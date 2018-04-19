@@ -28,3 +28,9 @@ We are looking for community leaders globally. If you are active Elastos communi
 - Any projects related to Elastos
 - Any requirements we can help
 
+## Elastos Javascript community website
+
+## Elastos Java community website
+
+## Elastos Youtube channels
+- K P Woods' Elastos series
