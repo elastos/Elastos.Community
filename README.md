@@ -6,7 +6,7 @@ This repo is for Elastos Developers Community members. We can disucss issues rel
 Everyone is welcome to raise issue for new ideas. 
 # Repo structure
 ## Headlines
-
+[We Want You! Elastos Community Recruitment](https://medium.com/elastos/we-want-you-elastos-community-recruitment-da0e97694f63)
 ## What's New?
 - Latest core development team updates
 - New release
