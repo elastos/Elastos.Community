@@ -14,7 +14,7 @@ Everyone is welcome to raise issue for new ideas.
 - New training material
 
 ## Help wanted
-- Team recuiting notice
+- [Team recuiting notice Apr 2018](https://medium.com/elastos/we-want-you-elastos-community-recruitment-da0e97694f63)
 - Todo list
 - Leader board
 
