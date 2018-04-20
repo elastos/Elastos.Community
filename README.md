@@ -18,6 +18,22 @@ Everyone is welcome to raise issue for new ideas.
 - Todo list
 - Leader board
 
+# FAQ
+## To be honest, I'm not technically great but I love blockchain and i'm ready to do anything to participate in a blockchain project that I love....
+>
+>Hello Elastos Community!
+
+> I love this project, I'm supporting and following you actively. I saw the actual job advertisements and I wonder, as a Business  Informatics student in Turkey, how can I join Elastos team? Do you have any opportunities like internship etc. for students like me? To be honest, I'm not technically great but I love blockchain and i'm ready to do anything to participate in a blockchain project that I love. If I can't join the community with my actual abilities right now, how should I improve myself to do it? Do you have any advices for me? 
+
+> I'd be glad if you can answer me, thanks a lot! Much love and kind regards,
+
+Answer:
+Elastos is an open source project. Anyone can contribute, no matter technical enough to contribute code, or just help us find some bug and raise an issue. Or not related to technology at all, just write some learning experiences on youtube, medium stackoverflow etc, let more people know Elastos, enjoy the learning process together,
+
+let me know which part you think you are good at.
+
+
+
 
 # Links to other community repos
 ## [Global Community](https://github.com/elastos/Elastos.Community.Global)
