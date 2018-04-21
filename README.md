@@ -36,8 +36,6 @@ Elastos is an open source project. Anyone can contribute, no matter technical en
 let me know which part you think you are good at.
 
 
-
-
 # Links to other community repos
 ## [Global Community](https://github.com/elastos/Elastos.Community.Global)
 We are looking for community leaders globally. If you are active Elastos community member, you live in a country/region without Elastos community activity, you can lead the local community. Please contact us. What you can help us are:
@@ -52,4 +50,4 @@ We are looking for community leaders globally. If you are active Elastos communi
 ## Elastos Java community website
 
 ## Elastos Youtube channels
-- K P Woods' Elastos series
+- KP Woods' Elastos tutorial/news series: Each video about 5 mintues long explaining different facets of Elastos like Elastos Runtime, Elastos SDK, Elastos OS, How digital assets get stored, played and traded on elastos platform, building sample dapps from scratch, Elastos developer news, etc
