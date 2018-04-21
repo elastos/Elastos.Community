@@ -4,8 +4,8 @@ Welcome to Elastos Developers Community!
 This repo is for Elastos Developers Community members. We can disucss issues related to community events, technical training material, ideas and comments. 
 
 Everyone is welcome to raise issue for new ideas. 
-# Repo structure
-## Headlines
+
+# Headlines
 [We Want You! Elastos Community Recruitment](https://medium.com/elastos/we-want-you-elastos-community-recruitment-da0e97694f63)
 ## What's New?
 - Latest core development team updates
@@ -18,7 +18,10 @@ Everyone is welcome to raise issue for new ideas.
 - Todo list
 - Leader board
 
+
 # FAQ
+## How to contribute to the community? [Contribution Guide](./CONTRIBUTING.md)
+## How to raise an issue? [Issue Template](./ISSUE_TEMPKLATE.md)
 ## To be honest, I'm not technically great but I love blockchain and i'm ready to do anything to participate in a blockchain project that I love....
 >
 >Hello Elastos Community!
