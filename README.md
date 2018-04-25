@@ -46,5 +46,7 @@ We are looking for community leaders globally. If you are active Elastos communi
 
 ## Elastos Java community website
 
-## Elastos Youtube channels
-- KP Woods' Elastos tutorial/news series: Each video about 5 mintues long explaining different facets of Elastos like Elastos Runtime, Elastos SDK, Elastos OS, How digital assets get stored, played and traded on elastos platform, building sample dapps from scratch, Elastos developer news, etc
+## Elastos Youtube
+- [What is Elastos?](https://www.youtube.com/watch?v=20mTY3G5y0c)
+- [Official Elastos Youtube Channel](https://www.youtube.com/channel/UCy5AjgpQIQq3bv8oy_L5WTQ)
+- [Elastos Video Series by KP Woods](https://www.youtube.com/channel/UCu1XxDJE84ZvgLJ-EssbveA)
