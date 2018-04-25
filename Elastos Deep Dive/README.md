@@ -1,6 +1,6 @@
 # Videos
 ## Youtube Playlists
-- [Elastos Introductory Series Videos](https://www.youtube.com/watch?v=BnsjGJPMVqo&list=PL3vUOqY6AksGBD3Yve671Q_vsOUPxnzBc)
+- [Elastos Introductory Series Playlist](https://www.youtube.com/watch?v=BnsjGJPMVqo&list=PL3vUOqY6AksGBD3Yve671Q_vsOUPxnzBc)
 
 ## Medium Blogs
 - [Elastos Runtime: A Window into a new world of DApps](https://medium.com/@kiran.pachhai/elastos-runtime-a-window-into-a-new-world-of-dapps-1905839ea452)
