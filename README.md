@@ -18,6 +18,17 @@ Everyone is welcome to raise issue for new ideas.
 - Todo list
 - Leader board
 
+# [Elastos Bounty Program (EBP)](./ElastosBountyProgram/README.md)
+Elastos is an open source project made by open community. We reserved 16.5M ELA in order to reward the Elastos community members who contribute to the commmunity. EBP- Elastos Bounty Program is a web app platform for community members to take tasks, make contribution and get ELA as reward.
+
+The whole EBP contains several subsidiary programs
+- Elastos Developer Bounty Program - EDBP. Developers contribute code to Elastos
+- Elastos Bug Bounty Program - EBBP. Users or testers find bugs and report to Elastos developers
+- Elastos Social Bounty Program - ESBP. Social media users and influencers introduce Elastos to social media.
+- Elastos Leader Bounty Program - ELBP. Reward to those leaders in different subsidiary communities (Universities, Countries, Cities community leader)
+- Elastos Referral Bounty Program - ERBP. Reward to members who refer other users, leaders, members to join Elastos community that made significant contribution.
+
+See details [here](./ElastosBountyProgram/README.md)
 
 # FAQ
 ## How to contribute to the community? [Contribution Guide](./CONTRIBUTING.md)
