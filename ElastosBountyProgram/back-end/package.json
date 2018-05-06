@@ -8,7 +8,7 @@
     "tsc": "tsc || echo TSC compilation has errors.",
     "lint:ci": "tslint \"src/**/*.ts\" --project tsconfig.json",
     "tslint": "tslint -c tslint.json -p tsconfig.json -t codeFrame",
-    "serve": "nodemon --config nodemon.json dist/index.js"
+    "start:production": "npm run build && NODE_ENV=production node dist/index.js"
   },
   "dependencies": {
     "@types/http-status": "0.2.30",

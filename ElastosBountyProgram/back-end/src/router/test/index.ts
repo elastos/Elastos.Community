@@ -5,6 +5,7 @@ class helloworld extends Base {
         const Test = this.db.getModel('Test');
         const list = await Test.find({});
 
+        this.session.hello = '11';
         return this.result(1, list,'hello world');
     }
 }

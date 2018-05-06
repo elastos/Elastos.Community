@@ -3,7 +3,7 @@ import Test from './Test';
 
 export default class {
     protected db: any;
-    protected connection: mongoose.ConnectionBase;
+    public connection: mongoose.ConnectionBase;
 
     constructor(){
         this.db = {};
