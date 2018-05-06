@@ -2,9 +2,10 @@ import Base from '../Base';
 
 class helloworld extends Base {
     async action(){
-        this.session.hello = 11;
+        const Test = this.db.getModel('Test');
+        const list = await Test.find({});
 
-        return this.result(1, 'hello world');
+        return this.result(1, list,'hello world');
     }
 }
 

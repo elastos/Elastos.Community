@@ -1,25 +1,15 @@
-import * as mongoose from 'mongoose';
+import Base from './Base';
 
-export default class {
-    private db;
-    constructor(DB){
-        const schema = new mongoose.Schema(this.getSchema());
-
-        this.db = DB.model('Test', schema);
-    }
-
-    getSchema(){
+export default class extends Base {
+    protected getSchema(){
         return {
             name : String,
             age : Number,
             time : Date
         };
     }
+    protected getName(){
+        return 'Test';
+    }
 
-    async save(doc: object){
-        return await this.db.create(doc);
-    }
-    async find(query){
-        return await this.db.find(query);
-    }
 };

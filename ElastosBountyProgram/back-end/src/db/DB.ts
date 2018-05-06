@@ -70,4 +70,12 @@ export default class {
     private initDB(db){
         this.db.Test = new Test(db);
     }
+
+    public getModel(name: string){
+        const rs = this.db[name];
+        if(!rs){
+            throw new Error('invalid model name : '+name);
+        }
+        return rs;
+    }
 }

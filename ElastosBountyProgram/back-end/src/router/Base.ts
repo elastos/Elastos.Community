@@ -2,6 +2,7 @@ import {Response, Request, Router} from 'express';
 import * as Session from 'express-session';
 // import Service from '../model/Service';
 import * as _ from 'lodash';
+import DB from '../db';
 
 interface RESULT {
     code: number,
@@ -32,6 +33,7 @@ export default abstract class {
     protected req: Request;
     protected res: Response;
     protected session: Session;
+    protected db;
 
     constructor(req, res) {
         this.req = req;
@@ -48,6 +50,7 @@ export default abstract class {
                 return false;
             }
 
+            this.db = await DB.create();
             const result = await this.action();
             if(result){
                 this.res.set('Content-Type', 'application/json');

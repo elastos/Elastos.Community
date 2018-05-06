@@ -7,8 +7,6 @@ import user from './user';
 
 export const middleware = (req: Request, res: Response, next: NextFunction)=>{
     // TODO add middleware if needed
-    const session = req['session'];
-    console.log(111, session);
 
     next();
 };
