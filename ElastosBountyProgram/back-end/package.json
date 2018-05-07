@@ -6,9 +6,10 @@
     "build": "npm run build:ts",
     "build:ts": "tsc",
     "tsc": "tsc || echo TSC compilation has errors.",
-    "lint:ci": "tslint \"src/**/*.ts\" --project tsconfig.json",
     "tslint": "tslint -c tslint.json -p tsconfig.json -t codeFrame",
-    "start:production": "npm run build && NODE_ENV=production node dist/index.js"
+    "start:production": "npm run build && NODE_ENV=production node dist/index.js",
+    "unit": "NODE_ENV=dev jest --config test/unit/jest.conf.js --coverage",
+    "test": "npm run unit"
   },
   "dependencies": {
     "@types/http-status": "0.2.30",
@@ -35,14 +36,17 @@
   "devDependencies": {
     "@types/chai": "4.0.6",
     "@types/connect-timeout": "^0.0.33",
-    "@types/dotenv": "^4.0.1",
     "@types/cucumber": "2.1.0",
+    "@types/dotenv": "^4.0.1",
     "@types/express": "4.0.39",
     "@types/helmet": "0.0.37",
+    "@types/jest": "^22.2.3",
     "@types/js-yaml": "3.10.1",
     "@types/mocha": "2.2.44",
     "@types/mongoose": "^5.0.12",
+    "jest": "^22.4.3",
     "nodemon": "1.12.1",
+    "ts-jest": "^22.4.5",
     "ts-node": "3.3.0",
     "tslint": "5.8.0",
     "typescript": "2.3.3"

@@ -12,4 +12,4 @@ export default class {
     protected getDBModel(name: string){
         return this.db.getModel(name);
     }
-};
+}

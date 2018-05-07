@@ -8,8 +8,8 @@ export default abstract class {
         this.db = DB.model(this.getName(), schema);
     }
 
-    protected abstract getSchema(): mongoose.SchemaDefinition
-    protected abstract getName(): string
+    protected abstract getSchema(): mongoose.SchemaDefinition;
+    protected abstract getName(): string;
 
     public async save(doc: object){
         return await this.db.create(doc);
@@ -17,4 +17,4 @@ export default abstract class {
     public async find(query){
         return await this.db.find(query);
     }
-};
+}

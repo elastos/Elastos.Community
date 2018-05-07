@@ -2,7 +2,7 @@
   "extends": [],
   "rules": {
     "trailing-comma": true,
-    "class-name": true,
+    "class-name": false,
     "comment-format": [true, "check-space"],
     "indent": [false, "spaces"],
     "one-line": [false, "check-open-brace", "check-whitespace"],

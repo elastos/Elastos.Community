@@ -5,10 +5,10 @@ import * as _ from 'lodash';
 import DB from '../db';
 
 interface RESULT {
-    code: number,
-    data?: any,
-    error?: Error,
-    message?: string
+    code: number;
+    data?: any;
+    error?: Error;
+    message?: string;
 }
 
 interface ROUTEING {
@@ -103,7 +103,7 @@ export default abstract class {
 
     protected getParam(key?: string): any{
         const param = _.extend({}, this.req.query, this.req.params);
-        return key ? _.get(param, key, null) : param;
+        return key ? _.get(param, key, '') : param;
     }
 
-};
+}

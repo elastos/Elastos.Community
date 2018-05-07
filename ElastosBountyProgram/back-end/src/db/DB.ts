@@ -19,7 +19,7 @@ export default class {
         this.connection = db;
 
         // Setup callback
-        this.connection.on("error", this.handleDBError());
+        this.connection.on('error', this.handleDBError());
 
         this.connection.on('disconnected', this.handleUnexpectedDisconnect());
 
@@ -37,7 +37,7 @@ export default class {
 
         return (error: any) => {
 
-            console.log("Error is happenning", error);
+            console.log('Error is happenning', error);
         };
     }
 
@@ -47,7 +47,7 @@ export default class {
 
             console.error('mongodb is disconnect', error);
             setTimeout(() => {
-                this.start()
+                this.start();
             }, 5000);
         };
     }

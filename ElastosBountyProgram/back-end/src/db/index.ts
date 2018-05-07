@@ -1,6 +1,6 @@
 import DB from './DB';
 
-let db:DB = null;
+let db: DB;
 export default class {
     static async create(){
         if(!db){
