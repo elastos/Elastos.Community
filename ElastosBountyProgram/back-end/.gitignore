@@ -43,5 +43,6 @@ coverage/
 issues.json
 
 .DS_Store
+.data
 
 

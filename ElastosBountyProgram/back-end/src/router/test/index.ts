@@ -6,7 +6,7 @@ class helloworld extends Base {
         const testService = this.buildService(TestService);
         const list = await testService.getTestList();
 
-        return this.result(1, list,'hello world');
+        return this.result(1, list,'hello world, ebp');
     }
 }
 

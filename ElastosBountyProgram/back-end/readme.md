@@ -8,3 +8,15 @@ cp ./env/dev.sample ./env/dev.env
 npm i
 npm start
 ```
+
+## run with docker
+```
+# start
+docker-compose up -d
+
+# show log
+docker logs -f ebp-backend
+
+# stop
+docker-compose down
+```

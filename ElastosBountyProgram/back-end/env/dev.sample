@@ -2,4 +2,7 @@
 SERVER_PORT=3000
 
 # DB
-DB_URL=mongodb://127.0.0.1:27017/EBP
+# this is for local running to develop
+DB_URL=mongodb://localhost:27017/EBP
+# this is for running docker container to develop
+#DB_URL=mongodb://ebp-mongo:27017/EBP
