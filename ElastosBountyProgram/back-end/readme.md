@@ -21,6 +21,16 @@ docker logs -f ebp-backend
 docker-compose down
 ```
 
+## api doc via swaager
+```
+# api doc folder : /api_doc
+
+# run swagger
+docker-compose up -d
+```
+swagger.io is running in **http://localhost:9001**
+
+
 ## command
 ```
 # unit test
