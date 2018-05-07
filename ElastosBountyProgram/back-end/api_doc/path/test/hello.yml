@@ -1,0 +1,15 @@
+get:
+  tags:
+  - test
+  description: hello world
+  operationId: hello
+
+
+  responses:
+    200:
+      description: success response
+      content:
+        application/json:
+          schema:
+            $ref: '../../schema/success_response.yml'
+

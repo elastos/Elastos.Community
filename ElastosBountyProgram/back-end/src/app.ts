@@ -5,6 +5,7 @@ import * as morgan from 'morgan';
 import * as timeout from 'connect-timeout';
 import * as session from 'express-session';
 import * as ConnectMongo from 'connect-mongo';
+import * as cors from 'cors';
 import db from './db';
 
 import router, {middleware} from './router';
@@ -15,6 +16,9 @@ import './config';
     const DB = await db.create();
 
     const app = express();
+
+    app.use(cors());
+    app.options('*', cors());
 
     const TIMEOUT = '120s';
     app.use(timeout(TIMEOUT));

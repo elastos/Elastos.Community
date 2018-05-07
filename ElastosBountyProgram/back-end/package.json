@@ -1,6 +1,6 @@
 {
   "name": "EBP-backend",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "start": "nodemon --config nodemon.json",
     "build": "npm run build:ts",
@@ -21,6 +21,7 @@
     "connect-timeout": "1.7.0",
     "cookie-parser": "1.4.3",
     "cookie-session": "^2.0.0-beta.3",
+    "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "4.16.0",
     "express-jwt": "^5.3.0",

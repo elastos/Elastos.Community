@@ -15,9 +15,20 @@ services:
     command: npm start
     volumes:
       - ./src:/app/src
+      - ./node_modules:/app/node_modules
     ports:
       - 3000:3000
     env_file:
       - ./env/dev.env
     links:
       - ebp-mongo
+
+  swagger_ui:
+    environment:
+      - API_URL=/api_doc/main.yml
+    image: swaggerapi/swagger-ui
+    volumes:
+      - ./api_doc:/usr/share/nginx/html/api_doc
+    restart: always
+    ports:
+      - 9001:8080
