@@ -20,3 +20,12 @@ docker logs -f ebp-backend
 # stop
 docker-compose down
 ```
+
+## command
+```
+# unit test
+npm test
+
+# tslint validate
+npm run tslint
+```
