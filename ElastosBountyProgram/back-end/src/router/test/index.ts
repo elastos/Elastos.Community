@@ -1,11 +1,11 @@
 import Base from '../Base';
+import TestService from '../../service/TestService';
 
 class helloworld extends Base {
     async action(){
-        const Test = this.db.getModel('Test');
-        const list = await Test.find({});
+        const testService = this.buildService(TestService);
+        const list = await testService.getTestList();
 
-        this.session.hello = '11';
         return this.result(1, list,'hello world');
     }
 }

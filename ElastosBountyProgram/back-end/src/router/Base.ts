@@ -1,6 +1,6 @@
 import {Response, Request, Router} from 'express';
 import * as Session from 'express-session';
-// import Service from '../model/Service';
+import Service from '../service/Base';
 import * as _ from 'lodash';
 import DB from '../db';
 
@@ -97,9 +97,9 @@ export default abstract class {
     /*
     * get service
     * */
-    // protected buildService<T extends Service>(service: { new(...args): T }): T{
-    //     return new service(this.db, this.config, this.req);
-    // }
+    protected buildService<T extends Service>(service: { new(...args): T }): T{
+        return new service(this.db);
+    }
 
     protected getParam(key?: string): any{
         const param = _.extend({}, this.req.query, this.req.params);
