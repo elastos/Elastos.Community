@@ -27,7 +27,7 @@ const firstChild = (props)=>{
 const App = ()=>{
 	return (
 		<div id="ebp-main">
-			<h1>EBP front end</h1>
+			<h1>EBP front end1121</h1>
 		</div>
 	);
 };

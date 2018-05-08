@@ -5,8 +5,6 @@
   "scripts": {
     "start": "rimraf dev_dist && webpack-dev-server --mode development --config ./webpack/webpack.dev.js",
     "build": "rimraf dist && NODE_ENV=production webpack --mode production --config ./webpack/webpack.prod.js --colors --progress",
-    "build:dev_watch": "webpack --mode development --config ./webpack/webpack.dev.js --progress --watch",
-    "docker:start": "docker-compose up -d",
     "lint": "eslint ./src/**/**.js",
     "test": "jest"
   },
@@ -15,9 +13,11 @@
     "setupFiles": [
       "<rootDir>/jest/boot.js"
     ],
-    "mapCoverage": true,
+    "collectCoverage": true,
     "collectCoverageFrom": [
-      "app/**/*.{js,jsx,ts,tsx}"
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/*.js",
+      "!src/{I18N|data|model|module|config}/**/*.js"
     ],
     "testMatch": [
       "**/?(*.)(spec|test).js?(x)"
