@@ -11,7 +11,6 @@ import Store from '@/store';
 import './boot';
 import './style/index.scss';
 
-import {Button} from 'antd';
 
 const middleware = (render, props)=>{
 	return render;
@@ -30,7 +29,6 @@ const App = ()=>{
 	return (
 		<div id="ebp-main">
 			<h1>EBP front end1121</h1>
-            <Button>Default</Button>
 		</div>
 	);
 };
