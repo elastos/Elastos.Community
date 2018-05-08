@@ -7,11 +7,71 @@ Everyone is welcome to raise issue for new ideas.
 
 # Headlines
 [We Want You! Elastos Community Recruitment](https://medium.com/elastos/we-want-you-elastos-community-recruitment-da0e97694f63)
+
 ## What's New?
-- Latest core development team updates
-- New release
-- Upcoming events
-- New training materials
+Attention developers!  Join our live stream and Elastos Bounty Program on May 8th at 6:30pm Pacific time for the first Developer Meetup and technical AMA!    https://youtu.be/k6k4UiBRrho 
+
+Elastos Sidechain WP V0.3: https://t.me/elastosgroup/326898
+
+Omaha Livestream! https://youtu.be/Xkk2WTZcR-s
+
+Weekly Update: https://medium.com/elastos/elastos-weekly-updates-04-may-2018-d617d86b2ef1
+
+Logo Contest and Re-Brand Update:
+https://medium.com/elastos/logo-contest-and-re-brand-update-b4c170ff318a
+
+Elastos Community Recruit:
+https://medium.com/elastos/we-want-you-elastos-community-recruitment-da0e97694f63
+
+Casual Q&A with Rong Chen: https://youtu.be/LEuJlzipsTw
+
+https://t.me/elastosgroup/288411
+———————————
+Beginners Guide: 
+https://www.reddit.com/r/Elastos/comments/7xihw9/elastos_a_beginners_guide/  
+
+Resources:
+Official Website: https://www.elastos.org/
+Elastos News: https://elanews.net/
+Roadmap: https://www.elastos.org/roadmap
+Elastos Carrier: https://medium.com/elastos/elastos-carrier-explanation-development-status-b468199c1aa4?source=linkShare-7e59912129a9-1521164555
+Elastos Wallet: https://wallet.elastos.org/
+Wallet FAQ: https://medium.com/@elastos/elastos-wallet-faq-f717291fd7ae
+Using the Wallet: https://medium.com/@elastos/the-elastos-wallet-68797064d8dd
+Blockchain Explorer: https://blockchain.elastos.org/blocks
+GitHub: https://github.com/elastos
+Gitlab: https://gitlab.com/users/elastos/projects
+
+Social Media:
+Discord: https://discord.gg/MHSUVZN
+Facebook: https://www.facebook.com/elastosorg/
+Twitter: https://twitter.com/Elastos_org
+Reddit: https://www.reddit.com/r/Elastos/
+Medium: https://medium.com/elastos
+Youtube: https://www.youtube.com/channel/UCy5AjgpQIQq3bv8oy_L5WTQ
+Instagram: https://www.instagram.com/elastosofficial/
+Official News Channel: https://t.me/elastos_org
+Chinese Telegram Community: https://t.me/elastoschina
+Korean Telegram Community: https://t.me/elastoskorea
+German Telegram Community: https://t.me/elastosgerman
+Dutch Telegram Community: https://t.me/ElastosNL
+Finnish Telegram Community: https://t.me/elastosfinland
+Indian Telegram Community: https://t.me/ElastosIndia
+Russian Telegram Community: https://t.me/Elastos_RUS
+U.K. Telegram Community: https://t.me/ElastosUK
+Czech Telegram Community: https://t.me/elastoscz
+Spanish Telegram Community: https://t.me/ElastosSpa
+Australia Telegram Community: https://t.me/ElastosAus
+Thai Telegram Community:
+https://t.me/elastosthai
+
+Rules:
+- Any input and contribution to this community is appreciated, but remember, be respectful of one another.
+- No referral links to other telegram groups, other cryptocurrencies or spams. You may be banned without notice. Discussions are ok and encouraged however no external links that advertises something in any way except if it's related to Elastos
+
+Awareness:
+- There are fake accounts pretending to be Elastos Admin. Please be aware of this. Admin will never contact you first or solicit any kind of payment through pm.
+- Please report ANYONE asking you to make a payment, for your private wallet add
 
 ## Help wanted
 - [Team recuiting notice Apr 2018](https://medium.com/elastos/we-want-you-elastos-community-recruitment-da0e97694f63)
