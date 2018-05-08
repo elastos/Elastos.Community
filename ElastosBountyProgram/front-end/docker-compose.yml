@@ -1,0 +1,11 @@
+version: '3'
+services:
+  proxy:
+    container_name: ebp-frontend
+    image: nginx:alpine
+    ports:
+      - 80:80
+
+    volumes:
+      - ./nginx/proxy.conf:/etc/nginx/conf.d/proxy.conf:ro
+      - ./dist:/www
