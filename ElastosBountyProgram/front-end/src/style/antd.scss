@@ -1,0 +1,15 @@
+.ant-btn{
+  font-size: 1.1rem;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 40px;
+}
+.ant-btn-primary{
+  background: #ff7300;
+  border: 1px solid #ff7300;
+
+  &:hover{
+    background: #df7300;
+    border-color: #ff7300;
+  }
+}

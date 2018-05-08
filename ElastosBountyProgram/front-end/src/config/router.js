@@ -1,10 +1,17 @@
-import I18N from '@/I18N';
+import HomePage from '@/module/page/home/Container';
+import LoginPage from '@/module/page/login/Container';
 
-
-export default {
-
-
-	router : [
-
-	]
-};
+export default [
+	{
+		path : '/',
+		page : HomePage
+	},
+    {
+        path : '/home',
+        page : HomePage
+    },
+    {
+        path : '/login',
+        page : LoginPage
+    }
+];

@@ -1,0 +1,25 @@
+.flex-center{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+.v-center{
+
+}
+.h-center{
+
+}
+.flex-space{
+  display: flex;
+  justify-content: space-between;
+}
+
+.ebp-wrap{
+  min-width: $main_width;
+  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  //outline: 1px solid red;
+}

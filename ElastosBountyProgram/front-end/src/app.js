@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
-import * as ReactRouter from 'react-router';
 import {BrowserRouter, Route, Link, NavLink} from 'react-router-dom';
 import { Provider } from 'react-redux';
-import Store from '@/store';
-
-// import RouterConfig from 'app/config/router';
+import store from '@/store';
+import config from '@/config';
 
 import './boot';
 import './style/index.scss';
@@ -28,7 +26,14 @@ const firstChild = (props)=>{
 const App = ()=>{
 	return (
 		<div id="ebp-main">
-			<h1>EBP front end1121</h1>
+            {
+                _.map(config.router, (item, i)=>{
+                    const props = _.omit(item, ['page', 'path']);
+                    return (
+                        <Route path={item.path} key={i} exact component={item.page} {...props} />
+                    );
+                })
+            }
 		</div>
 	);
 };
@@ -39,7 +44,7 @@ const App = ()=>{
 const render = () => {
 	ReactDOM.render(
 		(
-			<Provider store={Store}>
+			<Provider store={store}>
 				<BrowserRouter>
 					<App />
 				</BrowserRouter>

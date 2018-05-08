@@ -28,19 +28,12 @@ html, body{
 
 }
 body{
-  background-color: $color_bg;
-  font-size: 24px;
+  font-size: 14px;
 }
 
 #ebp-root{
-  outline:1px solid red;
   background: #eeeeee;
-  min-height: 100%;
+  min-height: 100vh;
 
-  @media (min-width: 992px){
-    .container{
-      width: $main_width;
-    }
-  }
 }
 
