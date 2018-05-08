@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
-import {BrowserRouter, Route, Link, NavLink} from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '@/store';
 import config from '@/config';
@@ -25,16 +25,17 @@ const firstChild = (props)=>{
 
 const App = ()=>{
 	return (
-		<div id="ebp-main">
+		<Switch id="ebp-main">
             {
                 _.map(config.router, (item, i)=>{
-                    const props = _.omit(item, ['page', 'path']);
+                    const props = _.omit(item, ['page', 'path', 'type']);
+                    const R = item.type || Route;
                     return (
-                        <Route path={item.path} key={i} exact component={item.page} {...props} />
+                        <R path={item.path} key={i} component={item.page} {...props} />
                     );
                 })
             }
-		</div>
+		</Switch>
 	);
 };
 

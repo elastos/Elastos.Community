@@ -13,7 +13,7 @@ export default class extends BaseComponent {
         return (
             <Header className="c_Header" theme="light">
                 <Menu onClick={this.clickItem.bind(this)} className="ebp-wrap" selectedKeys={['mail']} mode="horizontal">
-                    <Menu.Item disabled>
+                    <Menu.Item key="home">
                         <h1>LOGO</h1>
                     </Menu.Item>
 
