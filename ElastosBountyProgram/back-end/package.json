@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "nodemon --config nodemon.json",
+    "debug": "nodemon --config nodemon-debug.json",
     "build": "npm run build:ts",
     "build:ts": "tsc",
     "tsc": "tsc || echo TSC compilation has errors.",
