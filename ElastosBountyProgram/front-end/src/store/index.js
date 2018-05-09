@@ -6,7 +6,7 @@ import { routerReducer, routerMiddleware, push, replace} from 'react-router-redu
 
 
 import reducer from './reducer';
-import action from './action';
+// import action from './action';
 
 const history = createHistory();
 const middleware = routerMiddleware(history);
@@ -20,7 +20,16 @@ const store = createStore(
 	)
 );
 store.history = history;
-store.actions = action;
+// store.actions = action;
+
+store.getRedux = (name)=>{
+	try{
+        const redux = require('./redux/'+name);
+		return redux.default;
+	}catch(e){
+		throw e;
+	}
+}
 
 if(config.NODE_ENV === 'development'){
     global.store = store;
