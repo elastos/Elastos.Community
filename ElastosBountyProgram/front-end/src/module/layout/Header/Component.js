@@ -14,7 +14,7 @@ export default class extends BaseComponent {
             <Header className="c_Header" theme="light">
                 <Menu onClick={this.clickItem.bind(this)} className="ebp-wrap" selectedKeys={['mail']} mode="horizontal">
                     <Menu.Item key="home">
-                        <h1>LOGO</h1>
+                        <h1>ELASTOS LOGO</h1>
                     </Menu.Item>
 
                     <Menu.Item className="d_li" key="signup">

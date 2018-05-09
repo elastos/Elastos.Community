@@ -9,7 +9,6 @@ import config from '@/config';
 import './boot';
 import './style/index.scss';
 
-
 const middleware = (render, props)=>{
 	return render;
 };
@@ -31,7 +30,7 @@ const App = ()=>{
                     const props = _.omit(item, ['page', 'path', 'type']);
                     const R = item.type || Route;
                     return (
-                        <R path={item.path} key={i} component={item.page} {...props} />
+                        <R path={item.path} key={i} exact component={item.page} {...props} />
                     );
                 })
             }

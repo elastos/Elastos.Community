@@ -6,8 +6,7 @@ import NotFound from '@/module/page/error/NotFound';
 export default [
 	{
 		path : '/',
-		page : HomePage,
-        exact : true
+		page : HomePage
 	},
     {
         path : '/home',

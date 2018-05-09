@@ -5,7 +5,7 @@ const util = require('./util');
 const resolve = util.resolve;
 
 module.exports = {
-    entry: [resolve('src/app.js')],
+    entry: ['babel-polyfill', resolve('src/app.js')],
     optimization: {
         minimizer: [
             new UglifyJsPlugin({

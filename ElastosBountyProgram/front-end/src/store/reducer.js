@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import user from './user/reducer';
 
 
 const default_state = {
@@ -15,4 +16,5 @@ const appReducer = (state = default_state, action)=>{
 
 export default combineReducers({
 	app: appReducer,
+	user
 });

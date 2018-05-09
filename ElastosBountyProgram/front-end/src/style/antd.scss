@@ -8,7 +8,7 @@
   background: #ff7300;
   border: 1px solid #ff7300;
 
-  &:hover{
+  &:hover, &:focus, &:active{
     background: #df7300;
     border-color: #ff7300;
   }

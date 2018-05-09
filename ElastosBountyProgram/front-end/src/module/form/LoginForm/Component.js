@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
 
 import './style.scss';
 
@@ -9,10 +9,13 @@ const FormItem = Form.Item;
 class C extends BaseComponent {
     handleSubmit(e){
         e.preventDefault();
-        console.log(this.props.form)
         this.props.form.validateFields((err, values) => {
             if(!err){
                 console.log('Received values of form: ', values);
+                this.props.login(values.username, values.password, values.remember);
+
+                message.success('login success');
+                this.props.history.push('/home');
             }
         });
     }
@@ -69,7 +72,7 @@ class C extends BaseComponent {
 
                 </FormItem>
                 <FormItem>
-                    <Button type="primary" htmlType="submit" className="d_btn">
+                    <Button loading={this.props.loading} type="primary" htmlType="submit" className="d_btn">
                         Log in
                     </Button>
                 </FormItem>
