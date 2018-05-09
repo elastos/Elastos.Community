@@ -2,6 +2,7 @@ import React from 'react';
 import BaseComponent from './BaseComponent';
 import {spring, Motion} from 'react-motion';
 import _ from 'lodash';
+import store from '@/store';
 
 /**
     noWobble: {stiffness: 170, damping: 26}, // the default, if nothing provided
@@ -56,4 +57,11 @@ export default class extends BaseComponent {
     ord_renderPage(){
         return null;
     }
+
+    componentWillMount(){
+        const is_login = store.getState().user.is_login;
+        this.ord_checkLogin(is_login);
+    }
+
+    ord_checkLogin(){}
 }

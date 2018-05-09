@@ -7,4 +7,10 @@ export default class extends StandardPage {
             <h1>Home</h1>
         );
     }
+
+    ord_checkLogin(isLogin){
+        if(!isLogin){
+            this.props.history.replace('/login');
+        }
+    }
 }

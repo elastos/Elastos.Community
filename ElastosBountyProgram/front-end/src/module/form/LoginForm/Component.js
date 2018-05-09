@@ -70,7 +70,7 @@ class C extends BaseComponent {
 
                 </FormItem>
                 <FormItem>
-                    <Button loading={this.props.loading} type="primary" htmlType="submit" className="d_btn">
+                    <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
                         Log in
                     </Button>
                 </FormItem>

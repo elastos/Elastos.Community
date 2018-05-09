@@ -11,6 +11,7 @@ import './boot';
 import './style/index.scss';
 
 const middleware = (render, props)=>{
+	console.log(123)
 	return render;
 };
 
@@ -18,10 +19,6 @@ const onEnter = ()=>{
 
 };
 
-const firstChild = (props)=>{
-	const childrenArray = React.Children.toArray(props.children);
-	return _.first(childrenArray);
-};
 
 const App = ()=>{
 	return (
@@ -46,7 +43,7 @@ const render = () => {
 	ReactDOM.render(
 		(
 			<Provider store={store}>
-				<ConnectedRouter history={store.history}>
+				<ConnectedRouter middleware={middleware} history={store.history}>
 					<App />
 				</ConnectedRouter>
 			</Provider>

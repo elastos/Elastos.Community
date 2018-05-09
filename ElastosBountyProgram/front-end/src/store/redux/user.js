@@ -15,7 +15,15 @@ class UserRedux extends BaseRedux {
                 loading : false
             },
 
-            profile : {}
+            register_form : {
+                username : '',
+                email : '',
+                password : ''
+            },
+
+            profile : {
+                name : 'Jacky.Li'
+            }
         };
     }
 

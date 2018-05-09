@@ -24,7 +24,7 @@ export default class {
             this.reducers[update_key] = (state, param)=>{
                 return {
                     ...state,
-                    [key]: _.merge({}, state[key], param||{})
+                    [key]: _.isObject(param) ? _.merge({}, state[key], param||{}) : param
                 };
             };
             this.actions[update_key] = (param)=>{
@@ -57,7 +57,7 @@ export default class {
         return (state=this.defineDefaultState(), action)=>{
             const type = action.type;
             if(this.types[type] && this.reducers[type]){
-                return this.reducers[type](state, action.param||{});
+                return this.reducers[type](state, action.param);
             }
 
             return state;
