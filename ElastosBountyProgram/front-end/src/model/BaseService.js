@@ -3,6 +3,7 @@ import store from '@/store';
 export default class {
     constructor(){
         this.store = store;
+        this.path = store.history;
 
         this.init();
     }
@@ -12,4 +13,5 @@ export default class {
     dispatch(action){
         return this.store.dispatch(action);
     }
+
 };

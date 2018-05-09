@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux'
+
 import user from './user/reducer';
 
 
@@ -16,5 +18,6 @@ const appReducer = (state = default_state, action)=>{
 
 export default combineReducers({
 	app: appReducer,
+	router: routerReducer,
 	user
 });

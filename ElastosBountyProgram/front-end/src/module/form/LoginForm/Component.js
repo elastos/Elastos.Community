@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent';
-import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
+import { Form, Icon, Input, Button, Checkbox } from 'antd';
 
 import './style.scss';
 
@@ -14,8 +14,6 @@ class C extends BaseComponent {
                 console.log('Received values of form: ', values);
                 this.props.login(values.username, values.password, values.remember);
 
-                message.success('login success');
-                this.props.history.push('/home');
             }
         });
     }

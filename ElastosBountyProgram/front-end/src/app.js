@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'react-router-redux';
 import store from '@/store';
 import config from '@/config';
 
@@ -45,9 +46,9 @@ const render = () => {
 	ReactDOM.render(
 		(
 			<Provider store={store}>
-				<BrowserRouter>
+				<ConnectedRouter history={store.history}>
 					<App />
-				</BrowserRouter>
+				</ConnectedRouter>
 			</Provider>
 		),
 		document.getElementById('ebp-root')

@@ -1,6 +1,7 @@
 import {createContainer, goPath} from "@/util";
 import Component from './Component';
 import UserService from '@/service/UserService';
+import {message} from 'antd';
 
 
 export default createContainer(Component, (state)=>{
@@ -12,11 +13,14 @@ export default createContainer(Component, (state)=>{
 
     return {
         async login(username, password, remember){
-            await userService.login(username, password, {
+            const rs = await userService.login(username, password, {
                 remember
             });
 
-            return true;
+            if(rs){
+                message.success('login success');
+                userService.path.push('/home');
+            }
         }
     };
 });
