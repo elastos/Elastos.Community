@@ -1,11 +1,33 @@
 import * as mongoose from 'mongoose';
+import * as _ from 'lodash';
 
 export default abstract class {
     private db;
+    private schema;
     constructor(DB){
-        const schema = new mongoose.Schema(this.getSchema());
+        this.schema = this.buildSchema();
+        this.db = DB.model(this.getName(), this.schema);
+    }
 
-        this.db = DB.model(this.getName(), schema);
+    private buildSchema(){
+        const schema = new mongoose.Schema(_.extend({
+            createdAt: {
+                type: Date,
+                default: Date.now
+            },
+            updatedAt: {
+                type: Date
+            }
+        }, this.getSchema()));
+
+        schema.pre('save', function(next){
+            if(!this['updatedAt']){
+                this['updatedAt'] = Date.now();
+                next();
+            }
+        });
+
+        return schema;
     }
 
     protected abstract getSchema(): mongoose.SchemaDefinition;
