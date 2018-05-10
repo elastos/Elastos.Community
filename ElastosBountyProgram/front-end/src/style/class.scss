@@ -23,3 +23,11 @@
 
   //outline: 1px solid red;
 }
+
+.ebp-page{
+  @extend .ebp-wrap;
+  background: #ffffff;
+  min-height: 60vh;
+  margin-top: $gap_2;
+  padding: $gap_2 0;
+}
