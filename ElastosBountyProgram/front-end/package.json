@@ -1,28 +1,14 @@
 {
   "name": "ebp-frontend",
   "version": "1.0.0",
-  "description": "react+webpack+es6",
+  "description": "Elastos Bounty Program Front-end",
   "scripts": {
     "start": "rimraf dev_dist && webpack-dev-server --mode development --config ./webpack/webpack.dev.js",
     "build": "rimraf dist && NODE_ENV=production webpack --mode production --config ./webpack/webpack.prod.js --colors --progress",
     "lint": "eslint ./src/**/**.js",
-    "test": "jest"
+    "test": "NODE_ENV=development jest --config jest/jest.conf.js --coverage"
   },
   "author": "liyangwood@gmail.com",
-  "jest": {
-    "setupFiles": [
-      "<rootDir>/jest/boot.js"
-    ],
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/*.js",
-      "!src/{I18N|data|model|module|config}/**/*.js"
-    ],
-    "testMatch": [
-      "**/?(*.)(spec|test).js?(x)"
-    ]
-  },
   "dependencies": {
     "antd": "^3.5.0",
     "cross-env": "^5.1.1",

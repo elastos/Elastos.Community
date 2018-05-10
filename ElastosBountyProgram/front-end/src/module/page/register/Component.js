@@ -4,13 +4,13 @@ import StandardPage from '../StandardPage';
 export default class extends StandardPage {
     ord_renderContent(){
         return (
-            <h1>Home</h1>
+            <h1>Register</h1>
         );
     }
 
     ord_checkLogin(isLogin){
-        // if(!isLogin){
-        //     this.props.history.replace('/login');
-        // }
+        if(isLogin){
+            this.props.history.replace('/home');
+        }
     }
 }
