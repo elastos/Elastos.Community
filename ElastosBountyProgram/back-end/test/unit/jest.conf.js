@@ -23,5 +23,10 @@ module.exports = {
         "js",
         "jsx",
         "json"
-    ]
+    ],
+    globals: {
+        "ts-jest": {
+            "skipBabel": true
+        }
+    }
 };

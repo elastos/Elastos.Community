@@ -58,7 +58,7 @@ export default abstract class {
             }
 
         }catch(e){
-            this.res.json(this.result(-1000, e));
+            this.res.json(this.result(-1, e));
         }
     }
 
@@ -87,7 +87,8 @@ export default abstract class {
         else{
             const err = opts.error;
             return {
-                code : opts.code,
+                code : err['code'] ? -err['code'] : opts.code,
+                type : err.name || '',
                 error : err.message || err.toString()
             };
         }
@@ -102,7 +103,7 @@ export default abstract class {
     }
 
     protected getParam(key?: string): any{
-        const param = _.extend({}, this.req.query, this.req.params);
+        const param = _.extend({}, this.req.query, this.req.body, this.req.params);
         return key ? _.get(param, key, '') : param;
     }
 

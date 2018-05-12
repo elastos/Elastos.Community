@@ -6,3 +6,6 @@ SERVER_PORT=3000
 DB_URL=mongodb://localhost:27017/EBP
 # this is for running docker container to develop
 #DB_URL=mongodb://ebp-mongo:27017/EBP
+
+# APP
+APP_SECRET=elastos

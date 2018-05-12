@@ -1,0 +1,17 @@
+post:
+  tags:
+  - user
+  description: register new user
+  operationId: register
+
+
+  responses:
+    200:
+      description: success response
+      content:
+        application/json:
+          schema:
+            $ref: '../../schema/success_response.yml'
+
+
+

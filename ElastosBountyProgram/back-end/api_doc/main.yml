@@ -20,6 +20,9 @@ servers:
 tags:
 - name: test
   description: test api, only available in dev env.
+- name: user
+  description: user api
+
 
 paths:
   /test/hello:
