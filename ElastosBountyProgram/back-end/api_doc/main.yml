@@ -30,6 +30,8 @@ paths:
 
   /user/register:
     $ref: "./path/user/register.yml"
+  /user/login:
+    $ref: "./path/user/login.yml"
 
 components:
   schemas:

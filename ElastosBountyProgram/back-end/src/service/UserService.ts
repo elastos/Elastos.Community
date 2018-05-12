@@ -30,4 +30,12 @@ export default class extends Base {
 
         return await db_user.save(doc);
     }
+
+    public async findUser(query): Promise<Document>{
+        const db_user = this.getDBModel('User');
+        return await db_user.findOne({
+            username: query.username,
+            password: query.password
+        });
+    }
 }

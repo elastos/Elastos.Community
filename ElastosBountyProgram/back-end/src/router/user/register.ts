@@ -7,7 +7,6 @@ export default class extends Base {
         const param = this.getParam();
         const userService = this.buildService(UserService);
 
-        // TODO validate
         if(!validate.username(param.username)){
             throw 'invalid username';
         }

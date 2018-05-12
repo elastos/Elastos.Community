@@ -1,5 +1,6 @@
 import * as mongoose from 'mongoose';
 import * as _ from 'lodash';
+import {Document} from 'mongoose';
 
 export default abstract class {
     private db;
@@ -33,10 +34,14 @@ export default abstract class {
     protected abstract getSchema(): mongoose.SchemaDefinition;
     protected abstract getName(): string;
 
-    public async save(doc: object){
+    public async save(doc: object): Promise<Document>{
         return await this.db.create(doc);
     }
-    public async find(query){
+    public async find(query): Promise<Document[]>{
         return await this.db.find(query);
+    }
+
+    public async findOne(query): Promise<Document>{
+        return await this.db.findOne(query);
     }
 }
