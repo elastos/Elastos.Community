@@ -13,5 +13,34 @@ post:
           schema:
             $ref: '../../schema/success_response.yml'
 
+  requestBody:
+    required: true
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+              required: true
+              example: jacky
+            password:
+              type: string
+              required: true
+              example: password
 
+            email:
+              type: string
+              example: test@elastos.org
+
+            name:
+              type: string
+              example: Jacky.Li
+
+            country:
+              type: string
+              example: China
+            city:
+              type: string
+              example: Dalian
 

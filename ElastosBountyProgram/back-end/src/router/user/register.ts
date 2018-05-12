@@ -11,9 +11,19 @@ export default class extends Base {
 
         const password = crypto.sha512(param.password);
 
+        const profile = {
+            name : param.name,
+            email : param.email,
+            region : {
+                country : param.country,
+                city : param.city
+            }
+        };
+
         const rs = await userService.registerNewUser({
             username : param.username,
-            password : password
+            password : password,
+            profile
         });
 
         return this.result(1, rs);
