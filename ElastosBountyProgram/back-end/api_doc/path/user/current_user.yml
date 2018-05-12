@@ -6,8 +6,6 @@ get:
 
   responses:
     200:
-      description: success response
-      content:
-        application/json:
-          schema:
-            $ref: '../../schema/success_response.yml'
+      $ref: '../../schema/success_response.yml'
+    401:
+      $ref: '../../schema/unauthorized_response.yml'

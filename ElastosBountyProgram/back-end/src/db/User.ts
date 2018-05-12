@@ -8,4 +8,10 @@ export default class extends Base {
     protected getName(){
         return 'user'
     }
+    protected rejectFields(){
+        return {
+            _id : false,
+            password : false
+        };
+    }
 }

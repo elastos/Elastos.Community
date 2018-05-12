@@ -61,4 +61,8 @@ if(getEnv() === 'dev'){
 
 router.use('/user', user);
 
+router.use((req, res)=>{
+    return res.sendStatus(403);
+});
+
 export default router;
