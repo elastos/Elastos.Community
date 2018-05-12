@@ -66,6 +66,7 @@ The best way to raise your question is using Github. Go to https://github.com/el
 * Spanish Telegram Community: https://t.me/ElastosSpa
 * Australia Telegram Community: https://t.me/ElastosAus
 * Thai Telegram Community: https://t.me/elastosthai
+* French Telegram Community: https://t.me/elastosfrance
 
 ## Help wanted
 - [Team recuiting notice Apr 2018](https://medium.com/elastos/we-want-you-elastos-community-recruitment-da0e97694f63)
