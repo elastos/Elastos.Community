@@ -1,8 +1,10 @@
 export default class {
     protected db;
+    protected currentUser;
 
-    constructor(db){
+    constructor(db, session){
         this.db = db;
+        this.currentUser = session.user;
 
         this.init();
     }

@@ -6,6 +6,7 @@ import * as moment from 'moment';
 
 import test from './test';
 import user from './user';
+import team from './team';
 
 
 export const middleware = (req: Request, res: Response, next: NextFunction)=>{
@@ -61,6 +62,7 @@ if(getEnv() === 'dev'){
 }
 
 router.use('/user', user);
+router.use('/team', team);
 
 router.use((req, res)=>{
     return res.sendStatus(403);

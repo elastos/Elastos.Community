@@ -1,7 +1,9 @@
 import Base from './Base';
 import {Document} from 'mongoose';
 import * as _ from 'lodash';
+import {constant} from '../constant';
 
+const {Role} = constant;
 interface RegisterNewUserParam {
     username: string;
     password: string;
@@ -25,7 +27,8 @@ export default class extends Base {
         const doc = _.merge({
             username : opts.username,
             password : opts.password,
-            profile : opts.profile
+            profile : opts.profile,
+            role : Role.MEMBER
         }, opts);
 
         return await db_user.save(doc);

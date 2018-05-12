@@ -18,6 +18,15 @@ const F = {
         if(!pwd || pwd.length < 6) return false;
 
         return true;
+    },
+
+    valid_string(str, min, max=100){
+        if(!str || !_.isString(str)) return false;
+        const len = str.length;
+        if(len < min) return false;
+        if(len > max) return false;
+
+        return true;
     }
 };
 

@@ -109,7 +109,7 @@ export default abstract class {
     * get service
     * */
     protected buildService<T extends Service>(service: { new(...args): T }): T{
-        return new service(this.db);
+        return new service(this.db, this.session);
     }
 
     protected getParam(key?: string): any{
