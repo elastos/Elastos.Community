@@ -47,3 +47,5 @@ paths:
     $ref: "./path/user/register.yml"
   /user/login:
     $ref: "./path/user/login.yml"
+  /user/current_user:
+    $ref: './path/user/current_user.yml'

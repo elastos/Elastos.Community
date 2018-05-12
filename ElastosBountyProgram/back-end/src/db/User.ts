@@ -10,7 +10,6 @@ export default class extends Base {
     }
     protected rejectFields(){
         return {
-            _id : false,
             password : false
         };
     }

@@ -3,6 +3,9 @@ get:
   - user
   description: get current login user info
   operationId: current_user
+  security:
+    - api-token: []
+
 
   responses:
     200:
