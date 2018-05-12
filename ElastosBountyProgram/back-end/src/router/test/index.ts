@@ -2,7 +2,9 @@ import Base from '../Base';
 import TestService from '../../service/TestService';
 
 class helloworld extends Base {
+    protected needLogin = true;
     async action(){
+
         const testService = this.buildService(TestService);
         const list = await testService.getTestList();
 

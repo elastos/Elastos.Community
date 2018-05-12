@@ -35,6 +35,8 @@ export default abstract class {
     protected session: Session;
     protected db;
 
+    protected needLogin = false;
+
     constructor(req, res) {
         this.req = req;
         this.res = res;
@@ -63,12 +65,20 @@ export default abstract class {
     }
 
     private async validate(){
-        // TODO
+        // check need login or not
+        if(this.needLogin){
+            if(!this.session.user){
+                this.res.sendStatus(401);
+                return false;
+            }
+        }
+
         return true;
     }
 
     // need to override
     abstract async action();
+
 
     protected result(code, dataOrError, msg?){
         const opts: RESULT = {
