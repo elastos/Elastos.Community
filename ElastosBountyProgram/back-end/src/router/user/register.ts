@@ -1,6 +1,6 @@
 import Base from '../Base';
 import UserService from '../../service/UserService';
-import {crypto} from '../../utility';
+import {crypto, validate} from '../../utility';
 
 export default class extends Base {
     async action(){
@@ -8,6 +8,15 @@ export default class extends Base {
         const userService = this.buildService(UserService);
 
         // TODO validate
+        if(!validate.username(param.username)){
+            throw 'invalid username';
+        }
+        if(!validate.password(param.password)){
+            throw 'invalid password';
+        }
+        if(param.email && !validate.email(param.email)){
+            throw 'invalid email';
+        }
 
         const password = crypto.sha512(param.password);
 

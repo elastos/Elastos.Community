@@ -34,7 +34,8 @@
     "lodash": "4.17.4",
     "mongoose": "^5.1.0",
     "morgan": "^1.9.0",
-    "request": "^2.85.0"
+    "request": "^2.85.0",
+    "validator": "^10.2.0"
   },
   "devDependencies": {
     "@types/chai": "4.0.6",
