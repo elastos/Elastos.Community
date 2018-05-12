@@ -1,6 +1,7 @@
 import Base from '../Base';
 import UserService from '../../service/UserService';
 import {crypto, validate} from '../../utility';
+import * as moment from 'moment';
 
 export default class extends Base {
     async action(){
@@ -29,7 +30,11 @@ export default class extends Base {
         };
 
         if(remember){
-            this.session.userId = user._id;
+            this.session.userId = user.id;
+            resultData['api-token'] = crypto.encrypt(JSON.stringify({
+                userId : user.id,
+                expired : moment().add(30, 'd').unix()
+            }));
         }
 
         return this.result(1, resultData);

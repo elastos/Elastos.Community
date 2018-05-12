@@ -37,7 +37,7 @@ import './config';
 
     const SessionStore = ConnectMongo(session);
     app.use(session({
-        name: 'ebp_token',
+        name: 'ebp-token',
         secret: process.env.APP_SECRET || 'session_secret',
         store: new SessionStore({
             mongooseConnection: DB.connection

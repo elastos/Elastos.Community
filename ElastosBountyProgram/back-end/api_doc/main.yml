@@ -23,6 +23,21 @@ tags:
 - name: user
   description: user api
 
+components:
+  schemas:
+
+  securitySchemes:
+#    session-token:
+#      type: apiKey
+#      in: cookie
+#      name: ebp-token
+    api-token:
+      type: apiKey
+      in: header
+      name: api-token
+
+  UnauthorizedError:
+    description: ebp-token is missing or invalid
 
 paths:
   /test/hello:
@@ -32,7 +47,3 @@ paths:
     $ref: "./path/user/register.yml"
   /user/login:
     $ref: "./path/user/login.yml"
-
-components:
-  schemas:
-

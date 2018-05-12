@@ -7,3 +7,8 @@ test('sha512 method', ()=>{
 
     expect(crypto.sha512('password')).toBe(str);
 });
+
+test('encrypt & decrypt method', ()=>{
+    const str = crypto.encrypt('elastos');
+    expect(crypto.decrypt(str)).toBe('elastos');
+});

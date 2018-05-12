@@ -6,11 +6,7 @@ get:
 
   responses:
     200:
-      description: success response
-      content:
-        application/json:
-          schema:
-            $ref: '../../schema/success_response.yml'
+      $ref: '../../schema/success_response.yml'
 
   parameters:
     - name: username
@@ -30,5 +26,5 @@ get:
     - name: remember
       in: query
       schema:
-        type: boolean
-      example: true
+        type: string
+      example: 'true'

@@ -1,14 +1,19 @@
-type: object
-properties:
-  code:
-    type: number
-  data:
-    type: object
-  message:
-    type: string
+description: success response
+content:
+  application/json:
 
-example:
-  code: 1
-  data:
-    data: 'data'
-  message: ok
+    schema:
+      type: object
+      properties:
+        code:
+          type: number
+        data:
+          type: object
+        message:
+          type: string
+
+      example:
+        code: 1
+        data:
+          data: 'data'
+        message: ok

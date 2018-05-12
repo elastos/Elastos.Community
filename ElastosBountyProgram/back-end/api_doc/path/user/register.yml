@@ -7,11 +7,7 @@ post:
 
   responses:
     200:
-      description: success response
-      content:
-        application/json:
-          schema:
-            $ref: '../../schema/success_response.yml'
+      $ref: '../../schema/success_response.yml'
 
   requestBody:
     required: true

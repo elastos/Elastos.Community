@@ -1,0 +1,13 @@
+get:
+  tags:
+  - user
+  description: get current login user info
+  operationId: current_user
+
+  responses:
+    200:
+      description: success response
+      content:
+        application/json:
+          schema:
+            $ref: '../../schema/success_response.yml'
