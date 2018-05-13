@@ -23,7 +23,8 @@ export default class extends Base {
                 country : param.country,
                 city : param.city
             },
-            role : Role.MEMBER
+            role : Role.MEMBER,
+            active: true
         };
 
         return await db_user.save(doc);

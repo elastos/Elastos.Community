@@ -60,5 +60,9 @@ export const User = {
     votePower : [VotePower],
     votePowerAmount : {
         // TODO auto calculate with votePower
+    },
+    active : {
+        type : Boolean,
+        default : false
     }
 };
