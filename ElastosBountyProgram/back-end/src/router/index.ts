@@ -15,7 +15,6 @@ export const middleware = (req: Request, res: Response, next: NextFunction)=>{
     if(token){
         try{
             const json = JSON.parse(crypto.decrypt(token.toString()));
-            console.log(111, json);
             if(json.userId && json.expired && (json.expired - moment().unix() > 0)){
                 db.create().then((DB)=>{
                     DB.getModel('User').findOne({_id: json.userId}).then((user)=>{

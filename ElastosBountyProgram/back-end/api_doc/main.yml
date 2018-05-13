@@ -22,6 +22,8 @@ tags:
   description: test api, only available in dev env.
 - name: user
   description: user api
+- name: team
+  description: team api
 
 components:
   schemas:
@@ -49,3 +51,6 @@ paths:
     $ref: "./path/user/login.yml"
   /user/current_user:
     $ref: './path/user/current_user.yml'
+
+  /team/create:
+    $ref: './path/team/create.yml'

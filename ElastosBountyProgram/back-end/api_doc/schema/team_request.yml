@@ -1,0 +1,66 @@
+required: true
+content:
+  application/x-www-form-urlencoded:
+    schema:
+      type: object
+      properties:
+
+        name:
+          type: string
+          required: true
+          example: test_team
+
+        type:
+          type: string
+          description: team or coummity
+          example: ""
+
+        metadata:
+          type: array
+          items:
+            type: string
+            description: foramt as "key|value"
+          example:
+            - meta_key|meta_value
+
+        tags:
+          type: array
+          items:
+            type: string
+          example:
+            - French
+            - Paris
+
+
+        description:
+          type: string
+          example: my first team
+
+        logo:
+          type: string
+          format: uri
+          example: ""
+
+        images:
+          type: array
+          description: team images, like member's photos, project history ...
+          items:
+            type: string
+          example: []
+
+#        members:
+#          type: array
+#          items:
+#            type: object
+#            properties:
+#              userId:
+#                type: string
+#              level:
+#                type: string
+#              role:
+#                type: string
+#                description: member, admin
+#              title:
+#                type: string
+#                description: PM, PO, developer, designer, tester ...
+#          example: []

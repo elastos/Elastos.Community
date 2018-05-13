@@ -5,6 +5,6 @@ export const Role = {
 
 export const TeamRole = {
     OWNER : 'owner',
-    MEMBER : 'member',
-
+    ADMIN : 'admin',
+    MEMBER : 'member'
 };

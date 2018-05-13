@@ -5,22 +5,6 @@ import {constant} from '../constant';
 import {validate, crypto} from '../utility';
 
 const {Role} = constant;
-interface RegisterNewUserParam {
-    username: string;
-    password: string;
-
-    profile?: {
-        email?: string;
-        name?: string;
-        avatar?: string;
-        birth?: any,
-        timezone?: string,
-        region?: {
-            country?: string,
-            city?: string
-        }
-    };
-}
 
 export default class extends Base {
     public async registerNewUser(param): Promise<Document>{

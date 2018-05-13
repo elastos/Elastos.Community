@@ -1,6 +1,8 @@
 import * as mongoose from 'mongoose';
 import Test from './Test';
 import User from './User';
+import Team from './Team';
+import User_Team from './User_Team';
 
 export default class {
     protected db: any;
@@ -71,6 +73,8 @@ export default class {
     private initDB(db){
         this.db.Test = new Test(db);
         this.db.User = new User(db);
+        this.db.Team = new Team(db);
+        this.db.User_Team = new User_Team(db);
     }
 
     public getModel(name: string){

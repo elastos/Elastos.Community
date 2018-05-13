@@ -8,10 +8,11 @@ export const TeamProfile = {
 };
 
 export const TeamMember = {
-    userId : String,
-    name : String,
+    userId : Schema.Types.ObjectId,
+    // name : String,
     level : String,
-    role : String
+    role : String,
+    title : String
 };
 
 export const Team = {

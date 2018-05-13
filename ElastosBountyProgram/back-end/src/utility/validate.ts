@@ -6,20 +6,6 @@ const F = {
         return validator.isEmail(email);
     },
 
-    username(name){
-        if(!name) return false;
-        const len = name.length;
-        if(len < 5) return false;
-
-        return true;
-    },
-
-    password(pwd){
-        if(!pwd || pwd.length < 6) return false;
-
-        return true;
-    },
-
     valid_string(str, min, max=100){
         if(!str || !_.isString(str)) return false;
         const len = str.length;
