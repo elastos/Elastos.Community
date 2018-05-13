@@ -1,6 +1,7 @@
 # Videos
 ## Youtube Playlists
 - [Elastos Introductory Series Playlist by KP Woods](https://www.youtube.com/watch?v=BnsjGJPMVqo&list=PL3vUOqY6AksGBD3Yve671Q_vsOUPxnzBc)
+- [Elastos Demo Series Playlist by KP Woods](https://www.youtube.com/playlist?list=PL3vUOqY6AksH1-UVQ2KDqzhD0zP7v6ObN)
 - [Elastos Carrier Explained Series by Kevin Zhang](https://www.youtube.com/watch?v=xtqv3knDllw&t=2s)
 
 ## Medium Blogs
