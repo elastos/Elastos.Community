@@ -1,6 +1,6 @@
 import Base from '../Base';
 import UserService from '../../service/UserService';
-import {crypto, validate} from '../../utility';
+import {crypto} from '../../utility';
 import * as moment from 'moment';
 
 export default class extends Base {
@@ -9,12 +9,8 @@ export default class extends Base {
 
         const {username, password, remember} = this.getParam();
 
-        if(!validate.username(username)){
-            throw 'invalid username';
-        }
-        if(!validate.password(password)){
-            throw 'invalid password';
-        }
+        userService.validate_username(username);
+        userService.validate_password(password);
 
         const pwd = crypto.sha512(password);
         const user = await userService.findUser({
