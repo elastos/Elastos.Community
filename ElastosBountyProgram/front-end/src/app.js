@@ -11,7 +11,6 @@ import './boot';
 import './style/index.scss';
 
 const middleware = (render, props)=>{
-	console.log(123)
 	return render;
 };
 

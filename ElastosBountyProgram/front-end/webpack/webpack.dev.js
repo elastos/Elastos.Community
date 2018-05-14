@@ -86,7 +86,8 @@ module.exports = merge(common, {
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify('development'),
-                PLATFORM_ENV: JSON.stringify('web')
+                PLATFORM_ENV: JSON.stringify('web'),
+                SERVER_URL: JSON.stringify('http://127.0.0.1:3000')
             },
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),

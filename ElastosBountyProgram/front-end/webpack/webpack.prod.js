@@ -15,7 +15,7 @@ const resolve = util.resolve;
 const prodEnv = {
     NODE_ENV: JSON.stringify('production'),
     PLATFORM_ENV: JSON.stringify('web'),
-    SERVER_URL: JSON.stringify('https://server.com/api')
+    SERVER_URL: JSON.stringify('https://127.0.0.1:3000')
 };
 
 const stagingEnv = {
@@ -24,8 +24,10 @@ const stagingEnv = {
     SERVER_URL: JSON.stringify('https://staging-server.com/api'),
 };
 
-const cssFilename = 'static/css/[name].css?[hash:8]';
-const extractCSS = new ExtractTextPlugin(cssFilename);
+const cssFilename_lib = 'static/css/lib.css?[hash:8]';
+const cssFilename_app = 'static/css/app.css?[hash:8]';
+const extractCSS_LIB = new ExtractTextPlugin(cssFilename_lib);
+const extractCSS_APP = new ExtractTextPlugin(cssFilename_app);
 module.exports = merge(common, {
     cache: false,
     performance : {
@@ -37,7 +39,7 @@ module.exports = merge(common, {
         filename: 'static/js/[name].js?[hash:8]',
         publicPath: '',
     },
-    devtool: 'inline-source-map',
+    //devtool: 'inline-source-map',
     stats: {
         //need it
         entrypoints: false,
@@ -85,7 +87,7 @@ module.exports = merge(common, {
                     },
                     {
                         test: /\.css$/,
-                        use: extractCSS.extract({
+                        use: extractCSS_LIB.extract({
                             fallback: 'style-loader',
                             use: [{ loader: 'css-loader' }, { loader: 'postcss-loader' }],
                         }),
@@ -94,7 +96,7 @@ module.exports = merge(common, {
                         test: /\.(scss)$/,
                         include: resolve('src'),
                         exclude: /node_modules/,
-                        loader: ExtractTextPlugin.extract(
+                        loader: extractCSS_APP.extract(
                             Object.assign({
                                 fallback: require.resolve('style-loader'),
                                 use: [
@@ -107,27 +109,27 @@ module.exports = merge(common, {
                                             publicPath: resolve('dist'),
                                         },
                                     },
-                                    // {
-                                    //     loader: require.resolve('postcss-loader'),
-                                    //     options: {
-                                    //         ident: 'postcss',
-                                    //         plugins: () => [
-                                    //             require('postcss-flexbugs-fixes'),
-                                    //             autoprefixer({
-                                    //                 browsers: [
-                                    //                     '>1%',
-                                    //                     'last 4 versions',
-                                    //                     'Firefox ESR',
-                                    //                     'not ie < 9', // React doesn't support IE8 anyway
-                                    //                 ],
-                                    //                 flexbox: 'no-2009',
-                                    //             }),
-                                    //         ],
-                                    //     },
-                                    // },
+                                    {
+                                        loader: require.resolve('postcss-loader'),
+                                        // options: {
+                                        //     ident: 'postcss',
+                                        //     plugins: () => [
+                                        //         require('postcss-flexbugs-fixes'),
+                                        //         autoprefixer({
+                                        //             browsers: [
+                                        //                 '>1%',
+                                        //                 'last 4 versions',
+                                        //                 'Firefox ESR',
+                                        //                 'not ie < 9', // React doesn't support IE8 anyway
+                                        //             ],
+                                        //             flexbox: 'no-2009',
+                                        //         }),
+                                        //     ],
+                                        // },
+                                    },
                                     {
                                         loader: require.resolve('sass-loader'),
-                                    },
+                                    }
                                 ],
                                 publicPath: resolve('dist'),
                             })
@@ -168,10 +170,8 @@ module.exports = merge(common, {
                 minifyURLs: true,
             },
         }),
-        extractCSS,
-        // new ExtractTextPlugin({
-        //     filename: cssFilename,
-        // }),
+        extractCSS_LIB,
+        extractCSS_APP,
         new webpack.DefinePlugin({
             'process.env': process.env.NODE_ENV === 'production' ? prodEnv : stagingEnv,
         }),
