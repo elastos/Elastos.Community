@@ -1,32 +1,32 @@
 import BaseRedux from '@/model/BaseRedux';
 
 class UserRedux extends BaseRedux {
-    defineTypes(){
+    defineTypes() {
         return ['user'];
     }
-    defineDefaultState(){
+
+    defineDefaultState() {
         return {
-            is_login : false,
+            is_login: false,
 
-            login_form : {
-                username : '',
-                password : '',
-                remember_me : true,
-                loading : false
+            login_form: {
+                username: '',
+                password: '',
+                remember_me: true,
+                loading: false
             },
 
-            register_form : {
-                username : '',
-                email : '',
-                password : ''
+            register_form: {
+                username: '',
+                email: '',
+                password: ''
             },
 
-            profile : {
-                name : 'Jacky.Li'
+            profile: {
+                name: 'Jacky.Li'
             }
         };
     }
-
 }
 
-export default new UserRedux();
+export default new UserRedux()

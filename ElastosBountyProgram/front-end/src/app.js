@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
+import {Provider} from 'react-redux';
+import {ConnectedRouter} from 'react-router-redux';
 import store from '@/store';
 import config from '@/config';
 
@@ -14,16 +14,16 @@ const middleware = (render, props)=>{
 	return render;
 };
 
-const onEnter = ()=>{
+const onEnter = () => {
 
 };
 
 
-const App = ()=>{
-	return (
-		<Switch id="ebp-main">
+const App = () => {
+    return (
+        <Switch id="ebp-main">
             {
-                _.map(config.router, (item, i)=>{
+                _.map(config.router, (item, i) => {
                     const props = _.omit(item, ['page', 'path', 'type']);
                     const R = item.type || Route;
                     return (
@@ -31,24 +31,23 @@ const App = ()=>{
                     );
                 })
             }
-		</Switch>
-	);
+        </Switch>
+    );
 };
-
-
 
 
 const render = () => {
-	ReactDOM.render(
-		(
-			<Provider store={store}>
-				<ConnectedRouter middleware={middleware} history={store.history}>
-					<App />
-				</ConnectedRouter>
-			</Provider>
-		),
-		document.getElementById('ebp-root')
-	);
+    ReactDOM.render(
+        (
+            <Provider store={store}>
+                <ConnectedRouter middleware={middleware} history={store.history}>
+                    <App/>
+                </ConnectedRouter>
+            </Provider>
+        ),
+        document.getElementById('ebp-root')
+    );
 };
 
 render();
+
