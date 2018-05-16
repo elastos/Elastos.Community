@@ -60,6 +60,10 @@ export default abstract class {
         return await this.db.update(query, doc, this.buildUpdateOptions(opts));
     }
 
+    public getAggregate(){
+        return this.db.aggregate();
+    }
+
 
     private buildUpdateOptions(opts?: updateOptions): updateOptions{
         return _.extend({
