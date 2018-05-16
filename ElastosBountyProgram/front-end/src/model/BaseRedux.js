@@ -19,6 +19,8 @@ export default class {
         const pathName = userDefineTypes[0];
         const types = {};
         _.each(this.defineDefaultState(), (value, key)=>{
+
+            // this adds a [field]_update action
             const update_key = `${key}_update`;
             types[update_key] = `${pathName}/${key}_update`;
             this.reducers[update_key] = (state, param)=>{
@@ -34,6 +36,8 @@ export default class {
                 }
             };
 
+            // this adds a [field]_reset action which resets
+            // the field to the default state
             const reset_key = `${key}_reset`;
             types[reset_key] = `${pathName}/${key}_reset`;
             this.reducers[reset_key] = (state)=>{

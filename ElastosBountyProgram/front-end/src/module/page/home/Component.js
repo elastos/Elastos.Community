@@ -1,10 +1,12 @@
 import React from 'react';
 import StandardPage from '../StandardPage';
 
+import Task from '@/module/task/Container'
+
 export default class extends StandardPage {
     ord_renderContent(){
         return (
-            <h1>Home</h1>
+            <Task />
         );
     }
 

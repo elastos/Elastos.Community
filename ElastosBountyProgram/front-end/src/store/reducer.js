@@ -1,7 +1,8 @@
-import {combineReducers} from 'redux';
-import {routerReducer} from 'react-router-redux';
+import {combineReducers} from 'redux'
+import {routerReducer} from 'react-router-redux'
 
-import user from './redux/user';
+import task from './redux/task'
+import user from './redux/user'
 
 const default_state = {
     init: false
@@ -12,11 +13,12 @@ const appReducer = (state = default_state, action) => {
 
     }
 
-    return state;
-};
+    return state
+}
 
 export default combineReducers({
     app: appReducer,
     router: routerReducer,
+    tasks: task.getReducer(),
     user: user.getReducer()
-});
+})

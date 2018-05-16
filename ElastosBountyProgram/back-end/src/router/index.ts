@@ -7,11 +7,13 @@ import * as moment from 'moment';
 import test from './test';
 import user from './user';
 import team from './team';
+import task from './task';
 
 
 export const middleware = (req: Request, res: Response, next: NextFunction)=>{
     // check token
     const token = req.headers['api-token'];
+
     if(token){
         try{
             const json = JSON.parse(crypto.decrypt(token.toString()));
@@ -62,6 +64,7 @@ if(getEnv() === 'dev'){
 
 router.use('/user', user);
 router.use('/team', team);
+router.use('/task', task);
 
 router.use((req, res)=>{
     return res.sendStatus(403);
