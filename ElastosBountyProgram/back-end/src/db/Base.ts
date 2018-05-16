@@ -24,16 +24,13 @@ export default abstract class {
                 default: Date.now
             },
             updatedAt: {
-                type: Date
+                type: Date,
+                default: Date.now
             }
-        }, this.getSchema()));
-
-        schema.pre('save', function(next){
-            if(!this['updatedAt']){
-                this['updatedAt'] = Date.now();
-                next();
-            }
+        }, this.getSchema()), {
+            timestamps: true
         });
+
 
         return schema;
     }
@@ -47,11 +44,38 @@ export default abstract class {
     public async save(doc: object): Promise<Document>{
         return await this.db.create(doc);
     }
-    public async find(query): Promise<Document[]>{
-        return await this.db.find(query, this.reject_fields);
+    public async find(query, opts?): Promise<Document[]>{
+        const option = this.buildFindOptions(opts);
+        const reject_fields = option.reject ? this.reject_fields : {};
+        return await this.db.find(query, reject_fields);
     }
 
-    public async findOne(query): Promise<Document>{
-        return await this.db.findOne(query, this.reject_fields);
+    public async findOne(query, opts?): Promise<Document>{
+        const option = this.buildFindOptions(opts);
+        const reject_fields = option.reject ? this.reject_fields : {};
+        return await this.db.findOne(query, reject_fields);
     }
+
+    public async update(query, doc, opts?: updateOptions): Promise<Document>{
+        return await this.db.update(query, doc, this.buildUpdateOptions(opts));
+    }
+
+
+    private buildUpdateOptions(opts?: updateOptions): updateOptions{
+        return _.extend({
+            multi : false
+        }, opts||{});
+    }
+    private buildFindOptions(opts?: findOptions): findOptions{
+        return _.extend({
+            reject: true
+        }, opts||{});
+    }
+}
+
+interface updateOptions {
+    multi?: boolean;
+}
+interface findOptions {
+    reject?: boolean;
 }

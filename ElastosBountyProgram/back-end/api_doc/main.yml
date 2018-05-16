@@ -53,6 +53,8 @@ paths:
     $ref: "./path/user/login.yml"
   /user/current_user:
     $ref: './path/user/current_user.yml'
+  /user/change_password:
+    $ref: './path/user/change_password.yml'
 
   /team/create:
     $ref: './path/team/create.yml'

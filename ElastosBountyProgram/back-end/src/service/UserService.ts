@@ -38,6 +38,30 @@ export default class extends Base {
         });
     }
 
+    public async changePassword(param): Promise<boolean>{
+        const db_user = this.getDBModel('User');
+
+        const {oldPassword, password, userId} = param;
+
+        this.validate_password(oldPassword);
+        this.validate_password(password);
+
+        const user = await db_user.findOne({_id: userId}, {reject: false});
+        if(!user){
+            throw 'user is not exist';
+        }
+
+        if(user.password !== crypto.sha512(oldPassword)){
+            throw 'old password is incorrect';
+        }
+
+        return await db_user.update({_id : userId}, {
+            $set : {
+                password : crypto.sha512(password)
+            }
+        });
+    }
+
     public validate_username(username){
         if(!validate.valid_string(username, 5)){
             throw 'invalid username';
