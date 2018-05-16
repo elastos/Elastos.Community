@@ -8,7 +8,10 @@ export const TeamProfile = {
 };
 
 export const TeamMember = {
-    userId : Schema.Types.ObjectId,
+    userId : {
+        type : Schema.Types.ObjectId,
+        unique : true
+    },
     // name : String,
     level : String,
     role : String,

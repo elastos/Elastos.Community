@@ -36,6 +36,44 @@ export default class extends Base {
         return await db_team.save(doc);
     }
 
+    public async addMember(param): Promise<boolean>{
+        const {userId, teamId, level, role, title} = param;
+
+        const db_team = this.getDBModel('Team');
+        const db_user_team = this.getDBModel('User_Team');
+
+        const current = this.currentUser;
+        if(current._id === userId){
+            throw 'could not add yourself to team';
+        }
+
+        const tmp = await db_team.findOne({
+            _id: teamId,
+            'members.userId' : userId
+        });
+        if(tmp){
+            throw 'user is exist';
+        }
+
+        const x = await db_team.update({_id: teamId}, {
+            $addToSet : {
+                members : {
+                    userId,
+                    level,
+                    role: role || constant.TeamRole.MEMBER,
+                    title
+                }
+            }
+        });
+        if(x.n === 1){
+            await db_user_team.save({
+                userId, teamId
+            });
+        }
+
+        return true;
+    }
+
     public validate_name(name){
         if(!validate.valid_string(name, 4)){
             throw 'invalid team name';

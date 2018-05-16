@@ -1,6 +1,7 @@
 import Base from '../Base';
 
 import create from './create';
+import add_member from './add_member';
 
 
 export default Base.setRouter([
@@ -8,5 +9,10 @@ export default Base.setRouter([
         path : '/create',
         router : create,
         method : 'post'
+    },
+    {
+        path : '/add_member',
+        router : add_member,
+        method : 'get'
     }
 ]);
