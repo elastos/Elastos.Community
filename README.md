@@ -9,22 +9,9 @@ Everyone is welcome to raise issue for new ideas.
 [We Want You! Elastos Community Recruitment](https://medium.com/elastos/we-want-you-elastos-community-recruitment-da0e97694f63)
 
 ## What's New?
-Next Developers + Community Members Virtual Meetup: Tuesday May 15th
-
-First Elastos Developers Meetup - Announcing the Elastos Bounty Program: https://www.youtube.com/watch?v=TSkcZVCH7uw
+Elastos Virtual Meetup May 15th 2018 - Global Community Leaders: https://www.youtube.com/watch?v=lYXrwrVJcvs&list=PLoxCTwcUvvNvWe5pD1oZ0FRtV4HhU9Jt0
 
 Elastos Sidechain WP V0.3: http://elanews.net/wp-content/uploads/2018/05/Elastos_Sidechain_Whitepaper_v0.3.0.3_EN-.pdf?189db0&189db0
-
-Omaha Livestream: https://youtu.be/Xkk2WTZcR-s
-
-Weekly Update: https://medium.com/elastos/elastos-weekly-updates-04-may-2018-d617d86b2ef1
-
-Logo Contest and Re-Brand Update:
-https://medium.com/elastos/logo-contest-and-re-brand-update-b4c170ff318a
-
-Elastos Community Recruit: https://medium.com/elastos/we-want-you-elastos-community-recruitment-da0e97694f63
-
-Casual Q&A with Rong Chen: https://youtu.be/LEuJlzipsTw
 
 **Ask general questions to Kevin Zhang:**
 
@@ -122,3 +109,4 @@ We are looking for community leaders globally. If you are active Elastos communi
 - [What is Elastos?](https://www.youtube.com/watch?v=20mTY3G5y0c)
 - [Official Elastos Youtube Channel](https://www.youtube.com/channel/UCy5AjgpQIQq3bv8oy_L5WTQ)
 - [Elastos Video Series by KP Woods](https://www.youtube.com/channel/UCu1XxDJE84ZvgLJ-EssbveA)
+- [Elastos Virtual Meetups](https://www.youtube.com/playlist?list=PLoxCTwcUvvNvWe5pD1oZ0FRtV4HhU9Jt0)

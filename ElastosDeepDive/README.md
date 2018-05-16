@@ -8,3 +8,4 @@
 - [Elastos Runtime: A Window into a new world of DApps](https://medium.com/@kiran.pachhai/elastos-runtime-a-window-into-a-new-world-of-dapps-1905839ea452)
 - [How Digital Assets Work on Elastos Platform](https://medium.com/@kiran.pachhai/how-digital-assets-work-on-elastos-platform-98a2bb8f1dd8)
 - [Elastos Carrier: The Great Spam Filter](https://medium.com/@kiran.pachhai/elastos-carrier-the-great-spam-filter-6edc6f6d85d1)
+- [Elastos: ELA Tokenomics](https://medium.com/@kiran.pachhai/elastos-ela-tokenomics-d3fc44791661)
