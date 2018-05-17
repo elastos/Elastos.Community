@@ -10,8 +10,8 @@ export const Contact = {
 };
 
 export const Profile = {
-    name : String,
-    email : String,
+    firstName : String,
+    lastName: String,
     avatar : String,
     birth : Date,
     timezone: String,
@@ -53,10 +53,16 @@ export const User = {
         type : String,
         required : true
     },
+    email: String,
     profile : Profile,
     workAbout : WorkAbout,
     role : String,
-    ela : [ELA],
+    elaOwed : [ELA],
+
+    // admin or council approved max event budget, defaults to 0
+    // decreases upon usage
+    elaBudget: [ELA],
+
     votePower : [VotePower],
     votePowerAmount : {
         // TODO auto calculate with votePower

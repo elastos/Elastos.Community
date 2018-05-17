@@ -48,6 +48,7 @@
     "@types/jest": "^22.2.3",
     "@types/js-yaml": "3.10.1",
     "@types/mongoose": "^5.0.13",
+    "chai": "^4.1.2",
     "jest": "^22.4.3",
     "nodemon": "1.12.7",
     "ts-jest": "^22.4.6",

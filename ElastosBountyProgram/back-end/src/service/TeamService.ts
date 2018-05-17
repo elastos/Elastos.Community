@@ -26,7 +26,7 @@ export default class extends Base {
                 {
                     userId : this.currentUser._id,
                     level : '',
-                    role : constant.TeamRole.OWNER
+                    role : constant.TEAM_ROLE.OWNER
                 }
             ],
             owner : this.currentUser._id
@@ -60,7 +60,7 @@ export default class extends Base {
                 members : {
                     userId,
                     level,
-                    role: role || constant.TeamRole.MEMBER,
+                    role: role || constant.TEAM_ROLE.MEMBER,
                     title
                 }
             }

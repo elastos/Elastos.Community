@@ -4,10 +4,10 @@ import {Layout} from 'antd';
 import Header from '../layout/Header/Container';
 
 export default class extends BasePage {
-    ord_renderPage(){
+    ord_renderPage() {
         return (
             <Layout className="p_standardPage">
-                <Header />
+                <Header/>
                 <Layout.Content>
                     {this.ord_renderContent()}
                 </Layout.Content>
@@ -16,7 +16,7 @@ export default class extends BasePage {
         );
     }
 
-    ord_renderContent(){
+    ord_renderContent() {
         return null;
     }
 }

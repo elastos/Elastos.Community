@@ -67,3 +67,6 @@ paths:
 
   /campaign/create:
     $ref: './path/campaign/create.yml'
+
+  /task/{taskId}:
+    $ref: './path/task/get.yml'

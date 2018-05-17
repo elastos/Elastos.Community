@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import {constant} from '../constant';
 import {validate, crypto} from '../utility';
 
-const {Role} = constant;
+const {USER_ROLE} = constant;
 
 export default class extends Base {
     public async registerNewUser(param): Promise<Document>{
@@ -17,13 +17,14 @@ export default class extends Base {
         const doc = {
             username : param.username,
             password : crypto.sha512(param.password),
+            email : param.email,
             profile : {
-                name : param.name,
-                email : param.email,
-                country : param.country,
-                city : param.city
+                firstName : param.profile.region.firstName,
+                lastName : param.profile.region.lastName,
+                country : param.profile.region.country,
+                city : param.profile.region.city
             },
-            role : Role.MEMBER,
+            role : USER_ROLE.MEMBER,
             active: true
         };
 

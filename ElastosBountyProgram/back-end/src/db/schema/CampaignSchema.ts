@@ -1,6 +1,11 @@
 import {Schema} from 'mongoose';
 import {ELA, VotePower} from "./UserSchema";
 
+/*
+*****************************************************************
+* DEPRECATED - replacing this with TaskSchema
+*****************************************************************
+ */
 export const CampaignOutput = {
     description: String,
     images : [String]

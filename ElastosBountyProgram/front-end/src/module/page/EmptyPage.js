@@ -2,7 +2,7 @@ import React from 'react';
 import BasePage from '@/model/BasePage';
 
 export default class extends BasePage {
-    ord_renderPage(){
+    ord_renderPage() {
         return (
             <div className="p_emptyPage">
                 {this.ord_renderContent()}
@@ -10,7 +10,7 @@ export default class extends BasePage {
         );
     }
 
-    ord_renderContent(){
+    ord_renderContent() {
         return null;
     }
 }
