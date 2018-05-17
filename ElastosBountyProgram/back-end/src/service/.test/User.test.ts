@@ -1,7 +1,8 @@
 declare var describe, test, expect, require, process;
 
-import * as Session from 'express-session';
+import {expect} from 'chai'
 
+import {constant} from '../../constant';
 import db from '../../db';
 import '../../config';
 import UserService from '../UserService';
@@ -20,10 +21,11 @@ describe('Tests for User', () => {
 
         let result = await userService.registerNewUser({
             username: `clarence+dev.test.${timeMs}@elastosjs.com`,
-            password: 'elastos450',
+            password: 'elastos821',
+            email: 'clarence+dev.test@elastosjs.com',
             profile: {
-                name: 'Clarence',
-                email: 'clarence+dev.test@elastosjs.com',
+                firstName: 'Clarence',
+                lastName: 'Liu',
                 region: {
                     country: 'Canada',
                     city: 'Vancouver'
@@ -31,7 +33,7 @@ describe('Tests for User', () => {
             }
         });
 
-        expect(result.role).to.be.equal('member')
+        expect(result.role).to.be.equal(constant.USER_ROLE.MEMBER)
 
     })
 

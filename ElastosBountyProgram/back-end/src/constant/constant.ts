@@ -1,10 +1,39 @@
-export const Role = {
-    ADMIN : 'admin',
-    MEMBER : 'member'
+export const USER_ROLE = {
+    MEMBER : 'MEMBER',
+    LEADER : 'LEADER',
+    ADMIN : 'ADMIN',
+    COUNCIL: 'COUNCIL'
 };
 
-export const TeamRole = {
-    OWNER : 'owner',
-    ADMIN : 'admin',
-    MEMBER : 'member'
+export const TEAM_ROLE = {
+    MEMBER : 'MEMBER',
+    OWNER : 'OWNER'
 };
+
+export const TASK_TYPE = {
+    TASK: 'TASK',
+    SUB_TASK: 'SUB_TASK',
+    PROJECT: 'PROJECT',
+    EVENT: 'EVENT'
+}
+
+export const TASK_STATUS = {
+    PROPOSAL: 'PROPOSAL',
+    CREATED: 'CREATED',
+    APPROVED: 'APPROVED',
+    SUCCESS: 'SUCCESS',
+    CANCELED: 'CANCELED',
+    EXPIRED: 'EXPIRED'
+}
+
+export const TASK_CANDIDATE_TYPE = {
+    PERSON: 'PERSON',
+    TEAM: 'TEAM'
+}
+
+export const TASK_CANDIDATE_STATUS = {
+    NOT_REQUIRED: 'NOT_REQUIRED',
+    PENDING: 'PENDING',
+    APPROVED: 'APPROVED',
+    REJECTED: 'REJECTED'
+}
