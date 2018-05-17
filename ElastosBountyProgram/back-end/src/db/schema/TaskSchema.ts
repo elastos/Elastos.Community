@@ -2,7 +2,7 @@ import {Schema} from 'mongoose';
 import {ELA, VotePower} from "./UserSchema";
 
 // TODO: allow links?
-export const CampaignOutput = {
+export const TaskOutput = {
     description: String,
     images : [String]
 };
@@ -40,8 +40,17 @@ export const TaskCandidate = {
     // this is the admin that approved the candidate
     approvedBy: Schema.Types.ObjectId,
 
-    output : CampaignOutput
+    output : TaskOutput
 };
+
+export const TaskActivity = {
+    type : {
+        type : String,
+        required : true
+    },
+    userId : Schema.Types.ObjectId,
+    notes : String
+}
 
 /**
  * A task is a base class for any event,
@@ -101,5 +110,7 @@ export const Task = {
 
     candidates : [TaskCandidate],
 
-    reward : TaskReward
+    reward : TaskReward,
+
+    activityLog: []
 };

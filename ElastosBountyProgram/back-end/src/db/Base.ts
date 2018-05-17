@@ -31,7 +31,6 @@ export default abstract class {
             timestamps: true
         });
 
-
         return schema;
     }
 

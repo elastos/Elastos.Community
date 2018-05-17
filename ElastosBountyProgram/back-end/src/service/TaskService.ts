@@ -24,6 +24,16 @@ export default class extends Base {
     }
 
     /**
+     * We should only ever set deleted flag
+     *
+     * @param param
+     * @returns {Promise<boolean>}
+     */
+    public async remove(param): Promise<boolean> {
+
+    }
+
+    /**
      * Only an admin/council role may approve the task
      *
      * @param param
@@ -34,6 +44,15 @@ export default class extends Base {
     }
 
     public async addCandidate(param): Promise<boolean> {
+
+    }
+
+    /**
+     * You can either be the candidate or the task owner, or admin/council
+     * @param param
+     * @returns {Promise<boolean>}
+     */
+    public async removeCandidate(param): Promise<boolean> {
 
     }
 

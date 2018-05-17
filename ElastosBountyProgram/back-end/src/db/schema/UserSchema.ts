@@ -2,6 +2,7 @@ import {Schema} from 'mongoose';
 
 export const Region = {
     country: String,
+    state: String,
     city: String
 };
 export const Contact = {
@@ -28,9 +29,13 @@ export const WorkProject = {
 };
 
 export const WorkAbout = {
+    status: String, // employed, student, etc
+    employment: String, // company if employed / school if student
     skill : [String],
     project : [WorkProject],
-    resume : String
+    resume : String,
+
+    notes: String // private internal notes visible only to admin/council
 };
 
 export const ELA = {
@@ -53,11 +58,15 @@ export const User = {
         type : String,
         required : true
     },
+
+    // let's keep this on the root object
     email: String,
     profile : Profile,
     workAbout : WorkAbout,
     role : String,
     elaOwed : [ELA],
+
+    notes: String, // private internal notes visible only to admin/council
 
     // admin or council approved max event budget, defaults to 0
     // decreases upon usage

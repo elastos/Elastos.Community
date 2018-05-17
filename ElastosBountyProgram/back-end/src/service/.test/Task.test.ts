@@ -29,6 +29,24 @@ describe.skip('Tests for Tasks', () => {
         // TODO: make sure the elaBudget is deducted from and there is a transaction log
     })
 
+    test('Should allow adding candidate to a task', async () => {
+
+    })
+
+    test('Should allow removing candidate from task if you are the candidate', async () => {
+
+    })
+
+    test('Should allow removing candidate from task if you are the task owner (leader)', async () => {
+
+        // this needs to be logged
+    })
+
+    test('Should allow removing candidate from task if you are an admin/council', async () => {
+
+        // this needs to be logged
+    })
+
     test('Should try to approve event but fail because user is only a leader', async () => {
 
     })
@@ -39,5 +57,13 @@ describe.skip('Tests for Tasks', () => {
 
     test('Should veto task proposal as council', async () => {
         // expect user to be council
+    })
+
+    test('Should set task to SUCCESS as admin/council', async () => {
+        // expect user to be admin/council
+
+        // expect ELA transactions for task & all sub-tasks to be logged
+
+        // expect EVP to be logged for all allocations
     })
 });
