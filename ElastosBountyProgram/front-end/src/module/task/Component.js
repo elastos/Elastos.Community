@@ -8,9 +8,12 @@ export default class extends BaseComponent {
     }
 
     ord_render () {
-
-        this.props.helloWorld()
-
-        return <div>Hello World 2</div>
+        return <div>
+            {this.props.all_tasks.map((task) => {
+                return <div key={task.task_id}>
+                    ABC {task.task_id} - {task.task_name}
+                </div>
+            })}
+        </div>
     }
 }

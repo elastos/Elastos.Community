@@ -15,7 +15,7 @@ export default class extends BaseService {
 
         // this.dispatch(taskRedux.actions.fetchTaskSuccess(res.json()))
 
-        this.dispatch(taskRedux.actions.items_update(result.data))
+        this.dispatch(taskRedux.actions.all_tasks_update(result.data))
 
         return res
     }

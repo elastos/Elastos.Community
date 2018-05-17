@@ -1,22 +1,19 @@
 import {createContainer} from "@/util"
 import Component from './Component'
 import TaskService from '@/service/TaskService'
+import _ from 'lodash'
 
 export default createContainer(Component, (state)=>{
-    return {
-        abc: 'def'
+
+    let tasksState = state.tasks
+
+    if (!_.isArray(state.tasks.all_tasks)) {
+        tasksState.all_tasks = _.values(state.tasks.all_tasks)
     }
+    return tasksState
+
 }, ()=>{
     return {
-        async helloWorld() {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    console.log('hello world')
-                    resolve()
-                }, 5000)
-            })
-        },
-
         async fetchTasks() {
 
             const taskService = new TaskService()
