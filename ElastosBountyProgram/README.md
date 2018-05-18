@@ -144,7 +144,11 @@ After consuming, the voting power will be burned.
 In the beginning, Elastos foundation will be the only campaign manager. We shall issue ELA to each local community leader and each DAPP project leader. They could be the next campaign manager who could then break down the tasks and post to the EBP platform. The community member then takes the task and gets rewarded after completing their tasks. 
 As an example, this is how the system will work. ELA funds flow from the Elastos foundation as a source then gets transferred to each smaller level project leaders and local team leaders. They get these ELA funds and break down the tasks. ELA will then flow to the local community members. And so on.
 
+### EBP Templates
 
+These are for reference only:
+
+Task Proposal Template: https://docs.google.com/spreadsheets/d/1gu5V20B4qBoB38IviPE5lh0aVfQJuUa4CHvObFO33NE/edit#gid=0
 
 # [EBP platform technical design](./EBP_Tech_Design.md)
 
