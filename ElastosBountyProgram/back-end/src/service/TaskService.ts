@@ -19,6 +19,12 @@ export default class extends Base {
 
     }
 
+    /**
+     * Changing a task's reward/upfront after approval is only allowed by admins/council
+     *
+     * @param param
+     * @returns {Promise<boolean>}
+     */
     public async update(param): Promise<boolean> {
 
     }

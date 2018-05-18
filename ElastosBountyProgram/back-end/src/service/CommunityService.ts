@@ -7,7 +7,8 @@ import {validate, crypto} from '../utility';
 export default class extends Base {
 
     /**
-     * Add a transaction, this initializes to PENDING
+     * Create a Community, you can nest them under other communities,
+     * each community can have a leader
      *
      * @param param
      * @returns {Promise<"mongoose".Document>}
@@ -27,6 +28,14 @@ export default class extends Base {
     }
 
     public async index(param): Promise<[Document]> {
+
+    }
+
+    public async addMember(param): Promise<boolean> {
+
+    }
+
+    public async removeMember(param): Promise<boolean> {
 
     }
 }

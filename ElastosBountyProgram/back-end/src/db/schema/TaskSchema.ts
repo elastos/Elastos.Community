@@ -76,8 +76,11 @@ export const Task = {
 
     },
 
+    // for events this should be set, or if null assume online
+    communityId: Schema.Types.ObjectId,
+
     /*
-    * project, issue, task
+    * TASK, SUB-TASK, PROJECT, EVENT
     * */
     type : {
         type : String,

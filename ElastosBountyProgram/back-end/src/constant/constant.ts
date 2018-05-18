@@ -37,3 +37,17 @@ export const TASK_CANDIDATE_STATUS = {
     APPROVED: 'APPROVED',
     REJECTED: 'REJECTED'
 }
+
+export const COMMUNITY_TYPE = {
+    COUNTRY: 'COUNTRY',
+    STATE: 'STATE',
+    REGION: 'REGION',
+    SCHOOL: 'SCHOOL'
+}
+
+export const TRANS_STATUS = {
+    PENDING: 'PENDING',
+    CANCELED: 'CANCELED',
+    FAILED: 'FAILED',
+    SUCCESSFUL: 'SUCCESSFUL'
+}

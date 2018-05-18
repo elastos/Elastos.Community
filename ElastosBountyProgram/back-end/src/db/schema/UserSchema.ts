@@ -38,9 +38,10 @@ export const WorkAbout = {
     notes: String // private internal notes visible only to admin/council
 };
 
+// amount is ELA * 1000
 export const ELA = {
     address: String,
-    amount: Schema.Types.Decimal128
+    amount: Schema.Types.Number
 };
 export const VotePower = {
     amount: Number,
