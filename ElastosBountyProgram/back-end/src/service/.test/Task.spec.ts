@@ -80,9 +80,20 @@ describe('Tests for Tasks', () => {
         // this needs to be logged
     })
 
-    test('Should try to approve event but fail because user is only a leader', async () => {
+    test('only admin and council could approve a task', async () => {
+        const taskService = new TaskService(DB, {
+            user : user.admin
+        });
 
-    })
+        const task: any = await taskService.create(global.DB.TASK_1);
+
+        let rs: any = await taskService.approve({id : task._id});
+        expect(rs.ok).toBe(1);
+
+        const ts1 = new TaskService(DB, {user : user.member});
+        // member role could not approve
+        await expect(ts1.approve({id : task._id})).rejects.toThrow();
+    });
 
     test('Should approve event with upfront over budget and create an ELA owed transaction', async () => {
         // expect user to be admin/council

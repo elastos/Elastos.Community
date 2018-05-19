@@ -37,6 +37,7 @@ export default class extends Base {
                     amount : reward_votePower
                 }
             },
+            status : constant.TASK_STATUS.CREATED,
             createdBy : this.currentUser._id
         };
         if(communityId){
@@ -96,10 +97,28 @@ export default class extends Base {
      * @param param
      * @returns {Promise<boolean>}
      */
-    public async approve(param): Promise<boolean> {
-        return true;
+    public async approve(param): Promise<any> {
+        const {id} = param;
+
+        const role = this.currentUser.role;
+        if(!_.includes([constant.USER_ROLE.ADMIN, constant.USER_ROLE.COUNCIL], role)){
+            throw 'no permission to approve task';
+        }
+
+        const db_task = this.getDBModel('Task');
+        const rs =  await db_task.update({_id : id}, {
+            $set : {
+                status : constant.TASK_STATUS.APPROVED
+            }
+        });
+        console.log('approve task =>', rs);
+        return rs;
     }
 
+    /*
+    * candidate could be user or team
+    *
+    * */
     public async addCandidate(param): Promise<boolean> {
         return true;
     }
