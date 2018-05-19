@@ -3,8 +3,8 @@ declare var describe, test, expect, require, process;
 import {getEnv, crypto} from '../index';
 
 describe('test utility/index', ()=>{
-    test('NODE_ENV should be dev', ()=>{
-        expect(getEnv()).toBe('dev');
+    test('NODE_ENV should be jest', ()=>{
+        expect(getEnv()).toBe('jest');
     });
 
     test('a', ()=>{

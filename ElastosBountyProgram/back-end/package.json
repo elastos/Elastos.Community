@@ -9,7 +9,7 @@
     "tsc": "tsc || echo TSC compilation has errors.",
     "tslint": "tslint -c tslint.json -p tsconfig.json -t codeFrame",
     "start:production": "npm run build && NODE_ENV=production node dist/index.js",
-    "unit": "NODE_ENV=dev jest --config test/unit/jest.conf.js --coverage",
+    "unit": "NODE_ENV=jest jest --config test/unit/jest.conf.js --coverage",
     "test": "npm run unit"
   },
   "dependencies": {

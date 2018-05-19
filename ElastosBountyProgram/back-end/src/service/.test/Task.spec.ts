@@ -1,17 +1,46 @@
-declare var describe, test, expect, assert, require, process;
-
-import {assert} from 'chai'
-import * as Session from 'express-session';
+declare var global, describe, test, expect, assert, require, process, beforeAll, afterAll;
 
 import db from '../../db';
 import '../../config';
 import UserService from '../UserService';
+import TaskService from '../TaskService';
 
-describe.skip('Tests for Tasks', () => {
+const user: any = {};
+let DB;
+beforeAll(async ()=>{
+    DB = await db.create();
+    await DB.getModel('User').remove({
+        role : 'MEMBER'
+    });
+    await DB.getModel('Task').remove({});
+
+    // create a test user as member role
+    const userService = new UserService(DB, {
+        user: null
+    });
+    user.member = await userService.registerNewUser(global.DB.MEMBER_USER);
+    user.admin = await userService.getDBModel('User').findOne(global.DB.ADMIN_USER);
+});
+
+describe('Tests for Tasks', () => {
+
+    test('should create task success as admin user', async ()=>{
+        const taskService = new TaskService(DB, {
+            user : user.admin
+        });
+
+        const task: any = await taskService.create(global.DB.TASK_1);
+        expect(task.createdBy).toBe(user.admin._id);
+    });
 
     test('Should create task and fail because user is member role only', async () => {
+        const taskService = new TaskService(DB, {
+            user : user.member
+        });
 
-    })
+        // create task will fail
+        await expect(taskService.create(global.DB.TASK_1)).rejects.toThrowError(/member/);
+    });
 
     test('Should create event and fail because reward is over user budget limit', async () => {
 

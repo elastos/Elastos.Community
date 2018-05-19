@@ -63,6 +63,10 @@ export default abstract class {
         return this.db.aggregate();
     }
 
+    public async remove(query){
+        return await this.db.remove(query);
+    }
+
 
     private buildUpdateOptions(opts?: updateOptions): updateOptions{
         return _.extend({

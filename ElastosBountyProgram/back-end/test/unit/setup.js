@@ -1,0 +1,30 @@
+global.DB = {
+    MEMBER_USER : {
+        username: `test_member`,
+        password: 'ebp1234',
+        email: 'test_member@ebp.com',
+        profile: {
+            firstName: 'Hello',
+            lastName: 'World',
+            region: {
+                country: 'Canada',
+                city: 'Vancouver'
+            }
+        }
+    },
+    ADMIN_USER : {
+        username: 'admin'
+    },
+
+    TASK_1 : {
+        "name": "test_task",
+        "description": "This is a test campaign, user must put their requirements and rewards here.",
+        "communityId": "",
+        "type": "TASK",
+        "startTime": "",
+        "endTime": "",
+        "candidateLimit": 1,
+        "reward_ela": 1000,
+        "reward_votePower": 10
+    }
+};

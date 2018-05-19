@@ -34,6 +34,8 @@ export default class {
         this.initDB(db);
         await this.initTest();
 
+        await this.prepareRecord();
+
         return db;
     }
 
@@ -85,5 +87,29 @@ export default class {
             throw new Error('invalid model name : '+name);
         }
         return rs;
+    }
+
+    private async prepareRecord(){
+        // create admin user
+        const doc = {
+            username: `admin`,
+            password: 'admin_password',
+            email: 'admin@ebp.com',
+            role: 'ADMIN',
+            profile: {
+                firstName: 'Admin',
+                lastName: 'Ebp',
+                region: {
+                    country: 'China',
+                    city: ''
+                }
+            }
+        };
+        try{
+            const rs = await this.db.User.save(doc);
+            console.log('create admin user =>', rs);
+        }catch(e){
+            console.log('admin user is already exist');
+        }
     }
 }

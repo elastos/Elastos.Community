@@ -11,7 +11,8 @@ export default class {
 
     protected init(){}
 
-    protected getDBModel(name: string){
+    public getDBModel(name: string){
         return this.db.getModel(name);
     }
+
 }
