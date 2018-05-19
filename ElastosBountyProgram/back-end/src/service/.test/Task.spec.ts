@@ -23,13 +23,28 @@ beforeAll(async ()=>{
 });
 
 describe('Tests for Tasks', () => {
+    let ts_admin: TaskService, task:any;
 
-    test('should create task success as admin user', async ()=>{
-        const taskService = new TaskService(DB, {
+    test('prepare test', async ()=>{
+        // add a task
+        ts_admin = new TaskService(DB, {
             user : user.admin
         });
+        task = await ts_admin.create(global.DB.TASK_1);
 
-        const task: any = await taskService.create(global.DB.TASK_1);
+        // add 1 more member
+        // const userService = new UserService(DB, {
+        //     user: user.admin
+        // });
+        // const m1: any = await userService.registerNewUser({
+        //     ...global.DB.MEMBER_USER,
+        //     username: 'aaa'
+        // });
+    });
+
+
+
+    test('should create task success as admin user', async ()=>{
         expect(task.createdBy).toBe(user.admin._id);
     });
 
@@ -66,11 +81,6 @@ describe('Tests for Tasks', () => {
         const taskService = new TaskService(DB, {
             user : user.member
         });
-        const db_task = taskService.getDBModel('Task');
-        const task: any = await db_task.findOne({
-            name : global.DB.TASK_1.name,
-            description: global.DB.TASK_1.description
-        });
 
         const rs: any = await taskService.addCandidate({
             taskId: task._id,
@@ -81,18 +91,47 @@ describe('Tests for Tasks', () => {
     });
 
     test('Should allow removing candidate from task if you are the candidate', async () => {
+        const task = await ts_admin.create({
+            ...global.DB.TASK_1,
+            name : 'task_111'
+        });
 
+        const ts1 = new TaskService(DB, {user: user.member});
+        await ts1.addCandidate({
+            taskId: task._id,
+            userId: user.member._id
+        });
+
+        const rs: any = await ts1.removeCandidate({
+            taskId: task._id,
+            userId: user.member._id
+        });
+        expect(rs.ok).toBe(1);
     })
 
     test('Should allow removing candidate from task if you are the task owner (leader)', async () => {
-
-        // this needs to be logged
+        // task owner must be admin for now.
+        // same to next test
     })
 
     test('Should allow removing candidate from task if you are an admin/council', async () => {
+        const task = await ts_admin.create({
+            ...global.DB.TASK_1,
+            name : 'task_222'
+        });
 
-        // this needs to be logged
-    })
+        const ts1 = new TaskService(DB, {user: user.member});
+        await ts1.addCandidate({
+            taskId: task._id,
+            userId: user.member._id
+        });
+
+        const rs: any = await ts_admin.removeCandidate({
+            taskId: task._id,
+            userId: user.member._id
+        });
+        expect(rs.ok).toBe(1);
+    });
 
     test('only admin and council could approve a task', async () => {
         const taskService = new TaskService(DB, {

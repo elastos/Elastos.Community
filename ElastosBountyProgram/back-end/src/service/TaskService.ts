@@ -175,13 +175,50 @@ export default class extends Base {
      * @returns {Promise<boolean>}
      */
     public async removeCandidate(param): Promise<boolean> {
-        return true;
+        const {taskId, userId, teamId} = param;
+
+        const doc: any = {
+            taskId
+        };
+        if(teamId){
+            doc.teamId = teamId;
+            doc.type = constant.TASK_CANDIDATE_TYPE.TEAM;
+        }
+        else if(userId){
+            doc.userId = userId;
+            doc.type = constant.TASK_CANDIDATE_TYPE.USER;
+        }
+        else{
+            throw 'no user id and team id';
+        }
+
+        const db_task = this.getDBModel('Task');
+        const task = await db_task.findOne({_id: taskId});
+        if(!task){
+            throw 'invalid task id';
+        }
+
+        const role = this.currentUser.role;
+        const cid = this.currentUser._id;
+
+        // TODO add check for team
+        if(!(
+            _.includes([constant.USER_ROLE.ADMIN, constant.USER_ROLE.COUNCIL], role) ||
+            cid === task.createdBy ||
+            (userId && userId === cid)
+        )){
+            throw 'no permission to remove candidate';
+        }
+
+        const db_tc = this.getDBModel('Task_Candidate');
+        console.log('remove task candidate =>', doc);
+        return await db_tc.remove(doc);
     }
 
     /**
-     * @param param {Object}
-     * @param param.id {String}
-     * @returns {Promise<boolean>}
+     * approve a candidate by admin or council
+     *
+     *
      */
     public async approveCandidate(param): Promise<boolean> {
         return true;
