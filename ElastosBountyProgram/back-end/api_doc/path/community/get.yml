@@ -1,0 +1,21 @@
+get:
+  communities:
+  - community
+  description: get community api
+  operationId: community/get
+  parameters:
+    - name: communityId
+      in: path
+      description: communityId
+      required: false
+      schema:
+        type: string
+        format: uuid
+  security:
+    - api-token: []
+
+  responses:
+    200:
+      $ref: '../../schema/success_response.yml'
+    401:
+      $ref: '../../schema/unauthorized_response.yml'
