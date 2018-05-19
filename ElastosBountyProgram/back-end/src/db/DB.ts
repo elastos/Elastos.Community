@@ -3,6 +3,8 @@ import Test from './Test';
 import User from './User';
 import Team from './Team';
 import User_Team from './User_Team';
+import Community from './Community';
+import User_Community from './User_Community';
 
 export default class {
     protected db: any;
@@ -75,6 +77,8 @@ export default class {
         this.db.User = new User(db);
         this.db.Team = new Team(db);
         this.db.User_Team = new User_Team(db);
+        this.db.Community = new User_Team(db);
+        this.db.User_Community = new User_Team(db);
     }
 
     public getModel(name: string){
