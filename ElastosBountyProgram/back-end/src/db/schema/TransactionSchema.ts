@@ -20,6 +20,10 @@ export const Transaction = {
         default : 'MANUAL'
     },
 
+    type: {
+        type : String
+    },
+
     /**
      * ELA * 1000 - e.g. 0.01 ELA is written as 100
      */

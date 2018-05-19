@@ -63,6 +63,7 @@ export const User = {
     // let's keep this on the root object
     email: String,
     profile : Profile,
+    defaultLanguage: String,
     workAbout : WorkAbout,
     role : String,
     elaOwed : [ELA],
