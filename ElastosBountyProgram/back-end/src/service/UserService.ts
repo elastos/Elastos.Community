@@ -63,6 +63,20 @@ export default class extends Base {
         });
     }
 
+    /*
+    * return ela budget sum amount.
+    *
+    * param : user's elaBudget
+    * */
+    public getSumElaBudget(ela){
+        let total = 0;
+        _.each(ela, ()=>{
+            total += ela.amount;
+        });
+
+        return total;
+    }
+
     public validate_username(username){
         if(!validate.valid_string(username, 5)){
             throw 'invalid username';

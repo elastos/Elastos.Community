@@ -3,6 +3,7 @@ import {Document} from 'mongoose';
 import * as _ from 'lodash';
 import {constant} from '../constant';
 import {validate, crypto} from '../utility';
+import UserService from "./UserService";
 
 export default class extends Base {
 
@@ -42,9 +43,17 @@ export default class extends Base {
             doc['communityId'] = communityId;
         }
 
+        // if member role, could not create
         const role = this.currentUser.role;
         if(role === constant.USER_ROLE.MEMBER){
             throw 'member could not create task';
+        }
+
+        if(type === constant.TASK_TYPE.EVENT){
+            const userService = this.getService(UserService);
+            if(reward_ela > userService.getSumElaBudget(this.currentUser.elaBudget)){
+                throw 'ela reward could not greater than user budget';
+            }
         }
 
         const db_task = this.getDBModel('Task');

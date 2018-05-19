@@ -26,5 +26,17 @@ global.DB = {
         "candidateLimit": 1,
         "reward_ela": 1000,
         "reward_votePower": 10
+    },
+
+    TASK_2 : {
+        "name": "test_event",
+        "description": "This is a test event",
+        "communityId": "",
+        "type": "EVENT",
+        "startTime": "",
+        "endTime": "",
+        "candidateLimit": 0,
+        "reward_ela": 1000,
+        "reward_votePower": 10
     }
 };

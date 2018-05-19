@@ -43,8 +43,12 @@ describe('Tests for Tasks', () => {
     });
 
     test('Should create event and fail because reward is over user budget limit', async () => {
+        const taskService = new TaskService(DB, {
+            user : user.admin
+        });
 
-    })
+        await expect(taskService.create(global.DB.TASK_2)).rejects.toThrowError(/budget/);
+    });
 
     test('Should create event with status SUCCESS because reward + upfront is under budget limit', async () => {
 
