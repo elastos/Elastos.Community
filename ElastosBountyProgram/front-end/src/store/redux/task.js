@@ -12,6 +12,7 @@ class TaskRedux extends BaseRedux {
     defineDefaultState(){
         return {
             active_task: null,
+
             all_tasks: []
         };
     }

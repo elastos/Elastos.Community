@@ -15,6 +15,8 @@ export default class extends BaseService {
 
         // this.dispatch(taskRedux.actions.fetchTaskSuccess(res.json()))
 
+        debugger
+
         // TODO: why does this set it as a struct?
         this.dispatch(taskRedux.actions.all_tasks_update(result.data))
 
