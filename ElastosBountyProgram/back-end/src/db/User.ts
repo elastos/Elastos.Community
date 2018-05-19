@@ -6,7 +6,7 @@ export default class extends Base {
         return User;
     }
     protected getName(){
-        return 'user'
+        return 'users'
     }
     protected rejectFields(){
         return {

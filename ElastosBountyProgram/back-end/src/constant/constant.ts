@@ -32,12 +32,12 @@ export const TASK_STATUS = {
 }
 
 export const TASK_CANDIDATE_TYPE = {
-    PERSON: 'PERSON',
+    USER: 'USER',
     TEAM: 'TEAM'
 }
 
 export const TASK_CANDIDATE_STATUS = {
-    NOT_REQUIRED: 'NOT_REQUIRED',
+    // NOT_REQUIRED: 'NOT_REQUIRED',
     PENDING: 'PENDING',
     APPROVED: 'APPROVED',
     REJECTED: 'REJECTED'

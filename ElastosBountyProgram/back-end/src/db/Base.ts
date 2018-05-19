@@ -59,6 +59,10 @@ export default abstract class {
         return await this.db.update(query, doc, this.buildUpdateOptions(opts));
     }
 
+    public async count(query): Promise<number>{
+        return await this.db.count(query);
+    }
+
     public getAggregate(){
         return this.db.aggregate();
     }

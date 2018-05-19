@@ -62,9 +62,23 @@ describe('Tests for Tasks', () => {
         // TODO: make sure the elaBudget is deducted from and there is a transaction log
     })
 
-    test('Should allow adding candidate to a task', async () => {
+    test('member should apply to be a task candidate', async () => {
+        const taskService = new TaskService(DB, {
+            user : user.member
+        });
+        const db_task = taskService.getDBModel('Task');
+        const task: any = await db_task.findOne({
+            name : global.DB.TASK_1.name,
+            description: global.DB.TASK_1.description
+        });
 
-    })
+        const rs: any = await taskService.addCandidate({
+            taskId: task._id,
+            userId: user.member._id
+        });
+
+        expect(rs.status).toBe('PENDING');
+    });
 
     test('Should allow removing candidate from task if you are the candidate', async () => {
 

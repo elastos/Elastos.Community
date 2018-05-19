@@ -120,7 +120,53 @@ export default class extends Base {
     *
     * */
     public async addCandidate(param): Promise<boolean> {
-        return true;
+        const {teamId, userId, taskId} = param;
+        const doc: any = {
+            taskId
+        };
+        if(teamId){
+            doc.teamId = teamId;
+            const db_team = this.getDBModel('Team');
+            const team = await db_team.findOne({_id: teamId});
+            if(!team){
+                throw 'invalid team id';
+            }
+            doc.type = constant.TASK_CANDIDATE_TYPE.TEAM;
+        }
+        else if(userId){
+            doc.userId = userId;
+            const db_user = this.getDBModel('User');
+            const user = await db_user.findOne({_id: userId});
+            if(!user){
+                throw 'invalid user id';
+            }
+            doc.type = constant.TASK_CANDIDATE_TYPE.USER;
+        }
+        else{
+            throw 'no user id and team id';
+        }
+
+        const db_tc = this.getDBModel('Task_Candidate');
+        if(await db_tc.findOne(doc)){
+            throw 'candidate is exist';
+        }
+
+        doc.status = constant.TASK_CANDIDATE_STATUS.PENDING;
+
+        const db_task = this.getDBModel('Task');
+        const task = await db_task.findOne({_id: taskId});
+        if(!task){
+            throw 'invalid task id';
+        }
+
+        // check limit
+        const total = await db_tc.count({taskId});
+        if(total >= task.candidateLimit){
+            throw 'candidate amount is up to limit';
+        }
+
+        console.log('add task candidate =>', doc);
+        return await db_tc.save(doc);
     }
 
     /**

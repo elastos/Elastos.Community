@@ -112,9 +112,15 @@ export const Task = {
         required : true
     },
 
-    candidates : [TaskCandidate],
+    // candidates : [TaskCandidate],
 
     reward : TaskReward,
 
     createdBy : Schema.Types.ObjectId
+};
+
+
+export const Task_Candidate = {
+    ...TaskCandidate,
+    taskId : Schema.Types.ObjectId
 };
