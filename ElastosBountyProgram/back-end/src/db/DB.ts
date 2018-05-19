@@ -79,8 +79,8 @@ export default class {
         this.db.Team = new Team(db);
         this.db.User_Team = new User_Team(db);
         this.db.Task = new Task(db);
-        this.db.Community = new User_Team(db);
-        this.db.User_Community = new User_Team(db);
+        this.db.Community = new Community(db);
+        this.db.User_Community = new User_Community(db);
     }
 
     public getModel(name: string){

@@ -32,3 +32,23 @@
     }
   }
 }
+
+.c_Header_Admin{
+  background: #F7F8FC;
+  height: 90px;
+  padding: 0;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+
+  .ant-menu{
+    background: none;
+    padding-top: 24px;
+    border-bottom: none;
+    margin: 0 auto;
+  }
+
+  .d_li{
+    float: right;
+    font-size: 1.2rem;
+  }
+}

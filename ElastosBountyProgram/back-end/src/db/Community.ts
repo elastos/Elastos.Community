@@ -1,5 +1,5 @@
 import Base from './Base';
-import {Community} from './schema/Community';
+import {Community} from './schema/CommunitySchema';
 
 export default class extends Base {
     protected getSchema(){
