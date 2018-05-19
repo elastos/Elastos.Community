@@ -5,6 +5,11 @@ export const USER_ROLE = {
     COUNCIL: 'COUNCIL'
 };
 
+export const USER_LANGUAGE = {
+    en: 'en',
+    zh: 'zh'
+}
+
 export const TEAM_ROLE = {
     MEMBER : 'MEMBER',
     OWNER : 'OWNER'
