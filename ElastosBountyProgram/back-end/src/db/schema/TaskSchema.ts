@@ -100,19 +100,39 @@ export const Task = {
     },
 
     /*
-    * electing, success, failure, cancel
+    * constants.TASK_STATUS
     * */
     status : {
         type : String
     },
 
+    /**
+     * - candidateLimit should be allowed to = 0
+     *
+     * 1.   IF candidateLimit = 0 THEN Leader creates task proposal for themselves to do -->
+     *      they get approved --> (optional create sub-task and assign to members - v2) -->
+     *      get ELA upfront (if any) --> do the task --> then they get reward based on allocation to sub-tasks, leader gets remainder
+     *
+     *      (this will be a common scenario if a leader is organizing an event)*
+     *
+     * 2.   IF candidateLimit >= 1 THEN Leader creates task for others to do -->
+     *      it gets approved --> other member adds self as candidate (1 or more) -->
+     *      leader selects (1 or more) candidate --> each candidate gets ELA upfront (if any) -->
+     *      all candidate does the task --> each candidate that is successful gets reward
+     *
+     *      (this will be a common scenario if a leader is creating bounties for others to do)*
+     */
     candidateLimit : {
         type : Number,
         min : 0,
         required : true
     },
 
-    // candidates : [TaskCandidate],
+    candidateSltLimit : {
+        type : Number,
+        min : 0,
+        required : true
+    },
 
     reward : TaskReward,
 
