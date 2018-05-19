@@ -8,6 +8,7 @@ import test from './test';
 import user from './user';
 import team from './team';
 import task from './task';
+import community from './community';
 
 
 export const middleware = (req: Request, res: Response, next: NextFunction)=>{
@@ -65,6 +66,7 @@ if(getEnv() === 'dev'){
 router.use('/user', user);
 router.use('/team', team);
 router.use('/task', task);
+router.use('/community', community);
 
 router.use((req, res)=>{
     return res.sendStatus(403);

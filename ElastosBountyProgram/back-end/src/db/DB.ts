@@ -4,6 +4,8 @@ import User from './User';
 import Team from './Team';
 import User_Team from './User_Team';
 import Task from './Task';
+import Community from './Community';
+import User_Community from './User_Community';
 
 export default class {
     protected db: any;
@@ -79,6 +81,8 @@ export default class {
         this.db.Team = new Team(db);
         this.db.User_Team = new User_Team(db);
         this.db.Task = new Task(db);
+        this.db.Community = new Community(db);
+        this.db.User_Community = new User_Community(db);
     }
 
     public getModel(name: string){

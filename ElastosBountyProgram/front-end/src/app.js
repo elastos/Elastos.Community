@@ -18,7 +18,6 @@ const onEnter = () => {
 
 };
 
-
 const App = () => {
     return (
         <Switch id="ebp-main">
@@ -34,7 +33,6 @@ const App = () => {
         </Switch>
     );
 };
-
 
 const render = () => {
     ReactDOM.render(

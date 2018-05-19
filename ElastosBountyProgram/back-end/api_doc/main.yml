@@ -28,6 +28,8 @@ tags:
   description: team api
 - name: task
   description: task api
+- name: community
+  description: community api
 
 components:
   schemas:
@@ -70,3 +72,6 @@ paths:
     $ref: './path/task/create.yml'
   /task/{taskId}:
     $ref: './path/task/get.yml'
+
+  /community/{communityId}:
+    $ref: './path/community/get.yml'
