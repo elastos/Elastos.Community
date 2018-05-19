@@ -51,12 +51,6 @@ export const Transaction = {
         min : Date.now
     },
 
-    /**
-     *
-     */
-    status : {
-        type : String
-    },
 
     createdBy: Schema.Types.ObjectId
 };
