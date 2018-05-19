@@ -1,5 +1,6 @@
 import {Schema} from 'mongoose';
 import {ELA, VotePower} from "./UserSchema";
+import {constant} from '../../constant';
 
 // TODO: allow links?
 export const TaskOutput = {
@@ -84,7 +85,7 @@ export const Task = {
     * */
     type : {
         type : String,
-        default : 'task'
+        default : constant.TASK_TYPE.TASK
     },
 
     startTime : {
@@ -107,7 +108,7 @@ export const Task = {
 
     candidateLimit : {
         type : Number,
-        min : 1,
+        min : 0,
         required : true
     },
 
@@ -115,5 +116,5 @@ export const Task = {
 
     reward : TaskReward,
 
-    activityLog: []
+    createdBy : Schema.Types.ObjectId
 };

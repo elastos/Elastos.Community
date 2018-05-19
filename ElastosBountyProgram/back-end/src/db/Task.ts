@@ -8,9 +8,4 @@ export default class extends Base {
     protected getName(){
         return 'task'
     }
-    protected rejectFields(){
-        return {
-
-        };
-    }
 }

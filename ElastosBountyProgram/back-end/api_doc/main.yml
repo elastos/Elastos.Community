@@ -26,8 +26,8 @@ tags:
   description: user api
 - name: team
   description: team api
-- name: campaign
-  description: campaign api
+- name: task
+  description: task api
 
 components:
   schemas:
@@ -65,8 +65,8 @@ paths:
   /team/list_member:
     $ref: './path/team/list_member.yml'
 
-  /campaign/create:
-    $ref: './path/campaign/create.yml'
 
+  /task/create:
+    $ref: './path/task/create.yml'
   /task/{taskId}:
     $ref: './path/task/get.yml'
