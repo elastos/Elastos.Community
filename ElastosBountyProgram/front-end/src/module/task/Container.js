@@ -26,7 +26,7 @@ export default createContainer(Component, (state)=>{
                 return rs
             } catch (err) {
                 // TODO: why doesn't thrown error message come through in err?
-                message.error('Not Authenticated')
+                // do nothing
             }
         }
     }

@@ -5,11 +5,6 @@ export default class extends BaseService {
 
     async index() {
 
-        // just playing around here with authentication
-        if (!this.store.getState().user.is_login) {
-            return []
-        }
-
         const taskRedux = this.store.getRedux('task')
 
         // this.dispatch(taskRedux.actions.fetchTaskBegin())
