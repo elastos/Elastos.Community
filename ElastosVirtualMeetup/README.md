@@ -7,13 +7,9 @@ We will regularly schedule virtual meetups where the community members can direc
 - Introduction to Elastos Platform - How different pieces fit together
 - EBP Demo by Clarence
 - Meetup Invite: https://zoom.us/j/3087789172
-
-iPhone one-tap: US: +16699006833,,3087789172# or +19294362866,,3087789172#
-
-Telephone: US: +1 669 900 6833 or +1 929 436 2866 
-    
+    iPhone one-tap: US: +16699006833,,3087789172# or +19294362866,,3087789172#
+    Telephone: US: +1 669 900 6833 or +1 929 436 2866 
     Meeting ID: 308 778 9172
-    
     International numbers available: https://zoom.us/u/TFhNa
 
 ## Past Meetups
