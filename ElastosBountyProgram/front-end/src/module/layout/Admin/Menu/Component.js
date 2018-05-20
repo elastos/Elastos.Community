@@ -1,7 +1,6 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import { Layout, Menu, Icon, Badge, Avatar, Modal, Row, Col } from 'antd'
-import _ from 'lodash'
+import { Badge, Icon, Layout, Menu } from 'antd'
 import I18N from '@/I18N'
 
 import './style.scss'
@@ -14,38 +13,37 @@ export default class extends BaseComponent {
     ord_render () {
         return (
             <Menu
+                className="admin-menu"
                 onClick={this.handleClick.bind(this)}
                 selectedKeys={['mail']}
                 mode="horizontal"
             >
-                <SubMenu title={<span><Icon type="caret-down" />OVERVIEW</span>}>
-                    <Menu.Item key="setting:1">Option 1</Menu.Item>
-                    <Menu.Item key="setting:2">Option 2</Menu.Item>
+                <SubMenu title={<span><Icon type="caret-down"/>{I18N.get('1100')}</span>}>
+                    <Menu.Item key="setting:1">TODO Option 1</Menu.Item>
+                    <Menu.Item key="setting:2">TODO Option 2</Menu.Item>
                 </SubMenu>
                 <Menu.Item key="community">
-                    COMMUNITY
+                    {I18N.get('1101')}
                 </Menu.Item>
                 <Menu.Item key="directory">
-                    DIRECTORY
+                    {I18N.get('1102')}
                 </Menu.Item>
-
                 <Menu.Item className="menu-right" key="find">
-                    <Badge count={5} offset={[-0, 5]}>
-                        MAIL
+                    <Badge count={5} offset={[-5, 5]}>
+                        {I18N.get('1105')}
                     </Badge>
                 </Menu.Item>
                 <Menu.Item className="menu-right" key="post">
-                    TEAM
+                    {I18N.get('1104')}
                 </Menu.Item>
                 <Menu.Item className="menu-right" key="work">
-                    ACCOUNT
+                    {I18N.get('1103')}
                 </Menu.Item>
             </Menu>
         )
     }
 
     handleClick (e) {
-        console.log('click ', e)
         this.setState({
             current: e.key
         })

@@ -1,19 +1,18 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import { Layout, Menu, Icon, Badge, Avatar, Modal, Row, Col } from 'antd'
-import _ from 'lodash'
+import { Col, Layout, Menu, Row } from 'antd'
 import I18N from '@/I18N'
 
 import './style.scss'
 
-const {Header} = Layout
+const { Header } = Layout
 const SubMenu = Menu.SubMenu
 const MenuItemGroup = Menu.ItemGroup
 
 export default class extends BaseComponent {
 
     buildDetailComponent () {
-        const {profile} = this.props
+        const { profile } = this.props
 
         const logo_el = (
             <h1 className="admin-logo">EBP</h1>
@@ -21,23 +20,23 @@ export default class extends BaseComponent {
 
         const menuItems = [
             {
-                text: 'Admin',
+                text: '1000',
                 link: 'admin'
             },
             {
-                text: 'How to earn ELA',
+                text: '1001',
                 link: 'how-to-earn-ela'
             },
             {
-                text: 'About',
+                text: '1002',
                 link: 'about'
             },
             {
-                text: 'FAQ',
+                text: '1003',
                 link: 'faq'
             },
             {
-                text: 'Contact',
+                text: '1004',
                 link: 'contact'
             }
         ]
@@ -45,9 +44,9 @@ export default class extends BaseComponent {
         const menuItemsEl = menuItems.map((menu, index) => {
             return (
                 <li onClick={this.clickItem.bind(this, menu.link)} key={index}>
-                    <a>{menu.text}</a>
+                    <a>{I18N.get(menu.text)}</a>
                 </li>
-            );
+            )
         })
 
         const menu_el = (
@@ -62,7 +61,7 @@ export default class extends BaseComponent {
 
     ord_render () {
 
-        const {menu_el, logo_el} = this.buildDetailComponent()
+        const { menu_el, logo_el } = this.buildDetailComponent()
         const isLogin = this.props.isLogin
 
         return (
