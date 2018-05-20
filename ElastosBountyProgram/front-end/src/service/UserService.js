@@ -31,13 +31,6 @@ export default class extends BaseService {
 
         sessionStorage.setItem('api-token', loginRes.data['api-token'])
 
-        /*
-        if (opts.remember) {
-            // set a new flag on
-            // path += '&remember=true'
-        }
-        */
-
         return true
 
     }

@@ -129,7 +129,25 @@ export default class extends BaseComponent {
 
     clickItem(e) {
         const key = e.key
-        if (_.includes(['home', 'developer', 'social', 'leader', 'community', 'directory', 'account', 'teams', 'inbox', 'login', 'signup', 'profile'], key)) {
+        if (_.includes([
+            'home',
+            'developer',
+            'social',
+            'leader',
+            'community',
+            'directory',
+            'account',
+            'teams',
+            'inbox',
+            'login',
+            'signup',
+            'profile',
+            'admin',
+            'how-to-earn',
+            'about',
+            'faq',
+            'contact'
+        ], key)) {
             this.props.history.push(e.key)
         }
         else if (key === 'logout') {
