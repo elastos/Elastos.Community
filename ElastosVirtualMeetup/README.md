@@ -4,17 +4,19 @@ We will regularly schedule virtual meetups where the community members can direc
 
 ## Upcoming Meetups
 ### [Thursday, May 24th at 16:00 Eastern Daylight Time: Elastos Platform]()
-- Introduction to Elastos Platform - How different pieces fit together
-- EBP Demo by Clarence
-- Meetup Invite: https://zoom.us/j/3087789172
-    
-    iPhone one-tap: US: +16699006833,,3087789172# or +19294362866,,3087789172#
-    
-    Telephone: US: +1 669 900 6833 or +1 929 436 2866 
-   
-    Meeting ID: 308 778 9172
-    
-    International numbers available: https://zoom.us/u/TFhNa
+###### Agenda(All times are in EDT)
+- 4:00 - 4:10 pm: Review from last Virtual Meetup
+- 4:10 - 4:40 pm: Main Presentation: Introduction to Elastos Platform - How different pieces fit together and Q&A
+- 4:40 - 5:00 pm: Demo: EBP Progress/Demo
+- 5:00 - 5:15 pm: Community engagement, discussions
+- 5:15 pm: Wrapup -  Next Meetup: Developers Focused: Introduction to various github projects
+```
+Meetup Invite: https://zoom.us/j/3087789172
+iPhone one-tap: US: +16699006833,,3087789172# or +19294362866,,3087789172#
+Telephone: US: +1 669 900 6833 or +1 929 436 2866 
+Meeting ID: 308 778 9172
+International numbers available: https://zoom.us/u/TFhNa
+```
 
 ## Past Meetups
 ### [Tuesday, May 15th at 22:00 Eastern Daylight Time: Elastos Bounty Program](https://www.youtube.com/watch?v=lYXrwrVJcvs)
