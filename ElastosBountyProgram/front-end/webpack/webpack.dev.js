@@ -72,6 +72,7 @@ module.exports = merge(common, {
             ignored: /node_modules/,
         },
         compress: true,
+        disableHostCheck: true
     },
     plugins: [
         new webpackNotifier(),
