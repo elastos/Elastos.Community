@@ -1,4 +1,4 @@
-# Gist
+# Gist Answer
 Welcome to Elastos Developers Community!
 
 This repo is for Elastos Developers Community members. We can disucss issues related to community events, technical training material, ideas and comments. 
