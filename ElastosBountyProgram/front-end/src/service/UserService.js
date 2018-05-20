@@ -27,6 +27,7 @@ export default class extends BaseService {
         await this.dispatch(userRedux.actions.is_login_update(true))
 
         await this.dispatch(userRedux.actions.profile_update(loginRes.data.user.profile))
+        await this.dispatch(userRedux.actions.role_update(loginRes.data.user.role))
 
         sessionStorage.setItem('api-token', loginRes.data['api-token'])
 
@@ -43,11 +44,13 @@ export default class extends BaseService {
 
     async logout(){
         const userRedux = this.store.getRedux('user');
+        const tasksRedux = this.store.getRedux('task');
 
         return new Promise((resolve)=>{
             this.dispatch(userRedux.actions.is_login_update(false));
             this.dispatch(userRedux.actions.profile_reset());
-
+            this.dispatch(tasksRedux.actions.all_tasks_reset());
+            sessionStorage.clear()
             resolve(true);
         });
     }

@@ -25,7 +25,7 @@ class UserRedux extends BaseRedux {
             },
 
             profile: {
-                name: 'Jacky.Li'
+
             }
         };
     }

@@ -49,7 +49,7 @@ if (apiToken) {
 
     const userRedux = store.getRedux('user');
 
-    fetch(process.env.SERVER_URL + '/user/reauth?apiToken=' + encodeURIComponent(apiToken)).then((res) => res.json()).then((result) => {
+    fetch(process.env.SERVER_URL + '/user/reauth?apiToken=' + encodeURIComponent(apiToken)).then((res) => res.json()).then(async (result) => {
 
         if (result.code !== 1) {
             return
@@ -57,7 +57,9 @@ if (apiToken) {
 
         sessionStorage.setItem('api-token', result.data['api-token'])
 
-        return store.dispatch(userRedux.actions.is_login_update(true))
+        await store.dispatch(userRedux.actions.is_login_update(true))
+        await store.dispatch(userRedux.actions.profile_update(result.data.user.profile))
+        await store.dispatch(userRedux.actions.role_update(result.data.user.role))
 
     }).then(() => {
         render()

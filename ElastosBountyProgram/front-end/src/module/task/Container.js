@@ -6,14 +6,14 @@ import { message } from 'antd/lib/index'
 
 export default createContainer(Component, (state)=>{
 
-    let tasksState = state.tasks
+    let taskState = state.task
 
-    tasksState.is_login = state.user.is_login
+    taskState.is_login = state.user.is_login
 
-    if (!_.isArray(state.tasks.all_tasks)) {
-        tasksState.all_tasks = _.values(state.tasks.all_tasks)
+    if (!_.isArray(state.task.all_tasks)) {
+        taskState.all_tasks = _.values(state.task.all_tasks)
     }
-    return tasksState
+    return taskState
 
 }, ()=>{
     return {

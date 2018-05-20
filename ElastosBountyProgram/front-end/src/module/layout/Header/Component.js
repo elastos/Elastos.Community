@@ -45,14 +45,14 @@ export default class extends BaseComponent {
                         Login
                     </Menu.Item>
                 }
-                {hasAdminAccess &&
+                {isLogin && hasAdminAccess &&
                     <Menu.Item key="admin">
                         Admin
                     </Menu.Item>
                 }
                 {isLogin &&
-                    <Menu.Item key="login">
-                        Login
+                    <Menu.Item key="logout">
+                        Logout
                     </Menu.Item>
                 }
             </Menu>
