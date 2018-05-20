@@ -7,8 +7,6 @@ export default createContainer(Component, (state)=>{
 
     let tasksState = state.tasks
 
-    debugger
-
     if (!_.isArray(state.tasks.all_tasks)) {
         tasksState.all_tasks = _.values(state.tasks.all_tasks)
     }

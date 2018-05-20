@@ -1,8 +1,12 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import {Layout, Menu, Icon, Badge, Avatar, Modal} from 'antd'
+import {Layout, Menu, Icon, Badge, Avatar, Modal, Dropdown} from 'antd'
 import _ from 'lodash'
 import I18N from '@/I18N'
+
+import logoImg from 'img/Elastos Logo_Temp.png'
+
+import {USER_ROLE} from '@/constant'
 
 const {Header} = Layout
 const SubMenu = Menu.SubMenu
@@ -10,69 +14,108 @@ const MenuItemGroup = Menu.ItemGroup
 
 export default class extends BaseComponent {
 
-    buildDetailComponent() {
-        const {profile} = this.props
-        const signup_el = (
-            <Menu.Item className="d_li" key="signup">
-                {I18N.get('0001')}
-            </Menu.Item>
+    buildOverviewDropdown() {
+        return (
+            <Menu>
+                <Menu.Item key="developer">
+                    Developer
+                </Menu.Item>
+                <Menu.Item key="social">
+                    Social
+                </Menu.Item>
+                <Menu.Item key="leader">
+                    Leader
+                </Menu.Item>
+            </Menu>
         )
-        const login_el = (
-            <Menu.Item className="d_li" style={{borderLeft: '1px solid #cdcdcd'}} key="login">
-                {I18N.get('0002')}
-            </Menu.Item>
+    }
+
+    buildAcctDropdown() {
+
+        const isLogin = this.props.isLogin
+        const hasAdminAccess = [USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(this.props.role)
+
+        return (
+            <Menu>
+                {isLogin ?
+                    <Menu.Item key="profile">
+                        Profile
+                    </Menu.Item> :
+                    <Menu.Item key="login">
+                        Login
+                    </Menu.Item>
+                }
+                {hasAdminAccess &&
+                    <Menu.Item key="admin">
+                        Admin
+                    </Menu.Item>
+                }
+            </Menu>
         )
-
-        const user_p = {
-            title: (
-                <span>
-                    <Badge className="d_avatar" count={1}>
-                        <Avatar shape="square" size="large" icon="user"/>
-                    </Badge>
-                    {profile.name}
-                </span>
-            )
-        }
-        const user_el = (
-            <SubMenu className="d_li" style={{borderLeft: '1px solid #cdcdcd'}} title={user_p.title}>
-                <Menu.Item key="profile">Profile</Menu.Item>
-                <Menu.Divider/>
-                <Menu.Item key="logout">Logout</Menu.Item>
-            </SubMenu>
-        )
-
-        return {
-            signup_el,
-            login_el,
-            user_el
-        }
-
     }
 
     ord_render() {
 
-        const {signup_el, login_el, user_el} = this.buildDetailComponent()
         const isLogin = this.props.isLogin
 
+        const overviewDropdown = this.buildOverviewDropdown()
+        const acctDropdown = this.buildAcctDropdown()
+
         return (
-            <Header className="c_Header" theme="light">
-                <Menu onClick={this.clickItem.bind(this)} className="ebp-wrap" selectedKeys={['mail']}
-                    mode="horizontal">
-                    <Menu.Item key="home">
-                        <h1>ELASTOS LOGO</h1>
+            <Header className="c_Header">
+                <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu" selectedKeys={['mail']} mode="horizontal">
+                    <Menu.Item className="c_MenuItem logo" key="home">
+                        <img src={logoImg} />
                     </Menu.Item>
 
-                    {isLogin ? null : signup_el}
-                    {isLogin ? user_el : login_el}
+                    <Menu.Item className="c_MenuItem overview">
+                        <Dropdown overlay={overviewDropdown} style="margin-top: 24px;">
+                            <a className="ant-dropdown-link" href="#">
+                                Overview <Icon type="down" />
+                            </a>
+                        </Dropdown>
+                    </Menu.Item>
 
-                    <Menu.Item className="d_li" key="work">
-                        {I18N.get('0003')}
+                    <Menu.Item className="c_MenuItem" key="community">
+                        Community
                     </Menu.Item>
-                    <Menu.Item className="d_li" key="post">
-                        {I18N.get('0004')}
+
+                    <Menu.Item className="c_MenuItem" key="directory">
+                        Leaders
                     </Menu.Item>
-                    <Menu.Item className="d_li" key="find">
-                        {I18N.get('0005')}
+
+                    <Menu.Item className="c_MenuItem right-side" key="inbox">
+                        Inbox
+                    </Menu.Item>
+
+                    <Menu.Item className="c_MenuItem right-side" key="teams">
+                        Teams
+                    </Menu.Item>
+
+                    <Menu.Item className="c_MenuItem account right-side" key="account">
+                        <Dropdown overlay={acctDropdown} style="margin-top: 24px;">
+                            <a className="ant-dropdown-link" href="#">
+                                Overview <Icon type="down" />
+                            </a>
+                        </Dropdown>
+                    </Menu.Item>
+                </Menu>
+
+                <Menu onClick={this.clickItem.bind(this)} className="c_MenuTopRight" mode="horizontal">
+                    <Menu.Item key="how-to-earn">
+                        How to Earn ELA
+                    </Menu.Item>
+
+                    <Menu.Item key="about">
+                        About
+                    </Menu.Item>
+
+                    <Menu.Item key="faq">
+                        FAQ
+                    </Menu.Item>
+
+                    <Menu.Item key="contact">
+                        Contact
                     </Menu.Item>
                 </Menu>
             </Header>
@@ -81,7 +124,7 @@ export default class extends BaseComponent {
 
     clickItem(e) {
         const key = e.key
-        if (_.includes(['work', 'post', 'find', 'home', 'login', 'signup', 'profile'], key)) {
+        if (_.includes(['home', 'developer', 'social', 'leader', 'community', 'directory', 'account', 'teams', 'inbox', 'login', 'signup', 'profile'], key)) {
             this.props.history.push(e.key)
         }
         else if (key === 'logout') {

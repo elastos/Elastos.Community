@@ -94,5 +94,5 @@ module.exports = merge(common, {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    ],
+    ]
 });

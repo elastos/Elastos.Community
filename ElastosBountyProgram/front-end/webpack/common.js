@@ -54,6 +54,7 @@ module.exports = {
         extensions: ['.js', '.json', '.css', '.less', '.scss', '.sass', '.jsx'],
         alias: {
             '@': resolve('src'),
+            'img': resolve('src/img')
         }
     },
 };

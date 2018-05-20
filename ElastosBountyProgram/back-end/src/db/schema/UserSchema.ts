@@ -65,6 +65,8 @@ export const User = {
     profile : Profile,
     defaultLanguage: String,
     workAbout : WorkAbout,
+
+    // constants.USER_ROLE
     role : String,
     elaOwed : [ELA],
 
