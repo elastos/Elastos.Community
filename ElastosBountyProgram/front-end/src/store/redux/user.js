@@ -9,6 +9,8 @@ class UserRedux extends BaseRedux {
         return {
             is_login: false,
 
+            role: '',
+
             login_form: {
                 username: '',
                 password: '',
@@ -23,7 +25,7 @@ class UserRedux extends BaseRedux {
             },
 
             profile: {
-                name: 'Jacky.Li'
+
             }
         };
     }

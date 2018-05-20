@@ -14,10 +14,6 @@ const middleware = (render, props)=>{
 	return render;
 };
 
-const onEnter = () => {
-
-};
-
 const App = () => {
     return (
         <Switch id="ebp-main">
@@ -47,4 +43,29 @@ const render = () => {
     );
 };
 
-render();
+const apiToken = sessionStorage.getItem('api-token')
+
+if (apiToken) {
+
+    const userRedux = store.getRedux('user');
+
+    fetch(process.env.SERVER_URL + '/user/reauth?apiToken=' + encodeURIComponent(apiToken)).then((res) => res.json()).then(async (result) => {
+
+        if (result.code !== 1) {
+            return
+        }
+
+        sessionStorage.setItem('api-token', result.data['api-token'])
+
+        await store.dispatch(userRedux.actions.is_login_update(true))
+        await store.dispatch(userRedux.actions.profile_update(result.data.user.profile))
+        await store.dispatch(userRedux.actions.role_update(result.data.user.role))
+
+    }).then(() => {
+        render()
+    })
+
+} else {
+    render()
+}
+

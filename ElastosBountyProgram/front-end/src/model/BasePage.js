@@ -62,8 +62,9 @@ export default class extends BaseComponent {
         return null
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const is_login = store.getState().user.is_login
+
         this.ord_checkLogin(is_login)
     }
 

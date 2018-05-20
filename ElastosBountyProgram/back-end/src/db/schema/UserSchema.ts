@@ -59,6 +59,10 @@ export const User = {
         type : String,
         required : true
     },
+    salt: {
+        type: String,
+        required: true
+    },
 
     // let's keep this on the root object
     email: String,

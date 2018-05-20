@@ -19,6 +19,6 @@ const appReducer = (state = default_state, action) => {
 export default combineReducers({
     app: appReducer,
     router: routerReducer,
-    tasks: task.getReducer(),
+    task: task.getReducer(),
     user: user.getReducer()
 })

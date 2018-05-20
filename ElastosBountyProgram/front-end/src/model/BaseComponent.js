@@ -18,7 +18,6 @@ export default class extends React.Component{
 		return this.ord_render(this.$p);
 	}
 
-
 	// could be override
 	ord_init(){}
 	ord_render(){return null;}

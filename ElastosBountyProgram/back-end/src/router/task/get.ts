@@ -1,4 +1,5 @@
 import Base from '../Base';
+import * as uuid from 'node-uuid';
 
 export default class GetTask extends Base {
     protected needLogin = false;
@@ -18,14 +19,19 @@ export default class GetTask extends Base {
     }
 
     async index() {
+
+        if (!this.session.userId) {
+            return this.result(-1, 'must be logged in')
+        }
+
         // TODO
         return this.result(1, [
             {
-                task_id: '17132b27-13d3-45c8-852b-d4c68193a310',
+                task_id: uuid.v4(),
                 task_name: 'first'
             },
             {
-                task_id: '17132b27-13d3-45c8-852b-d4c68193a311',
+                task_id: uuid.v4(),
                 task_name: 'second'
             }
         ]);

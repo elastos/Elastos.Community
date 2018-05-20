@@ -2,7 +2,7 @@ import React from 'react';
 import StandardPage from '../StandardPage';
 import LoginForm from '@/module/form/LoginForm/Container';
 
-import './style.scss';
+import './style.scss'
 
 export default class extends StandardPage {
     ord_renderContent(){
