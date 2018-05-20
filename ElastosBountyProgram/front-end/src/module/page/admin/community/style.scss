@@ -1,0 +1,48 @@
+.p_admin_breadcrumb {
+    padding: 10px 0;
+    text-align: left;
+}
+
+.p_admin_content {
+}
+
+.admin-left-column, .admin-right-column {
+  padding: 0 20px;
+  text-align: left;
+}
+
+.admin-left-column {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background: #FFF;
+}
+
+.wrap-box-user {
+  h1 {
+    text-align: left;
+  }
+}
+
+.wrap-box-navigator {
+}
+
+.user-card {
+  padding: 10px;
+
+  .ant-card-cover {
+    padding: 10px;
+
+    img {
+      border-radius: 50%;
+    }
+  }
+
+  button {
+    width: 100%;
+    margin-top: 20px;
+  }
+}
+
+.user-card.user-card--without-padding {
+    padding: unset;
+}

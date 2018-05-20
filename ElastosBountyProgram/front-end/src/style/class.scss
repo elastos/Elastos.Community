@@ -22,6 +22,10 @@
   //outline: 1px solid red;
 }
 
+.ebp-wrap--admin {
+  min-width: unset!important;
+}
+
 .ebp-admin-wrap{
   max-width: $main_width;
   height: 100%;
@@ -37,4 +41,9 @@
   min-height: 60vh;
   margin-top: $gap_2;
   padding: $gap_2 0;
+}
+
+//Common class
+.pull-right {
+  float: right;
 }
