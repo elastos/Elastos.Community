@@ -27,6 +27,14 @@ export default [
         page: AdminCommunityPage
     },
     {
+        path: '/admin/community/:country',
+        page: AdminCommunityPage
+    },
+    {
+        path: '/admin/community/:country/:region',
+        page: AdminCommunityPage
+    },
+    {
         page: NotFound
     }
 ]
