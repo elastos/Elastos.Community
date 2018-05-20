@@ -16,7 +16,7 @@ export default class extends BaseComponent {
     ord_render () {
         const listLeaders = [
             {
-                name: 'Nong Hoang',
+                name: 'John Nguyen',
                 country: 'Vietnam',
                 avatar: 'https://www.w3schools.com/howto/img_avatar.png',
             },
