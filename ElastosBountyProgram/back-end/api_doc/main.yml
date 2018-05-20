@@ -51,6 +51,8 @@ paths:
   /test/hello:
     $ref: "./path/test/hello.yml"
 
+  /user/reauth:
+    $ref: "./path/user/reauth.yml"
   /user/register:
     $ref: "./path/user/register.yml"
   /user/login:

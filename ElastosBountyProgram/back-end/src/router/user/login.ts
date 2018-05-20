@@ -4,6 +4,7 @@ import {crypto} from '../../utility';
 import * as moment from 'moment';
 
 export default class extends Base {
+
     async action(){
         const userService = this.buildService(UserService);
 
@@ -12,7 +13,13 @@ export default class extends Base {
         userService.validate_username(username);
         userService.validate_password(password);
 
-        const pwd = crypto.sha512(password);
+        // first get user for salt
+        const salt = await userService.getUserSalt(username)
+
+        // password is passed in as is sha512
+        // and then this sha512 call is actually is HMAC_SHA512 with process.env.APP_SECRET
+        const pwd = crypto.sha512(password + salt);
+
         const user = await userService.findUser({
             username,
             password : pwd
@@ -25,13 +32,12 @@ export default class extends Base {
             user
         };
 
-        if(remember){
-            this.session.userId = user.id;
-            resultData['api-token'] = crypto.encrypt(JSON.stringify({
-                userId : user.id,
-                expired : moment().add(30, 'd').unix()
-            }));
-        }
+        // always return api-token on login, this is needed for future requests
+        this.session.userId = user.id;
+        resultData['api-token'] = crypto.encrypt(JSON.stringify({
+            userId : user.id,
+            expired : moment().add(30, 'd').unix()
+        }));
 
         return this.result(1, resultData);
     }

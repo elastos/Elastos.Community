@@ -3,6 +3,10 @@ import Component from './Component';
 import UserService from '@/service/UserService';
 import {message} from 'antd';
 
+message.config({
+    top: 100
+})
+
 
 export default createContainer(Component, (state)=>{
     return {
@@ -13,13 +17,17 @@ export default createContainer(Component, (state)=>{
 
     return {
         async login(username, password, remember){
-            const rs = await userService.login(username, password, {
-                remember
-            });
+            try {
+                const rs = await userService.login(username, password, {
+                    remember
+                });
 
-            if(rs){
-                message.success('login success');
-                userService.path.push('/home');
+                if (rs) {
+                    message.success('login success');
+                    userService.path.push('/home');
+                }
+            } catch (err) {
+                message.error('login failed')
             }
         }
     };

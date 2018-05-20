@@ -16,16 +16,14 @@
 }
 
 .ebp-wrap{
-  min-width: $main_width;
+  max-width: $main_width;
   height: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
 
   //outline: 1px solid red;
 }
 
 .ebp-admin-wrap{
-  //min-width: $main_width;
+  max-width: $main_width;
   height: 100%;
   margin: 0 auto;
   background: #FFF;

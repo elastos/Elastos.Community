@@ -1,6 +1,8 @@
 import React from 'react';
 import StandardPage from '../StandardPage';
 
+import './style.scss'
+
 import Task from '@/module/task/Container'
 
 import homeHeaderImg from 'img/HomeHeader.jpg'

@@ -47,6 +47,7 @@ export const TASK_CANDIDATE_STATUS = {
 export const COMMUNITY_TYPE = {
     COUNTRY: 'COUNTRY',
     STATE: 'STATE',
+    CITY: 'CITY',
     REGION: 'REGION',
     SCHOOL: 'SCHOOL'
 }

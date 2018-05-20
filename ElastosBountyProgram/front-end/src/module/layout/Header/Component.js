@@ -16,7 +16,7 @@ export default class extends BaseComponent {
 
     buildOverviewDropdown() {
         return (
-            <Menu>
+            <Menu onClick={this.clickItem.bind(this)}>
                 <Menu.Item key="developer">
                     Developer
                 </Menu.Item>
@@ -36,7 +36,7 @@ export default class extends BaseComponent {
         const hasAdminAccess = [USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(this.props.role)
 
         return (
-            <Menu>
+            <Menu onClick={this.clickItem.bind(this)}>
                 {isLogin ?
                     <Menu.Item key="profile">
                         Profile
@@ -48,6 +48,11 @@ export default class extends BaseComponent {
                 {hasAdminAccess &&
                     <Menu.Item key="admin">
                         Admin
+                    </Menu.Item>
+                }
+                {isLogin &&
+                    <Menu.Item key="login">
+                        Login
                     </Menu.Item>
                 }
             </Menu>
@@ -92,10 +97,10 @@ export default class extends BaseComponent {
                         Teams
                     </Menu.Item>
 
-                    <Menu.Item className="c_MenuItem account right-side" key="account">
+                    <Menu.Item className="c_MenuItem account right-side">
                         <Dropdown overlay={acctDropdown} style="margin-top: 24px;">
                             <a className="ant-dropdown-link" href="#">
-                                Overview <Icon type="down" />
+                                Account <Icon type="down" />
                             </a>
                         </Dropdown>
                     </Menu.Item>
@@ -129,7 +134,7 @@ export default class extends BaseComponent {
         }
         else if (key === 'logout') {
             Modal.confirm({
-                title: 'Are you sure to logout',
+                title: 'Are you sure you want to logout?',
                 content: '',
                 okText: 'Yes',
                 okType: 'danger',
