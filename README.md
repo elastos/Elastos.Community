@@ -9,6 +9,8 @@ Everyone is welcome to raise issue for new ideas.
 [We Want You! Elastos Community Recruitment](https://medium.com/elastos/we-want-you-elastos-community-recruitment-da0e97694f63)
 
 ## What's New?
+Elastos Virtual Meetup May 24th 2018: https://zoom.us/j/3087789172
+
 Elastos Virtual Meetup May 15th 2018 - Global Community Leaders: https://www.youtube.com/watch?v=lYXrwrVJcvs&list=PLoxCTwcUvvNvWe5pD1oZ0FRtV4HhU9Jt0
 
 Elastos Sidechain WP V0.3: http://elanews.net/wp-content/uploads/2018/05/Elastos_Sidechain_Whitepaper_v0.3.0.3_EN-.pdf?189db0&189db0
