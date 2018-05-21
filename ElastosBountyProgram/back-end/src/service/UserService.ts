@@ -2,7 +2,7 @@ import Base from './Base';
 import {Document} from 'mongoose';
 import * as _ from 'lodash';
 import {constant} from '../constant';
-import {validate, crypto} from '../utility';
+import {validate, crypto, uuid} from '../utility';
 
 const {USER_ROLE} = constant;
 
@@ -14,12 +14,13 @@ export default class extends Base {
         this.validate_password(param.password);
         this.validate_email(param.email);
 
-
+        const salt = uuid();
 
         const doc = {
             username : param.username,
-            password : crypto.sha512(param.password),
+            password : this.getPassword(param.password, salt),
             email : param.email,
+            salt,
             profile : {
                 firstName : param.firstName,
                 lastName : param.lastName,
