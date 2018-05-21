@@ -138,7 +138,7 @@ export default class extends Base {
     }
 
     public validate_name(name){
-        if(!validate.valid_string(name, 4)){
+        if(!validate.valid_string(name, 2)){
             throw 'invalid community name';
         }
     }
