@@ -2,15 +2,30 @@ import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import { Card, Row, Col, Button } from 'antd'
 import './style.scss'
+import AddCountryModal from '../../shared/ModalAddCountry/Component';
 
 export default class extends BaseComponent {
+    componentWillMount() {
+        this.setState({
+            visibleModalAddCountry: false
+        });
+    }
+
     handleChangeLeaderCountry(leader) {
         alert('TODO open popup change leader of country ' + leader.country)
         console.log('TODO handleChangeLeaderCountry', leader)
     }
 
     handleAddCountry() {
-        alert('TODO open popup add country');
+        this.setState({
+            visibleModalAddCountry: true
+        });
+    }
+
+    handleCancelAddCountry() {
+        this.setState({
+            visibleModalAddCountry: false
+        });
     }
 
     ord_render () {
@@ -51,11 +66,23 @@ export default class extends BaseComponent {
         return (
             <div>
                 <Button className="pull-right" onClick={this.handleAddCountry.bind(this)} type="primary">Add country</Button>
+                <AddCountryModal
+                    visible={this.state.visibleModalAddCountry}
+                    onOk={this.handleSubmitAddCountry.bind(this)}
+                    onCancel={this.handleCancelAddCountry.bind(this)} />
                 <h1>Country Leaders</h1>
                 <Row>
                     {listLeadersEl}
                 </Row>
             </div>
         )
+    }
+
+    handleSubmitAddCountry(country) {
+        console.log('handleSubmitAddCountry', country);
+
+        this.setState({
+            visibleModalAddCountry: false
+        });
     }
 }
