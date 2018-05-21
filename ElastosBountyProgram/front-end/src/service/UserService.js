@@ -1,6 +1,7 @@
 import BaseService from '../model/BaseService';
 import _ from 'lodash';
 import sha512 from 'crypto-js/sha512';
+import {USER_ROLE} from '@/constant'
 
 export default class extends BaseService {
 
@@ -24,7 +25,12 @@ export default class extends BaseService {
         }
 
         await this.dispatch(userRedux.actions.login_form_reset())
+
         await this.dispatch(userRedux.actions.is_login_update(true))
+
+        if ([USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(loginRes.data.user.role)) {
+            await store.dispatch(userRedux.actions.is_admin_update(true))
+        }
 
         await this.dispatch(userRedux.actions.profile_update(loginRes.data.user.profile))
         await this.dispatch(userRedux.actions.role_update(loginRes.data.user.role))

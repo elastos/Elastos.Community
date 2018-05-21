@@ -22,6 +22,9 @@ export const middleware = (req: Request, res: Response, next: NextFunction)=>{
                 db.create().then((DB)=>{
                     DB.getModel('User').findOne({_id: json.userId}).then((user) => {
 
+                        // TODO: find better way to send the salt back to the front-end
+                        user._doc.salt = null
+
                         if (user){
                             req['session'].user = user;
                             req['session'].userId = user.id;

@@ -6,6 +6,7 @@ import {Provider} from 'react-redux';
 import {ConnectedRouter} from 'react-router-redux';
 import store from '@/store';
 import config from '@/config';
+import {USER_ROLE} from '@/constant'
 
 import './boot';
 import './style/index.scss';
@@ -63,6 +64,10 @@ if (apiToken) {
         }
 
         await store.dispatch(userRedux.actions.is_login_update(true))
+        if ([USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(result.data.role)) {
+            await store.dispatch(userRedux.actions.is_admin_update(true))
+        }
+
         await store.dispatch(userRedux.actions.profile_update(result.data.profile))
         await store.dispatch(userRedux.actions.role_update(result.data.role))
 

@@ -3,6 +3,7 @@ import BaseComponent from './BaseComponent'
 // import {spring, Motion} from 'react-motion'
 // import _ from 'lodash'
 import store from '@/store'
+import {USER_ROLE} from '@/constant'
 
 /**
  noWobble: {stiffness: 170, damping: 26}, // the default, if nothing provided
@@ -63,9 +64,15 @@ export default class extends BaseComponent {
     }
 
     componentDidMount() {
-        const is_login = store.getState().user.is_login
+        const storeUser = store.getState().user
 
-        this.ord_checkLogin(is_login)
+        if (!storeUser) {
+            return
+        }
+        const is_login = storeUser.is_login
+        const is_admin = storeUser.is_admin
+
+        this.ord_checkLogin(is_login, is_admin)
     }
 
     ord_checkLogin() {

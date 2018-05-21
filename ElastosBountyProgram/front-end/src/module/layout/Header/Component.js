@@ -45,8 +45,13 @@ export default class extends BaseComponent {
                         Login
                     </Menu.Item>
                 }
+                {!isLogin &&
+                    <Menu.Item key="register">
+                        Register
+                    </Menu.Item>
+                }
                 {isLogin && hasAdminAccess &&
-                    <Menu.Item key="admin">
+                    <Menu.Item key="admin/users">
                         Admin
                     </Menu.Item>
                 }
@@ -140,15 +145,16 @@ export default class extends BaseComponent {
             'teams',
             'inbox',
             'login',
+            'register',
             'signup',
             'profile',
-            'admin',
+            'admin/users',
             'how-to-earn',
             'about',
             'faq',
             'contact'
         ], key)) {
-            this.props.history.push(e.key)
+            this.props.history.push('/' + e.key)
         }
         else if (key === 'logout') {
             Modal.confirm({

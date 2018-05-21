@@ -1,12 +1,12 @@
 import React from 'react'
-import StandardPage from '../../StandardPage'
+import AdminPage from '../BaseAdmin'
 import './style.scss'
 
 import { Col, Row, Breadcrumb, Icon } from 'antd'
 import ListUsers from './ListUsers/Component'
 import Navigator from '../shared/Navigator/Component'
 
-export default class extends StandardPage {
+export default class extends AdminPage {
     ord_renderContent () {
         return (
             <div className="p_admin_index ebp-wrap ebp-wrap--admin">
@@ -36,11 +36,5 @@ export default class extends StandardPage {
                 </div>
             </div>
         )
-    }
-
-    ord_checkLogin (isLogin) {
-        if (isLogin) {
-            this.props.history.replace('/home')
-        }
     }
 }
