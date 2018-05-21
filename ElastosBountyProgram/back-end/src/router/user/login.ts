@@ -14,11 +14,10 @@ export default class extends Base {
         userService.validate_password(password);
 
         // first get user for salt
-        const salt = await userService.getUserSalt(username)
+        const salt = await userService.getUserSalt(username);
 
         // password is passed in as is sha512
-        // and then this sha512 call is actually is HMAC_SHA512 with process.env.APP_SECRET
-        const pwd = crypto.sha512(password + salt);
+        const pwd = userService.getPassword(password, salt);
 
         const user = await userService.findUser({
             username,

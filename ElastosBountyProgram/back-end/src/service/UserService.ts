@@ -36,6 +36,9 @@ export default class extends Base {
         const user = await db_user.findOne({
             username: username
         });
+        if(!user){
+            throw 'invalid username';
+        }
         return user.salt;
     }
 
@@ -84,6 +87,15 @@ export default class extends Base {
         });
 
         return total;
+    }
+
+    /*
+    * return user password
+    * password is built with sha512 to (password + salt)
+    *
+    * */
+    public getPassword(password, salt){
+        return crypto.sha512(password+salt);
     }
 
     public validate_username(username){

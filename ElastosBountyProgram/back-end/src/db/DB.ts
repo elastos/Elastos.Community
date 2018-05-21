@@ -8,6 +8,7 @@ import Community from './Community';
 import User_Community from './User_Community';
 import Task_Candidate from './Task_Candidate';
 import * as crypto from 'crypto';
+import * as uuid from 'node-uuid';
 
 export default class {
     protected db: any;
