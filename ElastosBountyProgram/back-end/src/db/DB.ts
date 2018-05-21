@@ -117,7 +117,12 @@ export default class {
             const rs = await this.db.User.save(doc);
             console.log('create admin user =>', rs);
         }catch(err){
-            console.log('admin user is already exist', err);
+            if(err.code === 11000){
+                console.log('admin user is already exist');
+            }
+            else{
+                console.error(err);
+            }
         }
     }
 }
