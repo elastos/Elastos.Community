@@ -9,7 +9,7 @@ export const Community = {
     },
     parentCommunityId: Schema.Types.ObjectId,
 
-    // TODO: geolocation type
+    geolocation : String
 
     // constants.COMMUNITY_TYPE - COUNTRY, STATE, REGION, SCHOOL
     type : String,

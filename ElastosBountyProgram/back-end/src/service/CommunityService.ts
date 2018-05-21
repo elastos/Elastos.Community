@@ -18,11 +18,12 @@ export default class extends Base {
 
         // validate
         this.validate_name(param.name);
-        const {name, parentCommunityId, type, leaderId} = param;
+        const {name, parentCommunityId, geolocation, type, leaderId} = param;
 
         const doc = {
             name,
             parentCommunityId,
+            geolocation,
             type,
             leaderId,
             createdBy : this.currentUser._id
@@ -42,12 +43,13 @@ export default class extends Base {
 
         //validate
         this.validate_name(param.name);
-        const {communityId, name, parentCommunityId, type, leaderId} = param;
+        const {communityId, name, parentCommunityId, geolocation, type, leaderId} = param;
 
         const doc = {
             $set : {
                 name,
                 parentCommunityId,
+                geolocation,
                 type,
                 leaderId
             }
@@ -63,10 +65,10 @@ export default class extends Base {
      * @returns {Promise<"mongoose".Document>}
      */
     public async index(param): Promise<[Document]> {
-        const {skip, limit, query, sort} = param;
+        const {query} = param;
         const db_community = this.getDBModel('Community');
 
-        return await db_community.find(query).skip(skip).limit(limit).sort(sort);
+        return await db_community.find(query);
     }
 
     /**
