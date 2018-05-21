@@ -1,16 +1,17 @@
 import React from 'react';
 import StandardPage from '../StandardPage';
+import RegisterForm from '@/module/form/RegisterForm/Container';
+
+import './style.scss'
 
 export default class extends StandardPage {
     ord_renderContent() {
         return (
-            <h1>Register</h1>
+            <div className="p_register ebp-wrap">
+                <div className="d_box">
+                    <RegisterForm />
+                </div>
+            </div>
         );
-    }
-
-    ord_checkLogin(isLogin) {
-        if (isLogin) {
-            this.props.history.replace('/home');
-        }
     }
 }

@@ -1,13 +1,13 @@
-import BaseService from '../model/BaseService';
-import _ from 'lodash';
-import sha512 from 'crypto-js/sha512';
+import BaseService from '../model/BaseService'
+import _ from 'lodash'
+import sha512 from 'crypto-js/sha512'
 import {USER_ROLE} from '@/constant'
 
 export default class extends BaseService {
 
     async login(username, password, opts={}){
 
-        const userRedux = this.store.getRedux('user');
+        const userRedux = this.store.getRedux('user')
 
         // call API /login
 
@@ -41,16 +41,30 @@ export default class extends BaseService {
 
     }
 
+    async register(username, password, profile) {
+
+    }
+
     async logout(){
-        const userRedux = this.store.getRedux('user');
-        const tasksRedux = this.store.getRedux('task');
+        const userRedux = this.store.getRedux('user')
+        const tasksRedux = this.store.getRedux('task')
 
         return new Promise((resolve)=>{
-            this.dispatch(userRedux.actions.is_login_update(false));
-            this.dispatch(userRedux.actions.profile_reset());
-            this.dispatch(tasksRedux.actions.all_tasks_reset());
+            this.dispatch(userRedux.actions.is_login_update(false))
+            this.dispatch(userRedux.actions.profile_reset())
+            this.dispatch(tasksRedux.actions.all_tasks_reset())
             sessionStorage.clear()
-            resolve(true);
-        });
+            resolve(true)
+        })
+    }
+
+    async changeStep(step) {
+        const userRedux = this.store.getRedux('user')
+
+        await this.dispatch(userRedux.actions.register_form_update({
+            step: 2
+        }))
+
+        return true
     }
 }

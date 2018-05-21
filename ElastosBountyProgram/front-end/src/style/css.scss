@@ -2,7 +2,7 @@
 
 * {
   box-sizing: border-box;
-  -webkit-text-size-adjust:none;
+  -webkit-text-size-adjust: none;
   font-family: 'Montserrat', sans-serif;
   margin: 0;
   padding: 0;
@@ -11,30 +11,35 @@
   vertical-align: baseline;
   background: transparent;
 }
-h1,h2,h3,h4,h5,h6{
-  margin:0;
-}
-p{
-  margin:0;
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: $gap_2 0;
 }
 
-a{
+p {
+  margin: 0;
+  padding-bottom: $gap_2;
+}
+
+a {
   text-decoration: none;
 }
 
 /* main layout */
-html, body{
+html, body {
   height: 100%;
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
 
 }
-body{
+
+body {
   font-size: 14px;
   color: #333333;
 }
 
-#ebp-root{
+#ebp-root {
   background: #E5E5E5;
   min-height: 100vh;
 

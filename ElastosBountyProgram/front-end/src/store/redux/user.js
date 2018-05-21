@@ -15,12 +15,13 @@ class UserRedux extends BaseRedux {
             login_form: {
                 username: '',
                 password: '',
-                remember_me: true,
                 loading: false
             },
 
             register_form: {
-                username: '',
+                step: 1,
+                firstName: '',
+                lastName: '',
                 email: '',
                 password: ''
             },
