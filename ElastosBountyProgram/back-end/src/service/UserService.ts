@@ -56,23 +56,24 @@ export default class extends Base {
     public async changePassword(param): Promise<boolean>{
         const db_user = this.getDBModel('User');
 
-        const {oldPassword, password, userId} = param;
+        const {oldPassword, password, username} = param;
 
         this.validate_password(oldPassword);
         this.validate_password(password);
+        this.validate_username(username);
 
-        const user = await db_user.findOne({_id: userId}, {reject: false});
+        const user = await db_user.findOne({username}, {reject: false});
         if(!user){
             throw 'user is not exist';
         }
 
-        if(user.password !== crypto.sha512(oldPassword)){
+        if(user.password !== this.getPassword(oldPassword, user.salt)){
             throw 'old password is incorrect';
         }
 
-        return await db_user.update({_id : userId}, {
+        return await db_user.update({username}, {
             $set : {
-                password : crypto.sha512(password)
+                password : this.getPassword(password, user.salt)
             }
         });
     }
