@@ -36,7 +36,7 @@ export default class extends Base {
 
     public async getUserSalt(username): Promise<String>{
         const db_user = this.getDBModel('User');
-        const user = await db_user.findOne({
+        const user = await db_user.db.findOne({
             username: username
         });
         if(!user){
@@ -45,7 +45,6 @@ export default class extends Base {
         return user.salt;
     }
 
-    // TODO: do not return salt
     public async findUser(query): Promise<Document>{
         const db_user = this.getDBModel('User');
         return await db_user.findOne({
