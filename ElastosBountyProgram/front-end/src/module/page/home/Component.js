@@ -107,8 +107,7 @@ export default class extends StandardPage {
                         <Row>
                             <Col span={12} className="d_colMeetups">
                                 <h2>
-                                    Meetups &<br/>
-                                    Hackathons
+                                    Meetups & Hackathons
                                 </h2>
                             </Col>
                             <Col span={12}>
