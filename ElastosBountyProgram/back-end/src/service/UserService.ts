@@ -14,15 +14,17 @@ export default class extends Base {
         this.validate_password(param.password);
         this.validate_email(param.email);
 
+
+
         const doc = {
             username : param.username,
             password : crypto.sha512(param.password),
             email : param.email,
             profile : {
-                firstName : param.profile.region.firstName,
-                lastName : param.profile.region.lastName,
-                country : param.profile.region.country,
-                city : param.profile.region.city
+                firstName : param.firstName,
+                lastName : param.lastName,
+                country : param.country,
+                city : param.city
             },
             role : USER_ROLE.MEMBER,
             active: true
