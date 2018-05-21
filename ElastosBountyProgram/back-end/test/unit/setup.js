@@ -3,17 +3,13 @@ global.DB = {
         username: `test_member`,
         password: 'ebp1234',
         email: 'test_member@ebp.com',
-        profile: {
-            firstName: 'Hello',
-            lastName: 'World',
-            region: {
-                country: 'Canada',
-                city: 'Vancouver'
-            }
-        }
+        firstName: 'Hello',
+        lastName: 'World',
+        country: 'Canada',
+        city: 'Vancouver'
     },
     ADMIN_USER : {
-        username: 'admin'
+        username: 'admin@ebp.com'
     },
 
     TASK_1 : {
@@ -24,6 +20,7 @@ global.DB = {
         "startTime": "",
         "endTime": "",
         "candidateLimit": 1,
+        "candidateSltLimit": 1,
         "reward_ela": 1000,
         "reward_votePower": 10
     },
@@ -36,6 +33,7 @@ global.DB = {
         "startTime": "",
         "endTime": "",
         "candidateLimit": 0,
+        "candidateSltLimit": 0,
         "reward_ela": 1000,
         "reward_votePower": 10
     }
