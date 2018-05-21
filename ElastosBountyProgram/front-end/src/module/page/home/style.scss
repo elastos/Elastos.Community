@@ -1,8 +1,21 @@
 
+@import "../../../style/variable";
+
+@mixin homeContent {
+  max-width: $main_width;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .c_Home {
 
-  .topBackdrop {
+  background-color: #ffffff;
+
+  .horizGap {
+    height: $gap_3;
+  }
+
+  .d_topBackdrop {
     font-size: 40px;
     font-weight: 500;
     color: #fff;
@@ -12,6 +25,70 @@
     text-align: left;
 
     height: 130px;
+
+    > .d_topBackdrop_title {
+      @include homeContent;
+    }
   }
 
+  .d_rowPrograms {
+
+    @include homeContent;
+
+    padding-bottom: $gap_3;
+
+    p {
+      text-align: left;
+      max-width: 70%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    img {
+      margin: 0 auto;
+
+      width: 100px;
+
+      display: block;
+    }
+
+    h1 {
+      font-weight: 600;
+    }
+
+    h3 {
+      padding-bottom: $gap_1;
+    }
+  }
+
+  .d_colProgram_middle {
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+  }
+
+  .d_rowGrey {
+    background-color: rgb(229, 229, 229);
+  }
+
+  .d_rowEvents {
+    @include homeContent;
+  }
+
+  .d_rowFooter {
+
+    @include homeContent;
+
+    .d_footerSection {
+      text-align: left;
+      max-width: 70%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .d_colMeetups {
+    border-right: 1px solid #000000;
+
+    height: 300px;
+  }
 }

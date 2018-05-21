@@ -17,6 +17,10 @@ h1, h2, h3, h4, h5, h6 {
   padding: $gap_2 0;
 }
 
+h2 {
+  font-size: 24px;
+}
+
 p {
   margin: 0;
   padding-bottom: $gap_2;
@@ -24,6 +28,11 @@ p {
 
 a {
   text-decoration: none;
+  color: $link-color;
+
+  &:hover {
+    color: $link-hover-color;
+  }
 }
 
 /* main layout */

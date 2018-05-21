@@ -7,18 +7,18 @@ import './style.scss'
 const FormItem = Form.Item
 
 class C extends BaseComponent {
-    /*
+
     handleSubmit(e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values)
+                console.log('Register - received values of form: ', values)
                 this.props.register(values.username, values.password)
 
             }
         })
     }
-    */
+
 
     constructor(props) {
         super(props)
@@ -118,7 +118,7 @@ class C extends BaseComponent {
                     you do not need to be a member to join events.
                 </p>
 
-                <Form>
+                <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
                     <div ref={this.step1Container} className={this.props.step === 1 ? '' : 'hide'}>
                         <FormItem>
                             {p.firstName}
@@ -158,15 +158,12 @@ class C extends BaseComponent {
         const pwd = _.trim(this.props.form.getFieldValue('password'))
         const pwdConfirm = _.trim(this.props.form.getFieldValue('passwordConfirm'))
 
-        if (pwd.length === 0 || pwd !== pwdConfirm) {
-            message.error('Passwords required and must match')
+        if (pwd.length < 8 || pwd !== pwdConfirm) {
+            message.error('Passwords must be 8 characters or more and must match')
             return
         }
 
-        await this.props.changeStep(2)
-
-
-
+        this.props.changeStep(2)
     }
 }
 
