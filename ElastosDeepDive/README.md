@@ -1,8 +1,8 @@
 # Videos
 ## Youtube Playlists
-- [Elastos Introductory Series Playlist by KP Woods](https://www.youtube.com/watch?v=BnsjGJPMVqo&list=PL3vUOqY6AksGBD3Yve671Q_vsOUPxnzBc)
+- [Elastos Introductory Series Playlist by KP Woods](https://www.youtube.com/playlist?list=PL3vUOqY6AksGBD3Yve671Q_vsOUPxnzBc)
 - [Elastos Demo Series Playlist by KP Woods](https://www.youtube.com/playlist?list=PL3vUOqY6AksH1-UVQ2KDqzhD0zP7v6ObN)
-- [Elastos Carrier Explained Series by Kevin Zhang](https://www.youtube.com/watch?v=xtqv3knDllw&t=2s)
+- [Elastos Carrier Explained Series by Kevin Zhang](https://www.youtube.com/playlist?list=PLS6d1baqGamKMwQPt51I82L5l1h51qrZA)
 
 ## Medium Blogs
 - [Elastos Runtime: A Window into a new world of DApps](https://medium.com/@kiran.pachhai/elastos-runtime-a-window-into-a-new-world-of-dapps-1905839ea452)
