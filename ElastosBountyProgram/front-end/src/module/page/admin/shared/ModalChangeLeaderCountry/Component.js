@@ -7,7 +7,7 @@ const FormItem = Form.Item
 export default Form.create()(
     class C extends BaseComponent {
         ord_render () {
-            const {visible, onCancel, onCreate, form} = this.props
+            const {visible, onCancel, onCreate, handleRemoveCountry, form} = this.props
             const {getFieldDecorator} = form
             const formItemLayout = {
                 labelCol: {span: 6},
@@ -16,7 +16,8 @@ export default Form.create()(
 
             const footerModal = (
                 <div>
-                    <Button onClick={onCreate} type="primary">Add country</Button>
+                    <Button onClick={onCreate} type="primary">Change leader</Button>
+                    <Button onClick={handleRemoveCountry}>Remove country</Button>
                     <Button onClick={onCancel}>Cancel</Button>
                 </div>
             )
@@ -34,13 +35,9 @@ export default Form.create()(
                         <FormItem
                             {...formItemLayout}
                             label="Country">
-                            {getFieldDecorator('country', {
-                                rules: [{required: true, message: 'This field is required'}]
-                            })(
+                            {getFieldDecorator('country', {})(
                                 <Select
-                                    showSearch
-                                    placeholder="Please select a country"
-                                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                    disabled={true}
                                 >
                                     <Select.Option value="china">China</Select.Option>
                                     <Select.Option value="use">U.S.A</Select.Option>

@@ -25,7 +25,7 @@
     "padded-blocks": "off",
     "brace-style": "off",
     "arrow-body-style": "off",
-    "indent": [2, 4],
+    "indent": [2, 4, {"SwitchCase": 1}],
     "camelcase": [0, { "properties": "never" }],
     "no-unused-vars": [1, { "vars": "all", "args": "none" }]
   }

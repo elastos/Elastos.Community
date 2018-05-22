@@ -1,22 +1,62 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import { Card, Row, Col, Button } from 'antd'
+import { Button, Card, Col, Row, message } from 'antd'
+import ModalChangeLeaderCountry from '../../shared/ModalChangeLeaderCountry/Component'
 
 import './style.scss'
 
 export default class extends BaseComponent {
-
-    handleChangeLeader() {
-        alert('TODO change leader')
+    state = {
+        visibleModalChangeLeader: false,
     }
 
+    // Modal change leader
+    showModalChangeLeader = () => {
+        this.setState({visibleModalChangeLeader: true})
+    }
+    handleCancelModalChangeLeader = () => {
+        const form = this.formRefChangeLeader.props.form
+        form.resetFields()
+        
+        this.setState({visibleModalChangeLeader: false})
+    }
+    handleChangeLeaderCountry = () => {
+        const form = this.formRefChangeLeader.props.form
+        form.validateFields((err, values) => {
+            if (err) {
+                return
+            }
+            
+            console.log('Received values of form: ', values)
+            message.success('Change leader of country successfully')
+            
+            form.resetFields()
+            this.setState({visibleModalChangeLeader: false})
+        })
+    }
+    saveFormChangeLeaderRef = (formRef) => {
+        this.formRefChangeLeader = formRef
+    }
+    
+    openChangeLeaderCountry (leader) {
+        this.formRefChangeLeader.props.form.setFieldsValue({
+            country: 'china',
+            leader: 'David',
+        }, this.showModalChangeLeader())
+    }
+    
+    handleRemoveCountry = () => {
+        this.handleCancelModalChangeLeader()
+        
+        message.success('Remove country successfully')
+    }
+
+    
     ord_render () {
         const leaderInfo = {
-            name: 'John Nguyen',
-            country: 'Vietnam',
-            avatar: 'https://www.w3schools.com/howto/img_avatar.png'
+            name: 'John Nguyen', country: 'Vietnam', avatar: 'https://www.w3schools.com/howto/img_avatar.png',
         }
-
+        
         const leaderEl = (
             <Card
                 hoverable
@@ -28,38 +68,43 @@ export default class extends BaseComponent {
                 />
             </Card>
         )
-
+        
         return (
             <div className="list-leaders-of-a-country">
                 <Row>
-                    <Col span={6} className="user-card user-card--without-padding">
+                    <Col span={6}
+                         className="user-card user-card--without-padding">
                         {leaderEl}
-                        <Button onClick={this.handleChangeLeader.bind(this)} type="primary">Change leader</Button>
+                        <Button onClick={this.openChangeLeaderCountry.bind(this, leaderInfo)} type="primary">Change leader</Button>
                     </Col>
                     <Col span={18} className="wrap-child-box-users">
                         <div className="child-box-users">
-                            <Button className="pull-right" type="primary">Add state</Button>
+                            <Button className="pull-right" type="primary">Add
+                                state</Button>
                             <h1>States / Provinces (18)</h1>
                             <Row>
                                 TODO list user
                             </Row>
                         </div>
                         <div className="child-box-users">
-                            <Button className="pull-right" type="primary">Add city</Button>
+                            <Button className="pull-right" type="primary">Add
+                                city</Button>
                             <h1>Cities (40)</h1>
                             <Row>
                                 TODO list user
                             </Row>
                         </div>
                         <div className="child-box-users">
-                            <Button className="pull-right" type="primary">Add region</Button>
+                            <Button className="pull-right" type="primary">Add
+                                region</Button>
                             <h1>Region (0)</h1>
                             <Row>
                                 TODO list user
                             </Row>
                         </div>
                         <div className="child-box-users">
-                            <Button className="pull-right" type="primary">Add school</Button>
+                            <Button className="pull-right" type="primary">Add
+                                school</Button>
                             <h1>Schools (0)</h1>
                             <Row>
                                 TODO list user
@@ -67,6 +112,14 @@ export default class extends BaseComponent {
                         </div>
                     </Col>
                 </Row>
+    
+                <ModalChangeLeaderCountry
+                    wrappedComponentRef={this.saveFormChangeLeaderRef}
+                    visible={this.state.visibleModalChangeLeader}
+                    onCancel={this.handleCancelModalChangeLeader}
+                    onCreate={this.handleChangeLeaderCountry}
+                    handleRemoveCountry={this.handleRemoveCountry}
+                />
             </div>
         )
     }

@@ -4,7 +4,7 @@ import AdminPage from '../BaseAdmin'
 import '../admin.scss'
 import './style.scss'
 
-import { Breadcrumb, Col, Icon, Row, Menu, Select } from 'antd'
+import { Breadcrumb, Col, Icon, Row, Select } from 'antd'
 import ListLeadersOfAllCountries from './ListLeadersOfAllCountries/Component'
 import ListLeadersOfACountry from './ListLeadersOfACountry/Component'
 import ListLeadersOfARegion from './ListLeadersOfARegion/Component'
@@ -12,35 +12,36 @@ import Navigator from '../shared/Navigator/Component'
 import { Link } from 'react-router-dom'
 
 export default class extends AdminPage {
-    checkTypeOfBreadcrumb() {
+    checkTypeOfBreadcrumb () {
         // Check status of breadcrumb
-        let treeLevel = Object.keys(this.props.match.params).length;
+        let treeLevel = Object.keys(this.props.match.params).length
         this.setState({
             treeLevel
-        });
+        })
     }
 
-    componentWillMount() {
-        this.checkTypeOfBreadcrumb();
+    componentWillMount () {
+        this.checkTypeOfBreadcrumb()
     }
 
-    renderMatchComponent() {
+    renderMatchComponent () {
         switch (this.state.treeLevel) {
-        case 0:
-            return <ListLeadersOfAllCountries/>;
-        case 1:
-            return <ListLeadersOfACountry/>;
-        default:
-            return <ListLeadersOfARegion/>;
+            case 0:
+                return <ListLeadersOfAllCountries/>
+            case 1:
+                return <ListLeadersOfACountry/>
+            default:
+                return <ListLeadersOfARegion/>
         }
     }
 
-    handleChangeCountry(country) {
-        this.props.history.push(`/admin/community/${country}`);
+    handleChangeCountry (country) {
+        this.props.history.push(`/admin/community/${country}`)
     }
 
-    handleChangeRegion(region) {
-        this.props.history.push(`/admin/community/${this.props.match.params['country']}/${region}`);
+    handleChangeRegion (region) {
+        this.props.history.push(
+            `/admin/community/${this.props.match.params['country']}/${region}`)
     }
 
     ord_renderContent () {
@@ -50,7 +51,8 @@ export default class extends AdminPage {
 
         const listCountriesEl = listCountries.map((country) => {
             return (
-                <Select.Option key={country} value={country}>{country}</Select.Option>
+                <Select.Option key={country}
+                    value={country}>{country}</Select.Option>
             )
         })
 
@@ -58,14 +60,14 @@ export default class extends AdminPage {
             <Select
                 defaultValue={this.props.match.params['country']}
                 showSearch
-                style={{ width: 160 }}
+                style={{width: 160}}
                 placeholder="Select a country"
                 optionFilterProp="children"
                 onChange={this.handleChangeCountry.bind(this)}
             >
                 {listCountriesEl}
             </Select>
-        );
+        )
 
         const listRegions = [
             'Hanoi', 'Tokyo', 'NewYork'
@@ -73,7 +75,8 @@ export default class extends AdminPage {
 
         const listRegionsEl = listRegions.map((region) => {
             return (
-                <Select.Option key={region} value={region}>{region}</Select.Option>
+                <Select.Option key={region}
+                    value={region}>{region}</Select.Option>
             )
         })
 
@@ -81,14 +84,14 @@ export default class extends AdminPage {
             <Select
                 defaultValue={this.props.match.params['region']}
                 showSearch
-                style={{ width: 160 }}
+                style={{width: 160}}
                 placeholder="Select a region"
                 optionFilterProp="children"
                 onChange={this.handleChangeRegion.bind(this)}
             >
                 {listRegionsEl}
             </Select>
-        );
+        )
 
         return (
             <div className="p_admin_index ebp-wrap">
@@ -96,7 +99,7 @@ export default class extends AdminPage {
                     <div className="p_admin_breadcrumb">
                         <Breadcrumb>
                             <Breadcrumb.Item href="/">
-                                <Icon type="home" />
+                                <Icon type="home"/>
                             </Breadcrumb.Item>
                             <Breadcrumb.Item>Admin</Breadcrumb.Item>
                             <Breadcrumb.Item>
@@ -115,10 +118,12 @@ export default class extends AdminPage {
                     </div>
                     <div className="p_admin_content">
                         <Row>
-                            <Col span={18} className="admin-left-column wrap-box-user">
+                            <Col span={18}
+                                className="admin-left-column wrap-box-user">
                                 {this.renderMatchComponent()}
                             </Col>
-                            <Col span={6} className="admin-right-column wrap-box-navigator">
+                            <Col span={6}
+                                className="admin-right-column wrap-box-navigator">
                                 <Navigator selectedItem={'community'}/>
                             </Col>
                         </Row>
