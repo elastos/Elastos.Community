@@ -1,31 +1,86 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import { Card, Row, Col, Button } from 'antd'
+import { Button, Card, Col, message, Row } from 'antd'
+
+import ModalAddCountry from '../../shared/ModalAddCountry/Component'
+import ModalChangeLeaderCountry from '../../shared/ModalChangeLeaderCountry/Component'
+
 import './style.scss'
-import AddCountryModal from '../../shared/ModalAddCountry/Component';
 
 export default class extends BaseComponent {
-    componentWillMount() {
-        this.setState({
-            visibleModalAddCountry: false
-        });
+    state = {
+        visibleModalAddCountry: false,
+        visibleModalChangeLeader: false,
     }
 
-    handleChangeLeaderCountry(leader) {
-        alert('TODO open popup change leader of country ' + leader.country)
-        console.log('TODO handleChangeLeaderCountry', leader)
+    // Modal add country
+    showModalAddCountry = () => {
+        this.setState({visibleModalAddCountry: true})
+    }
+    handleCancelModalAddCountry = () => {
+        const form = this.formRefAddCountry.props.form
+        form.resetFields()
+
+        this.setState({visibleModalAddCountry: false})
+    }
+    handleCreateCountry = () => {
+        const form = this.formRefAddCountry.props.form
+
+        form.validateFields((err, values) => {
+            if (err) {
+                return
+            }
+
+            console.log('Received values of form: ', values)
+            message.success('Add new country successfully')
+
+            form.resetFields()
+            this.setState({visibleModalAddCountry: false})
+        })
+    }
+    saveFormAddCountryRef = (formRef) => {
+        this.formRefAddCountry = formRef
     }
 
-    handleAddCountry() {
-        this.setState({
-            visibleModalAddCountry: true
-        });
+    // Modal change leader
+    showModalChangeLeader = () => {
+        this.setState({visibleModalChangeLeader: true})
+    }
+    handleCancelModalChangeLeader = () => {
+        const form = this.formRefChangeLeader.props.form
+        form.resetFields()
+
+        this.setState({visibleModalChangeLeader: false})
+    }
+    handleChangeLeaderCountry = () => {
+        const form = this.formRefChangeLeader.props.form
+        form.validateFields((err, values) => {
+            if (err) {
+                return
+            }
+
+            console.log('Received values of form: ', values)
+            message.success('Change leader of country successfully')
+
+            form.resetFields()
+            this.setState({visibleModalChangeLeader: false})
+        })
+    }
+    saveFormChangeLeaderRef = (formRef) => {
+        this.formRefChangeLeader = formRef
     }
 
-    handleCancelAddCountry() {
-        this.setState({
-            visibleModalAddCountry: false
-        });
+    openChangeLeaderCountry (leader) {
+        this.formRefChangeLeader.props.form.setFieldsValue({
+            country: 'china',
+            leader: 'John Nguyen',
+        }, this.showModalChangeLeader())
+    }
+
+    handleRemoveCountry = () => {
+        this.handleCancelModalChangeLeader()
+
+        message.success('Remove country successfully')
     }
 
     ord_render () {
@@ -44,7 +99,7 @@ export default class extends BaseComponent {
                 name: 'John',
                 country: 'England',
                 avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-            }
+            },
         ]
 
         const listLeadersEl = listLeaders.map((leader, index) => {
@@ -52,7 +107,8 @@ export default class extends BaseComponent {
                 <Col span={6} key={index} className="user-card">
                     <Card
                         hoverable
-                        onClick={this.handleChangeLeaderCountry.bind(this, leader)}
+                        onClick={this.openChangeLeaderCountry.bind(this,
+                            leader)}
                         cover={<img alt="example" src={leader.avatar}/>}
                     >
                         <Card.Meta
@@ -65,24 +121,35 @@ export default class extends BaseComponent {
         })
         return (
             <div>
-                <Button className="pull-right" onClick={this.handleAddCountry.bind(this)} type="primary">Add country</Button>
-                <AddCountryModal
-                    visible={this.state.visibleModalAddCountry}
-                    onOk={this.handleSubmitAddCountry.bind(this)}
-                    onCancel={this.handleCancelAddCountry.bind(this)} />
+                <Button className="pull-right" onClick={this.showModalAddCountry} type="primary">Add country</Button>
                 <h1>Country Leaders</h1>
                 <Row>
                     {listLeadersEl}
                 </Row>
+
+                <ModalAddCountry
+                    wrappedComponentRef={this.saveFormAddCountryRef}
+                    visible={this.state.visibleModalAddCountry}
+                    onCancel={this.handleCancelModalAddCountry}
+                    onCreate={this.handleCreateCountry}
+                />
+
+                <ModalChangeLeaderCountry
+                    wrappedComponentRef={this.saveFormChangeLeaderRef}
+                    visible={this.state.visibleModalChangeLeader}
+                    onCancel={this.handleCancelModalChangeLeader}
+                    onCreate={this.handleChangeLeaderCountry}
+                    handleRemoveCountry={this.handleRemoveCountry}
+                />
             </div>
         )
     }
 
-    handleSubmitAddCountry(country) {
-        console.log('handleSubmitAddCountry', country);
+    handleSubmitAddCountry (country) {
+        console.log('handleSubmitAddCountry', country)
 
         this.setState({
-            visibleModalAddCountry: false
-        });
+            visibleModalAddCountry: false,
+        })
     }
 }
