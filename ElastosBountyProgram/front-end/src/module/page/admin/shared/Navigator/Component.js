@@ -14,14 +14,14 @@ export default class extends BaseComponent {
                 defaultSelectedKeys={[this.props.selectedItem]}
                 mode="inline"
             >
-                <Menu.Item key="users">
-                    <Link to="/admin/users">{I18N.get('1300')}</Link>
+                <Menu.Item key="tasks">
+                    <Link to="/admin/tasks">{I18N.get('1300')}</Link>
                 </Menu.Item>
                 <Menu.Item key="community">
                     <Link to="/admin/community">{I18N.get('1301')}</Link>
                 </Menu.Item>
-                <Menu.Item key="task-proposals">
-                    <Link to="/admin/task-proposals">{I18N.get('1302')}</Link>
+                <Menu.Item key="users">
+                    <Link to="/admin/users">{I18N.get('1302')}</Link>
                 </Menu.Item>
             </Menu>
         )

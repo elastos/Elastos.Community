@@ -18,13 +18,13 @@ export default class extends BaseComponent {
         return (
             <Menu onClick={this.clickItem.bind(this)}>
                 <Menu.Item key="developer">
-                    Developer
+                    {I18N.get('0100')}
                 </Menu.Item>
                 <Menu.Item key="social">
-                    Social
+                    {I18N.get('0101')}
                 </Menu.Item>
                 <Menu.Item key="leader">
-                    Leader
+                    {I18N.get('0102')}
                 </Menu.Item>
             </Menu>
         )
@@ -39,25 +39,25 @@ export default class extends BaseComponent {
             <Menu onClick={this.clickItem.bind(this)}>
                 {isLogin ?
                     <Menu.Item key="profile">
-                        Profile
+                        {I18N.get('0200')}
                     </Menu.Item> :
                     <Menu.Item key="login">
-                        Login
+                        {I18N.get('0201')}
                     </Menu.Item>
                 }
                 {!isLogin &&
                     <Menu.Item key="register">
-                        Register
+                        {I18N.get('0202')}
                     </Menu.Item>
                 }
                 {isLogin && hasAdminAccess &&
-                    <Menu.Item key="admin/users">
-                        Admin
+                    <Menu.Item key="admin/tasks">
+                        {I18N.get('0203')}
                     </Menu.Item>
                 }
                 {isLogin &&
                     <Menu.Item key="logout">
-                        Logout
+                        {I18N.get('0204')}
                     </Menu.Item>
                 }
             </Menu>
@@ -81,31 +81,31 @@ export default class extends BaseComponent {
                     <Menu.Item className="c_MenuItem overview">
                         <Dropdown overlay={overviewDropdown} style="margin-top: 24px;">
                             <a className="ant-dropdown-link" href="#">
-                                Overview <Icon type="down" />
+                                {I18N.get('0001')} <Icon type="down" />
                             </a>
                         </Dropdown>
                     </Menu.Item>
 
                     <Menu.Item className="c_MenuItem" key="community">
-                        Community
+                        {I18N.get('0002')}
                     </Menu.Item>
 
                     <Menu.Item className="c_MenuItem" key="directory">
-                        Leaders
+                        {I18N.get('0003')}
                     </Menu.Item>
 
                     <Menu.Item className="c_MenuItem right-side" key="inbox">
-                        Inbox
+                        {I18N.get('0006')}
                     </Menu.Item>
 
                     <Menu.Item className="c_MenuItem right-side" key="teams">
-                        Teams
+                        {I18N.get('0005')}
                     </Menu.Item>
 
                     <Menu.Item className="c_MenuItem account right-side">
                         <Dropdown overlay={acctDropdown} style="margin-top: 24px;">
                             <a className="ant-dropdown-link" href="#">
-                                Account <Icon type="down" />
+                                {I18N.get('0004')} <Icon type="down" />
                             </a>
                         </Dropdown>
                     </Menu.Item>
@@ -113,19 +113,19 @@ export default class extends BaseComponent {
 
                 <Menu onClick={this.clickItem.bind(this)} className="c_MenuTopRight" mode="horizontal">
                     <Menu.Item key="how-to-earn">
-                        How to Earn ELA
+                        {I18N.get('0007')}
                     </Menu.Item>
 
                     <Menu.Item key="about">
-                        About
+                        {I18N.get('0008')}
                     </Menu.Item>
 
                     <Menu.Item key="faq">
-                        FAQ
+                        {I18N.get('0009')}
                     </Menu.Item>
 
                     <Menu.Item key="contact">
-                        Contact
+                        {I18N.get('0010')}
                     </Menu.Item>
                 </Menu>
             </Header>
@@ -148,7 +148,7 @@ export default class extends BaseComponent {
             'register',
             'signup',
             'profile',
-            'admin/users',
+            'admin/tasks',
             'how-to-earn',
             'about',
             'faq',

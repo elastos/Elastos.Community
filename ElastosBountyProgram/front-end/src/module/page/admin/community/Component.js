@@ -1,5 +1,7 @@
 import React from 'react'
 import AdminPage from '../BaseAdmin'
+
+import '../admin.scss'
 import './style.scss'
 
 import { Breadcrumb, Col, Icon, Row, Menu, Select } from 'antd'
@@ -89,7 +91,7 @@ export default class extends AdminPage {
         );
 
         return (
-            <div className="p_admin_index ebp-wrap ebp-wrap--admin">
+            <div className="p_admin_index ebp-wrap">
                 <div className="d_box">
                     <div className="p_admin_breadcrumb">
                         <Breadcrumb>

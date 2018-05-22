@@ -1,24 +1,28 @@
 export default {
-    '0001': 'SIGN UP',
-    '0002': 'LOG IN',
-    '0003': 'HOW IT WORK',
-    '0004': 'POST TASK',
-    '0005': 'FIND TASK',
+    // Header
+    '0001': 'Bounty Programs',
+    '0002': 'Community',
+    '0003': 'Leaders',
+    '0004': 'Account',
+    '0005': 'Teams',
+    '0006': 'Inbox',
+    '0007': 'How to Earn ELA',
+    '0008': 'About',
+    '0009': 'FAQ',
+    '0010': 'Contact',
 
-    // Header Admin
-    '1000': 'Admin',
-    '1001': 'How to earn ELA',
-    '1002': 'About',
-    '1003': 'FAQ',
-    '1004': 'Contact',
+    '0100': 'Developer',
+    '0101': 'Social',
+    '0102': 'Leader',
 
-    // Menu Admin
-    '1100': 'Overview',
-    '1101': 'Community',
-    '1102': 'Directory',
-    '1103': 'Account',
-    '1104': 'Team',
-    '1105': 'Mail',
+    '0200': 'Profile',
+    '0201': 'Login',
+    '0202': 'Register',
+    '0203': 'Admin',
+    '0204': 'Logout',
+
+    // Admin breadcrumb
+    '1100': 'Admin',
 
     // Admin users
     '1200': 'No',
@@ -31,7 +35,7 @@ export default {
     '1207': 'Created date',
 
     // Admin navigator
-    '1300': 'Users',
+    '1300': 'Tasks',
     '1301': 'Community',
-    '1302': 'Task Proposals',
+    '1302': 'Users',
 };
