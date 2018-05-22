@@ -2,7 +2,7 @@ import Base from './Base';
 import {Document} from 'mongoose';
 import * as _ from 'lodash';
 import {constant} from '../constant';
-import {validate, crypto} from '../utility';
+import {validate, crypto, uuid} from '../utility';
 
 const {USER_ROLE} = constant;
 
@@ -14,15 +14,18 @@ export default class extends Base {
         this.validate_password(param.password);
         this.validate_email(param.email);
 
+        const salt = uuid();
+
         const doc = {
             username : param.username,
-            password : crypto.sha512(param.password),
+            password : this.getPassword(param.password, salt),
             email : param.email,
+            salt,
             profile : {
-                firstName : param.profile.region.firstName,
-                lastName : param.profile.region.lastName,
-                country : param.profile.region.country,
-                city : param.profile.region.city
+                firstName : param.firstName,
+                lastName : param.lastName,
+                country : param.country,
+                city : param.city
             },
             role : USER_ROLE.MEMBER,
             active: true
@@ -33,13 +36,15 @@ export default class extends Base {
 
     public async getUserSalt(username): Promise<String>{
         const db_user = this.getDBModel('User');
-        const user = await db_user.findOne({
+        const user = await db_user.db.findOne({
             username: username
         });
+        if(!user){
+            throw 'invalid username';
+        }
         return user.salt;
     }
 
-    // TODO: do not return salt
     public async findUser(query): Promise<Document>{
         const db_user = this.getDBModel('User');
         return await db_user.findOne({
@@ -51,23 +56,24 @@ export default class extends Base {
     public async changePassword(param): Promise<boolean>{
         const db_user = this.getDBModel('User');
 
-        const {oldPassword, password, userId} = param;
+        const {oldPassword, password, username} = param;
 
         this.validate_password(oldPassword);
         this.validate_password(password);
+        this.validate_username(username);
 
-        const user = await db_user.findOne({_id: userId}, {reject: false});
+        const user = await db_user.findOne({username}, {reject: false});
         if(!user){
             throw 'user is not exist';
         }
 
-        if(user.password !== crypto.sha512(oldPassword)){
+        if(user.password !== this.getPassword(oldPassword, user.salt)){
             throw 'old password is incorrect';
         }
 
-        return await db_user.update({_id : userId}, {
+        return await db_user.update({username}, {
             $set : {
-                password : crypto.sha512(password)
+                password : this.getPassword(password, user.salt)
             }
         });
     }
@@ -84,6 +90,15 @@ export default class extends Base {
         });
 
         return total;
+    }
+
+    /*
+    * return user password
+    * password is built with sha512 to (password + salt)
+    *
+    * */
+    public getPassword(password, salt){
+        return crypto.sha512(password+salt);
     }
 
     public validate_username(username){

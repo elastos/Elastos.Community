@@ -7,7 +7,6 @@ import Task from './Task';
 import Community from './Community';
 import User_Community from './User_Community';
 import Task_Candidate from './Task_Candidate';
-import * as crypto from 'crypto';
 
 export default class {
     protected db: any;
@@ -118,7 +117,12 @@ export default class {
             const rs = await this.db.User.save(doc);
             console.log('create admin user =>', rs);
         }catch(err){
-            console.log('admin user is already exist', err);
+            if(err.code === 11000){
+                console.log('admin user is already exist');
+            }
+            else{
+                console.error(err);
+            }
         }
     }
 }

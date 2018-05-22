@@ -1,5 +1,5 @@
 import Base from '../Base';
-import * as uuid from 'node-uuid';
+import {uuid} from '../../utility';
 
 export default class GetTask extends Base {
     protected needLogin = false;
@@ -27,11 +27,11 @@ export default class GetTask extends Base {
         // TODO
         return this.result(1, [
             {
-                task_id: uuid.v4(),
+                task_id: uuid(),
                 task_name: 'first'
             },
             {
-                task_id: uuid.v4(),
+                task_id: uuid(),
                 task_name: 'second'
             }
         ]);

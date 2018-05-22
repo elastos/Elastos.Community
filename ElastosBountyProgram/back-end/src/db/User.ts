@@ -10,7 +10,8 @@ export default class extends Base {
     }
     protected rejectFields(){
         return {
-            password : false
+            password : false,
+            salt : false
         };
     }
 }

@@ -17,7 +17,10 @@ export default class extends Base {
      * @returns {Promise<"mongoose".Document>}
      */
     public async create(param): Promise<Document> {
-        const {name, description, communityId, type, startTime, endTime, candidateLimit, reward_ela, reward_votePower} = param;
+        const {
+            name, description, communityId, type, startTime, endTime,
+            candidateLimit, candidateSltLimit, reward_ela, reward_votePower
+        } = param;
         this.validate_name(name);
         this.validate_description(description);
         this.validate_type(type);
@@ -29,6 +32,7 @@ export default class extends Base {
             startTime,
             endTime,
             candidateLimit,
+            candidateSltLimit,
             reward : {
                 ela : {
                     amount : reward_ela

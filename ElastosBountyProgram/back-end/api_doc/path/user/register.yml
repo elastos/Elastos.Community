@@ -29,9 +29,13 @@ post:
               type: string
               example: test@elastos.org
 
-            name:
+            firstName:
               type: string
-              example: Jacky.Li
+              example: Jacky
+
+            lastName:
+              type: string
+              example: Li
 
             country:
               type: string
