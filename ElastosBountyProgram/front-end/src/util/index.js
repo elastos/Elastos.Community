@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router';
+import {api_request} from './request';
 
 /**
  * Helper for React-Redux connect
@@ -20,4 +21,8 @@ export const constant = (moduleName, detailArray)=>{
     });
 
     return result;
+};
+
+export {
+    api_request
 };

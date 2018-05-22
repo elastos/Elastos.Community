@@ -25,7 +25,7 @@ export default createContainer(Component, (state)=>{
                     userService.path.push('/home')
                 }
             } catch (err) {
-                message.error('login failed')
+                message.error(err.message)
             }
         }
     }
