@@ -4,7 +4,6 @@ import {Layout, Menu, Icon, Badge, Avatar, Modal, Dropdown} from 'antd'
 import _ from 'lodash'
 import I18N from '@/I18N'
 
-import logoImg from 'img/Elastos Logo_Temp.png'
 
 import {USER_ROLE} from '@/constant'
 
@@ -75,7 +74,7 @@ export default class extends BaseComponent {
             <Header className="c_Header">
                 <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu" selectedKeys={['mail']} mode="horizontal">
                     <Menu.Item className="c_MenuItem logo" key="home">
-                        <img src={logoImg} />
+                        <img src='/assets/images/Elastos_Logo_Temp.png' />
                     </Menu.Item>
 
                     <Menu.Item className="c_MenuItem overview">

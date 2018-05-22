@@ -43,7 +43,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "6.24.1",
     "clean-webpack-plugin": "^0.1.16",
-    "copy-webpack-plugin": "4.5.1",
+    "copy-webpack-plugin": "^4.5.1",
     "css-loader": "0.28.11",
     "eslint": "4.19.1",
     "eslint-config-standard": "^11.0.0",

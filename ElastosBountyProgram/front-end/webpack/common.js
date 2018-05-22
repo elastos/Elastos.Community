@@ -1,6 +1,7 @@
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const util = require('./util');
 const resolve = util.resolve;
 
@@ -57,4 +58,12 @@ module.exports = {
             'img': resolve('src/img')
         }
     },
+    plugins : [
+        new CopyWebpackPlugin([
+            {
+                from: 'src/assets',
+                to: 'assets'
+            }
+        ])
+    ]
 };

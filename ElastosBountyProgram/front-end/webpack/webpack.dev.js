@@ -68,6 +68,7 @@ module.exports = merge(common, {
         contentBase: 'dev_dist',
         port: 3001,
         hot: true,
+
         watchOptions: {
             ignored: /node_modules/,
         },
