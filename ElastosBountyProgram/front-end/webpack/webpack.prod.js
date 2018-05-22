@@ -48,20 +48,20 @@ module.exports = merge(common, {
     module: {
         strictExportPresence: true, //need this
         rules: [
-            {
-                test: /\.(js|jsx)$/,
-                enforce: 'pre',
-                use: [
-                    {
-                        options: {
-                            formatter: eslintFormatter,
-                            eslintPath: require.resolve('eslint'),
-                        },
-                        loader: require.resolve('eslint-loader'),
-                    },
-                ],
-                include: resolve('src'),
-            },
+            // {
+            //     test: /\.(js|jsx)$/,
+            //     enforce: 'pre',
+            //     use: [
+            //         {
+            //             options: {
+            //                 formatter: eslintFormatter,
+            //                 eslintPath: require.resolve('eslint'),
+            //             },
+            //             loader: require.resolve('eslint-loader'),
+            //         },
+            //     ],
+            //     include: resolve('src'),
+            // },
             {
                 oneOf: [
                     {
