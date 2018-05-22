@@ -73,4 +73,8 @@ export const api_request = (opts = {})=>{
             throw new Error(data.error);
         }
     });
-}
+};
+
+// TODO upload file
+export const upload_request = ()=>{};
+
