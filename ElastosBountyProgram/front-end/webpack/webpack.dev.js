@@ -41,7 +41,7 @@ module.exports = merge(common, {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['es2015', 'react'],
+                        presets: ['es2015', 'react', 'stage-0'],
                         cacheDirectory: true,
                         plugins: ['react-hot-loader/babel', 'react-html-attrs'],
                     },
