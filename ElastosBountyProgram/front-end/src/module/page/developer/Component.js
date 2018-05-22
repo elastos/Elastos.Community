@@ -5,7 +5,7 @@ import IssueForm from './formIssue/Container'
 
 import './style.scss'
 
-import { Col, Row, Icon, Form, Input, Button, Dropdown } from 'antd'
+import { Col, Row, Icon, Form, Input, Button, Modal } from 'antd'
 const FormItem = Form.Item;
 
 export default class extends StandardPage {
@@ -13,9 +13,6 @@ export default class extends StandardPage {
     ord_renderContent () {
 
         // const p = this.getIssueFormProps()
-
-
-
         return (
             <div className="p_Social">
                 <div className="ebp-header-divider">
@@ -54,7 +51,7 @@ export default class extends StandardPage {
                                     Available Tasks
                                 </h2>
                                 <div className="pull-right btnContainer">
-                                    <Button>
+                                    <Button onClick={this.createTaskModal.bind(this)}>
                                         Create Task
                                     </Button>
                                 </div>
@@ -73,5 +70,11 @@ export default class extends StandardPage {
                 <Footer />
             </div>
         )
+    }
+
+    async createTaskModal() {
+
+
+
     }
 }
