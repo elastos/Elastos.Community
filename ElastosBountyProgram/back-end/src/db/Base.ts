@@ -43,10 +43,17 @@ export default abstract class {
     public async save(doc: object): Promise<Document>{
         return await this.db.create(doc);
     }
+
     public async find(query, opts?): Promise<Document[]>{
         const option = this.buildFindOptions(opts);
         const reject_fields = option.reject ? this.reject_fields : {};
         return await this.db.find(query, reject_fields);
+    }
+
+    public async findById(id, opts?): Promise<Document>{
+        const option = this.buildFindOptions(opts);
+        const reject_fields = option.reject ? this.reject_fields : {};
+        return await this.db.findById(id, reject_fields);
     }
 
     public async findOne(query, opts?): Promise<Document>{

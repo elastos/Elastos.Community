@@ -26,7 +26,7 @@ export default class extends Base {
             geolocation,
             type,
             leaderId,
-            createdBy : this.currentUser._id
+            createdBy : '5b02dc22425c521e3be89791'
         };
 
         return await db_community.save(doc);
@@ -61,14 +61,25 @@ export default class extends Base {
     /**
      * Get list Community
      *
-     * @param param skip, limit: number query, sort: object
+     * @param param
      * @returns {Promise<"mongoose".Document>}
      */
     public async index(param): Promise<[Document]> {
         const {query} = param;
         const db_community = this.getDBModel('Community');
 
-        return await db_community.find(query);
+        return await db_community.find(query);;
+    }
+
+    /**
+     * Get Community
+     *
+     * @param param
+     * @returns {Promise<"mongoose".Document>}
+     */
+    public async get(communityId): Promise<Document> {
+        const db_community = this.getDBModel('Community');
+        return await db_community.findById(communityId);
     }
 
     /**
