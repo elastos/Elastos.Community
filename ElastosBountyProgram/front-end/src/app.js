@@ -7,6 +7,7 @@ import {ConnectedRouter} from 'react-router-redux';
 import store from '@/store';
 import config from '@/config';
 import {USER_ROLE} from '@/constant'
+import {api_request} from "./util";
 
 import './boot';
 import './style/index.scss';
@@ -44,38 +45,23 @@ const render = () => {
     );
 };
 
-const apiToken = sessionStorage.getItem('api-token')
-
-if (apiToken) {
-
+if(sessionStorage.getItem('api-token')){
     const userRedux = store.getRedux('user');
+    api_request({
+        path : '/user/current_user',
+        success : (data)=>{
+            store.dispatch(userRedux.actions.is_login_update(true));
+            if ([USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(data.role)) {
+                store.dispatch(userRedux.actions.is_admin_update(true))
+            }
+            store.dispatch(userRedux.actions.profile_update(data.profile))
+            store.dispatch(userRedux.actions.role_update(data.role))
 
-    let request = new Request(process.env.SERVER_URL + '/user/current_user', {
-        method: 'GET',
-        headers: new Headers({
-            'api-token': apiToken
-        })
-    })
-
-    fetch(request).then((res) => res.json()).then(async (result) => {
-
-        if (result.code !== 1) {
-            return
+            render()
         }
-
-        await store.dispatch(userRedux.actions.is_login_update(true))
-        if ([USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(result.data.role)) {
-            await store.dispatch(userRedux.actions.is_admin_update(true))
-        }
-
-        await store.dispatch(userRedux.actions.profile_update(result.data.profile))
-        await store.dispatch(userRedux.actions.role_update(result.data.role))
-
-    }).then(() => {
-        render()
-    })
-
-} else {
-    render()
+    });
+}
+else{
+    render();
 }
 
