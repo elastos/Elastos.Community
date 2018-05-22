@@ -1,6 +1,14 @@
 import HomePage from '@/module/page/home/Container'
 import SocialPage from '@/module/page/social/Container'
 import DeveloperPage from '@/module/page/developer/Container'
+import LeaderPage from '@/module/page/leader/Container'
+
+// this is the leaders link in the header
+import DirectoryPage from '@/module/page/directory/Container'
+import CommunityPage from '@/module/page/community/Container'
+
+import TeamsPage from '@/module/page/teams/Container'
+import TasksPage from '@/module/page/tasks/Container'
 
 import LoginPage from '@/module/page/login/Container'
 import RegisterPage from '@/module/page/register/Container'
@@ -27,6 +35,26 @@ export default [
     {
         path: '/developer',
         page: DeveloperPage
+    },
+    {
+        path: '/leader',
+        page: LeaderPage
+    },
+    {
+        path: '/directory',
+        page: DirectoryPage
+    },
+    {
+        path: '/community',
+        page: CommunityPage
+    },
+    {
+        path: '/teams',
+        page: TeamsPage
+    },
+    {
+        path: '/tasks',
+        page: TasksPage
     },
     {
         path: '/login',

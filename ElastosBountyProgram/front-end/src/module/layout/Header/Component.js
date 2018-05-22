@@ -94,7 +94,7 @@ export default class extends BaseComponent {
                         {I18N.get('0003')}
                     </Menu.Item>
 
-                    <Menu.Item className="c_MenuItem right-side" key="inbox">
+                    <Menu.Item className="c_MenuItem right-side" key="tasks">
                         {I18N.get('0006')}
                     </Menu.Item>
 
@@ -143,7 +143,7 @@ export default class extends BaseComponent {
             'directory',
             'account',
             'teams',
-            'inbox',
+            'tasks',
             'login',
             'register',
             'signup',

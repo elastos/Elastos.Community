@@ -5,7 +5,7 @@ export default {
     '0003': 'Leaders',
     '0004': 'Account',
     '0005': 'Teams',
-    '0006': 'Inbox',
+    '0006': 'Tasks',
     '0007': 'How to Earn ELA',
     '0008': 'About',
     '0009': 'FAQ',
