@@ -58,3 +58,10 @@ export const TRANS_STATUS = {
     FAILED: 'FAILED',
     SUCCESSFUL: 'SUCCESSFUL'
 }
+
+export const ISSUE_CATEGORY = {
+    BUG: 'BUG',
+    SECURITY: 'SECURITY',
+    SUGGESTION: 'SUGGESTION',
+    OTHER: 'OTHER'
+}

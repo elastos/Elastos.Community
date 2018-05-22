@@ -4,7 +4,7 @@ import StandardPage from '../StandardPage';
 import './style.scss'
 
 import { Col, Row, Icon } from 'antd'
-// import Task from '@/module/task/Container'
+import Footer from '@/module/layout/Footer/Container'
 
 import homeHeaderImg from 'img/HomeHeader.jpg'
 
@@ -15,6 +15,7 @@ import homeLeaderImg from 'img/Home_Leader.png'
 import homeBottomTempImg from 'img/HomeBottomTemp.png'
 
 export default class extends StandardPage {
+
     ord_renderContent(){
 
         const backdropStyle = {
@@ -40,10 +41,10 @@ export default class extends StandardPage {
                             Developer
                         </h2>
 
+                        <h3>
+                            Interested in getting into blockchain development?
+                        </h3>
                         <p>
-                            <h3>
-                                Interested in getting into blockchain development?
-                            </h3>
                             Earn ELA for contributing to the Elastos ecosystem through
                             everything from example apps to enterprise dApp development.
                         </p>
@@ -61,10 +62,10 @@ export default class extends StandardPage {
                             Social
                         </h2>
 
+                        <h3>
+                            Fan of Elastos?
+                        </h3>
                         <p>
-                            <h3>
-                                Fan of Elastos?
-                            </h3>
                             Whether you're already part of the community or want to join,
                             we reward you for various things you do online to promote Elastos
                             either locally or worldwide.
@@ -83,10 +84,10 @@ export default class extends StandardPage {
                             Leader
                         </h2>
 
+                        <h3>
+                            Organize Elastos Events
+                        </h3>
                         <p>
-                            <h3>
-                                Organize Elastos Events
-                            </h3>
                             Interested in becoming a leader for your community, school or entire country?
                             Our program empowers you to take a leadership role in the Elastos world.
                         </p>
@@ -128,40 +129,7 @@ export default class extends StandardPage {
 
                     <img src={homeBottomTempImg} />
                 </div>
-                <div className="horizGap d_rowGrey">
-
-                </div>
-                <div className="d_rowGrey">
-                    <Row className="d_rowFooter">
-                        <Col span={8}>
-                            <div className="d_footerSection">
-                                <h2>Offices</h2>
-
-                                <b>Beijing—</b>
-
-                                <p>
-                                    Tower G, Zhizao Street, Zhongguancun, No. 45, Chengfu Road, Haidian District, Beijing City
-                                </p>
-
-                                <b>Shanghai—</b>
-
-                                <p>
-                                    11F, Huahong Tower, 463 Tanggu Road, Shanghai, China
-                                </p>
-                            </div>
-                        </Col>
-                        <Col span={8}>
-                            <div className="d_footerSection">
-                                <h2>Contact Us</h2>
-                            </div>
-                        </Col>
-                        <Col span={8}>
-                            <div className="d_footerSection">
-                                <h2>Newsletter</h2>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
+                <Footer />
             </div>
         );
     }

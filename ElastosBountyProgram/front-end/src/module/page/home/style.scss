@@ -11,10 +11,6 @@
 
   background-color: #ffffff;
 
-  .horizGap {
-    height: $gap_3;
-  }
-
   .d_topBackdrop {
     font-size: 40px;
     font-weight: 500;
@@ -57,6 +53,10 @@
     }
 
     h3 {
+      text-align: left;
+      max-width: 70%;
+      margin-left: auto;
+      margin-right: auto;
       padding-bottom: $gap_1;
     }
   }
@@ -66,24 +66,8 @@
     border-right: 1px solid #e0e0e0;
   }
 
-  .d_rowGrey {
-    background-color: rgb(229, 229, 229);
-  }
-
   .d_rowEvents {
     @include homeContent;
-  }
-
-  .d_rowFooter {
-
-    @include homeContent;
-
-    .d_footerSection {
-      text-align: left;
-      max-width: 70%;
-      margin-left: auto;
-      margin-right: auto;
-    }
   }
 
   .d_colMeetups {

@@ -1,54 +1,54 @@
-import React from 'react';
-import BaseComponent from '@/model/BaseComponent';
-import {Form, Icon, Input, Button, Checkbox} from 'antd';
+import React from 'react'
+import BaseComponent from '@/model/BaseComponent'
+import {Form, Icon, Input, Button, Checkbox} from 'antd'
 
-import './style.scss';
+import './style.scss'
 
-const FormItem = Form.Item;
+const FormItem = Form.Item
 
 class C extends BaseComponent {
 
     handleSubmit(e) {
-        e.preventDefault();
+        e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
-                this.props.login(values.username, values.password, values.remember);
+                console.log('Received values of form: ', values)
+                this.props.login(values.username, values.password, values.remember)
 
             }
-        });
+        })
     }
 
     getInputProps() {
-        const {getFieldDecorator} = this.props.form;
+        const {getFieldDecorator} = this.props.form
         const userName_fn = getFieldDecorator('username', {
             rules: [{required: true, message: 'Please input your username!'}],
             initialValue: ''
-        });
+        })
         const userName_el = (
             <Input size="large"
                 prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 placeholder="Username"/>
-        );
+        )
 
         const pwd_fn = getFieldDecorator('password', {
             rules: [{required: true, message: 'Please input your Password!'}]
-        });
+        })
         const pwd_el = (
             <Input size="large"
                 prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 type="password" placeholder="Password"/>
-        );
+        )
 
         return {
             userName: userName_fn(userName_el),
             pwd: pwd_fn(pwd_el)
-        };
+        }
     }
 
     ord_render() {
-        const {getFieldDecorator} = this.props.form;
-        const p = this.getInputProps();
+        const {getFieldDecorator} = this.props.form
+        const p = this.getInputProps()
         return (
             <Form onSubmit={this.handleSubmit.bind(this)} className="c_loginForm">
                 <FormItem>
@@ -66,8 +66,8 @@ class C extends BaseComponent {
                     </Button>
                 </FormItem>
             </Form>
-        );
+        )
     }
 }
 
-export default Form.create()(C);
+export default Form.create()(C)

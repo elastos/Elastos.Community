@@ -24,7 +24,7 @@
 
   //outline: 1px solid red;
 
-  padding: 0 20px;
+  padding: 0 $gap_3;
 }
 
 .ebp-admin-wrap{
@@ -41,7 +41,18 @@
   background: #ffffff;
   min-height: 60vh;
   margin-top: $gap_2;
-  padding: $gap_2 0;
+  padding: 0 $gap_2 $gap_3;
+
+  .ebp-page-title {
+    text-align: center;
+    padding-bottom: $gap_2;
+  }
+}
+
+.ebp-header-divider {
+  height: 2px;
+  background: linear-gradient(90deg, #ffffff 3.52% ,rgba(71, 170, 167, 0.55) 47.51%, rgba(224, 224, 224, 0.55) 100%);
+  transform: matrix(1, 0, 0, -1, 0, 0);
 }
 
 //Common class
