@@ -1,5 +1,5 @@
 import React from 'react'
-import StandardPage from '../../StandardPage'
+import AdminPage from '../BaseAdmin'
 import './style.scss'
 
 import { Breadcrumb, Col, Icon, Row, Menu, Select } from 'antd'
@@ -9,7 +9,7 @@ import ListLeadersOfARegion from './ListLeadersOfARegion/Component'
 import Navigator from '../shared/Navigator/Component'
 import { Link } from 'react-router-dom'
 
-export default class extends StandardPage {
+export default class extends AdminPage {
     checkTypeOfBreadcrumb() {
         // Check status of breadcrumb
         let treeLevel = Object.keys(this.props.match.params).length;
@@ -92,56 +92,24 @@ export default class extends StandardPage {
             <div className="p_admin_index ebp-wrap ebp-wrap--admin">
                 <div className="d_box">
                     <div className="p_admin_breadcrumb">
-                        { this.state.treeLevel === 0 ? (
-                            <Breadcrumb>
-                                <Breadcrumb.Item href="/">
-                                    <Icon type="home" />
-                                </Breadcrumb.Item>
-                                <Breadcrumb.Item>Admin</Breadcrumb.Item>
-                                <Breadcrumb.Item>
-                                    <Link to="/admin/community">Community</Link>
-                                </Breadcrumb.Item>
-                                <Breadcrumb.Item>
-                                    {menuCountriesEl}
-                                </Breadcrumb.Item>
-                            </Breadcrumb>
-                        ) : null}
+                        <Breadcrumb>
+                            <Breadcrumb.Item href="/">
+                                <Icon type="home" />
+                            </Breadcrumb.Item>
+                            <Breadcrumb.Item>Admin</Breadcrumb.Item>
+                            <Breadcrumb.Item>
+                                <Link to="/admin/community">Community</Link>
+                            </Breadcrumb.Item>
+                            <Breadcrumb.Item>
+                                {menuCountriesEl}
+                            </Breadcrumb.Item>
 
-                        { this.state.treeLevel === 1 ? (
-                            <Breadcrumb>
-                                <Breadcrumb.Item href="/">
-                                    <Icon type="home" />
-                                </Breadcrumb.Item>
-                                <Breadcrumb.Item>Admin</Breadcrumb.Item>
-                                <Breadcrumb.Item>
-                                    <Link to="/admin/community">Community</Link>
-                                </Breadcrumb.Item>
-                                <Breadcrumb.Item>
-                                    {menuCountriesEl}
-                                </Breadcrumb.Item>
+                            {this.state.treeLevel >= 1 && (
                                 <Breadcrumb.Item>
                                     {menuListRegionsEl}
                                 </Breadcrumb.Item>
-                            </Breadcrumb>
-                        ) : null}
-
-                        { this.state.treeLevel === 2 ? (
-                            <Breadcrumb>
-                                <Breadcrumb.Item href="/">
-                                    <Icon type="home" />
-                                </Breadcrumb.Item>
-                                <Breadcrumb.Item>Admin</Breadcrumb.Item>
-                                <Breadcrumb.Item>
-                                    <Link to="/admin/community">Community</Link>
-                                </Breadcrumb.Item>
-                                <Breadcrumb.Item>
-                                    {menuCountriesEl}
-                                </Breadcrumb.Item>
-                                <Breadcrumb.Item>
-                                    {menuListRegionsEl}
-                                </Breadcrumb.Item>
-                            </Breadcrumb>
-                        ) : null}
+                            )}
+                        </Breadcrumb>
                     </div>
                     <div className="p_admin_content">
                         <Row>
