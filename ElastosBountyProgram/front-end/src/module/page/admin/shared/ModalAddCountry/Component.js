@@ -1,6 +1,7 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import { Form, Input, Modal, Select, Button } from 'antd'
+import config from '@/config'
 
 const FormItem = Form.Item
 
@@ -20,6 +21,13 @@ export default Form.create()(
                     <Button onClick={onCancel}>Cancel</Button>
                 </div>
             )
+
+            const listCountriesEl = config.data.listCountries.map((country) => {
+                return (
+                    <Select.Option key={country}
+                        value={country.code}>{country.name}</Select.Option>
+                )
+            })
 
             return (
                 <Modal
@@ -42,8 +50,7 @@ export default Form.create()(
                                     placeholder="Please select a country"
                                     filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                                 >
-                                    <Select.Option value="china">China</Select.Option>
-                                    <Select.Option value="use">U.S.A</Select.Option>
+                                    {listCountriesEl}
                                 </Select>
                             )}
                         </FormItem>

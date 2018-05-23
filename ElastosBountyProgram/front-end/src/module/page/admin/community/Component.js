@@ -5,60 +5,85 @@ import '../admin.scss'
 import './style.scss'
 
 import { Breadcrumb, Col, Icon, Row, Select } from 'antd'
-import ListLeadersOfAllCountries from './ListLeadersOfAllCountries/Component'
-import ListLeadersOfACountry from './ListLeadersOfACountry/Component'
-import ListLeadersOfARegion from './ListLeadersOfARegion/Component'
+import ListCountryLeaders from './ListCountryLeaders/Component'
+import DetailLeaderOfCountryOrRegion from './DetailLeaderOfCountryOrRegion/Component'
 import Navigator from '../shared/Navigator/Component'
 import { Link } from 'react-router-dom'
+import config from '@/config'
 
 export default class extends AdminPage {
     checkTypeOfBreadcrumb () {
-        // Check status of breadcrumb
-        let treeLevel = Object.keys(this.props.match.params).length
+        let type;
+        
+        const routePrams = this.props.match.params;
+        if (!Object.keys(routePrams).length) {
+            type = 'LEADER_OF_ALL_COUNTRIES';
+        } else if (routePrams['country'] && routePrams['leader']) {
+            type = 'LEADER_DETAIL';
+        } else if (routePrams['country'] && routePrams['region']) {
+            type = 'REGION_DETAIL';
+        } else {
+            type = 'LEADER_OF_A_COUNTRY';
+        }
+
         this.setState({
-            treeLevel
-        })
+            type
+        });
+    
+        this.setState({
+            type,
+        });
     }
 
     componentWillMount () {
         this.checkTypeOfBreadcrumb()
     }
 
+    updateBreadcrumb(data) {
+        console.log('set breakcrunm data', data)
+        this.setState({...data})
+    }
+
     renderMatchComponent () {
-        switch (this.state.treeLevel) {
-            case 0:
-                return <ListLeadersOfAllCountries/>
-            case 1:
-                return <ListLeadersOfACountry/>
+        switch (this.state.type) {
+            case 'LEADER_OF_ALL_COUNTRIES':
+                return <ListCountryLeaders country={null} />
+            case 'LEADER_OF_A_COUNTRY':
+                return <ListCountryLeaders country={this.props.match.params['country']} />
             default:
-                return <ListLeadersOfARegion/>
+                return <DetailLeaderOfCountryOrRegion leader={this.props.match.params['leader']} region={this.props.match.params['region']} />
         }
     }
 
-    handleChangeCountry (country) {
-        this.props.history.push(`/admin/community/${country}`)
+    handleChangeCountry (countryCode) {
+        this.setState({
+            selectedCountry: countryCode,
+        });
+
+        this.props.history.push(`/admin/community/${countryCode}`)
     }
 
     handleChangeRegion (region) {
-        this.props.history.push(
-            `/admin/community/${this.props.match.params['country']}/${region}`)
+        this.setState({
+            selectedRegion: region,
+        });
+
+        this.props.history.push(`/admin/community/${this.props.match.params['country']}/region/${region}`)
     }
 
     ord_renderContent () {
-        const listCountries = [
-            'Vietnam', 'China', 'Singapore', 'USA'
-        ]
+        console.log('this.props community', this.props);
 
-        const listCountriesEl = listCountries.map((country) => {
+        const listCountriesEl = config.data.listCountries.map((country) => {
             return (
                 <Select.Option key={country}
-                    value={country}>{country}</Select.Option>
+                    value={country.code}>{country.name}</Select.Option>
             )
         })
 
         const menuCountriesEl = (
             <Select
-                defaultValue={this.props.match.params['country']}
+                value={this.props.match.params['country']}
                 showSearch
                 style={{width: 160}}
                 placeholder="Select a country"
@@ -82,7 +107,7 @@ export default class extends AdminPage {
 
         const menuListRegionsEl = (
             <Select
-                defaultValue={this.props.match.params['region']}
+                value={this.props.match.params['region']}
                 showSearch
                 style={{width: 160}}
                 placeholder="Select a region"
@@ -109,7 +134,7 @@ export default class extends AdminPage {
                                 {menuCountriesEl}
                             </Breadcrumb.Item>
 
-                            {this.state.treeLevel >= 1 && (
+                            {(this.state.type !== 'LEADER_OF_ALL_COUNTRIES') && (
                                 <Breadcrumb.Item>
                                     {menuListRegionsEl}
                                 </Breadcrumb.Item>
