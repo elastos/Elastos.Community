@@ -6,21 +6,13 @@ import './style.scss'
 import { Col, Row, Icon } from 'antd'
 import Footer from '@/module/layout/Footer/Container'
 
-import homeHeaderImg from 'img/HomeHeader.jpg'
-
-import homeDeveloperImg from 'img/Home_Developers.png'
-import homeSocialImg from 'img/Home_Social.png'
-import homeLeaderImg from 'img/Home_Leader.png'
-
-import homeBottomTempImg from 'img/HomeBottomTemp.png'
-
 export default class extends StandardPage {
 
     ord_renderContent(){
 
         const backdropStyle = {
             backgroundPosition: '0 50%',
-            backgroundImage: `url(${homeHeaderImg})`
+            backgroundImage: `url('/assets/images/HomeHeader.jpg')`
         }
 
         return (
@@ -35,7 +27,7 @@ export default class extends StandardPage {
                 </div>
                 <Row className="d_rowPrograms">
                     <Col span={8}>
-                        <img src={homeDeveloperImg} />
+                        <img src="/assets/images/Home_Developers.png" />
 
                         <h2>
                             Developer
@@ -56,7 +48,7 @@ export default class extends StandardPage {
                         </div>
                     </Col>
                     <Col span={8} className="d_colProgram_middle">
-                        <img src={homeSocialImg} />
+                        <img src="/assets/images/Home_Social.png" />
 
                         <h2>
                             Social
@@ -78,7 +70,7 @@ export default class extends StandardPage {
                         </div>
                     </Col>
                     <Col span={8}>
-                        <img src={homeLeaderImg} />
+                        <img src="/assets/images/Home_Leader.png" />
 
                         <h2>
                             Leader
@@ -127,7 +119,7 @@ export default class extends StandardPage {
                         News & Updates
                     </h1>
 
-                    <img src={homeBottomTempImg} />
+                    <img src="/assets/images/HomeBottomTemp.png" />
                 </div>
                 <Footer />
             </div>
