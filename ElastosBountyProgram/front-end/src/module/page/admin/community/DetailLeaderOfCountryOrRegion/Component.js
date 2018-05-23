@@ -3,6 +3,8 @@ import BaseComponent from '@/model/BaseComponent'
 import { Button, Card, Col, Row, message } from 'antd'
 import ModalChangeLeaderCountry from '../../shared/ModalChangeLeaderCountry/Component'
 import ModalAddSubCommunity from '../../shared/ModalAddSubCommunity/Component'
+import _ from 'lodash'
+import config from '@/config'
 
 import './style.scss'
 
@@ -91,10 +93,14 @@ export default class extends BaseComponent {
     }
 
     ord_render () {
-        const leaderInfo = {
-            name: 'John Nguyen', country: 'Vietnam', avatar: 'https://www.w3schools.com/howto/img_avatar.png',
+        let leaderInfo;
+        if (this.props.leader) {
+            leaderInfo = _.find(config.data.mockDataAllLeaders, {id: parseInt(this.props.leader)})
+        } else {
+            // Mock data leader of region
+            leaderInfo = _.find(config.data.mockDataAllLeaders, {id: 3})
         }
-        
+
         const leaderEl = (
             <Card
                 hoverable

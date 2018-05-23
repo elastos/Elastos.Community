@@ -81,7 +81,11 @@ export default [
         page: AdminCommunityPage
     },
     {
-        path: '/admin/community/:country/:region',
+        path: '/admin/community/:country/leader/:leader',
+        page: AdminCommunityPage
+    },
+    {
+        path: '/admin/community/:country/region/:region',
         page: AdminCommunityPage
     },
     {
