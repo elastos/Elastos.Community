@@ -12,10 +12,10 @@ const FormItem = Form.Item
  * Which version of the form depends on the leader's program
  *
  * Admin
- * - social tasks for media: blogs, video, podcasts - these can only be created by admins
+ * - social tasks for media: blogs, video, podcasts - these can only be created by any leader/admin
  * - developer tasks for dApps, example apps, technical tutorials - these can only be created by admins
  *
- * TODO: in the future we should have social and developer admins
+ * TODO: in the future we should developer leaders
  *
  * Community Leaders - each community has a leader
  * - a leader can create events in their own local community or online community
