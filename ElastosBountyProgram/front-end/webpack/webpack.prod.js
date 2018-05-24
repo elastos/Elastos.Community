@@ -15,7 +15,7 @@ const resolve = util.resolve;
 const prodEnv = {
     NODE_ENV: JSON.stringify('production'),
     PLATFORM_ENV: JSON.stringify('web'),
-    SERVER_URL: JSON.stringify('http://52.15.45.1:3000')
+    SERVER_URL: JSON.stringify('http://18.218.149.20:3000')
 };
 
 const stagingEnv = {
