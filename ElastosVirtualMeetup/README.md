@@ -18,6 +18,7 @@ We will regularly schedule virtual meetups where the community members can direc
 ## Past Meetups
 ### Thursday, May 24th 2018 at 16:00 Eastern Daylight Time: Elastos Platform
 - [Link to powerpoint slides](https://docs.google.com/presentation/d/1n2hyzjlbAZwNevbBAX9DEpZfWTQIH-Jl3hgCCJfi3tc/edit?usp=sharing)
+- [Link to youtube recording](https://www.youtube.com/watch?v=1p-P0p5yjoQ&feature=youtu.be)
 - Main Presentation: Introduction to Elastos Platform - How different pieces fit together and Q&A
 - Demo: EBP Progress/Demo
 
