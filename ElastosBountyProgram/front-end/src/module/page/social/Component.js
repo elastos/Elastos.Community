@@ -28,7 +28,7 @@ export default class extends StandardPage {
                         </h1>
                     </div>
                     <Row className="d_rowTop">
-                        <Col span={16} className="d_box">
+                        <Col span={16} className="d_leftContainer d_box">
                             <h2>
                                 Upcoming Social Events
                             </h2>
@@ -41,7 +41,14 @@ export default class extends StandardPage {
                                                 {task.name}
                                             </h3>
                                             <img src={'/assets/images/task_thumbs/' + task.thumbnail} />
-
+                                        </div>
+                                    </Col>
+                                })}
+                            </Row>
+                            <Row className="d_devEventsContainer">
+                                {this.props.all_tasks.map((task) => {
+                                    return <Col key={task._id} md={{span:8}} lg={{span: 6}}>
+                                        <div class="i_event">
                                             <p>
                                                 {_.truncate(task.description, {length: 100})}
 

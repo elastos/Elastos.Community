@@ -15,14 +15,27 @@
     }
   }
 
-  .d_rightContainer {
-    border-left: 1px solid #e0e0e0;
+  .d_leftContainer {
+    border-right: 1px solid #e0e0e0;
   }
 
-  .i_event {
-    > img {
-      width: 100%;
+  .d_devEventsContainer {
+    margin-left: -1 * $gap_2;
+
+    .i_event {
+
+      padding: 0 $gap_2;
+
+      img {
+        max-height: 200px;
+        width: 100%;
+      }
+    }
+
+    p {
+      padding-top: $gap_1;
     }
   }
+
 }
 

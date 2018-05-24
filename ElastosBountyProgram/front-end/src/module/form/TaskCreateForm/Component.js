@@ -147,7 +147,7 @@ class C extends BaseComponent {
                         <FormItem label="Max Participants" {...formItemLayout}>
                             {p.taskCandLimit}
                         </FormItem>
-                        <FormItem>
+                        <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
                             <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
                                 {this.props.is_admin ? 'Create Task' : 'Submit Proposal'}
                             </Button>
