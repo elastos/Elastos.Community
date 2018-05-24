@@ -15,6 +15,12 @@ export const TEAM_ROLE = {
     OWNER : 'OWNER'
 };
 
+export const TASK_CATEGORY = {
+    DEVELOPER: 'DEVELOPER',
+    SOCIAL: 'SOCIAL',
+    LEADER: 'LEADER'
+}
+
 export const TASK_TYPE = {
     TASK: 'TASK',
     SUB_TASK: 'SUB_TASK',

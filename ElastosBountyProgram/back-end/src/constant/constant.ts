@@ -22,6 +22,12 @@ export const TASK_TYPE = {
     EVENT: 'EVENT'
 }
 
+export const TASK_CATEGORY = {
+    DEVELOPER: 'DEVELOPER',
+    SOCIAL: 'SOCIAL',
+    LEADER: 'LEADER'
+}
+
 export const TASK_STATUS = {
     PROPOSAL: 'PROPOSAL',
     CREATED: 'CREATED',

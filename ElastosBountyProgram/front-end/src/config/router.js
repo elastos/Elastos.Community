@@ -17,6 +17,8 @@ import AdminUsersPage from '@/module/page/admin/users/Container'
 import AdminTasksPage from '@/module/page/admin/tasks/Container'
 import AdminCommunityPage from '@/module/page/admin/community/Container'
 
+import TaskCreatePage from '@/module/page/task_create/Container'
+
 import NotFound from '@/module/page/error/NotFound'
 
 export default [
@@ -55,6 +57,10 @@ export default [
     {
         path: '/tasks',
         page: TasksPage
+    },
+    {
+        path: '/task-create',
+        page: TaskCreatePage
     },
     {
         path: '/login',

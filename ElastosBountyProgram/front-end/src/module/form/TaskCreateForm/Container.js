@@ -1,6 +1,6 @@
 import {createContainer, goPath} from "@/util";
 import Component from './Component';
-import UserService from '@/service/UserService';
+import TaskService from '@/service/TaskService';
 import {message} from 'antd';
 
 message.config({
@@ -10,26 +10,30 @@ message.config({
 
 export default createContainer(Component, (state)=>{
     return {
-        ...state.user.register_form
+        is_admin: state.user.is_admin
     };
 }, ()=>{
-    const userService = new UserService();
+    const taskService = new TaskService();
 
     return {
-        async changeStep(step) {
-            await userService.changeStep(step);
-        },
+        async createTask(formData){
 
-        async register(username, password, profile){
             try {
-                const rs = await userService.register(username, password, profile);
+                const rs = await taskService.create({
+                    name: formData.taskName,
+                    category: formData.taskCategory,
+                    type: formData.taskType,
+                    description: formData.taskDesc,
+                    candidateLimit: formData.taskCandLimit
+                });
 
                 if (rs) {
-                    message.success('login success');
-                    userService.path.push('/home');
+                    message.success('task created successfully');
+                    taskService.path.push('/home');
                 }
             } catch (err) {
-                message.error('login failed')
+                message.error('There was an error creating this task')
+                console.error(err) // TODO: add rollbar?
             }
         }
     };

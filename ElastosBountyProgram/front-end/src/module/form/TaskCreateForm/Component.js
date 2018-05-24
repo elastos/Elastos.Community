@@ -1,19 +1,22 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import {Form, Icon, Input, Button, Checkbox, message} from 'antd'
+import {Form, Icon, Input, Button, Checkbox, Select, message} from 'antd'
 
 import './style.scss'
 
+import {TASK_CATEGORY, TASK_TYPE} from '@/constant'
+
 const FormItem = Form.Item
+const TextArea = Input.TextArea;
 
 /**
  * This is generic task create form for both Developer and Social Bounties / Events
  *
  * Which version of the form depends on the leader's program
  *
- * Admin
- * - social tasks for media: blogs, video, podcasts - these can only be created by any leader/admin
- * - developer tasks for dApps, example apps, technical tutorials - these can only be created by admins
+ * Leaders - can create:
+ * - Events (offline) restricted to their area - must be approved
+ * - Events (online) anywhere - Social or Developer
  *
  * TODO: in the future we should developer leaders
  *
@@ -26,97 +29,86 @@ const FormItem = Form.Item
  */
 class C extends BaseComponent {
 
-    handleSubmit(e) {
+    handleSubmit (e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Register - received values of form: ', values)
-                this.props.register(values.username, values.password)
+                console.log('CreateTask - received values of form: ', values)
+                this.props.createTask(values)
 
             }
         })
     }
 
-
-    constructor(props) {
+    constructor (props) {
         super(props)
 
         this.step1Container = React.createRef()
         this.step2Container = React.createRef()
     }
 
-    getInputProps() {
+    getInputProps () {
         const {getFieldDecorator} = this.props.form
 
-        const firstName_fn = getFieldDecorator('firstName', {
-            rules: [{required: true, message: 'Please input your first name'}],
+        const taskName_fn = getFieldDecorator('taskName', {
+            rules: [{required: true, message: 'Please input a task name'}],
             initialValue: ''
         })
-        const firstName_el = (
-            <Input size="large"
-                   prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                   placeholder="first name"/>
+        const taskName_el = (
+            <Input size="large"/>
         )
 
-        const lastName_fn = getFieldDecorator('lastName', {
-            rules: [{required: true, message: 'Please input your last name'}],
+        const taskCategory_fn = getFieldDecorator('taskCategory', {
+            rules: [{required: true, message: 'Please select a category'}],
+            initialValue: TASK_CATEGORY.SOCIAL
+        });
+        const taskCategory_el = (
+            <Select>
+                <Option value={TASK_CATEGORY.SOCIAL}>Social</Option>
+                <Option value={TASK_CATEGORY.DEVELOPER}>Developer</Option>
+                <Option value={TASK_CATEGORY.LEADER}>Leader</Option>
+            </Select>
+        );
+
+        // sub-tasks are not here because those can only be created from an existing Task Detail Page
+        const taskType_fn = getFieldDecorator('taskType', {
+            rules: [{required: true, message: 'Please select a task type'}],
+            initialValue: TASK_TYPE.EVENT
+        });
+        const taskType_el = (
+            <Select>
+                <Option value={TASK_TYPE.EVENT}>Event</Option>
+                <Option value={TASK_TYPE.PROJECT}>Project</Option>
+                {this.props.is_admin && <Option value={TASK_TYPE.TASK}>Task</Option>}
+            </Select>
+        );
+
+        const taskDesc_fn = getFieldDecorator('taskDesc', {
+            rules: [{required: true, message: 'You must have a description'}],
             initialValue: ''
-        })
-        const lastName_el = (
-            <Input size="large"
-                   prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                   placeholder="last name"/>
-        )
+        });
+        const taskDesc_el = (
+            <TextArea rows={4} name="taskDesc"></TextArea>
+        );
 
-        const email_fn = getFieldDecorator('email', {
-            rules: [{required: true, message: 'Please input your email'}],
-            initialValue: ''
-        })
-        const email_el = (
-            <Input size="large"
-                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                placeholder="email"/>
-        )
-
-        const pwd_fn = getFieldDecorator('password', {
-            rules: [{required: true, message: 'Please input a password'}]
-        })
-        const pwd_el = (
-            <Input size="large"
-                prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                type="password" placeholder="password"/>
-        )
-
-        const pwdConfirm_fn = getFieldDecorator('passwordConfirm', {
-            rules: [{required: true, message: 'Please input your password again'}]
-        })
-        const pwdConfirm_el = (
-            <Input size="large"
-                   prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                   type="password" placeholder="password confirm"/>
-        )
-
-        const country_fn = getFieldDecorator('country', {
-            rules: [{required: true, message: 'Please select your country'}],
-            initialValue: ''
-        })
-        const country_el = (
-            <Input size="large"
-                   placeholder="country"/>
-        )
+        const taskCandLimit_fn = getFieldDecorator('taskCandLimit', {
+            rules: [{required: true, type: 'integer', message: 'You must set a limit'}],
+            initialValue: 50
+        });
+        const taskCandLimit_el = (
+            <Input size="small"/>
+        );
 
         return {
-            firstName: firstName_fn(firstName_el),
-            lastName: lastName_fn(lastName_el),
-            userName: email_fn(email_el),
-            pwd: pwd_fn(pwd_el),
-            pwdConfirm: pwdConfirm_fn(pwdConfirm_el),
-
-            country: country_fn(country_el)
+            taskName: taskName_fn(taskName_el),
+            taskCategory: taskCategory_fn(taskCategory_el),
+            taskType: taskType_fn(taskType_el),
+            taskDesc: taskDesc_fn(taskDesc_el),
+            taskCandLimit: taskCandLimit_fn(taskCandLimit_el)
         }
     }
 
-    ord_render() {
+    ord_render () {
         const {getFieldDecorator} = this.props.form
         const p = this.getInputProps()
 
@@ -124,44 +116,41 @@ class C extends BaseComponent {
 
         // TODO: react-motion animate slide left
 
+        const formItemLayout = {
+            labelCol: {
+                xs: {span: 24},
+                sm: {span: 8},
+            },
+            wrapperCol: {
+                xs: {span: 24},
+                sm: {span: 12},
+            },
+        }
+
         return (
             <div className="c_registerContainer">
 
-                <h2>
-                    Become a Contributor
-                </h2>
-
-                <p>
-                    As a member you can sign up for bounties on EBP, <br/>
-                    you do not need to be a member to join events.
-                </p>
-
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
-                    <div ref={this.step1Container} className={this.props.step === 1 ? '' : 'hide'}>
-                        <FormItem>
-                            {p.firstName}
+                    <div>
+                        <FormItem label="Task Name" {...formItemLayout}>
+                            {p.taskName}
+                        </FormItem>
+                        <FormItem label="Category" {...formItemLayout}>
+                            {p.taskCategory}
+                        </FormItem>
+                        <FormItem label="Type"  {...formItemLayout}>
+                            {p.taskType}
+                        </FormItem>
+                        <FormItem label="Description" {...formItemLayout}>
+                            {p.taskDesc}
+                        </FormItem>
+                        <FormItem label="Max Participants" {...formItemLayout}>
+                            {p.taskCandLimit}
                         </FormItem>
                         <FormItem>
-                            {p.lastName}
-                        </FormItem>
-                        <FormItem>
-                            {p.userName}
-                        </FormItem>
-                        <FormItem>
-                            {p.pwd}
-                        </FormItem>
-                        <FormItem>
-                            {p.pwdConfirm}
-                        </FormItem>
-                        <FormItem>
-                            <Button loading={this.props.loading} type="ebp" htmlType="button" className="d_btn" onClick={this.registerStep1.bind(this)}>
-                                Continue
+                            <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
+                                {this.props.is_admin ? 'Create Task' : 'Submit Proposal'}
                             </Button>
-                        </FormItem>
-                    </div>
-                    <div ref={this.step2Container} className={this.props.step === 2 ? '' : 'hide'}>
-                        <FormItem>
-                            {p.country}
                         </FormItem>
                     </div>
                 </Form>
@@ -169,20 +158,5 @@ class C extends BaseComponent {
         )
 
     }
-
-    async registerStep1() {
-
-        // check if passwords match
-        const pwd = _.trim(this.props.form.getFieldValue('password'))
-        const pwdConfirm = _.trim(this.props.form.getFieldValue('passwordConfirm'))
-
-        if (pwd.length < 8 || pwd !== pwdConfirm) {
-            message.error('Passwords must be 8 characters or more and must match')
-            return
-        }
-
-        this.props.changeStep(2)
-    }
 }
-
 export default Form.create()(C)

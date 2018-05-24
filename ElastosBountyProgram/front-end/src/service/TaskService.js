@@ -1,5 +1,6 @@
 import BaseService from '../model/BaseService'
 import _ from 'lodash'
+import {api_request} from '@/util'
 
 export default class extends BaseService {
 
@@ -28,5 +29,16 @@ export default class extends BaseService {
         this.dispatch(taskRedux.actions.all_tasks_update(result.data))
 
         return result
+    }
+
+    async create(doc) {
+
+        const res = await api_request({
+            path: '/task/create',
+            method: 'post',
+            data: doc
+        })
+
+        debugger
     }
 }

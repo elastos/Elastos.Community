@@ -51,7 +51,7 @@ export default class extends StandardPage {
                                     Available Tasks
                                 </h2>
                                 <div className="pull-right btnContainer">
-                                    <Button onClick={this.createTaskModal.bind(this)}>
+                                    <Button onClick={this.createTaskLink.bind(this)}>
                                         Create Task
                                     </Button>
                                 </div>
@@ -72,9 +72,7 @@ export default class extends StandardPage {
         )
     }
 
-    async createTaskModal() {
-
-
-
+    async createTaskLink() {
+        this.props.history.push('/task-create')
     }
 }

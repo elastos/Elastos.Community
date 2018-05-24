@@ -80,6 +80,11 @@ export const Task = {
     // for events this should be set, or if null assume online
     communityId: Schema.Types.ObjectId,
 
+    category: {
+        type: String,
+        default: constant.TASK_CATEGORY.LEADER
+    },
+
     /*
     * TASK, SUB-TASK, PROJECT, EVENT
     * */
@@ -131,6 +136,7 @@ export const Task = {
     candidateSltLimit : {
         type : Number,
         min : 0,
+        default: 0,
         required : true
     },
 

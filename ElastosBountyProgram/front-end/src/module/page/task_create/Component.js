@@ -3,8 +3,6 @@ import StandardPage from '../StandardPage';
 import Footer from '@/module/layout/Footer/Container'
 import TaskCreateForm from '@/module/form/TaskCreateForm/Container'
 
-import './style.scss'
-
 export default class extends StandardPage {
 
     ord_renderContent () {
