@@ -4,7 +4,7 @@ import AdminPage from '../BaseAdmin'
 import '../admin.scss'
 import './style.scss'
 
-import { Breadcrumb, Col, Icon, Row, Select } from 'antd'
+import { Breadcrumb, Col, Icon, Row, Select, message } from 'antd'
 import ListCountryLeaders from './ListCountryLeaders/Component'
 import DetailLeaderOfCountryOrRegion from './DetailLeaderOfCountryOrRegion/Component'
 import Navigator from '../shared/Navigator/Component'
@@ -29,27 +29,44 @@ export default class extends AdminPage {
         this.setState({
             type
         });
-    
-        this.setState({
-            type,
-        });
     }
 
     componentWillMount () {
         this.checkTypeOfBreadcrumb()
+    }
+    
+    updateListLeaders() {
+        if (this.state.type === 'LEADER_OF_ALL_COUNTRIES') {
+            this.props.getAllLeaders()
+        } else {
+            this.props.getLeadersACountry(this.props.match.params['country'])
+        }
+    }
+
+    componentDidMount() {
+        this.updateListLeaders()
     }
 
     updateBreadcrumb(data) {
         console.log('set breakcrunm data', data)
         this.setState({...data})
     }
+    
+    proxyAddCountry(data) {
+        return this.props.addCountry(data).then(() => {
+            this.updateListLeaders()
+            message.success('Add new country successfully')
+        }).catch(() => {
+            message.error('Error while add country')
+        })
+    }
 
     renderMatchComponent () {
         switch (this.state.type) {
             case 'LEADER_OF_ALL_COUNTRIES':
-                return <ListCountryLeaders country={null} />
+                return <ListCountryLeaders addCountry={this.proxyAddCountry.bind(this)} country={null} leaders={this.props.all_leaders} />
             case 'LEADER_OF_A_COUNTRY':
-                return <ListCountryLeaders country={this.props.match.params['country']} />
+                return <ListCountryLeaders addCountry={this.proxyAddCountry.bind(this)} country={this.props.match.params['country']} leaders={this.props.country_leaders} />
             default:
                 return <DetailLeaderOfCountryOrRegion leader={this.props.match.params['leader']} region={this.props.match.params['region']} />
         }
@@ -61,6 +78,7 @@ export default class extends AdminPage {
         });
 
         this.props.history.push(`/admin/community/${countryCode}`)
+        this.props.getLeadersACountry(countryCode)
     }
 
     handleChangeRegion (region) {
@@ -72,8 +90,6 @@ export default class extends AdminPage {
     }
 
     ord_renderContent () {
-        console.log('this.props community', this.props);
-
         const listCountriesEl = config.data.listCountries.map((country) => {
             return (
                 <Select.Option key={country}

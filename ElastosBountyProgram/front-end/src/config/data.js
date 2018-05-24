@@ -78,5 +78,11 @@ export default {
                 avatar: 'https://www.w3schools.com/howto/img_avatar.png',
             }
         ]
-    }
+    },
+    mockDataLeaderId: '5b05972dda959130aeaa0124',
+    mappingCountryCodeToName: {
+        vn: 'Vietnam',
+        cn: 'China',
+        us: 'USA',
+    },
 }

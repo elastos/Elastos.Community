@@ -36,11 +36,10 @@ export default class extends BaseComponent {
                 return
             }
 
-            console.log('Received values of form: ', values)
-            message.success('Add new country successfully')
-
             form.resetFields()
             this.setState({visibleModalAddCountry: false})
+    
+            this.props.addCountry(values);
         })
     }
     saveFormAddCountryRef = (formRef) => {
@@ -48,14 +47,12 @@ export default class extends BaseComponent {
     }
 
     ord_render () {
-        let listLeaders;
-        if (this.props.country) {
-            listLeaders = config.data.mockDataLeaderByCountries[this.props.country];
-        } else {
-            listLeaders = config.data.mockDataAllLeaders;
-        }
+        const listLeaders = this.props.leaders;
 
         const listLeadersEl = listLeaders.map((leader, index) => {
+            // TODO API need return object leader instead of leaderId, mock data till they update
+            leader = config.data.mockDataAllLeaders[0];
+
             return (
                 <Col span={6} key={index} className="user-card">
                     <Link to={'/admin/community/' + leader.countryCode + '/leader/' + leader.id}>
