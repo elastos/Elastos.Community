@@ -6,6 +6,7 @@ import * as timeout from 'connect-timeout';
 import * as session from 'express-session';
 import * as ConnectMongo from 'connect-mongo';
 import * as cors from 'cors';
+import * as fileUpload from 'express-fileupload';
 import db from './db';
 
 import router, {middleware} from './router';
@@ -52,6 +53,7 @@ import './config';
 
     // init router
     app.use(middleware);
+    app.use(fileUpload());
     app.use(router);
 
     const port = process.env.SERVER_PORT;
