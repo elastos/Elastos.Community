@@ -112,18 +112,11 @@ for this work in the total hours expected for a task.
 
 ## Payment
 
-We will pay half of your requested payment for hours worked upfront, and the rest upon completion.
-Any operating expenses will be paid as required by your timeline or all upfront if it's a smaller amount and time sensitive.
+We will decide the payment on a case-by-case basis. We'll try to be as reasonable and as fair as possible to every leader. For most situations, we'll pay half of your requested budget upfront and the rest upon completion however this is not ideal for all scenarios(eg. when the cost of organizing a meetup at a large venue is high and cannot be approximated beforehand).
 
-For example if you request 40 ELA as payment for hours worked, and your event you expect will cost 50 ELA to run.
+Whatever the case may be, we'll request receipts for all the expenses for all the events and will reimburse everything while also being as fair as possible.
 
-We will first send you 20 ELA for pay, and the 50 ELA to a separate address for your use to pay expenses.
+If you have leftover operating expenses, those need to be either returned to us,
+or retained for future tasks by you. Please do not put your ELA address in the proposal. You need to send us your address via email.
 
-Upon completion we will pay the remaining 20 ELA. If you have leftover operating expenses those need to be either returned to us,
-or retained for future tasks by you. Please send us two addresses, one for your pay and another for your operating expenses.
-
-If you have assistants we will send them their pay directly based on your instructions. Do not give your wallet's secret key
-for operating expenses to your assistants. As a leader you are responsible for the operating funds.
-
-
-
+If you have assistants we will send them their pay directly based on your instructions. Do not give your wallet's secret key for operating expenses to your assistants. As a leader, you are responsible for the operating funds.
