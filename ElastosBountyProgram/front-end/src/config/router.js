@@ -13,6 +13,8 @@ import TasksPage from '@/module/page/tasks/Container'
 import LoginPage from '@/module/page/login/Container'
 import RegisterPage from '@/module/page/register/Container'
 
+import ProfilePage from '@/module/page/profile/Container'
+
 import AdminUsersPage from '@/module/page/admin/users/Container'
 import AdminTasksPage from '@/module/page/admin/tasks/Container'
 import AdminCommunityPage from '@/module/page/admin/community/Container'
@@ -69,6 +71,10 @@ export default [
     {
         path: '/register',
         page: RegisterPage
+    },
+    {
+        path: '/profile',
+        page: ProfilePage
     },
     {
         path: '/admin/users',

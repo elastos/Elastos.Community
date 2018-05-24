@@ -75,7 +75,8 @@
   .d_colMeetups {
     border-right: 1px solid #000000;
 
-    padding: 0 $gap_2;
+    padding-left: $gap_3;
+    padding-right: $gap_2;
 
     .i_event {
       padding: 0 $gap_2;
