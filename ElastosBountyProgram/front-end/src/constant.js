@@ -71,3 +71,10 @@ export const ISSUE_CATEGORY = {
     SUGGESTION: 'SUGGESTION',
     OTHER: 'OTHER'
 }
+
+export const CONTRIB_CATEGORY = {
+    BLOG: 'BLOG',
+    VIDEO: 'VIDEO',
+    PODCAST: 'PODCAST',
+    OTHER: 'OTHER'
+}

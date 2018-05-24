@@ -8,25 +8,13 @@ export default class extends BaseService {
 
         const taskRedux = this.store.getRedux('task')
 
-        // this.dispatch(taskRedux.actions.fetchTaskBegin())
-
-        let request = new Request(process.env.SERVER_URL + '/task', {
-            method: 'GET',
-            headers: new Headers({
-                'api-token': sessionStorage.getItem('api-token')
-            })
+        const result = await api_request({
+            path: '/task',
+            method: 'get'
         })
 
-        let result = await fetch(request).then((res) => res.json())
-
-        // this.dispatch(taskRedux.actions.fetchTaskSuccess(res.json()))
-
-        if (result.code !== 1) {
-            throw new Error('Not Authenticated')
-        }
-
         // TODO: why does this set it as a struct?
-        this.dispatch(taskRedux.actions.all_tasks_update(result.data))
+        this.dispatch(taskRedux.actions.all_tasks_update(result))
 
         return result
     }
@@ -39,6 +27,6 @@ export default class extends BaseService {
             data: doc
         })
 
-        debugger
+        // TODO: take user to task detail page
     }
 }

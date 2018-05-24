@@ -8,6 +8,10 @@ import Footer from '@/module/layout/Footer/Container'
 
 export default class extends StandardPage {
 
+    componentDidMount() {
+        this.props.getTasks()
+    }
+
     ord_renderContent(){
 
         const backdropStyle = {
@@ -93,15 +97,32 @@ export default class extends StandardPage {
                 </Row>
                 <div className="d_rowGrey">
                     <div className="d_rowEvents">
-                        <h1>
-                            Events
-                        </h1>
-
                         <Row>
                             <Col span={12} className="d_colMeetups">
                                 <h2>
-                                    Meetups & Hackathons
+                                    Upcoming Meetups
                                 </h2>
+
+                                <Row className="d_devEventsContainer">
+                                    {this.props.all_tasks.map((task) => {
+                                        return <Col key={task._id} md={{span:12}} lg={{span: 8}}>
+                                            <div class="i_event">
+                                                <h3>
+                                                    {task.name}
+                                                </h3>
+                                                <img src={'/assets/images/task_thumbs/' + task.thumbnail} />
+
+                                                <p>
+                                                    {_.truncate(task.description, {length: 100})}
+
+                                                    {task.description.length > 100 &&
+                                                    <a className="moreDetails"> more details</a>
+                                                    }
+                                                </p>
+                                            </div>
+                                        </Col>
+                                    })}
+                                </Row>
                             </Col>
                             <Col span={12}>
                                 <h2>

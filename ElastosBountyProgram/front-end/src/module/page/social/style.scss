@@ -18,5 +18,11 @@
   .d_rightContainer {
     border-left: 1px solid #e0e0e0;
   }
+
+  .i_event {
+    > img {
+      width: 100%;
+    }
+  }
 }
 

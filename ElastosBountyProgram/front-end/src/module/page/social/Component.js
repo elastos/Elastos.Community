@@ -1,6 +1,7 @@
 import React from 'react';
 import StandardPage from '../StandardPage';
 import Footer from '@/module/layout/Footer/Container'
+import ContribForm from './formContribution/Container'
 
 import './style.scss'
 
@@ -8,6 +9,10 @@ import { Col, Row, Icon, Form, Input, Button, Dropdown } from 'antd'
 const FormItem = Form.Item;
 
 export default class extends StandardPage {
+
+    componentDidMount() {
+        this.props.getTasks()
+    }
 
     ord_renderContent () {
 
@@ -29,13 +34,31 @@ export default class extends StandardPage {
                             </h2>
 
                             <Row className="d_devEventsContainer">
+                                {this.props.all_tasks.map((task) => {
+                                    return <Col key={task._id} md={{span:8}} lg={{span: 6}}>
+                                        <div class="i_event">
+                                            <h3>
+                                                {task.name}
+                                            </h3>
+                                            <img src={'/assets/images/task_thumbs/' + task.thumbnail} />
 
+                                            <p>
+                                                {_.truncate(task.description, {length: 100})}
+
+                                                {task.description.length > 100 &&
+                                                <a className="moreDetails"> more details</a>
+                                                }
+                                            </p>
+                                        </div>
+                                    </Col>
+                                })}
                             </Row>
                         </Col>
                         <Col span={8} className="d_rightContainer d_box">
                             <h2>
                                 Submit a Contribution
                             </h2>
+                            <ContribForm />
                         </Col>
                     </Row>
                     <div className="horizGap">
@@ -48,7 +71,7 @@ export default class extends StandardPage {
                                     Available Tasks
                                 </h2>
                                 <div className="pull-right btnContainer">
-                                    <Button>
+                                    <Button onClick={this.createTaskLink.bind(this)}>
                                         Create Task
                                     </Button>
                                 </div>
@@ -67,5 +90,9 @@ export default class extends StandardPage {
                 <Footer />
             </div>
         )
+    }
+
+    async createTaskLink() {
+        this.props.history.push('/task-create')
     }
 }

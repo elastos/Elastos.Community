@@ -7,6 +7,15 @@ import UserService from "./UserService";
 
 export default class extends Base {
 
+    public async index(param): Promise<[Document]> {
+
+        // TODO: filter by category
+
+        const db_task = this.getDBModel('Task');
+
+        return await db_task.find();
+    }
+
     /**
      * This also handles creating sub tasks, if it's sub task
      * the parentTaskId must be set, and the user must be owner of the parent task

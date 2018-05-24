@@ -89,7 +89,7 @@ module.exports = merge(common, {
             'process.env': {
                 NODE_ENV: JSON.stringify('development'),
                 PLATFORM_ENV: JSON.stringify('web'),
-                SERVER_URL: JSON.stringify('http://192.168.187.132:3000')
+                SERVER_URL: JSON.stringify('http://localhost:3000')
             },
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
