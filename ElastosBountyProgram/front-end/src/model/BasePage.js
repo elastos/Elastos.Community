@@ -1,9 +1,8 @@
 import React from 'react'
 import BaseComponent from './BaseComponent'
-// import {spring, Motion} from 'react-motion'
-// import _ from 'lodash'
+import {spring, Motion} from 'react-motion'
+import _ from 'lodash'
 import store from '@/store'
-import {USER_ROLE} from '@/constant'
 
 /**
  noWobble: {stiffness: 170, damping: 26}, // the default, if nothing provided
@@ -11,11 +10,10 @@ import {USER_ROLE} from '@/constant'
  wobbly: {stiffness: 180, damping: 12},
  stiff: {stiffness: 210, damping: 20},
  */
-// const springConfig = {stiffness: 180, damping: 14}
-
+const springConfig = {stiffness: 180, damping: 14}
 export default class extends BaseComponent {
     ord_render(p) {
-        /*
+
         const s = this.ord_animate()
         const defaultStyle = {}
         _.each(s.from, (v, i)=>{
@@ -40,9 +38,9 @@ export default class extends BaseComponent {
                 }
             </Motion>
         )
-        */
 
-        return (<div>{this.ord_renderPage(p)}</div>)
+
+        // return (<div>{this.ord_renderPage(p)}</div>)
     }
 
     ord_animate() {

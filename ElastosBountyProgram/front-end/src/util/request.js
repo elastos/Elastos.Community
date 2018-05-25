@@ -22,7 +22,7 @@ export const api_request = (opts = {})=>{
     }
 
     let server_url = process.env.SERVER_URL;
-    opts = _.extend({
+    opts = _.merge({
         method : 'get',
         headers,
         cache: 'no-cache',
@@ -43,7 +43,16 @@ export const api_request = (opts = {})=>{
         method : opts.method,
         mode: 'cors'
     };
-    if(method !== 'get' && method !== 'head'){
+    if(method === 'post' && option.headers['Content-Type'] === 'multipart/form-data'){
+        const formData = new FormData();
+        _.each(opts.data, (v, k)=>{
+            formData.append(k, v);
+        });
+        option.body = formData;
+
+        delete option.headers['Content-Type'];
+    }
+    else if(method !== 'get' && method !== 'head'){
         option.body = JSON.stringify(opts.data);
     }
     else{
@@ -75,6 +84,36 @@ export const api_request = (opts = {})=>{
     });
 };
 
-// TODO upload file
-export const upload_request = ()=>{};
+/*
+*
+* example
+    upload_file(file, {
+        error(e){
+            console.error(e)
+        }
+    }).then((url)=>{
+        console.log(url);
+    });
+*
+* */
+export const upload_file = async (fileObject, opts={})=>{
+    try{
+        const url = await api_request({
+            path : '/upload/file',
+            method : 'post',
+            headers : {
+                'Content-Type' : 'multipart/form-data'
+            },
+            data : {
+                file : fileObject
+            }
+        });
+
+        return url;
+    }catch(e){
+        opts.error && opts.error(e);
+        throw e;
+    }
+
+};
 
