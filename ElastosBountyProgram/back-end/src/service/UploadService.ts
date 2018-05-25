@@ -3,10 +3,14 @@ import * as s3 from 's3';
 import {uuid} from '../utility';
 import * as fs from 'fs';
 
-let s3_client = null;
+let s3_client: any = null;
 export default class extends Base {
-    private bucket:string = 'ebp-files';
+    private config: any;
     protected init(){
+        this.config = {
+            bucket : process.env.S3_BUCKET,
+            region : process.env.S3_REGION
+        };
         if(!s3_client){
             this.initS3Client();
         }
@@ -22,13 +26,14 @@ export default class extends Base {
             s3Options: {
                 accessKeyId: process.env.AWS_ACCESS_KEY,
                 secretAccessKey: process.env.AWS_ACCESS_SECRET,
-                region: 'us-west-1',
+                region: this.config.region,
                 // endpoint: 's3.yourdomain.com',
                 // sslEnabled: false
                 // any other options are passed to new AWS.S3()
                 // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property
             }
         });
+
     }
 
     /*
@@ -42,11 +47,35 @@ export default class extends Base {
             fs.mkdirSync(path);
         }
 
-        const rs = file.mv(path+file_name);
+        file.mv(path+file_name);
 
         //TODO upload to s3
+        const uploader = s3_client.uploadFile({
+            localFile : path+file_name,
+            s3Params : {
+                ACL:'public-read',
+                Bucket : this.config.bucket,
+                Key : file_name
+            }
+        });
 
-        return rs;
+        return new Promise((resolve, reject)=>{
+            // On S3 error
+            uploader.on('error', (err)=>{
+                // On error print the error to the console and send the error back as the response
+                console.error("unable to upload:", err.stack);
+                reject(err);
+            });
+            // On S3 success
+            uploader.on('end', ()=>{
+                //Removing file from server after uploaded to S3
+                fs.unlinkSync(path+file_name);
+
+                // get public url
+                const url = s3.getPublicUrl(this.config.bucket, file_name, this.config.region);
+                resolve(url);
+            });
+        });
     }
 
 }
