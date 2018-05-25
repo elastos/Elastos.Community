@@ -1,6 +1,8 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import {Form, Icon, Input, Button, Checkbox, message} from 'antd'
+import ReCAPTCHA from 'react-google-recaptcha';
+import {RECAPTCHA_KEY} from '@/config/constant';
 
 import './style.scss'
 
@@ -128,6 +130,16 @@ class C extends BaseComponent {
                    placeholder="Country"/>
         )
 
+        const recaptcha_fn = getFieldDecorator('recaptcha', {
+            rules: [{required: true}]
+        })
+        const recaptcha_el = (
+            <ReCAPTCHA
+                 ref={(el) => { this.captcha = el; }}
+                 sitekey={RECAPTCHA_KEY}
+             />
+        )
+
         return {
             firstName: firstName_fn(firstName_el),
             lastName: lastName_fn(lastName_el),
@@ -135,7 +147,7 @@ class C extends BaseComponent {
             email: email_fn(email_el),
             pwd: pwd_fn(pwd_el),
             pwdConfirm: pwdConfirm_fn(pwdConfirm_el),
-
+            recaptcha: recaptcha_fn(recaptcha_el),
             country: country_fn(country_el)
         }
     }
@@ -179,6 +191,9 @@ class C extends BaseComponent {
                         </FormItem>
                         <FormItem>
                             {p.pwdConfirm}
+                        </FormItem>
+                        <FormItem>
+                            {p.recaptcha}
                         </FormItem>
                         <FormItem>
                             <Button loading={this.props.loading} type="ebp" htmlType="button" className="d_btn" onClick={this.registerStep1.bind(this)}>
