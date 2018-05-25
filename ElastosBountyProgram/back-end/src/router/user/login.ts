@@ -2,6 +2,7 @@ import Base from '../Base';
 import UserService from '../../service/UserService';
 import {crypto} from '../../utility';
 import * as moment from 'moment';
+import * as sha512 from 'crypto-js/sha512'
 
 export default class extends Base {
 
@@ -13,11 +14,13 @@ export default class extends Base {
         userService.validate_username(username);
         userService.validate_password(password);
 
+        let passwordSHA512 = encodeURIComponent(sha512(password));
+
         // first get user for salt
         const salt = await userService.getUserSalt(username);
 
         // password is passed in as is sha512
-        const pwd = userService.getPassword(password, salt);
+        const pwd = userService.getPassword(passwordSHA512, salt);
 
         const user = await userService.findUser({
             username,
