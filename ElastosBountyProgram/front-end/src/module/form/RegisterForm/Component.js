@@ -2,7 +2,10 @@ import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import {Form, Icon, Input, Button, Checkbox, message} from 'antd'
 import ReCAPTCHA from 'react-google-recaptcha';
-import {RECAPTCHA_KEY} from '@/config/constant';
+import {
+    RECAPTCHA_KEY,
+    MIN_LENGTH_PASSWORD
+} from '@/config/constant';
 
 import './style.scss'
 
@@ -43,8 +46,8 @@ class C extends BaseComponent {
         if (value && this.state.confirmDirty) {
             form.validateFields(['confirmPassword'], { force: true });
         }
-        if (value && value.length < 6) {
-            callback('The Password must be at least 6 characters.')
+        if (value && value.length < MIN_LENGTH_PASSWORD) {
+            callback(`The Password must be at least ${MIN_LENGTH_PASSWORD} characters.`);
         }
         callback();
     }
@@ -213,16 +216,6 @@ class C extends BaseComponent {
     }
 
     async registerStep1() {
-
-        // check if passwords match
-        const pwd = _.trim(this.props.form.getFieldValue('password'))
-        const pwdConfirm = _.trim(this.props.form.getFieldValue('passwordConfirm'))
-
-        if (pwd.length < 8 || pwd !== pwdConfirm) {
-            message.error('Passwords must be 8 characters or more and must match')
-            return
-        }
-
         this.props.changeStep(2)
     }
 }
