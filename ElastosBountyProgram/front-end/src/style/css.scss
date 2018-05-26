@@ -18,12 +18,20 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 36px;
-  font-weight: 500;
+  font-size: 40px;
 }
 
 h2 {
+  font-size: 36px;
+}
+
+h3 {
   font-size: 24px;
+  padding: $gap_1 0;
+}
+
+h4 {
+  font-size: 18px;
 }
 
 p {
@@ -33,10 +41,10 @@ p {
 
 a {
   text-decoration: none;
-  color: $link-color;
+  color: $link_color;
 
   &:hover {
-    color: $link-hover-color;
+    color: $link_hover_color;
   }
 }
 
@@ -65,4 +73,8 @@ body {
 
 .center {
   text-align: center;
+}
+
+.clearfix {
+  clear: both;
 }

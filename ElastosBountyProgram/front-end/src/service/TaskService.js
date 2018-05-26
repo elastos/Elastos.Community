@@ -4,13 +4,14 @@ import {api_request} from '@/util'
 
 export default class extends BaseService {
 
-    async index() {
+    async index(qry) {
 
         const taskRedux = this.store.getRedux('task')
 
         const result = await api_request({
             path: '/task',
-            method: 'get'
+            method: 'get',
+            data: qry
         })
 
         // TODO: why does this set it as a struct?

@@ -14,6 +14,7 @@ const springConfig = {stiffness: 180, damping: 14}
 export default class extends BaseComponent {
     ord_render(p) {
 
+        /*
         const s = this.ord_animate()
         const defaultStyle = {}
         _.each(s.from, (v, i)=>{
@@ -38,9 +39,9 @@ export default class extends BaseComponent {
                 }
             </Motion>
         )
+        */
 
-
-        // return (<div>{this.ord_renderPage(p)}</div>)
+        return (<div>{this.ord_renderPage(p)}</div>)
     }
 
     ord_animate() {
