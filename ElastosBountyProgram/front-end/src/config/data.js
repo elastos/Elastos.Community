@@ -1,18 +1,4 @@
 export default {
-    listCountries: [
-        {
-            name: 'Vietnam',
-            code: 'vn',
-        },
-        {
-            name: 'China',
-            code: 'cn',
-        },
-        {
-            name: 'USA',
-            code: 'us',
-        },
-    ],
     mockDataAllLeaders: [
         {
             id: 1,
@@ -85,4 +71,18 @@ export default {
         cn: 'China',
         us: 'USA',
     },
+    breadcrumbCountries: [
+        {
+            geolocation: 'vn',
+            name: 'Vietnam'
+        },
+        {
+            geolocation: 'cn',
+            name: 'China'
+        },
+        {
+            geolocation: 'us',
+            name: 'USA'
+        }
+    ]
 }

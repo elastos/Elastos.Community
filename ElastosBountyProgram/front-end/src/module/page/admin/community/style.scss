@@ -1,4 +1,3 @@
-
 .wrap-box-user {
   h1 {
     text-align: left;
@@ -25,4 +24,16 @@
 
 .user-card.user-card--without-padding {
   padding: unset;
+}
+
+.list-leaders-of-a-country {
+  .wrap-child-box-users {
+    padding-left: 20px;
+
+    .child-box-users {
+      border: 1px solid #e5e5e5;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+  }
 }

@@ -17,7 +17,9 @@ import ProfilePage from '@/module/page/profile/Container'
 
 import AdminUsersPage from '@/module/page/admin/users/Container'
 import AdminTasksPage from '@/module/page/admin/tasks/Container'
-import AdminCommunityPage from '@/module/page/admin/community/Container'
+
+import CountryCommunitiesPage from '@/module/page/admin/community/CountryCommunities/Container'
+import CommunityDetailPage from '@/module/page/admin/community/CommunityDetail/Container'
 
 import TaskCreatePage from '@/module/page/task_create/Container'
 
@@ -86,19 +88,19 @@ export default [
     },
     {
         path: '/admin/community',
-        page: AdminCommunityPage
+        page: CountryCommunitiesPage
     },
     {
         path: '/admin/community/country/:country',
-        page: AdminCommunityPage
+        page: CountryCommunitiesPage
     },
     {
         path: '/admin/community/:community/country/:country',
-        page: AdminCommunityPage
+        page: CommunityDetailPage
     },
     {
         path: '/admin/community/:community/country/:country/region/:region',
-        page: AdminCommunityPage
+        page: CommunityDetailPage
     },
     {
         page: NotFound
