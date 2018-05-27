@@ -12,6 +12,10 @@ export default class extends StandardPage {
         this.props.getTasks()
     }
 
+    componentWillUnmount() {
+        this.props.resetTasks()
+    }
+
     getCoreTenets() {
         return [
             'Leaders are decided by a transparent voting system',
@@ -40,19 +44,63 @@ export default class extends StandardPage {
                 <Row className="d_rowPrograms">
                     <Col span={8}>
                         <img src="/assets/images/Home_Developers.png" />
-
                         <h3>
                             Developer
                         </h3>
-
+                    </Col>
+                    <Col span={8} className="d_colProgram_middle">
+                        <img src="/assets/images/Home_Social.png" />
+                        <h3>
+                            Social
+                        </h3>
+                    </Col>
+                    <Col span={8}>
+                        <img src="/assets/images/Home_Leader.png" />
+                        <h3>
+                            Leader
+                        </h3>
+                    </Col>
+                </Row>
+                <Row className="d_rowPrograms subtitle">
+                    <Col span={8}>
                         <h4>
                             Interested in getting into blockchain development?
                         </h4>
+                    </Col>
+                    <Col span={8} className="d_colProgram_middle">
+                        <h4>
+                            Contribute to the Community
+                        </h4>
+                    </Col>
+                    <Col span={8}>
+                        <h4>
+                            Organize Elastos Events
+                        </h4>
+                    </Col>
+                </Row>
+                <Row className="d_rowPrograms">
+                    <Col span={8}>
                         <p>
                             Earn ELA for contributing to the Elastos ecosystem through
                             everything from example apps to enterprise dApp development.
                         </p>
-
+                    </Col>
+                    <Col span={8} className="d_colProgram_middle">
+                        <p>
+                            Whether you're already part of the community or want to join,
+                            we reward you for various things you do online to promote Elastos
+                            either locally or worldwide.
+                        </p>
+                    </Col>
+                    <Col span={8}>
+                        <p>
+                            Interested in becoming a leader for your community, school or entire country?
+                            Our program empowers you to take a leadership role in the Elastos world.
+                        </p>
+                    </Col>
+                </Row>
+                <Row className="d_rowPrograms last">
+                    <Col span={8}>
                         <div className="d_colProgram_subLinks">
                             <a href="/developer/bug-bounty">Bug Bounties</a> |&nbsp;
                             <a href="/developer/support">Developer Support</a> |&nbsp;
@@ -60,21 +108,6 @@ export default class extends StandardPage {
                         </div>
                     </Col>
                     <Col span={8} className="d_colProgram_middle">
-                        <img src="/assets/images/Home_Social.png" />
-
-                        <h3>
-                            Social
-                        </h3>
-
-                        <h4>
-                            Contribute to the Community
-                        </h4>
-                        <p>
-                            Whether you're already part of the community or want to join,
-                            we reward you for various things you do online to promote Elastos
-                            either locally or worldwide.
-                        </p>
-
                         <div className="d_colProgram_subLinks">
                             <a href="/social/media">Media Creation</a> |&nbsp;
                             <a href="/social">Social Media</a> |&nbsp;
@@ -82,20 +115,6 @@ export default class extends StandardPage {
                         </div>
                     </Col>
                     <Col span={8}>
-                        <img src="/assets/images/Home_Leader.png" />
-
-                        <h3>
-                            Leader
-                        </h3>
-
-                        <h4>
-                            Organize Elastos Events
-                        </h4>
-                        <p>
-                            Interested in becoming a leader for your community, school or entire country?
-                            Our program empowers you to take a leadership role in the Elastos world.
-                        </p>
-
                         <div className="d_colProgram_subLinks">
                             <a href="/leader/meetups">Meetups</a> |&nbsp;
                             <a href="/leader/hackathons">Hackathons</a> |&nbsp;
@@ -138,7 +157,7 @@ export default class extends StandardPage {
                     <Row>
                         <Col span={12} className="d_colTasks">
                             <h3>
-                                Featured Tasks
+                                Featured Developer Bounties
                             </h3>
                         </Col>
                         <Col span={12} className="d_colEvents">

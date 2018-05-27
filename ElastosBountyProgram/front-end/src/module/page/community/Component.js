@@ -15,12 +15,12 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <div className="ebp-page-title">
-                        <h1>
+                        <h2>
                             Community
-                        </h1>
+                        </h2>
                     </div>
 
-                    TODO: list of tasks by community
+                    TODO: list of leaders and members of each community
                 </div>
                 <Footer />
             </div>

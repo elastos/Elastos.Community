@@ -5,6 +5,7 @@ import create from './create';
 import update from './update';
 import getWithCountry from './get-with-country';
 import getChild from './get-child';
+import deleteCommunity from './delete';
 
 export default Base.setRouter([
     {
@@ -16,6 +17,11 @@ export default Base.setRouter([
         path : '/:communityId',
         router : get,
         method : 'get'
+    },
+    {
+        path : '/:communityId',
+        router : deleteCommunity,
+        method : 'delete'
     },
     {
         path : '/create',

@@ -62,6 +62,10 @@ export default abstract class {
         return await this.db.findOne(query, reject_fields);
     }
 
+    public async findByIdAndDelete(id): Promise<Document>{
+        return await this.db.findByIdAndDelete(id);
+    }
+
     public async update(query, doc, opts?: updateOptions): Promise<Document>{
         return await this.db.update(query, doc, this.buildUpdateOptions(opts));
     }
