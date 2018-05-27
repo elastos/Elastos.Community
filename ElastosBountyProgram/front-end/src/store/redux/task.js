@@ -13,6 +13,8 @@ class TaskRedux extends BaseRedux {
         return {
             active_task: null,
 
+            loading: false,
+
             create_form: {
                 task_type: 'EVENT'
             },

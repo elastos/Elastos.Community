@@ -83,6 +83,13 @@ class C extends BaseComponent {
             </Select>
         )
 
+        const taskCommunity_fn = getFieldDecorator('taskCommunity')
+        const taskCommunity_el = (
+            <Select>
+
+            </Select>
+        )
+
         const taskDesc_fn = getFieldDecorator('taskDesc', {
             rules: [{required: true, message: 'You must have a description'}],
             initialValue: ''
@@ -123,6 +130,9 @@ class C extends BaseComponent {
             taskName: taskName_fn(taskName_el),
             taskCategory: taskCategory_fn(taskCategory_el),
             taskType: taskType_fn(taskType_el),
+
+            taskCommunity: taskCommunity_fn(taskCommunity_el),
+
             taskDesc: taskDesc_fn(taskDesc_el),
             taskCandLimit: taskCandLimit_fn(taskCandLimit_el),
             taskCandSltLimit: taskCandSltLimit_fn(taskCandSltLimit_el),
@@ -164,6 +174,9 @@ class C extends BaseComponent {
                         </FormItem>
                         <FormItem label="Type"  {...formItemLayout}>
                             {p.taskType}
+                        </FormItem>
+                        <FormItem label="Community"  {...formItemLayout}>
+                            {p.taskCommunity}
                         </FormItem>
                         <FormItem label="Description" {...formItemLayout}>
                             {p.taskDesc}

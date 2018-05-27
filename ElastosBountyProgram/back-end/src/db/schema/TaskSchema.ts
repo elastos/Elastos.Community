@@ -56,7 +56,9 @@ export const TaskActivity = {
 }
 
 /**
- * A task is a base class for any event,
+ * A task is a base class for any event
+ *
+ * createdBy - always there
  *
  */
 export const Task = {
@@ -80,7 +82,7 @@ export const Task = {
     },
 
     // for events this should be set, or if null assume online
-    communityId: Schema.Types.ObjectId,
+    community: Schema.Types.ObjectId,
 
     category: {
         type: String,
@@ -145,7 +147,7 @@ export const Task = {
     rewardUpfront: TaskUpfront,
     reward : TaskReward,
 
-    createdBy : Schema.Types.ObjectId
+    createdAt: Date
 };
 
 

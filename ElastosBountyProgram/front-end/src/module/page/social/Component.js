@@ -16,7 +16,7 @@ export default class extends StandardPage {
     }
 
     componentWillUnmount() {
-        this.props.reset()
+        this.props.resetTasks()
     }
 
     ord_renderContent () {
@@ -46,6 +46,10 @@ export default class extends StandardPage {
                                 </h3>
                             </div>
                             <div className="pull-right btnContainer">
+                                <Button onClick={this.createTaskLink.bind(this)}>
+                                    Create Event
+                                </Button>
+                                &nbsp;
                                 <Select defaultValue="showHelp" style={{width: 300}} onChange={this.handleEventFilterChange.bind(this)}>
                                     <Option value="showHelp">Show Only Events Looking for Help</Option>
                                     <Option value="showAll">Show All</Option>

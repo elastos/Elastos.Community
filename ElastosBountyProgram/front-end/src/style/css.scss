@@ -61,6 +61,16 @@ body {
   color: #333333;
 }
 
+td {
+  &.fontWeight500 {
+    font-weight: 500;
+  }
+
+  &.fontWeight600 {
+    font-weight: 600;
+  }
+}
+
 #ebp-root {
   background: #E5E5E5;
   min-height: 100vh;
