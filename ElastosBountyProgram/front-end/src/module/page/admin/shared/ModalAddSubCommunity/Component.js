@@ -1,7 +1,7 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import { Form, Input, Modal, Select, Button } from 'antd'
-
+import {COMMUNITY_TYPE} from '@/constant'
 const FormItem = Form.Item
 
 export default Form.create()(
@@ -16,13 +16,13 @@ export default Form.create()(
             
             let contextTitle;
             switch (communityType) {
-                case 'STATE':
+                case COMMUNITY_TYPE.STATE:
                     contextTitle = 'Add states / provinces';
                     break;
-                case 'CITY':
+                case COMMUNITY_TYPE.CITY:
                     contextTitle = 'Add city';
                     break;
-                case 'REGION':
+                case COMMUNITY_TYPE.REGION:
                     contextTitle = 'Add region';
                     break;
                 default:
@@ -57,8 +57,9 @@ export default Form.create()(
                                     placeholder="Please select a country"
                                     filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                                 >
-                                    <Select.Option value="china">China</Select.Option>
-                                    <Select.Option value="use">U.S.A</Select.Option>
+                                    <Select.Option value="cn">China</Select.Option>
+                                    <Select.Option value="us">USA</Select.Option>
+                                    <Select.Option value="vn">Vietnam</Select.Option>
                                 </Select>
                             )}
                         </FormItem>

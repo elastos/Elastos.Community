@@ -7,8 +7,12 @@ class CommunityRedux extends BaseRedux {
     
     defineDefaultState(){
         return {
-            all_leaders: [],
-            country_leaders: []
+            all_country_communities: [],
+            specific_country_communities: [],
+            sub_communities: [],
+            community_detail: null,
+            breadcrumb_regions: [],
+            breadcrumb_countries: [],
         };
     }
 }

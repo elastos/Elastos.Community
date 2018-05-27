@@ -5,29 +5,29 @@ import '../admin.scss'
 import './style.scss'
 
 import { Breadcrumb, Col, Icon, Row, Select, message } from 'antd'
-import ListCountryLeaders from './ListCountryLeaders/Component'
-import DetailLeaderOfCountryOrRegion from './DetailLeaderOfCountryOrRegion/Component'
+import CountryCommunities from './CountryCommunities/Component'
+import CommunityDetail from './CommunityDetail/Container'
 import Navigator from '../shared/Navigator/Component'
 import { Link } from 'react-router-dom'
 import config from '@/config'
 
 export default class extends AdminPage {
     checkTypeOfBreadcrumb () {
-        let type;
-        
+        let screenType;
+
         const routePrams = this.props.match.params;
         if (!Object.keys(routePrams).length) {
-            type = 'LEADER_OF_ALL_COUNTRIES';
-        } else if (routePrams['country'] && routePrams['leader']) {
-            type = 'LEADER_DETAIL';
-        } else if (routePrams['country'] && routePrams['region']) {
-            type = 'REGION_DETAIL';
+            screenType = 'LEADER_OF_ALL_COUNTRIES';
+        } else if (routePrams['country'] && routePrams['community'] && routePrams['region']) {
+            screenType = 'REGION_DETAIL';
+        } else if (routePrams['country'] && routePrams['community']) {
+            screenType = 'LEADER_DETAIL';
         } else {
-            type = 'LEADER_OF_A_COUNTRY';
+            screenType = 'LEADER_OF_A_COUNTRY';
         }
 
         this.setState({
-            type
+            screenType
         });
     }
 
@@ -36,7 +36,7 @@ export default class extends AdminPage {
     }
     
     updateListLeaders() {
-        if (this.state.type === 'LEADER_OF_ALL_COUNTRIES') {
+        if (this.state.screenType === 'LEADER_OF_ALL_COUNTRIES') {
             this.props.getAllLeaders()
         } else {
             this.props.getLeadersACountry(this.props.match.params['country'])
@@ -62,13 +62,23 @@ export default class extends AdminPage {
     }
 
     renderMatchComponent () {
-        switch (this.state.type) {
+        switch (this.state.screenType) {
             case 'LEADER_OF_ALL_COUNTRIES':
-                return <ListCountryLeaders addCountry={this.proxyAddCountry.bind(this)} country={null} leaders={this.props.all_leaders} />
+                return <CountryCommunities
+                    addCountry={this.proxyAddCountry.bind(this)}
+                    country={null}
+                    communities={this.props.all_country_communities} />
             case 'LEADER_OF_A_COUNTRY':
-                return <ListCountryLeaders addCountry={this.proxyAddCountry.bind(this)} country={this.props.match.params['country']} leaders={this.props.country_leaders} />
+                return <CountryCommunities
+                    addCountry={this.proxyAddCountry.bind(this)}
+                    country={this.props.match.params['country']}
+                    communities={this.props.specific_country_communities} />
             default:
-                return <DetailLeaderOfCountryOrRegion leader={this.props.match.params['leader']} region={this.props.match.params['region']} />
+                return <CommunityDetail
+                    leader={this.props.match.params['leader']}
+                    region={this.props.match.params['region']}
+                    country={this.props.match.params['country']}
+                    communityId={this.props.match.params['community']}/>
         }
     }
 
@@ -77,7 +87,7 @@ export default class extends AdminPage {
             selectedCountry: countryCode,
         });
 
-        this.props.history.push(`/admin/community/${countryCode}`)
+        this.props.history.push(`/admin/community/country/${countryCode}`)
         this.props.getLeadersACountry(countryCode)
     }
 
@@ -85,8 +95,10 @@ export default class extends AdminPage {
         this.setState({
             selectedRegion: region,
         });
+        
+        console.log('region', region);
 
-        this.props.history.push(`/admin/community/${this.props.match.params['country']}/region/${region}`)
+        this.props.history.push(`/admin/community/${this.props.match.params['community']}/country/${this.props.match.params['country']}/region/${region}`)
     }
 
     ord_renderContent () {
@@ -110,14 +122,11 @@ export default class extends AdminPage {
             </Select>
         )
 
-        const listRegions = [
-            'Hanoi', 'Tokyo', 'NewYork'
-        ]
-
-        const listRegionsEl = listRegions.map((region) => {
+        const listRegionsEl = this.props.breadcrumb_regions.map((community) => {
+            console.log('community.geolocation', community.geolocation);
             return (
-                <Select.Option key={region}
-                    value={region}>{region}</Select.Option>
+                <Select.Option key={community._id}
+                    value={community.geolocation}>{community.name}</Select.Option>
             )
         })
 
@@ -150,7 +159,7 @@ export default class extends AdminPage {
                                 {menuCountriesEl}
                             </Breadcrumb.Item>
 
-                            {(this.state.type !== 'LEADER_OF_ALL_COUNTRIES') && (
+                            {(this.state.screenType === 'LEADER_DETAIL' || this.state.screenType === 'REGION_DETAIL') && (
                                 <Breadcrumb.Item>
                                     {menuListRegionsEl}
                                 </Breadcrumb.Item>
