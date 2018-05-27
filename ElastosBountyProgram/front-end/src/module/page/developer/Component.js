@@ -6,10 +6,19 @@ import IssueForm from './formIssue/Container'
 import './style.scss'
 
 import { Col, Row, Icon, Form, Input, Button, Modal, Select } from 'antd'
+import moment from 'moment/moment'
 const Option = Select.Option
 const FormItem = Form.Item;
 
 export default class extends StandardPage {
+
+    componentDidMount() {
+        this.props.getDeveloperEvents()
+    }
+
+    componentWillUnmount() {
+        this.props.reset()
+    }
 
     ord_renderContent () {
 
@@ -44,7 +53,45 @@ export default class extends StandardPage {
                                 </Button>
                             </div>
                             <Row className="d_devEventsContainer clearfix">
+                                {this.props.all_tasks.map((task) => {
+                                    return <Col key={task._id} md={{span:8}} lg={{span: 6}}>
+                                        <div class="i_event">
+                                            <h4>
+                                                {task.name}
+                                            </h4>
+                                            <p className="event-date">
+                                                {moment(task.date).format('MMM D, YYYY')}
+                                            </p>
+                                            <img src={'/assets/images/task_thumbs/' + task.thumbnail} />
+                                        </div>
+                                    </Col>
+                                })}
+                            </Row>
+                            <Row className="d_devEventsContainer">
+                                {this.props.all_tasks.map((task) => {
+                                    return <Col key={task._id} md={{span:8}} lg={{span: 6}}>
+                                        <div class="i_event">
+                                            <p>
+                                                {_.truncate(task.description, {length: 100})}
 
+                                                {task.description.length > 100 &&
+                                                <a className="moreDetails"> more details</a>
+                                                }
+                                            </p>
+                                        </div>
+                                    </Col>
+                                })}
+                            </Row>
+                            <Row className="d_devEventsContainer">
+                                {this.props.all_tasks.map((task) => {
+                                    return <Col key={task._id} md={{span:8}} lg={{span: 6}}>
+                                        <div class="i_event">
+                                            <Button onClick={this.createTaskLink.bind(this, task)}>
+                                                Request to Join
+                                            </Button>
+                                        </div>
+                                    </Col>
+                                })}
                             </Row>
                         </Col>
                         <Col span={8} className="d_rightContainer d_box">

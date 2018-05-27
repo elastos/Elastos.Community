@@ -15,6 +15,10 @@ export default class extends StandardPage {
         this.props.getSocialEvents()
     }
 
+    componentWillUnmount() {
+        this.props.reset()
+    }
+
     ord_renderContent () {
 
         return (
@@ -47,7 +51,7 @@ export default class extends StandardPage {
                                     <Option value="showAll">Show All</Option>
                                 </Select>
                             </div>
-                            <Row className="d_devEventsContainer clearfix">
+                            <Row className="d_socialEventsContainer clearfix">
                                 {this.props.all_tasks.map((task) => {
                                     return <Col key={task._id} md={{span:8}} lg={{span: 6}}>
                                         <div class="i_event">
@@ -62,7 +66,7 @@ export default class extends StandardPage {
                                     </Col>
                                 })}
                             </Row>
-                            <Row className="d_devEventsContainer">
+                            <Row className="d_socialEventsContainer">
                                 {this.props.all_tasks.map((task) => {
                                     return <Col key={task._id} md={{span:8}} lg={{span: 6}}>
                                         <div class="i_event">

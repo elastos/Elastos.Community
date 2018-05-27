@@ -20,6 +20,10 @@ export default createContainer(Component, (state, ownProps) => {
     return {
         async getTasks () {
             return taskService.index()
+        },
+
+        async resetTasks () {
+            return taskService.resetAllTasks()
         }
     }
 })

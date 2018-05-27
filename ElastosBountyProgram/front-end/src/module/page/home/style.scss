@@ -33,7 +33,14 @@
 
     @include homeContent;
 
-    padding-bottom: $gap_3;
+    &.last {
+      padding-bottom: $gap_3;
+      color: #777;
+    }
+
+    &.subtitle > div {
+      height: 93px;
+    }
 
     p {
       text-align: left;
