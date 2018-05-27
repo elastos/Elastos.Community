@@ -4,12 +4,16 @@ import CommunityService from '@/service/CommunityService'
 import _ from 'lodash'
 
 export default createContainer(Component, (state, ownProps) => {
-    if (!_.isArray(state.community.all_leaders)) {
-        state.community.all_leaders = _.values(state.community.all_leaders)
+    if (!_.isArray(state.community.all_country_communities)) {
+        state.community.all_country_communities = _.values(state.community.all_country_communities)
+    }
+
+    if (!_.isArray(state.community.breadcrumb_regions)) {
+        state.community.breadcrumb_regions = _.values(state.community.breadcrumb_regions)
     }
     
-    if (!_.isArray(state.community.country_leaders)) {
-        state.community.country_leaders = _.values(state.community.country_leaders)
+    if (!_.isArray(state.community.specific_country_communities)) {
+        state.community.specific_country_communities = _.values(state.community.specific_country_communities)
     }
 
     return state.community;
@@ -26,6 +30,9 @@ export default createContainer(Component, (state, ownProps) => {
         },
         async addCountry (country) {
             return communityService.addCountry(country)
+        },
+        async updateLeadersACountry (country) {
+            return communityService.updateLeadersACountry(country)
         }
     }
 })

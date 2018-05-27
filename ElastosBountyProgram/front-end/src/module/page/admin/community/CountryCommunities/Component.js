@@ -13,10 +13,6 @@ export default class extends BaseComponent {
         visibleModalAddCountry: false,
         visibleModalChangeLeader: false,
     }
-    
-    redirectToCountryDetail(leader) {
-        console.log('leader', leader);
-    }
 
     // Modal add country
     showModalAddCountry = () => {
@@ -47,24 +43,22 @@ export default class extends BaseComponent {
     }
 
     ord_render () {
-        const listLeaders = this.props.leaders;
+        const listCommunities = this.props.communities || [];
 
-        const listLeadersEl = listLeaders.map((leader, index) => {
-            // TODO API need return object leader instead of leaderId, mock data till they update
-            leader = config.data.mockDataAllLeaders[0];
+        const listCommunitiesEl = listCommunities.map((community, index) => {
+            // Mock data
+            community.leader = config.data.mockDataAllLeaders[0];
+            // Mock data -- end
 
             return (
                 <Col span={6} key={index} className="user-card">
-                    <Link to={'/admin/community/' + leader.countryCode + '/leader/' + leader.id}>
+                    <Link to={'/admin/community/' + community._id  + '/country/' + community.leader.countryCode}>
                         <Card
-                            hoverable
-                            onClick={this.redirectToCountryDetail.bind(this,
-                                leader)}
-                            cover={<img alt="example" src={leader.avatar}/>}
+                            cover={<img alt="example" src={community.leader.avatar}/>}
                         >
                             <Card.Meta
-                                title={leader.name}
-                                description={leader.country}
+                                title={community.leader.name}
+                                description={community.leader.country}
                             />
                         </Card>
                     </Link>
@@ -76,7 +70,7 @@ export default class extends BaseComponent {
                 <Button className="pull-right" onClick={this.showModalAddCountry} type="primary">Add country</Button>
                 <h1>Country Leaders</h1>
                 <Row>
-                    {listLeadersEl}
+                    {listCommunitiesEl}
                 </Row>
 
                 <ModalAddCountry

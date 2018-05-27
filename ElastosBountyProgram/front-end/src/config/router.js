@@ -89,15 +89,15 @@ export default [
         page: AdminCommunityPage
     },
     {
-        path: '/admin/community/:country',
+        path: '/admin/community/country/:country',
         page: AdminCommunityPage
     },
     {
-        path: '/admin/community/:country/leader/:leader',
+        path: '/admin/community/:community/country/:country',
         page: AdminCommunityPage
     },
     {
-        path: '/admin/community/:country/region/:region',
+        path: '/admin/community/:community/country/:country/region/:region',
         page: AdminCommunityPage
     },
     {

@@ -17,7 +17,8 @@ export default Form.create()(
             const footerModal = (
                 <div>
                     <Button onClick={onCreate} type="primary">Change leader</Button>
-                    <Button onClick={handleRemoveCountry}>Remove country</Button>
+                    {/*Don't need on this pharse*/}
+                    {/*<Button onClick={handleRemoveCountry}>Remove country</Button>*/}
                     <Button onClick={onCancel}>Cancel</Button>
                 </div>
             )
@@ -25,7 +26,7 @@ export default Form.create()(
             return (
                 <Modal
                     visible={visible}
-                    title="Add country"
+                    title="Change leader"
                     footer={footerModal}
                     okText="Create"
                     onCancel={onCancel}
