@@ -13,14 +13,16 @@ export const TaskOutput = {
  * @type {{ela: {address: StringConstructor; amount: "mongoose".Schema.Types.Decimal128}}}
  */
 export const TaskUpfront = {
-    ela : ELA
+    ela : ELA,
+
+    elaDisbursed: ELA
 }
 
 export const TaskReward = {
     ela : ELA,
 
     // if ELA reward is allocated to sub-tasks (v1.5)
-    elaAllocated: ELA,
+    elaDisbursed: ELA,
     votePower : VotePower
 };
 
@@ -140,6 +142,7 @@ export const Task = {
         required : true
     },
 
+    rewardUpfront: TaskUpfront,
     reward : TaskReward,
 
     createdBy : Schema.Types.ObjectId

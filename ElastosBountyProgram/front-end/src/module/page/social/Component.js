@@ -81,6 +81,9 @@ export default class extends StandardPage {
                                     </Col>
                                 })}
                             </Row>
+                            <Row className="d_socialEventsContainer">
+
+                            </Row>
                         </Col>
                         <Col span={8} className="d_rightContainer d_box">
                             <h2>

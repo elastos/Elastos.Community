@@ -18,13 +18,27 @@ export default createContainer(Component, (state)=>{
     return {
         async createTask(formData){
 
+            debugger
+
             try {
                 const rs = await taskService.create({
                     name: formData.taskName,
                     category: formData.taskCategory,
                     type: formData.taskType,
                     description: formData.taskDesc,
-                    candidateLimit: formData.taskCandLimit
+
+                    candidateLimit: formData.taskCandLimit,
+                    candidateSltLimit: formData.taskCandSltLimit,
+
+                    rewardUpfront: {
+                        ela: formData.taskCandSltLimit,
+                        elaDisbursed: 0
+                    },
+                    reward: {
+                        ela: formData.taskCandSltLimit,
+                        elaDisbursed: 0,
+                        votePower: parseFloat(formData.taskCandSltLimit) * 1000
+                    }
                 });
 
                 if (rs) {
