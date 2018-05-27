@@ -2,6 +2,8 @@ import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import { Form, Input, Modal, Select, Button } from 'antd'
 import {COMMUNITY_TYPE} from '@/constant'
+import config from '@/config'
+
 const FormItem = Form.Item
 
 export default Form.create()(
@@ -57,9 +59,9 @@ export default Form.create()(
                                     placeholder="Please select a country"
                                     filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                                 >
-                                    <Select.Option value="cn">China</Select.Option>
-                                    <Select.Option value="us">USA</Select.Option>
-                                    <Select.Option value="vn">Vietnam</Select.Option>
+                                    {config.data.breadcrumbCountries.map((country, index) => {
+                                        return (<Select.Option key={index} value={country.geolocation}>{country.name}</Select.Option>)
+                                    })}
                                 </Select>
                             )}
                         </FormItem>
@@ -83,8 +85,9 @@ export default Form.create()(
                                     placeholder="Please select a member"
                                     filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                                 >
-                                    <Select.Option value="John Nguyen">John Nguyen</Select.Option>
-                                    <Select.Option value="David">David</Select.Option>
+                                    {config.data.mockDataAllLeaders.map((leader, index) => {
+                                        return (<Select.Option key={index} value={leader.id}>{leader.name}</Select.Option>)
+                                    })}
                                 </Select>
                             )}
                         </FormItem>

@@ -1,6 +1,6 @@
 
 .p_admin_breadcrumb {
-  padding: 10px 20px;
+  padding: 10px 0px;
   text-align: left;
   height: 52px;
 
@@ -27,3 +27,12 @@
 
 }
 
+.without-padding {
+  padding: 0 0;
+}
+
+.overflow-ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
