@@ -13,6 +13,8 @@ export default createContainer(Component, (state) => {
         taskState.all_tasks = _.values(state.task.all_tasks)
     }
 
+    taskState.is_admin = state.user.is_admin
+
     return taskState
 }, () => {
 

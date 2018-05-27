@@ -39,7 +39,7 @@ export default class extends BaseComponent {
                                 <b>Email</b>
 
                                 <p>
-                                    community@elastos.org
+                                    <a href="mailto:community@elastos.org">community@elastos.org</a>
                                 </p>
 
                                 <b>Address</b>
@@ -53,7 +53,16 @@ export default class extends BaseComponent {
                         </Col>
                         <Col span={8}>
                             <div className="d_footerSection">
-                                <h2>Newsletter</h2>
+                                <h2>Support</h2>
+
+                                <p>
+                                    If you're a developer and are running into issues
+                                    with any of our open source projects our support team
+                                    is always here to help you
+                                    <br/>
+                                    <br/>
+                                    <a href="mailto:support@elastos.org">support@elastos.org</a>
+                                </p>
                             </div>
                         </Col>
                     </Row>
