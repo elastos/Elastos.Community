@@ -25,6 +25,10 @@ export default createContainer(Component, (state) => {
                 category: TASK_CATEGORY.SOCIAL,
                 type: TASK_TYPE.EVENT
             })
+        },
+
+        async reset() {
+            return taskService.resetAllTasks()
         }
     }
 })

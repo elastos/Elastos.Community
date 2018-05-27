@@ -15,9 +15,15 @@ export default class extends BaseService {
         })
 
         // TODO: why does this set it as a struct?
+        this.dispatch(taskRedux.actions.all_tasks_reset())
         this.dispatch(taskRedux.actions.all_tasks_update(result))
 
         return result
+    }
+
+    async resetAllTasks() {
+        const taskRedux = this.store.getRedux('task')
+        this.dispatch(taskRedux.actions.all_tasks_reset())
     }
 
     async create(doc) {
