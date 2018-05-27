@@ -148,6 +148,19 @@ export default class extends Base {
         return true;
     }
 
+    /**
+     * Remove Community
+     *
+     * @param param
+     * @returns {Promise<boolean>}
+     */
+     public async removeCommunity(communityId): Promise<boolean> {
+        const db_community = this.getDBModel('Community');
+        await db_community.findByIdAndDelete(communityId);
+
+        return true;
+    }
+
     public validate_name(name){
         if(!validate.valid_string(name, 2)){
             throw 'invalid community name';
