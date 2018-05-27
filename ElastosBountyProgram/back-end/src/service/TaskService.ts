@@ -5,15 +5,39 @@ import {constant} from '../constant';
 import {validate, crypto} from '../utility';
 import UserService from "./UserService";
 
+
+
 export default class extends Base {
 
+    /**
+     * If the status is not provided, we default to
+     * returning only CREATED, APPROVED statuses
+     *
+     * CREATED - does not require approval
+     * APPROVED - task approved by admin
+     *
+     * @param param
+     * @returns {Promise<["mongoose".Document]>}
+     */
     public async index(param): Promise<[Document]> {
 
         // TODO: filter by category
 
         const db_task = this.getDBModel('Task');
 
-        return await db_task.find();
+        const findObj: any = {
+            archived: {$ne: true}
+        };
+
+        if (param.category && _.values(constant.TASK_CATEGORY).includes(param.category)) {
+            findObj.category = param.category
+        }
+
+        if (param.type && _.values(constant.TASK_TYPE).includes(param.type)) {
+            findObj.type = param.type
+        }
+
+        return await db_task.find(findObj);
     }
 
     /**

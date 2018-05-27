@@ -38,14 +38,6 @@ export const VoteLog = {
         required : false,
         min : Date.now
     },
-
-    /**
-     *
-     */
-    status : {
-        type : String
-    },
-
     createdAt: {
         type : Date,
         required : true,

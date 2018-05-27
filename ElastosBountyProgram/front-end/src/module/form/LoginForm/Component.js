@@ -1,6 +1,8 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import {Form, Icon, Input, Button, Checkbox} from 'antd'
+import ReCAPTCHA from 'react-google-recaptcha';
+import {RECAPTCHA_KEY} from '@/config/constant';
 
 import './style.scss'
 
@@ -40,9 +42,20 @@ class C extends BaseComponent {
                 type="password" placeholder="Password"/>
         )
 
+        const recaptcha_fn = getFieldDecorator('recaptcha', {
+            rules: [{required: true}]
+        })
+        const recaptcha_el = (
+            <ReCAPTCHA
+                 ref={(el) => { this.captcha = el; }}
+                 sitekey={RECAPTCHA_KEY}
+             />
+        )
+
         return {
             userName: userName_fn(userName_el),
-            pwd: pwd_fn(pwd_el)
+            pwd: pwd_fn(pwd_el),
+            recaptcha: recaptcha_fn(recaptcha_el)
         }
     }
 
@@ -56,6 +69,9 @@ class C extends BaseComponent {
                 </FormItem>
                 <FormItem>
                     {p.pwd}
+                </FormItem>
+                <FormItem>
+                    {p.recaptcha}
                 </FormItem>
                 <FormItem className="d_item">
                     <a className="login-form-forgot" href="">Forgot password</a>

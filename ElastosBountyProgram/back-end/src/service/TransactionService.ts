@@ -13,7 +13,7 @@ export default class extends Base {
      * @returns {Promise<"mongoose".Document>}
      */
     public async create(param): Promise<Document> {
-
+        return null
     }
 
     /**
@@ -23,10 +23,10 @@ export default class extends Base {
      * @returns {Promise<boolean>}
      */
     public async update(param): Promise<boolean> {
-
+        return null
     }
 
     public async index(param): Promise<[Document]> {
-
+        return null
     }
 }

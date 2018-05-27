@@ -3,6 +3,8 @@ import Component from './Component'
 import TaskService from '@/service/TaskService'
 import _ from 'lodash'
 
+import {TASK_CATEGORY, TASK_TYPE} from '@/constant'
+
 export default createContainer(Component, (state) => {
 
     let taskState = state.task
@@ -18,8 +20,11 @@ export default createContainer(Component, (state) => {
     const taskService = new TaskService()
 
     return {
-        async getTasks () {
-            return taskService.index()
+        async getSocialEvents () {
+            return taskService.index({
+                category: TASK_CATEGORY.SOCIAL,
+                type: TASK_TYPE.EVENT
+            })
         }
     }
 })

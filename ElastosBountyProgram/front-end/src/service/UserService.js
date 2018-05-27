@@ -1,6 +1,5 @@
 import BaseService from '../model/BaseService'
 import _ from 'lodash'
-import sha512 from 'crypto-js/sha512'
 import {USER_ROLE} from '@/constant'
 import {api_request} from '@/util';
 
@@ -9,8 +8,6 @@ export default class extends BaseService {
     async login(username, password, opts={}){
 
         const userRedux = this.store.getRedux('user')
-        // sha512 hash the password
-        const passwordSHA512 = sha512(password)
 
         // call API /login
         const res = await api_request({
@@ -18,7 +15,7 @@ export default class extends BaseService {
             method : 'get',
             data : {
                 username,
-                password: encodeURIComponent(passwordSHA512)
+                password
             }
         });
 

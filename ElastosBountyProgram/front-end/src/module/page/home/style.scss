@@ -12,13 +12,15 @@
   background-color: #ffffff;
 
   .d_topBackdrop {
-    font-size: 40px;
+    font-size: 44px;
     font-weight: 500;
     color: #fff;
 
+    text-transform: uppercase;
+
     padding-left: 24px;
     padding-top: 36px;
-    text-align: left;
+    text-align: center;
 
     height: 130px;
 
@@ -48,11 +50,7 @@
       display: block;
     }
 
-    h1 {
-      font-weight: 600;
-    }
-
-    h3 {
+    h4 {
       text-align: left;
       max-width: 70%;
       margin-left: auto;
@@ -72,19 +70,49 @@
     padding-top: $gap_3;
   }
 
-  .d_colMeetups {
-    border-right: 1px solid #000000;
+  .d_colTasks {
+    // border-right: 1px solid #000000;
 
     padding-left: $gap_3;
     padding-right: $gap_2;
+  }
 
-    .i_event {
-      padding: 0 $gap_2;
+  .d_colEvents {
+    border-left: 1px solid #000000;
 
-      > img {
-        width: 100%;
-      }
+    padding-left: $gap_2;
+    padding-right: $gap_3;
+  }
+
+  .i_event {
+    padding: 0 $gap_2;
+
+    > img {
+      width: 100%;
     }
   }
 
+  .d_mission {
+    text-align: center;
+    max-width: 800px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    font-size: 18px;
+
+    .d_tenets {
+      max-width: 600px;
+
+      margin-left: auto;
+      margin-right: auto;
+
+      padding-left: 25px;
+
+      font-size: 20px;
+      font-weight: 500;
+
+      font-style: italic;
+    }
+  }
 }

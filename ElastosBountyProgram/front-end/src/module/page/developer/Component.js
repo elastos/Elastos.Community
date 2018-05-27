@@ -5,7 +5,8 @@ import IssueForm from './formIssue/Container'
 
 import './style.scss'
 
-import { Col, Row, Icon, Form, Input, Button, Modal } from 'antd'
+import { Col, Row, Icon, Form, Input, Button, Modal, Select } from 'antd'
+const Option = Select.Option
 const FormItem = Form.Item;
 
 export default class extends StandardPage {
@@ -14,42 +15,56 @@ export default class extends StandardPage {
 
         // const p = this.getIssueFormProps()
         return (
-            <div className="p_Social">
+            <div className="p_Developer">
                 <div className="ebp-header-divider">
 
                 </div>
+                <div className="ebp-page-title">
+                    <h2>
+                        Contribute to Open Source Projects and dApps
+                    </h2>
+                </div>
+                <div className="ebp-page-desc d_rowGrey">
+                    <p>
+                        Most of Elastos projects are open source, this program is for all developers
+                        who want to earn ELA and recognition for their efforts developing the platform
+                    </p>
+                </div>
                 <div className="ebp-page">
-                    <div className="ebp-page-title">
-                        <h1>
-                            Elastos Developer Bounty Program
-                        </h1>
-                    </div>
                     <Row className="d_rowTop">
                         <Col span={16} className="d_box">
-                            <h2>
-                                Upcoming Developer Events
-                            </h2>
-
-                            <Row className="d_devEventsContainer">
+                            <div className="pull-left">
+                                <h3>
+                                    Join Training and Developer Events
+                                </h3>
+                            </div>
+                            <div className="pull-right btnContainer">
+                                <Button onClick={this.createTaskLink.bind(this)}>
+                                    Request Support
+                                </Button>
+                            </div>
+                            <Row className="d_devEventsContainer clearfix">
 
                             </Row>
                         </Col>
                         <Col span={8} className="d_rightContainer d_box">
-                            <h2>
+                            <h3>
                                 Submit an Issue
-                            </h2>
+                            </h3>
                             <IssueForm />
                         </Col>
                     </Row>
                     <div className="horizGap">
 
                     </div>
+                </div>
+                <div className="ebp-page">
                     <Row>
                         <Col span={16} className="d_box">
                             <div>
-                                <h2 className="pull-left">
-                                    Available Tasks
-                                </h2>
+                                <h3 className="pull-left">
+                                    Available Developer Tasks and Open Issues
+                                </h3>
                                 <div className="pull-right btnContainer">
                                     <Button onClick={this.createTaskLink.bind(this)}>
                                         Create Task
@@ -61,9 +76,9 @@ export default class extends StandardPage {
                             </div>
                         </Col>
                         <Col span={8} className="d_rightContainer d_box">
-                            <h2>
+                            <h3>
                                 My Tasks
-                            </h2>
+                            </h3>
                         </Col>
                     </Row>
                 </div>

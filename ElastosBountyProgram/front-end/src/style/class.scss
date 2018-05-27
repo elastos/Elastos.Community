@@ -36,17 +36,33 @@
   //outline: 1px solid red;
 }
 
-.ebp-page{
+.ebp-page {
   @extend .ebp-wrap;
   background: #ffffff;
-  min-height: 60vh;
+  min-height: 40vh;
   margin-top: $gap_2;
   padding: 0 $gap_2 $gap_3;
 
-  .ebp-page-title {
-    text-align: center;
-    padding-bottom: $gap_2;
+}
+
+// this is for the grey description row
+.ebp-page-desc {
+  text-align: center;
+
+  > p {
+    max-width: 700px;
+    padding: $gap_2 0;
+    font-size: 16px;
+
+    margin-left: auto;
+    margin-right: auto;
   }
+}
+
+.ebp-page-title {
+  text-align: center;
+  padding-top: $gap_3;
+  padding-bottom: 0;
 }
 
 .ebp-header-divider {
@@ -58,4 +74,14 @@
 //Common class
 .pull-right {
   float: right;
+}
+
+.ebp-gray-box {
+
+  border-radius: 5px;
+  border: 1px solid $border_gray;
+
+  h2 {
+    text-align: center;
+  }
 }
