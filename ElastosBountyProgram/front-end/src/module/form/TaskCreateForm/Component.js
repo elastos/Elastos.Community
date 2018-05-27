@@ -1,13 +1,13 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import {Form, Icon, Input, Button, Checkbox, Select, message} from 'antd'
+import {Form, Icon, Input, InputNumber, Button, Checkbox, Select, message, Row, Col} from 'antd'
 
 import './style.scss'
 
 import {TASK_CATEGORY, TASK_TYPE} from '@/constant'
 
 const FormItem = Form.Item
-const TextArea = Input.TextArea;
+const TextArea = Input.TextArea
 
 /**
  * This is generic task create form for both Developer and Social Bounties / Events
@@ -61,60 +61,90 @@ class C extends BaseComponent {
         const taskCategory_fn = getFieldDecorator('taskCategory', {
             rules: [{required: true, message: 'Please select a category'}],
             initialValue: TASK_CATEGORY.SOCIAL
-        });
+        })
         const taskCategory_el = (
             <Select>
                 <Option value={TASK_CATEGORY.SOCIAL}>Social</Option>
                 <Option value={TASK_CATEGORY.DEVELOPER}>Developer</Option>
                 <Option value={TASK_CATEGORY.LEADER}>Leader</Option>
             </Select>
-        );
+        )
 
         // sub-tasks are not here because those can only be created from an existing Task Detail Page
         const taskType_fn = getFieldDecorator('taskType', {
             rules: [{required: true, message: 'Please select a task type'}],
             initialValue: TASK_TYPE.EVENT
-        });
+        })
         const taskType_el = (
             <Select>
                 <Option value={TASK_TYPE.EVENT}>Event</Option>
                 <Option value={TASK_TYPE.PROJECT}>Project</Option>
                 {this.props.is_admin && <Option value={TASK_TYPE.TASK}>Task</Option>}
             </Select>
-        );
+        )
+
+        const taskCommunity_fn = getFieldDecorator('taskCommunity')
+        const taskCommunity_el = (
+            <Select>
+
+            </Select>
+        )
 
         const taskDesc_fn = getFieldDecorator('taskDesc', {
             rules: [{required: true, message: 'You must have a description'}],
             initialValue: ''
-        });
+        })
         const taskDesc_el = (
             <TextArea rows={4} name="taskDesc"></TextArea>
-        );
+        )
 
         const taskCandLimit_fn = getFieldDecorator('taskCandLimit', {
-            rules: [{required: true, type: 'integer', message: 'You must set a limit'}],
-            initialValue: 50
-        });
+            rules: [{type: 'integer', message: 'You must set a limit'}]
+        })
         const taskCandLimit_el = (
             <Input size="small"/>
-        );
+        )
+
+        const taskCandSltLimit_fn = getFieldDecorator('taskCandSltLimit', {
+            rules: [{type: 'integer', message: 'You must set a limit'}]
+        })
+        const taskCandSltLimit_el = (
+            <Input size="small"/>
+        )
+
+        const taskRewardUpfront_fn = getFieldDecorator('taskRewardUpfront', {
+            rules: [{type: 'number', message: 'Please explictly enter 0 if intended'}]
+        })
+        const taskRewardUpfront_el = (
+            <Input size="large"/>
+        )
+
+        const taskReward_fn = getFieldDecorator('taskReward', {
+            rules: [{type: 'number', message: 'Please explictly enter 0 if intended'}],
+        })
+        const taskReward_el = (
+            <Input size="large"/>
+        )
 
         return {
             taskName: taskName_fn(taskName_el),
             taskCategory: taskCategory_fn(taskCategory_el),
             taskType: taskType_fn(taskType_el),
+
+            taskCommunity: taskCommunity_fn(taskCommunity_el),
+
             taskDesc: taskDesc_fn(taskDesc_el),
-            taskCandLimit: taskCandLimit_fn(taskCandLimit_el)
+            taskCandLimit: taskCandLimit_fn(taskCandLimit_el),
+            taskCandSltLimit: taskCandSltLimit_fn(taskCandSltLimit_el),
+
+            taskRewardUpfront: taskRewardUpfront_fn(taskRewardUpfront_el),
+            taskReward: taskReward_fn(taskReward_el)
         }
     }
 
     ord_render () {
         const {getFieldDecorator} = this.props.form
         const p = this.getInputProps()
-
-        // TODO: terms of service checkbox
-
-        // TODO: react-motion animate slide left
 
         const formItemLayout = {
             labelCol: {
@@ -127,10 +157,14 @@ class C extends BaseComponent {
             },
         }
 
-        return (
-            <div className="c_registerContainer">
+        // TODO: terms of service checkbox
 
-                <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
+        // TODO: react-motion animate slide left
+
+        return (
+            <div className="c_taskCreateFormContainer">
+
+                <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
                     <div>
                         <FormItem label="Task Name" {...formItemLayout}>
                             {p.taskName}
@@ -141,12 +175,33 @@ class C extends BaseComponent {
                         <FormItem label="Type"  {...formItemLayout}>
                             {p.taskType}
                         </FormItem>
+                        <FormItem label="Community"  {...formItemLayout}>
+                            {p.taskCommunity}
+                        </FormItem>
                         <FormItem label="Description" {...formItemLayout}>
                             {p.taskDesc}
                         </FormItem>
-                        <FormItem label="Max Participants" {...formItemLayout}>
-                            {p.taskCandLimit}
+                        <FormItem label="Candidates" {...formItemLayout}>
+                            <Row>
+                                <Col span={3}>
+                                    <InputNumber size="large" name="taskCandLimit"/>
+                                </Col>
+                                <Col class="midLabel" span={6}>
+                                    Max Accepted:
+                                </Col>
+                                <Col span={3}>
+                                    <InputNumber size="large" name="taskCandSltLimit"/>
+                                </Col>
+                            </Row>
                         </FormItem>
+
+                        <FormItem label="ELA Upfront" {...formItemLayout}>
+                            {p.taskRewardUpfront}
+                        </FormItem>
+                        <FormItem label="ELA Reward" {...formItemLayout}>
+                            {p.taskReward}
+                        </FormItem>
+
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
                             <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
                                 {this.props.is_admin ? 'Create Task' : 'Submit Proposal'}

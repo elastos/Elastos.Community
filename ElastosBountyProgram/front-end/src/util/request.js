@@ -12,7 +12,7 @@ import _ from 'lodash';
 * opts.success
 * opts.error
 *
-*
+* TODO: add limit to qry
 * */
 export const api_request = (opts = {})=>{
     const apiToken = sessionStorage.getItem('api-token');

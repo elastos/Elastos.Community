@@ -12,8 +12,7 @@ export default abstract class {
         this.db = DB.model(this.getName(), this.schema);
 
         this.reject_fields = _.extend({
-            __v : false,
-            createdAt : false
+            __v : false
         }, this.rejectFields());
     }
 
@@ -47,7 +46,8 @@ export default abstract class {
     public async find(query, opts?): Promise<Document[]>{
         const option = this.buildFindOptions(opts);
         const reject_fields = option.reject ? this.reject_fields : {};
-        return await this.db.find(query, reject_fields);
+        const res = await this.db.find(query, reject_fields);
+        return res
     }
 
     public async findById(id, opts?): Promise<Document>{

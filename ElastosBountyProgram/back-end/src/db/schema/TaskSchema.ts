@@ -13,14 +13,16 @@ export const TaskOutput = {
  * @type {{ela: {address: StringConstructor; amount: "mongoose".Schema.Types.Decimal128}}}
  */
 export const TaskUpfront = {
-    ela : ELA
+    ela : ELA,
+
+    elaDisbursed: ELA
 }
 
 export const TaskReward = {
     ela : ELA,
 
     // if ELA reward is allocated to sub-tasks (v1.5)
-    elaAllocated: ELA,
+    elaDisbursed: ELA,
     votePower : VotePower
 };
 
@@ -54,7 +56,9 @@ export const TaskActivity = {
 }
 
 /**
- * A task is a base class for any event,
+ * A task is a base class for any event
+ *
+ * createdBy - always there
  *
  */
 export const Task = {
@@ -78,7 +82,7 @@ export const Task = {
     },
 
     // for events this should be set, or if null assume online
-    communityId: Schema.Types.ObjectId,
+    community: Schema.Types.ObjectId,
 
     category: {
         type: String,
@@ -140,9 +144,10 @@ export const Task = {
         required : true
     },
 
+    rewardUpfront: TaskUpfront,
     reward : TaskReward,
 
-    createdBy : Schema.Types.ObjectId
+    createdAt: Date
 };
 
 

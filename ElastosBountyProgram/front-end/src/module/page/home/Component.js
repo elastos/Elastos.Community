@@ -1,10 +1,12 @@
 import React from 'react';
 import StandardPage from '../StandardPage';
+import _ from 'lodash'
 
 import './style.scss'
 
-import { Col, Row, List } from 'antd'
+import { Col, Row, List, Button } from 'antd'
 import Footer from '@/module/layout/Footer/Container'
+import moment from 'moment/moment'
 
 export default class extends StandardPage {
 
@@ -31,11 +33,63 @@ export default class extends StandardPage {
             backgroundImage: `url('/assets/images/HomeHeader.jpg')`
         }
 
+        const renderEventRow = (task, rowIndex) => {
+
+            switch (rowIndex) {
+                case 0:
+                    // Task Name
+                    return <Col key={task._id} md={{span:12}} lg={{span: 8}}>
+                        <div class="i_event">
+                            <h4>
+                                {task.name}
+                            </h4>
+                        </div>
+                    </Col>
+
+                case 1:
+                    // Date + Thumb
+                    return <Col key={task._id} md={{span:12}} lg={{span: 8}}>
+                        <div class="i_event">
+                            <p className="event-date">
+                                {moment(task.date).format('MMM D, YYYY')}
+                            </p>
+                            <img src={'/assets/images/task_thumbs/' + task.thumbnail} />
+                        </div>
+                    </Col>
+
+                case 2:
+                    // Desc
+                    return <Col key={task._id} md={{span:12}} lg={{span: 8}}>
+                        <div class="i_event">
+                            <p>
+                                {_.truncate(task.description, {length: 100})}
+
+                                {task.description.length > 100 &&
+                                <a className="moreDetails"> more details</a>
+                                }
+                            </p>
+                        </div>
+                    </Col>
+
+                case 3:
+                    // Apply button
+                    return <Col key={task._id} md={{span:12}} lg={{span: 8}}>
+                        <div class="i_event">
+                            <Button>
+                                Apply to Help
+                            </Button>
+                        </div>
+                    </Col>
+
+            }
+
+        }
+
         return (
             <div className="c_Home">
                 <div className="d_topBackdrop" style={backdropStyle}>
                     <div className="d_topBackdrop_title">
-                        Elastian Munimenta
+                        &lt;Name Goes Here&gt;
                     </div>
                 </div>
                 <div className="horizGap">
@@ -43,22 +97,28 @@ export default class extends StandardPage {
                 </div>
                 <Row className="d_rowPrograms">
                     <Col span={8}>
-                        <img src="/assets/images/Home_Developers.png" />
-                        <h3>
-                            Developer
-                        </h3>
+                        <a href="/developer">
+                            <img src="/assets/images/Home_Developers.png" />
+                            <h3>
+                                Developer
+                            </h3>
+                        </a>
                     </Col>
                     <Col span={8} className="d_colProgram_middle">
-                        <img src="/assets/images/Home_Social.png" />
-                        <h3>
-                            Social
-                        </h3>
+                        <a href="/social">
+                            <img src="/assets/images/Home_Social.png" />
+                            <h3>
+                                Social
+                            </h3>
+                        </a>
                     </Col>
                     <Col span={8}>
-                        <img src="/assets/images/Home_Leader.png" />
-                        <h3>
-                            Leader
-                        </h3>
+                        <a href="/leader">
+                            <img src="/assets/images/Home_Leader.png" />
+                            <h3>
+                                Leader
+                            </h3>
+                        </a>
                     </Col>
                 </Row>
                 <Row className="d_rowPrograms subtitle">
@@ -159,32 +219,27 @@ export default class extends StandardPage {
                             <h3>
                                 Featured Developer Bounties
                             </h3>
+
+                            {_.range(4).map((i) => {
+                                return <Row key={i} className="d_devEventsContainer">
+                                    {this.props.dev_tasks.map((task) => {
+                                        return renderEventRow(task, i)
+                                    })}
+                                </Row>
+                            })}
                         </Col>
                         <Col span={12} className="d_colEvents">
                             <h3>
-                                Events Looking for Help
+                                Featured Events
                             </h3>
 
-                            <Row className="d_devEventsContainer">
-                                {this.props.all_tasks.map((task) => {
-                                    return <Col key={task._id} md={{span:12}} lg={{span: 8}}>
-                                        <div class="i_event">
-                                            <h4>
-                                                {task.name}
-                                            </h4>
-                                            <img src={'/assets/images/task_thumbs/' + task.thumbnail} />
-
-                                            <p>
-                                                {_.truncate(task.description, {length: 100})}
-
-                                                {task.description.length > 100 &&
-                                                <a className="moreDetails"> more details</a>
-                                                }
-                                            </p>
-                                        </div>
-                                    </Col>
-                                })}
-                            </Row>
+                            {_.range(4).map((i) => {
+                                return <Row key={i} className="d_devEventsContainer">
+                                    {this.props.social_tasks.map((task) => {
+                                        return renderEventRow(task, i)
+                                    })}
+                                </Row>
+                            })}
                         </Col>
                     </Row>
                 </div>

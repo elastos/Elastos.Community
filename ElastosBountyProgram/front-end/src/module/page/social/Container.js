@@ -27,7 +27,7 @@ export default createContainer(Component, (state) => {
             })
         },
 
-        async reset() {
+        async resetTasks() {
             return taskService.resetAllTasks()
         }
     }
