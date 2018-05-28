@@ -9,7 +9,7 @@ export default class extends Base {
     async action(){
         const userService = this.buildService(UserService);
 
-        const {username, password, remember} = this.getParam();
+        const {username, password} = this.getParam();
 
         userService.validate_username(username);
         userService.validate_password(password);
