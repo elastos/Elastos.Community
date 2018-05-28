@@ -40,6 +40,17 @@ export default class extends Base {
         return await db_task.find(findObj);
     }
 
+    /*
+    * list tasks
+    * */
+    public async list(query): Promise<Document> {
+        const db_task = this.getDBModel('Task');
+
+        return await db_task.list(query, {
+            updatedAt: -1
+        });
+    }
+
     /**
      * This also handles creating sub tasks, if it's sub task
      * the parentTaskId must be set, and the user must be owner of the parent task

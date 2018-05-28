@@ -74,6 +74,8 @@ paths:
     $ref: './path/task/create.yml'
   /task/{taskId}:
     $ref: './path/task/get.yml'
+  /task/list:
+    $ref: './path/task/list.yml'
 
   /community/{communityId}:
     $ref: './path/community/get.yml'

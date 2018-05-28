@@ -51,9 +51,7 @@ export default abstract class {
     }
 
     public async findById(id, opts?): Promise<Document>{
-        const option = this.buildFindOptions(opts);
-        const reject_fields = option.reject ? this.reject_fields : {};
-        return await this.db.findById(id, reject_fields);
+        return await this.findOne({_id: id}, opts);
     }
 
     public async findOne(query, opts?): Promise<Document>{
@@ -73,9 +71,15 @@ export default abstract class {
     public async count(query): Promise<number>{
         return await this.db.count(query);
     }
+    public async list(query, sort?, limit?): Promise<Document>{
+        return await this.db.find(query).sort(sort || {}).limit(limit || 1000);
+    }
 
     public getAggregate(){
         return this.db.aggregate();
+    }
+    public getDBInstance(){
+        return this.db;
     }
 
     public async remove(query){
