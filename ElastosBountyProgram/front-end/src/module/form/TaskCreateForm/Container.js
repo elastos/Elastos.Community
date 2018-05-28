@@ -17,9 +17,6 @@ export default createContainer(Component, (state)=>{
 
     return {
         async createTask(formData){
-
-            debugger
-
             try {
                 const rs = await taskService.create({
                     name: formData.taskName,
@@ -30,15 +27,17 @@ export default createContainer(Component, (state)=>{
                     candidateLimit: formData.taskCandLimit,
                     candidateSltLimit: formData.taskCandSltLimit,
 
-                    rewardUpfront: {
-                        ela: formData.taskCandSltLimit,
-                        elaDisbursed: 0
-                    },
-                    reward: {
-                        ela: formData.taskCandSltLimit,
-                        elaDisbursed: 0,
-                        votePower: parseFloat(formData.taskCandSltLimit) * 1000
-                    }
+                    reward_ela : formData.taskReward,
+                    reward_votePower : formData.taskReward
+                    // rewardUpfront: {
+                    //     ela: formData.taskCandSltLimit,
+                    //     elaDisbursed: 0
+                    // },
+                    // reward: {
+                    //     ela: formData.taskCandSltLimit,
+                    //     elaDisbursed: 0,
+                    //     votePower: parseFloat(formData.taskCandSltLimit) * 1000
+                    // }
                 });
 
                 if (rs) {
@@ -46,8 +45,8 @@ export default createContainer(Component, (state)=>{
                     taskService.path.push('/home');
                 }
             } catch (err) {
-                message.error('There was an error creating this task')
-                console.error(err) // TODO: add rollbar?
+                // message.error('There was an error creating this task')
+                message.error(err.message) // TODO: add rollbar?
             }
         }
     };

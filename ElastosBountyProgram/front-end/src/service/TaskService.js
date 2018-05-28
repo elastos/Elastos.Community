@@ -44,5 +44,7 @@ export default class extends BaseService {
         })
 
         // TODO: take user to task detail page
+
+        return res;
     }
 }

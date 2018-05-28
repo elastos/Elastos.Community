@@ -10,14 +10,24 @@ export default class extends Base {
     public async registerNewUser(param): Promise<Document>{
         const db_user = this.getDBModel('User');
 
-        this.validate_username(param.username);
+        const username = param.username.toLowerCase();
+
+        this.validate_username(username);
         this.validate_password(param.password);
         this.validate_email(param.email);
+
+        // check username and email unique
+        if(await db_user.findOne({username})){
+            throw 'username is exist';
+        }
+        if(await db_user.findOne({email : param.email})){
+            throw 'email is exist';
+        }
 
         const salt = uuid();
 
         const doc = {
-            username : param.username.toLowerCase(),
+            username,
             password : this.getPassword(param.password, salt),
             email : param.email,
             salt,

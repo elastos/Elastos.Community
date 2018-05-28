@@ -22,9 +22,3 @@ get:
       schema:
         type: string
       example: password
-
-    - name: remember
-      in: query
-      schema:
-        type: string
-      example: 'true'

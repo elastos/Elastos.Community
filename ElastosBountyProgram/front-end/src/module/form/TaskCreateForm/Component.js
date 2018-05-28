@@ -102,28 +102,28 @@ class C extends BaseComponent {
             rules: [{type: 'integer', message: 'You must set a limit'}]
         })
         const taskCandLimit_el = (
-            <Input size="small"/>
+            <InputNumber size="large"/>
         )
 
         const taskCandSltLimit_fn = getFieldDecorator('taskCandSltLimit', {
             rules: [{type: 'integer', message: 'You must set a limit'}]
         })
         const taskCandSltLimit_el = (
-            <Input size="small"/>
+            <InputNumber size="large"/>
         )
 
         const taskRewardUpfront_fn = getFieldDecorator('taskRewardUpfront', {
             rules: [{type: 'number', message: 'Please explictly enter 0 if intended'}]
         })
         const taskRewardUpfront_el = (
-            <Input size="large"/>
+            <InputNumber size="large"/>
         )
 
         const taskReward_fn = getFieldDecorator('taskReward', {
             rules: [{type: 'number', message: 'Please explictly enter 0 if intended'}],
         })
         const taskReward_el = (
-            <Input size="large"/>
+            <InputNumber size="large"/>
         )
 
         return {
@@ -184,13 +184,15 @@ class C extends BaseComponent {
                         <FormItem label="Candidates" {...formItemLayout}>
                             <Row>
                                 <Col span={3}>
-                                    <InputNumber size="large" name="taskCandLimit"/>
+                                    {/*<InputNumber size="large" name="taskCandLimit"/>*/}
+                                    {p.taskCandLimit}
                                 </Col>
                                 <Col class="midLabel" span={6}>
                                     Max Accepted:
                                 </Col>
                                 <Col span={3}>
-                                    <InputNumber size="large" name="taskCandSltLimit"/>
+                                    {/*<InputNumber size="large" name="taskCandSltLimit"/>*/}
+                                    {p.taskCandSltLimit}
                                 </Col>
                             </Row>
                         </FormItem>
