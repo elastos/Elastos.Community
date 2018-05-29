@@ -29,7 +29,7 @@ export default class extends BaseService {
         // TODO: why does this set it as a struct?
         this.dispatch(taskRedux.actions.loading_update(false))
         this.dispatch(taskRedux.actions.all_tasks_reset())
-        this.dispatch(taskRedux.actions.all_tasks_update(result))
+        this.dispatch(taskRedux.actions.all_tasks_update(result.list))
 
         return result
     }
