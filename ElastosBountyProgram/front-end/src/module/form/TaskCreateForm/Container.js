@@ -28,22 +28,20 @@ export default createContainer(Component, (state)=>{
                     candidateLimit: formData.taskCandLimit,
                     candidateSltLimit: formData.taskCandSltLimit,
 
-                    reward_ela : formData.taskReward,
-                    reward_votePower : formData.taskReward
-                    // rewardUpfront: {
-                    //     ela: formData.taskCandSltLimit,
-                    //     elaDisbursed: 0
-                    // },
-                    // reward: {
-                    //     ela: formData.taskCandSltLimit,
-                    //     elaDisbursed: 0,
-                    //     votePower: parseFloat(formData.taskCandSltLimit) * 1000
-                    // }
+                    rewardUpfront: {
+                        ela: formData.taskCandSltLimit * 1000,
+                        elaDisbursed: 0
+                    },
+                    reward: {
+                        ela: formData.taskCandSltLimit * 1000,
+                        elaDisbursed: 0,
+                        votePower: parseFloat(formData.taskCandSltLimit) * 100
+                    }
                 });
 
                 if (rs) {
                     message.success('task created successfully');
-                    taskService.path.push('/home');
+                    taskService.path.push(`/task/${rs._id}`);
                 }
             } catch (err) {
                 // message.error('There was an error creating this task')

@@ -41,13 +41,13 @@ export default class extends Base {
 
         const {
             name, description, thumbnail, communityId, category, type, startTime, endTime,
-            candidateLimit, candidateSltLimit, reward_ela, reward_votePower
+            candidateLimit, candidateSltLimit, rewardUpfront, reward
         } = param;
         this.validate_name(name);
         this.validate_description(description);
         this.validate_type(type);
-        this.validate_reward_ela(reward_ela);
-        this.validate_reward_votePower(reward_votePower);
+        // this.validate_reward_ela(reward_ela);
+        // this.validate_reward_votePower(reward_votePower);
 
         const doc = {
             name, description, category, type,
@@ -56,13 +56,12 @@ export default class extends Base {
             thumbnail,
             candidateLimit,
             candidateSltLimit,
+            rewardUpfront: {
+                ela: rewardUpfront.ela
+            },
             reward : {
-                ela : {
-                    amount : reward_ela
-                },
-                votePower : {
-                    amount : reward_votePower
-                }
+                ela : reward.ela,
+                votePower : reward.votePower
             },
             status : constant.TASK_STATUS.CREATED,
             createdBy : this.currentUser._id
@@ -79,7 +78,7 @@ export default class extends Base {
 
         if(type === constant.TASK_TYPE.EVENT){
             const userService = this.getService(UserService);
-            if(reward_ela > userService.getSumElaBudget(this.currentUser.elaBudget)){
+            if(reward.ela > userService.getSumElaBudget(this.currentUser.elaBudget)){
                 throw 'ela reward could not greater than user budget';
             }
         }

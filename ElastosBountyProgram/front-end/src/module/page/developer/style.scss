@@ -44,5 +44,18 @@
       padding-top: $gap_1;
     }
   }
+
+  table {
+
+    > thead.ant-table-thead > tr > th {
+      word-break: normal;
+      white-space: nowrap;
+    }
+
+    td {
+      word-break: normal;
+      white-space: nowrap;
+    }
+  }
 }
 

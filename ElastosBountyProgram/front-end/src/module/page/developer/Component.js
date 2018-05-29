@@ -5,10 +5,12 @@ import IssueForm from './formIssue/Container'
 
 import './style.scss'
 
-import { Col, Row, Icon, Form, Input, Button, Modal, Select } from 'antd'
+import { Col, Row, Icon, Form, Input, Button, Modal, Select, Table } from 'antd'
 import moment from 'moment/moment'
 const Option = Select.Option
 const FormItem = Form.Item;
+
+import {TASK_STATUS} from '@/constant'
 
 export default class extends StandardPage {
 
@@ -21,6 +23,35 @@ export default class extends StandardPage {
     }
 
     ord_renderContent () {
+
+        const taskData = this.props.all_tasks
+
+        const columns = [{
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+            width: '30%',
+            className: 'fontWeight500',
+            render: (name, record) => {
+                return <a href={`/admin/task-detail/${record._id}`} className="tableLink">{name}</a>
+            }
+        }, {
+            title: 'Community',
+            dataIndex: 'communityId',
+            key: 'communityId'
+        }, {
+            title: 'Date',
+            dataIndex: 'startTime',
+            key: 'startTime',
+            render: (startTime) => moment(startTime).format('MMM D')
+        }, {
+            title: '',
+            dataIndex: '_id',
+            key: 'actions',
+            render: (id, record) => {
+
+            }
+        }]
 
         // const p = this.getIssueFormProps()
         return (
@@ -53,6 +84,13 @@ export default class extends StandardPage {
                                 </Button>
                             </div>
 
+                            <Table
+                                className="clearfix"
+                                columns={columns}
+                                rowKey={(item) => item._id}
+                                dataSource={taskData}
+                                loading={this.props.loading}
+                            />
                         </Col>
                         <Col span={8} className="d_rightContainer d_box">
                             <h3>

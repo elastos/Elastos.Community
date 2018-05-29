@@ -22,17 +22,17 @@ export default class extends StandardPage {
                     <Row>
                         <Col span={18}>
                             <div class="d_leadersList">
-                                <h2>
-                                    Leaders
-                                </h2>
+                                <h3>
+                                    Organizers
+                                </h3>
                             </div>
                         </Col>
                         <Col span={6}>
                             <br/>
-                            <div class="ebp-gray-box">
-                                <h3>
-                                    Apply to be a Leader
-                                </h3>
+                            <div class="ebp-gray-box center">
+                                <h4>
+
+                                </h4>
                             </div>
                         </Col>
                     </Row>

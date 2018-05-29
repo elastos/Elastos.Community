@@ -13,6 +13,10 @@ export default createContainer(Component, (state) => {
         taskState.all_tasks = _.values(state.task.all_tasks)
     }
 
+    taskState.events = _.filter(taskState.all_tasks, {type: TASK_TYPE.EVENT})
+    taskState.tasks = _.filter(taskState.all_tasks, {type: TASK_TYPE.TASK})
+    taskState.is_admin = state.user.is_admin
+
     return taskState
 
 }, () => {
@@ -22,8 +26,7 @@ export default createContainer(Component, (state) => {
     return {
         async getSocialEvents () {
             return taskService.index({
-                category: TASK_CATEGORY.SOCIAL,
-                type: TASK_TYPE.EVENT
+                category: TASK_CATEGORY.SOCIAL
             })
         },
 

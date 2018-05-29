@@ -6,8 +6,10 @@ import moment from 'moment'
 
 import './style.scss'
 
-import { Col, Row, Icon, Form, Input, Button, Select } from 'antd'
+import { Col, Row, Icon, Form, Input, Button, Select, Table } from 'antd'
 const Option = Select.Option
+
+import {TASK_STATUS} from '@/constant'
 
 export default class extends StandardPage {
 
@@ -20,6 +22,36 @@ export default class extends StandardPage {
     }
 
     ord_renderContent () {
+
+        const eventData = this.props.events
+        const taskData = this.props.tasks
+
+        const columns = [{
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+            width: '30%',
+            className: 'fontWeight500',
+            render: (name, record) => {
+                return <a href={`/admin/task-detail/${record._id}`} className="tableLink">{name}</a>
+            }
+        }, {
+            title: 'Community',
+            dataIndex: 'communityId',
+            key: 'communityId'
+        }, {
+            title: 'Date',
+            dataIndex: 'startTime',
+            key: 'startTime',
+            render: (startTime) => moment(startTime).format('MMM D')
+        }, {
+            title: '',
+            dataIndex: '_id',
+            key: 'actions',
+            render: (id, record) => {
+
+            }
+        }]
 
         return (
             <div className="p_Social">
@@ -49,13 +81,15 @@ export default class extends StandardPage {
                                 <Button onClick={this.createTaskLink.bind(this)}>
                                     Create Event
                                 </Button>
-                                &nbsp;
-                                <Select defaultValue="showHelp" style={{width: 300}} onChange={this.handleEventFilterChange.bind(this)}>
-                                    <Option value="showHelp">Show Only Events Looking for Help</Option>
-                                    <Option value="showAll">Show All</Option>
-                                </Select>
                             </div>
 
+                            <Table
+                                className="clearfix"
+                                columns={columns}
+                                rowKey={(item) => item._id}
+                                dataSource={eventData}
+                                loading={this.props.loading}
+                            />
                         </Col>
                         <Col span={8} className="d_rightContainer d_box">
                             <h2>
@@ -81,9 +115,14 @@ export default class extends StandardPage {
                                     </Button>
                                 </div>
                             </div>
-                            <div>
 
-                            </div>
+                            <Table
+                                className="clearfix"
+                                columns={columns}
+                                rowKey={(item) => item._id}
+                                dataSource={taskData}
+                                loading={this.props.loading}
+                            />
                         </Col>
                         <Col span={8} className="d_rightContainer d_box">
                             <h3>
