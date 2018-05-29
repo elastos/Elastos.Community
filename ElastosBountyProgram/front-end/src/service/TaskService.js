@@ -60,7 +60,9 @@ export default class extends BaseService {
             data: doc
         })
 
-        debugger
+        const taskUpdated = Object.assign({}, this.store.getState().task.detail, doc)
+
+        this.dispatch(taskRedux.actions.detail_update(taskUpdated))
 
         return result
     }
