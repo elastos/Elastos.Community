@@ -51,13 +51,16 @@ export default class extends BaseService {
     }
 
     async update(taskId, doc) {
+
+        const taskRedux = this.store.getRedux('task')
+
         const result = await api_request({
             path: `/task/${taskId}`,
             method: 'put',
             data: doc
         })
 
-        this.dispatch(taskRedux.actions.detail_update(result))
+        debugger
 
         return result
     }

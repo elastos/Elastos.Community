@@ -148,7 +148,9 @@ export const Task = {
     },
 
     rewardUpfront: TaskUpfront,
-    reward : TaskReward
+    reward : TaskReward,
+
+    approvedBy: Schema.Types.ObjectId
 };
 
 

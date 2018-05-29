@@ -3,6 +3,7 @@ import Component from './Component'
 import TaskService from '@/service/TaskService'
 import _ from 'lodash'
 
+import {TASK_STATUS} from '@/config/constant'
 
 export default createContainer(Component, (state) => {
 
@@ -28,8 +29,9 @@ export default createContainer(Component, (state) => {
 
     return {
         async getTasks () {
-
-            return taskService.index()
+            return taskService.index({
+                admin: true
+            })
         },
 
         async resetTasks () {

@@ -15,3 +15,23 @@
     }
   }
 }
+
+.ant-menu-item {
+  &.ant-menu-item-selected {
+
+    > a {
+      color: $primary_dark_color;
+
+      outline-color: $primary_color;
+      border-color: $primary_color;
+
+      &::before {
+        background-color: rgba(71, 170, 167, 0.1);
+      }
+    }
+
+    &::after {
+      border-color: $primary_color;
+    }
+  }
+}

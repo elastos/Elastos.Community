@@ -51,6 +51,7 @@
     "@types/helmet": "0.0.37",
     "@types/jest": "^22.2.3",
     "@types/js-yaml": "3.10.1",
+    "@types/lodash": "^4.14.109",
     "@types/mongoose": "^5.0.13",
     "chai": "^4.1.2",
     "jest": "^22.4.3",

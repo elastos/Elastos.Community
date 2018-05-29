@@ -1,8 +1,8 @@
 import {createContainer} from "@/util"
 import Component from './Component'
 import TaskService from '@/service/TaskService'
-
-import {TASK_STATUS} from '@/config/constant'
+import {message} from 'antd'
+import {TASK_STATUS} from '@/constant'
 
 export default createContainer(Component, (state)=>{
     return {}
@@ -11,9 +11,7 @@ export default createContainer(Component, (state)=>{
     const taskService = new TaskService()
 
     return {
-        async approveTask() {
-
-            const taskId = this.props.task.detail._id
+        async approveTask(taskId) {
 
             try {
                 const rs = await taskService.update(taskId, {

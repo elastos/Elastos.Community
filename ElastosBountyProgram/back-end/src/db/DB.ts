@@ -122,7 +122,7 @@ export default class {
             console.log('create admin user =>', rs);
         }catch(err){
             if(err.code === 11000){
-                console.log('admin user is already exist');
+                console.log('admin user already exists');
             }
             else{
                 console.error(err);

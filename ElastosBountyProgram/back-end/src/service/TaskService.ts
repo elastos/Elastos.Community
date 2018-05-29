@@ -7,6 +7,8 @@ import UserService from "./UserService";
 
 const restrictedFields = {
     update: [
+        '_id',
+        'taskId',
         'status',
         'password'
     ]
@@ -21,7 +23,6 @@ export default class extends Base {
 
     public async list(query): Promise<Document> {
         const db_task = this.getDBModel('Task');
-
         return await db_task.list(query, {
             updatedAt: -1
         });
@@ -37,6 +38,7 @@ export default class extends Base {
      * @returns {Promise<"mongoose".Document>}
      */
     public async create(param): Promise<Document> {
+
         const {
             name, description, thumbnail, communityId, category, type, startTime, endTime,
             candidateLimit, candidateSltLimit, reward_ela, reward_votePower
@@ -95,19 +97,27 @@ export default class extends Base {
      * @returns {Promise<boolean>}
      */
     public async update(param): Promise<boolean> {
+
         const {id, name, description, communityId, type, startTime, endTime, candidateLimit, reward, rewardUpfront} = param;
-        this.validate_name(name);
-        this.validate_description(description);
-        this.validate_type(type);
 
         // explictly copy over fields, do not accept param as is
         const updateObj:any = _.omit(param, restrictedFields.update)
 
-        debugger
+        // only allow updating these fields if user is admin
+        if (this.currentUser.role === constant.USER_ROLE.ADMIN) {
 
-        if (this.currentUser.role !== constant.USER_ROLE.ADMIN) {
+            if (param.status) {
+                updateObj.status = param.status
 
+                if (param.status === constant.TASK_STATUS.APPROVED) {
+                    updateObj.approvedBy = this.currentUser._id
+                }
+            }
         }
+
+        const db_task = this.getDBModel('Task');
+
+        await db_task.update({_id: param.taskId}, updateObj)
 
         return true;
     }

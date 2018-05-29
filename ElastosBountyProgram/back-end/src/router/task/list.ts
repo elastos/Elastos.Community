@@ -30,7 +30,11 @@ export default class extends Base{
             query.category = param.category;
         }
 
-        if (!param.status) {
+        if (param.admin) {
+            delete param.admin;
+            query.status = {$ne: constant.TASK_STATUS.CANCELED}
+
+        } else if (!param.status) {
             query.status = {$in: [
                     constant.TASK_STATUS.CREATED,
                     constant.TASK_STATUS.APPROVED

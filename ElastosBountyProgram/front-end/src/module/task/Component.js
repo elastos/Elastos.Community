@@ -15,16 +15,20 @@ export default class extends BaseComponent {
             <div className="c_TaskDetail">
                 <div className="l_banner">
                     <div className="pull-left">
+                        Status: <span className="status">{this.props.task.status}</span>
+                        {this.props.task.status === TASK_STATUS.CREATED &&
+                        <span className="help-text">&nbsp; - this task does not require approval</span>
+                        }
                         {this.props.task.status === TASK_STATUS.PENDING &&
-                            <div>
-                                Status: <span className="status">{this.props.task.status}</span>
-                                <span className="help-text">&nbsp; - this task is awaiting approval</span>
-                            </div>
+                        <span className="help-text">&nbsp; - this task is awaiting approval</span>
+                        }
+                        {this.props.task.status === TASK_STATUS.APPROVED &&
+                        <span className="help-text">&nbsp; - this task is approved by {this.props.task.approvedBy}</span>
                         }
                     </div>
                     <div className="pull-right right-align">
                         {this.props.task.status === TASK_STATUS.PENDING &&
-                        <Button type="primary" onClick={this.props.approveTask}>Approve</Button>
+                        <Button type="primary" onClick={this.approveTask.bind(this)}>Approve</Button>
                         }
                         <Button>Edit</Button>
                     </div>
@@ -114,5 +118,10 @@ export default class extends BaseComponent {
 
             </div>
         )
+    }
+
+    async approveTask() {
+        const taskId = this.props.task._id
+        return this.props.approveTask(taskId)
     }
 }
