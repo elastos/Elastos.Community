@@ -24,6 +24,22 @@ export default class extends BaseService {
         return result
     }
 
+    async get(taskId) {
+        const taskRedux = this.store.getRedux('task')
+
+        this.dispatch(taskRedux.actions.loading_update(true))
+
+        const result = await api_request({
+            path: `/task/${taskId}`,
+            method: 'get'
+        })
+
+        this.dispatch(taskRedux.actions.loading_update(false))
+        this.dispatch(taskRedux.actions.detail_update(result))
+
+        return result
+    }
+
     async setFilter(options) {
         const taskRedux = this.store.getRedux('task')
 
@@ -33,6 +49,11 @@ export default class extends BaseService {
     async resetAllTasks() {
         const taskRedux = this.store.getRedux('task')
         this.dispatch(taskRedux.actions.all_tasks_reset())
+    }
+
+    async resetTaskDetail() {
+        const taskRedux = this.store.getRedux('task')
+        this.dispatch(taskRedux.actions.detail_reset())
     }
 
     async create(doc) {

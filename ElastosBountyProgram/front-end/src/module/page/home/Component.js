@@ -20,7 +20,7 @@ export default class extends StandardPage {
 
     getCoreTenets() {
         return [
-            'Leaders are decided by a transparent voting system',
+            'Organizers are decided by a transparent voting system',
             'Voting power (EVP) is only earned through participation',
             'Elastos can only veto tasks and define the ELA rewards'
         ]
@@ -116,7 +116,7 @@ export default class extends StandardPage {
                         <a href="/leader">
                             <img src="/assets/images/Home_Leader.png" />
                             <h3>
-                                Leader
+                                Organizers
                             </h3>
                         </a>
                     </Col>
@@ -154,7 +154,7 @@ export default class extends StandardPage {
                     </Col>
                     <Col span={8}>
                         <p>
-                            Interested in becoming a leader for your community, school or entire country?
+                            Interested in organizing events for your community, school or entire country?
                             Our program empowers you to take a leadership role in the Elastos world.
                         </p>
                     </Col>

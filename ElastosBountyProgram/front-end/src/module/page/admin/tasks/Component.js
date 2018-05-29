@@ -28,7 +28,10 @@ export default class extends AdminPage {
             dataIndex: 'name',
             key: 'name',
             width: '30%',
-            className: 'fontWeight500'
+            className: 'fontWeight500',
+            render: (name, record) => {
+                return <a href={`/admin/task-detail/${record._id}`} className="tableLink">{name}</a>
+            }
         }, {
             title: 'Leader',
             dataIndex: 'createdBy',
@@ -66,6 +69,13 @@ export default class extends AdminPage {
             dataIndex: 'createdAt',
             key: 'createdAt',
             render: (createdAt) => moment(createdAt).format('MMM D')
+        }, {
+            title: '',
+            dataIndex: '_id',
+            key: 'actions',
+            render: (id, record) => {
+
+            }
         }]
 
         return (

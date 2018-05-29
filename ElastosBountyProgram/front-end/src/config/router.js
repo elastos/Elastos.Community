@@ -9,6 +9,7 @@ import CommunityPage from '@/module/page/community/Container'
 
 import TeamsPage from '@/module/page/teams/Container'
 import TasksPage from '@/module/page/tasks/Container'
+import TaskDetailPage from '@/module/page/task_detail/Container'
 
 import LoginPage from '@/module/page/login/Container'
 import RegisterPage from '@/module/page/register/Container'
@@ -17,6 +18,7 @@ import ProfilePage from '@/module/page/profile/Container'
 
 import AdminUsersPage from '@/module/page/admin/users/Container'
 import AdminTasksPage from '@/module/page/admin/tasks/Container'
+import AdminTaskDetailPage from '@/module/page/admin/task_detail/Container'
 
 import CountryCommunitiesPage from '@/module/page/admin/community/CountryCommunities/Container'
 import CommunityDetailPage from '@/module/page/admin/community/CommunityDetail/Container'
@@ -63,6 +65,10 @@ export default [
         page: TasksPage
     },
     {
+        path: '/task-detail/:taskId',
+        page: TaskDetailPage
+    },
+    {
         path: '/task-create',
         page: TaskCreatePage
     },
@@ -85,6 +91,10 @@ export default [
     {
         path: '/admin/tasks',
         page: AdminTasksPage
+    },
+    {
+        path: '/admin/task-detail/:taskId',
+        page: AdminTaskDetailPage
     },
     {
         path: '/admin/community',

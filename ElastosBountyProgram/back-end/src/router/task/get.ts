@@ -2,6 +2,9 @@ import Base from '../Base';
 import TaskService from '../../service/TaskService';
 import {uuid} from '../../utility';
 
+/**
+ * Both the '/' and '/:taskId' routes map to this class
+ */
 export default class GetTask extends Base {
 
     protected needLogin = false;
@@ -18,7 +21,9 @@ export default class GetTask extends Base {
     }
 
     async show(taskId) {
-        return this.result(1, {task_id: taskId});
+        const taskService = this.buildService(TaskService);
+        const rs = await taskService.show(this.getParam());
+        return this.result(1, rs);
     }
 
     async index() {

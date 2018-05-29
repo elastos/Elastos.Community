@@ -2,7 +2,7 @@ export default {
     // Header
     '0001': 'Bounty Programs',
     '0002': 'Community',
-    '0003': 'Leaders',
+    '0003': 'Organizers',
     '0004': 'Account',
     '0005': 'Teams',
     '0006': 'Tasks',

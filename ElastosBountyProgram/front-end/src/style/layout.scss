@@ -134,3 +134,21 @@
     font-size: 1.2rem;
   }
 }
+
+.l_banner {
+  background: linear-gradient(90deg, rgba(71, 170, 167, 1) 0%, rgba(71, 170, 167, 0.75) 60%, rgba(224, 224, 224, 0.55) 100%);
+  border-radius: 4px;
+  padding: 8px $gap_1;
+
+  > div:first-child {
+    color: #ffffff;
+    padding: 0;
+    padding-top: 3px;
+
+    font-size: 120%;
+  }
+
+  .status {
+    font-weight: 600;
+  }
+}

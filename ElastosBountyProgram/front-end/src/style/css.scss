@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:200,400,500,700,800');
-
 * {
   box-sizing: border-box;
   -webkit-text-size-adjust: none;
@@ -69,6 +67,10 @@ td {
   &.fontWeight600 {
     font-weight: 600;
   }
+
+  .tableLink {
+
+  }
 }
 
 #ebp-root {
@@ -83,6 +85,10 @@ td {
 
 .center {
   text-align: center;
+}
+
+.right-align {
+  text-align: right;
 }
 
 .clearfix {

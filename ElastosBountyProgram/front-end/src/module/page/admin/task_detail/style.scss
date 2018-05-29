@@ -1,0 +1,21 @@
+.wrap-box-user {
+  h1 {
+    text-align: left;
+  }
+}
+
+.c_TaskTableContainer {
+
+  table {
+
+    > thead.ant-table-thead > tr > th {
+      word-break: normal;
+      white-space: nowrap;
+    }
+
+    td {
+      word-break: normal;
+      white-space: nowrap;
+    }
+  }
+}

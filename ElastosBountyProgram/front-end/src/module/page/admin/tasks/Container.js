@@ -17,7 +17,7 @@ export default createContainer(Component, (state) => {
     taskState.filter = state.task.filter || {}
 
     if (taskState.all_tasks.length) {
-        debugger
+        // debugger
     }
 
     return taskState
@@ -29,9 +29,7 @@ export default createContainer(Component, (state) => {
     return {
         async getTasks () {
 
-            return taskService.index({
-
-            })
+            return taskService.index()
         },
 
         async resetTasks () {

@@ -2,8 +2,6 @@ import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import {Form, Icon, Input, InputNumber, Button, Checkbox, Select, message, Row, Col} from 'antd'
 
-import './style.scss'
-
 import {TASK_CATEGORY, TASK_TYPE} from '@/constant'
 
 const FormItem = Form.Item
@@ -169,14 +167,14 @@ class C extends BaseComponent {
                         <FormItem label="Task Name" {...formItemLayout}>
                             {p.taskName}
                         </FormItem>
+                        <FormItem label="Community"  {...formItemLayout}>
+                            {p.taskCommunity}
+                        </FormItem>
                         <FormItem label="Category" {...formItemLayout}>
                             {p.taskCategory}
                         </FormItem>
                         <FormItem label="Type"  {...formItemLayout}>
                             {p.taskType}
-                        </FormItem>
-                        <FormItem label="Community"  {...formItemLayout}>
-                            {p.taskCommunity}
                         </FormItem>
                         <FormItem label="Description" {...formItemLayout}>
                             {p.taskDesc}

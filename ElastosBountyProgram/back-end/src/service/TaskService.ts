@@ -9,6 +9,11 @@ import UserService from "./UserService";
 
 export default class extends Base {
 
+    public async show(param): Promise<Document> {
+        const db_task = this.getDBModel('Task');
+        return await db_task.findById(param.taskId);
+    }
+
     /**
      * If the status is not provided, we default to
      * returning only CREATED, APPROVED statuses

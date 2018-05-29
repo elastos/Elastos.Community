@@ -12,12 +12,12 @@ export default class extends StandardPage {
                 <div className="ebp-header-divider">
 
                 </div>
+                <div className="ebp-page-title">
+                    <h2>
+                        Create Task / Event
+                    </h2>
+                </div>
                 <div className="ebp-page">
-                    <div className="ebp-page-title">
-                        <h1>
-                            Create Task / Event
-                        </h1>
-                    </div>
                     <TaskCreateForm />
                 </div>
                 <Footer />

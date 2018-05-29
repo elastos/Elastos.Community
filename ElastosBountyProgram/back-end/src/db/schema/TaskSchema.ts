@@ -10,19 +10,18 @@ export const TaskOutput = {
 
 /**
  * Some Tasks request an upfront ELA transfer
- * @type {{ela: {address: StringConstructor; amount: "mongoose".Schema.Types.Decimal128}}}
  */
 export const TaskUpfront = {
-    ela : ELA,
+    ela : Number,
 
-    elaDisbursed: ELA
+    elaDisbursed: Number
 }
 
 export const TaskReward = {
-    ela : ELA,
+    ela : Number,
 
     // if ELA reward is allocated to sub-tasks (v1.5)
-    elaDisbursed: ELA,
+    elaDisbursed: Number,
     votePower : VotePower
 };
 
