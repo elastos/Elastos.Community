@@ -5,7 +5,6 @@ import LeaderPage from '@/module/page/leader/Container'
 
 // this is the leaders link in the header
 import DirectoryPage from '@/module/page/directory/Container'
-import CommunityPage from '@/module/page/community/Container'
 
 import TeamsPage from '@/module/page/teams/Container'
 import TasksPage from '@/module/page/tasks/Container'
@@ -20,6 +19,9 @@ import AdminTasksPage from '@/module/page/admin/tasks/Container'
 
 import CountryCommunitiesPage from '@/module/page/admin/community/CountryCommunities/Container'
 import CommunityDetailPage from '@/module/page/admin/community/CommunityDetail/Container'
+
+import PublicCountryCommunitiesPage from '@/module/page/community/PublicCountryCommunities/Container'
+import PublicCommunityDetailPage from '@/module/page/community/PublicCommunityDetail/Container'
 
 import TaskCreatePage from '@/module/page/task_create/Container'
 
@@ -49,10 +51,6 @@ export default [
     {
         path: '/directory',
         page: DirectoryPage
-    },
-    {
-        path: '/community',
-        page: CommunityPage
     },
     {
         path: '/teams',
@@ -85,6 +83,22 @@ export default [
     {
         path: '/admin/tasks',
         page: AdminTasksPage
+    },
+    {
+        path: '/community',
+        page: PublicCountryCommunitiesPage
+    },
+    {
+        path: '/community/country/:country',
+        page: PublicCountryCommunitiesPage
+    },
+    {
+        path: '/community/:community/country/:country',
+        page: PublicCommunityDetailPage
+    },
+    {
+        path: '/community/:community/country/:country/region/:region',
+        page: PublicCommunityDetailPage
     },
     {
         path: '/admin/community',
