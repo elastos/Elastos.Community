@@ -71,6 +71,10 @@ export const Task = {
         required : true
     },
 
+    thumbnail : {
+        type : String
+    },
+
     /**
      * Owners of a parent task may create sub tasks
      * They may also allocate ELA to subtasks
@@ -145,9 +149,7 @@ export const Task = {
     },
 
     rewardUpfront: TaskUpfront,
-    reward : TaskReward,
-
-    createdAt: Date
+    reward : TaskReward
 };
 
 

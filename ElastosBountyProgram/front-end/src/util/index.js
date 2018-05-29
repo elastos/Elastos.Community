@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { withRouter } from 'react-router';
-import {api_request} from './request';
+import {api_request, upload_file} from './request';
 
 /**
  * Helper for React-Redux connect
@@ -24,5 +24,6 @@ export const constant = (moduleName, detailArray)=>{
 };
 
 export {
-    api_request
+    api_request,
+    upload_file
 };

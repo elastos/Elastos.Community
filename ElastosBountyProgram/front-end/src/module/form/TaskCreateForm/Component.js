@@ -1,7 +1,7 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import {Form, Icon, Input, InputNumber, Button, Checkbox, Select, message, Row, Col} from 'antd'
-
+import {Form, Icon, Input, InputNumber, Button, Checkbox, Select, message, Row, Col, Upload} from 'antd'
+import {upload_file} from "@/util";
 import './style.scss'
 
 import {TASK_CATEGORY, TASK_TYPE} from '@/constant'
@@ -34,7 +34,7 @@ class C extends BaseComponent {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('CreateTask - received values of form: ', values)
-                this.props.createTask(values)
+                this.props.createTask(values, this.state);
 
             }
         })
@@ -45,6 +45,11 @@ class C extends BaseComponent {
 
         this.step1Container = React.createRef()
         this.step2Container = React.createRef()
+
+        this.state = {
+            upload_url : null,
+            upload_loading : false
+        };
     }
 
     getInputProps () {
@@ -126,6 +131,40 @@ class C extends BaseComponent {
             <InputNumber size="large"/>
         )
 
+        const thumbnail_fn = getFieldDecorator('thumbnail', {
+            rules: []
+        });
+        const p_thumbnail = {
+            showUploadList: false,
+            customRequest :(info)=>{
+                this.setState({
+                    upload_loading: true
+                });
+                upload_file(info.file).then((d)=>{
+                    const url = d.url;
+                    this.setState({
+                        upload_loading: false,
+                        upload_url : url
+                    });
+                })
+            }
+        };
+        const thumbnail_el = (
+            <Upload name="logo" listType="picture" {...p_thumbnail}>
+                {
+                    this.state.upload_url ? (
+                        <img style={{width:'200px'}} src={this.state.upload_url} />
+                        ) : (
+                        <Button loading={this.state.upload_loading}>
+                            <Icon type="upload" /> Click to upload
+                        </Button>
+                    )
+                }
+
+            </Upload>
+        );
+
+
         return {
             taskName: taskName_fn(taskName_el),
             taskCategory: taskCategory_fn(taskCategory_el),
@@ -138,7 +177,9 @@ class C extends BaseComponent {
             taskCandSltLimit: taskCandSltLimit_fn(taskCandSltLimit_el),
 
             taskRewardUpfront: taskRewardUpfront_fn(taskRewardUpfront_el),
-            taskReward: taskReward_fn(taskReward_el)
+            taskReward: taskReward_fn(taskReward_el),
+
+            thumbnail: thumbnail_fn(thumbnail_el)
         }
     }
 
@@ -168,6 +209,9 @@ class C extends BaseComponent {
                     <div>
                         <FormItem label="Task Name" {...formItemLayout}>
                             {p.taskName}
+                        </FormItem>
+                        <FormItem label="Thumbnail" {...formItemLayout}>
+                            {p.thumbnail}
                         </FormItem>
                         <FormItem label="Category" {...formItemLayout}>
                             {p.taskCategory}

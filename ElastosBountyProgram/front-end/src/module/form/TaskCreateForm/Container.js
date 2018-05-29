@@ -16,13 +16,14 @@ export default createContainer(Component, (state)=>{
     const taskService = new TaskService();
 
     return {
-        async createTask(formData){
+        async createTask(formData, st){
             try {
                 const rs = await taskService.create({
                     name: formData.taskName,
                     category: formData.taskCategory,
                     type: formData.taskType,
                     description: formData.taskDesc,
+                    thumbnail: st.upload_url,
 
                     candidateLimit: formData.taskCandLimit,
                     candidateSltLimit: formData.taskCandSltLimit,
