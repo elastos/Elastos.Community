@@ -16,7 +16,7 @@ export default class extends StandardPage {
     componentWillMount() {
         this.loadCommunities();
     }
-    
+
     loadCommunities() {
         const currentCountry = this.props.match.params['country'];
         if (currentCountry) {
@@ -33,14 +33,14 @@ export default class extends StandardPage {
             })
         }
     }
-    
+
     handleChangeCountry(geolocation) {
         if (geolocation) {
             this.props.getSpecificCountryCommunities(geolocation).then((communities) => {
                 this.setState({
                     communities
                 })
-                
+
                 this.props.history.push(`/community/country/${geolocation}`)
             })
         } else {
@@ -48,7 +48,7 @@ export default class extends StandardPage {
                 this.setState({
                     communities
                 })
-                
+
                 this.props.history.push('/community')
             })
         }
@@ -120,9 +120,9 @@ export default class extends StandardPage {
                         </Row>
                     </div>
                     <div className="ebp-page-title">
-                        <h1>
+                        <h2>
                             Community
-                        </h1>
+                        </h2>
                     </div>
                     <div className="ebp-page">
                         <div className="ebp-page-content">
@@ -130,7 +130,7 @@ export default class extends StandardPage {
                                 <Col span={18}
                                      className="community-left-column">
                                     <div>
-                                        <h2 className="without-padding">Country Leaders</h2>
+                                        <h3 className="without-padding">Country Leaders</h3>
                                         <Row>
                                             {listCommunitiesEl}
                                         </Row>
@@ -139,13 +139,13 @@ export default class extends StandardPage {
                                 <Col span={6}
                                      className="community-right-column">
                                     <div>
-                                        <h2 className="without-padding">Members List</h2>
+                                        <h3 className="without-padding">Members List</h3>
                                         <div className="list-members"></div>
                                         <Button>See more</Button>
                                     </div>
                                 </Col>
                             </Row>
-    
+
                             <div className="ebp-page-title">
                                 <h2>Events</h2>
                             </div>

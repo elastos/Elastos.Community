@@ -5,7 +5,12 @@ import {constant} from '../constant';
 import {validate, crypto} from '../utility';
 import UserService from "./UserService";
 
-
+const restrictedFields = {
+    update: [
+        'status',
+        'password'
+    ]
+}
 
 export default class extends Base {
 
@@ -90,13 +95,19 @@ export default class extends Base {
      * @returns {Promise<boolean>}
      */
     public async update(param): Promise<boolean> {
-        const {id, name, description, communityId, type, startTime, endTime, candidateLimit, reward_ela, reward_votePower} = param;
+        const {id, name, description, communityId, type, startTime, endTime, candidateLimit, reward, rewardUpfront} = param;
         this.validate_name(name);
         this.validate_description(description);
         this.validate_type(type);
-        this.validate_reward_ela(reward_ela);
-        this.validate_reward_votePower(reward_votePower);
 
+        // explictly copy over fields, do not accept param as is
+        const updateObj:any = _.omit(param, restrictedFields.update)
+
+        debugger
+
+        if (this.currentUser.role !== constant.USER_ROLE.ADMIN) {
+
+        }
 
         return true;
     }

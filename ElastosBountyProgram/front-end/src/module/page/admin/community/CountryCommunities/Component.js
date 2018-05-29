@@ -41,10 +41,10 @@ export default class extends AdminPage {
 
             form.resetFields()
             this.setState({visibleModalAddCountry: false})
-    
+
             this.props.addCountry(values).then(() => {
                 message.success('Add new country successfully')
-    
+
                 this.loadCommunities();
             }).catch((err) => {
                 console.error(err);
@@ -59,7 +59,7 @@ export default class extends AdminPage {
     componentWillMount() {
         this.loadCommunities();
     }
-    
+
     loadCommunities() {
         const currentCountry = this.props.match.params['country'];
         if (currentCountry) {
@@ -96,7 +96,7 @@ export default class extends AdminPage {
             })
         }
     }
-    
+
     ord_renderContent () {
         const listCommunitiesEl = this.state.communities.map((community, index) => {
             // Mock data
@@ -163,11 +163,11 @@ export default class extends AdminPage {
                                  className="admin-left-column wrap-box-user">
                                 <div>
                                     <Button className="pull-right" onClick={this.showModalAddCountry} type="primary">Add country</Button>
-                                    <h1 className="without-padding">Country Leaders</h1>
+                                    <h2 className="without-padding">Country Leaders</h2>
                                     <Row>
                                         {listCommunitiesEl}
                                     </Row>
-        
+
                                     <ModalAddCountry
                                         wrappedComponentRef={this.saveFormAddCountryRef}
                                         visible={this.state.visibleModalAddCountry}

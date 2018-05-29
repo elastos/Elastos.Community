@@ -1,6 +1,6 @@
 import Base from '../Base';
 import TaskService from '../../service/TaskService';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import {constant} from '../../constant';
 
 export default class extends Base{
@@ -23,21 +23,19 @@ export default class extends Base{
             archived: {$ne: true}
         };
 
-        if (param.type) { // && _.values(constant.TASK_TYPE).includes(param.type)) {
+        if (param.type && _.values(constant.TASK_TYPE).includes(param.type)) {
             query.type = param.type;
         }
-        if (param.category) { // && _.values(constant.TASK_CATEGORY).includes(param.category)) {
+        if (param.category && _.values(constant.TASK_CATEGORY).includes(param.category)) {
             query.category = param.category;
         }
 
-        /*
         if (!param.status) {
             query.status = {$in: [
                     constant.TASK_STATUS.CREATED,
                     constant.TASK_STATUS.APPROVED
                 ]}
         }
-        */
 
         const list = await taskService.list(query);
         const count = await taskService.getDBModel('Task').count(query);

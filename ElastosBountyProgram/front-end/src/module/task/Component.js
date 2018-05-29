@@ -24,7 +24,7 @@ export default class extends BaseComponent {
                     </div>
                     <div className="pull-right right-align">
                         {this.props.task.status === TASK_STATUS.PENDING &&
-                        <Button type="primary">Approve</Button>
+                        <Button type="primary" onClick={this.props.approveTask}>Approve</Button>
                         }
                         <Button>Edit</Button>
                     </div>
@@ -96,7 +96,7 @@ export default class extends BaseComponent {
                         Upfront
                     </Col>
                     <Col span={16} className="gridCol">
-                        {this.props.task.rewardUpfront.ela}
+                        {this.props.task.rewardUpfront.ela / 1000}
                     </Col>
                 </Row>
 
@@ -105,9 +105,13 @@ export default class extends BaseComponent {
                         Reward
                     </Col>
                     <Col span={16} className="gridCol">
-                        {this.props.task.reward.ela}
+                        {this.props.task.reward.ela / 1000}
                     </Col>
                 </Row>
+
+                <Divider>Attachments</Divider>
+
+
             </div>
         )
     }
