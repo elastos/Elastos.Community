@@ -1,6 +1,6 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import {Form, Icon, Input, InputNumber, Button, Checkbox, Select, message, Row, Col} from 'antd'
+import {Form, Icon, Input, InputNumber, Button, Checkbox, Select, message, Row, Col, Upload} from 'antd'
 
 import {upload_file} from "@/util";
 import './style.scss'

@@ -21,7 +21,7 @@ export default class extends BaseService {
         this.dispatch(taskRedux.actions.loading_update(true))
 
         const result = await api_request({
-            path: '/task',
+            path: '/task/list',
             method: 'get',
             data: qry
         })
