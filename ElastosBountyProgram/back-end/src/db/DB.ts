@@ -8,6 +8,8 @@ import Community from './Community';
 import User_Community from './User_Community';
 import Task_Candidate from './Task_Candidate';
 
+import {uuid, crypto} from '../utility';
+
 export default class {
     protected db: any;
     public connection: mongoose.ConnectionBase;
@@ -97,10 +99,12 @@ export default class {
 
     private async prepareRecord(){
         // create admin user
+        const salt = uuid();
+        const password = crypto.sha512(process.env.ADMIN_PASSWORD+salt);
         const doc = {
-            username: 'admin@ebp.com',
-            password: 'd6e2bd6e06dae12c1126b29682080ea69273f680f167e6dcb4af241e514577aceca46eb088ede2e8822f3a0893e5cd98952d0a062f030c0ebc90310ab053478c',
-            salt: '27b12e6a843a3326051dcd184e3c436d',
+            username: process.env.ADMIN_USERNAME,
+            password,
+            salt,
             email: 'admin@ebp.com',
             role: 'ADMIN',
             active: true,

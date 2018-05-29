@@ -9,18 +9,15 @@ export default class extends Base {
     async action(){
         const userService = this.buildService(UserService);
 
-        const {username, password, remember} = this.getParam();
+        const {username, password} = this.getParam();
 
         userService.validate_username(username);
         userService.validate_password(password);
 
-        let passwordSHA512 = encodeURIComponent(sha512(password));
 
         // first get user for salt
         const salt = await userService.getUserSalt(username);
-
-        // password is passed in as is sha512
-        const pwd = userService.getPassword(passwordSHA512, salt);
+        const pwd = userService.getPassword(password, salt);
 
         const user = await userService.findUser({
             username,

@@ -10,14 +10,24 @@ export default class extends Base {
     public async registerNewUser(param): Promise<Document>{
         const db_user = this.getDBModel('User');
 
-        this.validate_username(param.username);
+        const username = param.username.toLowerCase();
+
+        this.validate_username(username);
         this.validate_password(param.password);
         this.validate_email(param.email);
+
+        // check username and email unique
+        if(await db_user.findOne({username})){
+            throw 'username is exist';
+        }
+        if(await db_user.findOne({email : param.email})){
+            throw 'email is exist';
+        }
 
         const salt = uuid();
 
         const doc = {
-            username : param.username,
+            username,
             password : this.getPassword(param.password, salt),
             email : param.email,
             salt,
@@ -35,9 +45,10 @@ export default class extends Base {
     }
 
     public async getUserSalt(username): Promise<String>{
+        username = username.toLowerCase();
         const db_user = this.getDBModel('User');
         const user = await db_user.db.findOne({
-            username: new RegExp(`^${username}$`, 'i')
+            username
         });
         if(!user){
             throw 'invalid username';
@@ -48,7 +59,7 @@ export default class extends Base {
     public async findUser(query): Promise<Document>{
         const db_user = this.getDBModel('User');
         return await db_user.findOne({
-            username: new RegExp(`^${query.username}$`, 'i'),
+            username: query.username.toLowerCase(),
             password: query.password
         });
     }
@@ -56,7 +67,8 @@ export default class extends Base {
     public async changePassword(param): Promise<boolean>{
         const db_user = this.getDBModel('User');
 
-        const {oldPassword, password, username} = param;
+        const {oldPassword, password} = param;
+        const username = param.username.toLowerCase();
 
         this.validate_password(oldPassword);
         this.validate_password(password);

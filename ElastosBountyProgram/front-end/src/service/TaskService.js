@@ -4,6 +4,16 @@ import {api_request} from '@/util'
 
 export default class extends BaseService {
 
+    async list(filter={}){
+        const result = await api_request({
+            path: '/task/list',
+            method: 'get',
+            data: filter
+        });
+
+        return result;
+    }
+
     async index(qry) {
 
         const taskRedux = this.store.getRedux('task')
@@ -65,5 +75,7 @@ export default class extends BaseService {
         })
 
         // TODO: take user to task detail page
+
+        return res;
     }
 }

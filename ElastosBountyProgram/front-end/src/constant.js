@@ -78,3 +78,7 @@ export const CONTRIB_CATEGORY = {
     PODCAST: 'PODCAST',
     OTHER: 'OTHER'
 }
+
+export const DEFAULT_IMAGE = {
+    TASK : '/assets/images/task_thumbs/12.jpg'
+};

@@ -45,6 +45,17 @@ export default class extends Base {
         return await db_task.find(findObj);
     }
 
+    /*
+    * list tasks
+    * */
+    public async list(query): Promise<Document> {
+        const db_task = this.getDBModel('Task');
+
+        return await db_task.list(query, {
+            updatedAt: -1
+        });
+    }
+
     /**
      * This also handles creating sub tasks, if it's sub task
      * the parentTaskId must be set, and the user must be owner of the parent task
@@ -56,7 +67,7 @@ export default class extends Base {
      */
     public async create(param): Promise<Document> {
         const {
-            name, description, communityId, category, type, startTime, endTime,
+            name, description, thumbnail, communityId, category, type, startTime, endTime,
             candidateLimit, candidateSltLimit, reward_ela, reward_votePower
         } = param;
         this.validate_name(name);
@@ -69,6 +80,7 @@ export default class extends Base {
             name, description, category, type,
             startTime,
             endTime,
+            thumbnail,
             candidateLimit,
             candidateSltLimit,
             reward : {

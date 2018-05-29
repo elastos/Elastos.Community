@@ -2,6 +2,9 @@ import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import {Form, Icon, Input, InputNumber, Button, Checkbox, Select, message, Row, Col} from 'antd'
 
+import {upload_file} from "@/util";
+import './style.scss'
+
 import {TASK_CATEGORY, TASK_TYPE} from '@/constant'
 
 const FormItem = Form.Item
@@ -32,7 +35,7 @@ class C extends BaseComponent {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('CreateTask - received values of form: ', values)
-                this.props.createTask(values)
+                this.props.createTask(values, this.state);
 
             }
         })
@@ -43,6 +46,11 @@ class C extends BaseComponent {
 
         this.step1Container = React.createRef()
         this.step2Container = React.createRef()
+
+        this.state = {
+            upload_url : null,
+            upload_loading : false
+        };
     }
 
     getInputProps () {
@@ -100,29 +108,63 @@ class C extends BaseComponent {
             rules: [{type: 'integer', message: 'You must set a limit'}]
         })
         const taskCandLimit_el = (
-            <Input size="small"/>
+            <InputNumber size="large"/>
         )
 
         const taskCandSltLimit_fn = getFieldDecorator('taskCandSltLimit', {
             rules: [{type: 'integer', message: 'You must set a limit'}]
         })
         const taskCandSltLimit_el = (
-            <Input size="small"/>
+            <InputNumber size="large"/>
         )
 
         const taskRewardUpfront_fn = getFieldDecorator('taskRewardUpfront', {
             rules: [{type: 'number', message: 'Please explictly enter 0 if intended'}]
         })
         const taskRewardUpfront_el = (
-            <Input size="large"/>
+            <InputNumber size="large"/>
         )
 
         const taskReward_fn = getFieldDecorator('taskReward', {
             rules: [{type: 'number', message: 'Please explictly enter 0 if intended'}],
         })
         const taskReward_el = (
-            <Input size="large"/>
+            <InputNumber size="large"/>
         )
+
+        const thumbnail_fn = getFieldDecorator('thumbnail', {
+            rules: []
+        });
+        const p_thumbnail = {
+            showUploadList: false,
+            customRequest :(info)=>{
+                this.setState({
+                    upload_loading: true
+                });
+                upload_file(info.file).then((d)=>{
+                    const url = d.url;
+                    this.setState({
+                        upload_loading: false,
+                        upload_url : url
+                    });
+                })
+            }
+        };
+        const thumbnail_el = (
+            <Upload name="logo" listType="picture" {...p_thumbnail}>
+                {
+                    this.state.upload_url ? (
+                        <img style={{width:'200px'}} src={this.state.upload_url} />
+                        ) : (
+                        <Button loading={this.state.upload_loading}>
+                            <Icon type="upload" /> Click to upload
+                        </Button>
+                    )
+                }
+
+            </Upload>
+        );
+
 
         return {
             taskName: taskName_fn(taskName_el),
@@ -136,7 +178,9 @@ class C extends BaseComponent {
             taskCandSltLimit: taskCandSltLimit_fn(taskCandSltLimit_el),
 
             taskRewardUpfront: taskRewardUpfront_fn(taskRewardUpfront_el),
-            taskReward: taskReward_fn(taskReward_el)
+            taskReward: taskReward_fn(taskReward_el),
+
+            thumbnail: thumbnail_fn(thumbnail_el)
         }
     }
 
@@ -170,6 +214,9 @@ class C extends BaseComponent {
                         <FormItem label="Community"  {...formItemLayout}>
                             {p.taskCommunity}
                         </FormItem>
+                        <FormItem label="Thumbnail" {...formItemLayout}>
+                            {p.thumbnail}
+                        </FormItem>
                         <FormItem label="Category" {...formItemLayout}>
                             {p.taskCategory}
                         </FormItem>
@@ -182,13 +229,15 @@ class C extends BaseComponent {
                         <FormItem label="Candidates" {...formItemLayout}>
                             <Row>
                                 <Col span={3}>
-                                    <InputNumber size="large" name="taskCandLimit"/>
+                                    {/*<InputNumber size="large" name="taskCandLimit"/>*/}
+                                    {p.taskCandLimit}
                                 </Col>
                                 <Col class="midLabel" span={6}>
                                     Max Accepted:
                                 </Col>
                                 <Col span={3}>
-                                    <InputNumber size="large" name="taskCandSltLimit"/>
+                                    {/*<InputNumber size="large" name="taskCandSltLimit"/>*/}
+                                    {p.taskCandSltLimit}
                                 </Col>
                             </Row>
                         </FormItem>
