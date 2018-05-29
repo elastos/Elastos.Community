@@ -22,7 +22,7 @@ export const TaskReward = {
 
     // if ELA reward is allocated to sub-tasks (v1.5)
     elaDisbursed: Number,
-    votePower : VotePower
+    votePower : Number
 };
 
 export const TaskCandidate = {

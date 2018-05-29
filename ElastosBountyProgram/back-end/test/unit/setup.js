@@ -22,7 +22,7 @@ global.DB = {
         "candidateLimit": 1,
         "candidateSltLimit": 1,
         "reward_ela": 1000,
-        "reward_votePower": 10
+        "reward_evp": 10
     },
 
     TASK_2 : {
@@ -35,6 +35,6 @@ global.DB = {
         "candidateLimit": 0,
         "candidateSltLimit": 0,
         "reward_ela": 1000,
-        "reward_votePower": 10
+        "reward_evp": 10
     }
 };
