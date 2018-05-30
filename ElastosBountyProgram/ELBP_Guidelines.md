@@ -1,7 +1,7 @@
 
-# Elastos Leader Bounty Program Guidelines
+# Elastos Organizer Meetup Planning Guidelines
 
-This document describes the process and guidelines we hope elected/appointed leaders will follow when proposing events,
+This document describes the process and guidelines we hope elected/appointed organizers will follow when proposing events,
 tasks and new bounties. *At the time of this writing the EBP site is not yet launched*
 
 ## Getting Started
@@ -22,14 +22,14 @@ The Elastos community will go through several phases as the platform matures, at
 our focus is with getting our branding out among seasoned developers who can quickly ramp up and develop future apps
 on Elastos or participate in our upcoming hackathon/competition.
 
-Less emphasis will be placed on universities/schools but any publicity among students is still good as they are likely
-places to find many crypto fans.
+Less emphasis will be placed on universities/schools, but any publicity among students is still good as they are likely
+places to find many crypto fans. Also investors will be targeted at a later date but always welcome to our events.
 
 Initially the only developer tasks will be building example/demo apps, bug reporting/fixes and writing tutorials.
 Therefore we are not immediately looking for engineering teams to build apps on Elastos, the goal is to establish a
 relationship with developers looking to learn more about Elastos or get involved.
 
-### Learn about Elastos - we will be putting together a learning package for Elastos Leaders so you can learn the important aspects of Elastos to talk about during the meetups.
+### Learn about Elastos - we will be putting together a learning package so you can learn the important aspects of Elastos to talk about during the meetups.
 
 
 ### Your goals in a new community for the first 1-2 months should be the following. Your task proposal should be related to one of these goals.
@@ -39,7 +39,8 @@ relationship with developers looking to learn more about Elastos or get involved
     Your first meetup should be small and not require extensive advertising, we want to gauge the existing popularity of
     Elastos in your community.
 
-    Also we hope that you can find assistants to help you through this initial event.
+    Also we hope that you can find assistants to help you through this initial event. We do not
+    want anyone to tackle this alone and want to grow faster.
 
     You should post the meetup online in existing event websites, forums or chat groups (Telegram), suggestions below:
 
@@ -68,10 +69,14 @@ relationship with developers looking to learn more about Elastos or get involved
 
 4. **Promote the Global Competition/Hackathon**
 
-    The official announcement will be in the second half of June 2018 and the expected event is in mid-August 2018.
+    This is a an online competition with the event, rules and award categories announced in the second half of June 2018
+    and the expected deadling is in mid-August 2018.
+
+
     As soon as reasonable we want to promote this event or at least mention it during our events, the prizes will be
-    substantial and it's one of the singular goals EBP has together. Hopefully we can get as many people from your
+    substantial and it's one of the singular goals EBP has together. Hopefully we can get as many developers from your
     community to join.
+
 
 
 ## Submit a Proposal
@@ -96,6 +101,12 @@ in the future.*
 
 ## Things to Avoid in the Meantime
 
+#### Calling this program EBP
+
+For now you simply represent Elastos, we are changing the name EBP to something else we haven't decided yet, but when
+we do you will officially be part of that team.
+
+
 #### Building a Standalone Website for Your Community
 
 We hope every member that wishes to contribute joins the EBP website and our Slack channel. Nor do we want fragmented
@@ -112,11 +123,11 @@ for this work in the total hours expected for a task.
 
 ## Payment
 
-We will decide the payment on a case-by-case basis. We'll try to be as reasonable and as fair as possible to every leader. For most situations, we'll pay half of your requested budget upfront and the rest upon completion however this is not ideal for all scenarios(eg. when the cost of organizing a meetup at a large venue is high and cannot be approximated beforehand).
+We will decide the payment on a case-by-case basis. We'll try to be as reasonable and as fair as possible to every organizer. For most situations, we'll pay half of your requested budget upfront and the rest upon completion however this is not ideal for all scenarios (eg. when the cost of organizing a meetup at a large venue is high and cannot be approximated beforehand).
 
 Whatever the case may be, we'll request receipts for all the expenses for all the events and will reimburse everything while also being as fair as possible.
 
 If you have leftover operating expenses, those need to be either returned to us,
 or retained for future tasks by you. Please do not put your ELA address in the proposal. You need to send us your address via email.
 
-If you have assistants we will send them their pay directly based on your instructions. Do not give your wallet's secret key for operating expenses to your assistants. As a leader, you are responsible for the operating funds.
+If you have assistants we will send them their pay directly based on your instructions. Do not give your wallet's secret key for operating expenses to your assistants. As a organizer, you are responsible for the operating funds.
