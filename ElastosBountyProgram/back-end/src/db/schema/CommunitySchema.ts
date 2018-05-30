@@ -14,7 +14,7 @@ export const Community = {
     // constants.COMMUNITY_TYPE - COUNTRY, STATE, REGION, SCHOOL
     type : String,
 
-    leaderId: Schema.Types.ObjectId,
+    leaderIds: [Schema.Types.ObjectId],
 
     createdBy: Schema.Types.ObjectId
 };

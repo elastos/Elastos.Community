@@ -18,15 +18,15 @@ export default class extends Base {
 
         // validate
         this.validate_name(param.name);
-        const {name, parentCommunityId, geolocation, type, leaderId} = param;
+        const {name, parentCommunityId, geolocation, type, leaderIds} = param;
 
         const doc = {
             name,
             parentCommunityId,
             geolocation,
             type,
-            leaderId,
-            createdBy : '5b02dc22425c521e3be89791'
+            leaderIds : this.param_leaderIds(leaderIds),
+            createdBy : this.currentUser._id
         };
 
         return await db_community.save(doc);
@@ -43,7 +43,7 @@ export default class extends Base {
 
         //validate
         this.validate_name(param.name);
-        const {communityId, name, parentCommunityId, geolocation, type, leaderId} = param;
+        const {communityId, name, parentCommunityId, geolocation, type, leaderIds} = param;
 
         const doc = {
             $set : {
@@ -51,7 +51,7 @@ export default class extends Base {
                 parentCommunityId,
                 geolocation,
                 type,
-                leaderId
+                leaderIds : this.param_leaderIds(leaderIds)
             }
         };
 
@@ -165,5 +165,13 @@ export default class extends Base {
         if(!validate.valid_string(name, 2)){
             throw 'invalid community name';
         }
+    }
+
+    public param_leaderIds(leaderIds: string){
+        let rs = [];
+        if(leaderIds){
+            rs = leaderIds.split(',');
+        }
+        return rs;
     }
 }
