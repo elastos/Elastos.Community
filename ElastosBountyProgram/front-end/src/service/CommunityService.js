@@ -11,11 +11,10 @@ export default class extends BaseService {
             method: 'post',
             // Mock data
             data: {
+                ...country,
                 name: config.data.mappingCountryCodeToName[country.geolocation],
                 parentCommunityId: null,
-                geolocation: country.geolocation,
                 type: COMMUNITY_TYPE.COUNTRY,
-                leaderId: config.data.mockDataLeaderId,
             }
         })
     }
@@ -42,7 +41,10 @@ export default class extends BaseService {
         const result = await api_request({
             path: '/community/update',
             method: 'put',
-            data: community
+            data: {
+                ...community,
+                leaderIds: (typeof community.leaderIds === 'object' ? community.leaderIds.toString() : community.leaderIds)
+            }
         })
 
         return result

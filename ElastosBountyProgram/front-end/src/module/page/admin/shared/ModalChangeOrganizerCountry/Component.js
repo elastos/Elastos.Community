@@ -16,7 +16,7 @@ export default Form.create()(
 
             const footerModal = (
                 <div>
-                    <Button onClick={onCreate} type="primary">Change leader</Button>
+                    <Button onClick={onCreate} type="primary">Change organizer</Button>
                     {/*Don't need on this pharse*/}
                     {/*<Button onClick={handleRemoveCountry}>Remove country</Button>*/}
                     <Button onClick={onCancel}>Cancel</Button>
@@ -26,7 +26,7 @@ export default Form.create()(
             return (
                 <Modal
                     visible={visible}
-                    title="Change leader"
+                    title="Change organizer"
                     footer={footerModal}
                     okText="Create"
                     onCancel={onCancel}
@@ -48,7 +48,7 @@ export default Form.create()(
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
-                            label="Leader">
+                            label="Organizer">
                             {getFieldDecorator('leader', {
                                 rules: [{required: true, message: 'This field is required'}]
                             })(

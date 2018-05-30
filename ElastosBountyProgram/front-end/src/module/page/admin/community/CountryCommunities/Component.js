@@ -42,7 +42,11 @@ export default class extends AdminPage {
             form.resetFields()
             this.setState({visibleModalAddCountry: false})
 
-            this.props.addCountry(values).then(() => {
+            console.log('values', values);
+            this.props.addCountry({
+                geolocation: values.geolocation,
+                leaderIds: config.data.mockDataLeaderId, // Just mock data, in future use may set it from values.leaderId
+            }).then(() => {
                 message.success('Add new country successfully')
 
                 this.loadCommunities();

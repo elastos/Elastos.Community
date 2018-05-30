@@ -18,7 +18,12 @@
 
   button {
     width: 100%;
-    margin-top: 20px;
+  }
+}
+
+.user-card--organizer {
+  .ant-card {
+    margin-bottom: 20px;
   }
 }
 
