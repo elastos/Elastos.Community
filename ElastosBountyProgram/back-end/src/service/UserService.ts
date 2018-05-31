@@ -68,6 +68,15 @@ export default class extends Base {
         });
     }
 
+    public async findUsers(query): Promise<Document[]>{
+        const db_user = this.getDBModel('User');
+        return await db_user.find({
+            '_id' : {
+                $in : query.userIds
+            }
+        });
+    }
+
     public async changePassword(param): Promise<boolean>{
         const db_user = this.getDBModel('User');
 
