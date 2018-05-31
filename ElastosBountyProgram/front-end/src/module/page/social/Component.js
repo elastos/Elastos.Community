@@ -1,5 +1,5 @@
-import React from 'react';
-import StandardPage from '../StandardPage';
+import React from 'react'
+import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import ContribForm from './formContribution/Container'
 import moment from 'moment'
@@ -7,17 +7,18 @@ import moment from 'moment'
 import './style.scss'
 
 import { Col, Row, Icon, Form, Input, Button, Select, Table } from 'antd'
+
 const Option = Select.Option
 
-import {TASK_STATUS} from '@/constant'
+import { TASK_STATUS } from '@/constant'
 
 export default class extends StandardPage {
 
-    componentDidMount() {
+    componentDidMount () {
         this.props.getSocialEvents()
     }
 
-    componentWillUnmount() {
+    componentWillUnmount () {
         this.props.resetTasks()
     }
 
@@ -78,9 +79,11 @@ export default class extends StandardPage {
                                 </h3>
                             </div>
                             <div className="pull-right btnContainer">
+                                {this.props.is_admin &&
                                 <Button onClick={this.createTaskLink.bind(this)}>
                                     Create Event
                                 </Button>
+                                }
                             </div>
 
                             <Table
@@ -95,7 +98,7 @@ export default class extends StandardPage {
                             <h2>
                                 Submit a Contribution
                             </h2>
-                            <ContribForm />
+                            <ContribForm/>
                         </Col>
                     </Row>
                     <div className="horizGap">
@@ -110,9 +113,11 @@ export default class extends StandardPage {
                                     Available Tasks
                                 </h3>
                                 <div className="pull-right btnContainer">
+                                    {this.props.is_admin &&
                                     <Button onClick={this.createTaskLink.bind(this)}>
                                         Create Task
                                     </Button>
+                                    }
                                 </div>
                             </div>
 
@@ -131,16 +136,16 @@ export default class extends StandardPage {
                         </Col>
                     </Row>
                 </div>
-                <Footer />
+                <Footer/>
             </div>
         )
     }
 
-    async handleEventFilterChange(val) {
+    async handleEventFilterChange (val) {
 
     }
 
-    async createTaskLink() {
+    async createTaskLink () {
         this.props.history.push('/task-create')
     }
 }

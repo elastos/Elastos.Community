@@ -22,7 +22,12 @@ export default createContainer(Component, (state)=>{
 
                 if (rs) {
                     message.success('login success')
-                    userService.path.push('/home')
+
+                    if (rs.is_admin) {
+                        this.history.push('/admin/tasks')
+                    } else {
+                        this.history.push('/home')
+                    }
                 }
             } catch (err) {
                 message.error(err.message)
