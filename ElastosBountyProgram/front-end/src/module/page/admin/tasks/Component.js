@@ -19,6 +19,10 @@ export default class extends AdminPage {
         this.props.getTasks()
     }
 
+    componentWillUnmount() {
+        this.props.resetTasks()
+    }
+
     ord_renderContent () {
 
         const taskData = this.props.all_tasks

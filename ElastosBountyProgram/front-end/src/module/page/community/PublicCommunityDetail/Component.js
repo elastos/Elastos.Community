@@ -1,32 +1,53 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import StandardPage from '../../StandardPage'
-import { Button, Card, Col, Select, Row, Icon, message, Divider, Breadcrumb } from 'antd'
+import { Button, Card, Col, Select, Row, Icon, message, Divider, Breadcrumb, Tabs } from 'antd'
 import config from '@/config'
 import { COMMUNITY_TYPE } from '@/constant'
 import Footer from '@/module/layout/Footer/Container'
 import ListTasks from '../shared/ListTasks/Component'
 import ListEvents from '../shared/ListEvents/Component'
 
+const TabPane = Tabs.TabPane
 import '../style.scss'
 
 export default class extends StandardPage {
     state = {
         breadcrumbRegions: [],
         community: null,
+        communityMembers: [],
         subCommunities: [],
-        regionCommunities: [],
+        listSubCommunitiesByType: {
+            STATE: [],
+            CITY: [],
+            REGION: [],
+            SCHOOL: [],
+        },
     }
 
-    componentWillMount() {
-        this.loadCommunityDetail();
-        this.loadSubCommunities();
+    componentDidMount() {
+        this.loadCommunityDetail()
+        this.loadSubCommunities()
+        this.loadCommunityMembers()
     }
-
+    
+    loadCommunityMembers() {
+        this.props.getCommunityMembers(this.props.match.params['community']).then((members) => {
+            console.log('members', members);
+        });
+    }
+    
     loadCommunityDetail() {
         this.props.getCommunityDetail(this.props.match.params['community']).then((community) => {
-            // Mock data leader
-            community.leader = config.data.mockDataAllLeaders[0];
+            community.leaders = [];
+            community.leaderIds.forEach(() => {
+                community.leaders.push(config.data.mockDataAllLeaders[0]) // Mock data
+                community.leaders.push(config.data.mockDataAllLeaders[0]) // Mock data
+                community.leaders.push(config.data.mockDataAllLeaders[0]) // Mock data
+                community.leaders.push(config.data.mockDataAllLeaders[0]) // Mock data
+                community.leaders.push(config.data.mockDataAllLeaders[0]) // Mock data
+                community.leaders.push(config.data.mockDataAllLeaders[0]) // Mock data
+            })
             this.setState({
                 community
             })
@@ -37,11 +58,11 @@ export default class extends StandardPage {
         this.props.getSubCommunities(this.props.match.params['community']).then((subCommunities) => {
             // Check which communities we will use to render
             const breadcrumbRegions = this.getBreadcrumbRegions(subCommunities);
-            const regionCommunities = this.getRegionCommunities(subCommunities, this.props.match.params['region']);
+            const listSubCommunitiesByType = this.getListSubCommunitiesByType(subCommunities, this.props.match.params['region']);
             // Update to state
             this.setState({
                 subCommunities,
-                regionCommunities,
+                listSubCommunitiesByType,
                 breadcrumbRegions,
             })
         })
@@ -69,31 +90,43 @@ export default class extends StandardPage {
         }
     }
 
-    getRegionCommunities(subCommunities, filterRegionName) {
-        let regionCommunities;
-
+    getListSubCommunitiesByType(subCommunities, filterRegionName) {
+        let renderCommunities;
+        
         if (filterRegionName) {
-            regionCommunities = subCommunities.filter((community) => {
+            renderCommunities = subCommunities.filter((community) => {
                 return community.name === filterRegionName
             })
         } else {
-            regionCommunities = subCommunities
+            renderCommunities = subCommunities
         }
-
-        regionCommunities.forEach((community) => {
+        
+        const listSubCommunitiesByType = {
+            STATE: [],
+            CITY: [],
+            REGION: [],
+            SCHOOL: [],
+        }
+        
+        renderCommunities.forEach((community) => {
             // Mock data
-            community.leader = config.data.mockDataAllLeaders[0];
+            community.leaders = []
+            community.leaderIds.forEach((leader) => {
+                community.leaders.push(config.data.mockDataAllLeaders[0])
+            })
             // Mock data -- end
+            listSubCommunitiesByType[community.type] = listSubCommunitiesByType[community.type] || [];
+            listSubCommunitiesByType[community.type].push(community);
         })
-
-        return regionCommunities;
+        
+        return listSubCommunitiesByType;
     }
 
     handleChangeRegion(region) {
         if (region) {
-            const regionCommunities = this.getRegionCommunities(this.state.subCommunities, region);
+            const listSubCommunitiesByType = this.getListSubCommunitiesByType(this.state.subCommunities, region);
             this.setState({
-                regionCommunities
+                listSubCommunitiesByType
             })
             this.props.history.push(`/community/${this.props.match.params['community']}/country/${this.props.match.params['country']}/region/${region}`);
         } else {
@@ -102,10 +135,10 @@ export default class extends StandardPage {
     }
 
     ord_renderContent () {
-        const listCountriesEl = config.data.breadcrumbCountries.map((country, index) => {
+        const listCountriesEl = Object.keys(config.data.mappingCountryCodeToName).map((key, index) => {
             return (
-                <Select.Option title={country.name} key={index}
-                               value={country.geolocation}>{country.name}</Select.Option>
+                <Select.Option title={config.data.mappingCountryCodeToName[key]} key={index}
+                               value={key}>{config.data.mappingCountryCodeToName[key]}</Select.Option>
             )
         })
 
@@ -168,59 +201,140 @@ export default class extends StandardPage {
                             </Col>
                         </Row>
                     </div>
-                    <div className="ebp-page-title">
-                        <h1>
-                            Community
-                        </h1>
-                    </div>
                     <div className="ebp-page">
                         <div className="ebp-page-content">
                             <Row>
                                 <Col span={18}
-                                     className="community-left-column community-left-column--text-center">
+                                     className="community-left-column">
                                     <div>
-                                        <Row>
-                                            <Col span={8}>
-                                                <h2 className="without-padding overflow-ellipsis" title="Country Organizers">Country Organizers</h2>
-                                            </Col>
-                                            <Col span={16}>
-                                                <h2 className="without-padding overflow-ellipsis" title="Local Organizers">Local Organizers</h2>
-                                            </Col>
-                                        </Row>
                                         {(this.state.community && this.state.subCommunities) && (
                                             <Row>
-                                                <Col span={8}>
-                                                    <div className="user-card">
-                                                        <Row>
-                                                            <Col span={24}>
-                                                                <Card
-                                                                    cover={<img alt="example" src={this.state.community.leader.avatar}/>}
-                                                                >
-                                                                    <Card.Meta
-                                                                        title={this.state.community.leader.name}
-                                                                        description={this.state.community.leader.country + ' - Country leader'}
-                                                                    />
-                                                                </Card>
-                                                            </Col>
-                                                        </Row>
-                                                    </div>
+                                                <Col span={24}>
+                                                    <h2 className="without-padding overflow-ellipsis">{config.data.mappingCountryCodeToName[this.props.match.params['country']] + ' Organizers'}</h2>
                                                 </Col>
-                                                <Col span={16} className="wrap-child-box-users">
+                                                <Col span={24}>
                                                     <Row>
-                                                        {this.state.regionCommunities.map((community, index) => {
-                                                            return (<Col key={index} span={12}
-                                                                         className="user-card">
-                                                                <Card
-                                                                    cover={<img src={community.leader.avatar}/>}
-                                                                >
-                                                                    <Card.Meta
-                                                                        title={community.leader.name}
-                                                                        description={community.name}
-                                                                    />
-                                                                </Card>
-                                                            </Col>)
+                                                        {this.state.community.leaders.map((leader, index) => {
+                                                            return (
+                                                                <Col span={6} key={index} className="user-card">
+                                                                    <Card
+                                                                        cover={<img alt="example" src={leader.avatar}/>}
+                                                                    >
+                                                                        <Card.Meta
+                                                                            title={leader.name}
+                                                                        />
+                                                                    </Card>
+                                                                </Col>
+                                                            )
                                                         })}
                                                     </Row>
+                                                </Col>
+                                                <Col span={24}>
+                                                    <h2 className="without-padding overflow-ellipsis">Sub-Communities</h2>
+                                                </Col>
+                                                <Col span={24}>
+                                                    <Tabs type="card">
+                                                        <TabPane tab="State" key="1">
+                                                            <Row>
+                                                                {this.state.listSubCommunitiesByType['STATE'].map((community, index) => {
+                                                                    return (
+                                                                        <Col span={4}
+                                                                             key={index}
+                                                                             className="user-card">
+                                                                            {community.leaders.map((leader, index) => {
+                                                                                return (
+                                                                                    <Card
+                                                                                        key={index}
+                                                                                        cover={<img src={leader.avatar}/>}
+                                                                                    >
+                                                                                        <Card.Meta
+                                                                                            title={leader.name}
+                                                                                            description={community.name}
+                                                                                        />
+                                                                                    </Card>
+                                                                                )
+                                                                            })}
+                                                                        </Col>
+                                                                    );
+                                                                })}
+                                                            </Row>
+                                                        </TabPane>
+                                                        <TabPane tab="City" key="2">
+                                                            <Row>
+                                                                {this.state.listSubCommunitiesByType['REGION'].map((community, index) => {
+                                                                    return (
+                                                                        <Col span={6}
+                                                                             key={index}
+                                                                             className="user-card">
+                                                                            {community.leaders.map((leader, index) => {
+                                                                                return (
+                                                                                    <Card
+                                                                                        key={index}
+                                                                                        cover={<img src={leader.avatar}/>}
+                                                                                    >
+                                                                                        <Card.Meta
+                                                                                            title={leader.name}
+                                                                                            description={community.name}
+                                                                                        />
+                                                                                    </Card>
+                                                                                )
+                                                                            })}
+                                                                        </Col>
+                                                                    );
+                                                                })}
+                                                            </Row>
+                                                        </TabPane>
+                                                        <TabPane tab="Region" key="3">
+                                                            <Row>
+                                                                {this.state.listSubCommunitiesByType['CITY'].map((community, index) => {
+                                                                    return (
+                                                                        <Col span={6}
+                                                                             key={index}
+                                                                             className="user-card">
+                                                                            {community.leaders.map((leader, index) => {
+                                                                                return (
+                                                                                    <Card
+                                                                                        key={index}
+                                                                                        cover={<img src={leader.avatar}/>}
+                                                                                    >
+                                                                                        <Card.Meta
+                                                                                            title={leader.name}
+                                                                                            description={community.name}
+                                                                                        />
+                                                                                    </Card>
+                                                                                )
+                                                                            })}
+                                                                        </Col>
+                                                                    );
+                                                                })}
+                                                            </Row>
+                                                        </TabPane>
+                                                        <TabPane tab="School" key="4">
+                                                            <Row>
+                                                                {this.state.listSubCommunitiesByType['SCHOOL'].map((community, index) => {
+                                                                    return (
+                                                                        <Col span={6}
+                                                                             key={index}
+                                                                             className="user-card">
+                                                                            {community.leaders.map((leader, index) => {
+                                                                                return (
+                                                                                    <Card
+                                                                                        key={index}
+                                                                                        cover={<img src={leader.avatar}/>}
+                                                                                    >
+                                                                                        <Card.Meta
+                                                                                            title={leader.name}
+                                                                                            description={community.name}
+                                                                                        />
+                                                                                    </Card>
+                                                                                )
+                                                                            })}
+                                                                        </Col>
+                                                                    );
+                                                                })}
+                                                            </Row>
+                                                        </TabPane>
+                                                    </Tabs>
                                                 </Col>
                                             </Row>
                                         )}

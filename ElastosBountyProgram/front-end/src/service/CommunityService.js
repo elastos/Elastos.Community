@@ -58,6 +58,14 @@ export default class extends BaseService {
 
         return result
     }
+
+    async getMembers(communityId) {
+        const result = await api_request({
+            path: '/community/members/' + communityId, method: 'get',
+        })
+        
+        return result
+    }
     
     async getSubCommunities(parentCommunityId) {
         const result = await api_request({

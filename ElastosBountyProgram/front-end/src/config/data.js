@@ -318,9 +318,5 @@ export default {
         za: 'South Africa',
         zm: 'Zambia',
         zw: 'Zimbabwe'
-    },
-    breadcrumbCountries: [
-        {geolocation: 'ad', name: 'Andorra'},
-        {geolocation: 'ae', name: 'United Arab Emirates'}
-    ]
+    }
 }

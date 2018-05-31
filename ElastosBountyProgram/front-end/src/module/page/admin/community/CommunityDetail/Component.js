@@ -80,7 +80,7 @@ export default class extends AdminPage {
         this.formRefAddOrganizer = formRef
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.loadCommunityDetail();
         this.loadSubCommunities();
     }
@@ -339,10 +339,10 @@ export default class extends AdminPage {
     }
 
     ord_renderContent () {
-        const listCountriesEl = config.data.breadcrumbCountries.map((country, index) => {
+        const listCountriesEl = Object.keys(config.data.mappingCountryCodeToName).map((key, index) => {
             return (
-                <Select.Option title={country.name} key={index}
-                               value={country.geolocation}>{country.name}</Select.Option>
+                <Select.Option title={config.data.mappingCountryCodeToName[key]} key={index}
+                               value={key}>{config.data.mappingCountryCodeToName[key]}</Select.Option>
             )
         })
 
