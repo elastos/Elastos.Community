@@ -16,6 +16,10 @@ import {TASK_STATUS} from '@/constant'
 
 export default class extends AdminPage {
 
+    state = {
+        editing: false
+    }
+
     componentDidMount() {
         const taskId = this.props.match.params.taskId
         this.props.getTaskDetail(taskId)

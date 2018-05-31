@@ -50,9 +50,19 @@ export default class extends BaseService {
         return result
     }
 
+    /**
+     * Need to rework this to return the updated doc, though this isn't a true
+     * PUT the issue is it's just easier to have side effects
+     *
+     * @param taskId
+     * @param doc
+     * @returns {Promise<*>}
+     */
     async update(taskId, doc) {
 
         const taskRedux = this.store.getRedux('task')
+
+        this.dispatch(taskRedux.actions.loading_update(true))
 
         const result = await api_request({
             path: `/task/${taskId}`,
@@ -63,6 +73,7 @@ export default class extends BaseService {
         const taskUpdated = Object.assign({}, this.store.getState().task.detail, doc)
 
         this.dispatch(taskRedux.actions.detail_update(taskUpdated))
+        this.dispatch(taskRedux.actions.loading_update(false))
 
         return result
     }

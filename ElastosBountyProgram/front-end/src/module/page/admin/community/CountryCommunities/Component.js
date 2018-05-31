@@ -184,7 +184,7 @@ export default class extends AdminPage {
                     </div>
                     <div className="p_admin_content">
                         <Row>
-                            <Col span={18}
+                            <Col span={20}
                                  className="admin-left-column wrap-box-user">
                                 <div>
                                     <Button className="ant-btn-ebp pull-right" onClick={this.showModalAddCountry} type="primary">Add country</Button>
@@ -201,7 +201,7 @@ export default class extends AdminPage {
                                     />
                                 </div>
                             </Col>
-                            <Col span={6}
+                            <Col span={4}
                                  className="admin-right-column wrap-box-navigator">
                                 <Navigator selectedItem={'community'}/>
                             </Col>
