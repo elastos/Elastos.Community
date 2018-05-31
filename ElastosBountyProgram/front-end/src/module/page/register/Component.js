@@ -7,10 +7,17 @@ import './style.scss'
 export default class extends StandardPage {
     ord_renderContent() {
         return (
-            <div className="p_register ebp-wrap">
-                <div className="d_box">
-                    <RegisterForm />
+            <div class="p_Register">
+                <div className="ebp-header-divider">
+
                 </div>
+                <div className="ebp-wrap">
+                    <div className="d_box">
+                        <RegisterForm />
+                    </div>
+                </div>
+                <br/>
+                <br/>
             </div>
         );
     }

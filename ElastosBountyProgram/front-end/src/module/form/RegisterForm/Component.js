@@ -1,11 +1,12 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import {Form, Icon, Input, Button, Checkbox, message} from 'antd'
-import ReCAPTCHA from 'react-google-recaptcha';
+import {Form, Icon, Input, Button, Checkbox, message, Select} from 'antd'
+import ReCAPTCHA from 'react-google-recaptcha'
 import {
     RECAPTCHA_KEY,
     MIN_LENGTH_PASSWORD
-} from '@/config/constant';
+} from '@/config/constant'
+import config from '@/config'
 
 import './style.scss'
 
@@ -13,18 +14,12 @@ const FormItem = Form.Item
 
 class C extends BaseComponent {
 
-    async componentDidMount() {
-        const communities = await this.props.fetchCommunities()
-
-        this.state.communities = communities
-    }
-
     handleSubmit(e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Register - received values of form: ', values)
-                this.props.register(values.username, values.password)
+                this.props.register(values.username, values.password, _.omit(values, ['username', 'password']))
 
             }
         })
@@ -38,23 +33,23 @@ class C extends BaseComponent {
     }
 
     compareToFirstPassword(rule, value, callback) {
-        const form = this.props.form;
+        const form = this.props.form
         if (value && value !== form.getFieldValue('password')) {
-          callback('Two passwords that you entered do not match');
+          callback('Two passwords that you entered do not match')
         } else {
-          callback();
+          callback()
         }
     }
 
     validateToNextPassword(rule, value, callback) {
-        const form = this.props.form;
+        const form = this.props.form
         if (value && this.state.confirmDirty) {
-            form.validateFields(['confirmPassword'], { force: true });
+            form.validateFields(['confirmPassword'], { force: true })
         }
         if (value && value.length < MIN_LENGTH_PASSWORD) {
-            callback(`The password must be at least ${MIN_LENGTH_PASSWORD} characters.`);
+            callback(`The password must be at least ${MIN_LENGTH_PASSWORD} characters.`)
         }
-        callback();
+        callback()
     }
 
     getInputProps() {
@@ -130,12 +125,19 @@ class C extends BaseComponent {
         )
 
         const country_fn = getFieldDecorator('country', {
-            rules: [{required: true, message: 'Please select your country'}],
-            initialValue: ''
+            rules: [{required: true, message: 'Please select your country'}]
         })
         const country_el = (
-            <Input size="large"
-                   placeholder="Country"/>
+            <Select size="large"
+                    showSearch
+                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                placeholder="Country">
+                {_.entries(config.data.mappingCountryCodeToName).map(([key, val]) => {
+                    return <Select.Option key={key} value={key}>
+                        {val}
+                    </Select.Option>
+                })}
+            </Select>
         )
 
         const recaptcha_fn = getFieldDecorator('recaptcha', {
@@ -143,9 +145,51 @@ class C extends BaseComponent {
         })
         const recaptcha_el = (
             <ReCAPTCHA
-                 ref={(el) => { this.captcha = el; }}
+                 ref={(el) => { this.captcha = el }}
                  sitekey={RECAPTCHA_KEY}
              />
+        )
+
+        const state_fn = getFieldDecorator('State')
+        const state_el = (
+            <Input size="large"
+                   placeholder="State/Province"/>
+        )
+
+        const city_fn = getFieldDecorator('City')
+        const city_el = (
+            <Input size="large"
+                   placeholder="City"/>
+        )
+
+        const organizer_fn = getFieldDecorator('beOrganizer', {
+            rules: [{message: 'Please select an option'}]
+        })
+        const organizer_el = (
+            <Select size="large"
+                    placeholder="Do you want to be an organizer?">
+                <Select.Option value="yes">Yes</Select.Option>
+                <Select.Option value="no">No</Select.Option>
+            </Select>
+        )
+
+        const developer_fn = getFieldDecorator('isDeveloper', {
+            rules: [{message: 'Please select an option'}]
+        })
+        const developer_el = (
+            <Select size="large"
+                    placeholder="Are you a software developer or engineer?">
+                <Select.Option value="yes">Yes</Select.Option>
+                <Select.Option value="no">No</Select.Option>
+            </Select>
+        )
+
+        const source_fn = getFieldDecorator('source', {
+            rules: [{message: ''}],
+        })
+        const source_el = (
+            <Input size="large"
+                   placeholder="Where did you hear about us?"/>
         )
 
         return {
@@ -155,8 +199,17 @@ class C extends BaseComponent {
             email: email_fn(email_el),
             pwd: pwd_fn(pwd_el),
             pwdConfirm: pwdConfirm_fn(pwdConfirm_el),
-            recaptcha: recaptcha_fn(recaptcha_el),
-            country: country_fn(country_el)
+
+            country: country_fn(country_el),
+            state: state_fn(state_el),
+            city: city_fn(city_el),
+
+            organizer: organizer_fn(organizer_el),
+            developer: developer_fn(developer_el),
+
+            source: source_fn(source_el),
+
+            recaptcha: recaptcha_fn(recaptcha_el)
         }
     }
 
@@ -201,22 +254,44 @@ class C extends BaseComponent {
                             {p.pwdConfirm}
                         </FormItem>
                         <FormItem>
-                            {p.recaptcha}
-                        </FormItem>
-                        <FormItem>
                             <Button loading={this.props.loading} type="ebp" htmlType="button" className="d_btn" onClick={this.registerStep1.bind(this)}>
                                 Continue
                             </Button>
                         </FormItem>
                     </div>
-                    <div ref={this.step2Container} className={this.props.step === 2 ? '' : 'hide'}>
+                    <div ref={this.step2Container}>
                         <FormItem>
                             {p.country}
+                        </FormItem>
+                        <FormItem>
+                            {p.state}
+                        </FormItem>
+                        <FormItem>
+                            {p.city}
+                        </FormItem>
+                        <FormItem>
+                            {p.organizer}
+                        </FormItem>
+                        <FormItem>
+                            {p.developer}
+                        </FormItem>
+                        <FormItem>
+                            {p.source}
+                        </FormItem>
+                        <FormItem>
+                            {p.recaptcha}
+                        </FormItem>
+                        <FormItem>
+                            <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn" onClick={this.handleSubmit.bind(this)}>
+                                Register
+                            </Button>
                         </FormItem>
                     </div>
                 </Form>
             </div>
         )
+
+        /* className={this.props.step === 2 ? '' : 'hide'}>*/
 
     }
 

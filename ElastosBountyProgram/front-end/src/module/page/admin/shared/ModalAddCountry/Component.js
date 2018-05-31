@@ -17,15 +17,16 @@ export default Form.create()(
 
             const footerModal = (
                 <div>
-                    <Button onClick={onCreate} type="primary">Add country</Button>
+                    <Button onClick={onCreate} className="ant-btn-ebp" type="primary">Add country</Button>
                     <Button onClick={onCancel}>Cancel</Button>
                 </div>
             )
 
-            const listCountriesEl = config.data.breadcrumbCountries.map((country) => {
+            const listCountriesEl = _.entries(config.data.mappingCountryCodeToName).map(([key, val]) => {
                 return (
-                    <Select.Option key={country.geolocation}
-                        value={country.geolocation}>{country.name}</Select.Option>
+                    <Select.Option key={key} value={key}>
+                        {val}
+                    </Select.Option>
                 )
             })
 

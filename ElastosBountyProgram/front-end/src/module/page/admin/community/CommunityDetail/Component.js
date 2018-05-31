@@ -426,13 +426,13 @@ export default class extends AdminPage {
                                                             </Card>
                                                         )
                                                     })}
-                                                    <Button className="ant-btn-ebp" type="primary" onClick={this.showModalAddOrganizer}>Add organizer</Button>
+                                                    <Button className="ant-btn-ebp" type="primary" size="small" onClick={this.showModalAddOrganizer}>Add organizer</Button>
                                                 </Col>
                                                 <Col span={18} className="wrap-child-box-users">
                                                     {['STATE', 'CITY', 'REGION', 'SCHOOL'].map((communityType, index) => {
                                                         return (
                                                             <div key={index} className="child-box-users">
-                                                                <Button className="ant-btn-ebp pull-right" type="primary" onClick={this.showModalAddSubCommunity.bind(null, COMMUNITY_TYPE[communityType])}>
+                                                                <Button className="ant-btn-ebp pull-right" type="primary" size="small" onClick={this.showModalAddSubCommunity.bind(null, COMMUNITY_TYPE[communityType])}>
                                                                     {communityType === 'STATE' && 'Add state'}
                                                                     {communityType === 'CITY' && 'Add city'}
                                                                     {communityType === 'REGION' && 'Add region'}

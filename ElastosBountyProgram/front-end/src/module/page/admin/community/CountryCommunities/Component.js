@@ -60,7 +60,7 @@ export default class extends AdminPage {
         this.formRefAddCountry = formRef
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.loadCommunities();
     }
 
@@ -143,7 +143,8 @@ export default class extends AdminPage {
             )
         })
 
-        const listCountriesEl = config.data.breadcrumbCountries.map((country, index) => {
+        // here we only want to show communities
+        const listCountriesEl = this.state.communities.map((country, index) => {
             return (
                 <Select.Option title={country.name} key={index}
                                value={country.geolocation}>{country.name}</Select.Option>
@@ -186,10 +187,10 @@ export default class extends AdminPage {
                             <Col span={18}
                                  className="admin-left-column wrap-box-user">
                                 <div>
-                                    <Button className="pull-right" onClick={this.showModalAddCountry} type="primary">Add country</Button>
+                                    <Button className="ant-btn-ebp pull-right" onClick={this.showModalAddCountry} type="primary">Add country</Button>
                                     <h2 className="without-padding">Country Organizers</h2>
                                     <Row>
-                                        {this.state.communities.length && listCommunitiesEl}
+                                        {listCommunitiesEl}
                                     </Row>
 
                                     <ModalAddCountry

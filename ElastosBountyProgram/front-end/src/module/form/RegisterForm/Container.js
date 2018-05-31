@@ -1,7 +1,6 @@
 import {createContainer, goPath} from "@/util"
 import Component from './Component'
 import UserService from '@/service/UserService'
-import CommunityService from '@/service/CommunityService'
 import {message} from 'antd'
 
 message.config({
@@ -11,14 +10,11 @@ message.config({
 
 export default createContainer(Component, (state) => {
 
-
-
     return {
         ...state.user.register_form
     }
 }, ()=>{
     const userService = new UserService()
-    const communityService = new CommunityService()
 
     return {
         async changeStep(step) {
@@ -29,17 +25,16 @@ export default createContainer(Component, (state) => {
             try {
                 const rs = await userService.register(username, password, profile)
 
+                debugger
+
                 if (rs) {
-                    message.success('login success')
-                    userService.path.push('/home')
+                    message.success('Successfully Registered - Please Login', 7)
+                    debugger
+                    this.history.replace('/login')
                 }
             } catch (err) {
-                message.error('login failed')
+                message.error('Registration Failed - Please Contact Our Support')
             }
-        },
-
-        async fetchCommunities() {
-            return await communityService.getAllCountryCommunities()
         }
     }
 })

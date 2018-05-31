@@ -37,20 +37,16 @@ export default class extends BaseService {
     }
 
     async register(username, password, profile) {
-        // const res = await api_request({
-        //     path : '/user/register',
-        //     method : 'post',
-        //     data : {
-        //         "username": "jacky2",
-        //         "password": "password",
-        //         "email": "test@elastos.org",
-        //         "firstName": "Jacky11",
-        //         "lastName": "Li22",
-        //         "country": "China",
-        //         "city": "Dalian"
-        //     }
-        // });
+        const res = await api_request({
+            path : '/user/register',
+            method : 'post',
+            data : Object.assign(profile, {
+                username,
+                password
+            })
+        });
 
+        return true
     }
 
     async logout(){

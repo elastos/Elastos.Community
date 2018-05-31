@@ -22,10 +22,11 @@ export default Form.create()(
                 </div>
             )
 
-            const listCountriesEl = config.data.breadcrumbCountries.map((country) => {
+            const listCountriesEl = _.entries(config.data.mappingCountryCodeToName).map(([key, val]) => {
                 return (
-                    <Select.Option key={country.geolocation}
-                        value={country.geolocation}>{country.name}</Select.Option>
+                    <Select.Option key={key} value={key}>
+                        {val}
+                    </Select.Option>
                 )
             })
 

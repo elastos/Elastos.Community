@@ -1,4 +1,8 @@
-.ant-btn{
+
+.ant-btn {
+
+  height: 40px;
+  line-height: 40px;
 
   &.ant-btn-ebp{
     font-size: 1.1rem;
@@ -6,16 +10,21 @@
     line-height: 40px;
     padding: 0 40px;
     color: #ffffff;
-    background: #ff7300;
-    border: 1px solid #ff7300;
+    background: $primary_color;
+    border: 1px solid $primary_dark_color;
 
-    &:hover, &:focus, &:active{
-      background: #df7300;
-      border-color: #ff7300;
+    &.ant-btn-sm {
+      line-height: 0.9rem;
+      font-size: 0.9rem;
+      height: 34px;
     }
 
-
+    &:hover, &:focus, &:active{
+      background: $primary_light_color;
+      border-color: $primary_color;
+    }
   }
+
 }
 
 .ant-menu-item {

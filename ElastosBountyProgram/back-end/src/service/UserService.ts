@@ -18,10 +18,10 @@ export default class extends Base {
 
         // check username and email unique
         if(await db_user.findOne({username})){
-            throw 'username is exist';
+            throw 'username already exists';
         }
         if(await db_user.findOne({email : param.email})){
-            throw 'email is exist';
+            throw 'email already exists';
         }
 
         const salt = uuid();
@@ -35,7 +35,11 @@ export default class extends Base {
                 firstName : param.firstName,
                 lastName : param.lastName,
                 country : param.country,
-                city : param.city
+                state : param.state,
+                city : param.city,
+                beOrganizer : param.beOrganizer,
+                isDeveloper : param.isDeveloper,
+                source : param.source
             },
             role : USER_ROLE.MEMBER,
             active: true
