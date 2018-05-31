@@ -13,12 +13,20 @@ export const Contact = {
 export const Profile = {
     firstName : String,
     lastName: String,
+
     avatar : String,
     birth : Date,
     timezone: String,
     region: Region,
 
-    contact: Contact
+    country: String,
+    state: String,
+    city: String,
+
+    beOrganizer: Boolean,
+    isDeveloper: Boolean,
+
+    source: String
 };
 
 export const WorkProject = {

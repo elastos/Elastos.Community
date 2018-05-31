@@ -1,6 +1,6 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import {Form, Icon, Input, Button, Checkbox, message, Select} from 'antd'
+import {Form, Icon, Input, Button, Checkbox, message, Select, Divider} from 'antd'
 import ReCAPTCHA from 'react-google-recaptcha'
 import {
     RECAPTCHA_KEY,
@@ -23,13 +23,6 @@ class C extends BaseComponent {
 
             }
         })
-    }
-
-    constructor(props) {
-        super(props)
-
-        this.step1Container = React.createRef()
-        this.step2Container = React.createRef()
     }
 
     compareToFirstPassword(rule, value, callback) {
@@ -141,7 +134,7 @@ class C extends BaseComponent {
         )
 
         const recaptcha_fn = getFieldDecorator('recaptcha', {
-            rules: [{required: true}]
+            rules: [{required: false}]
         })
         const recaptcha_el = (
             <ReCAPTCHA
@@ -150,13 +143,13 @@ class C extends BaseComponent {
              />
         )
 
-        const state_fn = getFieldDecorator('State')
+        const state_fn = getFieldDecorator('state')
         const state_el = (
             <Input size="large"
                    placeholder="State/Province"/>
         )
 
-        const city_fn = getFieldDecorator('City')
+        const city_fn = getFieldDecorator('city')
         const city_el = (
             <Input size="large"
                    placeholder="City"/>
@@ -234,69 +227,55 @@ class C extends BaseComponent {
                 </p>
 
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
-                    <div ref={this.step1Container} className={this.props.step === 1 ? '' : 'hide'}>
-                        <FormItem>
-                            {p.firstName}
-                        </FormItem>
-                        <FormItem>
-                            {p.lastName}
-                        </FormItem>
-                        <FormItem>
-                            {p.userName}
-                        </FormItem>
-                        <FormItem>
-                            {p.email}
-                        </FormItem>
-                        <FormItem>
-                            {p.pwd}
-                        </FormItem>
-                        <FormItem>
-                            {p.pwdConfirm}
-                        </FormItem>
-                        <FormItem>
-                            <Button loading={this.props.loading} type="ebp" htmlType="button" className="d_btn" onClick={this.registerStep1.bind(this)}>
-                                Continue
-                            </Button>
-                        </FormItem>
-                    </div>
-                    <div ref={this.step2Container}>
-                        <FormItem>
-                            {p.country}
-                        </FormItem>
-                        <FormItem>
-                            {p.state}
-                        </FormItem>
-                        <FormItem>
-                            {p.city}
-                        </FormItem>
-                        <FormItem>
-                            {p.organizer}
-                        </FormItem>
-                        <FormItem>
-                            {p.developer}
-                        </FormItem>
-                        <FormItem>
-                            {p.source}
-                        </FormItem>
-                        <FormItem>
-                            {p.recaptcha}
-                        </FormItem>
-                        <FormItem>
-                            <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn" onClick={this.handleSubmit.bind(this)}>
-                                Register
-                            </Button>
-                        </FormItem>
-                    </div>
+                    <FormItem>
+                        {p.firstName}
+                    </FormItem>
+                    <FormItem>
+                        {p.lastName}
+                    </FormItem>
+                    <FormItem>
+                        {p.userName}
+                    </FormItem>
+                    <FormItem>
+                        {p.email}
+                    </FormItem>
+                    <FormItem>
+                        {p.pwd}
+                    </FormItem>
+                    <FormItem>
+                        {p.pwdConfirm}
+                    </FormItem>
+                    <FormItem>
+                        {p.country}
+                    </FormItem>
+                    <Divider>Optional Info</Divider>
+                    <FormItem>
+                        {p.state}
+                    </FormItem>
+                    <FormItem>
+                        {p.city}
+                    </FormItem>
+                    <FormItem>
+                        {p.organizer}
+                    </FormItem>
+                    <FormItem>
+                        {p.developer}
+                    </FormItem>
+                    <FormItem>
+                        {p.source}
+                    </FormItem>
+                    <FormItem>
+                        {p.recaptcha}
+                    </FormItem>
+                    <FormItem>
+                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn" onClick={this.handleSubmit.bind(this)}>
+                            Register
+                        </Button>
+                    </FormItem>
                 </Form>
             </div>
         )
 
-        /* className={this.props.step === 2 ? '' : 'hide'}>*/
-
-    }
-
-    async registerStep1() {
-        this.props.changeStep(2)
     }
 }
 

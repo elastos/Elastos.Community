@@ -37,8 +37,8 @@ export default class extends Base {
                 country : param.country,
                 state : param.state,
                 city : param.city,
-                beOrganizer : param.beOrganizer,
-                isDeveloper : param.isDeveloper,
+                beOrganizer : param.beOrganizer === 'yes',
+                isDeveloper : param.isDeveloper === 'yes',
                 source : param.source
             },
             role : USER_ROLE.MEMBER,
