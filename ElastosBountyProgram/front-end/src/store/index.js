@@ -32,7 +32,7 @@ store.getRedux = (name)=>{
 }
 
 if(config.NODE_ENV === 'development'){
-    global.store = store;
+    global._store = store;
 }
 
 export default store;

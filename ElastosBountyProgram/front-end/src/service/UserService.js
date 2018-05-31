@@ -24,7 +24,7 @@ export default class extends BaseService {
         await this.dispatch(userRedux.actions.is_login_update(true))
 
         if ([USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(res.user.role)) {
-            await store.dispatch(userRedux.actions.is_admin_update(true))
+            await this.dispatch(userRedux.actions.is_admin_update(true))
         }
 
         await this.dispatch(userRedux.actions.profile_update(res.user.profile))
