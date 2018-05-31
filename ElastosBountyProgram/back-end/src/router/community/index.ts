@@ -1,13 +1,13 @@
 import Base from '../Base';
 
-import add_member from './add-member';
-import remove_member from './remove-member';
-import list_member from './list-member';
+import add_member from './add_member';
+import remove_member from './remove_member';
+import list_member from './list_member';
 import get from './get';
 import create from './create';
 import update from './update';
-import get_with_country from './get-with-country';
-import get_child from './get-child';
+import get_with_country from './get_with_country';
+import get_child from './get_child';
 import delete_community from './delete';
 
 export default Base.setRouter([
@@ -32,7 +32,7 @@ export default Base.setRouter([
         method : 'post'
     },
     {
-        path : '/members/:communityId',
+        path : '/:communityId/members',
         router : list_member,
         method : 'get'
     },
