@@ -97,8 +97,8 @@ export default class extends Base {
     * */
     public getSumElaBudget(ela){
         let total = 0;
-        _.each(ela, ()=>{
-            total += ela.amount;
+        _.each(ela, (item)=>{
+            total += item.amount;
         });
 
         return total;

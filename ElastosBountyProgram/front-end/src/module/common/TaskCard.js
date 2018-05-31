@@ -11,11 +11,11 @@ export default class extends BaseComponent {
     ord_render(){
         const {thumbnail, name, reward} = this.props;
         console.log(this.props);
-        const desc = reward ? `Ela : ${reward.ela / 1000} | VotePower : ${reward.evp}` : 'no reward';
+        const desc = reward ? `Ela : ${reward.ela / 1000} | VotePower : ${reward.votePower}` : 'no reward';
         return (
             <Card onClick={this.click.bind(this)}
                 style={{cursor:'pointer'}}
-                cover={<img style={{height:200}} src={'/assets/images/task_thumbs/' + (thumbnail || DEFAULT_IMAGE.TASK)} />}
+                cover={<img style={{height:200}} src={(thumbnail || DEFAULT_IMAGE.TASK)} />}
             >
                 <Meta
                     title={name}
