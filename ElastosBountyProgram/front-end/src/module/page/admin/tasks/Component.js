@@ -34,7 +34,7 @@ export default class extends AdminPage {
             width: '30%',
             className: 'fontWeight500',
             render: (name, record) => {
-                return <a href={`/admin/task-detail/${record._id}`} className="tableLink">{name}</a>
+                return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
             }
         }, {
             title: 'Leader',
@@ -112,5 +112,9 @@ export default class extends AdminPage {
                 </div>
             </div>
         )
+    }
+
+    linkTaskDetail(taskId) {
+        this.props.history.push(`/admin/task-detail/${taskId}`)
     }
 }
