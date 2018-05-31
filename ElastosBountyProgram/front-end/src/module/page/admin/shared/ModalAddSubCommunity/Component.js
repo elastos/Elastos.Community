@@ -59,8 +59,11 @@ export default Form.create()(
                                     placeholder="Please select a country"
                                     filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                                 >
-                                    {config.data.breadcrumbCountries.map((country, index) => {
-                                        return (<Select.Option key={index} value={country.geolocation}>{country.name}</Select.Option>)
+                                    {Object.keys(config.data.mappingCountryCodeToName).map((key, index) => {
+                                        return (
+                                            <Select.Option title={config.data.mappingCountryCodeToName[key]} key={index}
+                                                           value={key}>{config.data.mappingCountryCodeToName[key]}</Select.Option>
+                                        )
                                     })}
                                 </Select>
                             )}

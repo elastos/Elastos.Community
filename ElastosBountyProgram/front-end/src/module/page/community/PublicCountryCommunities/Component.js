@@ -13,7 +13,7 @@ export default class extends StandardPage {
         communities: [],
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.loadCommunities();
     }
 
@@ -76,10 +76,10 @@ export default class extends StandardPage {
             )
         })
 
-        const listCountriesEl = config.data.breadcrumbCountries.map((country, index) => {
+        const listCountriesEl = Object.keys(config.data.mappingCountryCodeToName).map((key, index) => {
             return (
-                <Select.Option title={country.name} key={index}
-                               value={country.geolocation}>{country.name}</Select.Option>
+                <Select.Option title={config.data.mappingCountryCodeToName[key]} key={index}
+                               value={key}>{config.data.mappingCountryCodeToName[key]}</Select.Option>
             )
         })
 
@@ -127,21 +127,13 @@ export default class extends StandardPage {
                     <div className="ebp-page">
                         <div className="ebp-page-content">
                             <Row>
-                                <Col span={18}
+                                <Col span={24}
                                      className="community-left-column">
                                     <div>
                                         <h3 className="without-padding">Country Organizers</h3>
                                         <Row>
                                             {listCommunitiesEl}
                                         </Row>
-                                    </div>
-                                </Col>
-                                <Col span={6}
-                                     className="community-right-column">
-                                    <div>
-                                        <h3 className="without-padding">Members List</h3>
-                                        <div className="list-members"></div>
-                                        <Button>See more</Button>
                                     </div>
                                 </Col>
                             </Row>
