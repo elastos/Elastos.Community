@@ -2,7 +2,7 @@ import Base from '../Base';
 import CommunityService from '../../service/CommunityService';
 import {constant} from '../../constant';
 
-export default class GetCommunity extends Base {
+export default class extends Base {
     protected needLogin = false;
     async action(){
 

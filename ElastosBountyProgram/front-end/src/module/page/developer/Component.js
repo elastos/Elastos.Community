@@ -1,5 +1,5 @@
-import React from 'react';
-import StandardPage from '../StandardPage';
+import React from 'react'
+import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import IssueForm from './formIssue/Container'
 
@@ -7,24 +7,26 @@ import './style.scss'
 
 import { Col, Row, Icon, Form, Input, Button, Modal, Select, Table } from 'antd'
 import moment from 'moment/moment'
-const Option = Select.Option
-const FormItem = Form.Item;
 
-import {TASK_STATUS} from '@/constant'
+const Option = Select.Option
+const FormItem = Form.Item
+
+import { TASK_STATUS } from '@/constant'
 
 export default class extends StandardPage {
 
-    componentDidMount() {
+    componentDidMount () {
         this.props.getDeveloperEvents()
     }
 
-    componentWillUnmount() {
-        this.props.reset()
+    componentWillUnmount () {
+        this.props.resetTasks()
     }
 
     ord_renderContent () {
 
-        const taskData = this.props.all_tasks
+        const eventData = this.props.events
+        const taskData = this.props.tasks
 
         const columns = [{
             title: 'Name',
@@ -79,16 +81,18 @@ export default class extends StandardPage {
                                 </h3>
                             </div>
                             <div className="pull-right btnContainer">
+                                {this.props.is_admin &&
                                 <Button type="dashed" onClick={this.createTaskLink.bind(this)}>
                                     Create Event
                                 </Button>
+                                }
                             </div>
 
                             <Table
                                 className="clearfix"
                                 columns={columns}
                                 rowKey={(item) => item._id}
-                                dataSource={taskData}
+                                dataSource={eventData}
                                 loading={this.props.loading}
                             />
                         </Col>
@@ -96,7 +100,7 @@ export default class extends StandardPage {
                             <h3>
                                 Submit an Issue
                             </h3>
-                            <IssueForm />
+                            <IssueForm/>
                         </Col>
                     </Row>
                     <div className="horizGap">
@@ -118,9 +122,13 @@ export default class extends StandardPage {
                                     }
                                 </div>
                             </div>
-                            <div>
-
-                            </div>
+                            <Table
+                                className="clearfix"
+                                columns={columns}
+                                rowKey={(item) => item._id}
+                                dataSource={taskData}
+                                loading={this.props.loading}
+                            />
                         </Col>
                         <Col span={8} className="d_rightContainer d_box">
                             <h3>
@@ -129,12 +137,12 @@ export default class extends StandardPage {
                         </Col>
                     </Row>
                 </div>
-                <Footer />
+                <Footer/>
             </div>
         )
     }
 
-    async createTaskLink() {
+    async createTaskLink () {
         this.props.history.push('/task-create')
     }
 }

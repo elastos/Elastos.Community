@@ -16,6 +16,10 @@ import {TASK_STATUS} from '@/constant'
 
 export default class extends AdminPage {
 
+    state = {
+        editing: false
+    }
+
     componentDidMount() {
         const taskId = this.props.match.params.taskId
         this.props.getTaskDetail(taskId)
@@ -40,7 +44,7 @@ export default class extends AdminPage {
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>Admin</Breadcrumb.Item>
-                                <Breadcrumb.Item>Tasks</Breadcrumb.Item>
+                                <Breadcrumb.Item href="/admin/tasks">Tasks</Breadcrumb.Item>
                                 <Breadcrumb.Item>{this.props.task.name}</Breadcrumb.Item>
                             </Breadcrumb>
                         </div>

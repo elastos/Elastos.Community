@@ -32,7 +32,10 @@ export default class extends BaseService {
 
         sessionStorage.setItem('api-token', res['api-token']);
 
-        return true
+        return {
+            success: true,
+            is_admin: res.user.role === USER_ROLE.ADMIN
+        }
 
     }
 
