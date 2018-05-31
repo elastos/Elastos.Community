@@ -32,7 +32,7 @@ export default class extends AdminPage {
         editedSubCommunity: null,
         editedOrganizer: null,
     }
-    
+
     // Modal add organizer
     showModalAddOrganizer = () => {
         this.formRefAddOrganizer.props.form.setFieldsValue({
@@ -46,17 +46,17 @@ export default class extends AdminPage {
     handleCancelModalAddOrganizer = () => {
         const form = this.formRefAddOrganizer.props.form
         form.resetFields()
-        
+
         this.setState({visibleModalAddOrganizer: false})
     }
     handleCreateOrganizer = () => {
         const form = this.formRefAddOrganizer.props.form
-        
+
         form.validateFields((err, values) => {
             if (err) {
                 return
             }
-            
+
             form.resetFields()
             this.setState({visibleModalAddOrganizer: false})
 
@@ -97,13 +97,13 @@ export default class extends AdminPage {
             })
         });
     }
-    
+
     loadSubCommunities() {
         this.props.getSubCommunities(this.props.match.params['community']).then((subCommunities) => {
             // Check which communities we will use to render
             const listSubCommunitiesByType = this.getListSubCommunitiesByType(subCommunities, this.props.match.params['region']);
             const breadcrumbRegions = this.getBreadcrumbRegions(subCommunities);
-        
+
             // Update to state
             this.setState({
                 subCommunities,
@@ -112,7 +112,7 @@ export default class extends AdminPage {
             })
         })
     }
-    
+
     getBreadcrumbRegions(subCommunities) {
         // Filter communities to get breadcrumb regions
         let breadcrumbRegions = [];
@@ -121,9 +121,9 @@ export default class extends AdminPage {
                 name: community.name,
             })
         })
-    
+
         breadcrumbRegions = _.sortBy(_.uniqBy(breadcrumbRegions, 'name'), 'name');
-        
+
         return breadcrumbRegions;
     }
 
@@ -137,7 +137,7 @@ export default class extends AdminPage {
     handleCancelModalChangeOrganizer = () => {
         const form = this.formRefChangeOrganizer.props.form
         form.resetFields()
-        
+
         this.setState({visibleModalChangeOrganizer: false})
     }
     handleChangeOrganizerCountry = () => {
@@ -159,7 +159,7 @@ export default class extends AdminPage {
                 form.resetFields()
                 this.setState({visibleModalChangeOrganizer: false})
                 message.success('Change organizer successfully')
-                
+
                 this.loadCommunityDetail()
             })
         })
@@ -167,14 +167,14 @@ export default class extends AdminPage {
     saveFormChangeOrganizerRef = (formRef) => {
         this.formRefChangeOrganizer = formRef
     }
-    
+
     openChangeOrganizerCountry (leader) {
         this.formRefChangeOrganizer.props.form.setFieldsValue({
             geolocation: this.props.match.params['country'],
             leader: config.data.mockDataAllLeaders[0].id,
         }, this.showModalChangeOrganizer(leader._id))
     }
-    
+
     handleRemoveCountry = () => {
         alert('TODO confirm spec when click button Remove country')
     }
@@ -193,17 +193,17 @@ export default class extends AdminPage {
     handleCancelModalAddSubCommunity = () => {
         const form = this.formRefAddSubCommunity.props.form
         form.resetFields()
-        
+
         this.setState({visibleModalAddSubCommunity: false})
     }
     handleAddSubCommunity = () => {
         const form = this.formRefAddSubCommunity.props.form
-        
+
         form.validateFields((err, values) => {
             if (err) {
                 return
             }
-            
+
             this.proxyCreateSubCommunity(values)
             form.resetFields()
             this.setState({visibleModalAddSubCommunity: false})
@@ -212,7 +212,7 @@ export default class extends AdminPage {
     saveFormAddSubCommunityRef = (formRef) => {
         this.formRefAddSubCommunity = formRef
     }
-    
+
     // Modal update community
     showModalUpdateSubCommunity = (community) => {
         this.setState({
@@ -233,12 +233,12 @@ export default class extends AdminPage {
     handleCancelModalUpdateSubCommunity = () => {
         const form = this.formRefUpdateSubCommunity.props.form
         form.resetFields()
-        
+
         this.setState({visibleModalUpdateSubCommunity: false})
     }
     handleUpdateSubCommunity = () => {
         const form = this.formRefUpdateSubCommunity.props.form
-        
+
         form.validateFields((err, values) => {
             if (err) {
                 return
@@ -251,9 +251,9 @@ export default class extends AdminPage {
             }).then(() => {
                 form.resetFields()
                 this.setState({visibleModalUpdateSubCommunity: false})
-                
+
                 message.success('Update community successfully')
-                
+
                 this.loadSubCommunities()
             })
         })
@@ -261,7 +261,7 @@ export default class extends AdminPage {
     saveFormUpdateSubCommunityRef = (formRef) => {
         this.formRefUpdateSubCommunity = formRef
     }
-    
+
     handleShowAllSubCommunity(type) {
         const showAllSubCommunity = this.state.showAllSubCommunity
         showAllSubCommunity[type] = !showAllSubCommunity[type]
@@ -269,7 +269,7 @@ export default class extends AdminPage {
             showAllSubCommunity
         })
     }
-    
+
     proxyCreateSubCommunity(formValues) {
         this.props.createSubCommunity({
             parentCommunityId: this.props.match.params['community'],
@@ -293,10 +293,10 @@ export default class extends AdminPage {
             this.props.history.push('/admin/community')
         }
     }
-    
+
     getListSubCommunitiesByType(subCommunities, filterRegionName) {
         let renderCommunities;
-        
+
         if (filterRegionName) {
             renderCommunities = subCommunities.filter((community) => {
                 return community.name === filterRegionName
@@ -304,14 +304,14 @@ export default class extends AdminPage {
         } else {
             renderCommunities = subCommunities
         }
-    
+
         const listSubCommunitiesByType = {
             STATE: [],
             CITY: [],
             REGION: [],
             SCHOOL: [],
         }
-    
+
         renderCommunities.forEach((community) => {
             // Mock data
             community.leaders = []
@@ -322,10 +322,10 @@ export default class extends AdminPage {
             listSubCommunitiesByType[community.type] = listSubCommunitiesByType[community.type] || [];
             listSubCommunitiesByType[community.type].push(community);
         })
-        
+
         return listSubCommunitiesByType;
     }
-    
+
     handleChangeRegion(region) {
         if (region) {
             const listSubCommunitiesByType = this.getListSubCommunitiesByType(this.state.subCommunities, region);
@@ -359,7 +359,7 @@ export default class extends AdminPage {
                 {listCountriesEl}
             </Select>
         )
-    
+
         const listRegionsEl = this.state.breadcrumbRegions.map((region, index) => {
             return (
                 <Select.Option key={index} title={region.name} value={region.name}>{region.name}</Select.Option>
@@ -410,7 +410,7 @@ export default class extends AdminPage {
                                             <Row>
                                                 <Col span={6}
                                                      className="user-card user-card--without-padding user-card--organizer">
-                                                    <h1 className="without-padding overflow-ellipsis" title={this.state.community.name + ' Organizers'}>{this.state.community.name} Organizers</h1>
+                                                    <h3 className="without-padding overflow-ellipsis" title={this.state.community.name + ' Organizers'}>{this.state.community.name}</h3>
                                                     {this.state.community.leaders.map((leader, index) => {
                                                         return (
                                                             <Card
@@ -426,31 +426,31 @@ export default class extends AdminPage {
                                                             </Card>
                                                         )
                                                     })}
-                                                    <Button type="primary" onClick={this.showModalAddOrganizer}>Add organizer</Button>
+                                                    <Button className="ant-btn-ebp" type="primary" onClick={this.showModalAddOrganizer}>Add organizer</Button>
                                                 </Col>
                                                 <Col span={18} className="wrap-child-box-users">
                                                     {['STATE', 'CITY', 'REGION', 'SCHOOL'].map((communityType, index) => {
                                                         return (
                                                             <div key={index} className="child-box-users">
-                                                                <Button className="pull-right" type="primary" onClick={this.showModalAddSubCommunity.bind(null, COMMUNITY_TYPE[communityType])}>
+                                                                <Button className="ant-btn-ebp pull-right" type="primary" onClick={this.showModalAddSubCommunity.bind(null, COMMUNITY_TYPE[communityType])}>
                                                                     {communityType === 'STATE' && 'Add state'}
                                                                     {communityType === 'CITY' && 'Add city'}
                                                                     {communityType === 'REGION' && 'Add region'}
                                                                     {communityType === 'SCHOOL' && 'Add school'}
                                                                 </Button>
-                                                                <h2 className="without-padding">
+                                                                <h3 className="without-padding">
                                                                     {communityType === 'STATE' && 'States / Provinces '}
                                                                     {communityType === 'CITY' && 'Cities '}
                                                                     {communityType === 'REGION' && 'Regions '}
                                                                     {communityType === 'SCHOOL' && 'Schools '}
                                                                     ({this.state.listSubCommunitiesByType[COMMUNITY_TYPE[communityType]].length})
-                                                                </h2>
+                                                                </h3>
                                                                 <Row>
                                                                     {this.state.listSubCommunitiesByType[COMMUNITY_TYPE[communityType]].map((community, i) => {
                                                                         if (!this.state.showAllSubCommunity[COMMUNITY_TYPE[communityType]] && i >= this.state.showMoreMinimum) {
                                                                             return;
                                                                         }
-                
+
                                                                         return (
                                                                             <Col span={6}
                                                                                  key={i}
@@ -474,7 +474,7 @@ export default class extends AdminPage {
                                                                         );
                                                                     })}
                                                                 </Row>
-        
+
                                                                 { this.state.listSubCommunitiesByType[COMMUNITY_TYPE.STATE].length > this.state.showMoreMinimum && (
                                                                     <div onClick={this.handleShowAllSubCommunity.bind(this, COMMUNITY_TYPE.STATE)}>
                                                                         <Divider>
@@ -493,7 +493,7 @@ export default class extends AdminPage {
                                                 </Col>
                                             </Row>
                                         ) : (<div>Loading</div>)}
-        
+
                                         <ModalChangeOrganizerCountry
                                             wrappedComponentRef={this.saveFormChangeOrganizerRef}
                                             visible={this.state.visibleModalChangeOrganizer}

@@ -123,6 +123,7 @@ export default class extends AdminPage {
                                 renderItem={item => (
                                     <List.Item className="organizerListItem">
                                         <table>
+                                            <tbody>
                                             <tr>
                                                 <td>
                                                     <Avatar size="large" icon="user" src={item.avatar}/>
@@ -131,6 +132,7 @@ export default class extends AdminPage {
                                                     {item.firstName} {item.lastName}
                                                 </td>
                                             </tr>
+                                            </tbody>
                                         </table>
                                     </List.Item>
                                 )}
