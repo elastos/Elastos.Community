@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import AdminPage from '../../BaseAdmin'
-import { Button, Card, Select, Col, message, Row, Breadcrumb, Icon } from 'antd'
+import { Button, Card, Select, Col, message, Row, Breadcrumb, Icon, List, Avatar } from 'antd'
 import _ from 'lodash'
 import ModalAddCountry from '../../shared/ModalAddCountry/Component'
 import config from '@/config'
@@ -103,19 +103,37 @@ export default class extends AdminPage {
 
     ord_renderContent () {
         const listCommunitiesEl = this.state.communities.map((community, index) => {
-            // Mock data
-            community.leader = config.data.mockDataAllLeaders[0];
-            // Mock data -- end
+
+            const leaderData = [{
+                firstName: 'John',
+                lastName: 'Smith',
+                avatar: 'https://www.w3schools.com/howto/img_avatar.png'
+            }, {
+                firstName: 'Mary',
+                lastName: 'Jane',
+                avatar: 'https://www.w3schools.com/howto/img_avatar.png'
+            }]
 
             return (
                 <Col span={6} key={index} className="user-card">
-                    <Link to={'/admin/community/' + community._id  + '/country/' + community.leader.countryCode}>
-                        <Card
-                            cover={<img alt="example" src={community.leader.avatar}/>}
-                        >
-                            <Card.Meta
-                                title={community.leader.name}
-                                description={community.leader.country}
+                    <Link to={'/admin/community/' + community._id  + '/country/' + community.geolocation}>
+                        <Card title={community.name}>
+                            <List
+                                dataSource={leaderData}
+                                renderItem={item => (
+                                    <List.Item className="organizerListItem">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <Avatar size="large" icon="user" src={item.avatar}/>
+                                                </td>
+                                                <td>
+                                                    {item.firstName} {item.lastName}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </List.Item>
+                                )}
                             />
                         </Card>
                     </Link>
@@ -145,7 +163,7 @@ export default class extends AdminPage {
         )
 
         return (
-            <div className="p_admin_index ebp-wrap">
+            <div className="p_admin_index ebp-wrap c_adminCommunity">
                 <div className="d_box">
                     <div className="p_admin_breadcrumb">
                         <Breadcrumb>
@@ -167,9 +185,9 @@ export default class extends AdminPage {
                                  className="admin-left-column wrap-box-user">
                                 <div>
                                     <Button className="pull-right" onClick={this.showModalAddCountry} type="primary">Add country</Button>
-                                    <h2 className="without-padding">Country Leaders</h2>
+                                    <h2 className="without-padding">Country Organizers</h2>
                                     <Row>
-                                        {listCommunitiesEl}
+                                        {this.state.communities.length && listCommunitiesEl}
                                     </Row>
 
                                     <ModalAddCountry

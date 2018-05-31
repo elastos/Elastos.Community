@@ -130,7 +130,7 @@ export default class extends StandardPage {
                                 <Col span={18}
                                      className="community-left-column">
                                     <div>
-                                        <h3 className="without-padding">Country Leaders</h3>
+                                        <h3 className="without-padding">Country Organizers</h3>
                                         <Row>
                                             {listCommunitiesEl}
                                         </Row>

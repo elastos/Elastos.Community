@@ -2,7 +2,6 @@ import Base from '../Base';
 import UserService from '../../service/UserService';
 import {crypto} from '../../utility';
 import * as moment from 'moment';
-import * as sha512 from 'crypto-js/sha512'
 
 export default class extends Base {
 

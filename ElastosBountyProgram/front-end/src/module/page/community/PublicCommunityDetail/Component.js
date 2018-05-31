@@ -22,7 +22,7 @@ export default class extends StandardPage {
         this.loadCommunityDetail();
         this.loadSubCommunities();
     }
-    
+
     loadCommunityDetail() {
         this.props.getCommunityDetail(this.props.match.params['community']).then((community) => {
             // Mock data leader
@@ -32,7 +32,7 @@ export default class extends StandardPage {
             })
         });
     }
-    
+
     loadSubCommunities() {
         this.props.getSubCommunities(this.props.match.params['community']).then((subCommunities) => {
             // Check which communities we will use to render
@@ -46,7 +46,7 @@ export default class extends StandardPage {
             })
         })
     }
-    
+
     getBreadcrumbRegions(subCommunities) {
         // Filter communities to get breadcrumb regions
         let breadcrumbRegions = [];
@@ -55,9 +55,9 @@ export default class extends StandardPage {
                 name: community.name,
             })
         })
-    
+
         breadcrumbRegions = _.sortBy(_.uniqBy(breadcrumbRegions, 'name'), 'name');
-        
+
         return breadcrumbRegions;
     }
 
@@ -68,10 +68,10 @@ export default class extends StandardPage {
             this.props.history.push('/community')
         }
     }
-    
+
     getRegionCommunities(subCommunities, filterRegionName) {
         let regionCommunities;
-        
+
         if (filterRegionName) {
             regionCommunities = subCommunities.filter((community) => {
                 return community.name === filterRegionName
@@ -79,16 +79,16 @@ export default class extends StandardPage {
         } else {
             regionCommunities = subCommunities
         }
-    
+
         regionCommunities.forEach((community) => {
             // Mock data
             community.leader = config.data.mockDataAllLeaders[0];
             // Mock data -- end
         })
-        
+
         return regionCommunities;
     }
-    
+
     handleChangeRegion(region) {
         if (region) {
             const regionCommunities = this.getRegionCommunities(this.state.subCommunities, region);
@@ -122,7 +122,7 @@ export default class extends StandardPage {
                 {listCountriesEl}
             </Select>
         )
-    
+
         const listRegionsEl = this.state.breadcrumbRegions.map((region, index) => {
             return (
                 <Select.Option key={index} title={region.name} value={region.name}>{region.name}</Select.Option>
@@ -181,10 +181,10 @@ export default class extends StandardPage {
                                     <div>
                                         <Row>
                                             <Col span={8}>
-                                                <h2 className="without-padding overflow-ellipsis" title="Country Leader">Country Leader</h2>
+                                                <h2 className="without-padding overflow-ellipsis" title="Country Organizers">Country Organizers</h2>
                                             </Col>
                                             <Col span={16}>
-                                                <h2 className="without-padding overflow-ellipsis" title="Local Leaders">Local Leaders</h2>
+                                                <h2 className="without-padding overflow-ellipsis" title="Local Organizers">Local Organizers</h2>
                                             </Col>
                                         </Row>
                                         {(this.state.community && this.state.subCommunities) && (
@@ -235,7 +235,7 @@ export default class extends StandardPage {
                                     </div>
                                 </Col>
                             </Row>
-    
+
                             <div className="ebp-page-title">
                                 <h2>Events</h2>
                             </div>

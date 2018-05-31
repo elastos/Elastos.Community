@@ -13,6 +13,12 @@ const FormItem = Form.Item
 
 class C extends BaseComponent {
 
+    async componentDidMount() {
+        const communities = await this.props.fetchCommunities()
+
+        this.state.communities = communities
+    }
+
     handleSubmit(e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
@@ -24,7 +30,6 @@ class C extends BaseComponent {
         })
     }
 
-
     constructor(props) {
         super(props)
 
@@ -35,7 +40,7 @@ class C extends BaseComponent {
     compareToFirstPassword(rule, value, callback) {
         const form = this.props.form;
         if (value && value !== form.getFieldValue('password')) {
-          callback('Two passwords that you enter is inconsistent!');
+          callback('Two passwords that you entered do not match');
         } else {
           callback();
         }
@@ -47,7 +52,7 @@ class C extends BaseComponent {
             form.validateFields(['confirmPassword'], { force: true });
         }
         if (value && value.length < MIN_LENGTH_PASSWORD) {
-            callback(`The Password must be at least ${MIN_LENGTH_PASSWORD} characters.`);
+            callback(`The password must be at least ${MIN_LENGTH_PASSWORD} characters.`);
         }
         callback();
     }

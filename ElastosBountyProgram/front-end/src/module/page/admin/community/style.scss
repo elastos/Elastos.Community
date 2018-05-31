@@ -1,44 +1,62 @@
-.wrap-box-user {
-  h1 {
-    text-align: left;
-  }
-}
 
-.user-card {
-  padding: 10px;
-  text-align: center;
+@import '../../../../style/variable';
 
-  .ant-card-cover {
-    padding: 10px;
+.c_adminCommunity {
 
-    img {
-      border-radius: 50%;
+  .wrap-box-user {
+    h1 {
+      text-align: left;
     }
   }
 
-  button {
-    width: 100%;
+  .organizerListItem {
+    table {
+      td {
+        padding: $gap_0;
+      }
+    }
   }
-}
 
-.user-card--organizer {
-  .ant-card {
-    margin-bottom: 20px;
+  .ant-card-body {
+    padding: $gap_1;
   }
-}
 
-.user-card.user-card--without-padding {
-  padding: unset;
-}
+  .user-card {
+    padding: 10px;
+    text-align: center;
 
-.list-leaders-of-a-country {
-  .wrap-child-box-users {
-    padding-left: 20px;
+    .ant-card-cover {
+      padding: 10px;
 
-    .child-box-users {
-      border: 1px solid #e5e5e5;
-      padding: 20px;
+      img {
+        border-radius: 50%;
+      }
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .user-card--organizer {
+    .ant-card {
       margin-bottom: 20px;
+    }
+  }
+
+  .user-card.user-card--without-padding {
+    padding: unset;
+  }
+
+  .list-leaders-of-a-country {
+    .wrap-child-box-users {
+      padding-left: 20px;
+
+      .child-box-users {
+        border: 1px solid #e5e5e5;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
     }
   }
 }
