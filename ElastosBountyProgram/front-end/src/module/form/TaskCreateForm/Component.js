@@ -34,8 +34,14 @@ class C extends BaseComponent {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('CreateTask - received values of form: ', values)
-                this.props.createTask(values, this.state);
+                console.log('Task submit - received values of form: ', values)
+
+                if (this.state.editing) {
+                    this.props.updateTask(values, this.state);
+                    this.props.switchEditMode()
+                } else {
+                    this.props.createTask(values, this.state);
+                }
 
             }
         })
@@ -44,21 +50,21 @@ class C extends BaseComponent {
     constructor (props) {
         super(props)
 
-        this.step1Container = React.createRef()
-        this.step2Container = React.createRef()
-
         this.state = {
             upload_url : null,
-            upload_loading : false
+            upload_loading : false,
+            editing: !!props.existingTask
         };
     }
 
     getInputProps () {
+
         const {getFieldDecorator} = this.props.form
+        const existingTask = this.props.existingTask
 
         const taskName_fn = getFieldDecorator('taskName', {
             rules: [{required: true, message: 'Please input a task name'}],
-            initialValue: ''
+            initialValue: this.state.editing ? existingTask.name : ''
         })
         const taskName_el = (
             <Input size="large"/>
@@ -66,7 +72,7 @@ class C extends BaseComponent {
 
         const taskCategory_fn = getFieldDecorator('taskCategory', {
             rules: [{required: true, message: 'Please select a category'}],
-            initialValue: TASK_CATEGORY.SOCIAL
+            initialValue: this.state.editing ? existingTask.category : TASK_CATEGORY.SOCIAL
         })
         const taskCategory_el = (
             <Select>
@@ -79,7 +85,7 @@ class C extends BaseComponent {
         // sub-tasks are not here because those can only be created from an existing Task Detail Page
         const taskType_fn = getFieldDecorator('taskType', {
             rules: [{required: true, message: 'Please select a task type'}],
-            initialValue: TASK_TYPE.EVENT
+            initialValue: this.state.editing ? existingTask.type : TASK_TYPE.EVENT
         })
         const taskType_el = (
             <Select>
@@ -98,28 +104,31 @@ class C extends BaseComponent {
 
         const taskDesc_fn = getFieldDecorator('taskDesc', {
             rules: [{required: true, message: 'You must have a description'}],
-            initialValue: ''
+            initialValue: this.state.editing ? existingTask.description : ''
         })
         const taskDesc_el = (
             <TextArea rows={4} name="taskDesc"></TextArea>
         )
 
         const taskCandLimit_fn = getFieldDecorator('taskCandLimit', {
-            rules: [{type: 'integer', message: 'You must set a limit'}]
+            rules: [{type: 'integer', message: 'You must set a limit'}],
+            initialValue: this.state.editing ? existingTask.candidateLimit : null
         })
         const taskCandLimit_el = (
             <InputNumber size="large"/>
         )
 
         const taskCandSltLimit_fn = getFieldDecorator('taskCandSltLimit', {
-            rules: [{type: 'integer', message: 'You must set a limit'}]
+            rules: [{type: 'integer', message: 'You must set a limit'}],
+            initialValue: this.state.editing ? existingTask.candidateSltLimit : null
         })
         const taskCandSltLimit_el = (
             <InputNumber size="large"/>
         )
 
         const taskRewardUpfront_fn = getFieldDecorator('taskRewardUpfront', {
-            rules: [{type: 'number', message: 'Please explictly enter 0 if intended'}]
+            rules: [{type: 'number', message: 'Please explictly enter 0 if intended'}],
+            initialValue: this.state.editing ? existingTask.rewardUpfront.ela / 1000 : null
         })
         const taskRewardUpfront_el = (
             <InputNumber size="large"/>
@@ -127,6 +136,7 @@ class C extends BaseComponent {
 
         const taskReward_fn = getFieldDecorator('taskReward', {
             rules: [{type: 'number', message: 'Please explictly enter 0 if intended'}],
+            initialValue: this.state.editing ? existingTask.reward.ela / 1000 : null
         })
         const taskReward_el = (
             <InputNumber size="large"/>
@@ -199,9 +209,13 @@ class C extends BaseComponent {
             },
         }
 
+        // const existingTask = this.props.existingTask
+
         // TODO: terms of service checkbox
 
         // TODO: react-motion animate slide left
+
+        // TODO: description CKE Editor
 
         return (
             <div className="c_taskCreateFormContainer">
@@ -229,14 +243,14 @@ class C extends BaseComponent {
                         <FormItem label="Candidates" {...formItemLayout}>
                             <Row>
                                 <Col span={3}>
-                                    {/*<InputNumber size="large" name="taskCandLimit"/>*/}
+                                    {/*<InputNumber size="large" defaultValue={this.state.editing ? existingTask.candidateLimit : null} name="taskCandLimit"/>*/}
                                     {p.taskCandLimit}
                                 </Col>
-                                <Col class="midLabel" span={6}>
+                                <Col class="midLabel" span={8}>
                                     Max Accepted:
                                 </Col>
                                 <Col span={3}>
-                                    {/*<InputNumber size="large" name="taskCandSltLimit"/>*/}
+                                    {/*<InputNumber size="large" defaultValue={this.state.editing ? existingTask.candidateSltLimit : null} name="taskCandSltLimit"/>*/}
                                     {p.taskCandSltLimit}
                                 </Col>
                             </Row>
@@ -251,14 +265,14 @@ class C extends BaseComponent {
 
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
                             <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
-                                {this.props.is_admin ? 'Create Task' : 'Submit Proposal'}
+                                {this.state.editing ? 'Save Changes' : (this.props.is_admin ? 'Create Task' : 'Submit Proposal')}
                             </Button>
                         </FormItem>
                     </div>
                 </Form>
             </div>
         )
-
     }
+
 }
 export default Form.create()(C)
