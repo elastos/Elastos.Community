@@ -1,5 +1,8 @@
 import Base from '../Base';
 
+import addMember from './add-member';
+import removeMember from './remove-member';
+import listMember from './list-member';
 import get from './get';
 import create from './create';
 import update from './update';
@@ -27,6 +30,21 @@ export default Base.setRouter([
         path : '/create',
         router : create,
         method : 'post'
+    },
+    {
+        path : '/members/:communityId',
+        router : listMember,
+        method : 'get'
+    },
+    {
+        path : '/:communityId/:userId',
+        router : addMember,
+        method : 'get'
+    },
+    {
+        path : '/:communityId/:userId',
+        router : removeMember,
+        method : 'delete'
     },
     {
         path : '/update',
