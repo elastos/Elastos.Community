@@ -34,7 +34,7 @@ export default class extends StandardPage {
             width: '30%',
             className: 'fontWeight500',
             render: (name, record) => {
-                return <a href={`/admin/task-detail/${record._id}`} className="tableLink">{name}</a>
+                return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
             }
         }, {
             title: 'Community',
@@ -145,7 +145,12 @@ export default class extends StandardPage {
 
     }
 
-    async createTaskLink () {
+
+    linkTaskDetail(taskId) {
+        this.props.history.push(`/admin/task-detail/${taskId}`)
+    }
+
+    createTaskLink () {
         this.props.history.push('/task-create')
     }
 }
