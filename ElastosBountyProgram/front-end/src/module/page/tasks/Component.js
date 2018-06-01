@@ -53,7 +53,7 @@ export default class extends StandardPage {
                             {
                                 _.map(d_list, (p, j)=>{
                                     return (
-                                        <Col key={j} className="gutter-row" span={6}>
+                                        <Col key={j} className="gutter-row" span={4}>
                                             <TaskCard {...p} />
                                         </Col>
                                     );

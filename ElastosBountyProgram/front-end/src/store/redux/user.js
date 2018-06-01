@@ -10,6 +10,8 @@ class UserRedux extends BaseRedux {
             is_login: false,
             is_admin: false,
 
+            username: '',
+
             role: '',
 
             login_form: {

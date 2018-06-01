@@ -27,6 +27,7 @@ export default class extends BaseService {
             await this.dispatch(userRedux.actions.is_admin_update(true))
         }
 
+        await this.dispatch(userRedux.actions.username_update(res.user.username))
         await this.dispatch(userRedux.actions.profile_update(res.user.profile))
         await this.dispatch(userRedux.actions.role_update(res.user.role))
 
@@ -36,6 +37,9 @@ export default class extends BaseService {
             success: true,
             is_admin: res.user.role === USER_ROLE.ADMIN
         }
+    }
+
+    async getCurrentUser() {
 
     }
 

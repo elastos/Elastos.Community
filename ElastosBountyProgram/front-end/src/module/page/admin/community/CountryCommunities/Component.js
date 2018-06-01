@@ -104,6 +104,7 @@ export default class extends AdminPage {
     ord_renderContent () {
         const listCommunitiesEl = this.state.communities.map((community, index) => {
 
+            /*
             const leaderData = [{
                 firstName: 'John',
                 lastName: 'Smith',
@@ -113,6 +114,9 @@ export default class extends AdminPage {
                 lastName: 'Jane',
                 avatar: 'https://www.w3schools.com/howto/img_avatar.png'
             }]
+            */
+
+            const leaderData = []
 
             return (
                 <Col span={6} key={index} className="user-card">
