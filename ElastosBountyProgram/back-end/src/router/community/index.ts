@@ -52,7 +52,7 @@ export default Base.setRouter([
         method : 'put'
     },
     {
-        path : '/:countryName/country',
+        path : '/country/:countryName',
         router : get_with_country,
         method : 'get'
     },
