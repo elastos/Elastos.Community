@@ -78,4 +78,13 @@ export default class extends BaseService {
 
         return true
     }
+    
+    async getByIds(ids) {
+        const result = await api_request({
+            path : `/user/${ids}/users`,
+            method : 'get',
+        });
+
+        return result
+    }
 }

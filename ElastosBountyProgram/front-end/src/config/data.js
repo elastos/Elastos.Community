@@ -29,28 +29,28 @@ export default {
             avatar: 'https://www.w3schools.com/howto/img_avatar.png',
         },
         {
-            id: 1,
+            id: 5,
             name: 'Song King',
             country: 'China',
             countryCode: 'cn',
             avatar: 'https://www.w3schools.com/howto/img_avatar.png',
         },
         {
-            id: 1,
+            id: 6,
             name: 'Caocao',
             country: 'China',
             countryCode: 'cn',
             avatar: 'https://www.w3schools.com/howto/img_avatar.png',
         },
         {
-            id: 1,
+            id: 7,
             name: 'Song',
             country: 'China',
             countryCode: 'cn',
             avatar: 'https://www.w3schools.com/howto/img_avatar.png',
         },
         {
-            id: 1,
+            id: 8,
             name: 'Henry',
             country: 'Vietnam',
             countryCode: 'vn',
@@ -93,7 +93,8 @@ export default {
             }
         ]
     },
-    mockDataLeaderId: '5b05972dda959130aeaa0124',
+    mockAvatarUrl: 'https://www.w3schools.com/howto/img_avatar.png',
+    mockDataLeaderId: '5b101cb5bb285e751d3c460c',
     mappingCountryCodeToName: {
         ad: 'Andorra',
         ae: 'United Arab Emirates',

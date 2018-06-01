@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import StandardPage from '../../StandardPage'
-import { Button, Card, Col, Select, Row, Icon, message, Divider, Breadcrumb, Tabs } from 'antd'
+import { Button, Card, Col, Select, Row, Icon, message, Divider, Breadcrumb, Tabs, List, Avatar } from 'antd'
 import config from '@/config'
 import { COMMUNITY_TYPE } from '@/constant'
 import Footer from '@/module/layout/Footer/Container'
@@ -32,42 +32,110 @@ export default class extends StandardPage {
     }
 
     loadCommunityMembers() {
-        this.props.getCommunityMembers(this.props.match.params['community']).then((members) => {
-            console.log('members', members);
+        this.props.getCommunityMembers(this.props.match.params['community']).then((communityMembers) => {
+            communityMembers = this.mockAvatarToUsers(communityMembers)
+            communityMembers.push(communityMembers[0])
+            communityMembers.push(communityMembers[0])
+            communityMembers.push(communityMembers[0])
+            communityMembers.push(communityMembers[0])
+            communityMembers.push(communityMembers[0])
+            communityMembers.push(communityMembers[0])
+            communityMembers.push(communityMembers[0])
+            communityMembers.push(communityMembers[0])
+            communityMembers.push(communityMembers[0])
+            communityMembers.push(communityMembers[0])
+
+            this.setState({
+                communityMembers
+            })
         });
     }
 
     loadCommunityDetail() {
         this.props.getCommunityDetail(this.props.match.params['community']).then((community) => {
-            community.leaders = [];
-            community.leaderIds.forEach(() => {
-                community.leaders.push(config.data.mockDataAllLeaders[0]) // Mock data
-                community.leaders.push(config.data.mockDataAllLeaders[0]) // Mock data
-                community.leaders.push(config.data.mockDataAllLeaders[0]) // Mock data
-                community.leaders.push(config.data.mockDataAllLeaders[0]) // Mock data
-                community.leaders.push(config.data.mockDataAllLeaders[0]) // Mock data
-                community.leaders.push(config.data.mockDataAllLeaders[0]) // Mock data
-            })
-            this.setState({
-                community
+            this.convertCommunityLeaderIdsToLeaderObjects(community).then((community) => {
+                this.setState({
+                    community
+                })
             })
         });
     }
 
     loadSubCommunities() {
         this.props.getSubCommunities(this.props.match.params['community']).then((subCommunities) => {
-            // Check which communities we will use to render
-            const breadcrumbRegions = this.getBreadcrumbRegions(subCommunities);
-            const listSubCommunitiesByType = this.getListSubCommunitiesByType(subCommunities, this.props.match.params['region']);
-            // Update to state
-            this.setState({
-                subCommunities,
-                listSubCommunitiesByType,
-                breadcrumbRegions,
+            this.convertCommunitiesLeaderIdsToLeaderObjects(subCommunities).then((subCommunities) => {
+                // Check which communities we will use to render
+                const breadcrumbRegions = this.getBreadcrumbRegions(subCommunities);
+                const listSubCommunitiesByType = this.getListSubCommunitiesByType(subCommunities, this.props.match.params['region']);
+                // Update to state
+                this.setState({
+                    subCommunities,
+                    listSubCommunitiesByType,
+                    breadcrumbRegions,
+                })
             })
         })
     }
-
+    
+    mockAvatarToUsers(users) {
+        users.forEach((user) => {
+            user.profile.avatar = config.data.mockAvatarUrl
+        })
+        
+        return users
+    }
+    
+    // API only return list leader ids [leaderIds], so we need convert it to array object leader [leaders]
+    convertCommunityLeaderIdsToLeaderObjects(community) {
+        return new Promise((resolve, reject) => {
+            const userIds = _.uniq(community.leaderIds)
+            if (!userIds.length) {
+                return resolve([])
+            }
+            this.props.getUserByIds(userIds).then((users) => {
+                users = this.mockAvatarToUsers(users) // Mock avatar url
+                const mappingIdToUserList = _.keyBy(users, '_id')
+                community.leaders = community.leaders || []
+                community.leaderIds.forEach((leaderId) => {
+                    if (mappingIdToUserList[leaderId]) {
+                        community.leaders.push(mappingIdToUserList[leaderId])
+                    }
+                })
+                
+                resolve(community)
+            })
+        })
+    }
+    
+    convertCommunitiesLeaderIdsToLeaderObjects(communities) {
+        return new Promise((resolve, reject) => {
+            let userIds = []
+            communities.forEach((community) => {
+                userIds.push(...community.leaderIds)
+            })
+            userIds = _.uniq(userIds)
+            
+            if (!userIds.length) {
+                return resolve([])
+            }
+            
+            this.props.getUserByIds(userIds).then((users) => {
+                users = this.mockAvatarToUsers(users) // Mock avatar url
+                const mappingIdToUserList = _.keyBy(users, '_id');
+                communities.forEach((community) => {
+                    community.leaders = community.leaders || [];
+                    community.leaderIds.forEach((leaderId) => {
+                        if (mappingIdToUserList[leaderId]) {
+                            community.leaders.push(mappingIdToUserList[leaderId])
+                        }
+                    })
+                })
+                
+                resolve(communities)
+            })
+        })
+    }
+    
     getBreadcrumbRegions(subCommunities) {
         // Filter communities to get breadcrumb regions
         let breadcrumbRegions = [];
@@ -109,12 +177,6 @@ export default class extends StandardPage {
         }
 
         renderCommunities.forEach((community) => {
-            // Mock data
-            community.leaders = []
-            community.leaderIds.forEach((leader) => {
-                community.leaders.push(config.data.mockDataAllLeaders[0])
-            })
-            // Mock data -- end
             listSubCommunitiesByType[community.type] = listSubCommunitiesByType[community.type] || [];
             listSubCommunitiesByType[community.type].push(community);
         })
@@ -132,6 +194,10 @@ export default class extends StandardPage {
         } else {
             this.props.history.push(`/community/${this.props.match.params['community']}/country/${this.props.match.params['country']}`);
         }
+    }
+    
+    joinToCommunity() {
+    
     }
 
     ord_renderContent () {
@@ -218,10 +284,10 @@ export default class extends StandardPage {
                                                             return (
                                                                 <Col span={4} key={index} className="user-card">
                                                                     <Card
-                                                                        cover={<img alt="example" src={leader.avatar}/>}
+                                                                        cover={<img alt="example" src={leader.profile.avatar}/>}
                                                                     >
                                                                         <Card.Meta
-                                                                            title={leader.name}
+                                                                            title={leader.profile.firstName + ' ' + leader.profile.lastName}
                                                                         />
                                                                     </Card>
                                                                 </Col>
@@ -245,10 +311,10 @@ export default class extends StandardPage {
                                                                                 return (
                                                                                     <Card
                                                                                         key={index}
-                                                                                        cover={<img src={leader.avatar}/>}
+                                                                                        cover={<img src={leader.profile.avatar}/>}
                                                                                     >
                                                                                         <Card.Meta
-                                                                                            title={leader.name}
+                                                                                            title={leader.profile.firstName + ' ' + leader.profile.lastName}
                                                                                             description={community.name}
                                                                                         />
                                                                                     </Card>
@@ -261,7 +327,7 @@ export default class extends StandardPage {
                                                         </TabPane>
                                                         <TabPane tab="City" key="2">
                                                             <Row>
-                                                                {this.state.listSubCommunitiesByType['REGION'].map((community, index) => {
+                                                                {this.state.listSubCommunitiesByType['CITY'].map((community, index) => {
                                                                     return (
                                                                         <Col span={4}
                                                                              key={index}
@@ -270,10 +336,10 @@ export default class extends StandardPage {
                                                                                 return (
                                                                                     <Card
                                                                                         key={index}
-                                                                                        cover={<img src={leader.avatar}/>}
+                                                                                        cover={<img src={leader.profile.avatar}/>}
                                                                                     >
                                                                                         <Card.Meta
-                                                                                            title={leader.name}
+                                                                                            title={leader.profile.firstName + ' ' + leader.profile.lastName}
                                                                                             description={community.name}
                                                                                         />
                                                                                     </Card>
@@ -286,7 +352,7 @@ export default class extends StandardPage {
                                                         </TabPane>
                                                         <TabPane tab="Region" key="3">
                                                             <Row>
-                                                                {this.state.listSubCommunitiesByType['CITY'].map((community, index) => {
+                                                                {this.state.listSubCommunitiesByType['REGION'].map((community, index) => {
                                                                     return (
                                                                         <Col span={4}
                                                                              key={index}
@@ -295,10 +361,10 @@ export default class extends StandardPage {
                                                                                 return (
                                                                                     <Card
                                                                                         key={index}
-                                                                                        cover={<img src={leader.avatar}/>}
+                                                                                        cover={<img src={leader.profile.avatar}/>}
                                                                                     >
                                                                                         <Card.Meta
-                                                                                            title={leader.name}
+                                                                                            title={leader.profile.firstName + ' ' + leader.profile.lastName}
                                                                                             description={community.name}
                                                                                         />
                                                                                     </Card>
@@ -320,10 +386,10 @@ export default class extends StandardPage {
                                                                                 return (
                                                                                     <Card
                                                                                         key={index}
-                                                                                        cover={<img src={leader.avatar}/>}
+                                                                                        cover={<img src={leader.profile.avatar}/>}
                                                                                     >
                                                                                         <Card.Meta
-                                                                                            title={leader.name}
+                                                                                            title={leader.profile.firstName + ' ' + leader.profile.lastName}
                                                                                             description={community.name}
                                                                                         />
                                                                                     </Card>
@@ -344,8 +410,28 @@ export default class extends StandardPage {
                                      className="community-right-column">
                                     <div>
                                         <h2 className="without-padding">Members List</h2>
-                                        <div className="list-members"></div>
-                                        <Button>See more</Button>
+                                        <div className="list-members">
+                                            <List
+                                                dataSource={this.state.communityMembers}
+                                                renderItem={item => (
+                                                    <List.Item>
+                                                        <table>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <Avatar size="large" icon="user" src={item.profile.avatar}/>
+                                                                </td>
+                                                                <td className="member-name">
+                                                                    {item.profile.firstName} {item.profile.lastName}
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </List.Item>
+                                                )}
+                                            />
+                                        </div>
+                                        <Button onClick={this.joinToCommunity}>Join</Button>
                                     </div>
                                 </Col>
                             </Row>

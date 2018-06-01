@@ -87,28 +87,87 @@ export default class extends AdminPage {
 
     loadCommunityDetail() {
         this.props.getCommunityDetail(this.props.match.params['community']).then((community) => {
-            // Mock data leader
-            community.leaders = []
-            community.leaderIds.forEach(() => {
-                community.leaders.push(config.data.mockDataAllLeaders[0])
-            })
-            this.setState({
-                community
+            this.convertCommunityLeaderIdsToLeaderObjects(community).then((community) => {
+                this.setState({
+                    community
+                })
             })
         });
     }
-
+    
+    mockAvatarToUsers(users) {
+        users.forEach((user) => {
+            user.profile.avatar = config.data.mockAvatarUrl
+        })
+        
+        return users
+    }
+    
+    // API only return list leader ids [leaderIds], so we need convert it to array object leader [leaders]
+    convertCommunityLeaderIdsToLeaderObjects(community) {
+        return new Promise((resolve, reject) => {
+            const userIds = _.uniq(community.leaderIds)
+            if (!userIds.length) {
+                return resolve([])
+            }
+            this.props.getUserByIds(userIds).then((users) => {
+                users = this.mockAvatarToUsers(users) // Mock avatar url
+                const mappingIdToUserList = _.keyBy(users, '_id')
+                community.leaders = community.leaders || []
+                community.leaderIds.forEach((leaderId) => {
+                    if (mappingIdToUserList[leaderId]) {
+                        community.leaders.push(mappingIdToUserList[leaderId])
+                    }
+                })
+                
+                resolve(community)
+            })
+        })
+    }
+    
+    convertCommunitiesLeaderIdsToLeaderObjects(communities) {
+        return new Promise((resolve, reject) => {
+            let userIds = []
+            communities.forEach((community) => {
+                userIds.push(...community.leaderIds)
+            })
+            userIds = _.uniq(userIds)
+    
+            if (!userIds.length) {
+                return resolve([])
+            }
+            
+            this.props.getUserByIds(userIds).then((users) => {
+                users = this.mockAvatarToUsers(users) // Mock avatar url
+                const mappingIdToUserList = _.keyBy(users, '_id');
+                communities.forEach((community) => {
+                    community.leaders = community.leaders || [];
+                    community.leaderIds.forEach((leaderId) => {
+                        if (mappingIdToUserList[leaderId]) {
+                            community.leaders.push(mappingIdToUserList[leaderId])
+                        }
+                    })
+                })
+                
+                resolve(communities)
+            })
+        })
+    }
+    
     loadSubCommunities() {
         this.props.getSubCommunities(this.props.match.params['community']).then((subCommunities) => {
-            // Check which communities we will use to render
-            const listSubCommunitiesByType = this.getListSubCommunitiesByType(subCommunities, this.props.match.params['region']);
-            const breadcrumbRegions = this.getBreadcrumbRegions(subCommunities);
-
-            // Update to state
-            this.setState({
-                subCommunities,
-                listSubCommunitiesByType,
-                breadcrumbRegions,
+            this.convertCommunitiesLeaderIdsToLeaderObjects(subCommunities).then((subCommunities) => {
+                console.log('subCommunities', subCommunities)
+                // Check which communities we will use to render
+                const listSubCommunitiesByType = this.getListSubCommunitiesByType(subCommunities, this.props.match.params['region']);
+                const breadcrumbRegions = this.getBreadcrumbRegions(subCommunities);
+    
+                // Update to state
+                this.setState({
+                    subCommunities,
+                    listSubCommunitiesByType,
+                    breadcrumbRegions,
+                })
             })
         })
     }
@@ -313,12 +372,6 @@ export default class extends AdminPage {
         }
 
         renderCommunities.forEach((community) => {
-            // Mock data
-            community.leaders = []
-            community.leaderIds.forEach((leader) => {
-                community.leaders.push(config.data.mockDataAllLeaders[0])
-            })
-            // Mock data -- end
             listSubCommunitiesByType[community.type] = listSubCommunitiesByType[community.type] || [];
             listSubCommunitiesByType[community.type].push(community);
         })
@@ -417,10 +470,10 @@ export default class extends AdminPage {
                                                                 key={index}
                                                                 hoverable
                                                                 onClick={this.openChangeOrganizerCountry.bind(this, leader)}
-                                                                cover={<img alt="example" src={leader.avatar}/>}
+                                                                cover={<img alt="example" src={leader.profile.avatar}/>}
                                                             >
                                                                 <Card.Meta
-                                                                    title={leader.name}
+                                                                    title={leader.profile.firstName + ' ' + leader.profile.lastName}
                                                                     description={leader.country}
                                                                 />
                                                             </Card>
@@ -461,10 +514,10 @@ export default class extends AdminPage {
                                                                                             key={index}
                                                                                             hoverable
                                                                                             onClick={this.showModalUpdateSubCommunity.bind(null, community)}
-                                                                                            cover={<img src={leader.avatar}/>}
+                                                                                            cover={<img src={leader.profile.avatar}/>}
                                                                                         >
                                                                                             <Card.Meta
-                                                                                                title={leader.name}
+                                                                                                title={leader.profile.firstName + ' ' + leader.profile.lastName}
                                                                                                 description={community.name}
                                                                                             />
                                                                                         </Card>

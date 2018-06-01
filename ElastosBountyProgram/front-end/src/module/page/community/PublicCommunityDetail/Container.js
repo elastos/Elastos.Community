@@ -1,14 +1,14 @@
 import {createContainer} from '@/util'
 import Component from './Component'
 import CommunityService from '@/service/CommunityService'
-import _ from 'lodash'
-import config from '@/config'
+import UserService from '@/service/UserService'
 
 export default createContainer(Component, (state, ownProps) => {
     return {};
 }, () => {
     
     const communityService = new CommunityService()
+    const userService = new UserService()
     
     return {
         async getCommunityDetail(communityId) {
@@ -26,5 +26,8 @@ export default createContainer(Component, (state, ownProps) => {
         async getCommunityMembers(communityId) {
             return communityService.getMembers(communityId)
         },
+        async getUserByIds (ids) {
+            return userService.getByIds(ids)
+        }
     }
 })

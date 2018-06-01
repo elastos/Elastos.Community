@@ -21,65 +21,123 @@ export default class extends StandardPage {
         const currentCountry = this.props.match.params['country'];
         if (currentCountry) {
             this.props.getSpecificCountryCommunities(currentCountry).then((communities) => {
-                this.setState({
-                    communities
+                this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
+                    this.setState({
+                        communities
+                    })
                 })
             })
         } else {
             this.props.getAllCountryCommunity().then((communities) => {
-                this.setState({
-                    communities
+                this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
+                    console.log('communities', communities)
+                    this.setState({
+                        communities
+                    })
                 })
             })
         }
     }
-
+    
+    mockAvatarToUsers(users) {
+        users.forEach((user) => {
+            user.profile.avatar = config.data.mockAvatarUrl
+        })
+        
+        return users
+    }
+    
+    // API only return list leader ids [leaderIds], so we need convert it to array object leader [leaders]
+    convertCommunitiesLeaderIdsToLeaderObjects(communities) {
+        return new Promise((resolve, reject) => {
+            let userIds = []
+            communities.forEach((community) => {
+                userIds.push(...community.leaderIds)
+            })
+            userIds = _.uniq(userIds)
+            
+            if (!userIds.length) {
+                return resolve([])
+            }
+            
+            this.props.getUserByIds(userIds).then((users) => {
+                users = this.mockAvatarToUsers(users) // Mock avatar url
+                const mappingIdToUserList = _.keyBy(users, '_id');
+                communities.forEach((community) => {
+                    community.leaders = community.leaders || [];
+                    community.leaderIds.forEach((leaderId) => {
+                        if (mappingIdToUserList[leaderId]) {
+                            community.leaders.push(mappingIdToUserList[leaderId])
+                        }
+                    })
+                })
+                
+                resolve(communities)
+            })
+        })
+    }
+    
     handleChangeCountry(geolocation) {
         if (geolocation) {
             this.props.getSpecificCountryCommunities(geolocation).then((communities) => {
-                this.setState({
-                    communities
+                this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
+                    this.setState({
+                        communities
+                    })
+    
+                    this.props.history.push(`/community/country/${geolocation}`)
                 })
-
-                this.props.history.push(`/community/country/${geolocation}`)
             })
         } else {
             this.props.getAllCountryCommunity().then((communities) => {
-                this.setState({
-                    communities
+                this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
+                    this.setState({
+                        communities
+                    })
+    
+                    this.props.history.push('/community')
                 })
-
-                this.props.history.push('/community')
             })
         }
     }
 
     ord_renderContent () {
         const listCommunitiesEl = this.state.communities.map((community, index) => {
-            // Mock data
-            community.leader = config.data.mockDataAllLeaders[index];
-            // Mock data -- end
-
             return (
-                <Col span={3} key={index} className="user-card">
-                    <Link to={'/community/' + community._id  + '/country/' + community.leader.countryCode}>
-                        <Card
-                            cover={<img alt="example" src={community.leader.avatar}/>}
-                        >
-                            <Card.Meta
-                                title={community.leader.name}
-                                description={community.leader.country}
-                            />
-                        </Card>
-                    </Link>
-                </Col>
+                <div key={index}>
+                    {community.leaders.map((leader) => {
+                        return (
+                            <Col span={3} key={index} className="user-card">
+                                <Link to={'/community/' + community._id  + '/country/' + community.geolocation}>
+                                    <Card
+                                        cover={<img alt="example" src={leader.profile.avatar}/>}
+                                    >
+                                        <Card.Meta
+                                            title={leader.profile.firstName + ' ' + leader.profile.lastName}
+                                            description={leader.country}
+                                        />
+                                    </Card>
+                                </Link>
+                            </Col>
+                        )
+                    })}
+                </div>
             )
         })
 
-        const listCountriesEl = this.state.communities.map((country, index) => {
+        // const listCountriesEl = this.state.communities.map((country, index) => {
+        //     return (
+        //         <Select.Option title={country.name} key={index}
+        //                        value={country.geolocation}>{country.name}</Select.Option>
+        //     )
+        // })
+
+        // Dropdown will have errors if two communities has same geolocation key
+        // At the moment, I display all countries
+        const listCountriesEl = Object.keys(config.data.mappingCountryCodeToName).map((key, index) => {
             return (
-                <Select.Option title={country.name} key={index}
-                               value={country.geolocation}>{country.name}</Select.Option>
+                <Select.Option title={config.data.mappingCountryCodeToName[key]} key={index}
+                               value={key}>{config.data.mappingCountryCodeToName[key]}</Select.Option>
             )
         })
 

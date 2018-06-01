@@ -68,17 +68,59 @@ export default class extends AdminPage {
         const currentCountry = this.props.match.params['country'];
         if (currentCountry) {
             this.props.getSpecificCountryCommunities(currentCountry).then((communities) => {
-                this.setState({
-                    communities
+                this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
+                    this.setState({
+                        communities
+                    })
                 })
             })
         } else {
             this.props.getAllCountryCommunity().then((communities) => {
-                this.setState({
-                    communities
+                this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
+                    this.setState({
+                        communities
+                    })
                 })
             })
         }
+    }
+    
+    mockAvatarToUsers(users) {
+        users.forEach((user) => {
+            user.profile.avatar = config.data.mockAvatarUrl
+        })
+        
+        return users
+    }
+    
+    // API only return list leader ids [leaderIds], so we need convert it to array object leader [leaders]
+    convertCommunitiesLeaderIdsToLeaderObjects(communities) {
+        return new Promise((resolve, reject) => {
+            let userIds = []
+            communities.forEach((community) => {
+                userIds.push(...community.leaderIds)
+            })
+            userIds = _.uniq(userIds)
+            
+            if (!userIds.length) {
+                return resolve([])
+            }
+
+            this.props.getUserByIds(userIds).then((users) => {
+                users = this.mockAvatarToUsers(users) // Mock avatar url
+                const mappingIdToUserList = _.keyBy(users, '_id');
+                communities.forEach((community) => {
+                    community.leaders = community.leaders || [];
+                    community.leaderIds.forEach((leaderId) => {
+                        if (mappingIdToUserList[leaderId]) {
+                            community.leaders.push(mappingIdToUserList[leaderId])
+                        }
+                    })
+                })
+
+                return resolve(communities)
+            })
+        })
     }
 
     handleChangeCountry(geolocation) {
@@ -103,37 +145,22 @@ export default class extends AdminPage {
 
     ord_renderContent () {
         const listCommunitiesEl = this.state.communities.map((community, index) => {
-
-            /*
-            const leaderData = [{
-                firstName: 'John',
-                lastName: 'Smith',
-                avatar: 'https://www.w3schools.com/howto/img_avatar.png'
-            }, {
-                firstName: 'Mary',
-                lastName: 'Jane',
-                avatar: 'https://www.w3schools.com/howto/img_avatar.png'
-            }]
-            */
-
-            const leaderData = []
-
             return (
                 <Col span={6} key={index} className="user-card">
                     <Link to={'/admin/community/' + community._id  + '/country/' + community.geolocation}>
                         <Card title={community.name}>
                             <List
-                                dataSource={leaderData}
+                                dataSource={community.leaders}
                                 renderItem={item => (
                                     <List.Item className="organizerListItem">
                                         <table>
                                             <tbody>
                                             <tr>
                                                 <td>
-                                                    <Avatar size="large" icon="user" src={item.avatar}/>
+                                                    <Avatar size="large" icon="user" src={item.profile.avatar}/>
                                                 </td>
                                                 <td>
-                                                    {item.firstName} {item.lastName}
+                                                    {item.profile.firstName} {item.profile.lastName}
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -147,11 +174,20 @@ export default class extends AdminPage {
             )
         })
 
-        // here we only want to show communities
-        const listCountriesEl = this.state.communities.map((country, index) => {
+        // Here we only want to show communities
+        // const listCountriesEl = this.state.communities.map((country, index) => {
+        //     return (
+        //         <Select.Option title={country.name} key={index}
+        //                        value={country.geolocation}>{country.name}</Select.Option>
+        //     )
+        // })
+    
+        // Dropdown will have errors if two communities has same geolocation key
+        // At the moment, I display all countries
+        const listCountriesEl = Object.keys(config.data.mappingCountryCodeToName).map((key, index) => {
             return (
-                <Select.Option title={country.name} key={index}
-                               value={country.geolocation}>{country.name}</Select.Option>
+                <Select.Option title={config.data.mappingCountryCodeToName[key]} key={index}
+                               value={key}>{config.data.mappingCountryCodeToName[key]}</Select.Option>
             )
         })
 

@@ -31,16 +31,18 @@
   }
 
   .community-right-column {
-    background: #d0d0d0;
+    border: 1px solid #d0d0d0;
     text-align: center;
-    padding-bottom: 15px;
+    padding: 0 10px 10px 10px;
 
     .list-members {
-      height: 605px
-    }
+      height: 605px;
+      overflow-y: scroll;
+      margin-bottom: 10px;
 
-    h2 {
-      color: #FFF;
+      table .member-name {
+        padding: 10px;
+      }
     }
   }
 
