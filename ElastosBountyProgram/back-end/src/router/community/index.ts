@@ -39,7 +39,7 @@ export default Base.setRouter([
     {
         path : '/:communityId/:userId',
         router : add_member,
-        method : 'get'
+        method : 'post'
     },
     {
         path : '/:communityId/:userId',
@@ -52,7 +52,7 @@ export default Base.setRouter([
         method : 'put'
     },
     {
-        path : '/country/:countryName',
+        path : '/:countryName/country',
         router : get_with_country,
         method : 'get'
     },
