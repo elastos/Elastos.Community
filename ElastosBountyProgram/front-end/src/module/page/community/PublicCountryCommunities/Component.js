@@ -57,7 +57,7 @@ export default class extends StandardPage {
     ord_renderContent () {
         const listCommunitiesEl = this.state.communities.map((community, index) => {
             // Mock data
-            community.leader = config.data.mockDataAllLeaders[0];
+            community.leader = config.data.mockDataAllLeaders[index];
             // Mock data -- end
 
             return (

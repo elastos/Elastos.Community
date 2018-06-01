@@ -2,9 +2,9 @@ export default {
     mockDataAllLeaders: [
         {
             id: 1,
-            name: 'Nguyen Van A',
-            country: 'Vietnam',
-            countryCode: 'vn',
+            name: 'Song',
+            country: 'China',
+            countryCode: 'cn',
             avatar: 'https://www.w3schools.com/howto/img_avatar.png',
         },
         {
@@ -17,7 +17,7 @@ export default {
         {
             id: 3,
             name: 'John Even',
-            country: 'China',
+            country: 'USA',
             countryCode: 'cn',
             avatar: 'https://www.w3schools.com/howto/img_avatar.png',
         },
@@ -26,6 +26,34 @@ export default {
             name: 'Obama',
             country: 'USA',
             countryCode: 'us',
+            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
+        },
+        {
+            id: 1,
+            name: 'Song King',
+            country: 'China',
+            countryCode: 'cn',
+            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
+        },
+        {
+            id: 1,
+            name: 'Caocao',
+            country: 'China',
+            countryCode: 'cn',
+            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
+        },
+        {
+            id: 1,
+            name: 'Song',
+            country: 'China',
+            countryCode: 'cn',
+            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
+        },
+        {
+            id: 1,
+            name: 'Henry',
+            country: 'Vietnam',
+            countryCode: 'vn',
             avatar: 'https://www.w3schools.com/howto/img_avatar.png',
         }
     ],
