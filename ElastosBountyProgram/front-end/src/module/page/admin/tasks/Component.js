@@ -105,7 +105,7 @@ export default class extends AdminPage {
                                />
                             </Col>
                             <Col span={4} className="admin-right-column wrap-box-navigator">
-                                <Navigator selectedItem={'tasks'}/>
+                                <Navigator selectedItem={'profile'}/>
                             </Col>
                         </Row>
                     </div>

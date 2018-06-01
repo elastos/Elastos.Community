@@ -61,7 +61,7 @@ export default class extends StandardPage {
             // Mock data -- end
 
             return (
-                <Col span={6} key={index} className="user-card">
+                <Col span={3} key={index} className="user-card">
                     <Link to={'/community/' + community._id  + '/country/' + community.leader.countryCode}>
                         <Card
                             cover={<img alt="example" src={community.leader.avatar}/>}

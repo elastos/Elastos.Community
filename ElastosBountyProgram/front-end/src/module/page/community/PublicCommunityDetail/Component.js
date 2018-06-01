@@ -30,13 +30,13 @@ export default class extends StandardPage {
         this.loadSubCommunities()
         this.loadCommunityMembers()
     }
-    
+
     loadCommunityMembers() {
         this.props.getCommunityMembers(this.props.match.params['community']).then((members) => {
             console.log('members', members);
         });
     }
-    
+
     loadCommunityDetail() {
         this.props.getCommunityDetail(this.props.match.params['community']).then((community) => {
             community.leaders = [];
@@ -92,7 +92,7 @@ export default class extends StandardPage {
 
     getListSubCommunitiesByType(subCommunities, filterRegionName) {
         let renderCommunities;
-        
+
         if (filterRegionName) {
             renderCommunities = subCommunities.filter((community) => {
                 return community.name === filterRegionName
@@ -100,14 +100,14 @@ export default class extends StandardPage {
         } else {
             renderCommunities = subCommunities
         }
-        
+
         const listSubCommunitiesByType = {
             STATE: [],
             CITY: [],
             REGION: [],
             SCHOOL: [],
         }
-        
+
         renderCommunities.forEach((community) => {
             // Mock data
             community.leaders = []
@@ -118,7 +118,7 @@ export default class extends StandardPage {
             listSubCommunitiesByType[community.type] = listSubCommunitiesByType[community.type] || [];
             listSubCommunitiesByType[community.type].push(community);
         })
-        
+
         return listSubCommunitiesByType;
     }
 
@@ -216,7 +216,7 @@ export default class extends StandardPage {
                                                     <Row>
                                                         {this.state.community.leaders.map((leader, index) => {
                                                             return (
-                                                                <Col span={6} key={index} className="user-card">
+                                                                <Col span={4} key={index} className="user-card">
                                                                     <Card
                                                                         cover={<img alt="example" src={leader.avatar}/>}
                                                                     >
@@ -263,7 +263,7 @@ export default class extends StandardPage {
                                                             <Row>
                                                                 {this.state.listSubCommunitiesByType['REGION'].map((community, index) => {
                                                                     return (
-                                                                        <Col span={6}
+                                                                        <Col span={4}
                                                                              key={index}
                                                                              className="user-card">
                                                                             {community.leaders.map((leader, index) => {
@@ -288,7 +288,7 @@ export default class extends StandardPage {
                                                             <Row>
                                                                 {this.state.listSubCommunitiesByType['CITY'].map((community, index) => {
                                                                     return (
-                                                                        <Col span={6}
+                                                                        <Col span={4}
                                                                              key={index}
                                                                              className="user-card">
                                                                             {community.leaders.map((leader, index) => {
@@ -313,7 +313,7 @@ export default class extends StandardPage {
                                                             <Row>
                                                                 {this.state.listSubCommunitiesByType['SCHOOL'].map((community, index) => {
                                                                     return (
-                                                                        <Col span={6}
+                                                                        <Col span={4}
                                                                              key={index}
                                                                              className="user-card">
                                                                             {community.leaders.map((leader, index) => {

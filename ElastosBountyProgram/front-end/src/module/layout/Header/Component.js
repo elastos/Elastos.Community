@@ -37,7 +37,7 @@ export default class extends BaseComponent {
         return (
             <Menu onClick={this.clickItem.bind(this)}>
                 {isLogin ?
-                    <Menu.Item key="profile">
+                    <Menu.Item key="profile/info">
                         {I18N.get('0200')}
                     </Menu.Item> :
                     <Menu.Item key="login">
@@ -146,7 +146,7 @@ export default class extends BaseComponent {
             'login',
             'register',
             'signup',
-            'profile',
+            'profile/info',
             'admin/tasks',
             'how-to-earn',
             'about',

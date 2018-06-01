@@ -38,4 +38,9 @@ export default {
     '1300': 'Tasks',
     '1301': 'Community',
     '1302': 'Users',
+
+    // Profile navigator
+    '2300': 'Info',
+    '2301': 'Tasks',
+    '2302': 'Teams'
 };
