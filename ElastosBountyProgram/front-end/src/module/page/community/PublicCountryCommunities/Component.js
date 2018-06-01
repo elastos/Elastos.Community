@@ -76,10 +76,10 @@ export default class extends StandardPage {
             )
         })
 
-        const listCountriesEl = Object.keys(config.data.mappingCountryCodeToName).map((key, index) => {
+        const listCountriesEl = this.state.communities.map((country, index) => {
             return (
-                <Select.Option title={config.data.mappingCountryCodeToName[key]} key={index}
-                               value={key}>{config.data.mappingCountryCodeToName[key]}</Select.Option>
+                <Select.Option title={country.name} key={index}
+                               value={country.geolocation}>{country.name}</Select.Option>
             )
         })
 
