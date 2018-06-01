@@ -39,7 +39,7 @@ export default Base.setRouter([
     {
         path : '/:communityId/:userId',
         router : add_member,
-        method : 'get'
+        method : 'post'
     },
     {
         path : '/:communityId/:userId',
