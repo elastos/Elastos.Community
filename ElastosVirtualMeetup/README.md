@@ -3,19 +3,15 @@
 We will regularly schedule virtual meetups where the community members can directly interact with the developers on the status of the project and ask any questions they need clarification on. Each meetup will have a different agenda.
 
 ## Upcoming Meetups
-### Thursday, May 31st 2018 at 22:00 Eastern Daylight Time: Elastos Github Projects
-#### Agenda
-- 22:00 - 22:10: Review from last Virtual Meetup
-- 22:10 - 22:40: Main Presentation: Introduction to Elastos Github Projects and Q&A
-- 22:40 - 23:00: Demo
-- 23:00 - 23:15: Community engagement, discussions
-- 23:15: Wrapup - Next meetup: Leaders focused
-```
-- Meetup Invite: https://zoom.us/j/3087789172
-- Or dial: Or dial: +1 443-626-4233  PIN: 324464561#
-```
+### TBD
 
 ## Past Meetups
+### Thursday, May 31st 2018 at 22:00 Eastern Daylight Time: Elastos Github Projects
+- [Link to powerpoint slides](https://docs.google.com/presentation/d/1VE8Kigj5iTvEH6Pkk2iB3mVv10-GoiJEZZk-gmWbNBQ/edit?usp=sharing)
+- [Link to youtube recording](https://www.youtube.com/watch?v=3WR93iuXZ18&feature=youtu.be&app=desktop)
+- Main Presentation: Introduction to Elastos Github Projects and Q&A
+- Trinity Browser Demo with different examples of Elastos DApps running in it
+
 ### Thursday, May 24th 2018 at 16:00 Eastern Daylight Time: Elastos Platform
 - [Link to powerpoint slides](https://docs.google.com/presentation/d/1n2hyzjlbAZwNevbBAX9DEpZfWTQIH-Jl3hgCCJfi3tc/edit?usp=sharing)
 - [Link to youtube recording](https://www.youtube.com/watch?v=1p-P0p5yjoQ&feature=youtu.be)
