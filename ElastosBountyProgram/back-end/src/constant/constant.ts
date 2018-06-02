@@ -12,7 +12,8 @@ export const USER_LANGUAGE = {
 
 export const TEAM_ROLE = {
     MEMBER : 'MEMBER',
-    OWNER : 'OWNER'
+    OWNER : 'OWNER',
+    LEADER : 'LEADER'
 };
 
 export const TASK_TYPE = {
@@ -63,4 +64,11 @@ export const TRANS_STATUS = {
     CANCELED: 'CANCELED',
     FAILED: 'FAILED',
     SUCCESSFUL: 'SUCCESSFUL'
+}
+
+
+export const TEAM_USER_STATUS = {
+    NORMAL : 'NORMAL',
+    PENDING : 'PENDING', // applying
+    REJECT : 'REJECT'
 }
