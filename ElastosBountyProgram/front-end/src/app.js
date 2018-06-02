@@ -57,6 +57,7 @@ if(sessionStorage.getItem('api-token')){
             store.dispatch(userRedux.actions.username_update(data.username))
             store.dispatch(userRedux.actions.profile_update(data.profile))
             store.dispatch(userRedux.actions.role_update(data.role))
+            store.dispatch(userRedux.actions.current_user_id_update(data._id))
 
             render()
         }

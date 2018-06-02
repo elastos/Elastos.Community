@@ -34,10 +34,12 @@
     border: 1px solid #d0d0d0;
     text-align: center;
     padding: 0 10px 10px 10px;
+    height: 535px;
+    overflow-y: auto;
 
     .list-members {
-      height: 605px;
-      overflow-y: scroll;
+      background: #f1f1f1;
+      padding: 0px 10px;
       margin-bottom: 10px;
 
       table .member-name {

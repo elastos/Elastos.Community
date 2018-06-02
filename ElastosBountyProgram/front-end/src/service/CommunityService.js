@@ -90,4 +90,13 @@ export default class extends BaseService {
 
         return result
     }
+    
+    async addMember(memberId, communityId) {
+        const result = await api_request({
+            path: `/community/${communityId}/${memberId}`,
+            method: 'post',
+        })
+        
+        return result
+    }
 }

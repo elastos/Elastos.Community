@@ -30,7 +30,7 @@ export default class extends BaseService {
         await this.dispatch(userRedux.actions.username_update(res.user.username))
         await this.dispatch(userRedux.actions.profile_update(res.user.profile))
         await this.dispatch(userRedux.actions.role_update(res.user.role))
-
+        await this.dispatch(userRedux.actions.current_user_id_update(res.user._id))
         sessionStorage.setItem('api-token', res['api-token']);
 
         return {

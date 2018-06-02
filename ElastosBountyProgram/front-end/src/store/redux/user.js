@@ -30,7 +30,8 @@ class UserRedux extends BaseRedux {
 
             profile: {
 
-            }
+            },
+            current_user_id: null
         };
     }
 }
