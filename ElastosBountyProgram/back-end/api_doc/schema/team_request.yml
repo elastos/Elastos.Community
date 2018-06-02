@@ -12,16 +12,17 @@ content:
 
         type:
           type: string
-          description: team or coummity
-          example: ""
+          description: "DEVELOP, MARKET, DESIGN, PROJECT, OTHER"
+          example: DEVELOP
 
         metadata:
           type: array
           items:
             type: string
-            description: foramt as "key|value"
+            description: foramt as "k1|v1"
           example:
             - meta_key|meta_value
+            - k1|v1
 
         tags:
           type: array
@@ -41,26 +42,3 @@ content:
           format: uri
           example: ""
 
-        images:
-          type: array
-          description: team images, like member's photos, project history ...
-          items:
-            type: string
-          example: []
-
-#        members:
-#          type: array
-#          items:
-#            type: object
-#            properties:
-#              userId:
-#                type: string
-#              level:
-#                type: string
-#              role:
-#                type: string
-#                description: member, admin
-#              title:
-#                type: string
-#                description: PM, PO, developer, designer, tester ...
-#          example: []

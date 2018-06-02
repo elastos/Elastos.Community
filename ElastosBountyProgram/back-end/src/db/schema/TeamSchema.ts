@@ -2,21 +2,9 @@ import {Schema} from 'mongoose';
 
 export const TeamProfile = {
     description : String,
-    logo : String,
-    images : [String],
-    createTime : Date,
+    logo : String
 };
 
-export const TeamMember = {
-    userId : {
-        type : Schema.Types.ObjectId,
-        unique : true
-    },
-    // name : String,
-    level : String,
-    role : String,
-    title : String
-};
 
 export const Team = {
     name : {
@@ -30,9 +18,17 @@ export const Team = {
     },
     tags : [String],
     profile : TeamProfile,
-    members : [TeamMember],
+    memberLimit : {
+        type : Number,
+        default : 10
+    },
+    recruiting : {
+        type : Boolean,
+        default : false
+    },
     owner : Schema.Types.ObjectId
 };
+
 
 
 export const User_Team = {
@@ -43,5 +39,11 @@ export const User_Team = {
     teamId : {
         required : true,
         type : Schema.Types.ObjectId
-    }
+    },
+    status : {
+        type : String
+    },
+    level : String,
+    role : String,
+    title : String
 };

@@ -1,3 +1,14 @@
+import * as _ from 'lodash';
+
+const create = (constant_list: [string]): any => {
+    const map = {};
+    _.each(constant_list, (key)=>{
+        map[key] = key;
+    });
+
+    return map;
+}
+
 export const USER_ROLE = {
     MEMBER : 'MEMBER',
     LEADER : 'LEADER',
@@ -9,11 +20,6 @@ export const USER_LANGUAGE = {
     en: 'en',
     zh: 'zh'
 }
-
-export const TEAM_ROLE = {
-    MEMBER : 'MEMBER',
-    OWNER : 'OWNER'
-};
 
 export const TASK_TYPE = {
     TASK: 'TASK',
@@ -64,3 +70,8 @@ export const TRANS_STATUS = {
     FAILED: 'FAILED',
     SUCCESSFUL: 'SUCCESSFUL'
 }
+
+// team constant
+export const TEAM_ROLE = create(['MEMBER', 'LEADER']);
+export const TEAM_USER_STATUS = create(['NORMAL', 'PENDING', 'REJECT']);
+export const TEAM_TYPE = create(['DEVELOP', 'MARKET', 'DESIGN', 'PROJECT', 'OTHER']);

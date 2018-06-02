@@ -7,9 +7,11 @@ import {constant} from '../constant';
 export default class extends Base {
     public async create(param): Promise<Document>{
         const db_team = this.getDBModel('Team');
+        const db_user_team = this.getDBModel("User_Team");
 
         // validate
         this.validate_name(param.name);
+        this.validate_type(param.type);
 
         const doc = {
             name : param.name,
@@ -18,22 +20,27 @@ export default class extends Base {
             tags : this.param_tags(param.tags),
             profile : {
                 logo : param.logo,
-                images : param.images,
-                description : param.description,
-                createTime : Date.now()
+                description : param.description
             },
-            members : [
-                {
-                    userId : this.currentUser._id,
-                    level : '',
-                    role : constant.TEAM_ROLE.OWNER
-                }
-            ],
+            recruiting : true,
             owner : this.currentUser._id
         };
 
         console.log('create team => ', doc);
-        return await db_team.save(doc);
+        const res = await db_team.save(doc);
+
+        // save to user team
+        const doc_user_team = {
+            userId : this.currentUser._id,
+            teamId : res._id,
+            status : constant.TEAM_USER_STATUS.NORMAL,
+            role : constant.TEAM_ROLE.LEADER
+        };
+
+        console.log('create user_team => ', doc_user_team);
+        const res1 = await db_user_team.save(doc_user_team);
+
+        return res;
     }
 
     public async addMember(param): Promise<boolean>{
@@ -124,5 +131,10 @@ export default class extends Base {
             rs = tags.split(',');
         }
         return rs;
+    }
+    public validate_type(type){
+        if(!type || !_.includes(constant.TEAM_TYPE, type)){
+            throw 'invalid team type';
+        }
     }
 }
