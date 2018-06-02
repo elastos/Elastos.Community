@@ -2,9 +2,7 @@ import {Schema} from 'mongoose';
 
 export const TeamProfile = {
     description : String,
-    logo : String,
-    images : [String],
-    createTime : Date,
+    logo : String
 };
 
 

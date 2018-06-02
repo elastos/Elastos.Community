@@ -5,6 +5,7 @@
     "moduleResolution": "node",
     "noEmitOnError": false,
     "allowJs": true,
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "lib": [ "es2015" ]
   }
 }

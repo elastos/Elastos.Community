@@ -36,5 +36,14 @@ global.DB = {
         "candidateSltLimit": 0,
         "reward_ela": 1000,
         "reward_evp": 10
+    },
+
+    TEAM_1 : {
+        name : 'test team 1',
+        description : 'this is test team 1',
+        type : 'DEVELOP',
+        metadata : 'key|value,k1|v1',
+        tags : 'key1,key2',
+        logo : 'logo_url'
     }
 };
