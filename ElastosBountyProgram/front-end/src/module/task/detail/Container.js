@@ -16,10 +16,13 @@ export default createContainer(Component, (state) => {
         async listTeamsOwned(userId) {
 
             try {
-                return await teamService.list({
+                const result = await teamService.list({
                     owner: userId
                 })
+
+                return result
             } catch (err) {
+                console.error(err)
                 message.error(err.message)
             }
         }

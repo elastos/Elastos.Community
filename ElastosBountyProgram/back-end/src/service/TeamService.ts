@@ -14,12 +14,6 @@ export default class extends Base {
         this.ut_model = this.getDBModel("User_Team");
     }
 
-    public async list(query): Promise<[Document]> {
-        return await this.model.list(query, {
-            updatedAt: -1
-        });
-    }
-
     public async create(param): Promise<Document>{
         const db_team = this.getDBModel('Team');
         const db_user_team = this.getDBModel("User_Team");
@@ -257,8 +251,8 @@ export default class extends Base {
         // TODO add filter
         const query = {};
 
-        const count = await this.mode.count(query);
-        const list = await this.mode.list(query, {
+        const count = await this.model.count(query);
+        const list = await this.model.list(query, {
             updateAt: -1
         }, limit);
 

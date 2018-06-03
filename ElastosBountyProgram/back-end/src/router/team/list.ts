@@ -20,12 +20,8 @@ export default class extends Base{
             archived: {$ne: true}
         };
 
-        const list = await teamService.list(query);
-        const count = await teamService.getDBModel('Team').count(query);
+        const rs = await teamService.list(query);
 
-        return this.result(1, {
-            list,
-            total: count
-        });
+        return this.result(1, rs);
     }
 }
