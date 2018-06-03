@@ -16,6 +16,14 @@ export default createContainer(Component, (state) => {
     const taskService = new TaskService()
 
     return {
+        async getTaskDetail (taskId) {
+            return taskService.get(taskId)
+        },
+
+        async resetTaskDetail () {
+            return taskService.resetTaskDetail()
+        },
+
         async approveTask(taskId) {
 
             try {

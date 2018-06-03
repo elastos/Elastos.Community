@@ -3,6 +3,8 @@ import BaseComponent from '@/model/BaseComponent'
 import TaskCreateForm from '@/module/form/TaskCreateForm/Container'
 import { Col, Row, Icon, Divider, Button, Spin } from 'antd'
 
+import TaskPublicDetail from './detail/Container'
+
 import {TASK_STATUS} from '@/constant'
 
 import './style.scss'
@@ -20,6 +22,7 @@ export default class extends BaseComponent {
     renderMain() {
         return (
             <div className="c_TaskDetail">
+                {this.props.page === 'admin' &&
                 <div className="l_banner">
                     <div className="pull-left">
                         Status: <span className="status">{this.props.task.status}</span>
@@ -43,7 +46,7 @@ export default class extends BaseComponent {
                         </Button>
                     </div>
                     <div className="clearfix"/>
-                </div>
+                </div>}
 
                 {this.state.editing ? this.renderEditForm() : this.renderDetail()}
             </div>
@@ -60,12 +63,8 @@ export default class extends BaseComponent {
         if (this.props.page === 'admin') {
             return this.renderAdminDetail()
         } else {
-            return this.renderPublicDetail()
+            return <TaskPublicDetail task={this.props.task}/>
         }
-    }
-
-    renderPublicDetail() {
-
     }
 
     renderAdminDetail() {

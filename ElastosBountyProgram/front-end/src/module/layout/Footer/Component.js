@@ -39,15 +39,7 @@ export default class extends BaseComponent {
                                 <b>Email</b>
 
                                 <p>
-                                    <a href="mailto:community@elastos.org">community@elastos.org</a>
-                                </p>
-
-                                <b>Address</b>
-
-                                <p>
-                                    8407 Central Ave<br/>
-                                    Newark, CA 94560-3431<br/>
-                                    United States
+                                    <a href="mailto:test@elastos.org">test@elastos.org</a>
                                 </p>
                             </div>
                         </Col>
