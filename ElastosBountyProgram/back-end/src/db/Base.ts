@@ -26,14 +26,17 @@ export default abstract class {
                 type: Date,
                 default: Date.now
             }
-        }, this.getSchema()), {
+        }, this.getSchema()), _.extend({
             timestamps: true
-        });
+        }, this.getSchemaOption()));
 
         return schema;
     }
 
     protected abstract getSchema(): mongoose.SchemaDefinition;
+    protected getSchemaOption(): mongoose.SchemaOptions{
+        return {};
+    }
     protected abstract getName(): string;
     protected rejectFields(): object{
         return {};
@@ -70,6 +73,11 @@ export default abstract class {
 
     public async update(query, doc, opts?: updateOptions): Promise<Document>{
         return await this.db.update(query, doc, this.buildUpdateOptions(opts));
+    }
+
+    // TODO why can not run, will lead a memory leak error.
+    public async findOneAndUpdate(query, doc, opts?): Promise<Document>{
+        return await this.db.findOneAndUpdate(query, doc, opts);
     }
 
     public async count(query): Promise<number>{

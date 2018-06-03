@@ -75,3 +75,8 @@ export const TRANS_STATUS = {
 export const TEAM_ROLE = create(['MEMBER', 'LEADER']);
 export const TEAM_USER_STATUS = create(['NORMAL', 'PENDING', 'REJECT']);
 export const TEAM_TYPE = create(['DEVELOP', 'MARKET', 'DESIGN', 'PROJECT', 'OTHER']);
+
+// log
+export const LOG_TYPE = {
+    'APPLY_TEAM' : 'apply_team'
+};
