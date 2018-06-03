@@ -3,8 +3,16 @@ import {Document, Types} from 'mongoose';
 import * as _ from 'lodash';
 import {validate} from '../utility';
 import {constant} from '../constant';
+import LogService from './LogService';
 
 export default class extends Base {
+    private mode;
+    private ut_mode;
+    protected init(){
+        this.mode = this.getDBModel('Team');
+        this.ut_mode = this.getDBModel("User_Team");
+    }
+
     public async create(param): Promise<Document>{
         const db_team = this.getDBModel('Team');
         const db_user_team = this.getDBModel("User_Team");
@@ -44,12 +52,18 @@ export default class extends Base {
     }
 
     public async update(param): Promise<Document>{
+        if(!param.id){
+            throw 'invalid team id'
+        }
         const db_team = this.getDBModel('Team');
-        const team_doc = await db_team.findById(param.id, {
+        const team_doc = await db_team.getDBInstance().findOne({_id : param.id}, {
             updatedAt: false
         });
         if(!team_doc){
             throw 'invalid team id';
+        }
+        if(!(this.currentUser._id.equals(team_doc.owner) || this.currentUser.role === constant.USER_ROLE.ADMIN)){
+            throw 'no permission to operate';
         }
 
         const doc = _.merge(team_doc, {
@@ -70,46 +84,67 @@ export default class extends Base {
 
         console.log('update team =>', doc);
         const res = await db_team.update({_id: param.id}, doc);
+        if(res.ok){
+            return doc;
+        }
+
         return res;
     }
 
-    public async addMember(param): Promise<boolean>{
-        const {userId, teamId, level, role, title} = param;
+    /*
+    * member apply to add a team
+    *
+    * */
+    public async applyToAddTeam(param): Promise<boolean>{
+        const {teamId, reason} = param;
 
-        const db_team = this.getDBModel('Team');
-        const db_user_team = this.getDBModel('User_Team');
-
-        const current = this.currentUser;
-        if(current._id === userId){
-            throw 'could not add yourself to team';
+        const team_doc = await this.mode.findOne({_id : teamId});
+        if(!team_doc){
+            throw 'invalid team id';
         }
 
-        const tmp = await db_team.findOne({
-            _id: teamId,
-            'members.userId' : userId
+        const tmp = await this.ut_mode.findOne({
+            userId : this.currentUser._id,
+            teamId
         });
         if(tmp){
-            throw 'user is exist';
+            if(tmp.status === constant.TEAM_USER_STATUS.PENDING){
+                throw 'user applied team before';
+            }
+            if(tmp.status === constant.TEAM_USER_STATUS.NORMAL){
+                throw 'user already in team';
+            }
+            else{
+                // reject
+                throw 'team reject this member';
+
+                // remove record first
+                // await db_user_team.remove({
+                //     userId : this.currentUser._id,
+                //     teamId
+                // });
+            }
         }
 
-        const x = await db_team.update({_id: teamId}, {
-            $addToSet : {
-                members : {
-                    userId,
-                    level,
-                    role: role || constant.TEAM_ROLE.MEMBER,
-                    title
-                }
-            }
-        });
-        if(x.n === 1){
-            await db_user_team.save({
-                userId, teamId
-            });
-        }
+        const doc = {
+            userId : this.currentUser._id,
+            teamId,
+            level : '',
+            role : constant.TEAM_ROLE.MEMBER,
+            apply_reason: reason,
+            status : constant.TEAM_USER_STATUS.PENDING
+        };
+
+        await this.ut_mode.save(doc);
+
+        // add log
+        const logService = this.getService(LogService);
+        await logService.applyToAddTeam(teamId, this.currentUser._id, reason);
 
         return true;
     }
+
+    public async
 
     public async listMember(param): Promise<Document[]>{
         const {teamId} = param;

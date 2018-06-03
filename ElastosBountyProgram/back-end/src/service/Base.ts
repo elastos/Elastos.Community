@@ -1,4 +1,5 @@
-export default class {
+
+export default class Base {
     protected db;
     private session;
     protected currentUser;
@@ -17,7 +18,8 @@ export default class {
         return this.db.getModel(name);
     }
 
-    public getService(service){
+
+    protected getService<T extends Base>(service: { new(...args): T }): T{
         return new service(this.db, this.session);
     }
 

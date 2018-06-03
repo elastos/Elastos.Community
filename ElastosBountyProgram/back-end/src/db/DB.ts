@@ -8,6 +8,8 @@ import Community from './Community';
 import User_Community from './User_Community';
 import Task_Candidate from './Task_Candidate';
 
+import Log from './Log';
+
 import {uuid, crypto} from '../utility';
 
 export default class {
@@ -87,6 +89,7 @@ export default class {
         this.db.Community = new Community(db);
         this.db.User_Community = new User_Community(db);
         this.db.Task_Candidate = new Task_Candidate(db);
+        this.db.Log = new Log(db);
     }
 
     public getModel(name: string){
