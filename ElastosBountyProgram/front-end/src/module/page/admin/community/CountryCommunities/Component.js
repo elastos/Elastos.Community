@@ -143,6 +143,24 @@ export default class extends AdminPage {
         }
     }
 
+    renderListCountriesEl() {
+        // Here we only want to show communities
+        const communities = [];
+        const listCountriesEl = this.state.communities.map((country, index) => {
+            if (communities.includes(country.name)) {
+                return null;
+            }
+
+            communities.push(country.name);
+            return (
+                <Select.Option title={country.name} key={index}
+                               value={country.geolocation}>{country.name}</Select.Option>
+            )
+        })
+
+        return listCountriesEl;
+    }
+
     ord_renderContent () {
         const listCommunitiesEl = this.state.communities.map((community, index) => {
             return (
@@ -174,20 +192,6 @@ export default class extends AdminPage {
             )
         })
 
-        // Here we only want to show communities
-        const communities = [];
-        const listCountriesEl = this.state.communities.map((country, index) => {
-            if (communities.includes(country.name)) {
-                return null;
-            }
-
-            communities.push(country.name);
-            return (
-                <Select.Option title={country.name} key={index}
-                               value={country.geolocation}>{country.name}</Select.Option>
-            )
-        })
-
         // Dropdown will have errors if two communities has same geolocation key
         // At the moment, I display all countries
         // const listCountriesEl = Object.keys(config.data.mappingCountryCodeToName).map((key, index) => {
@@ -207,7 +211,7 @@ export default class extends AdminPage {
                 optionFilterProp="children"
                 onChange={this.handleChangeCountry.bind(this)}
             >
-                {listCountriesEl}
+                {this.renderListCountriesEl.bind(this)}
             </Select>
         )
 
