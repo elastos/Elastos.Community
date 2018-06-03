@@ -6,11 +6,17 @@ import {constant} from '../constant';
 import LogService from './LogService';
 
 export default class extends Base {
-    private mode;
-    private ut_mode;
+    private model;
+    private ut_model;
     protected init(){
-        this.mode = this.getDBModel('Team');
-        this.ut_mode = this.getDBModel("User_Team");
+        this.model = this.getDBModel('Team');
+        this.ut_model = this.getDBModel("User_Team");
+    }
+
+    public async list(query): Promise<[Document]> {
+        return await this.model.list(query, {
+            updatedAt: -1
+        });
     }
 
     public async create(param): Promise<Document>{
@@ -55,7 +61,7 @@ export default class extends Base {
         if(!param.id){
             throw 'invalid team id'
         }
-        const db_team = this.getDBModel('Team');
+        const db_team = this.model;
         const team_doc = await db_team.getDBInstance().findOne({_id : param.id}, {
             updatedAt: false
         });
@@ -98,12 +104,12 @@ export default class extends Base {
     public async applyToAddTeam(param): Promise<boolean>{
         const {teamId, reason} = param;
 
-        const team_doc = await this.mode.findOne({_id : teamId});
+        const team_doc = await this.model.findOne({_id : teamId});
         if(!team_doc){
             throw 'invalid team id';
         }
 
-        const tmp = await this.ut_mode.findOne({
+        const tmp = await this.ut_model.findOne({
             userId : this.currentUser._id,
             teamId
         });
@@ -135,7 +141,7 @@ export default class extends Base {
             status : constant.TEAM_USER_STATUS.PENDING
         };
 
-        await this.ut_mode.save(doc);
+        await this.ut_model.save(doc);
 
         // add log
         const logService = this.getService(LogService);
@@ -150,7 +156,7 @@ export default class extends Base {
     public async acceptApply(param): Promise<Document>{
         const {teamId, userId, action} = param;
 
-        const team_doc = await this.mode.findOne({_id : teamId});
+        const team_doc = await this.model.findOne({_id : teamId});
         if(!team_doc){
             throw 'invalid team id';
         }
@@ -160,12 +166,12 @@ export default class extends Base {
             throw 'no permission to operate';
         }
 
-        const ut_doc = await this.ut_mode.findOne({teamId, userId});
+        const ut_doc = await this.ut_model.findOne({teamId, userId});
         if(!ut_doc || ut_doc.status !== constant.TEAM_USER_STATUS.PENDING){
             throw 'invalid params';
         }
 
-        const count = await this.ut_mode.count({
+        const count = await this.ut_model.count({
             teamId,
             status : constant.TEAM_USER_STATUS.NORMAL
         });
@@ -173,7 +179,7 @@ export default class extends Base {
             throw 'member count touch the limitation';
         }
 
-        return await this.ut_mode.update({teamId, userId}, {
+        return await this.ut_model.update({teamId, userId}, {
             status : constant.TEAM_USER_STATUS.NORMAL
         });
     }
@@ -185,7 +191,7 @@ export default class extends Base {
     public async rejectApply(param): Promise<Document>{
         const {teamId, userId, action} = param;
 
-        const team_doc = await this.mode.findOne({_id : teamId});
+        const team_doc = await this.model.findOne({_id : teamId});
         if(!team_doc){
             throw 'invalid team id';
         }
@@ -195,12 +201,12 @@ export default class extends Base {
             throw 'no permission to operate';
         }
 
-        const ut_doc = await this.ut_mode.findOne({teamId, userId});
+        const ut_doc = await this.ut_model.findOne({teamId, userId});
         if(!ut_doc || ut_doc.status !== constant.TEAM_USER_STATUS.PENDING){
             throw 'invalid params';
         }
 
-        return await this.ut_mode.update({teamId, userId}, {
+        return await this.ut_model.update({teamId, userId}, {
             status : constant.TEAM_USER_STATUS.REJECT
         });
     }
@@ -213,9 +219,9 @@ export default class extends Base {
     public async getWholeData(param): Promise<Document>{
         const {teamId, status} = param;
 
-        const team_doc = await this.mode.findOne({_id : teamId});
+        const team_doc = await this.model.findOne({_id : teamId});
 
-        const aggregate = this.ut_mode.getAggregate();
+        const aggregate = this.ut_model.getAggregate();
         const query: any = {
             teamId : Types.ObjectId(teamId)
         };

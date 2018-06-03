@@ -5,6 +5,11 @@
   line-height: 40px;
   margin-right: $gap_0;
 
+  &:hover {
+    border-color: $primary_color;
+    color: $primary_color;
+  }
+
   &.ant-btn-ebp{
     font-size: 1.1rem;
     height: 40px;

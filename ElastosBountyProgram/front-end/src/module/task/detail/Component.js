@@ -2,6 +2,8 @@ import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
 
+import ModalApplyTask from '../ModalApplyTask/Component'
+
 import { Col, Row, Button, Divider } from 'antd'
 
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS} from '@/constant'
@@ -12,12 +14,25 @@ export default class extends BaseComponent {
 
     ord_states() {
         return {
-            isDeveloperEvent: this.props.task.category === TASK_CATEGORY.DEVELOPER &&
-                                this.props.task.type === TASK_TYPE.EVENT
+            visibleModalApplyTask: false,
+            isDeveloperEvent: this.props.task.category === TASK_CATEGORY &&
+                                this.props.task.type === TASK_TYPE.EVENT,
+            teamsOwned: []
         }
     }
 
+    async componentDidMount() {
+        this.setState({loading : true});
+        const teamsOwned = await this.props.listTeamsOwned(this.props.userId)
+
+        this.setState({
+            loading: false,
+            teamsOwned: teamsOwned.list
+        })
+    }
+
     ord_render () {
+
         return (
             <div className="public">
                 <Row>
@@ -120,10 +135,18 @@ export default class extends BaseComponent {
                     <Col span={6} className="gridCol applicants">
                         <h4>{this.state.isDeveloperEvent ? 'Registrants' : 'Applicants'}</h4>
 
-                        {this.renderJoinButton.call(this)}
+                        {this.props.is_login && this.renderJoinButton.call(this)}
 
                     </Col>
                 </Row>
+
+                <ModalApplyTask
+                    wrappedComponentRef={this.saveFormApplyTaskRef}
+                    teamsOwned={this.state.teamsOwned}
+                    visible={this.state.visibleModalApplyTask}
+                    onCancel={this.handleCancelModalApplyTask}
+                    onCreate={this.handleModalApplyTask}
+                />
             </div>
         )
     }
@@ -149,12 +172,40 @@ export default class extends BaseComponent {
             }
         }
 
-        return <Button className="join-btn" onClick={this.handleApplyTask.bind(this)}>
+        return <Button className="join-btn" onClick={this.showModalApplyTask}>
             {buttonText}
         </Button>
     }
 
+    /**
+     * First we show a modal with teams or apply alone, only
+     * the leader of a team can apply
+     */
     handleApplyTask() {
+
+        this.props.applyTask(this.props.task._id)
+    }
+
+    showModalApplyTask = () => {
+        this.formRefApplyTask.props.form.setFieldsValue({}, () => {
+            this.setState({
+                visibleModalApplyTask: true,
+            })
+        })
+    }
+
+    saveFormApplyTaskRef = (formRef) => {
+        this.formRefApplyTask = formRef
+    }
+
+    handleCancelModalApplyTask = () => {
+        const form = this.formRefApplyTask.props.form
+        form.resetFields()
+
+        this.setState({visibleModalApplyTask: false})
+    }
+
+    handleModalApplyTask = () => {
 
     }
 }

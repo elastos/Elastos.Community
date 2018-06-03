@@ -5,7 +5,7 @@ import update from './update';
 import apply_add_team from './apply_add_team';
 import action from './action';
 import get from './get';
-
+import list from './list'
 
 
 export default Base.setRouter([
@@ -32,6 +32,11 @@ export default Base.setRouter([
     {
         path : '/get',
         router : get,
+        method : 'get'
+    },
+    {
+        path : '/list',
+        router : list,
         method : 'get'
     }
 ]);

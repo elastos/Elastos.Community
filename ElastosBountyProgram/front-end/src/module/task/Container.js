@@ -16,11 +16,11 @@ export default createContainer(Component, (state) => {
     const taskService = new TaskService()
 
     return {
-        async getTaskDetail (taskId) {
+        async getTaskDetail(taskId) {
             return taskService.get(taskId)
         },
 
-        async resetTaskDetail () {
+        async resetTaskDetail() {
             return taskService.resetTaskDetail()
         },
 
