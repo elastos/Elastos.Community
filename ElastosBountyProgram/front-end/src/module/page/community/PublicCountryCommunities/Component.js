@@ -12,7 +12,7 @@ export default class extends StandardPage {
     state = {
         communities: [],
     }
-    
+
     componentWillUnmount () {
         this.props.resetTasks()
     }
@@ -42,15 +42,15 @@ export default class extends StandardPage {
             })
         }
     }
-    
+
     mockAvatarToUsers(users) {
         users.forEach((user) => {
             user.profile.avatar = config.data.mockAvatarUrl
         })
-        
+
         return users
     }
-    
+
     // API only return list leader ids [leaderIds], so we need convert it to array object leader [leaders]
     convertCommunitiesLeaderIdsToLeaderObjects(communities) {
         return new Promise((resolve, reject) => {
@@ -59,11 +59,11 @@ export default class extends StandardPage {
                 userIds.push(...community.leaderIds)
             })
             userIds = _.uniq(userIds)
-            
+
             if (!userIds.length) {
                 return resolve([])
             }
-            
+
             this.props.getUserByIds(userIds).then((users) => {
                 users = this.mockAvatarToUsers(users) // Mock avatar url
                 const mappingIdToUserList = _.keyBy(users, '_id');
@@ -75,12 +75,12 @@ export default class extends StandardPage {
                         }
                     })
                 })
-                
+
                 resolve(communities)
             })
         })
     }
-    
+
     handleChangeCountry(geolocation) {
         if (geolocation) {
             this.props.getSpecificCountryCommunities(geolocation).then((communities) => {
@@ -88,7 +88,7 @@ export default class extends StandardPage {
                     this.setState({
                         communities
                     })
-    
+
                     this.props.history.push(`/community/country/${geolocation}`)
                 })
             })
@@ -98,15 +98,39 @@ export default class extends StandardPage {
                     this.setState({
                         communities
                     })
-    
+
                     this.props.history.push('/community')
                 })
             })
         }
     }
-
-    ord_renderContent () {
-        const listCommunitiesEl = this.state.communities.map((community, index) => {
+    
+    renderBreadcrumbCountries() {
+        const geolocationKeys = _.keyBy(this.state.communities, 'geolocation');
+        const listCountriesEl = Object.keys(geolocationKeys).map((geolocation, index) => {
+            return (
+                <Select.Option title={config.data.mappingCountryCodeToName[geolocation]} key={index}
+                               value={geolocation}>{config.data.mappingCountryCodeToName[geolocation]}</Select.Option>
+            )
+        })
+    
+        return (
+            <Select
+                allowClear
+                value={this.props.match.params['country'] || undefined}
+                showSearch
+                style={{width: 160}}
+                placeholder="Select a country"
+                optionFilterProp="children"
+                onChange={this.handleChangeCountry.bind(this)}
+            >
+                {listCountriesEl}
+            </Select>
+        )
+    }
+    
+    renderListCommunities() {
+        return this.state.communities.map((community, index) => {
             return (
                 <div key={index}>
                     {community.leaders.map((leader) => {
@@ -128,36 +152,11 @@ export default class extends StandardPage {
                 </div>
             )
         })
+    }
 
-        // const listCountriesEl = this.state.communities.map((country, index) => {
-        //     return (
-        //         <Select.Option title={country.name} key={index}
-        //                        value={country.geolocation}>{country.name}</Select.Option>
-        //     )
-        // })
-
-        // Dropdown will have errors if two communities has same geolocation key
-        // At the moment, I display all countries
-        const listCountriesEl = Object.keys(config.data.mappingCountryCodeToName).map((key, index) => {
-            return (
-                <Select.Option title={config.data.mappingCountryCodeToName[key]} key={index}
-                               value={key}>{config.data.mappingCountryCodeToName[key]}</Select.Option>
-            )
-        })
-
-        const menuCountriesEl = (
-            <Select
-                allowClear
-                value={this.props.match.params['country'] || undefined}
-                showSearch
-                style={{width: 160}}
-                placeholder="Select a country"
-                optionFilterProp="children"
-                onChange={this.handleChangeCountry.bind(this)}
-            >
-                {listCountriesEl}
-            </Select>
-        )
+    ord_renderContent () {
+        const listCommunitiesEl = this.renderListCommunities()
+        const menuCountriesEl = this.renderBreadcrumbCountries()
 
         return (
             <div className="p_Community">

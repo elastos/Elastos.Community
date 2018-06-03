@@ -144,7 +144,66 @@ export default class extends Base {
         return true;
     }
 
-    public async
+    /*
+    * only team owner or admin accept the apply request
+    * */
+    public async acceptApply(param): Promise<Document>{
+        const {teamId, userId, action} = param;
+
+        const team_doc = this.mode.findOne({_id : teamId});
+        if(!team_doc){
+            throw 'invalid team id';
+        }
+
+        // check current user is admin or team owner
+        if(!(this.currentUser._id.equals(team_doc.owner) || this.currentUser.role === constant.USER_ROLE.ADMIN)){
+            throw 'no permission to operate';
+        }
+
+        const ut_doc = this.ut_mode.findOne({teamId, userId});
+        if(!ut_doc || ut_doc.status !== constant.TEAM_USER_STATUS.PENDING){
+            throw 'invalid params';
+        }
+
+        const count = await this.ut_mode.count({
+            teamId,
+            status : constant.TEAM_USER_STATUS.NORMAL
+        });
+        if(count+1 > team_doc.memberLimit){
+            throw 'member count touch the limitation';
+        }
+
+        return await this.ut_mode.update({teamId, userId}, {
+            status : constant.TEAM_USER_STATUS.NORMAL
+        });
+    }
+
+    /*
+    * only team owner or admin reject the apply request
+    *
+    * */
+    public async rejectApply(param): Promise<Document>{
+        const {teamId, userId, action} = param;
+
+        const team_doc = this.mode.findOne({_id : teamId});
+        if(!team_doc){
+            throw 'invalid team id';
+        }
+
+        // check current user is admin or team owner
+        if(!(this.currentUser._id.equals(team_doc.owner) || this.currentUser.role === constant.USER_ROLE.ADMIN)){
+            throw 'no permission to operate';
+        }
+
+        const ut_doc = this.ut_mode.findOne({teamId, userId});
+        if(!ut_doc || ut_doc.status !== constant.TEAM_USER_STATUS.PENDING){
+            throw 'invalid params';
+        }
+
+        return await this.ut_mode.update({teamId, userId}, {
+            status : constant.TEAM_USER_STATUS.REJECT
+        });
+    }
 
     public async listMember(param): Promise<Document[]>{
         const {teamId} = param;

@@ -6,11 +6,14 @@ import UserService from '@/service/UserService'
 export default createContainer(Component, (state, ownProps) => {
     return {};
 }, () => {
-    
+
     const communityService = new CommunityService()
     const userService = new UserService()
-    
+
     return {
+        async getAllCountryCommunity () {
+            return communityService.getAllCountryCommunities()
+        },
         async getCommunityDetail(communityId) {
             return communityService.get(communityId)
         },
@@ -25,6 +28,9 @@ export default createContainer(Component, (state, ownProps) => {
         },
         async getUserByIds (ids) {
             return userService.getByIds(ids)
+        },
+        async getAllUsers() {
+            return userService.getAll()
         }
     }
 })
