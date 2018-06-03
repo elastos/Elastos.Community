@@ -3,6 +3,7 @@ import {Document, Types} from 'mongoose';
 import * as _ from 'lodash';
 import {validate} from '../utility';
 import {constant} from '../constant';
+import LogService from './LogService';
 
 export default class extends Base {
     public async create(param): Promise<Document>{
@@ -83,40 +84,51 @@ export default class extends Base {
         return res;
     }
 
-    public async addMember(param): Promise<boolean>{
-        const {userId, teamId, level, role, title} = param;
+    /*
+    * member apply to add a team
+    *
+    * */
+    public async applyToAddTeam(param): Promise<boolean>{
+        const {teamId, reason} = param;
 
-        const db_team = this.getDBModel('Team');
         const db_user_team = this.getDBModel('User_Team');
-
-        const current = this.currentUser;
-        if(current._id === userId){
-            throw 'could not add yourself to team';
-        }
-
-        const tmp = await db_team.findOne({
-            _id: teamId,
-            'members.userId' : userId
+        const tmp = db_user_team.findOne({
+            userId : this.currentUser._id,
+            teamId
         });
         if(tmp){
-            throw 'user is exist';
+            if(tmp.status === constant.TEAM_USER_STATUS.PENDING){
+                throw 'user applied team before';
+            }
+            if(tmp.status === constant.TEAM_USER_STATUS.NORMAL){
+                throw 'user already in team';
+            }
+            else{
+                // reject
+                throw 'team reject this member';
+
+                // remove record first
+                // await db_user_team.remove({
+                //     userId : this.currentUser._id,
+                //     teamId
+                // });
+            }
         }
 
-        const x = await db_team.update({_id: teamId}, {
-            $addToSet : {
-                members : {
-                    userId,
-                    level,
-                    role: role || constant.TEAM_ROLE.MEMBER,
-                    title
-                }
-            }
-        });
-        if(x.n === 1){
-            await db_user_team.save({
-                userId, teamId
-            });
-        }
+        const doc = {
+            userId : this.currentUser._id,
+            teamId,
+            level : '',
+            role : constant.TEAM_ROLE.MEMBER,
+            apply_reason: reason,
+            status : constant.TEAM_USER_STATUS.PENDING
+        };
+
+        await db_user_team.save(doc);
+
+        // add log
+        const logService = this.getService(LogService);
+        await logService.applyToAddTeam(teamId, this.currentUser._id, reason);
 
         return true;
     }

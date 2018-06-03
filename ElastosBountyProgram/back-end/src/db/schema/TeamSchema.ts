@@ -45,5 +45,7 @@ export const User_Team = {
     },
     level : String,
     role : String,
-    title : String
+    title : String,
+
+    apply_reason : String
 };
