@@ -23,26 +23,23 @@ export default class extends BaseComponent {
                 <Button>Accept</Button>
             ),
         }];
-        
-        const taskData = [{
+
+        const mockData = {
             id: 1,
             title: 'Build a website',
             description: 'Description of the project',
             location: 'Online',
-        }, {
-            id: 2,
-            title: 'Build a website',
-            description: 'Description of the project',
-            location: 'Online',
-        }, {
-            key: 3,
-            title: 'Build a website',
-            description: 'Description of the project',
-            location: 'Online',
-        }]
+        }
+
+        const tasks = this.props.tasks || []
+            // Mock data
+        tasks.forEach((task) => {
+            task.location = 'Location mock'
+            task.title = 'Title mock'
+        })
 
         return (
-            <Table pagination={false} columns={columns} dataSource={taskData} />
+            <Table rowKey={record => record._id} pagination={false} columns={columns} dataSource={tasks} />
         )
     }
 }

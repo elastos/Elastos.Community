@@ -12,8 +12,13 @@ export default class extends StandardPage {
     state = {
         communities: [],
     }
+    
+    componentWillUnmount () {
+        this.props.resetTasks()
+    }
 
     componentDidMount() {
+        this.props.getSocialEvents()
         this.loadCommunities();
     }
 
@@ -30,7 +35,6 @@ export default class extends StandardPage {
         } else {
             this.props.getAllCountryCommunity().then((communities) => {
                 this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
-                    console.log('communities', communities)
                     this.setState({
                         communities
                     })
@@ -177,18 +181,13 @@ export default class extends StandardPage {
                             </Col>
                         </Row>
                     </div>
-                    <div className="ebp-page-title">
-                        <h2>
-                            Community
-                        </h2>
-                    </div>
                     <div className="ebp-page">
                         <div className="ebp-page-content">
                             <Row>
                                 <Col span={24}
                                      className="community-left-column">
                                     <div>
-                                        <h3 className="without-padding">Country Organizers</h3>
+                                        <h2 className="without-padding">Country Organizers</h2>
                                         <Row>
                                             {listCommunitiesEl}
                                         </Row>
@@ -200,13 +199,13 @@ export default class extends StandardPage {
                                 <h2>Events</h2>
                             </div>
                             <div className="wrap-events">
-                                <ListEvents />
+                                <ListEvents events={this.props.events} />
                             </div>
                             <div className="ebp-page-title">
                                 <h2>Tasks</h2>
                             </div>
                             <div className="wrap-tasks">
-                                <ListTasks />
+                                <ListTasks tasks={this.props.tasks} />
                             </div>
                         </div>
                     </div>
