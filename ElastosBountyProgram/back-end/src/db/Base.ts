@@ -84,7 +84,7 @@ export default abstract class {
         return await this.db.count(query);
     }
     public async list(query, sort?, limit?): Promise<Document>{
-        return await this.db.find(query).sort(sort || {}).limit(limit || 1000);
+        return await this.db.find(query).sort(sort || {}).limit(_.toNumber(limit) || 1000);
     }
 
     public getAggregate(){

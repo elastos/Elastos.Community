@@ -29,6 +29,9 @@ import PublicCommunityDetailPage from '@/module/page/community/PublicCommunityDe
 
 import TaskCreatePage from '@/module/page/task_create/Container'
 
+// admin team page
+import TeamListPage from '../module/page/admin/teams/TeamListPage';
+
 import NotFound from '@/module/page/error/NotFound'
 
 export default [
@@ -136,6 +139,13 @@ export default [
         path: '/admin/community/:community/country/:country/region/:region',
         page: CommunityDetailPage
     },
+
+    // admin team page
+    {
+        path : '/admin/teams',
+        page : TeamListPage
+    },
+
     {
         page: NotFound
     }

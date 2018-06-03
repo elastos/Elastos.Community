@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import {validate} from '../utility';
 import {constant} from '../constant';
 import LogService from './LogService';
+import {DataList} from './interface';
 
 export default class extends Base {
     private model;
@@ -244,6 +245,30 @@ export default class extends Base {
         const data = team_doc.toJSON();
         data.members = rs;
         return data;
+    }
+
+    /*
+    * list teams
+    *
+    * */
+    public async list(param): Promise<DataList>{
+        const limit = param.limit || 10;
+
+        // TODO add filter
+        const query = {};
+
+        const count = await this.mode.count(query);
+        const list = await this.mode.list(query, {
+            updateAt: -1
+        }, limit);
+
+        // TODO add page and pageSize
+
+        return {
+            total : count,
+            list,
+            pageSize : limit
+        }
     }
 
     // public async listMember(param): Promise<Document[]>{
