@@ -66,6 +66,9 @@ paths:
     $ref: './path/team/create.yml'
   /team/update:
     $ref: './path/team/update.yml'
+  /team/apply_add_team:
+    $ref: './path/team/apply_add_team.yml'
+
   /team/add_member:
     $ref: './path/team/add_member.yml'
   /team/list_member:

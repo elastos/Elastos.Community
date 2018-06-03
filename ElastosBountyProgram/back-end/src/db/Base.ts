@@ -26,14 +26,17 @@ export default abstract class {
                 type: Date,
                 default: Date.now
             }
-        }, this.getSchema()), {
+        }, this.getSchema()), _.extend({
             timestamps: true
-        });
+        }, this.getSchemaOption()));
 
         return schema;
     }
 
     protected abstract getSchema(): mongoose.SchemaDefinition;
+    protected getSchemaOption(): mongoose.SchemaOptions{
+        return {};
+    }
     protected abstract getName(): string;
     protected rejectFields(): object{
         return {};

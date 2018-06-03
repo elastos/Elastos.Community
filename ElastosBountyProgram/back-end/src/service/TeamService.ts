@@ -6,6 +6,13 @@ import {constant} from '../constant';
 import LogService from './LogService';
 
 export default class extends Base {
+    private mode;
+    private ut_mode;
+    protected init(){
+        this.mode = this.getDBModel('Team');
+        this.ut_mode = this.getDBModel("User_Team");
+    }
+
     public async create(param): Promise<Document>{
         const db_team = this.getDBModel('Team');
         const db_user_team = this.getDBModel("User_Team");
@@ -91,8 +98,12 @@ export default class extends Base {
     public async applyToAddTeam(param): Promise<boolean>{
         const {teamId, reason} = param;
 
-        const db_user_team = this.getDBModel('User_Team');
-        const tmp = db_user_team.findOne({
+        const team_doc = await this.mode.findOne({_id : teamId});
+        if(!team_doc){
+            throw 'invalid team id';
+        }
+
+        const tmp = await this.ut_mode.findOne({
             userId : this.currentUser._id,
             teamId
         });
@@ -124,7 +135,7 @@ export default class extends Base {
             status : constant.TEAM_USER_STATUS.PENDING
         };
 
-        await db_user_team.save(doc);
+        await this.ut_mode.save(doc);
 
         // add log
         const logService = this.getService(LogService);
