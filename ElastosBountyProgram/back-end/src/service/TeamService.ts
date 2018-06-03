@@ -205,30 +205,65 @@ export default class extends Base {
         });
     }
 
-    public async listMember(param): Promise<Document[]>{
-        const {teamId} = param;
-        const db_team = this.getDBModel('Team');
-        const aggregate = db_team.getAggregate();
+    /*
+    * get whole team data
+    * include all of members
+    *
+    * */
+    public async getWholeData(param): Promise<Document>{
+        const {teamId, status} = param;
 
-        const rs = await aggregate.match({_id : Types.ObjectId(teamId)})
-            .unwind('$members')
+        const team_doc = await this.mode.findOne({_id : teamId});
+
+        const aggregate = this.ut_mode.getAggregate();
+        const query: any = {
+            teamId : Types.ObjectId(teamId)
+        };
+        if(_.includes(constant.TEAM_USER_STATUS, status)){
+            query.status = status;
+        }
+        const rs = await aggregate.match(query)
             .lookup({
                 from : 'users',
-                localField : 'members.userId',
+                localField : 'userId',
                 foreignField : '_id',
-                as : 'members.user'
+                as : 'user'
             })
-            .unwind('$members.user')
-            .group({
-                _id : '$_id',
-                list : {
-                    $push : '$members'
-                }
-            })
-            .project({'list.user.password' : 0, 'list._id' : 0});
+            .unwind('$user')
+            .project({
+                'user.password' : 0,
+                'user.salt' : 0
+            });
 
-        return rs[0].list;
+        const data = team_doc.toJSON();
+        data.members = rs;
+        return data;
     }
+
+    // public async listMember(param): Promise<Document[]>{
+    //     const {teamId} = param;
+    //     const db_team = this.getDBModel('Team');
+    //     const aggregate = db_team.getAggregate();
+    //
+    //     const rs = await aggregate.match({_id : Types.ObjectId(teamId)})
+    //         .unwind('$members')
+    //         .lookup({
+    //             from : 'users',
+    //             localField : 'members.userId',
+    //             foreignField : '_id',
+    //             as : 'members.user'
+    //         })
+    //         .unwind('$members.user')
+    //         .group({
+    //             _id : '$_id',
+    //             list : {
+    //                 $push : '$members'
+    //             }
+    //         })
+    //         .project({'list.user.password' : 0, 'list._id' : 0});
+    //
+    //     return rs[0].list;
+    // }
 
     public validate_name(name){
         if(!validate.valid_string(name, 4)){
