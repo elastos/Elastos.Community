@@ -5,7 +5,8 @@
   line-height: 40px;
   margin-right: $gap_0;
 
-  &:hover {
+  &:hover,
+  &:focus {
     border-color: $primary_color;
     color: $primary_color;
   }

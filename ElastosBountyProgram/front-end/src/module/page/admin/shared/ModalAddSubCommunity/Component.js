@@ -15,7 +15,7 @@ export default Form.create()(
                 labelCol: {span: 6},
                 wrapperCol: {span: 18}
             }
-            
+
             let contextTitle;
             switch (communityType) {
                 case COMMUNITY_TYPE.STATE:
@@ -34,11 +34,11 @@ export default Form.create()(
 
             const footerModal = (
                 <div>
-                    <Button onClick={onCreate} type="primary">{contextTitle}</Button>
+                    <Button onClick={onCreate} type="primary" className="ant-btn-ebp">{contextTitle}</Button>
                     <Button onClick={onCancel}>Cancel</Button>
                 </div>
             )
-    
+
             const users = this.props.users || []
 
             return (

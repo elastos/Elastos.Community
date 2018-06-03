@@ -18,7 +18,7 @@ export default Form.create()(
 
             const footerModal = (
                 <div>
-                    <Button onClick={onCreate} type="primary">Apply</Button>
+                    <Button onClick={onCreate} type="primary" className="ant-btn-ebp">Apply</Button>
                     <Button onClick={onCancel}>Cancel</Button>
                 </div>
             )

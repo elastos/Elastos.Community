@@ -42,7 +42,11 @@ export default class extends Base{
         }
 
         const list = await taskService.list(query);
+        const count = await taskService.getDBModel('Task').count(query);
 
-        return this.result(1, list)
+        return this.result(1, {
+            list,
+            total: count
+        });
     }
 }
