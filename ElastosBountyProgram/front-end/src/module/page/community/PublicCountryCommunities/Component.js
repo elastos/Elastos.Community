@@ -12,7 +12,7 @@ export default class extends StandardPage {
     state = {
         communities: [],
     }
-    
+
     componentWillUnmount () {
         this.props.resetTasks()
     }
@@ -42,15 +42,15 @@ export default class extends StandardPage {
             })
         }
     }
-    
+
     mockAvatarToUsers(users) {
         users.forEach((user) => {
             user.profile.avatar = config.data.mockAvatarUrl
         })
-        
+
         return users
     }
-    
+
     // API only return list leader ids [leaderIds], so we need convert it to array object leader [leaders]
     convertCommunitiesLeaderIdsToLeaderObjects(communities) {
         return new Promise((resolve, reject) => {
@@ -59,11 +59,11 @@ export default class extends StandardPage {
                 userIds.push(...community.leaderIds)
             })
             userIds = _.uniq(userIds)
-            
+
             if (!userIds.length) {
                 return resolve([])
             }
-            
+
             this.props.getUserByIds(userIds).then((users) => {
                 users = this.mockAvatarToUsers(users) // Mock avatar url
                 const mappingIdToUserList = _.keyBy(users, '_id');
@@ -75,12 +75,12 @@ export default class extends StandardPage {
                         }
                     })
                 })
-                
+
                 resolve(communities)
             })
         })
     }
-    
+
     handleChangeCountry(geolocation) {
         if (geolocation) {
             this.props.getSpecificCountryCommunities(geolocation).then((communities) => {
@@ -88,7 +88,7 @@ export default class extends StandardPage {
                     this.setState({
                         communities
                     })
-    
+
                     this.props.history.push(`/community/country/${geolocation}`)
                 })
             })
@@ -98,7 +98,7 @@ export default class extends StandardPage {
                     this.setState({
                         communities
                     })
-    
+
                     this.props.history.push('/community')
                 })
             })

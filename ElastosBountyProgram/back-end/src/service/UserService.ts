@@ -77,6 +77,13 @@ export default class extends Base {
         });
     }
 
+    public async findAll(): Promise<Document[]>{
+        const db_user = this.getDBModel('User');
+        return await db_user.find({
+            active : true
+        });
+    }
+
     public async changePassword(param): Promise<boolean>{
         const db_user = this.getDBModel('User');
 
