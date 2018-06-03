@@ -43,6 +43,36 @@ export default class extends Base {
         return res;
     }
 
+    public async update(param): Promise<Document>{
+        const db_team = this.getDBModel('Team');
+        const team_doc = await db_team.findById(param.id, {
+            updatedAt: false
+        });
+        if(!team_doc){
+            throw 'invalid team id';
+        }
+
+        const doc = _.merge(team_doc, {
+            name : param.name,
+            type : param.type,
+            metadata : this.param_metadata(param.metadata),
+            tags : this.param_tags(param.tags),
+            profile : {
+                logo : param.logo,
+                description : param.description
+            },
+            recruiting : param.recruiting
+        });
+
+        // validate
+        this.validate_name(doc.name);
+        this.validate_type(doc.type);
+
+        console.log('update team =>', doc);
+        const res = await db_team.update({_id: param.id}, doc);
+        return res;
+    }
+
     public async addMember(param): Promise<boolean>{
         const {userId, teamId, level, role, title} = param;
 

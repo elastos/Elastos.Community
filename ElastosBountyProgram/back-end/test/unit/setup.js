@@ -45,5 +45,12 @@ global.DB = {
         metadata : 'key|value,k1|v1',
         tags : 'key1,key2',
         logo : 'logo_url'
+    },
+    TEAM_UPDATE : {
+        name : 'test team 1111',
+        description : 'this is test team 1',
+        tags : 'key1,key2',
+        logo : 'logo_url111',
+        recruiting : false
     }
 };
