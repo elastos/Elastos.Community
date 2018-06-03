@@ -81,8 +81,19 @@ export default class extends AdminPage {
     }
 
     componentDidMount() {
+        this.loadCommunities();
         this.loadCommunityDetail();
         this.loadSubCommunities();
+    }
+
+    loadCommunities() {
+        this.props.getAllCountryCommunity().then((communities) => {
+            this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
+                this.setState({
+                    communities
+                })
+            })
+        })
     }
 
     loadCommunityDetail() {
@@ -94,15 +105,15 @@ export default class extends AdminPage {
             })
         });
     }
-    
+
     mockAvatarToUsers(users) {
         users.forEach((user) => {
             user.profile.avatar = config.data.mockAvatarUrl
         })
-        
+
         return users
     }
-    
+
     // API only return list leader ids [leaderIds], so we need convert it to array object leader [leaders]
     convertCommunityLeaderIdsToLeaderObjects(community) {
         return new Promise((resolve, reject) => {
@@ -119,12 +130,12 @@ export default class extends AdminPage {
                         community.leaders.push(mappingIdToUserList[leaderId])
                     }
                 })
-                
+
                 resolve(community)
             })
         })
     }
-    
+
     convertCommunitiesLeaderIdsToLeaderObjects(communities) {
         return new Promise((resolve, reject) => {
             let userIds = []
@@ -132,11 +143,11 @@ export default class extends AdminPage {
                 userIds.push(...community.leaderIds)
             })
             userIds = _.uniq(userIds)
-    
+
             if (!userIds.length) {
                 return resolve([])
             }
-            
+
             this.props.getUserByIds(userIds).then((users) => {
                 users = this.mockAvatarToUsers(users) // Mock avatar url
                 const mappingIdToUserList = _.keyBy(users, '_id');
@@ -148,12 +159,12 @@ export default class extends AdminPage {
                         }
                     })
                 })
-                
+
                 resolve(communities)
             })
         })
     }
-    
+
     loadSubCommunities() {
         this.props.getSubCommunities(this.props.match.params['community']).then((subCommunities) => {
             this.convertCommunitiesLeaderIdsToLeaderObjects(subCommunities).then((subCommunities) => {
@@ -161,7 +172,7 @@ export default class extends AdminPage {
                 // Check which communities we will use to render
                 const listSubCommunitiesByType = this.getListSubCommunitiesByType(subCommunities, this.props.match.params['region']);
                 const breadcrumbRegions = this.getBreadcrumbRegions(subCommunities);
-    
+
                 // Update to state
                 this.setState({
                     subCommunities,
@@ -389,6 +400,27 @@ export default class extends AdminPage {
         } else {
             this.props.history.push(`/admin/community/${this.props.match.params['community']}/country/${this.props.match.params['country']}`);
         }
+    }
+
+    renderListCountriesEl() {
+        if (!this.state.communities) {
+            return null;
+        }
+
+        const communities = [];
+        const listCountriesEl = this.state.communities.map((country, index) => {
+            if (communities.includes(country.name)) {
+                return null;
+            }
+
+            communities.push(country.name);
+            return (
+                <Select.Option title={country.name} key={index}
+                               value={country.name}>{country.name}</Select.Option>
+            )
+        })
+
+        return listCountriesEl;
     }
 
     ord_renderContent () {

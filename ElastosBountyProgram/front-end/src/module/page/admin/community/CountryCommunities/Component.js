@@ -84,15 +84,15 @@ export default class extends AdminPage {
             })
         }
     }
-    
+
     mockAvatarToUsers(users) {
         users.forEach((user) => {
             user.profile.avatar = config.data.mockAvatarUrl
         })
-        
+
         return users
     }
-    
+
     // API only return list leader ids [leaderIds], so we need convert it to array object leader [leaders]
     convertCommunitiesLeaderIdsToLeaderObjects(communities) {
         return new Promise((resolve, reject) => {
@@ -101,7 +101,7 @@ export default class extends AdminPage {
                 userIds.push(...community.leaderIds)
             })
             userIds = _.uniq(userIds)
-            
+
             if (!userIds.length) {
                 return resolve([])
             }
@@ -175,21 +175,27 @@ export default class extends AdminPage {
         })
 
         // Here we only want to show communities
-        // const listCountriesEl = this.state.communities.map((country, index) => {
-        //     return (
-        //         <Select.Option title={country.name} key={index}
-        //                        value={country.geolocation}>{country.name}</Select.Option>
-        //     )
-        // })
-    
-        // Dropdown will have errors if two communities has same geolocation key
-        // At the moment, I display all countries
-        const listCountriesEl = Object.keys(config.data.mappingCountryCodeToName).map((key, index) => {
+        const communities = [];
+        const listCountriesEl = this.state.communities.map((country, index) => {
+            if (communities.includes(country.name)) {
+                return null;
+            }
+
+            communities.push(country.name);
             return (
-                <Select.Option title={config.data.mappingCountryCodeToName[key]} key={index}
-                               value={key}>{config.data.mappingCountryCodeToName[key]}</Select.Option>
+                <Select.Option title={country.name} key={index}
+                               value={country.geolocation}>{country.name}</Select.Option>
             )
         })
+
+        // Dropdown will have errors if two communities has same geolocation key
+        // At the moment, I display all countries
+        // const listCountriesEl = Object.keys(config.data.mappingCountryCodeToName).map((key, index) => {
+        //     return (
+        //         <Select.Option title={config.data.mappingCountryCodeToName[key]} key={index}
+        //                        value={key}>{config.data.mappingCountryCodeToName[key]}</Select.Option>
+        //     )
+        // })
 
         const menuCountriesEl = (
             <Select
