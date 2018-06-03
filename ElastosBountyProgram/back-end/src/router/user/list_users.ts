@@ -8,7 +8,11 @@ export default class extends Base {
 
         const userIds = this.getParam('userIds');
 
-        return await this.show(userIds);
+        if (userIds) {
+            return await this.show(userIds);
+        } else {
+            return await this.listUser();
+        }
     }
 
     async show(userIds) {
@@ -18,6 +22,14 @@ export default class extends Base {
         const users = await userService.findUsers({
             userIds : arrayIds
         });
+
+        return this.result(1, users);
+    }
+
+    async listUser() {
+        console.log('xxx');
+        const userService = this.buildService(UserService);
+        const users = await userService.findAll();
 
         return this.result(1, users);
     }

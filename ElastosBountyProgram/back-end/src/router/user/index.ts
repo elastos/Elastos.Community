@@ -31,5 +31,10 @@ export default Base.setRouter([
         path : '/:userIds/users',
         router : list_users,
         method : 'get'
+    },
+    {
+        path : '/list',
+        router : list_users,
+        method : 'get'
     }
 ]);

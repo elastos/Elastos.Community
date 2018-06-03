@@ -22,6 +22,8 @@ export default Form.create()(
                     <Button onClick={onCancel}>Cancel</Button>
                 </div>
             )
+    
+            const users = this.props.users || []
 
             return (
                 <Modal
@@ -60,8 +62,8 @@ export default Form.create()(
                                     placeholder="Please select a member"
                                     filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                                 >
-                                    {config.data.mockDataAllLeaders.map((leader, index) => {
-                                        return (<Select.Option key={index} value={leader.id}>{leader.name}</Select.Option>)
+                                    {users.map((leader, index) => {
+                                        return (<Select.Option key={index} value={leader._id}>{leader.profile.firstName + ' ' + leader.profile.lastName}</Select.Option>)
                                     })}
                                 </Select>
                             )}

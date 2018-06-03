@@ -347,5 +347,27 @@ export default {
         za: 'South Africa',
         zm: 'Zambia',
         zw: 'Zimbabwe'
+    },
+    mappingSubCommunityTypesAndName: {
+        STATE: {
+            tabName: 'State',
+            addNewText: 'Add state',
+            pluralName: 'States / Provinces',
+        },
+        CITY: {
+            tabName: 'City',
+            addNewText: 'Add city',
+            pluralName: 'Cities',
+        },
+        REGION: {
+            tabName: 'Region',
+            addNewText: 'Add region',
+            pluralName: 'Regions',
+        },
+        SCHOOL: {
+            tabName: 'School',
+            addNewText: 'Add school',
+            pluralName: 'Schools',
+        },
     }
 }

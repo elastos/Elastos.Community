@@ -87,4 +87,13 @@ export default class extends BaseService {
 
         return result
     }
+    
+    async getAll() {
+        const result = await api_request({
+            path : `/user/list`,
+            method : 'get',
+        });
+
+        return result
+    }
 }

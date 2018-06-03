@@ -9,7 +9,6 @@ export default class extends Base {
     async action(){
 
         const communityId = this.getParam('communityId');
-        console.log('communityId', communityId);
         return await this.show(communityId);
     }
 
