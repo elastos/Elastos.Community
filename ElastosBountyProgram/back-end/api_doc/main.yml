@@ -74,7 +74,8 @@ paths:
     $ref: './path/team/reject_apply.yml'
   /team/get:
     $ref: './path/team/get.yml'
-
+  /team/list:
+    $ref: './path/team/list.yml'
   /team/list_member:
     $ref: './path/team/list_member.yml'
 
