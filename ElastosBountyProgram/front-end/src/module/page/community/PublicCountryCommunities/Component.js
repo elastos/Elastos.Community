@@ -104,9 +104,33 @@ export default class extends StandardPage {
             })
         }
     }
-
-    ord_renderContent () {
-        const listCommunitiesEl = this.state.communities.map((community, index) => {
+    
+    renderBreadcrumbCountries() {
+        const geolocationKeys = _.keyBy(this.state.communities, 'geolocation');
+        const listCountriesEl = Object.keys(geolocationKeys).map((geolocation, index) => {
+            return (
+                <Select.Option title={config.data.mappingCountryCodeToName[geolocation]} key={index}
+                               value={geolocation}>{config.data.mappingCountryCodeToName[geolocation]}</Select.Option>
+            )
+        })
+    
+        return (
+            <Select
+                allowClear
+                value={this.props.match.params['country'] || undefined}
+                showSearch
+                style={{width: 160}}
+                placeholder="Select a country"
+                optionFilterProp="children"
+                onChange={this.handleChangeCountry.bind(this)}
+            >
+                {listCountriesEl}
+            </Select>
+        )
+    }
+    
+    renderListCommunities() {
+        return this.state.communities.map((community, index) => {
             return (
                 <div key={index}>
                     {community.leaders.map((leader) => {
@@ -128,36 +152,11 @@ export default class extends StandardPage {
                 </div>
             )
         })
+    }
 
-        // const listCountriesEl = this.state.communities.map((country, index) => {
-        //     return (
-        //         <Select.Option title={country.name} key={index}
-        //                        value={country.geolocation}>{country.name}</Select.Option>
-        //     )
-        // })
-
-        // Dropdown will have errors if two communities has same geolocation key
-        // At the moment, I display all countries
-        const listCountriesEl = Object.keys(config.data.mappingCountryCodeToName).map((key, index) => {
-            return (
-                <Select.Option title={config.data.mappingCountryCodeToName[key]} key={index}
-                               value={key}>{config.data.mappingCountryCodeToName[key]}</Select.Option>
-            )
-        })
-
-        const menuCountriesEl = (
-            <Select
-                allowClear
-                value={this.props.match.params['country'] || undefined}
-                showSearch
-                style={{width: 160}}
-                placeholder="Select a country"
-                optionFilterProp="children"
-                onChange={this.handleChangeCountry.bind(this)}
-            >
-                {listCountriesEl}
-            </Select>
-        )
+    ord_renderContent () {
+        const listCommunitiesEl = this.renderListCommunities()
+        const menuCountriesEl = this.renderBreadcrumbCountries()
 
         return (
             <div className="p_Community">

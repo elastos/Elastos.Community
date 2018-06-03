@@ -12,7 +12,8 @@ import '../style.scss'
 export default class extends AdminPage {
     state = {
         visibleModalAddCountry: false,
-        communities: []
+        communities: [],
+        users: []
     }
 
     // Modal add country
@@ -42,10 +43,9 @@ export default class extends AdminPage {
             form.resetFields()
             this.setState({visibleModalAddCountry: false})
 
-            console.log('values', values);
             this.props.addCountry({
                 geolocation: values.geolocation,
-                leaderIds: config.data.mockDataLeaderId, // Just mock data, in future use may set it from values.leaderId
+                leaderIds: values['leader'],
             }).then(() => {
                 message.success('Add new country successfully')
 
@@ -62,6 +62,11 @@ export default class extends AdminPage {
 
     componentDidMount() {
         this.loadCommunities();
+        this.props.getAllUsers().then((users) => {
+            this.setState({
+                users
+            })
+        })
     }
 
     loadCommunities() {
@@ -143,25 +148,33 @@ export default class extends AdminPage {
         }
     }
 
-    renderListCountriesEl() {
-        // Here we only want to show communities
-        const communities = [];
-        const listCountriesEl = this.state.communities.map((country, index) => {
-            if (communities.includes(country.name)) {
-                return null;
-            }
-
-            communities.push(country.name);
+    renderBreadcrumbCountries() {
+        const geolocationKeys = _.keyBy(this.state.communities, 'geolocation');
+        const listCountriesEl = Object.keys(geolocationKeys).map((geolocation, index) => {
             return (
-                <Select.Option title={country.name} key={index}
-                               value={country.geolocation}>{country.name}</Select.Option>
+                <Select.Option title={config.data.mappingCountryCodeToName[geolocation]} key={index}
+                               value={geolocation}>{config.data.mappingCountryCodeToName[geolocation]}</Select.Option>
             )
         })
-
-        return listCountriesEl;
+    
+        const menuCountriesEl = (
+            <Select
+                allowClear
+                value={this.props.match.params['country'] || undefined}
+                showSearch
+                style={{width: 160}}
+                placeholder="Select a country"
+                optionFilterProp="children"
+                onChange={this.handleChangeCountry.bind(this)}
+            >
+                {listCountriesEl}
+            </Select>
+        )
+        
+        return menuCountriesEl
     }
-
-    ord_renderContent () {
+    
+    renderListCommunities() {
         const listCommunitiesEl = this.state.communities.map((community, index) => {
             return (
                 <Col span={6} key={index} className="user-card">
@@ -191,29 +204,13 @@ export default class extends AdminPage {
                 </Col>
             )
         })
+        
+        return listCommunitiesEl
+    }
 
-        // Dropdown will have errors if two communities has same geolocation key
-        // At the moment, I display all countries
-        // const listCountriesEl = Object.keys(config.data.mappingCountryCodeToName).map((key, index) => {
-        //     return (
-        //         <Select.Option title={config.data.mappingCountryCodeToName[key]} key={index}
-        //                        value={key}>{config.data.mappingCountryCodeToName[key]}</Select.Option>
-        //     )
-        // })
-
-        const menuCountriesEl = (
-            <Select
-                allowClear
-                value={this.props.match.params['country'] || undefined}
-                showSearch
-                style={{width: 160}}
-                placeholder="Select a country"
-                optionFilterProp="children"
-                onChange={this.handleChangeCountry.bind(this)}
-            >
-                {this.renderListCountriesEl.bind(this)}
-            </Select>
-        )
+    ord_renderContent () {
+        const listCommunitiesEl = this.renderListCommunities()
+        const menuCountriesEl = this.renderBreadcrumbCountries()
 
         return (
             <div className="p_admin_index ebp-wrap c_adminCommunity">
@@ -244,6 +241,7 @@ export default class extends AdminPage {
                                     </Row>
 
                                     <ModalAddCountry
+                                        users={this.state.users}
                                         wrappedComponentRef={this.saveFormAddCountryRef}
                                         visible={this.state.visibleModalAddCountry}
                                         onCancel={this.handleCancelModalAddCountry}

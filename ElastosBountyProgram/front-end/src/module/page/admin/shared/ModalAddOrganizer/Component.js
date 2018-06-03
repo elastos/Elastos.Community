@@ -29,6 +29,8 @@ export default Form.create()(
                     </Select.Option>
                 )
             })
+    
+            const users = this.props.users || []
 
             return (
                 <Modal
@@ -66,8 +68,9 @@ export default Form.create()(
                                     placeholder="Please select a member"
                                     filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                                 >
-                                    <Select.Option value="John Nguyen">John Nguyen</Select.Option>
-                                    <Select.Option value="David">David</Select.Option>
+                                    {users.map((leader, index) => {
+                                        return (<Select.Option key={index} value={leader._id}>{leader.profile.firstName + ' ' + leader.profile.lastName}</Select.Option>)
+                                    })}
                                 </Select>
                             )}
                         </FormItem>

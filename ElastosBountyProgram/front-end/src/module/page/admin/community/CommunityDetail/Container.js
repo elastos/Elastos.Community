@@ -28,6 +28,9 @@ export default createContainer(Component, (state, ownProps) => {
         },
         async getUserByIds (ids) {
             return userService.getByIds(ids)
+        },
+        async getAllUsers() {
+            return userService.getAll()
         }
     }
 })
