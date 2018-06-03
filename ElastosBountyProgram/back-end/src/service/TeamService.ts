@@ -144,6 +144,8 @@ export default class extends Base {
         return true;
     }
 
+    public async
+
     public async listMember(param): Promise<Document[]>{
         const {teamId} = param;
         const db_team = this.getDBModel('Team');
