@@ -23,7 +23,7 @@ beforeAll(async ()=>{
 
 describe('test for team', ()=>{
 
-    test('create team', async ()=>{
+    test('create team and update team', async ()=>{
         const teamService = new TeamService(DB, {
             user : user.member
         });
@@ -31,5 +31,13 @@ describe('test for team', ()=>{
         // create team
         const team: any = await teamService.create(global.DB.TEAM_1);
         expect(team.owner).toBe(user.member._id);
+
+        // update team
+        const rs1: any = await teamService.update({
+            ...global.DB.TEAM_UPDATE,
+            id : team._id
+        });
+        expect(rs1.ok).toBe(1);
+
     });
 });
