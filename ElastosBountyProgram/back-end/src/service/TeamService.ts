@@ -150,7 +150,7 @@ export default class extends Base {
     public async acceptApply(param): Promise<Document>{
         const {teamId, userId, action} = param;
 
-        const team_doc = this.mode.findOne({_id : teamId});
+        const team_doc = await this.mode.findOne({_id : teamId});
         if(!team_doc){
             throw 'invalid team id';
         }
@@ -160,7 +160,7 @@ export default class extends Base {
             throw 'no permission to operate';
         }
 
-        const ut_doc = this.ut_mode.findOne({teamId, userId});
+        const ut_doc = await this.ut_mode.findOne({teamId, userId});
         if(!ut_doc || ut_doc.status !== constant.TEAM_USER_STATUS.PENDING){
             throw 'invalid params';
         }
@@ -185,7 +185,7 @@ export default class extends Base {
     public async rejectApply(param): Promise<Document>{
         const {teamId, userId, action} = param;
 
-        const team_doc = this.mode.findOne({_id : teamId});
+        const team_doc = await this.mode.findOne({_id : teamId});
         if(!team_doc){
             throw 'invalid team id';
         }
@@ -195,7 +195,7 @@ export default class extends Base {
             throw 'no permission to operate';
         }
 
-        const ut_doc = this.ut_mode.findOne({teamId, userId});
+        const ut_doc = await this.ut_mode.findOne({teamId, userId});
         if(!ut_doc || ut_doc.status !== constant.TEAM_USER_STATUS.PENDING){
             throw 'invalid params';
         }
