@@ -7,21 +7,40 @@ import { Link } from 'react-router-dom';
 import './style.scss'
 
 export default class extends BaseComponent {
+
+    handleMenuClick(item, key, keyPath) {
+
+        switch (item.key) {
+            case 'profileInfo':
+                this.props.history.push('/profile/info')
+                break
+
+            case 'profileTasks':
+                this.props.history.push('/profile/tasks')
+                break
+
+            case 'profileTeams':
+                this.props.history.push('/profile/teams')
+                break
+        }
+    }
+
     ord_render () {
         // TODO check why we can not use redirect use this.props.history
         return (
             <Menu
                 defaultSelectedKeys={[this.props.selectedItem]}
+                onClick={this.handleMenuClick.bind(this)}
                 mode="inline"
             >
                 <Menu.Item key="profileInfo">
-                    <Link to="/profile/info">{I18N.get('2300')}</Link>
+                    {I18N.get('2300')}
                 </Menu.Item>
                 <Menu.Item key="profileTasks">
-                    <Link to="/profile/tasks">{I18N.get('2301')}</Link>
+                    {I18N.get('2301')}
                 </Menu.Item>
                 <Menu.Item key="profileTeams">
-                    <Link to="/profile/teams">{I18N.get('2302')}</Link>
+                    {I18N.get('2302')}
                 </Menu.Item>
             </Menu>
         )

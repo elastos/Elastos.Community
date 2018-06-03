@@ -45,6 +45,14 @@
   margin-top: $gap_2;
   padding: 0 $gap_2 $gap_3;
 
+  > .d_row,
+  > .d_row > .d_box {
+    min-height: inherit
+  }
+
+  .d_leftContainer {
+    border-right: 1px solid $border_gray;
+  }
 }
 
 // this is for the grey description row

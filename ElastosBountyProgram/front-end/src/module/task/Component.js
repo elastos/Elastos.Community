@@ -7,6 +7,14 @@ import {TASK_STATUS} from '@/constant'
 
 import './style.scss'
 
+/**
+ * This has 3 views
+ *
+ * 1. Public
+ * 2. Admin
+ * 3. Edit
+ *
+ */
 export default class extends BaseComponent {
 
     renderMain() {
@@ -49,87 +57,102 @@ export default class extends BaseComponent {
     }
 
     renderDetail() {
-        return <div>
+        if (this.props.page === 'admin') {
+            return this.renderAdminDetail()
+        } else {
+            return this.renderPublicDetail()
+        }
+    }
+
+    renderPublicDetail() {
+
+    }
+
+    renderAdminDetail() {
+
+        return (
+            <div>
+                <Row>
+                    <Col span={8} className="gridCol right-align">
+                        <h4>
+                            Task Name
+                        </h4>
+                    </Col>
+                    <Col span={16} className="gridCol">
+                        <h3>
+                            {this.props.task.name}
+                        </h3>
+                    </Col>
+                </Row>
                 <Row>
                 <Col span={8} className="gridCol right-align">
-                    <h4>
-                        Task Name
-                    </h4>
+                Community
                 </Col>
                 <Col span={16} className="gridCol">
-                    <h3>
-                        {this.props.task.name}
-                    </h3>
+                    {this.props.task.community}
                 </Col>
-            </Row>
-            <Row>
-            <Col span={8} className="gridCol right-align">
-            Community
-            </Col>
-            <Col span={16} className="gridCol">
-                {this.props.task.community}
-            </Col>
-            </Row>
-            <Row>
+                </Row>
+                <Row>
+                    <Col span={8} className="gridCol right-align">
+                        Leader
+                    </Col>
+                    <Col span={16} className="gridCol">
+                        {this.props.task.createdBy}
+                    </Col>
+                </Row>
+                <Row>
                 <Col span={8} className="gridCol right-align">
-                    Leader
-                </Col>
+                    Category
+                    </Col>
                 <Col span={16} className="gridCol">
-                    {this.props.task.createdBy}
+                    {this.props.task.category}
                 </Col>
-            </Row>
-            <Row>
-            <Col span={8} className="gridCol right-align">
-                Category
-                </Col>
-            <Col span={16} className="gridCol">
-                {this.props.task.category}
-            </Col>
-            </Row>
-            <Row>
+                </Row>
+                <Row>
+                    <Col span={8} className="gridCol right-align">
+                        Type
+                    </Col>
+                    <Col span={16} className="gridCol">
+                        {this.props.task.type}
+                    </Col>
+                </Row>
+                <Row>
                 <Col span={8} className="gridCol right-align">
-                    Type
-                </Col>
+                    Description
+                    </Col>
                 <Col span={16} className="gridCol">
-                    {this.props.task.type}
+                    <p>
+                        {this.props.task.description ?
+                            this.props.task.description :
+                            <span className="no-info">no description</span>
+                        }
+                    </p>
                 </Col>
-            </Row>
-            <Row>
-            <Col span={8} className="gridCol right-align">
-                Description
-                </Col>
-            <Col span={16} className="gridCol">
-                <p>
-                    {this.props.task.description ?
-                        this.props.task.description :
-                        <span className="no-info">no description</span>
-                    }
-                </p>
-            </Col>
-            </Row>
+                </Row>
 
-            <Divider>ELA Requested</Divider>
+                <Divider>ELA Requested</Divider>
 
-            <Row>
-            <Col span={8} className="gridCol right-align">
-                Upfront
-                </Col>
-            <Col span={16} className="gridCol">
-                {this.props.task.rewardUpfront.ela / 1000}
-            </Col>
-            </Row>
-
-            <Row>
+                <Row>
                 <Col span={8} className="gridCol right-align">
-                    Reward
-                </Col>
+                    Upfront
+                    </Col>
                 <Col span={16} className="gridCol">
-                    {this.props.task.reward.ela / 1000}
+                    {this.props.task.rewardUpfront.ela / 1000}
                 </Col>
-            </Row>
+                </Row>
 
-            <Divider>Attachments</Divider>
-        </div>
+                <Row>
+                    <Col span={8} className="gridCol right-align">
+                        Reward
+                    </Col>
+                    <Col span={16} className="gridCol">
+                        {this.props.task.reward.ela / 1000}
+                    </Col>
+                </Row>
+
+                <Divider>Attachments</Divider>
+            </div>
+        )
     }
 
     ord_render () {

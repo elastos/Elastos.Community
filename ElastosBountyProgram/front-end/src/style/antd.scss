@@ -29,7 +29,15 @@
 }
 
 .ant-menu-item {
+
+  &.ant-menu-item-active {
+    color: $primary_color;
+  }
+
   &.ant-menu-item-selected {
+
+    color: $primary_dark_color;
+    font-weight: 500;
 
     > a {
       font-weight: 500;

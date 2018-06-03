@@ -13,7 +13,9 @@ import TaskDetailPage from '@/module/page/task_detail/Container'
 import LoginPage from '@/module/page/login/Container'
 import RegisterPage from '@/module/page/register/Container'
 
-import ProfilePage from '@/module/page/profile/info/Container'
+import ProfileInfoPage from '@/module/page/profile/info/Container'
+import ProfileTasksPage from '@/module/page/profile/tasks/Container'
+import ProfileTeamsPage from '@/module/page/profile/teams/Container'
 
 import AdminUsersPage from '@/module/page/admin/users/Container'
 import AdminTasksPage from '@/module/page/admin/tasks/Container'
@@ -80,11 +82,15 @@ export default [
     },
     {
         path: '/profile/info',
-        page: ProfilePage
+        page: ProfileInfoPage
     },
     {
         path: '/profile/tasks',
-        page: ProfilePage
+        page: ProfileTasksPage
+    },
+    {
+        path: '/profile/tasks',
+        page: ProfileTeamsPage
     },
     {
         path: '/admin/users',

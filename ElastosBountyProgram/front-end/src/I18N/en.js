@@ -11,7 +11,7 @@ export default {
     '0009': 'FAQ',
     '0010': 'Contact',
 
-    '0100': 'Developer',
+    '0100': 'Developers',
     '0101': 'Social',
     '0102': 'Leader',
 

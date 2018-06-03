@@ -1,15 +1,21 @@
-import React from 'react';
-import StandardPage from '../../StandardPage';
+import React from 'react'
+import StandardPage from '../../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import Navigator from '@/module/page/shared/Navigator/Container'
+
+import config from '@/config'
 
 import './style.scss'
 import '../../admin/admin.scss'
 
 import { Col, Row, Icon, Form, Input, Button, Dropdown } from 'antd'
-const FormItem = Form.Item;
+const FormItem = Form.Item
 
 export default class extends StandardPage {
+
+    getCountryName(countryCode) {
+        return config.data.mappingCountryCodeToName[countryCode]
+    }
 
     ord_renderContent () {
 
@@ -65,9 +71,49 @@ export default class extends StandardPage {
                                             {this.props.profile.lastName}
                                         </Col>
                                     </Row>
+                                    <Row>
+                                        <Col span={8} className="gridCol right-align">
+                                            Country
+                                        </Col>
+                                        <Col span={16} className="gridCol">
+                                            {this.getCountryName(this.props.profile.country)}
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col span={8} className="gridCol right-align">
+                                            State/Province
+                                        </Col>
+                                        <Col span={16} className="gridCol">
+                                            {this.props.profile.state}
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col span={8} className="gridCol right-align">
+                                            City
+                                        </Col>
+                                        <Col span={16} className="gridCol">
+                                            {this.props.profile.city}
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col span={8} className="gridCol right-align">
+                                            Do you want to be an organizer?
+                                        </Col>
+                                        <Col span={16} className="gridCol">
+                                            {this.props.profile.beOrganizer ? 'Yes' : 'No'}
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col span={8} className="gridCol right-align">
+                                            Are you a software developer or engineer?
+                                        </Col>
+                                        <Col span={16} className="gridCol">
+                                            {this.props.profile.isDeveloper ? 'Yes' : 'No'}
+                                        </Col>
+                                    </Row>
                                 </Col>
                                 <Col span={4} className="admin-right-column wrap-box-navigator">
-                                    <Navigator selectedItem={'profileInfo'}/>
+                                    <Navigator selectedItem={'profileInfo'} />
                                 </Col>
                             </Row>
                         </div>

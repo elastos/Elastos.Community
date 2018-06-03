@@ -73,8 +73,8 @@ export default class extends StandardPage {
                     </p>
                 </div>
                 <div className="ebp-page">
-                    <Row className="d_rowTop">
-                        <Col span={16} className="d_box">
+                    <Row className="d_row d_rowTop">
+                        <Col span={16} className="d_leftContainer d_box">
                             <div className="pull-left">
                                 <h3>
                                     Join Training and Developer Events
@@ -108,8 +108,8 @@ export default class extends StandardPage {
                     </div>
                 </div>
                 <div className="ebp-page">
-                    <Row>
-                        <Col span={16} className="d_box">
+                    <Row className="d_row">
+                        <Col span={16} className="d_leftContainer d_box">
                             <div>
                                 <h3 className="pull-left">
                                     Available Developer Tasks and Open Issues
@@ -143,7 +143,7 @@ export default class extends StandardPage {
     }
 
     linkTaskDetail(taskId) {
-        this.props.history.push(`/admin/task-detail/${taskId}`)
+        this.props.history.push(`/task-detail/${taskId}`)
     }
 
     createTaskLink () {
