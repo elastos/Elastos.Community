@@ -100,6 +100,10 @@ export const Task = {
         default : constant.TASK_TYPE.TASK
     },
 
+    location: String,
+
+    infoLink: String,
+
     startTime : {
         type : Date,
         required : false,
@@ -110,6 +114,8 @@ export const Task = {
         type : Date,
         required : false
     },
+
+    applicationDeadline: Date,
 
     /*
     * constants.TASK_STATUS

@@ -7,7 +7,8 @@ export default createContainer(Component, (state) => {
     // TODO: need some more tracking of options here
 
     return {
-        ...state.task.detail
+        task: state.task.detail,
+        loading: state.task.loading
     }
 }, () => {
     const taskService = new TaskService()
