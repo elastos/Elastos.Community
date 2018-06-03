@@ -44,12 +44,18 @@ export default class extends Base {
     }
 
     public async update(param): Promise<Document>{
+        if(!param.id){
+            throw 'invalid team id'
+        }
         const db_team = this.getDBModel('Team');
-        const team_doc = await db_team.findById(param.id, {
+        const team_doc = await db_team.getDBInstance().findOne({_id : param.id}, {
             updatedAt: false
         });
         if(!team_doc){
             throw 'invalid team id';
+        }
+        if(!(this.currentUser._id.equals(team_doc.owner) || this.currentUser.role === constant.USER_ROLE.ADMIN)){
+            throw 'no permission to operate';
         }
 
         const doc = _.merge(team_doc, {
@@ -70,6 +76,10 @@ export default class extends Base {
 
         console.log('update team =>', doc);
         const res = await db_team.update({_id: param.id}, doc);
+        if(res.ok){
+            return doc;
+        }
+
         return res;
     }
 

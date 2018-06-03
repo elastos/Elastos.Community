@@ -19,10 +19,12 @@ beforeAll(async ()=>{
     });
     user.member = await userService.registerNewUser(global.DB.MEMBER_USER);
     user.admin = await userService.getDBModel('User').findOne(global.DB.ADMIN_USER);
+
+    // empty team collection
+    await DB.getModel('Team').remove({});
 });
 
 describe('test for team', ()=>{
-
     test('create team and update team', async ()=>{
         const teamService = new TeamService(DB, {
             user : user.member
@@ -37,7 +39,7 @@ describe('test for team', ()=>{
             ...global.DB.TEAM_UPDATE,
             id : team._id
         });
-        expect(rs1.ok).toBe(1);
+        expect(rs1.name).not.toBeNull();
 
     });
 });

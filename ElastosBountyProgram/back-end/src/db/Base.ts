@@ -72,6 +72,11 @@ export default abstract class {
         return await this.db.update(query, doc, this.buildUpdateOptions(opts));
     }
 
+    // TODO why can not run, will lead a memory leak error.
+    public async findOneAndUpdate(query, doc, opts?): Promise<Document>{
+        return await this.db.findOneAndUpdate(query, doc, opts);
+    }
+
     public async count(query): Promise<number>{
         return await this.db.count(query);
     }
