@@ -9,11 +9,17 @@ import update from './update';
 import get_with_country from './get_with_country';
 import get_child from './get_child';
 import delete_community from './delete';
+import get_all from './get_all';
 
 export default Base.setRouter([
     {
         path : '/',
         router : get,
+        method : 'get'
+    },
+    {
+        path : '/all',
+        router : get_all,
         method : 'get'
     },
     {

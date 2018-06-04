@@ -1,6 +1,6 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import {Form, Icon, Input, InputNumber, Button, Checkbox, Select, message, Row, Col, Upload} from 'antd'
+import {Form, Icon, Input, InputNumber, Button, Checkbox, Select, message, Row, Col, Upload, Cascader} from 'antd'
 
 import {upload_file} from "@/util";
 import './style.scss'
@@ -29,12 +29,20 @@ const TextArea = Input.TextArea
  * - a local event can have sub tasks, these are shown as tasks in the Social page
  */
 class C extends BaseComponent {
+    state = {
+        communityTrees: []
+    }
 
     handleSubmit (e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Task submit - received values of form: ', values)
+    
+                // Only get the last selected level
+                if (values.taskCommunity) {
+                    values.taskCommunity = values.taskCommunity[values.taskCommunity.length - 1]
+                }
 
                 if (this.state.editing) {
                     this.props.updateTask(values, this.state);
@@ -42,7 +50,6 @@ class C extends BaseComponent {
                 } else {
                     this.props.createTask(values, this.state);
                 }
-
             }
         })
     }
@@ -96,9 +103,7 @@ class C extends BaseComponent {
 
         const taskCommunity_fn = getFieldDecorator('taskCommunity')
         const taskCommunity_el = (
-            <Select>
-
-            </Select>
+            <Cascader options={this.state.communityTrees} placeholder="" />
         )
 
         const taskDesc_fn = getFieldDecorator('taskDesc', {
@@ -191,6 +196,18 @@ class C extends BaseComponent {
 
             thumbnail: thumbnail_fn(thumbnail_el)
         }
+    }
+    
+    componentDidMount() {
+        this.getCommunityTrees()
+    }
+    
+    getCommunityTrees() {
+        this.props.getAllCommunities().then((communityTrees) => {
+            this.setState({
+                communityTrees
+            })
+        })
     }
 
     ord_render () {

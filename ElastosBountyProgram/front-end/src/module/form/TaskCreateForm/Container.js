@@ -1,7 +1,9 @@
 import {createContainer, goPath} from "@/util";
 import Component from './Component';
 import TaskService from '@/service/TaskService';
-import {message} from 'antd';
+import CommunityService from '@/service/CommunityService'
+import {message} from 'antd'
+import _ from 'lodash'
 
 message.config({
     top: 100
@@ -14,6 +16,7 @@ export default createContainer(Component, (state)=>{
     };
 }, ()=>{
     const taskService = new TaskService();
+    const communityService = new CommunityService();
 
     return {
         async createTask(formData, st){
@@ -85,6 +88,38 @@ export default createContainer(Component, (state)=>{
                 // message.error('There was an error creating this task')
                 message.error(err.message) // TODO: add rollbar?
             }
+        },
+    
+        async getAllCommunities() {
+            return new Promise((resolve, reject) => {
+                communityService.getAll().then((data) => {
+                    const cascaderItems =  data.map((item) => {
+                        return {
+                            value: item._id,
+                            label: item.name,
+                            parentId: item.parentCommunityId,
+                        }
+                    })
+
+                    const rootCascaderItems = _.filter(cascaderItems, {
+                        parentId: null
+                    })
+    
+                    rootCascaderItems.forEach((rootCascaderItem) => {
+                        const children = _.filter(cascaderItems, {
+                            parentId: rootCascaderItem.value
+                        })
+                        
+                        if (children && children.length) {
+                            rootCascaderItem.children = children
+                        }
+                    })
+
+                    resolve(rootCascaderItems)
+                }).catch((err) => {
+                    reject(err)
+                })
+            })
         }
     };
 });
