@@ -40,6 +40,17 @@ export default createContainer(Component, (state) => {
                 message.error(err.message)
             }
 
+        },
+
+        async pullCandidate(taskId, taskCandidateId) {
+            try {
+                const result = await taskService.pullCandidate(taskId, taskCandidateId)
+
+                return result
+            } catch (err) {
+                console.error(err)
+                message.error(err.message)
+            }
         }
     }
 })

@@ -93,7 +93,7 @@ export default class extends BaseService {
         const taskRedux = this.store.getRedux('task')
 
         const result = await api_request({
-            path: `/task/addCandidate/${taskId}`,
+            path: '/task/addCandidate',
             method: 'post',
             data: {
                 taskId,
@@ -111,6 +111,30 @@ export default class extends BaseService {
 
         return result
     }
+
+    async pullCandidate(taskId, taskCandidateId) {
+        const taskRedux = this.store.getRedux('task')
+        const result = await api_request({
+            path: '/task/removeCandidate',
+            method: 'post',
+            data: {
+                taskId,
+                taskCandidateId
+            }
+        })
+
+        const curTaskDetail = this.store.getState().task.detail
+
+        _.remove(curTaskDetail.candidates, (candidate) => {
+            return candidate._id === taskCandidateId
+        })
+
+        this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
+
+        return result
+    }
+
+
 
     async setFilter(options) {
         const taskRedux = this.store.getRedux('task')

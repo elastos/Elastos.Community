@@ -4,7 +4,7 @@ import moment from 'moment'
 
 import ModalApplyTask from '../ModalApplyTask/Component'
 
-import { Col, Row, Button, Divider, message, List, Icon, Tooltip } from 'antd'
+import { Col, Row, Button, Divider, message, List, Icon, Tooltip, Popconfirm } from 'antd'
 
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS} from '@/constant'
 
@@ -141,10 +141,28 @@ export default class extends BaseComponent {
                             dataSource={this.props.task.candidates}
                             renderItem={(candidate) => {
 
-                                const listItemActions = [candidate.type === 'USER' ? <Icon type="user"/> : <Icon type="team"/>]
+                                const listItemActions = [candidate.type === 'USER' ?
+                                    <Tooltip title="Solo User">
+                                        <Icon type="user"/>
+                                    </Tooltip> :
+                                    <Tooltip title="Team">
+                                        <Icon type="team"/>
+                                    </Tooltip>]
+
                                 // if the candidate is the logged in user, show remove icon
                                 if (candidate.type === 'USER' && candidate.user._id === this.props.userId) {
-                                    listItemActions.unshift(<Tooltip title={`remove ${candidate.type === 'USER' ? 'self' : 'team'}`}><a>x</a></Tooltip>)
+                                    listItemActions.unshift(
+                                        <Tooltip title={`remove ${candidate.type === 'USER' ? 'self' : 'team'}`}>
+                                            <Popconfirm
+                                                title="Are you sure you want to remove your application?"
+                                                onConfirm={this.removeApplication.bind(this, candidate._id)}
+                                                placement="left"
+                                                okText="Yes"
+                                                cancelText="No"
+                                            >
+                                                <a href="#">x</a>
+                                            </Popconfirm>
+                                        </Tooltip>)
                                 }
 
                                 return <List.Item actions={listItemActions}>
@@ -247,6 +265,13 @@ export default class extends BaseComponent {
             this.handleCancelModalApplyTask()
             message.error(err.message, 10)
         })
+
+    }
+
+    async removeApplication(tcId) {
+        const taskId = this.props.task._id
+        const res = await this.props.pullCandidate(taskId, tcId)
+
 
     }
 }

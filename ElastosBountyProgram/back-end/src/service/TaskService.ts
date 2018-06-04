@@ -1,9 +1,11 @@
 import Base from './Base';
-import {Document} from 'mongoose';
+import {Document, Types} from 'mongoose';
 import * as _ from 'lodash';
 import {constant} from '../constant';
 import {validate, crypto} from '../utility';
 import UserService from "./UserService";
+
+const ObjectId = Types.ObjectId;
 
 const restrictedFields = {
     update: [
@@ -240,8 +242,36 @@ export default class extends Base {
      * @returns {Promise<boolean>}
      */
     public async removeCandidate(param): Promise<boolean> {
-        const {taskId, userId, teamId, applyMsg} = param;
+        const {taskId, taskCandidateId} = param;
 
+        // TODO: permission checks
+
+        const doc = {
+            _id: taskCandidateId
+        }
+
+        const db_tc = this.getDBModel('Task_Candidate');
+        await db_tc.remove(doc);
+
+        const db_task = this.getDBModel('Task');
+        const task = await db_task.findOne({_id: taskId});
+        if(!task){
+            throw 'invalid task id';
+        }
+
+        await db_task.db.update({
+            _id: task._id
+        }, {
+            $pull: {
+                candidates: new ObjectId(taskCandidateId)
+            }
+        })
+
+        console.log('remove task candidate =>', doc);
+
+        return true
+
+        /*
         const doc: any = {
             taskId,
             applyMsg
@@ -277,8 +307,7 @@ export default class extends Base {
         }
 
         const db_tc = this.getDBModel('Task_Candidate');
-        console.log('remove task candidate =>', doc);
-        return await db_tc.remove(doc);
+        */
     }
 
     /**

@@ -5,6 +5,7 @@ import create from './create';
 import list from './list';
 import update from './update';
 import addCandidate from './add_candidate';
+import removeCandidate from './remove_candidate';
 
 export default Base.setRouter([
 
@@ -29,8 +30,13 @@ export default Base.setRouter([
         method : 'put'
     },
     {
-        path : '/addCandidate/:taskId',
+        path : '/addCandidate',
         router : addCandidate,
+        method : 'post'
+    },
+    {
+        path : '/removeCandidate',
+        router : removeCandidate,
         method : 'post'
     }
 ]);
