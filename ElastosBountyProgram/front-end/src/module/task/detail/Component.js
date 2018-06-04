@@ -152,9 +152,22 @@ export default class extends BaseComponent {
                                 // if the candidate is the logged in user, show remove icon
                                 if (candidate.type === 'USER' && candidate.user._id === this.props.userId) {
                                     listItemActions.unshift(
-                                        <Tooltip title={`remove ${candidate.type === 'USER' ? 'self' : 'team'}`}>
+                                        <Tooltip title="remove self">
                                             <Popconfirm
                                                 title="Are you sure you want to remove your application?"
+                                                onConfirm={this.removeApplication.bind(this, candidate._id)}
+                                                placement="left"
+                                                okText="Yes"
+                                                cancelText="No"
+                                            >
+                                                <a href="#">x</a>
+                                            </Popconfirm>
+                                        </Tooltip>)
+                                } else if (candidate.type === 'TEAM' && _.map(this.state.teamsOwned, '_id').includes(candidate.team._id)) {
+                                    listItemActions.unshift(
+                                        <Tooltip title="remove team">
+                                            <Popconfirm
+                                                title="Are you sure you want to remove your team's application?"
                                                 onConfirm={this.removeApplication.bind(this, candidate._id)}
                                                 placement="left"
                                                 okText="Yes"

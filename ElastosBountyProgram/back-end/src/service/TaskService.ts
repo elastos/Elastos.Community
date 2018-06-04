@@ -246,6 +246,8 @@ export default class extends Base {
 
         // TODO: permission checks
 
+        // TODO: check max applicants
+
         const doc = {
             _id: taskCandidateId
         }
