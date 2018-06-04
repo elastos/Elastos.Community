@@ -1,8 +1,8 @@
 get:
   tags:
   - community
-  description: get community api
-  operationId: community/get
+  description: get children communities
+  operationId: community/parent/communityId
   security:
     - api-token: []
 
@@ -16,9 +16,6 @@ get:
     - name: communityId
       in: path
       description: communityId
-      required: false
       schema:
         type: string
         format: uuid
-  security:
-    - api-token: []

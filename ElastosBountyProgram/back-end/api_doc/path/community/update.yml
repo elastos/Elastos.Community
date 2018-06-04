@@ -1,8 +1,8 @@
-post:
+put:
   tags:
   - community
-  description: create community api
-  operationId: community/create
+  description: update community api
+  operationId: community/update
   security:
     - api-token: []
 
