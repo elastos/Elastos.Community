@@ -78,7 +78,20 @@ export default class extends BaseService {
         return result
     }
 
+    /**
+     * Here we assume we are using task.detail in the store, so we
+     * then push on to the task.detail.candidates array
+     *
+     * @param taskId
+     * @param userId
+     * @param teamId
+     * @param applyMsg
+     * @returns {Promise<*>}
+     */
     async pushCandidate(taskId, userId, teamId, applyMsg) {
+
+        const taskRedux = this.store.getRedux('task')
+
         const result = await api_request({
             path: `/task/addCandidate/${taskId}`,
             method: 'post',
@@ -89,6 +102,12 @@ export default class extends BaseService {
                 applyMsg
             }
         })
+
+        const curTaskDetail = this.store.getState().task.detail
+
+        curTaskDetail.candidates.push(result)
+
+        this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
 
         return result
     }

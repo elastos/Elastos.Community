@@ -228,6 +228,9 @@ export default class extends Base {
 
         await task.save()
 
+        // populate the taskCandidate
+        await db_tc.db.populate(taskCandidate, ['user', 'team'])
+
         return taskCandidate
     }
 

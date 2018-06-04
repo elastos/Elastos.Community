@@ -14,13 +14,8 @@ export default class extends Base{
      */
     public async action(){
         const teamService = this.buildService(TeamService);
-
         const param = this.getParam();
-        const query: any = {
-            archived: {$ne: true}
-        };
-
-        const rs = await teamService.list(query);
+        const rs = await teamService.list(param);
 
         return this.result(1, rs);
     }

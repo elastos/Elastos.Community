@@ -4,7 +4,7 @@ import moment from 'moment'
 
 import ModalApplyTask from '../ModalApplyTask/Component'
 
-import { Col, Row, Button, Divider, message, List } from 'antd'
+import { Col, Row, Button, Divider, message, List, Icon, Tooltip } from 'antd'
 
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS} from '@/constant'
 
@@ -140,12 +140,18 @@ export default class extends BaseComponent {
                             size="small"
                             dataSource={this.props.task.candidates}
                             renderItem={(candidate) => {
-                                return <List.Item>
+
+                                const listItemActions = [candidate.type === 'USER' ? <Icon type="user"/> : <Icon type="team"/>]
+                                // if the candidate is the logged in user, show remove icon
+                                if (candidate.type === 'USER' && candidate.user._id === this.props.userId) {
+                                    listItemActions.unshift(<Tooltip title={`remove ${candidate.type === 'USER' ? 'self' : 'team'}`}><a>x</a></Tooltip>)
+                                }
+
+                                return <List.Item actions={listItemActions}>
                                     {candidate.type === 'USER' ? candidate.user.username : candidate.team.name}
                                 </List.Item>
                             }}
                         />}
-
 
                         {this.props.is_login && this.renderJoinButton.call(this)}
 
@@ -233,9 +239,10 @@ export default class extends BaseComponent {
         const taskId = this.props.task._id
         const applyMsg = form.getFieldValue('applyMsg') || ''
 
-        this.props.pushCandidate(taskId, userId, teamId, applyMsg).then(() => {
+        this.props.pushCandidate(taskId, userId, teamId, applyMsg).then((result) => {
             this.handleCancelModalApplyTask()
-            message.success('You have applied, you will be contacted if approved', 10)
+            message.success('You have applied, you will be contacted if approved', 7)
+
         }).catch((err) => {
             this.handleCancelModalApplyTask()
             message.error(err.message, 10)

@@ -246,10 +246,20 @@ export default class extends Base {
     *
     * */
     public async list(param): Promise<DataList>{
+
+        // this should be documented
         const limit = param.limit || 10;
 
         // TODO add filter
-        const query = {};
+        const query:any = {};
+
+        if (param.owner) {
+            query.owner = param.owner
+        }
+
+        if (param.archived) {
+            query.archived = param.archived
+        }
 
         const count = await this.model.count(query);
         const list = await this.model.list(query, {
