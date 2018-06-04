@@ -1,6 +1,7 @@
 import {createContainer} from '@/util'
 import Component from './Component'
 import TeamService from '@/service/TeamService'
+import TaskService from '@/service/TaskService'
 import { message } from 'antd/lib/index'
 
 export default createContainer(Component, (state) => {
@@ -11,6 +12,7 @@ export default createContainer(Component, (state) => {
 }, () => {
 
     const teamService = new TeamService()
+    const taskService = new TaskService()
 
     return {
         async listTeamsOwned(userId) {
@@ -25,6 +27,19 @@ export default createContainer(Component, (state) => {
                 console.error(err)
                 message.error(err.message)
             }
+        },
+
+        async pushCandidate(taskId, userId, teamId, applyMsg) {
+
+            try {
+                const result = await taskService.pushCandidate(taskId, userId, teamId, applyMsg)
+
+                return result
+            } catch (err) {
+                console.error(err)
+                message.error(err.message)
+            }
+
         }
     }
 })

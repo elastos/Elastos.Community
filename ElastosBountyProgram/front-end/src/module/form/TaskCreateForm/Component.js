@@ -78,7 +78,6 @@ class C extends BaseComponent {
             <Select>
                 <Option value={TASK_CATEGORY.SOCIAL}>Social</Option>
                 <Option value={TASK_CATEGORY.DEVELOPER}>Developer</Option>
-                <Option value={TASK_CATEGORY.LEADER}>Leader</Option>
             </Select>
         )
 

@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import {Document} from 'mongoose';
 
 export default abstract class {
-    private db;
+    protected db;
     private schema;
     private reject_fields:object;
 

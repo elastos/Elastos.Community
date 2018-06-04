@@ -82,7 +82,7 @@ export default Form.create()(
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
-                            label="Leader">
+                            label="Organizer">
                             {getFieldDecorator('leader', {
                                 rules: [{required: true, message: 'This field is required'}]
                             })(

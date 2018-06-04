@@ -18,7 +18,16 @@ export default class extends Base {
 
     public async show(param): Promise<Document> {
         const db_task = this.getDBModel('Task');
-        return await db_task.findById(param.taskId);
+        const db_task_candidate = this.getDBModel('Task_Candidate');
+
+        const task = await db_task.db.findOne({_id: param.taskId})
+            .populate('candidates')
+
+        for (let candidate of task.candidates) {
+            await db_task_candidate.db.populate(candidate, ['user', 'team'])
+        }
+
+        return task
     }
 
     public async list(query): Promise<Document> {
@@ -160,12 +169,14 @@ export default class extends Base {
     *
     * */
     public async addCandidate(param): Promise<boolean> {
-        const {teamId, userId, taskId} = param;
+        const {teamId, userId, taskId, applyMsg} = param;
         const doc: any = {
-            taskId
+            task: taskId,
+            applyMsg
         };
+
         if(teamId){
-            doc.teamId = teamId;
+            doc.team = teamId;
             const db_team = this.getDBModel('Team');
             const team = await db_team.findOne({_id: teamId});
             if(!team){
@@ -174,7 +185,7 @@ export default class extends Base {
             doc.type = constant.TASK_CANDIDATE_TYPE.TEAM;
         }
         else if(userId){
-            doc.userId = userId;
+            doc.user = userId;
             const db_user = this.getDBModel('User');
             const user = await db_user.findOne({_id: userId});
             if(!user){
@@ -206,7 +217,18 @@ export default class extends Base {
         }
 
         console.log('add task candidate =>', doc);
-        return await db_tc.save(doc);
+        const taskCandidate = await db_tc.save(doc);
+
+        // add the candidate to the task too
+        if (task.candidates && task.candidates.length) {
+            task.candidates.push(taskCandidate._id)
+        } else {
+            task.candidates = [taskCandidate._id]
+        }
+
+        await task.save()
+
+        return taskCandidate
     }
 
     /**
@@ -215,10 +237,11 @@ export default class extends Base {
      * @returns {Promise<boolean>}
      */
     public async removeCandidate(param): Promise<boolean> {
-        const {taskId, userId, teamId} = param;
+        const {taskId, userId, teamId, applyMsg} = param;
 
         const doc: any = {
-            taskId
+            taskId,
+            applyMsg
         };
         if(teamId){
             doc.teamId = teamId;

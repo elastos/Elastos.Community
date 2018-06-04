@@ -85,10 +85,10 @@ export default class {
         this.db.User = new User(db);
         this.db.Team = new Team(db);
         this.db.User_Team = new User_Team(db);
+        this.db.Task_Candidate = new Task_Candidate(db);
         this.db.Task = new Task(db);
         this.db.Community = new Community(db);
         this.db.User_Community = new User_Community(db);
-        this.db.Task_Candidate = new Task_Candidate(db);
         this.db.Log = new Log(db);
     }
 

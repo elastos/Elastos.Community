@@ -78,8 +78,19 @@ export default class extends BaseService {
         return result
     }
 
-    async addCandidate(taskId, userId, teamId) {
+    async pushCandidate(taskId, userId, teamId, applyMsg) {
+        const result = await api_request({
+            path: `/task/addCandidate/${taskId}`,
+            method: 'post',
+            data: {
+                taskId,
+                userId,
+                teamId,
+                applyMsg
+            }
+        })
 
+        return result
     }
 
     async setFilter(options) {

@@ -31,13 +31,15 @@ export const TaskCandidate = {
         type : String,
         required : true
     },
-    teamId : Schema.Types.ObjectId,
-    userId : Schema.Types.ObjectId,
+    team : {type: Schema.Types.ObjectId, ref: 'team'},
+    user : {type: Schema.Types.ObjectId, ref: 'users'},
 
     // constants.TASK_CANDIDATE_STATUS - PENDING, APPROVED
     status : {
         type : String
     },
+
+    applyMsg: String,
 
     // this is the admin that approved the candidate
     approvedBy: Schema.Types.ObjectId,
@@ -156,11 +158,13 @@ export const Task = {
     rewardUpfront: TaskUpfront,
     reward : TaskReward,
 
-    approvedBy: Schema.Types.ObjectId
+    approvedBy: Schema.Types.ObjectId,
+
+    candidates: [{type: Schema.Types.ObjectId, ref: 'task_candidate'}]
 };
 
 
 export const Task_Candidate = {
     ...TaskCandidate,
-    taskId : Schema.Types.ObjectId
+    task : {type: Schema.Types.ObjectId, ref: 'task'}
 };

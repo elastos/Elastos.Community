@@ -1,6 +1,7 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import { Form, Modal, Select, Button } from 'antd'
+import { Form, Modal, Select, Button, Input } from 'antd'
+const TextArea = Input.TextArea
 import config from '@/config'
 
 const FormItem = Form.Item
@@ -12,8 +13,14 @@ export default Form.create()(
             const {onCancel, onCreate, form, visible} = this.props
             const {getFieldDecorator} = form
             const formItemLayout = {
-                labelCol: {span: 6},
-                wrapperCol: {span: 18}
+                labelCol: {
+                    xs: {span: 24},
+                    sm: {span: 8},
+                },
+                wrapperCol: {
+                    xs: {span: 24},
+                    sm: {span: 12},
+                },
             }
 
             const footerModal = (
@@ -33,6 +40,11 @@ export default Form.create()(
                 }
             }
 
+            const applyMsg_fn = getFieldDecorator('applyMsg')
+            const applyMsg_el = (
+                <TextArea rows={4} name="applyMsg"></TextArea>
+            )
+
             return (
                 <Modal
                     visible={visible}
@@ -47,9 +59,8 @@ export default Form.create()(
                         of any teams, you can apply for your team.
                     </p>
                     <Form>
-                        <FormItem {...formItemLayout}>
-                            {getFieldDecorator('applyType', {
-                                label: 'Team or Solo',
+                        <FormItem label="Team or Solo" {...formItemLayout}>
+                            {getFieldDecorator('applyId', {
                                 initialValue: 'self',
                                 rules: [{required: true, message: 'This field is required'}]
                             })(
@@ -62,6 +73,9 @@ export default Form.create()(
                                     })}
                                 </Select>
                             )}
+                        </FormItem>
+                        <FormItem label="Application Message" {...formItemLayout}>
+                            {applyMsg_fn(applyMsg_el)}
                         </FormItem>
                     </Form>
                 </Modal>
