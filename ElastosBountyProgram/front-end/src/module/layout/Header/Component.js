@@ -13,6 +13,7 @@ const MenuItemGroup = Menu.ItemGroup
 
 export default class extends BaseComponent {
 
+    /*
     buildOverviewDropdown() {
         return (
             <Menu onClick={this.clickItem.bind(this)}>
@@ -28,6 +29,7 @@ export default class extends BaseComponent {
             </Menu>
         )
     }
+    */
 
     buildAcctDropdown() {
 
@@ -67,7 +69,7 @@ export default class extends BaseComponent {
 
         const isLogin = this.props.isLogin
 
-        const overviewDropdown = this.buildOverviewDropdown()
+        // const overviewDropdown = this.buildOverviewDropdown()
         const acctDropdown = this.buildAcctDropdown()
 
         return (
@@ -76,13 +78,22 @@ export default class extends BaseComponent {
                     <Menu.Item className="c_MenuItem logo" key="home">
                         <img src='/assets/images/Elastos_Logo_Temp.png' />
                     </Menu.Item>
-
+                    {/*
                     <Menu.Item className="c_MenuItem overview">
                         <Dropdown overlay={overviewDropdown} style="margin-top: 24px;">
                             <a className="ant-dropdown-link" href="#">
                                 {I18N.get('0001')} <Icon type="down" />
                             </a>
                         </Dropdown>
+                    </Menu.Item>
+                    */}
+
+                    <Menu.Item className="c_MenuItem" key="developer">
+                        {I18N.get('0100')}
+                    </Menu.Item>
+
+                    <Menu.Item className="c_MenuItem" key="social">
+                        {I18N.get('0101')}
                     </Menu.Item>
 
                     <Menu.Item className="c_MenuItem" key="community">

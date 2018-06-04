@@ -1,12 +1,16 @@
 import React from 'react';
 import StandardPage from '../StandardPage';
 import Footer from '@/module/layout/Footer/Container'
+
+// TODO: this is backwards and confusing
 import TaskDetail from '@/module/task/Container'
 
+import _ from 'lodash'
 import './style.scss'
+import { Link } from 'react-router-dom'
+import { Breadcrumb, Icon } from 'antd'
 
-import { Breadcrumb, Col, Row, Icon, Form, Input, Button, Dropdown } from 'antd'
-const FormItem = Form.Item;
+import {TASK_CATEGORY} from '@/constant'
 
 export default class extends StandardPage {
 
@@ -28,6 +32,22 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
 
+                    <Breadcrumb>
+                        <Breadcrumb.Item href="/">
+                            <Icon type="home"/>
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Item>
+                            {this.props.task.category === TASK_CATEGORY.SOCIAL ?
+                                <Link to="/social">Social {_.capitalize(this.props.task.type)}s</Link> :
+                                <Link to="/developer">Developer {_.capitalize(this.props.task.type)}s</Link>
+                            }
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Item>
+                            {this.props.task.name}
+                        </Breadcrumb.Item>
+                    </Breadcrumb>
+
+                    <TaskDetail task={this.props.task}/>
                 </div>
                 <Footer />
             </div>

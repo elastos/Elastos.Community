@@ -13,7 +13,9 @@ import TaskDetailPage from '@/module/page/task_detail/Container'
 import LoginPage from '@/module/page/login/Container'
 import RegisterPage from '@/module/page/register/Container'
 
-import ProfilePage from '@/module/page/profile/info/Container'
+import ProfileInfoPage from '@/module/page/profile/info/Container'
+import ProfileTasksPage from '@/module/page/profile/tasks/Container'
+import ProfileTeamsPage from '@/module/page/profile/teams/Container'
 
 import AdminUsersPage from '@/module/page/admin/users/Container'
 import AdminTasksPage from '@/module/page/admin/tasks/Container'
@@ -26,6 +28,9 @@ import PublicCountryCommunitiesPage from '@/module/page/community/PublicCountryC
 import PublicCommunityDetailPage from '@/module/page/community/PublicCommunityDetail/Container'
 
 import TaskCreatePage from '@/module/page/task_create/Container'
+
+// admin team page
+import TeamListPage from '../module/page/admin/teams/TeamListPage';
 
 import NotFound from '@/module/page/error/NotFound'
 
@@ -80,11 +85,15 @@ export default [
     },
     {
         path: '/profile/info',
-        page: ProfilePage
+        page: ProfileInfoPage
     },
     {
         path: '/profile/tasks',
-        page: ProfilePage
+        page: ProfileTasksPage
+    },
+    {
+        path: '/profile/tasks',
+        page: ProfileTeamsPage
     },
     {
         path: '/admin/users',
@@ -130,6 +139,13 @@ export default [
         path: '/admin/community/:community/country/:country/region/:region',
         page: CommunityDetailPage
     },
+
+    // admin team page
+    {
+        path : '/admin/teams',
+        page : TeamListPage
+    },
+
     {
         page: NotFound
     }

@@ -61,6 +61,10 @@ paths:
     $ref: './path/user/current_user.yml'
   /user/change_password:
     $ref: './path/user/change_password.yml'
+  /user/{userIds}/users:
+    $ref: './path/user/list_users.yml'
+  /user/list:
+    $ref: './path/user/list.yml'
 
   /team/create:
     $ref: './path/team/create.yml'
@@ -68,9 +72,14 @@ paths:
     $ref: './path/team/update.yml'
   /team/apply_add_team:
     $ref: './path/team/apply_add_team.yml'
-
-  /team/add_member:
-    $ref: './path/team/add_member.yml'
+  /team/action/accept:
+    $ref: './path/team/accept_apply.yml'
+  /team/action/reject:
+    $ref: './path/team/reject_apply.yml'
+  /team/get:
+    $ref: './path/team/get.yml'
+  /team/list:
+    $ref: './path/team/list.yml'
   /team/list_member:
     $ref: './path/team/list_member.yml'
 
@@ -84,3 +93,19 @@ paths:
 
   /community/{communityId}:
     $ref: './path/community/get.yml'
+  /community/delete:
+    $ref: './path/community/delete.yml'
+  /community/create:
+    $ref: './path/community/create.yml'
+  /community/update:
+    $ref: './path/community/update.yml'
+  /community/{communityId}/members:
+    $ref: './path/community/list_member.yml'
+  /community/{communityId}/{userId}:
+    $ref: './path/community/add_member.yml'
+  /community/country/{countryName}:
+    $ref: './path/community/get_with_country.yml'
+  /community/parent/{communityId}:
+    $ref: './path/community/get_child.yml'
+  /community/all:
+    $ref: './path/community/get_all.yml'

@@ -5,6 +5,12 @@
   line-height: 40px;
   margin-right: $gap_0;
 
+  &:hover,
+  &:focus {
+    border-color: $primary_color;
+    color: $primary_color;
+  }
+
   &.ant-btn-ebp{
     font-size: 1.1rem;
     height: 40px;
@@ -29,7 +35,15 @@
 }
 
 .ant-menu-item {
+
+  &.ant-menu-item-active {
+    color: $primary_color;
+  }
+
   &.ant-menu-item-selected {
+
+    color: $primary_dark_color;
+    font-weight: 500;
 
     > a {
       font-weight: 500;

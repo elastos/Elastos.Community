@@ -78,6 +78,10 @@ export default class extends BaseService {
         return result
     }
 
+    async addCandidate(taskId, userId, teamId) {
+
+    }
+
     async setFilter(options) {
         const taskRedux = this.store.getRedux('task')
 

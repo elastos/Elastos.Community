@@ -11,7 +11,7 @@ export default {
     '0009': 'FAQ',
     '0010': 'Contact',
 
-    '0100': 'Developer',
+    '0100': 'Developers',
     '0101': 'Social',
     '0102': 'Leader',
 
@@ -38,6 +38,7 @@ export default {
     '1300': 'Tasks',
     '1301': 'Community',
     '1302': 'Users',
+    '1303': 'Teams',
 
     // Profile navigator
     '2300': 'Info',

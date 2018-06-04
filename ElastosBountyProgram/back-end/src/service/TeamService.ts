@@ -4,13 +4,14 @@ import * as _ from 'lodash';
 import {validate} from '../utility';
 import {constant} from '../constant';
 import LogService from './LogService';
+import {DataList} from './interface';
 
 export default class extends Base {
-    private mode;
-    private ut_mode;
+    private model;
+    private ut_model;
     protected init(){
-        this.mode = this.getDBModel('Team');
-        this.ut_mode = this.getDBModel("User_Team");
+        this.model = this.getDBModel('Team');
+        this.ut_model = this.getDBModel("User_Team");
     }
 
     public async create(param): Promise<Document>{
@@ -55,7 +56,7 @@ export default class extends Base {
         if(!param.id){
             throw 'invalid team id'
         }
-        const db_team = this.getDBModel('Team');
+        const db_team = this.model;
         const team_doc = await db_team.getDBInstance().findOne({_id : param.id}, {
             updatedAt: false
         });
@@ -98,12 +99,12 @@ export default class extends Base {
     public async applyToAddTeam(param): Promise<boolean>{
         const {teamId, reason} = param;
 
-        const team_doc = await this.mode.findOne({_id : teamId});
+        const team_doc = await this.model.findOne({_id : teamId});
         if(!team_doc){
             throw 'invalid team id';
         }
 
-        const tmp = await this.ut_mode.findOne({
+        const tmp = await this.ut_model.findOne({
             userId : this.currentUser._id,
             teamId
         });
@@ -135,7 +136,7 @@ export default class extends Base {
             status : constant.TEAM_USER_STATUS.PENDING
         };
 
-        await this.ut_mode.save(doc);
+        await this.ut_model.save(doc);
 
         // add log
         const logService = this.getService(LogService);
@@ -144,32 +145,150 @@ export default class extends Base {
         return true;
     }
 
-    public async
+    /*
+    * only team owner or admin accept the apply request
+    * */
+    public async acceptApply(param): Promise<Document>{
+        const {teamId, userId, action} = param;
 
-    public async listMember(param): Promise<Document[]>{
-        const {teamId} = param;
-        const db_team = this.getDBModel('Team');
-        const aggregate = db_team.getAggregate();
+        const team_doc = await this.model.findOne({_id : teamId});
+        if(!team_doc){
+            throw 'invalid team id';
+        }
 
-        const rs = await aggregate.match({_id : Types.ObjectId(teamId)})
-            .unwind('$members')
+        // check current user is admin or team owner
+        if(!(this.currentUser._id.equals(team_doc.owner) || this.currentUser.role === constant.USER_ROLE.ADMIN)){
+            throw 'no permission to operate';
+        }
+
+        const ut_doc = await this.ut_model.findOne({teamId, userId});
+        if(!ut_doc || ut_doc.status !== constant.TEAM_USER_STATUS.PENDING){
+            throw 'invalid params';
+        }
+
+        const count = await this.ut_model.count({
+            teamId,
+            status : constant.TEAM_USER_STATUS.NORMAL
+        });
+        if(count+1 > team_doc.memberLimit){
+            throw 'member count touch the limitation';
+        }
+
+        return await this.ut_model.update({teamId, userId}, {
+            status : constant.TEAM_USER_STATUS.NORMAL
+        });
+    }
+
+    /*
+    * only team owner or admin reject the apply request
+    *
+    * */
+    public async rejectApply(param): Promise<Document>{
+        const {teamId, userId, action} = param;
+
+        const team_doc = await this.model.findOne({_id : teamId});
+        if(!team_doc){
+            throw 'invalid team id';
+        }
+
+        // check current user is admin or team owner
+        if(!(this.currentUser._id.equals(team_doc.owner) || this.currentUser.role === constant.USER_ROLE.ADMIN)){
+            throw 'no permission to operate';
+        }
+
+        const ut_doc = await this.ut_model.findOne({teamId, userId});
+        if(!ut_doc || ut_doc.status !== constant.TEAM_USER_STATUS.PENDING){
+            throw 'invalid params';
+        }
+
+        return await this.ut_model.update({teamId, userId}, {
+            status : constant.TEAM_USER_STATUS.REJECT
+        });
+    }
+
+    /*
+    * get whole team data
+    * include all of members
+    *
+    * */
+    public async getWholeData(param): Promise<Document>{
+        const {teamId, status} = param;
+
+        const team_doc = await this.model.findOne({_id : teamId});
+
+        const aggregate = this.ut_model.getAggregate();
+        const query: any = {
+            teamId : Types.ObjectId(teamId)
+        };
+        if(_.includes(constant.TEAM_USER_STATUS, status)){
+            query.status = status;
+        }
+        const rs = await aggregate.match(query)
             .lookup({
                 from : 'users',
-                localField : 'members.userId',
+                localField : 'userId',
                 foreignField : '_id',
-                as : 'members.user'
+                as : 'user'
             })
-            .unwind('$members.user')
-            .group({
-                _id : '$_id',
-                list : {
-                    $push : '$members'
-                }
-            })
-            .project({'list.user.password' : 0, 'list._id' : 0});
+            .unwind('$user')
+            .project({
+                'user.password' : 0,
+                'user.salt' : 0
+            });
 
-        return rs[0].list;
+        const data = team_doc.toJSON();
+        data.members = rs;
+        return data;
     }
+
+    /*
+    * list teams
+    *
+    * */
+    public async list(param): Promise<DataList>{
+        const limit = param.limit || 10;
+
+        // TODO add filter
+        const query = {};
+
+        const count = await this.model.count(query);
+        const list = await this.model.list(query, {
+            updateAt: -1
+        }, limit);
+
+        // TODO add page and pageSize
+
+        return {
+            total : count,
+            list,
+            pageSize : limit
+        }
+    }
+
+    // public async listMember(param): Promise<Document[]>{
+    //     const {teamId} = param;
+    //     const db_team = this.getDBModel('Team');
+    //     const aggregate = db_team.getAggregate();
+    //
+    //     const rs = await aggregate.match({_id : Types.ObjectId(teamId)})
+    //         .unwind('$members')
+    //         .lookup({
+    //             from : 'users',
+    //             localField : 'members.userId',
+    //             foreignField : '_id',
+    //             as : 'members.user'
+    //         })
+    //         .unwind('$members.user')
+    //         .group({
+    //             _id : '$_id',
+    //             list : {
+    //                 $push : '$members'
+    //             }
+    //         })
+    //         .project({'list.user.password' : 0, 'list._id' : 0});
+    //
+    //     return rs[0].list;
+    // }
 
     public validate_name(name){
         if(!validate.valid_string(name, 4)){

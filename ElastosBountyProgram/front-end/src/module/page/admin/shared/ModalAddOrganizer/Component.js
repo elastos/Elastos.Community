@@ -17,7 +17,7 @@ export default Form.create()(
 
             const footerModal = (
                 <div>
-                    <Button onClick={onCreate} type="primary">Add organizer</Button>
+                    <Button onClick={onCreate} type="primary" className="ant-btn-ebp">Add organizer</Button>
                     <Button onClick={onCancel}>Cancel</Button>
                 </div>
             )
@@ -29,7 +29,7 @@ export default Form.create()(
                     </Select.Option>
                 )
             })
-    
+
             const users = this.props.users || []
 
             return (

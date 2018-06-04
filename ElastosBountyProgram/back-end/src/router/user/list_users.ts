@@ -27,7 +27,6 @@ export default class extends Base {
     }
 
     async listUser() {
-        console.log('xxx');
         const userService = this.buildService(UserService);
         const users = await userService.findAll();
 
