@@ -107,3 +107,5 @@ paths:
     $ref: './path/community/get_with_country.yml'
   /community/parent/{communityId}:
     $ref: './path/community/get_child.yml'
+  /community/all:
+    $ref: './path/community/get_all.yml'

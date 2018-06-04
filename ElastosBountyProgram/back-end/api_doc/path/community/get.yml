@@ -20,5 +20,3 @@ get:
       schema:
         type: string
         format: uuid
-  security:
-    - api-token: []
