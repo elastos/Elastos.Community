@@ -37,6 +37,15 @@ export default class extends BaseService {
         return result
     }
     
+    async getAll() {
+        const result = await api_request({
+            path: '/community/all',
+            method: 'get',
+        })
+        
+        return result
+    }
+    
     async update(community) {
         const result = await api_request({
             path: '/community/update',
