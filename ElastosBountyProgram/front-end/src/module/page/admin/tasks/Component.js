@@ -30,33 +30,27 @@ export default class extends AdminPage {
         const columns = [{
             title: 'Name',
             dataIndex: 'name',
-            key: 'name',
             width: '30%',
-            className: 'fontWeight500',
+            className: 'fontWeight500 allow-wrap',
             render: (name, record) => {
                 return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
             }
         }, {
-            title: 'Leader',
-            dataIndex: 'createdBy',
-            key: 'createdBy'
+            title: 'Owner',
+            dataIndex: 'createdBy.username'
         }, {
             title: 'Category',
             dataIndex: 'category',
-            key: 'category',
             render: (category) => _.capitalize(category)
         }, {
             title: 'Type',
             dataIndex: 'type',
-            key: 'type'
         }, {
             title: 'Community',
             dataIndex: 'communityId',
-            key: 'communityId'
         },{
             title: 'Status',
             dataIndex: 'status',
-            key: 'status',
             filters: [
                 {text: 'Created', value: TASK_STATUS.CREATED},
                 {text: 'Pending', value: TASK_STATUS.PENDING},
@@ -66,12 +60,10 @@ export default class extends AdminPage {
         }, {
             title: 'Date',
             dataIndex: 'startTime',
-            key: 'startTime',
             render: (startTime) => moment(startTime).format('MMM D')
         }, {
             title: 'Created',
             dataIndex: 'createdAt',
-            key: 'createdAt',
             render: (createdAt) => moment(createdAt).format('MMM D')
         }, {
             title: '',

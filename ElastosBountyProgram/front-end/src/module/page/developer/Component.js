@@ -81,11 +81,9 @@ export default class extends StandardPage {
                                 </h3>
                             </div>
                             <div className="pull-right btnContainer">
-                                {this.props.is_admin &&
-                                <Button type="dashed" onClick={this.createTaskLink.bind(this)}>
-                                    Create Event
+                                <Button onClick={this.createTaskLink.bind(this)}>
+                                    Suggest an Event
                                 </Button>
-                                }
                             </div>
 
                             <Table

@@ -2,8 +2,13 @@ import * as mongoose from 'mongoose';
 import * as _ from 'lodash';
 import {Document} from 'mongoose';
 
+/**
+ * This is an abstraction layer around the db model
+ *
+ * Use getDBInstance if you need access to the native Mongoose model
+ */
 export default abstract class {
-    protected db;
+    private db;
     private schema;
     private reject_fields:object;
 
@@ -83,7 +88,7 @@ export default abstract class {
     public async count(query): Promise<number>{
         return await this.db.count(query);
     }
-    public async list(query, sort?, limit?): Promise<Document>{
+    public async list(query, sort?, limit?): Promise<[Document]>{
         return await this.db.find(query).sort(sort || {}).limit(_.toNumber(limit) || 1000);
     }
 

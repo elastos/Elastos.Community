@@ -57,5 +57,23 @@
       white-space: nowrap;
     }
   }
+
+  .d_communities {
+    text-align: center;
+
+    min-height: 40vh;
+
+    position: relative;
+
+    padding-bottom: $gap_3;
+
+    .view-all-btn {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 55%;
+      margin: 0 20% 0 25%;
+    }
+  }
 }
 

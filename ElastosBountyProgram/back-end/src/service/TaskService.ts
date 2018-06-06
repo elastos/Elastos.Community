@@ -22,11 +22,13 @@ export default class extends Base {
         const db_task = this.getDBModel('Task');
         const db_task_candidate = this.getDBModel('Task_Candidate');
 
-        const task = await db_task.db.findOne({_id: param.taskId})
+        const task = await db_task.getDBInstance().findOne({_id: param.taskId})
             .populate('candidates')
+            .populate('createdBy')
+            .populate('approvedBy')
 
         for (let candidate of task.candidates) {
-            await db_task_candidate.db.populate(candidate, ['user', 'team'])
+            await db_task_candidate.getDBInstance().populate(candidate, ['user', 'team'])
         }
 
         return task
@@ -34,9 +36,15 @@ export default class extends Base {
 
     public async list(query): Promise<Document> {
         const db_task = this.getDBModel('Task');
-        return await db_task.list(query, {
+        const tasks = await db_task.list(query, {
             updatedAt: -1
         });
+
+        for (let task of tasks) {
+            await db_task.getDBInstance().populate(task, ['candidates', 'createdBy', 'approvedBy'])
+        }
+
+        return tasks
     }
 
     /**
@@ -274,13 +282,14 @@ export default class extends Base {
         return true
 
         /*
+        // TODO: add this back in for permission checks
         const doc: any = {
             taskId,
             applyMsg
         };
         if(teamId){
             doc.teamId = teamId;
-            doc.type = constant.TASK_CANDIDATE_TYPE.TEAM;
+            doc.type = constant.TASK_CANDIDATE_TYPE.TEAM;`
         }
         else if(userId){
             doc.userId = userId;
@@ -352,5 +361,11 @@ export default class extends Base {
         // TODO check current user has enough votePower or not.
     }
 
+    public async getCandidatesForUser(userId) {
 
+        const db_task_candidate = this.getDBModel('Task_Candidate');
+
+        return db_task_candidate.list({user: userId})
+
+    }
 }

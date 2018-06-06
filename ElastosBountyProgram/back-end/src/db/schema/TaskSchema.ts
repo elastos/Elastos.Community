@@ -59,8 +59,6 @@ export const TaskActivity = {
 /**
  * A task is a base class for any event
  *
- * createdBy - always there
- *
  */
 export const Task = {
     name : {
@@ -87,7 +85,7 @@ export const Task = {
     },
 
     // for events this should be set, or if null assume online
-    community: Schema.Types.ObjectId,
+    community: {type: Schema.Types.ObjectId, ref: 'community'},
 
     category: {
         type: String,
@@ -158,9 +156,11 @@ export const Task = {
     rewardUpfront: TaskUpfront,
     reward : TaskReward,
 
-    approvedBy: Schema.Types.ObjectId,
+    approvedBy: {type: Schema.Types.ObjectId, ref: 'users'},
 
-    candidates: [{type: Schema.Types.ObjectId, ref: 'task_candidate'}]
+    candidates: [{type: Schema.Types.ObjectId, ref: 'task_candidate'}],
+
+    createdBy: {type: Schema.Types.ObjectId, ref: 'users'}
 };
 
 

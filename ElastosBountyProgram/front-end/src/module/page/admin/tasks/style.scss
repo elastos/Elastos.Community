@@ -16,6 +16,10 @@
     td {
       word-break: normal;
       white-space: nowrap;
+
+      &.allow-wrap {
+        white-space: normal;
+      }
     }
   }
 }

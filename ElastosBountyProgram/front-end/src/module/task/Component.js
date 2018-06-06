@@ -33,7 +33,7 @@ export default class extends BaseComponent {
                         <span className="help-text">&nbsp; - this task is awaiting approval</span>
                         }
                         {this.props.task.status === TASK_STATUS.APPROVED &&
-                        <span className="help-text">&nbsp; - this task is approved by {this.props.task.approvedBy}</span>
+                        <span className="help-text">&nbsp; - this task is approved by {this.props.task.approvedBy.username}</span>
                         }
                     </div>
                     <div className="pull-right right-align">
@@ -96,7 +96,7 @@ export default class extends BaseComponent {
                         Organizer
                     </Col>
                     <Col span={16} className="gridCol">
-                        {this.props.task.createdBy}
+                        {this.props.task.createdBy.username}
                     </Col>
                 </Row>
                 <Row>

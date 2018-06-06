@@ -12,7 +12,7 @@ export default {
     '0010': 'Contact',
 
     '0100': 'Developers',
-    '0101': 'Social',
+    '0101': 'Community',
     '0102': 'Leader',
 
     '0200': 'Profile',

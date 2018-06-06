@@ -61,13 +61,13 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page-title">
                     <h2>
-                        Help Manage Events and Social Bounties
+                        General Events and Community Tasks
                     </h2>
                 </div>
                 <div className="ebp-page-desc d_rowGrey">
                     <p>
-                        This program is for members interested in helping leaders organize events or take on
-                        small tasks created by leaders to help promote Elastos to the community
+                        This program is for members interested in helping organizers plan events or take on
+                        small tasks created by organizers to help promote Elastos to the community
                     </p>
                 </div>
                 <div className="ebp-page">
@@ -75,15 +75,13 @@ export default class extends StandardPage {
                         <Col span={16} className="d_leftContainer d_box">
                             <div className="pull-left">
                                 <h3>
-                                    Events
+                                    Events Looking for Help
                                 </h3>
                             </div>
                             <div className="pull-right btnContainer">
-                                {this.props.is_admin &&
                                 <Button onClick={this.createTaskLink.bind(this)}>
                                     Create Event
                                 </Button>
-                                }
                             </div>
 
                             <Table
@@ -94,11 +92,12 @@ export default class extends StandardPage {
                                 loading={this.props.loading}
                             />
                         </Col>
-                        <Col span={8} className="d_rightContainer d_box">
-                            <h2>
-                                Submit a Contribution
-                            </h2>
-                            <ContribForm/>
+                        <Col span={8} className="d_rightContainer d_box d_communities">
+                            <h3>
+                                My Communities
+                            </h3>
+
+                            <Button className="view-all-btn" onClick={this.linkCommunities.bind(this)}>Join More Communities</Button>
                         </Col>
                     </Row>
                     <div className="horizGap">
@@ -113,11 +112,9 @@ export default class extends StandardPage {
                                     Available Tasks
                                 </h3>
                                 <div className="pull-right btnContainer">
-                                    {this.props.is_admin &&
                                     <Button onClick={this.createTaskLink.bind(this)}>
                                         Create Task
                                     </Button>
-                                    }
                                 </div>
                             </div>
 
@@ -145,6 +142,9 @@ export default class extends StandardPage {
 
     }
 
+    linkCommunities() {
+        this.props.history.push('/community')
+    }
 
     linkTaskDetail(taskId) {
         this.props.history.push(`/task-detail/${taskId}`)

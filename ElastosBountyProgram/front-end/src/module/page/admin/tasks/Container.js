@@ -17,10 +17,6 @@ export default createContainer(Component, (state) => {
 
     taskState.filter = state.task.filter || {}
 
-    if (taskState.all_tasks.length) {
-        // debugger
-    }
-
     return taskState
 
 }, () => {

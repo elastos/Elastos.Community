@@ -11,6 +11,14 @@ const FormItem = Form.Item;
 
 export default class extends StandardPage {
 
+    componentDidMount() {
+        this.props.getTasks(this.props.currentUserId)
+    }
+
+    componentWillUnmount() {
+        this.props.resetTasks()
+    }
+
     ord_renderContent () {
 
         return (
@@ -26,6 +34,11 @@ export default class extends StandardPage {
                         <div className="p_ProfileTasks p_admin_content">
                             <Row>
                                 <Col span={20} className="c_ProfileContainer admin-left-column wrap-box-user">
+                                    TODO: Active Tasks<br/>
+                                    TODO: Tasks Applied<br/>
+                                    TODO: Tasks Owned (if Organizer)<br/>
+
+
 
                                 </Col>
                                 <Col span={4} className="admin-right-column wrap-box-navigator">

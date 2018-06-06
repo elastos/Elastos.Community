@@ -96,7 +96,7 @@ export default class extends StandardPage {
 
                 </div>
                 <Row className="d_rowPrograms">
-                    <Col span={8}>
+                    <Col span={12}>
                         <a href="/developer">
                             <img src="/assets/images/Home_Developers.png" />
                             <h3>
@@ -104,82 +104,59 @@ export default class extends StandardPage {
                             </h3>
                         </a>
                     </Col>
-                    <Col span={8} className="d_colProgram_middle">
+                    <Col span={12} className="d_colProgram_middle">
                         <a href="/social">
                             <img src="/assets/images/Home_Social.png" />
                             <h3>
-                                Social
-                            </h3>
-                        </a>
-                    </Col>
-                    <Col span={8}>
-                        <a href="/leader">
-                            <img src="/assets/images/Home_Leader.png" />
-                            <h3>
-                                Organizers
+                                Community
                             </h3>
                         </a>
                     </Col>
                 </Row>
                 <Row className="d_rowPrograms subtitle">
-                    <Col span={8}>
+                    <Col span={12}>
                         <h4>
-                            Interested in getting into blockchain development?
+                            Write code, find bugs, earn ELA
                         </h4>
                     </Col>
-                    <Col span={8} className="d_colProgram_middle">
+                    <Col span={12} className="d_colProgram_middle">
                         <h4>
-                            Contribute to the Community
-                        </h4>
-                    </Col>
-                    <Col span={8}>
-                        <h4>
-                            Organize Elastos Events
+                            Help organize meetups and promote Elastos
                         </h4>
                     </Col>
                 </Row>
                 <Row className="d_rowPrograms">
-                    <Col span={8}>
+                    <Col span={12}>
                         <p>
                             Earn ELA for contributing to the Elastos ecosystem through
                             everything from example apps to enterprise dApp development.
+                            You can also earn ELA for finding bugs and submitting issues.
                         </p>
                     </Col>
-                    <Col span={8} className="d_colProgram_middle">
+                    <Col span={12} className="d_colProgram_middle">
                         <p>
                             Whether you're already part of the community or want to join,
-                            we reward you for various things you do online to promote Elastos
-                            either locally or worldwide.
-                        </p>
-                    </Col>
-                    <Col span={8}>
-                        <p>
-                            Interested in organizing events for your community, school or entire country?
-                            Our program empowers you to take a leadership role in the Elastos world.
+                            we reward you for various things you do to promote Elastos
+                            either online, locally or worldwide.
                         </p>
                     </Col>
                 </Row>
                 <Row className="d_rowPrograms last">
-                    <Col span={8}>
-                        <div className="d_colProgram_subLinks">
-                            <a href="/developer/bug-bounty">Bug Bounties</a> |&nbsp;
-                            <a href="/developer/support">Developer Support</a> |&nbsp;
-                            <a href="/developer/dapps">dApps</a>
-                        </div>
+                    <Col span={12}>
+                        <Button>
+                            View Available Tasks
+                        </Button>
+                        <Button>
+                            Register as a Developer
+                        </Button>
                     </Col>
-                    <Col span={8} className="d_colProgram_middle">
-                        <div className="d_colProgram_subLinks">
-                            <a href="/social/media">Media Creation</a> |&nbsp;
-                            <a href="/social">Social Media</a> |&nbsp;
-                            <a href="/social/podcasts">Podcasts</a>
-                        </div>
-                    </Col>
-                    <Col span={8}>
-                        <div className="d_colProgram_subLinks">
-                            <a href="/leader/meetups">Meetups</a> |&nbsp;
-                            <a href="/leader/hackathons">Hackathons</a> |&nbsp;
-                            <a href="/leader/organizers">Organizers</a>
-                        </div>
+                    <Col span={12} className="d_colProgram_middle">
+                        <Button>
+                            Find Your Community
+                        </Button>
+                        <Button>
+                            Apply to be an Organizer
+                        </Button>
                     </Col>
                 </Row>
                 <div className="horizGap d_rowGrey">
@@ -215,31 +192,22 @@ export default class extends StandardPage {
                 </div>
                 <div className="d_rowEvents">
                     <Row>
+                        <Col span={24}>
+                            <h2>
+                                How It Works
+                            </h2>
+                        </Col>
+                    </Row>
+                    <Row>
                         <Col span={12} className="d_colTasks">
                             <h3>
-                                Featured Developer Bounties
+                                Sign Up as a Member
                             </h3>
-
-                            {_.range(4).map((i) => {
-                                return <Row key={i} className="d_devEventsContainer">
-                                    {this.props.dev_tasks.map((task) => {
-                                        return renderEventRow(task, i)
-                                    })}
-                                </Row>
-                            })}
                         </Col>
                         <Col span={12} className="d_colEvents">
                             <h3>
-                                Featured Events
+                                Apply to be an Organizer
                             </h3>
-
-                            {_.range(4).map((i) => {
-                                return <Row key={i} className="d_devEventsContainer">
-                                    {this.props.social_tasks.map((task) => {
-                                        return renderEventRow(task, i)
-                                    })}
-                                </Row>
-                            })}
                         </Col>
                     </Row>
                 </div>
