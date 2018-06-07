@@ -143,18 +143,18 @@ export default class extends StandardPage {
                 </Row>
                 <Row className="d_rowPrograms last">
                     <Col span={12}>
-                        <Button>
+                        <Button onClick={() => {this.props.history.push('/developer')}}>
                             View Available Tasks
                         </Button>
-                        <Button>
+                        <Button onClick={() => {this.props.history.push('/profile/developer')}}>
                             Register as a Developer
                         </Button>
                     </Col>
                     <Col span={12} className="d_colProgram_middle">
-                        <Button>
+                        <Button onClick={() => {this.props.history.push('/community')}}>
                             Find Your Community
                         </Button>
-                        <Button>
+                        <Button onClick={() => {this.props.history.push('/profile/organizer')}}>
                             Apply to be an Organizer
                         </Button>
                     </Col>

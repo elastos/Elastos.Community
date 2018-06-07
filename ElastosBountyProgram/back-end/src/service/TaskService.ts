@@ -29,8 +29,10 @@ export default class extends Base {
             .populate('community')
             .populate('communityParent')
 
-        for (let candidate of task.candidates) {
-            await db_task_candidate.getDBInstance().populate(candidate, ['user', 'team'])
+        if (task) {
+            for (let candidate of task.candidates) {
+                await db_task_candidate.getDBInstance().populate(candidate, ['user', 'team'])
+            }
         }
 
         return task
@@ -63,8 +65,10 @@ export default class extends Base {
     public async create(param): Promise<Document> {
 
         const {
-            name, description, thumbnail, community, communityParent, category, type, startTime, endTime,
-            candidateLimit, candidateSltLimit, rewardUpfront, reward
+            name, description, thumbnail, infoLink, community, communityParent, category, type, startTime, endTime,
+            candidateLimit, candidateSltLimit, rewardUpfront, reward,
+
+            attachment, attachmentType, attachmentFilename
         } = param;
         this.validate_name(name);
         this.validate_description(description);
@@ -73,10 +77,11 @@ export default class extends Base {
         // this.validate_reward_votePower(reward_votePower);
 
         const doc = {
-            name, description, category, type,
+            name, description, infoLink, category, type,
             startTime,
             endTime,
             thumbnail,
+            attachment, attachmentType, attachmentFilename,
             candidateLimit,
             candidateSltLimit,
             rewardUpfront: {

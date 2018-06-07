@@ -157,6 +157,25 @@ export default class extends BaseComponent {
                                 }
                             </Col>
                         </Row>
+
+                        {this.props.task.attachment && <div>
+                            <Divider>Attachment</Divider>
+
+                            <Row>
+                                <Col span={4} className="label-col">
+                                    File
+                                </Col>
+                                <Col span={20}>
+                                    <a target="_blank" href={this.props.task.attachment}>
+                                        {this.props.task.attachmentType === 'application/pdf' ?
+                                            <Icon type="file-pdf"/> :
+                                            <Icon type="file"/>
+                                        } &nbsp;
+                                        {this.props.task.attachmentFilename}
+                                        </a>
+                                </Col>
+                            </Row>
+                        </div>}
                     </Col>
                     <Col span={6} className="gridCol applicants">
                         <h4>{this.state.isDeveloperEvent ? 'Registrants' : 'Applicants'}</h4>

@@ -1,6 +1,21 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import {Form, Icon, Input, InputNumber, Button, Checkbox, Select, message, Row, Col, Upload, Cascader} from 'antd'
+import {
+    Form,
+    Icon,
+    Input,
+    InputNumber,
+    Button,
+    Checkbox,
+    Select,
+    message,
+    Row,
+    Col,
+    Upload,
+    Cascader,
+    Divider
+
+} from 'antd'
 
 import {upload_file} from "@/util";
 import './style.scss'
@@ -65,6 +80,12 @@ class C extends BaseComponent {
         this.state = {
             upload_url : null,
             upload_loading : false,
+
+            attachment_url: null,
+            attachment_loading: false,
+            attachment_filename: '',
+            attachment_type: '',
+
             editing: !!props.existingTask
         };
     }
@@ -128,17 +149,25 @@ class C extends BaseComponent {
             <TextArea rows={4} name="taskDesc"></TextArea>
         )
 
+        const taskLink_fn = getFieldDecorator('taskLink', {
+            rules: [{required: false, message: 'Please input an info link'}],
+            initialValue: this.state.editing ? existingTask.infoLink : ''
+        })
+        const taskLink_el = (
+            <Input size="large"/>
+        )
+
         const taskCandLimit_fn = getFieldDecorator('taskCandLimit', {
-            rules: [{type: 'integer', message: 'You must set a limit'}],
-            initialValue: this.state.editing ? existingTask.candidateLimit : null
+            rules: [{required: true, type: 'integer', message: 'You must set a limit'}],
+            initialValue: this.state.editing ? existingTask.candidateLimit : 1
         })
         const taskCandLimit_el = (
             <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
         )
 
         const taskCandSltLimit_fn = getFieldDecorator('taskCandSltLimit', {
-            rules: [{type: 'integer', message: 'You must set a limit'}],
-            initialValue: this.state.editing ? existingTask.candidateSltLimit : null
+            rules: [{required: true, type: 'integer', message: 'You must set a limit'}],
+            initialValue: this.state.editing ? existingTask.candidateSltLimit : 1
         })
         const taskCandSltLimit_el = (
             <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
@@ -182,14 +211,53 @@ class C extends BaseComponent {
             <Upload name="logo" listType="picture" {...p_thumbnail}>
                 {
                     this.state.upload_url ? (
-                        <img style={{width:'200px'}} src={this.state.upload_url} />
+                        <img style={{height:'100px'}} src={this.state.upload_url} />
                         ) : (
                         <Button loading={this.state.upload_loading}>
                             <Icon type="upload" /> Click to upload
                         </Button>
                     )
                 }
+            </Upload>
+        );
 
+        const attachment_fn = getFieldDecorator('attachment', {
+            rules: []
+        });
+        const p_attachment = {
+            showUploadList: false,
+            customRequest :(info)=>{
+                this.setState({
+                    attachment_loading: true
+                });
+                upload_file(info.file).then((d)=>{
+                    const url = d.url;
+                    this.setState({
+                        attachment_loading: false,
+                        attachment_url : url,
+                        attachment_type: d.type,
+                        attachment_filename: d.filename
+                    });
+                })
+            }
+        };
+        const attachment_el = (
+            <Upload name="attachment" {...p_attachment}>
+                {
+                    this.state.attachment_url ? (
+                        <a target="_blank" href={this.state.attachment_url}>
+                            {this.state.attachment_type === 'application/pdf' ?
+                                <Icon type="file-pdf"/> :
+                                <Icon type="file"/>
+                            } &nbsp;
+                            {this.state.attachment_filename}
+                        </a>
+                    ) : (
+                        <Button loading={this.state.attachment_loading}>
+                            <Icon type="upload" /> Click to upload
+                        </Button>
+                    )
+                }
             </Upload>
         );
 
@@ -202,13 +270,15 @@ class C extends BaseComponent {
             taskCommunity: taskCommunity_fn(taskCommunity_el),
 
             taskDesc: taskDesc_fn(taskDesc_el),
+            taskLink: taskLink_fn(taskLink_el),
             taskCandLimit: taskCandLimit_fn(taskCandLimit_el),
             taskCandSltLimit: taskCandSltLimit_fn(taskCandSltLimit_el),
 
             taskRewardUpfront: taskRewardUpfront_fn(taskRewardUpfront_el),
             taskReward: taskReward_fn(taskReward_el),
 
-            thumbnail: thumbnail_fn(thumbnail_el)
+            thumbnail: thumbnail_fn(thumbnail_el),
+            attachment: attachment_fn(attachment_el)
         }
     }
 
@@ -270,6 +340,9 @@ class C extends BaseComponent {
                         <FormItem label="Description" {...formItemLayout}>
                             {p.taskDesc}
                         </FormItem>
+                        <FormItem label="Info Link" {...formItemLayout}>
+                            {p.taskLink}
+                        </FormItem>
                         <FormItem label="Candidates" {...formItemLayout}>
                             <Row>
                                 <Col span={3}>
@@ -291,6 +364,12 @@ class C extends BaseComponent {
                         </FormItem>
                         <FormItem label="ELA Reward" {...formItemLayout}>
                             {p.taskReward}
+                        </FormItem>
+
+                        <Divider>Attachments</Divider>
+
+                        <FormItem label="Attachment" {...formItemLayout}>
+                            {p.attachment}
                         </FormItem>
 
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>

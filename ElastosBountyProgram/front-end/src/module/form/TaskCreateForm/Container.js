@@ -26,7 +26,11 @@ export default createContainer(Component, (state)=>{
                     category: formData.taskCategory,
                     type: formData.taskType,
                     description: formData.taskDesc,
+                    infoLink: formData.taskLink,
                     thumbnail: st.upload_url,
+                    attachment: st.attachment_url,
+                    attachmentFilename: st.attachment_filename,
+                    attachmentType: st.attachment_type,
                     community: formData.community,
                     communityParent: formData.communityParent,
 
@@ -46,7 +50,7 @@ export default createContainer(Component, (state)=>{
 
                 if (rs) {
                     message.success('Task created successfully');
-                    taskService.path.push(`/task/${rs._id}`);
+                    taskService.path.push(`/profile/task-detail/${rs._id}`);
                 }
             } catch (err) {
                 // message.error('There was an error creating this task')
@@ -64,9 +68,12 @@ export default createContainer(Component, (state)=>{
                     category: formData.taskCategory,
                     type: formData.taskType,
                     description: formData.taskDesc,
+                    infoLink: formData.taskLink,
                     thumbnail: state.upload_url,
                     community: formData.community,
                     communityParent: formData.communityParent,
+
+                    // TODO: attachment
 
                     candidateLimit: formData.taskCandLimit,
                     candidateSltLimit: formData.taskCandSltLimit,
@@ -93,7 +100,7 @@ export default createContainer(Component, (state)=>{
                 message.error(err.message) // TODO: add rollbar?
             }
         },
-    
+
         async getTaskDetail (taskId) {
             return taskService.get(taskId)
         },

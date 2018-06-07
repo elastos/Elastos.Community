@@ -74,6 +74,13 @@ export const Task = {
         type : String
     },
 
+    attachment: {
+        type : String
+    },
+
+    attachmentType: String,
+    attachmentFilename: String,
+
     /**
      * Owners of a parent task may create sub tasks
      * They may also allocate ELA to subtasks
@@ -143,14 +150,14 @@ export const Task = {
      */
     candidateLimit : {
         type : Number,
-        min : 0,
+        min : 1,
         required : true
     },
 
     candidateSltLimit : {
         type : Number,
-        min : 0,
-        default: 0,
+        min : 1,
+        default: 1,
         required : true
     },
 

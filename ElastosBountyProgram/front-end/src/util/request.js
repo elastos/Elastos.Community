@@ -97,6 +97,7 @@ export const api_request = (opts = {})=>{
 *
 * */
 export const upload_file = async (fileObject, opts={})=>{
+
     try{
         const url = await api_request({
             path : '/upload/file',
@@ -109,7 +110,11 @@ export const upload_file = async (fileObject, opts={})=>{
             }
         });
 
-        return url;
+        return {
+            filename: fileObject.name,
+            type: fileObject.type,
+            ...url
+        };
     }catch(e){
         opts.error && opts.error(e);
         throw e;
