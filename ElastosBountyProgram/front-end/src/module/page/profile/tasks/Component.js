@@ -45,7 +45,21 @@ export default class extends StandardPage {
             dataIndex: 'type',
         }, {
             title: 'Community',
-            dataIndex: 'communityId',
+            dataIndex: 'community',
+            key: 'community',
+            render: (community, data) => {
+                if (!community) {
+                    return null;
+                }
+
+                if (data.communityParent) {
+                    let nameParent = data.communityParent.name;
+                    return (<p>{nameParent}/{community.name}</p>)
+                } else {
+                    return (<p>{community.name}</p>)
+                }
+
+            }
         }, {
             title: 'Date',
             dataIndex: 'startTime',
