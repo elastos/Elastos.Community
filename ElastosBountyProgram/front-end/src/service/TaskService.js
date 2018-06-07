@@ -43,6 +43,18 @@ export default class extends BaseService {
             path: `/task/${taskId}`,
             method: 'get'
         })
+        
+        // Format data for dropdown select community
+        result.taskCommunity = [];
+        if (result.communityParent) {
+            result.taskCommunity.push(result.communityParent._id)
+        }
+
+        if (result.community) {
+            result.taskCommunity.push(result.community._id)
+        }
+
+        // Format data for dropdown select community -- end
 
         this.dispatch(taskRedux.actions.loading_update(false))
         this.dispatch(taskRedux.actions.detail_update(result))
@@ -69,10 +81,8 @@ export default class extends BaseService {
             method: 'put',
             data: doc
         })
+        
 
-        const taskUpdated = Object.assign({}, this.store.getState().task.detail, doc)
-
-        this.dispatch(taskRedux.actions.detail_update(taskUpdated))
         this.dispatch(taskRedux.actions.loading_update(false))
 
         return result

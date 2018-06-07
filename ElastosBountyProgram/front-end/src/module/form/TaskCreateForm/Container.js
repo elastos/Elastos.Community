@@ -27,7 +27,7 @@ export default createContainer(Component, (state)=>{
                     type: formData.taskType,
                     description: formData.taskDesc,
                     thumbnail: st.upload_url,
-                    community: formData.taskCommunity,
+                    community: formData.community,
                     communityParent: formData.communityParent,
 
                     candidateLimit: formData.taskCandLimit,
@@ -65,7 +65,7 @@ export default createContainer(Component, (state)=>{
                     type: formData.taskType,
                     description: formData.taskDesc,
                     thumbnail: state.upload_url,
-                    community: formData.taskCommunity,
+                    community: formData.community,
                     communityParent: formData.communityParent,
 
                     candidateLimit: formData.taskCandLimit,
@@ -92,6 +92,10 @@ export default createContainer(Component, (state)=>{
                 // message.error('There was an error creating this task')
                 message.error(err.message) // TODO: add rollbar?
             }
+        },
+    
+        async getTaskDetail (taskId) {
+            return taskService.get(taskId)
         },
 
         async getAllCommunities() {

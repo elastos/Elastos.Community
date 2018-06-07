@@ -88,7 +88,8 @@ export default class extends BaseComponent {
                 Community
                 </Col>
                 <Col span={16} className="gridCol">
-                    {this.props.task.communityParent.name}/{this.props.task.community.name}
+                    {this.props.task.communityParent && this.props.task.community && (this.props.task.communityParent.name + '/' + this.props.task.community.name)}
+                    {!this.props.task.communityParent && this.props.task.community && this.props.task.community.name}
                 </Col>
                 </Row>
                 <Row>
