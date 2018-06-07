@@ -78,7 +78,7 @@ export default class extends BaseComponent {
                 Status: <span className="status">{this.props.task.status}</span>
 
                 {this.props.task.status === TASK_STATUS.PENDING &&
-                <span className="help-text">&nbsp; - this task is awaiting approval</span>
+                <span className="help-text">&nbsp; - this task is awaiting approval by council</span>
                 }
                 {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) &&
                 <span className="help-text">&nbsp; -
@@ -87,9 +87,6 @@ export default class extends BaseComponent {
                 }
             </div>
             <div className="pull-right right-align">
-                {!this.state.editing && this.props.task.status === TASK_STATUS.PENDING &&
-                <Button type="primary" onClick={this.approveTask.bind(this)}>Approve</Button>
-                }
                 {/*this.state.editing && <Button onClick={this.resetEdit.bind(this)}>Reset</Button>*/}
                 <Button onClick={this.switchEditMode.bind(this)}>
                     {this.state.editing ? 'Cancel' : 'Edit'}

@@ -76,6 +76,12 @@ export default class extends Base {
         // this.validate_reward_ela(reward_ela);
         // this.validate_reward_votePower(reward_votePower);
 
+        let status = constant.TASK_STATUS.CREATED;
+
+        if (rewardUpfront.ela > 0 || reward.ela > 0) {
+            status = constant.TASK_STATUS.PENDING;
+        }
+
         const doc = {
             name, description, infoLink, category, type,
             startTime,
@@ -91,7 +97,7 @@ export default class extends Base {
                 ela : reward.ela,
                 votePower : reward.votePower
             },
-            status : constant.TASK_STATUS.CREATED,
+            status : status,
             createdBy : this.currentUser._id
         };
         if(community){
@@ -129,10 +135,29 @@ export default class extends Base {
      */
     public async update(param): Promise<boolean> {
 
-        const {id, name, description, community, communityParent, type, startTime, endTime, candidateLimit, reward, rewardUpfront} = param;
+        const {
+            taskId, name, description, thumbnail, infoLink, community, communityParent, category, type, startTime, endTime,
+            candidateLimit, candidateSltLimit, rewardUpfront, reward,
+
+            attachment, attachmentType, attachmentFilename
+        } = param;
+
+        const db_task = this.getDBModel('Task');
+
+        // get current
+        // const task = db_task.findById(param.taskId)
+
+        // TODO: ensure reward cannot change if status APPROVED or after
 
         // explictly copy over fields, do not accept param as is
         const updateObj:any = _.omit(param, restrictedFields.update)
+
+        // reward should only change if
+        if (rewardUpfront.ela > 0 || reward.ela > 0) {
+            updateObj.status = constant.TASK_STATUS.PENDING;
+        } else {
+            updateObj.status = constant.TASK_STATUS.CREATED;
+        }
 
         // only allow updating these fields if user is admin
         if (this.currentUser.role === constant.USER_ROLE.ADMIN) {
@@ -145,8 +170,6 @@ export default class extends Base {
                 }
             }
         }
-
-        const db_task = this.getDBModel('Task');
 
         await db_task.update({_id: param.taskId}, updateObj)
 

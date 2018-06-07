@@ -127,6 +127,7 @@ export default class extends BaseComponent {
                             </Col>
                             }
                         </Row>
+                        <div className="vert-gap"/>
                         <Divider>{this.state.isDeveloperEvent ? 'Registration Info' : 'Application Info'}</Divider>
                         <Row>
                             {!this.state.isDeveloperEvent && this.props.task.candidateLimit &&
@@ -159,6 +160,7 @@ export default class extends BaseComponent {
                         </Row>
 
                         {this.props.task.attachment && <div>
+                            <div className="vert-gap"/>
                             <Divider>Attachment</Divider>
 
                             <Row>
@@ -180,7 +182,7 @@ export default class extends BaseComponent {
                     <Col span={6} className="gridCol applicants">
                         <h4>{this.state.isDeveloperEvent ? 'Registrants' : 'Applicants'}</h4>
 
-                        {this.props.task.candidates && this.props.task.candidates.length &&
+                        {(this.props.task.candidates && this.props.task.candidates.length) ?
                         <List
                             size="small"
                             dataSource={this.props.task.candidates}
@@ -241,7 +243,7 @@ export default class extends BaseComponent {
                                     }
                                 </List.Item>
                             }}
-                        />}
+                        /> : <span className="no-info">no applicants</span>}
 
                         {this.props.is_login &&
                         this.props.page !== 'LEADER' &&
