@@ -27,6 +27,7 @@ export default createContainer(Component, (state)=>{
                     type: formData.taskType,
                     description: formData.taskDesc,
                     thumbnail: st.upload_url,
+                    community: formData.taskCommunity,
 
                     candidateLimit: formData.taskCandLimit,
                     candidateSltLimit: formData.taskCandSltLimit,
@@ -63,6 +64,7 @@ export default createContainer(Component, (state)=>{
                     type: formData.taskType,
                     description: formData.taskDesc,
                     thumbnail: state.upload_url,
+                    community: formData.taskCommunity,
 
                     candidateLimit: formData.taskCandLimit,
                     candidateSltLimit: formData.taskCandSltLimit,
@@ -89,7 +91,7 @@ export default createContainer(Component, (state)=>{
                 message.error(err.message) // TODO: add rollbar?
             }
         },
-    
+
         async getAllCommunities() {
             return new Promise((resolve, reject) => {
                 communityService.getAll().then((data) => {
@@ -104,12 +106,12 @@ export default createContainer(Component, (state)=>{
                     const rootCascaderItems = _.filter(cascaderItems, {
                         parentId: null
                     })
-    
+
                     rootCascaderItems.forEach((rootCascaderItem) => {
                         const children = _.filter(cascaderItems, {
                             parentId: rootCascaderItem.value
                         })
-                        
+
                         if (children && children.length) {
                             rootCascaderItem.children = children
                         }

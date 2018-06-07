@@ -61,7 +61,7 @@ export default class extends Base {
     public async create(param): Promise<Document> {
 
         const {
-            name, description, thumbnail, communityId, category, type, startTime, endTime,
+            name, description, thumbnail, community, category, type, startTime, endTime,
             candidateLimit, candidateSltLimit, rewardUpfront, reward
         } = param;
         this.validate_name(name);
@@ -87,8 +87,8 @@ export default class extends Base {
             status : constant.TASK_STATUS.CREATED,
             createdBy : this.currentUser._id
         };
-        if(communityId){
-            doc['communityId'] = communityId;
+        if(community){
+            doc['community'] = community;
         }
 
         // if member role, could not create
@@ -118,7 +118,7 @@ export default class extends Base {
      */
     public async update(param): Promise<boolean> {
 
-        const {id, name, description, communityId, type, startTime, endTime, candidateLimit, reward, rewardUpfront} = param;
+        const {id, name, description, community, type, startTime, endTime, candidateLimit, reward, rewardUpfront} = param;
 
         // explictly copy over fields, do not accept param as is
         const updateObj:any = _.omit(param, restrictedFields.update)
