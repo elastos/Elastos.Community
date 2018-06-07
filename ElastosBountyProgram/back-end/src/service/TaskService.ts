@@ -89,7 +89,7 @@ export default class extends Base {
             status : constant.TASK_STATUS.CREATED,
             createdBy : this.currentUser._id
         };
-        if(community && communityParent !== community){
+        if(community){
             doc['community'] = community;
         }
 
