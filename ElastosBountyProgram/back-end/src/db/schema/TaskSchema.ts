@@ -86,6 +86,7 @@ export const Task = {
 
     // for events this should be set, or if null assume online
     community: {type: Schema.Types.ObjectId, ref: 'community'},
+    communityParent: {type: Schema.Types.ObjectId, ref: 'community'},
 
     category: {
         type: String,

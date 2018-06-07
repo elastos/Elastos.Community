@@ -28,6 +28,7 @@ export default createContainer(Component, (state)=>{
                     description: formData.taskDesc,
                     thumbnail: st.upload_url,
                     community: formData.taskCommunity,
+                    communityParent: formData.communityParent,
 
                     candidateLimit: formData.taskCandLimit,
                     candidateSltLimit: formData.taskCandSltLimit,
@@ -65,6 +66,7 @@ export default createContainer(Component, (state)=>{
                     description: formData.taskDesc,
                     thumbnail: state.upload_url,
                     community: formData.taskCommunity,
+                    communityParent: formData.communityParent,
 
                     candidateLimit: formData.taskCandLimit,
                     candidateSltLimit: formData.taskCandSltLimit,

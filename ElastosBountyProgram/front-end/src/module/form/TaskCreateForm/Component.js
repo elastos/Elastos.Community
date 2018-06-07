@@ -38,10 +38,12 @@ class C extends BaseComponent {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Task submit - received values of form: ', values)
-    
+
                 // Only get the last selected level
                 if (values.taskCommunity) {
+                    values.communityParent = values.taskCommunity[0]
                     values.taskCommunity = values.taskCommunity[values.taskCommunity.length - 1]
+
                 }
 
                 if (this.state.editing) {
@@ -197,11 +199,11 @@ class C extends BaseComponent {
             thumbnail: thumbnail_fn(thumbnail_el)
         }
     }
-    
+
     componentDidMount() {
         this.getCommunityTrees()
     }
-    
+
     getCommunityTrees() {
         this.props.getAllCommunities().then((communityTrees) => {
             this.setState({
