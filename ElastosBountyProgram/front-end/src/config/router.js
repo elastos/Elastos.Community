@@ -15,6 +15,7 @@ import RegisterPage from '@/module/page/register/Container'
 
 import ProfileInfoPage from '@/module/page/profile/info/Container'
 import ProfileTasksPage from '@/module/page/profile/tasks/Container'
+import ProfileTaskDetailPage from '@/module/page/profile/task_detail/Container'
 import ProfileTeamsPage from '@/module/page/profile/teams/Container'
 
 import AdminUsersPage from '@/module/page/admin/users/Container'
@@ -92,7 +93,11 @@ export default [
         page: ProfileTasksPage
     },
     {
-        path: '/profile/tasks',
+        path: '/profile/task-detail/:taskId',
+        page: ProfileTaskDetailPage
+    },
+    {
+        path: '/profile/teams',
         page: ProfileTeamsPage
     },
     {

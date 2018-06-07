@@ -139,6 +139,7 @@
   background: linear-gradient(90deg, rgba(71, 170, 167, 1) 0%, rgba(71, 170, 167, 0.75) 60%, rgba(224, 224, 224, 0.55) 100%);
   border-radius: 4px;
   padding: 8px $gap_1;
+  font-weight: 200;
 
   > div:first-child {
     color: #ffffff;
@@ -149,6 +150,6 @@
   }
 
   .status {
-    font-weight: 600;
+    font-weight: 500;
   }
 }

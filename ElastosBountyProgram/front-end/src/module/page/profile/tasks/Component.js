@@ -6,7 +6,7 @@ import Navigator from '@/module/page/shared/Navigator/Container'
 import './style.scss'
 import '../../admin/admin.scss'
 
-import { Col, Row, Icon, Form, Input, Button, Table, Divider } from 'antd'
+import { Col, Row, Icon, Form, Breadcrumb, Button, Table, Divider } from 'antd'
 import moment from 'moment/moment'
 const FormItem = Form.Item;
 
@@ -71,7 +71,13 @@ export default class extends StandardPage {
                 <div className="p_admin_index ebp-wrap">
                     <div className="d_box">
                         <div className="p_admin_breadcrumb">
-                            <br/>
+                            <Breadcrumb>
+                                <Breadcrumb.Item href="/">
+                                    <Icon type="home" />
+                                </Breadcrumb.Item>
+                                <Breadcrumb.Item>Profile</Breadcrumb.Item>
+                                <Breadcrumb.Item>Tasks</Breadcrumb.Item>
+                            </Breadcrumb>
                         </div>
                         <div className="p_ProfileTasks p_admin_content">
                             <Row>
@@ -97,6 +103,9 @@ export default class extends StandardPage {
                                         dataSource={tasksPendingData}
                                         loading={this.props.loading}
                                     />
+                                    {tasksPendingData.length === 0 &&
+                                    <div className="vert-gap"/>
+                                    }
 
                                     <Divider>Owned Tasks</Divider>
 
@@ -119,6 +128,6 @@ export default class extends StandardPage {
     }
 
     linkTaskDetail(taskId) {
-        this.props.history.push(`/admin/task-detail/${taskId}`)
+        this.props.history.push(`/profile/task-detail/${taskId}`)
     }
 }

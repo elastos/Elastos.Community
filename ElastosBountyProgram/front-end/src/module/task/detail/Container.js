@@ -42,7 +42,26 @@ export default createContainer(Component, (state) => {
 
         },
 
+        /**
+         * Although taskId can be determined by taskCandidateId, the API
+         * prefers skip the query for the taskCandidate object
+         *
+         * @param taskId
+         * @param taskCandidateId
+         * @returns {Promise<*>}
+         */
         async pullCandidate(taskId, taskCandidateId) {
+            try {
+                const result = await taskService.pullCandidate(taskId, taskCandidateId)
+
+                return result
+            } catch (err) {
+                console.error(err)
+                message.error(err.message)
+            }
+        },
+
+        async acceptCandidate(taskCandidateId) {
             try {
                 const result = await taskService.pullCandidate(taskId, taskCandidateId)
 

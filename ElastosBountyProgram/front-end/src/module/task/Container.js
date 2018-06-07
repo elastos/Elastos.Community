@@ -5,11 +5,20 @@ import {message} from 'antd'
 import {TASK_STATUS} from '@/constant'
 
 export default createContainer(Component, (state) => {
+
+    let page = 'PUBLIC' // default
+
+    if (/^\/admin/.test(state.router.location.pathname)) {
+        page = 'ADMIN'
+    } else if (/^\/profile/.test(state.router.location.pathname)){
+        page = 'LEADER'
+    }
+
     return {
         is_admin: state.user.is_admin,
         is_login: state.user.is_login,
 
-        page: /^\/admin/.test(state.router.location.pathname) ? 'admin' : 'public'
+        page: page
     }
 }, () => {
 

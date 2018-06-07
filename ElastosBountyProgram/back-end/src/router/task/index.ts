@@ -6,6 +6,7 @@ import list from './list';
 import update from './update';
 import addCandidate from './add_candidate';
 import removeCandidate from './remove_candidate';
+import acceptCandidate from './accept_candidate';
 
 export default Base.setRouter([
 
@@ -37,6 +38,11 @@ export default Base.setRouter([
     {
         path : '/removeCandidate',
         router : removeCandidate,
+        method : 'post'
+    },
+    {
+        path : '/acceptCandidate',
+        router : acceptCandidate,
         method : 'post'
     }
 ]);

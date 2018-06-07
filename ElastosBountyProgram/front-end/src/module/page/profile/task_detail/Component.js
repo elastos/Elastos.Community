@@ -1,17 +1,16 @@
 import React from 'react'
-import AdminPage from '../BaseAdmin'
+import StandardPage from '../../StandardPage'
 import TaskDetail from '@/module/task/Container'
+import Navigator from '@/module/page/shared/Navigator/Container'
 
-import '../admin.scss'
+import config from '@/config'
+
 import './style.scss'
+import '../../admin/admin.scss'
 
-import Navigator from '../shared/Navigator/Component'
+import { Col, Row, Breadcrumb, Icon } from 'antd'
 
-import { Breadcrumb, Col, Icon, Row } from 'antd'
-
-import {TASK_STATUS} from '@/constant'
-
-export default class extends AdminPage {
+export default class extends StandardPage {
 
     state = {
         editing: false
@@ -40,18 +39,18 @@ export default class extends AdminPage {
                                 <Breadcrumb.Item href="/">
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
-                                <Breadcrumb.Item>Admin</Breadcrumb.Item>
-                                <Breadcrumb.Item href="/admin/tasks">Tasks</Breadcrumb.Item>
-                                <Breadcrumb.Item>{this.props.task.name}</Breadcrumb.Item>
+                                <Breadcrumb.Item>Profile</Breadcrumb.Item>
+                                <Breadcrumb.Item href="/profile/tasks">Tasks</Breadcrumb.Item>
+                                <Breadcrumb.Item></Breadcrumb.Item>
                             </Breadcrumb>
                         </div>
-                        <div className="p_admin_content">
-                            <Row className="clearfix">
-                                <Col span={20} className="admin-left-column wrap-box-user">
-                                    <TaskDetail task={this.props.task}/>
+                        <div className="p_ProfileTaskDetail p_admin_content">
+                            <Row>
+                                <Col span={20} className="c_ProfileContainer admin-left-column wrap-box-user">
+                                    <TaskDetail task={this.props.task} />
                                 </Col>
                                 <Col span={4} className="admin-right-column wrap-box-navigator">
-                                    <Navigator selectedItem={'tasks'}/>
+                                    <Navigator selectedItem={'profileInfo'} />
                                 </Col>
                             </Row>
                         </div>

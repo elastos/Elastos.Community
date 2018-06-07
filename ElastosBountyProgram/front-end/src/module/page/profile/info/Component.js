@@ -8,7 +8,7 @@ import config from '@/config'
 import './style.scss'
 import '../../admin/admin.scss'
 
-import { Col, Row, Icon, Form, Input, Button, Dropdown } from 'antd'
+import { Col, Row, Icon, Form, Breadcrumb, Button, Dropdown } from 'antd'
 const FormItem = Form.Item
 
 export default class extends StandardPage {
@@ -27,7 +27,13 @@ export default class extends StandardPage {
                 <div className="p_admin_index ebp-wrap">
                     <div className="d_box">
                         <div className="p_admin_breadcrumb">
-                            <br/>
+                            <Breadcrumb>
+                                <Breadcrumb.Item href="/">
+                                    <Icon type="home" />
+                                </Breadcrumb.Item>
+                                <Breadcrumb.Item>Profile</Breadcrumb.Item>
+                                <Breadcrumb.Item>Info</Breadcrumb.Item>
+                            </Breadcrumb>
                         </div>
                         <div className="p_Profile p_admin_content">
                             <Row>

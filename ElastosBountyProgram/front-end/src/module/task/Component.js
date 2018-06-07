@@ -22,31 +22,8 @@ export default class extends BaseComponent {
     renderMain() {
         return (
             <div className="c_TaskDetail">
-                {this.props.page === 'admin' &&
-                <div className="l_banner">
-                    <div className="pull-left">
-                        Status: <span className="status">{this.props.task.status}</span>
-                        {this.props.task.status === TASK_STATUS.CREATED &&
-                        <span className="help-text">&nbsp; - this task does not require approval</span>
-                        }
-                        {this.props.task.status === TASK_STATUS.PENDING &&
-                        <span className="help-text">&nbsp; - this task is awaiting approval</span>
-                        }
-                        {this.props.task.status === TASK_STATUS.APPROVED &&
-                        <span className="help-text">&nbsp; - this task is approved by {this.props.task.approvedBy.username}</span>
-                        }
-                    </div>
-                    <div className="pull-right right-align">
-                        {!this.state.editing && this.props.task.status === TASK_STATUS.PENDING &&
-                        <Button type="primary" onClick={this.approveTask.bind(this)}>Approve</Button>
-                        }
-                        {this.state.editing && <Button onClick={this.resetEdit.bind(this)}>Reset</Button>}
-                        <Button onClick={this.switchEditMode.bind(this)}>
-                            {this.state.editing ? 'Cancel' : 'Edit'}
-                        </Button>
-                    </div>
-                    <div className="clearfix"/>
-                </div>}
+                {this.props.page === 'ADMIN' && this.renderAdminHeader()}
+                {this.props.page === 'LEADER' && this.renderLeaderHeader()}
 
                 {this.state.editing ? this.renderEditForm() : this.renderDetail()}
             </div>
@@ -60,11 +37,67 @@ export default class extends BaseComponent {
     }
 
     renderDetail() {
-        if (this.props.page === 'admin') {
+        if (this.props.page === 'ADMIN') {
             return this.renderAdminDetail()
         } else {
-            return <TaskPublicDetail task={this.props.task}/>
+            return <TaskPublicDetail task={this.props.task} page={this.props.page}/>
         }
+    }
+
+    renderAdminHeader() {
+        return <div className="l_banner">
+            <div className="pull-left">
+                Status: <span className="status">{this.props.task.status}</span>
+                {this.props.task.status === TASK_STATUS.CREATED &&
+                <span className="help-text">&nbsp; - this task does not require approval</span>
+                }
+                {this.props.task.status === TASK_STATUS.PENDING &&
+                <span className="help-text">&nbsp; - this task is awaiting approval</span>
+                }
+                {this.props.task.status === TASK_STATUS.APPROVED &&
+                <span className="help-text">&nbsp; - this task is approved by {this.props.task.approvedBy.username}</span>
+                }
+            </div>
+            <div className="pull-right right-align">
+                {!this.state.editing && this.props.task.status === TASK_STATUS.PENDING &&
+                <Button type="primary" onClick={this.approveTask.bind(this)}>Approve</Button>
+                }
+                {this.state.editing && <Button onClick={this.resetEdit.bind(this)}>Reset</Button>}
+                <Button onClick={this.switchEditMode.bind(this)}>
+                    {this.state.editing ? 'Cancel' : 'Edit'}
+                </Button>
+            </div>
+            <div className="clearfix"/>
+        </div>
+    }
+
+    renderLeaderHeader() {
+
+        return <div className="l_banner">
+            <div className="pull-left">
+                Status: <span className="status">{this.props.task.status}</span>
+
+                {this.props.task.status === TASK_STATUS.PENDING &&
+                <span className="help-text">&nbsp; - this task is awaiting approval</span>
+                }
+                {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) &&
+                <span className="help-text">&nbsp; -
+
+                </span>
+                }
+            </div>
+            <div className="pull-right right-align">
+                {!this.state.editing && this.props.task.status === TASK_STATUS.PENDING &&
+                <Button type="primary" onClick={this.approveTask.bind(this)}>Approve</Button>
+                }
+                {this.state.editing && <Button onClick={this.resetEdit.bind(this)}>Reset</Button>}
+                <Button onClick={this.switchEditMode.bind(this)}>
+                    {this.state.editing ? 'Cancel' : 'Edit'}
+                </Button>
+            </div>
+            <div className="clearfix"/>
+        </div>
+
     }
 
     renderAdminDetail() {
@@ -88,7 +121,7 @@ export default class extends BaseComponent {
                 Community
                 </Col>
                 <Col span={16} className="gridCol">
-                    {this.props.task.communityParent.name}/{this.props.task.community.name}
+                    {this.getCommunityDisp()}
                 </Col>
                 </Row>
                 <Row>
@@ -160,6 +193,18 @@ export default class extends BaseComponent {
             <div class="center"><Spin size="large" /></div> :
             this.renderMain()
         )
+    }
+
+    getCommunityDisp() {
+        let str = ''
+        if (this.props.task.communityParent) {
+            str += this.props.task.communityParent.name + '/'
+        }
+        if (this.props.task.community) {
+            str += this.props.task.community.name
+        }
+
+        return str
     }
 
     async approveTask() {

@@ -3,10 +3,11 @@ import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
 
 import ModalApplyTask from '../ModalApplyTask/Component'
+import ModalAcceptApplicant from '../ModalAcceptApplicant/Component'
 
 import { Col, Row, Button, Divider, message, List, Icon, Tooltip, Popconfirm } from 'antd'
 
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS} from '@/constant'
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS} from '@/constant'
 
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
@@ -15,6 +16,9 @@ export default class extends BaseComponent {
     ord_states() {
         return {
             visibleModalApplyTask: false,
+            visibleModalAcceptApplicant: false,
+            visibleModalMemberProfile: false,
+            selectedTaskCandidate: null,
             isDeveloperEvent: this.props.task.category === TASK_CATEGORY &&
                                 this.props.task.type === TASK_TYPE.EVENT,
             teamsOwned: []
@@ -141,6 +145,7 @@ export default class extends BaseComponent {
                             dataSource={this.props.task.candidates}
                             renderItem={(candidate) => {
 
+                                const name = candidate.type === 'USER' ? candidate.user.username : candidate.team.name
                                 const listItemActions = [candidate.type === 'USER' ?
                                     <Tooltip title="Solo User">
                                         <Icon type="user"/>
@@ -150,41 +155,56 @@ export default class extends BaseComponent {
                                     </Tooltip>]
 
                                 // if the candidate is the logged in user, show remove icon
-                                if (candidate.type === 'USER' && candidate.user._id === this.props.userId) {
+                                if (this.props.page === 'PUBLIC') {
+                                    if (candidate.type === 'USER' && candidate.user._id === this.props.userId) {
+                                        listItemActions.unshift(
+                                            <Tooltip title="remove self">
+                                                <Popconfirm
+                                                    title="Are you sure you want to remove your application?"
+                                                    onConfirm={this.removeApplication.bind(this, candidate._id)}
+                                                    placement="left"
+                                                    okText="Yes"
+                                                    cancelText="No"
+                                                >
+                                                    <a href="#">x</a>
+                                                </Popconfirm>
+                                            </Tooltip>)
+                                    } else if (candidate.type === 'TEAM' && _.map(this.state.teamsOwned, '_id').includes(candidate.team._id)) {
+                                        listItemActions.unshift(
+                                            <Tooltip title="remove team">
+                                                <Popconfirm
+                                                    title="Are you sure you want to remove your team's application?"
+                                                    onConfirm={this.removeApplication.bind(this, candidate._id)}
+                                                    placement="left"
+                                                    okText="Yes"
+                                                    cancelText="No"
+                                                >
+                                                    <a href="#">x</a>
+                                                </Popconfirm>
+                                            </Tooltip>)
+                                    }
+                                } else if (candidate.status === TASK_CANDIDATE_STATUS.APPROVED){
+                                    // this should be the leader's view - they can approve applicants
                                     listItemActions.unshift(
-                                        <Tooltip title="remove self">
-                                            <Popconfirm
-                                                title="Are you sure you want to remove your application?"
-                                                onConfirm={this.removeApplication.bind(this, candidate._id)}
-                                                placement="left"
-                                                okText="Yes"
-                                                cancelText="No"
-                                            >
-                                                <a href="#">x</a>
-                                            </Popconfirm>
-                                        </Tooltip>)
-                                } else if (candidate.type === 'TEAM' && _.map(this.state.teamsOwned, '_id').includes(candidate.team._id)) {
-                                    listItemActions.unshift(
-                                        <Tooltip title="remove team">
-                                            <Popconfirm
-                                                title="Are you sure you want to remove your team's application?"
-                                                onConfirm={this.removeApplication.bind(this, candidate._id)}
-                                                placement="left"
-                                                okText="Yes"
-                                                cancelText="No"
-                                            >
-                                                <a href="#">x</a>
-                                            </Popconfirm>
+                                        <Tooltip title="candidate already accepted">
+                                            <a href="#">✓</a>
                                         </Tooltip>)
                                 }
 
                                 return <List.Item actions={listItemActions}>
-                                    {candidate.type === 'USER' ? candidate.user.username : candidate.team.name}
+                                    {this.props.page === 'LEADER' ?
+                                        <Tooltip title="view user info / application">
+                                            <a href="#" onClick={this.showModalAcceptApplicant.bind(this, candidate)}>{name}</a>
+                                        </Tooltip> :
+                                        (name)
+                                    }
                                 </List.Item>
                             }}
                         />}
 
-                        {this.props.is_login && this.renderJoinButton.call(this)}
+                        {this.props.is_login &&
+                        this.props.page !== 'LEADER' &&
+                        this.renderJoinButton.call(this)}
 
                     </Col>
                 </Row>
@@ -195,6 +215,16 @@ export default class extends BaseComponent {
                     visible={this.state.visibleModalApplyTask}
                     onCancel={this.handleCancelModalApplyTask}
                     onCreate={this.handleModalApplyTask}
+                />
+
+                <ModalAcceptApplicant
+                    wrappedComponentRef={this.saveAcceptCandidateRef}
+                    acceptedCnt={0}
+                    acceptedMax={this.props.task.candidateSltLimit}
+                    taskCandidate={this.state.modalTaskCandidate}
+                    visible={this.state.visibleModalAcceptApplicant}
+                    onCancel={this.handleCancelModalAcceptApplicant}
+                    onCreate={this.handleModalAcceptApplicant}
                 />
             </div>
         )
@@ -233,7 +263,7 @@ export default class extends BaseComponent {
     showModalApplyTask = () => {
         this.formRefApplyTask.props.form.setFieldsValue({}, () => {
             this.setState({
-                visibleModalApplyTask: true,
+                visibleModalApplyTask: true
             })
         })
     }
@@ -270,12 +300,12 @@ export default class extends BaseComponent {
         const taskId = this.props.task._id
         const applyMsg = form.getFieldValue('applyMsg') || ''
 
+        this.handleCancelModalApplyTask()
+
         this.props.pushCandidate(taskId, userId, teamId, applyMsg).then((result) => {
-            this.handleCancelModalApplyTask()
             message.success('You have applied, you will be contacted if approved', 7)
 
         }).catch((err) => {
-            this.handleCancelModalApplyTask()
             message.error(err.message, 10)
         })
 
@@ -284,7 +314,41 @@ export default class extends BaseComponent {
     async removeApplication(tcId) {
         const taskId = this.props.task._id
         const res = await this.props.pullCandidate(taskId, tcId)
+    }
 
+    /**
+     * For organizers they can accept an applicant
+     */
+    showModalAcceptApplicant = (taskCandidate) => {
+        this.setState({
+            modalTaskCandidate: taskCandidate,
+            visibleModalAcceptApplicant: true
+        })
 
     }
+
+    saveAcceptCandidateRef = (ref) => {
+        this.acceptCandidateRef = ref
+    }
+
+    handleCancelModalAcceptApplicant = () => {
+        this.setState({visibleModalAcceptApplicant: false})
+    }
+
+    handleModalAcceptApplicant = () => {
+
+        // this is the candidate we are accepting
+        const taskCandidateId = this.state.modalTaskCandidate._id
+        this.handleCancelModalAcceptApplicant()
+
+        this.props.acceptCandidate(taskCandidateId). then((result) => {
+            message.success('Applicant has been accepted and contacted', 7)
+
+        }).catch((err) => {
+            message.error(err.message, 10)
+        })
+    }
+
+    // TODO: after max applicants are selected, we should send an email to those
+    // that were not selected
 }
