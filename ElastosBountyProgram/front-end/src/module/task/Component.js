@@ -62,7 +62,7 @@ export default class extends BaseComponent {
                 {!this.state.editing && this.props.task.status === TASK_STATUS.PENDING &&
                 <Button type="primary" onClick={this.approveTask.bind(this)}>Approve</Button>
                 }
-                {this.state.editing && <Button onClick={this.resetEdit.bind(this)}>Reset</Button>}
+                {/*this.state.editing && <Button onClick={this.resetEdit.bind(this)}>Reset</Button>*/}
                 <Button onClick={this.switchEditMode.bind(this)}>
                     {this.state.editing ? 'Cancel' : 'Edit'}
                 </Button>
@@ -90,7 +90,7 @@ export default class extends BaseComponent {
                 {!this.state.editing && this.props.task.status === TASK_STATUS.PENDING &&
                 <Button type="primary" onClick={this.approveTask.bind(this)}>Approve</Button>
                 }
-                {this.state.editing && <Button onClick={this.resetEdit.bind(this)}>Reset</Button>}
+                {/*this.state.editing && <Button onClick={this.resetEdit.bind(this)}>Reset</Button>*/}
                 <Button onClick={this.switchEditMode.bind(this)}>
                     {this.state.editing ? 'Cancel' : 'Edit'}
                 </Button>

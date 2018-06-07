@@ -62,13 +62,16 @@ export default class extends Base{
             query.status = {$in: [
                     constant.TASK_STATUS.CREATED,
                     constant.TASK_STATUS.PENDING,
-                    constant.TASK_STATUS.APPROVED
+                    constant.TASK_STATUS.APPROVED,
+                    constant.TASK_STATUS.ASSIGNED,
             ]}
 
         } else if (!param.status) {
+            // by default we only show tasks with these statuses
             query.status = {$in: [
                     constant.TASK_STATUS.CREATED,
-                    constant.TASK_STATUS.APPROVED
+                    constant.TASK_STATUS.APPROVED,
+                    constant.TASK_STATUS.ASSIGNED
                 ]}
         }
 

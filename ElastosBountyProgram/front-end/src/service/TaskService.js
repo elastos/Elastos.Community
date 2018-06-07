@@ -2,7 +2,7 @@ import BaseService from '../model/BaseService'
 import _ from 'lodash'
 import {api_request} from '@/util'
 
-import {TASK_CANDIDATE_STATUS} from '@/constant'
+import {TASK_CANDIDATE_STATUS, TASK_STATUS} from '@/constant'
 
 export default class extends BaseService {
 
@@ -148,7 +148,7 @@ export default class extends BaseService {
 
     async acceptCandidate(taskCandidateId) {
         const taskRedux = this.store.getRedux('task')
-        const result = await api_request({
+        const task = await api_request({
             path: '/task/acceptCandidate',
             method: 'post',
             data: {
@@ -156,15 +156,21 @@ export default class extends BaseService {
             }
         })
 
+        // we do this the hard way because the result doesn't have all the fields populated
+        // TODO: should we populate everything?
         const curTaskDetail = this.store.getState().task.detail
 
         const acceptedCandidate = _.find(curTaskDetail.candidates, (o) => o._id === taskCandidateId)
 
         acceptedCandidate.status = TASK_CANDIDATE_STATUS.APPROVED
 
+        if (task.status === TASK_STATUS.ASSIGNED) {
+            curTaskDetail.status = TASK_STATUS.ASSIGNED
+        }
+
         this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
 
-        return result
+        return task
     }
 
     async setFilter(options) {

@@ -34,6 +34,13 @@
 
 }
 
+#ebp-root {
+  .ant-table-thead > tr > th,
+  .ant-table-tbody > tr > td {
+    word-break: normal;
+  }
+}
+
 .ant-menu-item {
 
   &.ant-menu-item-active {

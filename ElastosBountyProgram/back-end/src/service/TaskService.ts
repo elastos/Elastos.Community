@@ -335,6 +335,7 @@ export default class extends Base {
      *
      */
     public async acceptCandidate(param): Promise<boolean> {
+        const db_task = this.getDBModel('Task');
         const db_tc = this.getDBModel('Task_Candidate');
         await db_tc.update({
             _id: param.taskCandidateId
@@ -342,11 +343,27 @@ export default class extends Base {
             status: constant.TASK_CANDIDATE_STATUS.APPROVED
         });
 
-        const doc = db_tc.findById(param.taskCandidateId)
+        const doc = await db_tc.findById(param.taskCandidateId)
 
-        debugger
+        let task = await db_task.getDBInstance().findOne({_id: doc.task})
+            .populate('candidates')
 
-        return doc
+        let acceptedCnt = 0;
+        for (let candidate of task.candidates) {
+            if (candidate.status === constant.TASK_CANDIDATE_STATUS.APPROVED) {
+                acceptedCnt =+ 1
+            }
+        }
+
+        if (acceptedCnt >= task.candidateSltLimit) {
+            await db_task.update({
+                _id: task._id
+            }, {
+                status: constant.TASK_STATUS.ASSIGNED
+            })
+        }
+
+        return await db_task.findById(task._id)
     }
 
     public async rejectCandidate(param): Promise<boolean> {

@@ -32,7 +32,7 @@ export const TASK_STATUS = {
     PROPOSAL: 'PROPOSAL',
     CREATED: 'CREATED',
     APPROVED: 'APPROVED',
-    ASSIGNED: 'ASSIGNED',
+    ASSIGNED: 'ASSIGNED', // when max candidates are accepted
     PENDING: 'PENDING',
     SUCCESS: 'SUCCESS',
     CANCELED: 'CANCELED',
