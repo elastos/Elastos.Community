@@ -40,7 +40,7 @@ export default class extends StandardPage {
     loadCommunityMembers() {
         this.props.getCommunityMembers(this.props.match.params['community']).then((communityMembers) => {
             communityMembers = this.mockAvatarToUsers(communityMembers)
-            
+
             // Convert array members to key (id) value (object user), so we can check if current user joined or not
             const keyValueCommunityMembers = _.keyBy(communityMembers, '_id')
             this.setState({
@@ -75,15 +75,15 @@ export default class extends StandardPage {
             })
         })
     }
-    
+
     mockAvatarToUsers(users) {
         users.forEach((user) => {
             user.profile.avatar = config.data.mockAvatarUrl
         })
-        
+
         return users
     }
-    
+
     // API only return list leader ids [leaderIds], so we need convert it to array object leader [leaders]
     convertCommunityLeaderIdsToLeaderObjects(community) {
         return new Promise((resolve, reject) => {
@@ -100,12 +100,12 @@ export default class extends StandardPage {
                         community.leaders.push(mappingIdToUserList[leaderId])
                     }
                 })
-                
+
                 resolve(community)
             })
         })
     }
-    
+
     convertCommunitiesLeaderIdsToLeaderObjects(communities) {
         return new Promise((resolve, reject) => {
             let userIds = []
@@ -113,11 +113,11 @@ export default class extends StandardPage {
                 userIds.push(...community.leaderIds)
             })
             userIds = _.uniq(userIds)
-            
+
             if (!userIds.length) {
                 return resolve([])
             }
-            
+
             this.props.getUserByIds(userIds).then((users) => {
                 users = this.mockAvatarToUsers(users) // Mock avatar url
                 const mappingIdToUserList = _.keyBy(users, '_id');
@@ -129,12 +129,12 @@ export default class extends StandardPage {
                         }
                     })
                 })
-                
+
                 resolve(communities)
             })
         })
     }
-    
+
     getBreadcrumbRegions(subCommunities) {
         // Filter communities to get breadcrumb regions
         let breadcrumbRegions = [];
@@ -194,18 +194,18 @@ export default class extends StandardPage {
             this.props.history.push(`/community/${this.props.match.params['community']}/country/${this.props.match.params['country']}`);
         }
     }
-    
+
     joinToCommunity() {
-        this.props.addMember(this.state.community._id, this.props.current_user_id).then(() => {
+        this.props.addMember(this.props.current_user_id, this.state.community._id).then(() => {
             message.success('You was added to community')
-            
+
             this.loadCommunityMembers()
         }).catch((err) => {
             console.error(err)
             message.error('Error while adding you to community')
         })
     }
-    
+
     renderBreadcrumbCountries() {
         let geolocationKeys = {}
         if (this.state.community) {
@@ -219,7 +219,7 @@ export default class extends StandardPage {
                                value={geolocation}>{config.data.mappingCountryCodeToName[geolocation]}</Select.Option>
             )
         })
-    
+
         const menuCountriesEl = (
             <Select
                 allowClear
@@ -233,17 +233,17 @@ export default class extends StandardPage {
                 {listCountriesEl}
             </Select>
         )
-        
+
         return menuCountriesEl
     }
-    
+
     renderBreadcrumbRegions() {
         const listRegionsEl = this.state.breadcrumbRegions.map((region, index) => {
             return (
                 <Select.Option key={index} title={region.name} value={region.name}>{region.name}</Select.Option>
             )
         })
-    
+
         const menuListRegionsEl = (
             <Select
                 allowClear
@@ -257,10 +257,10 @@ export default class extends StandardPage {
                 {listRegionsEl}
             </Select>
         )
-        
+
         return menuListRegionsEl
     }
-    
+
     renderTabSubCommunities() {
         return (
             <Tabs type="card">
@@ -296,7 +296,7 @@ export default class extends StandardPage {
             </Tabs>
         )
     }
-    
+
     renderListOrganizers() {
         if (!this.state.community) {
             return null
