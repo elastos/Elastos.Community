@@ -37,17 +37,20 @@ class C extends BaseComponent {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Task submit - received values of form: ', values)
-
-                // Only get the last selected level
                 if (values.taskCommunity) {
-                    values.communityParent = values.taskCommunity[0]
-                    values.taskCommunity = values.taskCommunity[values.taskCommunity.length - 1]
-
+                    if (values.taskCommunity.length > 1) {
+                        values.communityParent = values.taskCommunity[0]
+                        values.community = values.taskCommunity[1]
+                    } else {
+                        values.communityParent = null
+                        values.community = values.taskCommunity[0]
+                    }
                 }
 
                 if (this.state.editing) {
-                    this.props.updateTask(values, this.state);
+                    this.props.updateTask(values, this.state).then(() => {
+                        this.props.getTaskDetail(this.props.existingTask._id)
+                    });
                     this.props.switchEditMode()
                 } else {
                     this.props.createTask(values, this.state);
@@ -103,7 +106,9 @@ class C extends BaseComponent {
             </Select>
         )
 
-        const taskCommunity_fn = getFieldDecorator('taskCommunity')
+        const taskCommunity_fn = getFieldDecorator('taskCommunity', {
+            initialValue: existingTask ? existingTask.taskCommunity : []
+        })
         const taskCommunity_el = (
             <Cascader options={this.state.communityTrees} placeholder="" />
         )
