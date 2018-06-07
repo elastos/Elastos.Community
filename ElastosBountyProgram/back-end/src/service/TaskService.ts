@@ -258,7 +258,7 @@ export default class extends Base {
      * @returns {Promise<boolean>}
      */
     public async removeCandidate(param): Promise<boolean> {
-        const {taskCandidateId} = param;
+        const {taskId, taskCandidateId} = param;
 
         // TODO: permission checks
 
@@ -336,11 +336,17 @@ export default class extends Base {
      */
     public async acceptCandidate(param): Promise<boolean> {
         const db_tc = this.getDBModel('Task_Candidate');
-        return await db_tc.update({
+        await db_tc.update({
             _id: param.taskCandidateId
         }, {
             status: constant.TASK_CANDIDATE_STATUS.APPROVED
         });
+
+        const doc = db_tc.findById(param.taskCandidateId)
+
+        debugger
+
+        return doc
     }
 
     public async rejectCandidate(param): Promise<boolean> {

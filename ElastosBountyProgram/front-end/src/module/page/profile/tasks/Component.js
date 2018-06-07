@@ -77,6 +77,59 @@ export default class extends StandardPage {
             }
         }]
 
+        // TODO: this should be moved to a more restrictive admin
+        const ownedColumns = [{
+            title: 'Name',
+            dataIndex: 'name',
+            width: '30%',
+            className: 'fontWeight500 allow-wrap',
+            render: (name, record) => {
+                return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
+            }
+        }, {
+            title: 'Category',
+            dataIndex: 'category',
+            render: (category) => _.capitalize(category)
+        }, {
+            title: 'Type',
+            dataIndex: 'type',
+        }, {
+            title: 'Community',
+            dataIndex: 'community',
+            key: 'community',
+            render: (community, data) => {
+                if (!community) {
+                    return null;
+                }
+
+                if (data.communityParent) {
+                    let nameParent = data.communityParent.name;
+                    return (<p>{nameParent}/{community.name}</p>)
+                } else {
+                    return (<p>{community.name}</p>)
+                }
+
+            }
+        }, {
+            title: 'Status',
+            dataIndex: 'status'
+        },{
+            title: 'Date',
+            dataIndex: 'startTime',
+            render: (startTime) => moment(startTime).format('MMM D')
+        }, {
+            title: 'Created',
+            dataIndex: 'createdAt',
+            render: (createdAt) => moment(createdAt).format('MMM D')
+        }, {
+            title: '',
+            dataIndex: '_id',
+            key: 'actions',
+            render: (id, record) => {
+
+            }
+        }]
+
         return (
             <div>
                 <div className="ebp-header-divider">
@@ -124,7 +177,7 @@ export default class extends StandardPage {
                                     <Divider>Owned Tasks</Divider>
 
                                     <Table
-                                        columns={columns}
+                                        columns={ownedColumns}
                                         rowKey={(item) => item._id}
                                         dataSource={tasksOwnedData}
                                         loading={this.props.loading}

@@ -45,7 +45,7 @@ export default class extends BaseService {
             path: `/task/${taskId}`,
             method: 'get'
         })
-        
+
         // Format data for dropdown select community
         result.taskCommunity = [];
         if (result.communityParent) {
@@ -83,7 +83,7 @@ export default class extends BaseService {
             method: 'put',
             data: doc
         })
-        
+
 
         this.dispatch(taskRedux.actions.loading_update(false))
 
@@ -152,16 +152,13 @@ export default class extends BaseService {
             path: '/task/acceptCandidate',
             method: 'post',
             data: {
-                taskId,
                 taskCandidateId
             }
         })
 
         const curTaskDetail = this.store.getState().task.detail
 
-        const acceptedCandidate = _.find(curTaskDetail.candidates, (o) => o._id = taskCandidateId)
-
-        debugger
+        const acceptedCandidate = _.find(curTaskDetail.candidates, (o) => o._id === taskCandidateId)
 
         acceptedCandidate.status = TASK_CANDIDATE_STATUS.APPROVED
 

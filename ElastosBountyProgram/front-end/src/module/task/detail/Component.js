@@ -14,10 +14,20 @@ const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 export default class extends BaseComponent {
 
     ord_states() {
+
+        let acceptedCnt = 0
+
+        for (let candidate of this.props.task.candidates) {
+            if (candidate.status === TASK_CANDIDATE_STATUS.APPROVED) {
+                acceptedCnt += 1
+            }
+        }
+
         return {
             visibleModalApplyTask: false,
             visibleModalAcceptApplicant: false,
             visibleModalMemberProfile: false,
+            acceptedCnt,
             selectedTaskCandidate: null,
             isDeveloperEvent: this.props.task.category === TASK_CATEGORY &&
                                 this.props.task.type === TASK_TYPE.EVENT,
@@ -50,6 +60,18 @@ export default class extends BaseComponent {
                         </Row>
                         <Row>
                             <Col span={this.props.task.thumbnail ? 18 : 24}>
+                                {this.props.task.community &&
+                                <Row>
+                                    <Col span={4} className="label-col">
+                                        Community
+                                    </Col>
+                                    <Col span={20}>
+                                        <p>
+                                            {this.getCommunityDisp()}
+                                        </p>
+                                    </Col>
+                                </Row>
+                                }
                                 <Row>
                                     <Col span={4} className="label-col">
                                         Description
@@ -219,7 +241,7 @@ export default class extends BaseComponent {
 
                 <ModalAcceptApplicant
                     wrappedComponentRef={this.saveAcceptCandidateRef}
-                    acceptedCnt={0}
+                    acceptedCnt={this.state.acceptedCnt}
                     acceptedMax={this.props.task.candidateSltLimit}
                     taskCandidate={this.state.modalTaskCandidate}
                     visible={this.state.visibleModalAcceptApplicant}
@@ -228,6 +250,18 @@ export default class extends BaseComponent {
                 />
             </div>
         )
+    }
+
+    getCommunityDisp() {
+        let str = ''
+        if (this.props.task.communityParent) {
+            str += this.props.task.communityParent.name + '/'
+        }
+        if (this.props.task.community) {
+            str += this.props.task.community.name
+        }
+
+        return str
     }
 
     /**
@@ -341,8 +375,14 @@ export default class extends BaseComponent {
         const taskCandidateId = this.state.modalTaskCandidate._id
         this.handleCancelModalAcceptApplicant()
 
-        this.props.acceptCandidate(taskCandidateId). then((result) => {
+        this.props.acceptCandidate(taskCandidateId).then((result) => {
             message.success('Applicant has been accepted and contacted', 7)
+
+            let acceptedCnt = this.state.acceptedCnt
+
+            acceptedCnt += 1
+
+            this.setState({acceptedCnt})
 
         }).catch((err) => {
             message.error(err.message, 10)

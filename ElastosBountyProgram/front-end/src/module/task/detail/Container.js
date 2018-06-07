@@ -63,7 +63,7 @@ export default createContainer(Component, (state) => {
 
         async acceptCandidate(taskCandidateId) {
             try {
-                const result = await taskService.pullCandidate(taskId, taskCandidateId)
+                const result = await taskService.acceptCandidate(taskCandidateId)
 
                 return result
             } catch (err) {

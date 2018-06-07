@@ -5,7 +5,7 @@ import {Form, Icon, Input, InputNumber, Button, Checkbox, Select, message, Row, 
 import {upload_file} from "@/util";
 import './style.scss'
 
-import {TASK_CATEGORY, TASK_TYPE} from '@/constant'
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS} from '@/constant'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
@@ -74,6 +74,12 @@ class C extends BaseComponent {
         const {getFieldDecorator} = this.props.form
         const existingTask = this.props.existingTask
 
+        // if this is approved - TODO: back-end restrictions + tests
+        // this is for the organizer page and editing is more restrictive
+        // unless it's just CREATED/PENDING
+        const hasLeaderEditRestrictions = this.props.page === 'LEADER' &&
+            ![TASK_STATUS.CREATED, TASK_STATUS.PENDING].includes(existingTask.status)
+
         const taskName_fn = getFieldDecorator('taskName', {
             rules: [{required: true, message: 'Please input a task name'}],
             initialValue: this.state.editing ? existingTask.name : ''
@@ -87,7 +93,7 @@ class C extends BaseComponent {
             initialValue: this.state.editing ? existingTask.category : TASK_CATEGORY.SOCIAL
         })
         const taskCategory_el = (
-            <Select>
+            <Select disabled={hasLeaderEditRestrictions}>
                 <Option value={TASK_CATEGORY.SOCIAL}>Social</Option>
                 <Option value={TASK_CATEGORY.DEVELOPER}>Developer</Option>
             </Select>
@@ -99,13 +105,14 @@ class C extends BaseComponent {
             initialValue: this.state.editing ? existingTask.type : TASK_TYPE.EVENT
         })
         const taskType_el = (
-            <Select>
+            <Select disabled={hasLeaderEditRestrictions}>
                 <Option value={TASK_TYPE.EVENT}>Event</Option>
                 <Option value={TASK_TYPE.PROJECT}>Project</Option>
                 {this.props.is_admin && <Option value={TASK_TYPE.TASK}>Task</Option>}
             </Select>
         )
 
+        // TODO: restrict community to only the one you are in
         const taskCommunity_fn = getFieldDecorator('taskCommunity', {
             initialValue: existingTask ? existingTask.taskCommunity : []
         })
@@ -126,7 +133,7 @@ class C extends BaseComponent {
             initialValue: this.state.editing ? existingTask.candidateLimit : null
         })
         const taskCandLimit_el = (
-            <InputNumber size="large"/>
+            <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
         )
 
         const taskCandSltLimit_fn = getFieldDecorator('taskCandSltLimit', {
@@ -134,7 +141,7 @@ class C extends BaseComponent {
             initialValue: this.state.editing ? existingTask.candidateSltLimit : null
         })
         const taskCandSltLimit_el = (
-            <InputNumber size="large"/>
+            <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
         )
 
         const taskRewardUpfront_fn = getFieldDecorator('taskRewardUpfront', {
@@ -142,7 +149,7 @@ class C extends BaseComponent {
             initialValue: this.state.editing ? existingTask.rewardUpfront.ela / 1000 : null
         })
         const taskRewardUpfront_el = (
-            <InputNumber size="large"/>
+            <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
         )
 
         const taskReward_fn = getFieldDecorator('taskReward', {
@@ -150,7 +157,7 @@ class C extends BaseComponent {
             initialValue: this.state.editing ? existingTask.reward.ela / 1000 : null
         })
         const taskReward_el = (
-            <InputNumber size="large"/>
+            <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
         )
 
         const thumbnail_fn = getFieldDecorator('thumbnail', {

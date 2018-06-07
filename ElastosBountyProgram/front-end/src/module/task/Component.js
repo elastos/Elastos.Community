@@ -32,7 +32,7 @@ export default class extends BaseComponent {
 
     renderEditForm() {
         return <div className="form-wrapper">
-            <TaskCreateForm existingTask={this.props.task} switchEditMode={this.switchEditMode.bind(this)}/>
+            <TaskCreateForm existingTask={this.props.task} page={this.props.page} switchEditMode={this.switchEditMode.bind(this)}/>
         </div>
     }
 
@@ -82,7 +82,7 @@ export default class extends BaseComponent {
                 }
                 {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) &&
                 <span className="help-text">&nbsp; -
-
+                    Please accept applicants up to the max accepted number
                 </span>
                 }
             </div>
@@ -195,6 +195,7 @@ export default class extends BaseComponent {
         )
     }
 
+    // TODO: DRY - move to helper
     getCommunityDisp() {
         let str = ''
         if (this.props.task.communityParent) {
