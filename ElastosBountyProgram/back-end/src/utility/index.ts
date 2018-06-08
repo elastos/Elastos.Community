@@ -1,11 +1,13 @@
 import * as _ from 'lodash';
 import crypto from './crypto';
+import mail from './mail';
 import validate from './validate';
 import * as _uuid from 'uuid';
 
 export {
     crypto,
-    validate
+    validate,
+    mail
 };
 
 export const getEnv = ()=>process.env.NODE_ENV;

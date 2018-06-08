@@ -198,11 +198,13 @@ export default class extends StandardPage {
                                                 <h3 className="without-padding">Please Select a Country</h3>
                                             </Col>
                                             <Col span={4}>
+                                                {/*
                                                 <Search
                                                     placeholder="find member"
                                                     onSearch={value => console.log(value)}
                                                     enterButton
                                                 />
+                                                */}
                                             </Col>
                                         </Row>
                                         <Row>

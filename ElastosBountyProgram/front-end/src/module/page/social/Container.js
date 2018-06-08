@@ -57,7 +57,7 @@ export default createContainer(Component, (state) => {
 
     // communities
     if (!_.isArray(state.community.my_communities)) {
-        taskState.all_tasks = _.values(state.community.my_communities)
+        taskState.myCommunities = _.values(state.community.my_communities)
     }
 
     return taskState
