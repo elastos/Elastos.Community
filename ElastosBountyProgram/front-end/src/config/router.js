@@ -18,6 +18,8 @@ import ProfileTasksPage from '@/module/page/profile/tasks/Container'
 import ProfileTaskDetailPage from '@/module/page/profile/task_detail/Container'
 import ProfileTeamsPage from '@/module/page/profile/teams/Container'
 
+import MemberPage from '@/module/page/member/Container'
+
 import AdminUsersPage from '@/module/page/admin/users/Container'
 import AdminTasksPage from '@/module/page/admin/tasks/Container'
 import AdminTaskDetailPage from '@/module/page/admin/task_detail/Container'
@@ -99,6 +101,11 @@ export default [
     {
         path: '/profile/teams',
         page: ProfileTeamsPage
+    },
+    {
+        // public profile page
+        path: '/member/:userId',
+        page: MemberPage
     },
     {
         path: '/admin/users',

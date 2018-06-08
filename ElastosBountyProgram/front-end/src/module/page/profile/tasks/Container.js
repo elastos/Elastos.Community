@@ -8,16 +8,19 @@ import {TASK_STATUS, TASK_CANDIDATE_STATUS} from '@/constant'
 
 export default createContainer(Component, (state) => {
 
+
     const currentUserId = state.user.current_user_id
     const taskState = {
         ...state.task,
         currentUserId,
-        loading: false
+        loading: false,
+        is_leader: state.user.role === 'LEADER'
     }
 
-    if (!_.isArray(state.task.all_tasks)) {
-        taskState.all_tasks = _.values(state.task.all_tasks)
+    if (!_.isArray(taskState.all_tasks)) {
+        taskState.all_tasks = _.values(taskState.all_tasks)
     }
+
 
     taskState.filter = state.task.filter || {}
 
@@ -41,18 +44,20 @@ export default createContainer(Component, (state) => {
                 let taskCandidate = _.find(task.candidates, (candidate) => {
 
                     if (candidate.type === 'USER') {
-                        return candidate.user === currentUserId
+                        return candidate.user._id === currentUserId
                     }
 
                     if (candidate.type === 'TEAM') {
-                        return _.map(state.user.teams, '_id').includes(candidate.team)
+                        return _.map(state.user.teams, '_id').includes(candidate.team._id)
                     }
                 })
 
-                if (taskCandidate.status === TASK_CANDIDATE_STATUS.APPROVED) {
-                    taskState.candidate_active_tasks.push(task)
-                } else {
-                    taskState.candidate_pending_tasks.push(task)
+                if (taskCandidate) {
+                    if (taskCandidate.status === TASK_CANDIDATE_STATUS.APPROVED) {
+                        taskState.candidate_active_tasks.push(task)
+                    } else {
+                        taskState.candidate_pending_tasks.push(task)
+                    }
                 }
             }
         }

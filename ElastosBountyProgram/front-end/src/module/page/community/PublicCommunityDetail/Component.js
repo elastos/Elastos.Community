@@ -374,7 +374,7 @@ export default class extends StandardPage {
                                 <Col span={6}
                                      className="community-right-column">
                                     <div>
-                                        <h3 className="without-padding">Members List</h3>
+                                        <h3 className="without-padding">Members</h3>
                                         <div className="list-members">
                                             <List
                                                 dataSource={this.state.communityMembers}
@@ -387,7 +387,9 @@ export default class extends StandardPage {
                                                                     <Avatar size="large" icon="user" src={item.profile.avatar}/>
                                                                 </td>
                                                                 <td className="member-name">
-                                                                    {item.profile.firstName} {item.profile.lastName}
+                                                                    <a onClick={() => {this.props.history.push('/member/' + item._id)}}>
+                                                                        {item.profile.firstName} {item.profile.lastName}
+                                                                    </a>
                                                                 </td>
                                                             </tr>
                                                             </tbody>

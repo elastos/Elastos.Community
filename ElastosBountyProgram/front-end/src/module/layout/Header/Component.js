@@ -106,6 +106,7 @@ export default class extends BaseComponent {
                     </Menu.Item>
                     */}
 
+                    {/*
                     <Menu.Item className="c_MenuItem right-side" key="tasks">
                         {I18N.get('0006')}
                     </Menu.Item>
@@ -113,7 +114,7 @@ export default class extends BaseComponent {
                     <Menu.Item className="c_MenuItem right-side" key="teams">
                         {I18N.get('0005')}
                     </Menu.Item>
-
+                    */}
                     <Menu.Item className="c_MenuItem account right-side">
                         <Dropdown overlay={acctDropdown} style="margin-top: 24px;">
                             <a className="ant-dropdown-link" href="#">

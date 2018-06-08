@@ -175,14 +175,18 @@ export default class extends StandardPage {
                                     <div className="vert-gap"/>
                                     }
 
-                                    <Divider>Owned Tasks</Divider>
+                                    {this.props.is_leader &&
+                                    <div>
+                                        <Divider>Owned Tasks</Divider>
 
-                                    <Table
-                                        columns={ownedColumns}
-                                        rowKey={(item) => item._id}
-                                        dataSource={tasksOwnedData}
-                                        loading={this.props.loading}
-                                    />
+                                        <Table
+                                            columns={ownedColumns}
+                                            rowKey={(item) => item._id}
+                                            dataSource={tasksOwnedData}
+                                            loading={this.props.loading}
+                                        />
+                                    </div>
+                                    }
                                 </Col>
                                 <Col span={4} className="admin-right-column wrap-box-navigator">
                                     <Navigator selectedItem={'profileTasks'}/>
