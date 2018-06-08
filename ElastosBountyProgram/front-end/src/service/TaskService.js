@@ -37,6 +37,7 @@ export default class extends BaseService {
     }
 
     async get(taskId) {
+
         const taskRedux = this.store.getRedux('task')
 
         this.dispatch(taskRedux.actions.loading_update(true))
@@ -46,22 +47,25 @@ export default class extends BaseService {
             method: 'get'
         })
 
-        // Format data for dropdown select community
-        result.taskCommunity = [];
-        if (result.communityParent) {
-            result.taskCommunity.push(result.communityParent._id)
-        }
-
-        if (result.community) {
-            result.taskCommunity.push(result.community._id)
-        }
-
-        // Format data for dropdown select community -- end
-
         this.dispatch(taskRedux.actions.loading_update(false))
-        this.dispatch(taskRedux.actions.detail_update(result))
 
-        return result
+        // Format data for dropdown select community
+        if (result) {
+            result.taskCommunity = [];
+            if (result.communityParent) {
+                result.taskCommunity.push(result.communityParent._id)
+            }
+
+            if (result.community) {
+                result.taskCommunity.push(result.community._id)
+            }
+
+            // Format data for dropdown select community -- end
+            this.dispatch(taskRedux.actions.detail_update(result))
+
+            return result
+        }
+
     }
 
     /**

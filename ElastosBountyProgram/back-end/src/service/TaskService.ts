@@ -2,7 +2,7 @@ import Base from './Base';
 import {Document, Types} from 'mongoose';
 import * as _ from 'lodash';
 import {constant} from '../constant';
-import {validate, crypto} from '../utility';
+import {validate, crypto, mail} from '../utility';
 import UserService from "./UserService";
 
 const ObjectId = Types.ObjectId;
@@ -123,14 +123,18 @@ export default class extends Base {
             throw 'member could not create task';
         }
 
+        /*
         if(type === constant.TASK_TYPE.EVENT){
             const userService = this.getService(UserService);
             if(reward.ela > userService.getSumElaBudget(this.currentUser.elaBudget)){
                 throw 'ela reward could not greater than user budget';
             }
         }
+        */
 
         const db_task = this.getDBModel('Task');
+
+        this.sendCreateEmail(this.currentUser, doc)
 
         console.log('create task => ', doc);
         return await db_task.save(doc);
@@ -152,6 +156,7 @@ export default class extends Base {
         } = param;
 
         const db_task = this.getDBModel('Task');
+        const db_user = this.getDBModel('User');
 
         // get current
         const task = await db_task.findById(taskId)
@@ -181,6 +186,10 @@ export default class extends Base {
                 if (param.status === constant.TASK_STATUS.APPROVED) {
                     updateObj.approvedBy = this.currentUser._id
                 }
+
+                const taskOwner = await db_user.findById(task.createdBy)
+
+                await this.sendTaskApproveEmail(this.currentUser, taskOwner, task)
             }
         }
 
@@ -238,6 +247,7 @@ export default class extends Base {
             task: taskId,
             applyMsg
         };
+        const db_user = this.getDBModel('User');
 
         if(teamId){
             doc.team = teamId;
@@ -250,7 +260,6 @@ export default class extends Base {
         }
         else if(userId){
             doc.user = userId;
-            const db_user = this.getDBModel('User');
             const user = await db_user.findOne({_id: userId});
             if(!user){
                 throw 'invalid user id';
@@ -294,6 +303,11 @@ export default class extends Base {
 
         // populate the taskCandidate
         await db_tc.db.populate(taskCandidate, ['user', 'team'])
+
+        // send the email - first get the task owner
+        const taskOwner = await db_user.findById(task.createdBy)
+
+        await this.sendAddCandidateEmail(this.currentUser, taskOwner, task)
 
         return taskCandidate
     }
@@ -449,5 +463,74 @@ export default class extends Base {
 
         return db_task_candidate.list({user: userId})
 
+    }
+
+    public async sendCreateEmail(curUser, doc) {
+
+        let subject = 'New Task Created: ' + doc.name;
+        let body = `${this.currentUser.profile.firstName} ${this.currentUser.profile.lastName} has created the task ${doc.name}`
+
+        if (doc.status === constant.TASK_STATUS.PENDING) {
+            subject = 'ACTION REQUIRED: ' + subject
+            body += ' and it requires approval'
+        }
+
+        await mail.send({
+            to: 'clarence@elastosjs.com',
+            toName: 'Clarence Liu',
+            subject: subject,
+            body: body
+        })
+
+    }
+
+    /**
+     * There are two emails - one to the applicant and the other to the task owner
+     *
+     * @param curUser
+     * @param taskOwner
+     * @param doc
+     * @returns {Promise<void>}
+     */
+    public async sendAddCandidateEmail(curUser, taskOwner, doc) {
+
+        let ownerSubject = `A candidate has applied for your task - ${doc.name}`
+        let ownerBody = `${curUser.profile.firstName} ${curUser.profile.lastName} has applied for your task ${doc.name}<br/>Please review their application`
+        let ownerTo = taskOwner.email
+        let ownerToName = `${taskOwner.profile.firstName} ${taskOwner.profile.lastName}`
+
+        await mail.send({
+            to: ownerTo,
+            toName: ownerToName,
+            subject: ownerSubject,
+            body: ownerBody
+        })
+
+        let candidateSubject = `Your application for task ${doc.name} has been received`
+        let candidateBody = `Thank you, the task owner ${taskOwner.profile.firstName} ${taskOwner.profile.lastName} will review your application and be in contact`
+        let candidateTo = curUser.email
+        let candidateToName = `${curUser.profile.firstName} ${curUser.profile.lastName}`
+
+        await mail.send({
+            to: candidateTo,
+            toName: candidateToName,
+            subject: candidateSubject,
+            body: candidateBody
+        })
+    }
+
+    public async sendTaskApproveEmail(curUser, taskOwner, task) {
+
+        let ownerSubject = `Your task proposal - ${task.name} has been approved`
+        let ownerBody = `${curUser.profile.firstName} ${curUser.profile.lastName} has approved your task proposal ${task.name}`
+        let ownerTo = taskOwner.email
+        let ownerToName = `${taskOwner.profile.firstName} ${taskOwner.profile.lastName}`
+
+        await mail.send({
+            to: ownerTo,
+            toName: ownerToName,
+            subject: ownerSubject,
+            body: ownerBody
+        })
     }
 }
