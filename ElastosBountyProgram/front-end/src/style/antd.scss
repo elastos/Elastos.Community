@@ -69,3 +69,10 @@
     }
   }
 }
+
+.ant-input-search-button.ant-btn-primary {
+  background-color: transparent;
+  border-color: transparent;
+  color: $text_light_gray;
+  margin-right: 0;
+}

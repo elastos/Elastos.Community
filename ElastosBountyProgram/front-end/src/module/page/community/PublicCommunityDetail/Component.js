@@ -404,19 +404,6 @@ export default class extends StandardPage {
                                     {tabSubCommunities}
                                 </Col>
                             </Row>
-
-                            <div className="ebp-page-title">
-                                <h2>Events</h2>
-                            </div>
-                            <div className="wrap-events">
-                                <ListEvents events={this.props.events} />
-                            </div>
-                            <div className="ebp-page-title">
-                                <h2>Tasks</h2>
-                            </div>
-                            <div className="wrap-tasks">
-                                <ListTasks tasks={this.props.tasks} />
-                            </div>
                         </div>
                     </div>
                 </div>

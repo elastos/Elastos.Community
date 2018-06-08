@@ -13,7 +13,7 @@ export default {
 
     '0100': 'Developers',
     '0101': 'Community',
-    '0102': 'Leader',
+    '0102': 'Organizers',
 
     '0200': 'Profile',
     '0201': 'Login',

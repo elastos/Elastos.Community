@@ -1,7 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import StandardPage from '../../StandardPage';
-import { Table, Card, Select, Col, Row, Breadcrumb, Icon, Button } from 'antd'
+
+import { Table, Card, Select, Col, Row, Breadcrumb, Icon, Button, Input } from 'antd'
+const Search = Input.Search;
+
 import config from '@/config'
 import Footer from '@/module/layout/Footer/Container'
 import ListTasks from '../shared/ListTasks/Component'
@@ -104,7 +107,7 @@ export default class extends StandardPage {
             })
         }
     }
-    
+
     renderBreadcrumbCountries() {
         const geolocationKeys = _.keyBy(this.state.communities, 'geolocation');
         const listCountriesEl = Object.keys(geolocationKeys).map((geolocation, index) => {
@@ -113,7 +116,7 @@ export default class extends StandardPage {
                                value={geolocation}>{config.data.mappingCountryCodeToName[geolocation]}</Select.Option>
             )
         })
-    
+
         return (
             <Select
                 allowClear
@@ -128,7 +131,7 @@ export default class extends StandardPage {
             </Select>
         )
     }
-    
+
     renderListCommunities() {
         return this.state.communities.map((community, index) => {
             return (
@@ -186,26 +189,24 @@ export default class extends StandardPage {
                                 <Col span={24}
                                      className="community-left-column">
                                     <div>
-                                        <h2 className="without-padding">Country Organizers</h2>
+                                        <Row>
+                                            <Col span={20}>
+                                                <h2 className="without-padding">Please Select a Country</h2>
+                                            </Col>
+                                            <Col span={4}>
+                                                <Search
+                                                    placeholder="find member"
+                                                    onSearch={value => console.log(value)}
+                                                    enterButton
+                                                />
+                                            </Col>
+                                        </Row>
                                         <Row>
                                             {listCommunitiesEl}
                                         </Row>
                                     </div>
                                 </Col>
                             </Row>
-
-                            <div className="ebp-page-title">
-                                <h2>Events</h2>
-                            </div>
-                            <div className="wrap-events">
-                                <ListEvents events={this.props.events} />
-                            </div>
-                            <div className="ebp-page-title">
-                                <h2>Tasks</h2>
-                            </div>
-                            <div className="wrap-tasks">
-                                <ListTasks tasks={this.props.tasks} />
-                            </div>
                         </div>
                     </div>
                 </div>

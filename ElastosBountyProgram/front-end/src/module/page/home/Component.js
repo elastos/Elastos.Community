@@ -53,7 +53,7 @@ export default class extends StandardPage {
                             <p className="event-date">
                                 {moment(task.date).format('MMM D, YYYY')}
                             </p>
-                            <img src={'/assets/images/task_thumbs/' + task.thumbnail} />
+                            {task.thumbnail && <img src={task.thumbnail}/>}
                         </div>
                     </Col>
 
@@ -201,13 +201,29 @@ export default class extends StandardPage {
                     <Row>
                         <Col span={12} className="d_colTasks">
                             <h3>
-                                Sign Up as a Member
+                                Featured Developer Bounties
                             </h3>
+
+                            {_.range(4).map((i) => {
+                                return <Row key={i} className="d_devEventsContainer">
+                                    {this.props.dev_tasks.map((task) => {
+                                        return renderEventRow(task, i)
+                                    })}
+                                </Row>
+                            })}
                         </Col>
                         <Col span={12} className="d_colEvents">
                             <h3>
-                                Apply to be an Organizer
+                                Featured Events
                             </h3>
+
+                            {_.range(4).map((i) => {
+                                return <Row key={i} className="d_devEventsContainer">
+                                    {this.props.social_tasks.map((task) => {
+                                        return renderEventRow(task, i)
+                                    })}
+                                </Row>
+                            })}
                         </Col>
                     </Row>
                 </div>

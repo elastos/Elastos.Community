@@ -428,7 +428,7 @@ export default class extends AdminPage {
 
         return listCountriesEl;
     }
-    
+
     renderBreadcrumbCountries() {
         let geolocationKeys = {}
         if (this.state.community) {
@@ -442,7 +442,7 @@ export default class extends AdminPage {
                                value={geolocation}>{config.data.mappingCountryCodeToName[geolocation]}</Select.Option>
             )
         })
-    
+
         const menuCountriesEl = (
             <Select
                 allowClear
@@ -456,17 +456,17 @@ export default class extends AdminPage {
                 {listCountriesEl}
             </Select>
         )
-    
+
         return menuCountriesEl
     }
-    
+
     renderBreadcrumbRegions() {
         const listRegionsEl = this.state.breadcrumbRegions.map((region, index) => {
             return (
                 <Select.Option key={index} title={region.name} value={region.name}>{region.name}</Select.Option>
             )
         })
-    
+
         const menuListRegionsEl = (
             <Select
                 allowClear
@@ -480,18 +480,18 @@ export default class extends AdminPage {
                 {listRegionsEl}
             </Select>
         )
-        
+
         return menuListRegionsEl
     }
-    
+
     renderSubCommunitiesByType() {
         if (!this.state.community || !this.state.listSubCommunitiesByType) {
             return null
         }
-        
+
         return (
             <Row>
-                <Col span={6}
+                <Col span={4}
                      className="user-card user-card--without-padding user-card--organizer">
                     <h3 className="without-padding overflow-ellipsis" title={this.state.community.name + ' Organizers'}>{this.state.community.name}</h3>
                     {this.state.community.leaders.map((leader, index) => {
@@ -509,9 +509,9 @@ export default class extends AdminPage {
                             </Card>
                         )
                     })}
-                    <Button className="ant-btn-ebp" type="primary" size="small" onClick={this.showModalAddOrganizer}>Add organizer</Button>
+                    <Button className="ant-btn-ebp" type="primary" size="small" onClick={this.showModalAddOrganizer}>Add Organizer</Button>
                 </Col>
-                <Col span={18} className="wrap-child-box-users">
+                <Col span={20} className="wrap-child-box-users">
                     {Object.keys(config.data.mappingSubCommunityTypesAndName).map((communityType, index) => {
                         return (
                             <div key={index} className="child-box-users">
@@ -519,7 +519,7 @@ export default class extends AdminPage {
                                     {config.data.mappingSubCommunityTypesAndName[communityType].addNewText}
                                 </Button>
                                 <h3 className="without-padding">
-                                    {config.data.mappingSubCommunityTypesAndName[communityType].pluralName}
+                                    {config.data.mappingSubCommunityTypesAndName[communityType].pluralName} &nbsp;
                                     ({this.state.listSubCommunitiesByType[COMMUNITY_TYPE[communityType]].length})
                                 </h3>
                                 <Row>
@@ -527,9 +527,9 @@ export default class extends AdminPage {
                                         if (!this.state.showAllSubCommunity[COMMUNITY_TYPE[communityType]] && i >= this.state.showMoreMinimum) {
                                             return;
                                         }
-                                
+
                                         return (
-                                            <Col span={6}
+                                            <Col span={4}
                                                  key={i}
                                                  className="user-card">
                                                 {community.leaders.map((leader, index) => {
@@ -540,10 +540,13 @@ export default class extends AdminPage {
                                                             onClick={this.showModalUpdateSubCommunity.bind(null, community, leader)}
                                                             cover={<img src={leader.profile.avatar}/>}
                                                         >
-                                                            <Card.Meta
-                                                                title={leader.profile.firstName + ' ' + leader.profile.lastName}
-                                                                description={community.name}
-                                                            />
+                                                            <h5>
+                                                                {community.name}
+                                                            </h5>
+                                                            <p>
+                                                                {leader.profile.firstName + ' ' + leader.profile.lastName}<br/>
+                                                                <span class="no-info">{leader.profile.username}</span>
+                                                            </p>
                                                         </Card>
                                                     )
                                                 })}
@@ -551,7 +554,7 @@ export default class extends AdminPage {
                                         );
                                     })}
                                 </Row>
-                        
+
                                 { this.state.listSubCommunitiesByType[COMMUNITY_TYPE.STATE].length > this.state.showMoreMinimum && (
                                     <div onClick={this.handleShowAllSubCommunity.bind(this, COMMUNITY_TYPE.STATE)}>
                                         <Divider>
@@ -576,7 +579,7 @@ export default class extends AdminPage {
         const menuCountriesEl = this.renderBreadcrumbCountries()
         const menuListRegionsEl = this.renderBreadcrumbRegions()
         const subCommunitiesByType = this.renderSubCommunitiesByType()
-        
+
         return (
             <div className="p_admin_index ebp-wrap">
                 <div className="d_box">
