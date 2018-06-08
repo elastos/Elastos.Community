@@ -270,20 +270,24 @@ export default class extends StandardPage {
                             <Row>
                                 {this.state.listSubCommunitiesByType[key].map((community, index) => {
                                     return (
-                                        <Col span={4}
+                                        <Col span={3}
                                              key={index}
                                              className="user-card">
                                             {community.leaders.map((leader, index) => {
                                                 return (
-                                                    <Card
-                                                        key={index}
-                                                        cover={<img src={leader.profile.avatar}/>}
-                                                    >
-                                                        <Card.Meta
-                                                            title={leader.profile.firstName + ' ' + leader.profile.lastName}
-                                                            description={community.name}
-                                                        />
-                                                    </Card>
+                                                    <Link key={index} to={'/community/' + community.parentCommunityId  + '/country/' + community.geolocation + '/region/' + community._id}>
+                                                        <Card
+                                                            cover={<img src={leader.profile.avatar}/>}
+                                                        >
+                                                            <h5>
+                                                                {community.name}
+                                                            </h5>
+                                                            <p>
+                                                                {leader.profile.firstName + ' ' + leader.profile.lastName}<br/>
+                                                                <span class="no-info">{leader.profile.username}</span>
+                                                            </p>
+                                                        </Card>
+                                                    </Link>
                                                 )
                                             })}
                                         </Col>
@@ -312,11 +316,13 @@ export default class extends StandardPage {
                             return (
                                 <Col span={4} key={index} className="user-card">
                                     <Card
-                                        cover={<img alt="example" src={leader.profile.avatar}/>}
+                                        key={index}
+                                        cover={<img src={leader.profile.avatar}/>}
                                     >
-                                        <Card.Meta
-                                            title={leader.profile.firstName + ' ' + leader.profile.lastName}
-                                        />
+                                        <p>
+                                            {leader.profile.firstName + ' ' + leader.profile.lastName}<br/>
+                                            <span class="no-info">{leader.profile.username}</span>
+                                        </p>
                                     </Card>
                                 </Col>
                             )
@@ -368,7 +374,7 @@ export default class extends StandardPage {
                                 <Col span={6}
                                      className="community-right-column">
                                     <div>
-                                        <h2 className="without-padding">Members List</h2>
+                                        <h3 className="without-padding">Members List</h3>
                                         <div className="list-members">
                                             <List
                                                 dataSource={this.state.communityMembers}
@@ -398,7 +404,7 @@ export default class extends StandardPage {
                             </Row>
                             <Row>
                                 <Col span={24}>
-                                    <h2 className="without-padding overflow-ellipsis">Sub-Communities</h2>
+                                    <h3 className="without-padding overflow-ellipsis">Sub-Communities</h3>
                                 </Col>
                                 <Col span={24}>
                                     {tabSubCommunities}

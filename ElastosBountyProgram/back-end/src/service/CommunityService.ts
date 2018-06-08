@@ -68,7 +68,7 @@ export default class extends Base {
         const db_community = this.getDBModel('Community');
         const db_user_community = this.getDBModel('User_Community');
 
-        const query:any = {};
+        const query:any = param.query || {};
 
         if (param.communityHasUser) {
             const userCommunities = await db_user_community.find({

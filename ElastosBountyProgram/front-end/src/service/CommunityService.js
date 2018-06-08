@@ -33,6 +33,9 @@ export default class extends BaseService {
         const result = await api_request({
             path: '/community',
             method: 'get',
+            data: {
+                type: COMMUNITY_TYPE.COUNTRY
+            }
         })
 
         return result

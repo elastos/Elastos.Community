@@ -129,8 +129,15 @@ export default class extends StandardPage {
                                 dataSource={this.props.myCommunities}
                                 renderItem={(community) => {
 
+                                    let communityLink = '/community/'
+                                    if (community.parentCommunityId) {
+                                        communityLink += community.parentCommunityId + '/country/' + community.geolocation + '/region/' + community._id
+                                    } else {
+                                        communityLink += community._id + '/country/' + community.geolocation
+                                    }
+
                                     return <List.Item>
-                                        <a onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}>
+                                        <a onClick={() => {this.props.history.push(communityLink)}}>
                                             {community.name}
                                         </a>
                                     </List.Item>

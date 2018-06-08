@@ -141,12 +141,16 @@ export default class extends StandardPage {
                             <Col span={3} key={index} className="user-card">
                                 <Link to={'/community/' + community._id  + '/country/' + community.geolocation}>
                                     <Card
-                                        cover={<img alt="example" src={leader.profile.avatar}/>}
+                                        key={index}
+                                        cover={<img src={leader.profile.avatar}/>}
                                     >
-                                        <Card.Meta
-                                            title={leader.profile.firstName + ' ' + leader.profile.lastName}
-                                            description={leader.country}
-                                        />
+                                        <h5>
+                                            {community.name}
+                                        </h5>
+                                        <p>
+                                            {leader.profile.firstName + ' ' + leader.profile.lastName}<br/>
+                                            <span class="no-info">{leader.profile.username}</span>
+                                        </p>
                                     </Card>
                                 </Link>
                             </Col>
@@ -191,7 +195,7 @@ export default class extends StandardPage {
                                     <div>
                                         <Row>
                                             <Col span={20}>
-                                                <h2 className="without-padding">Please Select a Country</h2>
+                                                <h3 className="without-padding">Please Select a Country</h3>
                                             </Col>
                                             <Col span={4}>
                                                 <Search
