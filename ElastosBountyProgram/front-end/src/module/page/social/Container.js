@@ -57,7 +57,7 @@ export default createContainer(Component, (state) => {
 
     // communities
     if (!_.isArray(state.community.my_communities)) {
-        taskState.myCommunities = _.values(state.community.my_communities)
+        taskState.all_tasks = _.values(state.community.my_communities)
     }
 
     return taskState
@@ -71,10 +71,6 @@ export default createContainer(Component, (state) => {
             return taskService.index({
                 category: TASK_CATEGORY.SOCIAL
             })
-        },
-
-        async getMyTasks() {
-
         },
 
         async getMyCommunities(currentUserId) {

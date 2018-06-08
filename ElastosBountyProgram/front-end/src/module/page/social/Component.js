@@ -16,7 +16,6 @@ export default class extends StandardPage {
 
     componentDidMount () {
         this.props.getSocialEvents()
-        this.props.getMyTasks()
         this.props.getMyCommunities(this.props.currentUserId)
         this.props.getUserTeams(this.props.currentUserId)
     }
