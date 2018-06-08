@@ -4,6 +4,7 @@ import {routerReducer} from 'react-router-redux'
 import task from './redux/task'
 import user from './redux/user'
 import community from './redux/community'
+import member from './redux/member'
 
 const default_state = {
     init: false
@@ -23,4 +24,5 @@ export default combineReducers({
     task: task.getReducer(),
     user: user.getReducer(),
     community: community.getReducer(),
+    member: member.getReducer(),
 })

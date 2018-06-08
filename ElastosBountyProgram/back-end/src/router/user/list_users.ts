@@ -26,6 +26,10 @@ export default class extends Base {
         return this.result(1, users);
     }
 
+    /**
+     * TODO: may need to add security
+     * @returns {Promise<{code: number; data: any; message: string} | {code: number; type: string; error: string}>}
+     */
     async listUser() {
         const userService = this.buildService(UserService);
         const users = await userService.findAll();

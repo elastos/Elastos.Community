@@ -6,15 +6,15 @@ import I18N from '@/I18N'
 import './style.scss'
 
 export default class extends BaseComponent {
+
     ord_render () {
         const columns = [{
-            title: I18N.get('1200'),
-            dataIndex: 'no',
-            key: 'no'
-        }, {
             title: I18N.get('1201'),
             dataIndex: 'username',
-            key: 'username'
+            key: 'username',
+            render: (username, record) => {
+                return <a onClick={this.linkProfileInfo.bind(this, record._id)} className="tableLink">{username}</a>
+            }
         }, {
             title: I18N.get('1202'),
             dataIndex: 'email',
@@ -26,41 +26,30 @@ export default class extends BaseComponent {
         }, {
             title: I18N.get('1204'),
             dataIndex: 'role',
-            key: 'role'
-        }, {
-            title: I18N.get('1205'),
-            dataIndex: 'active',
-            key: 'active',
-            render: (value, row, index) => {
-                return (value ? <Icon type="check-square-o" /> : null);
+            key: 'role',
+            render: (role) => {
+                if (role === 'LEADER') {
+                    role = 'ORGANIZER'
+                }
+
+                return _.capitalize(role)
             }
-        }, {
-            title: I18N.get('1206'),
-            dataIndex: 'ela',
-            key: 'ela'
-        }, {
-            title: I18N.get('1207'),
-            dataIndex: 'createdDate',
-            key: 'createdDate'
         }]
 
-        const data = []
-        for (let i = 0; i < 50; i++) {
-            const fake = i + 1
-            data.push({
-                no: fake,
-                username: 'Username ' + fake,
-                email: `email${fake}@gmail.com`,
-                defaultLanguage: 'Language ' + fake,
-                role: 'Role ' + fake,
-                active: !!(i % 2),
-                ela: fake,
-                createdDate: 'createdDate ' + fake
-            })
-        }
+        const data = this.props.users
 
         return (
-            <Table columns={columns} dataSource={data} rowKey={record => record.username}/>
+            <Table
+                columns={columns}
+                dataSource={data}
+                rowKey={record => record.username}
+                loading={this.props.loading}
+            />
         )
     }
+
+    linkProfileInfo(userId) {
+        this.props.history.push(`/admin/profile/${userId}`)
+    }
+
 }

@@ -9,7 +9,13 @@ import ListUsers from './ListUsers/Component'
 import Navigator from '../shared/Navigator/Component'
 
 export default class extends AdminPage {
+
+    componentDidMount() {
+        this.props.listUsers()
+    }
+
     ord_renderContent () {
+
         return (
             <div className="p_admin_index ebp-wrap">
                 <div className="d_box">
@@ -25,10 +31,7 @@ export default class extends AdminPage {
                     <div className="p_admin_content">
                         <Row>
                             <Col span={20} className="admin-left-column wrap-box-user">
-                                <div>
-                                    <h1>Users</h1>
-                                </div>
-                                <ListUsers/>
+                                <ListUsers users={this.props.users} history={this.props.history} loading={this.props.loading}/>
                             </Col>
                             <Col span={4} className="admin-right-column wrap-box-navigator">
                                 <Navigator selectedItem={'users'}/>

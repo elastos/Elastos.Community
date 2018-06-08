@@ -581,7 +581,7 @@ export default class extends AdminPage {
         const subCommunitiesByType = this.renderSubCommunitiesByType()
 
         return (
-            <div className="p_admin_index ebp-wrap">
+            <div className="p_admin_index ebp-wrap c_adminCommunity">
                 <div className="d_box">
                     <div className="p_admin_breadcrumb">
                         <Breadcrumb>

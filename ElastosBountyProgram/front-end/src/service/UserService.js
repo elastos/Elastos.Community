@@ -78,7 +78,7 @@ export default class extends BaseService {
 
         return true
     }
-    
+
     async getByIds(ids) {
         const result = await api_request({
             path : `/user/${ids}/users`,
@@ -87,12 +87,20 @@ export default class extends BaseService {
 
         return result
     }
-    
+
     async getAll() {
+        const memberRedux = this.store.getRedux('member')
+
+        await this.dispatch(memberRedux.actions.loading_update(true))
+
         const result = await api_request({
             path : `/user/list`,
             method : 'get',
         });
+
+
+        await this.dispatch(memberRedux.actions.users_update(result))
+        await this.dispatch(memberRedux.actions.loading_update(false))
 
         return result
     }

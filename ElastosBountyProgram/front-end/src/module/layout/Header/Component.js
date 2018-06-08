@@ -97,7 +97,7 @@ export default class extends BaseComponent {
                     </Menu.Item>
 
                     <Menu.Item className="c_MenuItem" key="community">
-                        {I18N.get('0002')}
+                        {I18N.get('0102')}
                     </Menu.Item>
 
                     {/*
