@@ -60,6 +60,26 @@ export default class extends BaseComponent {
                         </Row>
                         <Row>
                             <Col span={this.props.task.thumbnail ? 18 : 24}>
+                                <Row>
+                                    <Col span={4} className="label-col">
+                                        Category
+                                    </Col>
+                                    <Col span={20}>
+                                        <p>
+                                            {this.props.task.category}
+                                        </p>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col span={4} className="label-col">
+                                        Type
+                                    </Col>
+                                    <Col span={20}>
+                                        <p>
+                                            {this.props.task.type}
+                                        </p>
+                                    </Col>
+                                </Row>
                                 {this.props.task.community &&
                                 <Row>
                                     <Col span={4} className="label-col">
@@ -243,7 +263,10 @@ export default class extends BaseComponent {
                                     }
                                 </List.Item>
                             }}
-                        /> : <span className="no-info">no applicants</span>}
+                        /> : <span className="no-info">
+                                {this.props.task.status === TASK_STATUS.PENDING ? 'task must be approved first' : 'no applicants'}
+                            </span>
+                        }
 
                         {this.props.is_login &&
                         this.props.page !== 'LEADER' &&

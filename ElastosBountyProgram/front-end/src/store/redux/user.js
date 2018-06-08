@@ -31,7 +31,9 @@ class UserRedux extends BaseRedux {
             profile: {
 
             },
-            current_user_id: null
+            current_user_id: null,
+
+            teams: []
         };
     }
 }

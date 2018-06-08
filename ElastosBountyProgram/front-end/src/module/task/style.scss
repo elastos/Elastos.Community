@@ -30,6 +30,10 @@
 
     .ant-row {
       margin: $gap_0 0;
+
+      p {
+        padding-bottom: $gap_0;
+      }
     }
 
     .ant-divider-inner-text {

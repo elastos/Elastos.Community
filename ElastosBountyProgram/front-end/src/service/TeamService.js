@@ -13,4 +13,21 @@ export default class extends BaseService {
 
         return result;
     }
+
+    async getUserTeams(userId) {
+
+        const userRedux = this.store.getRedux('user')
+
+        const result = await api_request({
+            path: '/team/list',
+            method: 'get',
+            data: {
+                teamHasUser: userId
+            }
+        });
+
+        this.dispatch(userRedux.actions.teams_update(result.list))
+
+        return result
+    }
 }

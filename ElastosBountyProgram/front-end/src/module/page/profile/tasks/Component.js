@@ -14,6 +14,7 @@ export default class extends StandardPage {
 
     componentDidMount() {
         this.props.getTasks(this.props.currentUserId)
+        this.props.getUserTeams(this.props.currentUserId)
     }
 
     componentWillUnmount() {

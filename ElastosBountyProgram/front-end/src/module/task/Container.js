@@ -36,9 +36,11 @@ export default createContainer(Component, (state) => {
         async approveTask(taskId) {
 
             try {
-                const rs = await taskService.update(taskId, {
+                await taskService.update(taskId, {
                     status: TASK_STATUS.APPROVED
                 })
+
+                message.success('Task approved successfully');
             } catch (err) {
                 message.error(err.message)
             }

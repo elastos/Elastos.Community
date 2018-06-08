@@ -1,6 +1,7 @@
 import {createContainer} from '@/util'
 import Component from './Component'
 import TaskService from '@/service/TaskService'
+import TeamService from '@/service/TeamService'
 import _ from 'lodash'
 
 import {TASK_STATUS, TASK_CANDIDATE_STATUS} from '@/constant'
@@ -37,9 +38,18 @@ export default createContainer(Component, (state) => {
                 // assumed to be candidate, a task can have multiple candidates
                 // find the one we are a user of (should be only one ever for a user)
                 // TODO: teams
-                let taskCandidate = _.find(task.candidates, (candidate) => candidate.user === currentUserId)
+                let taskCandidate = _.find(task.candidates, (candidate) => {
 
-                if (taskCandidate.status === TASK_CANDIDATE_STATUS.ACTIVE) {
+                    if (candidate.type === 'USER') {
+                        return candidate.user === currentUserId
+                    }
+
+                    if (candidate.type === 'TEAM') {
+                        return _.map(state.user.teams, '_id').includes(candidate.team)
+                    }
+                })
+
+                if (taskCandidate.status === TASK_CANDIDATE_STATUS.APPROVED) {
                     taskState.candidate_active_tasks.push(task)
                 } else {
                     taskState.candidate_pending_tasks.push(task)
@@ -77,6 +87,13 @@ export default createContainer(Component, (state) => {
 
         async setFilter(options) {
 
+        },
+
+        async getUserTeams(currentUserId) {
+
+            const teamService = new TeamService()
+
+            return teamService.getUserTeams(currentUserId)
         }
     }
 })

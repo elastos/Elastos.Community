@@ -207,7 +207,8 @@ export default class extends BaseComponent {
 
     async approveTask() {
         const taskId = this.props.task._id
-        return this.props.approveTask(taskId)
+        await this.props.approveTask(taskId)
+
     }
 
     async saveTask() {

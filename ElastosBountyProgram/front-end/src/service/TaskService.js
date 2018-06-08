@@ -84,6 +84,14 @@ export default class extends BaseService {
             data: doc
         })
 
+        const curTaskDetail = this.store.getState().task.detail
+
+        // if we are approving
+        if (curTaskDetail.status !== TASK_STATUS.APPROVED && result.status === TASK_STATUS.APPROVED) {
+            curTaskDetail.status = result.status
+
+            this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
+        }
 
         this.dispatch(taskRedux.actions.loading_update(false))
 

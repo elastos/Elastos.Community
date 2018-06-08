@@ -261,6 +261,15 @@ export default class extends Base {
             query.archived = param.archived
         }
 
+        // get all teams that include the userId val of teamHasUser
+        if (param.teamHasUser) {
+            const userTeams = await this.ut_model.find({
+                userId: param.teamHasUser
+            })
+
+            query._id = {$in: _.map(userTeams, 'teamId')}
+        }
+
         const count = await this.model.count(query);
         const list = await this.model.list(query, {
             updateAt: -1

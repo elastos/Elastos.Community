@@ -153,11 +153,13 @@ export default class extends Base {
         const updateObj:any = _.omit(param, restrictedFields.update)
 
         // reward should only change if
-        if (rewardUpfront.ela > 0 || reward.ela > 0) {
+        if ((rewardUpfront && rewardUpfront.ela > 0) || (reward && reward.ela > 0)) {
             updateObj.status = constant.TASK_STATUS.PENDING;
         } else {
             updateObj.status = constant.TASK_STATUS.CREATED;
         }
+
+        // TODO: if status changed to APPROVED - send notification
 
         // only allow updating these fields if user is admin
         if (this.currentUser.role === constant.USER_ROLE.ADMIN) {
@@ -171,9 +173,9 @@ export default class extends Base {
             }
         }
 
-        await db_task.update({_id: param.taskId}, updateObj)
+        await db_task.update({_id: taskId}, updateObj)
 
-        return true;
+        return db_task.findById(taskId);
     }
 
     /**
