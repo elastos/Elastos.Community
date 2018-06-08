@@ -2,6 +2,7 @@ import BaseService from '../model/BaseService'
 import {api_request} from '@/util'
 import {COMMUNITY_TYPE} from '@/constant'
 import config from '@/config'
+import _ from 'lodash'
 
 export default class extends BaseService {
 
@@ -36,16 +37,35 @@ export default class extends BaseService {
 
         return result
     }
-    
-    async getAll() {
+
+    async getAll(qry) {
         const result = await api_request({
             path: '/community/all',
             method: 'get',
+            data: qry
         })
-        
+
         return result
     }
-    
+
+    async getMyCommunities(userId) {
+        const communityRedux = this.store.getRedux('community')
+        this.dispatch(communityRedux.actions.loading_update(true))
+
+        let result = await api_request({
+            path: '/community/all',
+            method: 'get',
+            data: {
+                communityHasUser: userId
+            }
+        })
+
+        this.dispatch(communityRedux.actions.my_communities_update(result))
+        this.dispatch(communityRedux.actions.loading_update(false))
+
+        return result
+    }
+
     async update(community) {
         const result = await api_request({
             path: '/community/update',
@@ -58,7 +78,7 @@ export default class extends BaseService {
 
         return result
     }
-    
+
     async getLeadersACountry(countryCode) {
 
         const result = await api_request({
@@ -72,10 +92,10 @@ export default class extends BaseService {
         const result = await api_request({
             path: '/community/' + communityId + '/members', method: 'get',
         })
-        
+
         return result
     }
-    
+
     async getSubCommunities(parentCommunityId) {
         const result = await api_request({
             path: '/community/parent/' + parentCommunityId, method: 'get',
@@ -91,7 +111,7 @@ export default class extends BaseService {
 
         return result
     }
-    
+
     async create(community) {
         const result = await api_request({
             path: '/community/create', method: 'POST', data: community
@@ -99,13 +119,13 @@ export default class extends BaseService {
 
         return result
     }
-    
+
     async addMember(memberId, communityId) {
         const result = await api_request({
             path: `/community/${communityId}/${memberId}`,
             method: 'post',
         })
-        
+
         return result
     }
 }

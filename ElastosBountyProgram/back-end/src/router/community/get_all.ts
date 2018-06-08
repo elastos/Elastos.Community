@@ -6,13 +6,10 @@ export default class extends Base {
     protected needLogin = false;
 
     async action(){
-        return await this.show();
-    }
-
-    async show(){
         const communityService = this.buildService(CommunityService);
-        const rs = await communityService.index({});
-
+        const param = this.getParam();
+        const rs = await communityService.index(param);
         return this.result(1, rs);
     }
+
 }

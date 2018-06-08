@@ -1,16 +1,16 @@
 import BaseRedux from '@/model/BaseRedux'
 
-class CommunityRedux extends BaseRedux {
+class MemberRedux extends BaseRedux {
     defineTypes () {
-        return ['community']
+        return ['member']
     }
 
     defineDefaultState(){
         return {
             loading: false,
-            my_communities: []
+            users: []
         };
     }
 }
 
-export default new CommunityRedux()
+export default new MemberRedux()

@@ -65,8 +65,18 @@ export default class extends Base {
      * @returns {Promise<"mongoose".Document>}
      */
     public async index(param): Promise<[Document]> {
-        const {query} = param;
         const db_community = this.getDBModel('Community');
+        const db_user_community = this.getDBModel('User_Community');
+
+        const query:any = {};
+
+        if (param.communityHasUser) {
+            const userCommunities = await db_user_community.find({
+                userId: param.communityHasUser
+            })
+
+            query._id = {$in: _.map(userCommunities, 'communityId')}
+        }
 
         return await db_community.find(query);;
     }

@@ -40,15 +40,24 @@ export default class extends Base {
 
     public async list(query): Promise<Document> {
         const db_task = this.getDBModel('Task');
+        const db_task_candidate = this.getDBModel('Task_Candidate');
         const tasks = await db_task.list(query, {
             updatedAt: -1
         });
 
         for (let task of tasks) {
-            await db_task.getDBInstance().populate(task, ['candidates', 'createdBy', 'approvedBy', 'community', 'communityParent'])
-        }
+            await db_task.getDBInstance().populate(task, [
+                'candidates',
+                'createdBy',
+                'approvedBy',
+                'community',
+                'communityParent'
+            ])
 
-        // so far we are not populating the taskCandidates
+            for (let candidate of task.candidates) {
+                await db_task_candidate.getDBInstance().populate(candidate, ['user', 'team'])
+            }
+        }
 
         return tasks
     }
