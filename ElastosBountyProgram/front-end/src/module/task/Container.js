@@ -44,6 +44,19 @@ export default createContainer(Component, (state) => {
             } catch (err) {
                 message.error(err.message)
             }
+        },
+
+        async completeTask(taskId) {
+
+            try {
+                await taskService.update(taskId, {
+                    status: TASK_STATUS.SUCCESS
+                })
+
+                message.success('Task marked as complete');
+            } catch (err) {
+                message.error(err.message)
+            }
         }
     }
 })

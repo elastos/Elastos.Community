@@ -91,6 +91,12 @@ export default class extends BaseService {
             curTaskDetail.status = result.status
 
             this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
+
+        } else if (curTaskDetail.status !== TASK_STATUS.SUCCESS && result.status === TASK_STATUS.SUCCESS) {
+            // if we are marking complete
+            curTaskDetail.status = result.status
+
+            this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
         }
 
         this.dispatch(taskRedux.actions.loading_update(false))

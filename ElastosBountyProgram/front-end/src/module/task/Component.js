@@ -22,9 +22,7 @@ export default class extends BaseComponent {
     renderMain() {
         return (
             <div className="c_TaskDetail">
-                {this.props.page === 'ADMIN' && this.renderAdminHeader()}
-                {this.props.page === 'LEADER' && this.renderLeaderHeader()}
-
+                {this.props.page === 'ADMIN' ? this.renderAdminHeader() : this.renderHeader()}
                 {this.state.editing ? this.renderEditForm() : this.renderDetail()}
             </div>
         )
@@ -71,7 +69,7 @@ export default class extends BaseComponent {
         </div>
     }
 
-    renderLeaderHeader() {
+    renderHeader() {
 
         return <div className="l_banner">
             <div className="pull-left">
@@ -87,10 +85,14 @@ export default class extends BaseComponent {
                 }
             </div>
             <div className="pull-right right-align">
-                {/*this.state.editing && <Button onClick={this.resetEdit.bind(this)}>Reset</Button>*/}
+                {this.props.task.status === TASK_STATUS.ASSIGNED &&
+                <Button onClick={this.markAsComplete.bind(this)}>Mark as Complete</Button>
+                }
+                {this.props.task.status !== TASK_STATUS.SUCCESS &&
                 <Button onClick={this.switchEditMode.bind(this)}>
                     {this.state.editing ? 'Cancel' : 'Edit'}
                 </Button>
+                }
             </div>
             <div className="clearfix"/>
         </div>
@@ -209,6 +211,11 @@ export default class extends BaseComponent {
         const taskId = this.props.task._id
         await this.props.approveTask(taskId)
 
+    }
+
+    async markAsComplete() {
+        const taskId = this.props.task._id
+        await this.props.completeTask(taskId)
     }
 
     async saveTask() {

@@ -154,23 +154,25 @@ export default class extends Base {
         const db_task = this.getDBModel('Task');
 
         // get current
-        // const task = db_task.findById(param.taskId)
+        const task = await db_task.findById(taskId)
 
         // TODO: ensure reward cannot change if status APPROVED or after
 
         // explictly copy over fields, do not accept param as is
         const updateObj:any = _.omit(param, restrictedFields.update)
 
-        // reward should only change if
-        if ((rewardUpfront && rewardUpfront.ela > 0) || (reward && reward.ela > 0)) {
-            updateObj.status = constant.TASK_STATUS.PENDING;
-        } else {
-            updateObj.status = constant.TASK_STATUS.CREATED;
+        // reward should only change if ela amount changed
+        if ([constant.TASK_STATUS.PENDING, constant.TASK_STATUS.CREATED].includes(task.status)) {
+            if ((rewardUpfront && rewardUpfront.ela > 0) || (reward && reward.ela > 0)) {
+                updateObj.status = constant.TASK_STATUS.PENDING;
+            } else {
+                updateObj.status = constant.TASK_STATUS.CREATED;
+            }
         }
 
         // TODO: if status changed to APPROVED - send notification
 
-        // only allow updating these fields if user is admin
+        // only allow approving these fields if user is admin
         if (this.currentUser.role === constant.USER_ROLE.ADMIN) {
 
             if (param.status) {
@@ -180,6 +182,11 @@ export default class extends Base {
                     updateObj.approvedBy = this.currentUser._id
                 }
             }
+        }
+
+        // TODO: check if user is approved candidate
+        if (param.status === constant.TASK_STATUS.SUCCESS) {
+            updateObj.status = param.status
         }
 
         await db_task.update({_id: taskId}, updateObj)
