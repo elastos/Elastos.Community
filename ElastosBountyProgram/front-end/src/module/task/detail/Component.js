@@ -7,7 +7,7 @@ import ModalAcceptApplicant from '../ModalAcceptApplicant/Component'
 
 import { Col, Row, Button, Divider, message, List, Icon, Tooltip, Popconfirm } from 'antd'
 
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS} from '@/constant'
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_TYPE, TASK_CANDIDATE_STATUS} from '@/constant'
 
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
@@ -208,8 +208,8 @@ export default class extends BaseComponent {
                             dataSource={this.props.task.candidates}
                             renderItem={(candidate) => {
 
-                                const name = candidate.type === 'USER' ? candidate.user.username : candidate.team.name
-                                const listItemActions = [candidate.type === 'USER' ?
+                                const name = candidate.type === TASK_CANDIDATE_TYPE.USER ? candidate.user.username : candidate.team.name
+                                const listItemActions = [candidate.type === TASK_CANDIDATE_TYPE.USER ?
                                     <Tooltip title="Solo User">
                                         <Icon type="user"/>
                                     </Tooltip> :
@@ -219,7 +219,7 @@ export default class extends BaseComponent {
 
                                 // if the candidate is the logged in user, show remove icon
                                 if (this.props.page === 'PUBLIC') {
-                                    if (candidate.type === 'USER' && candidate.user._id === this.props.userId) {
+                                    if (candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === this.props.userId) {
                                         listItemActions.unshift(
                                             <Tooltip title="remove self">
                                                 <Popconfirm
@@ -232,7 +232,7 @@ export default class extends BaseComponent {
                                                     <a href="#">x</a>
                                                 </Popconfirm>
                                             </Tooltip>)
-                                    } else if (candidate.type === 'TEAM' && _.map(this.state.teamsOwned, '_id').includes(candidate.team._id)) {
+                                    } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM && _.map(this.state.teamsOwned, '_id').includes(candidate.team._id)) {
                                         listItemActions.unshift(
                                             <Tooltip title="remove team">
                                                 <Popconfirm
@@ -259,7 +259,10 @@ export default class extends BaseComponent {
                                         <Tooltip title="view user info / application">
                                             <a href="#" onClick={this.showModalAcceptApplicant.bind(this, candidate)}>{name}</a>
                                         </Tooltip> :
-                                        (name)
+                                        (candidate.type === TASK_CANDIDATE_TYPE.USER ?
+                                            <a onClick={() => {this.props.history.push(`/member/${candidate.user._id}`)}}>{name}</a> :
+                                            <a onClick={() => {this.props.history.push(`/team/${candidate.team._id}`)}}>{name}</a>
+                                        )
                                     }
                                 </List.Item>
                             }}

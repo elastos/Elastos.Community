@@ -28,7 +28,9 @@ export default createContainer(Component, (state)=>{
 
         async updateUser(formData, state) {
 
-            const userId = this.user.current_user_id
+            // TODO: refactor this, if it's current user it's current_user_id and otherwise it's _id
+            // should always be _id
+            const userId = this.user.current_user_id || this.user._id
 
             try {
                 const rs = await userService.update(userId, {

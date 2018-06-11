@@ -1,25 +1,18 @@
 import {createContainer} from '@/util'
 import Component from './Component'
-import TaskService from '@/service/TaskService'
+import UserService from '@/service/UserService'
 
 export default createContainer(Component, (state) => {
-
-    // TODO: need some more tracking of options here
-
     return {
-        task: state.task.detail,
-        loading: state.task.loading
+        loading: state.member.loading,
+        member: state.member.focus_user
     }
 }, () => {
-    const taskService = new TaskService()
+    const userService = new UserService()
 
     return {
-        async getTaskDetail (taskId) {
-            return taskService.get(taskId)
-        },
-
-        async resetTaskDetail () {
-            return taskService.resetTaskDetail()
+        async getMember(userId) {
+            return userService.getMember(userId, {admin: true})
         }
     }
 })

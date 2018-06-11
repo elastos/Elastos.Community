@@ -21,6 +21,7 @@ import ProfileTeamsPage from '@/module/page/profile/teams/Container'
 import MemberPage from '@/module/page/member/Container'
 
 import AdminUsersPage from '@/module/page/admin/users/Container'
+import AdminProfileDetailPage from '@/module/page/admin/profile_detail/Container'
 import AdminTasksPage from '@/module/page/admin/tasks/Container'
 import AdminTaskDetailPage from '@/module/page/admin/task_detail/Container'
 
@@ -118,6 +119,10 @@ export default [
     {
         path: '/admin/task-detail/:taskId',
         page: AdminTaskDetailPage
+    },
+    {
+        path: '/admin/profile/:userId',
+        page: AdminProfileDetailPage
     },
     {
         path: '/community',

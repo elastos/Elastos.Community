@@ -1,7 +1,7 @@
 import React from 'react';
 import StandardPage from '../StandardPage';
 import Footer from '@/module/layout/Footer/Container'
-import { Col, Row, Icon } from 'antd'
+import { Button, Icon } from 'antd'
 
 import PublicProfileDetail from '@/module/profile/detail/Container'
 
@@ -27,8 +27,10 @@ export default class extends StandardPage {
 
                 </div>
                 <div className="ebp-page">
-                    <div className="ebp-page-title">
-
+                    <div className="back-btn-container">
+                        <Button onClick={() => {this.props.history.goBack()}}>
+                            <Icon type="left" /> Back
+                        </Button>
                     </div>
 
                     {!this.state.loading &&

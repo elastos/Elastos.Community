@@ -80,18 +80,38 @@ export default class extends BaseService {
     }
 
     // restrictive getter - public profile should never return email / private info
-    getMember(userId) {
-        return api_request({
-            path: `/user/public/${userId}`,
+    // TODO: I am using member to refer to a profile other than yourself, might want to change it
+    async getMember(userId, options = {}) {
+
+        let path = `/user/public/${userId}`
+        const memberRedux = this.store.getRedux('member')
+
+        if (options.admin) {
+            await this.dispatch(memberRedux.actions.loading_update(true))
+            path += '?admin=true'
+        }
+
+        const result = await api_request({
+            path: path,
             method: 'get'
         })
+
+        // this is gross, if we are focused on a user, it shouldn't matter if it's you or another user
+        // we should use the same base redux model
+        if (options.admin) {
+
+            await this.dispatch(memberRedux.actions.focus_user_update(result))
+            await this.dispatch(memberRedux.actions.loading_update(false))
+        }
+
+        return result
     }
 
     async update(userId, doc) {
 
-        const userRedux = this.store.getRedux('user')
+        const memberRedux = this.store.getRedux('member')
 
-        this.dispatch(userRedux.actions.loading_update(true))
+        await this.dispatch(memberRedux.actions.loading_update(true))
 
         const result = await api_request({
             path: `/user/${userId}`,
@@ -99,7 +119,8 @@ export default class extends BaseService {
             data: doc
         })
 
-        this.dispatch(userRedux.actions.loading_update(false))
+        await this.dispatch(memberRedux.actions.focus_user_update(result))
+        await this.dispatch(memberRedux.actions.loading_update(false))
 
         return result
     }

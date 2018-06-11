@@ -49,8 +49,6 @@ export default class extends BaseComponent {
     // for now public and your profile view looks the same
     renderDetail() {
 
-
-
         if (this.props.page === 'ADMIN' || this.props.page === 'LEADER') {
             return this.renderPersonalDetail()
         } else {

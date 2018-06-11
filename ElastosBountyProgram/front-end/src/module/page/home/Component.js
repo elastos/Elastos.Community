@@ -192,13 +192,6 @@ export default class extends StandardPage {
                 </div>
                 <div className="d_rowEvents">
                     <Row>
-                        <Col span={24}>
-                            <h2>
-                                How It Works
-                            </h2>
-                        </Col>
-                    </Row>
-                    <Row>
                         <Col span={12} className="d_colTasks">
                             <h3>
                                 Featured Developer Bounties
