@@ -88,4 +88,15 @@ export default class extends BaseService {
 
         return res;
     }
+
+    async resetAllSubmissions() {
+        const submissionRedux = this.store.getRedux('submission')
+        this.dispatch(submissionRedux.actions.all_submissions_reset())
+    }
+
+    async resetSubmissionDetail() {
+        const submissionRedux = this.store.getRedux('submission')
+        this.dispatch(submissionRedux.actions.detail_reset())
+    }
+
 }
