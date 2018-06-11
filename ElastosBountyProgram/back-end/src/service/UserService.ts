@@ -48,6 +48,28 @@ export default class extends Base {
         return await db_user.save(doc);
     }
 
+    public async update(param): Promise<Document>{
+        const db_user = this.getDBModel('User');
+
+        const doc = {
+            profile : {
+                firstName : param.firstName,
+                lastName : param.lastName,
+                country : param.country,
+                state : param.state,
+                city : param.city,
+                avatar : param.avatar,
+                gender : param.gender,
+                beOrganizer : param.beOrganizer === 'yes',
+                isDeveloper : param.isDeveloper === 'yes',
+                source : param.source,
+                walletAddress: param.walletAddress
+            }
+        };
+
+        return await db_user.update({_id: this.currentUser._id}, doc);
+    }
+
     public async getUserSalt(username): Promise<String>{
         username = username.toLowerCase();
         const db_user = this.getDBModel('User');

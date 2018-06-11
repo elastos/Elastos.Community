@@ -15,18 +15,20 @@ export const Profile = {
     lastName: String,
 
     avatar : String,
+    gender : String,
     birth : Date,
     timezone: String,
     region: Region,
 
-    country: String,
-    state: String,
-    city: String,
+    country : String,
+    state : String,
+    city : String,
 
-    beOrganizer: Boolean,
-    isDeveloper: Boolean,
+    beOrganizer : Boolean,
+    isDeveloper : Boolean,
 
-    source: String
+    source : String,
+    walletAddress : String
 };
 
 export const WorkProject = {
