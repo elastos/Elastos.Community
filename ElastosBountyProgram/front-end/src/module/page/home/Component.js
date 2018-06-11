@@ -30,7 +30,7 @@ export default class extends StandardPage {
 
         const backdropStyle = {
             backgroundPosition: '0 50%',
-            backgroundImage: `url('/assets/images/HomeHeader.jpg')`
+            backgroundImage: `url('http://d72wx65dsgs48.cloudfront.net/images/HomeHeader.jpg')`
         }
 
         const renderEventRow = (task, rowIndex) => {
@@ -141,6 +141,8 @@ export default class extends StandardPage {
                         </p>
                     </Col>
                 </Row>
+                <div className="horizGap"/>
+                {/*
                 <Row className="d_rowPrograms last">
                     <Col span={12}>
                         <Button onClick={() => {this.props.history.push('/developer')}}>
@@ -159,9 +161,8 @@ export default class extends StandardPage {
                         </Button>
                     </Col>
                 </Row>
-                <div className="horizGap d_rowGrey">
-
-                </div>
+                */}
+                <div className="horizGap d_rowGrey"/>
                 <div className="d_rowNews d_rowGrey">
                     <h1>
                         Our Mandate
@@ -185,11 +186,10 @@ export default class extends StandardPage {
                                 </List.Item>
                             )}
                         />
+                        <br/>
                     </div>
                 </div>
-                <div className="horizGap d_rowGrey">
-
-                </div>
+                <div className="horizGap d_rowGrey"/>
                 <div className="d_rowEvents">
                     <Row>
                         <Col span={12} className="d_colTasks">
@@ -220,9 +220,7 @@ export default class extends StandardPage {
                         </Col>
                     </Row>
                 </div>
-                <div className="horizGap">
-
-                </div>
+                <div className="horizGap"/>
 
                 <Footer />
             </div>

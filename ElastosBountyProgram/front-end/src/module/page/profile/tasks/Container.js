@@ -4,7 +4,7 @@ import TaskService from '@/service/TaskService'
 import TeamService from '@/service/TeamService'
 import _ from 'lodash'
 
-import {TASK_STATUS, TASK_CANDIDATE_STATUS} from '@/constant'
+import {USER_ROLE, TASK_STATUS, TASK_CANDIDATE_STATUS} from '@/constant'
 
 export default createContainer(Component, (state) => {
 
@@ -14,7 +14,8 @@ export default createContainer(Component, (state) => {
         ...state.task,
         currentUserId,
         loading: false,
-        is_leader: state.user.role === 'LEADER'
+        is_leader: state.user.role === USER_ROLE.LEADER,
+        is_admin: state.user.role === USER_ROLE.ADMIN
     }
 
     if (!_.isArray(taskState.all_tasks)) {

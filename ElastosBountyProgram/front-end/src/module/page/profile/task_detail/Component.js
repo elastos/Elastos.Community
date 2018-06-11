@@ -52,7 +52,7 @@ export default class extends StandardPage {
                                     <TaskDetail task={this.props.task} />
                                 </Col>
                                 <Col span={4} className="admin-right-column wrap-box-navigator">
-                                    <Navigator selectedItem={'profileInfo'} />
+                                    <Navigator selectedItem={'profileTasks'} />
                                 </Col>
                             </Row>
                         </div>

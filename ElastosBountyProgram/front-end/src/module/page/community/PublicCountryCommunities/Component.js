@@ -195,7 +195,7 @@ export default class extends StandardPage {
                                     <div>
                                         <Row>
                                             <Col span={20}>
-                                                <h3 className="without-padding">Please Select a Country</h3>
+                                                <h3 className="without-padding">Under Development</h3>
                                             </Col>
                                             <Col span={4}>
                                                 {/*

@@ -175,7 +175,7 @@ export default class extends StandardPage {
                                     <div className="vert-gap"/>
                                     }
 
-                                    {this.props.is_leader &&
+                                    {(this.props.is_leader || this.props.is_admin) &&
                                     <div>
                                         <Divider>Owned Tasks</Divider>
 
