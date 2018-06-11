@@ -1,7 +1,9 @@
 import {createContainer} from '@/util'
 import Component from './Component'
+import CommunityService from '@/service/CommunityService'
 import TaskService from '@/service/TaskService'
 import TeamService from '@/service/TeamService'
+import UserService from '@/service/UserService'
 import _ from 'lodash'
 
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS} from '@/constant'
@@ -58,12 +60,23 @@ export default createContainer(Component, (state) => {
 }, () => {
 
     const taskService = new TaskService()
+    const userService = new UserService()
+    const communityService = new CommunityService()
 
     return {
+        async getAllCountryCommunity () {
+            return communityService.getAllCountryCommunities()
+        },
+        async getSpecificCountryCommunities (countryCode) {
+            return communityService.getSpecificCountryCommunities(countryCode)
+        },
         async getDeveloperEvents () {
             return taskService.index({
                 category: TASK_CATEGORY.DEVELOPER
             })
+        },
+        async getUserByIds (ids) {
+            return userService.getByIds(ids)
         },
 
         async resetTasks() {
