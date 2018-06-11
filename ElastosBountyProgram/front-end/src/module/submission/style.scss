@@ -1,0 +1,43 @@
+
+@import '../../style/variable';
+@import '../../style/color';
+
+.c_SubmissionDetail {
+
+  .ant-btn-primary {
+    margin-right: $gap_0;
+  }
+
+  .gridCol {
+    padding: 0 $gap_2;
+    margin: $gap_0 0;
+  }
+
+  .form-wrapper {
+    padding: $gap_2 0;
+  }
+
+  .public {
+
+    .label-col {
+      color: $text_light_gray;
+    }
+
+    .task-thumbnail {
+      width: 100%;
+      padding-left: $gap_0;
+    }
+
+    .ant-row {
+      margin: $gap_0 0;
+
+      p {
+        padding-bottom: $gap_0;
+      }
+    }
+
+    .ant-divider-inner-text {
+      color: $text_light_gray;
+    }
+  }
+}

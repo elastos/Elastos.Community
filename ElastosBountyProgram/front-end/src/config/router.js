@@ -25,7 +25,7 @@ import AdminProfileDetailPage from '@/module/page/admin/profile_detail/Container
 import AdminTasksPage from '@/module/page/admin/tasks/Container'
 import AdminTaskDetailPage from '@/module/page/admin/task_detail/Container'
 import AdminSubmissionsPage from '@/module/page/admin/submissions/Container'
-//import AdminSubmissionDetailPage from '@/module/page/admin/submission_detail/Container'
+import AdminSubmissionDetailPage from '@/module/page/admin/submission_detail/Container'
 
 import CountryCommunitiesPage from '@/module/page/admin/community/CountryCommunities/Container'
 import CommunityDetailPage from '@/module/page/admin/community/CommunityDetail/Container'
@@ -130,10 +130,10 @@ export default [
         path: '/admin/submissions',
         page: AdminSubmissionsPage
     },
-    // {
-    //     path: '/admin/submission-detail/:submissionId',
-    //     page: AdminSubmissionDetailPage
-    // },
+    {
+        path: '/admin/submission-detail/:submissionId',
+        page: AdminSubmissionDetailPage
+    },
     {
         path: '/community',
         page: PublicCountryCommunitiesPage
