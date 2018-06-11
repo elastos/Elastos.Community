@@ -78,7 +78,6 @@ export default class extends BaseService {
     }
 
     async create(doc) {
-
         const res = await api_request({
             path: '/submission/create',
             method: 'post',

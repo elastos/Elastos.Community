@@ -215,7 +215,6 @@ export default class extends StandardPage {
         const listCommunitiesEl = this.renderListCommunities()
         const menuCountriesEl = this.renderBreadcrumbCountries()
 
-        // const p = this.getIssueFormProps()
         return (
             <div className="p_Developer">
                 <div className="ebp-header-divider">
