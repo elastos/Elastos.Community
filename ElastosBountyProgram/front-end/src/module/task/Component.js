@@ -82,6 +82,9 @@ export default class extends BaseComponent {
                 {this.props.task.status === TASK_STATUS.PENDING &&
                 <span className="help-text">&nbsp; - this task is awaiting approval by council</span>
                 }
+                {this.props.task.status === TASK_STATUS.ASSIGNED &&
+                <span className="help-text">&nbsp; - this task is active</span>
+                }
                 {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) && isTaskOwner &&
                 <span className="help-text">&nbsp; -
                     Please accept applicants up to the max accepted number

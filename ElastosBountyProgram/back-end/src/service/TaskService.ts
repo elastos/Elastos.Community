@@ -425,6 +425,8 @@ export default class extends Base {
             })
         }
 
+        // TODO: remove unaccepted candidates and send them emails
+
         return await db_task.findById(task._id)
     }
 

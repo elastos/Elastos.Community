@@ -231,9 +231,16 @@ export default class extends BaseComponent {
                                         <Icon type="team"/>
                                     </Tooltip>]
 
+                                let candidateIsUserOrTeam = false
+                                if ((candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === this.props.userId) ||
+                                    (candidate.type === TASK_CANDIDATE_TYPE.TEAM && _.map(this.state.teamsOwned, '_id').includes(candidate.team._id))){
+
+                                    candidateIsUserOrTeam = true
+                                }
+
                                 // if the candidate is the logged in user, show remove icon
-                                if (this.props.page === 'PUBLIC') {
-                                    if (candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === this.props.userId) {
+                                if (this.props.page === 'PUBLIC' && candidateIsUserOrTeam) {
+                                    if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
                                         listItemActions.unshift(
                                             <Tooltip title="remove self">
                                                 <Popconfirm
@@ -246,7 +253,7 @@ export default class extends BaseComponent {
                                                     <a href="#">x</a>
                                                 </Popconfirm>
                                             </Tooltip>)
-                                    } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM && _.map(this.state.teamsOwned, '_id').includes(candidate.team._id)) {
+                                    } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
                                         listItemActions.unshift(
                                             <Tooltip title="remove team">
                                                 <Popconfirm
@@ -260,6 +267,7 @@ export default class extends BaseComponent {
                                                 </Popconfirm>
                                             </Tooltip>)
                                     }
+
                                 } else if (candidate.status === TASK_CANDIDATE_STATUS.APPROVED){
                                     // this should be the leader's view - they can approve applicants
                                     listItemActions.unshift(
@@ -270,15 +278,22 @@ export default class extends BaseComponent {
 
                                 // TODO: link to dedicated profile/team page if it's yours
 
+                                let userOrTeamName = name
+                                if (candidateIsUserOrTeam) {
+                                    userOrTeamName += ' (you)'
+                                }
+
+                                const nonOwnerLink = (candidate.type === TASK_CANDIDATE_TYPE.USER ?
+                                        <a onClick={() => {this.props.history.push(`/member/${candidate.user._id}`)}}>{userOrTeamName}</a> :
+                                        <a onClick={() => {this.props.history.push(`/team/${candidate.team._id}`)}}>{userOrTeamName}</a>
+                                )
+
                                 return <List.Item actions={listItemActions}>
                                     {this.props.page === 'LEADER' && isTaskOwner ?
                                         <Tooltip title="view user info / application">
-                                            <a href="#" onClick={this.showModalAcceptApplicant.bind(this, candidate)}>{name}</a>
+                                            <a href="#" onClick={this.showModalAcceptApplicant.bind(this, candidate)}>{userOrTeamName}</a>
                                         </Tooltip> :
-                                        (candidate.type === TASK_CANDIDATE_TYPE.USER ?
-                                            <a onClick={() => {this.props.history.push(`/member/${candidate.user._id}`)}}>{name}</a> :
-                                            <a onClick={() => {this.props.history.push(`/team/${candidate.team._id}`)}}>{name}</a>
-                                        )
+                                        nonOwnerLink
                                     }
                                 </List.Item>
                             }}
