@@ -9,7 +9,7 @@ export const Submission = {
         type : String,
         required : true
     },
-    creator : {
+    createdBy : {
         type: Schema.Types.ObjectId,
         ref: 'users'
     }
