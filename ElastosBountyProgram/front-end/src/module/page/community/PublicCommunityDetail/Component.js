@@ -197,7 +197,7 @@ export default class extends StandardPage {
 
     joinToCommunity() {
         this.props.addMember(this.props.current_user_id, this.state.community._id).then(() => {
-            message.success('You was added to community')
+            message.success('You were added to community')
 
             this.loadCommunityMembers()
         }).catch((err) => {
