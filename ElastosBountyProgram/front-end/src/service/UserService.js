@@ -40,6 +40,7 @@ export default class extends BaseService {
     }
 
     async register(username, password, profile) {
+
         const res = await api_request({
             path : '/user/register',
             method : 'post',
@@ -48,12 +49,6 @@ export default class extends BaseService {
                 password
             })
         });
-
-        const result = await api_request({
-            path: `/user/${userId}`,
-            method: 'put',
-            data: doc
-        })
 
         return true
     }

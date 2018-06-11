@@ -195,12 +195,12 @@ export default class extends Base {
     }
 
     public validate_username(username){
-        if(!validate.valid_string(username, 5)){
+        if(!validate.valid_string(username, 6)){
             throw 'invalid username';
         }
     }
     public validate_password(password){
-        if(!validate.valid_string(password, 6)){
+        if(!validate.valid_string(password, 8)){
             throw 'invalid password';
         }
     }

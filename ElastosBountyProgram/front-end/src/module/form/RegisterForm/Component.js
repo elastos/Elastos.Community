@@ -70,7 +70,10 @@ class C extends BaseComponent {
         )
 
         const username_fn = getFieldDecorator('username', {
-            rules: [{required: true, message: 'Please input your username'}],
+            rules: [
+                {required: true, message: 'Please input your username'},
+                {min: 6, message: 'Username must be more than 6 characters'}
+            ],
             initialValue: ''
         })
         const username_el = (
