@@ -39,6 +39,7 @@ export const TASK_STATUS = {
     ASSIGNED: 'ASSIGNED', // when max candidates are accepted
 
     SUCCESS: 'SUCCESS',
+    DISTRIBUTED: 'DISTRIBUTED',
     CANCELED: 'CANCELED',
     EXPIRED: 'EXPIRED'
 }

@@ -61,6 +61,9 @@ export default class extends BaseService {
             path : '/user/current_user',
             success : (data)=>{
                 this.dispatch(userRedux.actions.is_login_update(true));
+                if ([USER_ROLE.LEADER].includes(data.role)) {
+                    this.dispatch(userRedux.actions.is_leader_update(true))
+                }
                 if ([USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(data.role)) {
                     this.dispatch(userRedux.actions.is_admin_update(true))
                 }

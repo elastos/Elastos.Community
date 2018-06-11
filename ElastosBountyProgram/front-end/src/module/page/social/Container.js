@@ -21,6 +21,8 @@ export default createContainer(Component, (state) => {
     taskState.events = _.filter(taskState.all_tasks, {type: TASK_TYPE.EVENT})
     taskState.tasks = _.filter(taskState.all_tasks, {type: TASK_TYPE.TASK})
     taskState.is_admin = state.user.is_admin
+    taskState.is_login = state.user.is_login
+    taskState.is_leader = state.user.is_leader
 
     // available tasks are those that are CREATED / APPROVED
     taskState.availTasks = []

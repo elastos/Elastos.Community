@@ -51,6 +51,9 @@ if(sessionStorage.getItem('api-token')){
         path : '/user/current_user',
         success : (data)=>{
             store.dispatch(userRedux.actions.is_login_update(true));
+            if ([USER_ROLE.LEADER].includes(data.role)) {
+                store.dispatch(userRedux.actions.is_leader_update(true))
+            }
             if ([USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(data.role)) {
                 store.dispatch(userRedux.actions.is_admin_update(true))
             }
