@@ -90,16 +90,21 @@ export default class extends BaseService {
 
         const curTaskDetail = this.store.getState().task.detail
 
+        let updateStatus = false
+
         // if we are approving
         if (curTaskDetail.status !== TASK_STATUS.APPROVED && result.status === TASK_STATUS.APPROVED) {
-            curTaskDetail.status = result.status
-
-            this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
-
+            updateStatus = true
         } else if (curTaskDetail.status !== TASK_STATUS.SUCCESS && result.status === TASK_STATUS.SUCCESS) {
             // if we are marking complete
-            curTaskDetail.status = result.status
+            updateStatus = true
+        } else if (curTaskDetail.status !== TASK_STATUS.ASSIGNED && result.status === TASK_STATUS.ASSIGNED) {
+            // if we are doing a force start
+            updateStatus = true
+        }
 
+        if (updateStatus) {
+            curTaskDetail.status = result.status
             this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
         }
 

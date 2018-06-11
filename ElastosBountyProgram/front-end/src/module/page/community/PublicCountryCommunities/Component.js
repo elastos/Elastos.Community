@@ -147,7 +147,7 @@ export default class extends StandardPage {
                                         <h5>
                                             {community.name}
                                         </h5>
-                                        <p>
+                                        <p className="user-info">
                                             {leader.profile.firstName + ' ' + leader.profile.lastName}<br/>
                                             <span class="no-info">{leader.profile.username}</span>
                                         </p>
@@ -195,7 +195,7 @@ export default class extends StandardPage {
                                     <div>
                                         <Row>
                                             <Col span={20}>
-                                                <h3 className="without-padding">Please Select a Country</h3>
+                                                <h3 className="without-padding">Under Development</h3>
                                             </Col>
                                             <Col span={4}>
                                                 {/*

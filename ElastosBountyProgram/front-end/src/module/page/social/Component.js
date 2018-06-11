@@ -6,7 +6,7 @@ import moment from 'moment'
 
 import './style.scss'
 
-import { Col, Row, Icon, Form, Input, Button, Select, Table, List, Tooltip } from 'antd'
+import { Col, Row, Icon, Form, message, Button, Select, Table, List, Tooltip } from 'antd'
 
 const Option = Select.Option
 
@@ -59,17 +59,15 @@ export default class extends StandardPage {
 
             }
         }, {
-            title: 'Date',
-            dataIndex: 'startTime',
-            key: 'startTime',
-            render: (startTime) => moment(startTime).format('MMM D')
+            title: 'Reward',
+            dataIndex: 'reward.ela',
+            className: 'right-align',
+            render: (ela) => ela / 1000
         }, {
-            title: '',
-            dataIndex: '_id',
-            key: 'actions',
-            render: (id, record) => {
-
-            }
+            title: 'Register By',
+            dataIndex: 'startTime',
+            className: 'right-align',
+            render: (startTime) => moment(startTime).format('MMM D')
         }]
 
         return (
@@ -78,9 +76,9 @@ export default class extends StandardPage {
 
                 </div>
                 <div className="ebp-page-title">
-                    <h2>
+                    <h3 className="page-header">
                         General Events and Community Tasks
-                    </h2>
+                    </h3>
                 </div>
                 <div className="ebp-page-desc d_rowGrey">
                     <p>
@@ -90,7 +88,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row d_rowTop">
-                        <Col span={16} className="d_leftContainer d_box">
+                        <Col span={this.props.is_login ? 16 : 24} className="d_leftContainer d_box">
                             <div className="pull-left">
                                 <h3>
                                     Events Looking for Help
@@ -110,6 +108,7 @@ export default class extends StandardPage {
                                 loading={this.props.loading}
                             />
                         </Col>
+                        {this.props.is_login &&
                         <Col span={8} className="d_rightContainer d_box d_communities">
                             <div className="pull-left">
                                 <h3>
@@ -142,8 +141,8 @@ export default class extends StandardPage {
                                     </List.Item>
                                 }}
                             />
-
                         </Col>
+                        }
                     </Row>
                     <div className="horizGap">
 
@@ -151,7 +150,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row">
-                        <Col span={16} className="d_leftContainer d_box">
+                        <Col span={this.props.is_login ? 16 : 24} className="d_leftContainer d_box">
                             <div>
                                 <h3 className="pull-left">
                                     Available Tasks
@@ -171,6 +170,7 @@ export default class extends StandardPage {
                                 loading={this.props.loading}
                             />
                         </Col>
+                        {this.props.is_login &&
                         <Col span={8} className="d_rightContainer d_box">
                             <h3>
                                 My Tasks
@@ -197,6 +197,7 @@ export default class extends StandardPage {
                                 }}
                             />
                         </Col>
+                        }
                     </Row>
                 </div>
                 <Footer/>
@@ -217,6 +218,10 @@ export default class extends StandardPage {
     }
 
     createTaskLink () {
-        this.props.history.push('/task-create')
+        if (!this.props.is_login || !(this.props.is_leader || this.props.is_admin)) {
+            message.info('Only organizers can create events and tasks, we welcome anyone to email us for further information and to apply - community@elastos.org', 8)
+        } else {
+            this.props.history.push('/task-create')
+        }
     }
 }

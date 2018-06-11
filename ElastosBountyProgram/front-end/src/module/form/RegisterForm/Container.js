@@ -25,11 +25,14 @@ export default createContainer(Component, (state) => {
             try {
                 const rs = await userService.register(username, password, profile)
 
+                debugger
+
                 if (rs) {
                     message.success('Successfully Registered - Please Login', 10)
                     this.history.replace('/login')
                 }
             } catch (err) {
+                console.error(err)
                 message.error('Registration Failed - Please Contact Our Support')
             }
         }

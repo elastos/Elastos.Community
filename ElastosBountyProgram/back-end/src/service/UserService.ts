@@ -6,6 +6,15 @@ import {validate, crypto, uuid} from '../utility';
 
 const {USER_ROLE} = constant;
 
+const restrictedFields = {
+    update: [
+        '_id',
+        'username',
+        'role',
+        'profile'
+    ]
+}
+
 export default class extends Base {
     public async registerNewUser(param): Promise<Document>{
         const db_user = this.getDBModel('User');
@@ -82,6 +91,58 @@ export default class extends Base {
         return user.salt;
     }
 
+    public async show(param) {
+
+        const {userId} = param
+
+        const db_user = this.getDBModel('User');
+        let selectFields = '-salt -password -elaBudget -elaOwed -votePower'
+
+        if (!param.admin) {
+            selectFields += ' -email'
+        }
+
+        const user = db_user.getDBInstance().findOne({_id: userId})
+            .select(selectFields)
+
+        if (!user) {
+            throw `userId: ${userId} not found`
+        }
+
+        return user
+    }
+
+    public async update(param) {
+
+        const {userId} = param
+
+        const updateObj:any = _.omit(param, restrictedFields.update)
+
+        const db_user = this.getDBModel('User');
+
+        const user = await db_user.findById(userId)
+
+        if (!user) {
+            throw `userId: ${userId} not found`
+        }
+
+        if (param.profile) {
+            updateObj.profile = Object.assign(user.profile, param.profile)
+        }
+
+        if (param.email) {
+            updateObj.email = param.email
+        }
+
+        if (param.username) {
+            updateObj.username = param.username
+        }
+
+        await db_user.update({_id: userId}, updateObj)
+
+        return db_user.findById(userId)
+    }
+
     public async findUser(query): Promise<Document>{
         const db_user = this.getDBModel('User');
         return await db_user.findOne({
@@ -156,12 +217,12 @@ export default class extends Base {
     }
 
     public validate_username(username){
-        if(!validate.valid_string(username, 5)){
+        if(!validate.valid_string(username, 6)){
             throw 'invalid username';
         }
     }
     public validate_password(password){
-        if(!validate.valid_string(password, 6)){
+        if(!validate.valid_string(password, 8)){
             throw 'invalid password';
         }
     }

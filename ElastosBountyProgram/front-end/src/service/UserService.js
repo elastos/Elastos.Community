@@ -39,11 +39,8 @@ export default class extends BaseService {
         }
     }
 
-    async getCurrentUser() {
-
-    }
-
     async register(username, password, profile) {
+
         const res = await api_request({
             path : '/user/register',
             method : 'post',
@@ -54,6 +51,77 @@ export default class extends BaseService {
         });
 
         return true
+    }
+
+    async getCurrentUser() {
+
+        const userRedux = this.store.getRedux('user')
+
+        const result = await api_request({
+            path : '/user/current_user',
+            success : (data)=>{
+                this.dispatch(userRedux.actions.is_login_update(true));
+                if ([USER_ROLE.LEADER].includes(data.role)) {
+                    this.dispatch(userRedux.actions.is_leader_update(true))
+                }
+                if ([USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(data.role)) {
+                    this.dispatch(userRedux.actions.is_admin_update(true))
+                }
+                this.dispatch(userRedux.actions.email_update(data.email))
+                this.dispatch(userRedux.actions.username_update(data.username))
+                this.dispatch(userRedux.actions.profile_update(data.profile))
+                this.dispatch(userRedux.actions.role_update(data.role))
+                this.dispatch(userRedux.actions.current_user_id_update(data._id))
+            }
+        })
+
+        return result
+    }
+
+    // restrictive getter - public profile should never return email / private info
+    // TODO: I am using member to refer to a profile other than yourself, might want to change it
+    async getMember(userId, options = {}) {
+
+        let path = `/user/public/${userId}`
+        const memberRedux = this.store.getRedux('member')
+
+        if (options.admin) {
+            await this.dispatch(memberRedux.actions.loading_update(true))
+            path += '?admin=true'
+        }
+
+        const result = await api_request({
+            path: path,
+            method: 'get'
+        })
+
+        // this is gross, if we are focused on a user, it shouldn't matter if it's you or another user
+        // we should use the same base redux model
+        if (options.admin) {
+
+            await this.dispatch(memberRedux.actions.focus_user_update(result))
+            await this.dispatch(memberRedux.actions.loading_update(false))
+        }
+
+        return result
+    }
+
+    async update(userId, doc) {
+
+        const memberRedux = this.store.getRedux('member')
+
+        await this.dispatch(memberRedux.actions.loading_update(true))
+
+        const result = await api_request({
+            path: `/user/${userId}`,
+            method: 'put',
+            data: doc
+        })
+
+        await this.dispatch(memberRedux.actions.focus_user_update(result))
+        await this.dispatch(memberRedux.actions.loading_update(false))
+
+        return result
     }
 
     async logout(){

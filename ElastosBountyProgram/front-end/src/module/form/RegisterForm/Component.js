@@ -17,6 +17,7 @@ class C extends BaseComponent {
     handleSubmit(e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
+
             if (!err) {
                 console.log('Register - received values of form: ', values)
                 this.props.register(values.username, values.password, _.omit(values, ['username', 'password']))
@@ -69,7 +70,10 @@ class C extends BaseComponent {
         )
 
         const username_fn = getFieldDecorator('username', {
-            rules: [{required: true, message: 'Please input your username'}],
+            rules: [
+                {required: true, message: 'Please input your username'},
+                {min: 6, message: 'Username must be more than 6 characters'}
+            ],
             initialValue: ''
         })
         const username_el = (
@@ -227,6 +231,7 @@ class C extends BaseComponent {
                 </p>
 
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
+                    <Divider>Required Fields</Divider>
                     <FormItem>
                         {p.firstName}
                     </FormItem>

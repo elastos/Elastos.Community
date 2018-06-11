@@ -45,17 +45,19 @@ export default class extends Base {
             updatedAt: -1
         });
 
-        for (let task of tasks) {
-            await db_task.getDBInstance().populate(task, [
-                'candidates',
-                'createdBy',
-                'approvedBy',
-                'community',
-                'communityParent'
-            ])
+        if (tasks.length) {
+            for (let task of tasks) {
+                await db_task.getDBInstance().populate(task, [
+                    'candidates',
+                    'createdBy',
+                    'approvedBy',
+                    'community',
+                    'communityParent'
+                ])
 
-            for (let candidate of task.candidates) {
-                await db_task_candidate.getDBInstance().populate(candidate, ['user', 'team'])
+                for (let candidate of task.candidates) {
+                    await db_task_candidate.getDBInstance().populate(candidate, ['user', 'team'])
+                }
             }
         }
 

@@ -59,17 +59,15 @@ export default class extends StandardPage {
 
             }
         }, {
-            title: 'Date',
-            dataIndex: 'startTime',
-            key: 'startTime',
-            render: (startTime) => moment(startTime).format('MMM D')
+            title: 'Reward',
+            dataIndex: 'reward.ela',
+            className: 'right-align',
+            render: (ela) => ela / 1000
         }, {
-            title: '',
-            dataIndex: '_id',
-            key: 'actions',
-            render: (id, record) => {
-
-            }
+            title: 'Register By',
+            dataIndex: 'startTime',
+            className: 'right-align',
+            render: (startTime) => moment(startTime).format('MMM D')
         }]
 
         // const p = this.getIssueFormProps()
@@ -79,9 +77,9 @@ export default class extends StandardPage {
 
                 </div>
                 <div className="ebp-page-title">
-                    <h2>
+                    <h3 className="page-header">
                         Contribute to Open Source Projects and dApps
-                    </h2>
+                    </h3>
                 </div>
                 <div className="ebp-page-desc d_rowGrey">
                     <p>

@@ -282,8 +282,11 @@ export default class extends StandardPage {
                                                             <h5>
                                                                 {community.name}
                                                             </h5>
-                                                            <p>
-                                                                {leader.profile.firstName + ' ' + leader.profile.lastName}<br/>
+                                                            <p className="user-info">
+                                                                <a onClick={() => {this.props.history.push(`/member/${leader._id}`)}}>
+                                                                    {leader.profile.firstName + ' ' + leader.profile.lastName}
+                                                                </a>
+                                                                <br/>
                                                                 <span class="no-info">{leader.profile.username}</span>
                                                             </p>
                                                         </Card>
@@ -320,7 +323,10 @@ export default class extends StandardPage {
                                         cover={<img src={leader.profile.avatar}/>}
                                     >
                                         <p>
-                                            {leader.profile.firstName + ' ' + leader.profile.lastName}<br/>
+                                            <a onClick={() => {this.props.history.push(`/member/${leader._id}`)}}>
+                                                {leader.profile.firstName + ' ' + leader.profile.lastName}
+                                            </a>
+                                            <br/>
                                             <span class="no-info">{leader.profile.username}</span>
                                         </p>
                                     </Card>

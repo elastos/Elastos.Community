@@ -1,7 +1,7 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import TaskCreateForm from '@/module/form/TaskCreateForm/Container'
-import { Col, Row, Icon, Divider, Button, Spin } from 'antd'
+import { Col, Row, Popconfirm, Divider, Button, Spin } from 'antd'
 
 import TaskPublicDetail from './detail/Container'
 
@@ -52,13 +52,15 @@ export default class extends BaseComponent {
                 {this.props.task.status === TASK_STATUS.PENDING &&
                 <span className="help-text">&nbsp; - this task is awaiting approval</span>
                 }
-                {this.props.task.status === TASK_STATUS.APPROVED &&
+                {this.props.task.status === TASK_STATUS.APPROVED && this.props.task.approvedBy &&
                 <span className="help-text">&nbsp; - this task is approved by {this.props.task.approvedBy.username}</span>
                 }
             </div>
             <div className="pull-right right-align">
                 {!this.state.editing && this.props.task.status === TASK_STATUS.PENDING &&
-                <Button type="primary" onClick={this.approveTask.bind(this)}>Approve</Button>
+                <Popconfirm title="Are you sure you want to approve this task?" placement="left" okText="Yes" onConfirm={this.approveTask.bind(this)}>
+                    <Button type="primary">Approve</Button>
+                </Popconfirm>
                 }
                 {/*this.state.editing && <Button onClick={this.resetEdit.bind(this)}>Reset</Button>*/}
                 <Button onClick={this.switchEditMode.bind(this)}>
@@ -71,6 +73,8 @@ export default class extends BaseComponent {
 
     renderHeader() {
 
+        const isTaskOwner = this.props.current_user_id === this.props.task.createdBy._id
+
         return <div className="l_banner">
             <div className="pull-left">
                 Status: <span className="status">{this.props.task.status}</span>
@@ -78,17 +82,24 @@ export default class extends BaseComponent {
                 {this.props.task.status === TASK_STATUS.PENDING &&
                 <span className="help-text">&nbsp; - this task is awaiting approval by council</span>
                 }
-                {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) &&
+                {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) && isTaskOwner &&
                 <span className="help-text">&nbsp; -
                     Please accept applicants up to the max accepted number
                 </span>
                 }
             </div>
             <div className="pull-right right-align">
-                {this.props.task.status === TASK_STATUS.ASSIGNED &&
-                <Button onClick={this.markAsComplete.bind(this)}>Mark as Complete</Button>
+                {this.props.task.status === TASK_STATUS.ASSIGNED && isTaskOwner &&
+                <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsComplete.bind(this)}>
+                    <Button>Mark as Complete</Button>
+                </Popconfirm>
                 }
-                {this.props.task.status !== TASK_STATUS.SUCCESS &&
+                {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) && isTaskOwner &&
+                <Popconfirm title="Are you sure you want to start this task with the current applicants?" placement="left" okText="Yes" onConfirm={this.forceStart.bind(this)}>
+                    <Button>Force Start</Button>
+                </Popconfirm>
+                }
+                {this.props.task.status !== TASK_STATUS.SUCCESS && isTaskOwner &&
                 <Button onClick={this.switchEditMode.bind(this)}>
                     {this.state.editing ? 'Cancel' : 'Edit'}
                 </Button>
@@ -216,6 +227,11 @@ export default class extends BaseComponent {
     async markAsComplete() {
         const taskId = this.props.task._id
         await this.props.completeTask(taskId)
+    }
+
+    async forceStart() {
+        const taskId = this.props.task._id
+        await this.props.forceStart(taskId)
     }
 
     async saveTask() {

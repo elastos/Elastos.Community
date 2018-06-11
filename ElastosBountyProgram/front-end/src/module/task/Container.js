@@ -17,7 +17,7 @@ export default createContainer(Component, (state) => {
     return {
         is_admin: state.user.is_admin,
         is_login: state.user.is_login,
-
+        current_user_id: state.user.current_user_id,
         page: page
     }
 }, () => {
@@ -54,6 +54,19 @@ export default createContainer(Component, (state) => {
                 })
 
                 message.success('Task marked as complete');
+            } catch (err) {
+                message.error(err.message)
+            }
+        },
+
+        async forceStart(taskId) {
+
+            try {
+                await taskService.update(taskId, {
+                    status: TASK_STATUS.ASSIGNED
+                })
+
+                message.success('Task marked as assigned');
             } catch (err) {
                 message.error(err.message)
             }

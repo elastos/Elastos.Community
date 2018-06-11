@@ -31,6 +31,10 @@ h2 {
 h3 {
   font-size: 24px;
   padding: $gap_1 0;
+
+  &.page-header {
+    color: $text_dark_gray;
+  }
 }
 
 h4 {
@@ -103,7 +107,8 @@ table {
   text-align: center;
 }
 
-.right-align {
+.right-align,
+.ant-table-thead > tr > th.right-align {
   text-align: right;
 }
 

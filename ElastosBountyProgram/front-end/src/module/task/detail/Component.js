@@ -7,7 +7,7 @@ import ModalAcceptApplicant from '../ModalAcceptApplicant/Component'
 
 import { Col, Row, Button, Divider, message, List, Icon, Tooltip, Popconfirm } from 'antd'
 
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS} from '@/constant'
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_TYPE, TASK_CANDIDATE_STATUS} from '@/constant'
 
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
@@ -29,7 +29,7 @@ export default class extends BaseComponent {
             visibleModalMemberProfile: false,
             acceptedCnt,
             selectedTaskCandidate: null,
-            isDeveloperEvent: this.props.task.category === TASK_CATEGORY &&
+            isDeveloperEvent: this.props.task.category === TASK_CATEGORY.DEVELOPER &&
                                 this.props.task.type === TASK_TYPE.EVENT,
             teamsOwned: []
         }
@@ -47,6 +47,8 @@ export default class extends BaseComponent {
 
     ord_render () {
 
+        const isTaskOwner = this.props.task.createdBy._id === this.props.userId
+
         return (
             <div className="public">
                 <Row>
@@ -60,6 +62,18 @@ export default class extends BaseComponent {
                         </Row>
                         <Row>
                             <Col span={this.props.task.thumbnail ? 18 : 24}>
+                                <Row>
+                                    <Col span={4} className="label-col">
+                                        Organizer
+                                    </Col>
+                                    <Col span={20}>
+                                        <p>
+                                            <a onClick={() => {this.props.history.push(`/member/${this.props.task.createdBy._id}`)}}>
+                                                {this.props.task.createdBy.username}
+                                            </a>
+                                        </p>
+                                    </Col>
+                                </Row>
                                 <Row>
                                     <Col span={4} className="label-col">
                                         Category
@@ -208,8 +222,8 @@ export default class extends BaseComponent {
                             dataSource={this.props.task.candidates}
                             renderItem={(candidate) => {
 
-                                const name = candidate.type === 'USER' ? candidate.user.username : candidate.team.name
-                                const listItemActions = [candidate.type === 'USER' ?
+                                const name = candidate.type === TASK_CANDIDATE_TYPE.USER ? candidate.user.username : candidate.team.name
+                                const listItemActions = [candidate.type === TASK_CANDIDATE_TYPE.USER ?
                                     <Tooltip title="Solo User">
                                         <Icon type="user"/>
                                     </Tooltip> :
@@ -219,7 +233,7 @@ export default class extends BaseComponent {
 
                                 // if the candidate is the logged in user, show remove icon
                                 if (this.props.page === 'PUBLIC') {
-                                    if (candidate.type === 'USER' && candidate.user._id === this.props.userId) {
+                                    if (candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === this.props.userId) {
                                         listItemActions.unshift(
                                             <Tooltip title="remove self">
                                                 <Popconfirm
@@ -232,7 +246,7 @@ export default class extends BaseComponent {
                                                     <a href="#">x</a>
                                                 </Popconfirm>
                                             </Tooltip>)
-                                    } else if (candidate.type === 'TEAM' && _.map(this.state.teamsOwned, '_id').includes(candidate.team._id)) {
+                                    } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM && _.map(this.state.teamsOwned, '_id').includes(candidate.team._id)) {
                                         listItemActions.unshift(
                                             <Tooltip title="remove team">
                                                 <Popconfirm
@@ -249,17 +263,22 @@ export default class extends BaseComponent {
                                 } else if (candidate.status === TASK_CANDIDATE_STATUS.APPROVED){
                                     // this should be the leader's view - they can approve applicants
                                     listItemActions.unshift(
-                                        <Tooltip title="candidate already accepted">
+                                        <Tooltip title={isTaskOwner ? 'candidate already accepted' : 'accepted candidate'}>
                                             <a href="#">✓</a>
                                         </Tooltip>)
                                 }
 
+                                // TODO: link to dedicated profile/team page if it's yours
+
                                 return <List.Item actions={listItemActions}>
-                                    {this.props.page === 'LEADER' ?
+                                    {this.props.page === 'LEADER' && isTaskOwner ?
                                         <Tooltip title="view user info / application">
                                             <a href="#" onClick={this.showModalAcceptApplicant.bind(this, candidate)}>{name}</a>
                                         </Tooltip> :
-                                        (name)
+                                        (candidate.type === TASK_CANDIDATE_TYPE.USER ?
+                                            <a onClick={() => {this.props.history.push(`/member/${candidate.user._id}`)}}>{name}</a> :
+                                            <a onClick={() => {this.props.history.push(`/team/${candidate.team._id}`)}}>{name}</a>
+                                        )
                                     }
                                 </List.Item>
                             }}
