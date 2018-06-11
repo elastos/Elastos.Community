@@ -12,6 +12,7 @@ class UserRedux extends BaseRedux {
             is_login: false,
             is_admin: false,
 
+            email: '',
             username: '',
 
             role: '',

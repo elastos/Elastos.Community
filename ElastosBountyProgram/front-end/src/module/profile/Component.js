@@ -92,6 +92,14 @@ export default class extends BaseComponent {
                 </Row>
                 <Row>
                     <Col span={8} className="gridCol right-align">
+                        Email
+                    </Col>
+                    <Col span={16} className="gridCol">
+                        {this.props.user.email}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span={8} className="gridCol right-align">
                         First Name
                     </Col>
                     <Col span={16} className="gridCol">

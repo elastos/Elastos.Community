@@ -57,6 +57,19 @@ export default createContainer(Component, (state) => {
             } catch (err) {
                 message.error(err.message)
             }
+        },
+
+        async forceStart(taskId) {
+
+            try {
+                await taskService.update(taskId, {
+                    status: TASK_STATUS.ASSIGNED
+                })
+
+                message.success('Task marked as assigned');
+            } catch (err) {
+                message.error(err.message)
+            }
         }
     }
 })

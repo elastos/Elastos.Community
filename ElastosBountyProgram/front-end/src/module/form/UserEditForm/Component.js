@@ -17,6 +17,8 @@ import {
 
 } from 'antd'
 
+import config from '@/config'
+
 import {upload_file} from "@/util";
 import './style.scss'
 
@@ -65,6 +67,22 @@ class C extends BaseComponent {
         const {getFieldDecorator} = this.props.form
         const user = this.props.user
 
+        const username_fn = getFieldDecorator('username', {
+            rules: [{required: true, message: 'Username is required'}],
+            initialValue: user.username
+        })
+        const username_el = (
+            <Input size="large"/>
+        )
+
+        const email_fn = getFieldDecorator('email', {
+            rules: [{required: true, message: 'Email is required'}],
+            initialValue: user.email
+        })
+        const email_el = (
+            <Input size="large"/>
+        )
+
         const firstName_fn = getFieldDecorator('firstName', {
             rules: [{required: true, message: 'First name is required'}],
             initialValue: user.profile.firstName
@@ -73,8 +91,77 @@ class C extends BaseComponent {
             <Input size="large"/>
         )
 
+        const lastName_fn = getFieldDecorator('lastName', {
+            rules: [{required: true, message: 'Last name is required'}],
+            initialValue: user.profile.lastName
+        })
+        const lastName_el = (
+            <Input size="large"/>
+        )
+
+        const country_fn = getFieldDecorator('country', {
+            rules: [{required: true, message: 'Please select your country'}],
+            initialValue: user.profile.country
+        })
+        const country_el = (
+            <Select size="large"
+                    showSearch
+                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    placeholder="Country">
+                {_.entries(config.data.mappingCountryCodeToName).map(([key, val]) => {
+                    return <Select.Option key={key} value={key}>
+                        {val}
+                    </Select.Option>
+                })}
+            </Select>
+        )
+
+        const state_fn = getFieldDecorator('state')
+        const state_el = (
+            <Input size="large"
+                   placeholder="State/Province"/>
+        )
+
+        const city_fn = getFieldDecorator('city')
+        const city_el = (
+            <Input size="large"
+                   placeholder="City"/>
+        )
+
+        const organizer_fn = getFieldDecorator('beOrganizer', {
+            rules: [{message: 'Please select an option'}]
+        })
+        const organizer_el = (
+            <Select size="large"
+                    placeholder="Do you want to be an organizer?">
+                <Select.Option value="yes">Yes</Select.Option>
+                <Select.Option value="no">No</Select.Option>
+            </Select>
+        )
+
+        const developer_fn = getFieldDecorator('isDeveloper', {
+            rules: [{message: 'Please select an option'}]
+        })
+        const developer_el = (
+            <Select size="large"
+                    placeholder="Are you a software developer or engineer?">
+                <Select.Option value="yes">Yes</Select.Option>
+                <Select.Option value="no">No</Select.Option>
+            </Select>
+        )
+
         return {
-            firstName: firstName_fn(firstName_el)
+            username: username_fn(username_el),
+            email: email_fn(email_el),
+
+            firstName: firstName_fn(firstName_el),
+            lastName: lastName_fn(lastName_el),
+            country: country_fn(country_el),
+
+            state: state_fn(state_el),
+            city: city_fn(city_el),
+            organizer: organizer_fn(organizer_el),
+            developer: developer_fn(developer_el)
         }
     }
 
@@ -110,8 +197,32 @@ class C extends BaseComponent {
 
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
                     <div>
+                        <FormItem label="Username" {...formItemLayout}>
+                            {p.username}
+                        </FormItem>
+                        <FormItem label="Email" {...formItemLayout}>
+                            {p.email}
+                        </FormItem>
                         <FormItem label="First Name" {...formItemLayout}>
                             {p.firstName}
+                        </FormItem>
+                        <FormItem label="Last Name" {...formItemLayout}>
+                            {p.lastName}
+                        </FormItem>
+                        <FormItem label="Country" {...formItemLayout}>
+                            {p.country}
+                        </FormItem>
+                        <FormItem label="State/Province" {...formItemLayout}>
+                            {p.state}
+                        </FormItem>
+                        <FormItem label="City" {...formItemLayout}>
+                            {p.city}
+                        </FormItem>
+                        <FormItem label="Do you want to an organizer" {...formItemLayout}>
+                            {p.organizer}
+                        </FormItem>
+                        <FormItem label="Are you a software developer or organizer?" {...formItemLayout}>
+                            {p.developer}
                         </FormItem>
 
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>

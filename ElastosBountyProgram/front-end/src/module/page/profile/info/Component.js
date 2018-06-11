@@ -1,6 +1,5 @@
 import React from 'react'
 import StandardPage from '../../StandardPage'
-import Footer from '@/module/layout/Footer/Container'
 import Navigator from '@/module/page/shared/Navigator/Container'
 
 import Profile from '@/module/profile/Container'

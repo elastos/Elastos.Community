@@ -34,8 +34,16 @@ export default createContainer(Component, (state)=>{
 
             try {
                 const rs = await userService.update(userId, {
+                    email: formData.email,
+                    username: formData.username,
                     profile: {
-                        firstName: formData.firstName
+                        firstName: formData.firstName,
+                        lastName: formData.lastName,
+                        country: formData.country,
+                        state: formData.state,
+                        city: formData.city,
+                        beOrganizer: formData.beOrganizer === 'yes',
+                        isDeveloper: formData.isDeveloper === 'yes'
                     }
                 });
 

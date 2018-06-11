@@ -69,6 +69,7 @@ export default class extends BaseService {
                 if ([USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(data.role)) {
                     this.dispatch(userRedux.actions.is_admin_update(true))
                 }
+                this.dispatch(userRedux.actions.email_update(data.email))
                 this.dispatch(userRedux.actions.username_update(data.username))
                 this.dispatch(userRedux.actions.profile_update(data.profile))
                 this.dispatch(userRedux.actions.role_update(data.role))

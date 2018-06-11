@@ -74,9 +74,14 @@ export default class extends Base {
         const {userId} = param
 
         const db_user = this.getDBModel('User');
+        let selectFields = '-salt -password -elaBudget -elaOwed -votePower'
+
+        if (!param.admin) {
+            selectFields += ' -email'
+        }
 
         const user = db_user.getDBInstance().findOne({_id: userId})
-            .select('-email -salt -password -elaBudget -elaOwed -votePower')
+            .select(selectFields)
 
         if (!user) {
             throw `userId: ${userId} not found`
@@ -101,6 +106,14 @@ export default class extends Base {
 
         if (param.profile) {
             updateObj.profile = Object.assign(user.profile, param.profile)
+        }
+
+        if (param.email) {
+            updateObj.email = param.email
+        }
+
+        if (param.username) {
+            updateObj.username = param.username
         }
 
         await db_user.update({_id: userId}, updateObj)
