@@ -1,6 +1,6 @@
 import { createContainer, goPath } from '@/util'
 import Component from './Component'
-// import UserService from '@/service/IssueService'
+import SubmissionService from '@/service/SubmissionService'
 import { message } from 'antd'
 
 message.config({
@@ -12,10 +12,13 @@ export default createContainer(Component, (state) => {
         ...state.user.login_form
     }
 }, () => {
-    // const userService = new UserService()
+    const submissionService = new SubmissionService()
 
     return {
         async submitIssue (issueCategory, project, data) {
+            const rs = await submissionService.create({
+
+            })
 
             /*
             try {

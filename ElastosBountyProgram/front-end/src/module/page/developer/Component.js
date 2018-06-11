@@ -1,9 +1,9 @@
 import React from 'react'
 import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
-import IssueForm from './formIssue/Container'
 import { Link } from 'react-router-dom'
 import config from '@/config'
+import SubmissionForm from './formSubmission/Container'
 
 import './style.scss'
 
@@ -281,7 +281,7 @@ export default class extends StandardPage {
                             <h3>
                                 Submit an Issue
                             </h3>
-                            <IssueForm/>
+                            <SubmissionForm/>
                         </Col>
                     </Row>
                     <div className="horizGap">
