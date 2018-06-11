@@ -17,7 +17,7 @@ export default createContainer(Component, (state) => {
     return {
         is_admin: state.user.is_admin,
         is_login: state.user.is_login,
-
+        current_user_id: state.user.current_user_id,
         page: page
     }
 }, () => {

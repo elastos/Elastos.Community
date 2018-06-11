@@ -73,6 +73,8 @@ export default class extends BaseComponent {
 
     renderHeader() {
 
+        const isTaskOwner = this.props.current_user_id === this.props.task.createdBy._id
+
         return <div className="l_banner">
             <div className="pull-left">
                 Status: <span className="status">{this.props.task.status}</span>
@@ -80,24 +82,24 @@ export default class extends BaseComponent {
                 {this.props.task.status === TASK_STATUS.PENDING &&
                 <span className="help-text">&nbsp; - this task is awaiting approval by council</span>
                 }
-                {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) &&
+                {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) && isTaskOwner &&
                 <span className="help-text">&nbsp; -
                     Please accept applicants up to the max accepted number
                 </span>
                 }
             </div>
             <div className="pull-right right-align">
-                {this.props.task.status === TASK_STATUS.ASSIGNED &&
+                {this.props.task.status === TASK_STATUS.ASSIGNED && isTaskOwner &&
                 <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsComplete.bind(this)}>
                     <Button>Mark as Complete</Button>
                 </Popconfirm>
                 }
-                {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) &&
+                {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) && isTaskOwner &&
                 <Popconfirm title="Are you sure you want to start this task with the current applicants?" placement="left" okText="Yes" onConfirm={this.forceStart.bind(this)}>
                     <Button>Force Start</Button>
                 </Popconfirm>
                 }
-                {this.props.task.status !== TASK_STATUS.SUCCESS &&
+                {this.props.task.status !== TASK_STATUS.SUCCESS && isTaskOwner &&
                 <Button onClick={this.switchEditMode.bind(this)}>
                     {this.state.editing ? 'Cancel' : 'Edit'}
                 </Button>

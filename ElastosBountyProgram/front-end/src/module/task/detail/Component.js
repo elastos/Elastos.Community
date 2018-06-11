@@ -47,6 +47,8 @@ export default class extends BaseComponent {
 
     ord_render () {
 
+        const isTaskOwner = this.props.task.createdBy._id === this.props.userId
+
         return (
             <div className="public">
                 <Row>
@@ -60,6 +62,18 @@ export default class extends BaseComponent {
                         </Row>
                         <Row>
                             <Col span={this.props.task.thumbnail ? 18 : 24}>
+                                <Row>
+                                    <Col span={4} className="label-col">
+                                        Organizer
+                                    </Col>
+                                    <Col span={20}>
+                                        <p>
+                                            <a onClick={() => {this.props.history.push(`/member/${this.props.task.createdBy._id}`)}}>
+                                                {this.props.task.createdBy.username}
+                                            </a>
+                                        </p>
+                                    </Col>
+                                </Row>
                                 <Row>
                                     <Col span={4} className="label-col">
                                         Category
@@ -249,13 +263,15 @@ export default class extends BaseComponent {
                                 } else if (candidate.status === TASK_CANDIDATE_STATUS.APPROVED){
                                     // this should be the leader's view - they can approve applicants
                                     listItemActions.unshift(
-                                        <Tooltip title="candidate already accepted">
+                                        <Tooltip title={isTaskOwner ? 'candidate already accepted' : 'accepted candidate'}>
                                             <a href="#">✓</a>
                                         </Tooltip>)
                                 }
 
+                                // TODO: link to dedicated profile/team page if it's yours
+
                                 return <List.Item actions={listItemActions}>
-                                    {this.props.page === 'LEADER' ?
+                                    {this.props.page === 'LEADER' && isTaskOwner ?
                                         <Tooltip title="view user info / application">
                                             <a href="#" onClick={this.showModalAcceptApplicant.bind(this, candidate)}>{name}</a>
                                         </Tooltip> :

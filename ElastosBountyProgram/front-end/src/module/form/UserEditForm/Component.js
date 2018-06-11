@@ -116,20 +116,25 @@ class C extends BaseComponent {
             </Select>
         )
 
-        const state_fn = getFieldDecorator('state')
+        const state_fn = getFieldDecorator('state', {
+            initialValue: user.profile.state
+        })
         const state_el = (
             <Input size="large"
                    placeholder="State/Province"/>
         )
 
-        const city_fn = getFieldDecorator('city')
+        const city_fn = getFieldDecorator('city', {
+            initialValue: user.profile.city
+        })
         const city_el = (
             <Input size="large"
                    placeholder="City"/>
         )
 
         const organizer_fn = getFieldDecorator('beOrganizer', {
-            rules: [{message: 'Please select an option'}]
+            rules: [{message: 'Please select an option'}],
+            initialValue: user.profile.beOrganizer ? 'yes' : 'no'
         })
         const organizer_el = (
             <Select size="large"
@@ -140,7 +145,8 @@ class C extends BaseComponent {
         )
 
         const developer_fn = getFieldDecorator('isDeveloper', {
-            rules: [{message: 'Please select an option'}]
+            rules: [{message: 'Please select an option'}],
+            initialValue: user.profile.isDeveloper ? 'yes' : 'no'
         })
         const developer_el = (
             <Select size="large"
