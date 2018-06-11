@@ -147,7 +147,7 @@ export default class extends StandardPage {
                                         <h5>
                                             {community.name}
                                         </h5>
-                                        <p>
+                                        <p className="user-info">
                                             {leader.profile.firstName + ' ' + leader.profile.lastName}<br/>
                                             <span class="no-info">{leader.profile.username}</span>
                                         </p>

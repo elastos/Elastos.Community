@@ -10,7 +10,8 @@ import Navigator from '../shared/Navigator/Component'
 
 export default class extends AdminPage {
 
-    componentDidMount() {
+    async componentDidMount() {
+        await super.componentDidMount()
         this.props.listUsers()
     }
 

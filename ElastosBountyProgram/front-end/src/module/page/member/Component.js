@@ -9,9 +9,14 @@ import './style.scss'
 
 export default class extends StandardPage {
 
-    componentDidMount() {
+    async componentDidMount() {
         this.setState({loading: true})
-        this.getMember()
+        const userId = this.props.match.params.userId
+        const member = await this.props.getMember(userId)
+        this.setState({
+            loading: false,
+            member: member
+        })
     }
 
     ord_renderContent () {
@@ -33,15 +38,5 @@ export default class extends StandardPage {
                 <Footer />
             </div>
         )
-    }
-
-    async getMember() {
-        const userId = this.props.match.params.userId
-        const member = await this.props.getMember(userId)
-
-        this.setState({
-            loading: false,
-            member: member
-        })
     }
 }

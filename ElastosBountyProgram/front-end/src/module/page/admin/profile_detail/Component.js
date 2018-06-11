@@ -42,8 +42,8 @@ export default class extends AdminPage {
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>Admin</Breadcrumb.Item>
-                                <Breadcrumb.Item href="/admin/tasks">Tasks</Breadcrumb.Item>
-                                <Breadcrumb.Item>{this.props.task.name}</Breadcrumb.Item>
+                                <Breadcrumb.Item href="/admin/users">Tasks</Breadcrumb.Item>
+                                <Breadcrumb.Item>{this.props.member.username}</Breadcrumb.Item>
                             </Breadcrumb>
                         </div>
                         <div className="p_admin_content">
