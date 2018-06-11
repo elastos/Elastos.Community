@@ -65,6 +65,8 @@ paths:
     $ref: './path/user/list_users.yml'
   /user/list:
     $ref: './path/user/list.yml'
+  /user/{userId}:
+    $ref: './path/user/update.yml'
 
   /team/create:
     $ref: './path/team/create.yml'
