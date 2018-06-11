@@ -14,7 +14,7 @@ class C extends BaseComponent {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values)
-                this.props.createSubmission(values.submissionDescription, values.submissionType)
+                this.props.createSubmission(values.submissionType, values.submissionDescription)
             }
         })
     }
@@ -25,7 +25,7 @@ class C extends BaseComponent {
 
         const submissionType_fn = getFieldDecorator('submissionType', {
             rules: [{required: true, message: 'Please select a type'}],
-            initialValue: 'Bug'
+            initialValue: SUBMISSION_TYPE.BUG
         })
         const submissionType_el = (
             <Select name="type">
@@ -56,7 +56,7 @@ class C extends BaseComponent {
         return (
             <Form onSubmit={this.handleSubmit.bind(this)} className="c_issueForm">
                 <FormItem>
-                    {p.submissionCategory}
+                    {p.submissionType}
                 </FormItem>
                 <FormItem>
                     {p.submissionDescription}
