@@ -69,6 +69,22 @@ export default class extends Base {
         return user.salt;
     }
 
+    public async show(param) {
+
+        const {userId} = param
+
+        const db_user = this.getDBModel('User');
+
+        const user = db_user.getDBInstance().findOne({_id: userId})
+            .select('-email -salt -password -elaBudget -elaOwed -votePower')
+
+        if (!user) {
+            throw `userId: ${userId} not found`
+        }
+
+        return user
+    }
+
     public async update(param) {
 
         const {userId} = param
@@ -86,8 +102,6 @@ export default class extends Base {
         if (param.profile) {
             updateObj.profile = Object.assign(user.profile, param.profile)
         }
-
-        debugger
 
         await db_user.update({_id: userId}, updateObj)
 

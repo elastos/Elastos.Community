@@ -29,7 +29,7 @@ export default class extends BaseComponent {
             visibleModalMemberProfile: false,
             acceptedCnt,
             selectedTaskCandidate: null,
-            isDeveloperEvent: this.props.task.category === TASK_CATEGORY &&
+            isDeveloperEvent: this.props.task.category === TASK_CATEGORY.DEVELOPER &&
                                 this.props.task.type === TASK_TYPE.EVENT,
             teamsOwned: []
         }

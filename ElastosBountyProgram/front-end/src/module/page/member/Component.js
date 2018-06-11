@@ -3,14 +3,21 @@ import StandardPage from '../StandardPage';
 import Footer from '@/module/layout/Footer/Container'
 import { Col, Row, Icon } from 'antd'
 
+import PublicProfileDetail from '@/module/profile/detail/Container'
+
 import './style.scss'
 
 export default class extends StandardPage {
 
+    componentDidMount() {
+        this.setState({loading: true})
+        this.getMember()
+    }
+
     ord_renderContent () {
 
         return (
-            <div className="p_Directory">
+            <div className="p_Member">
                 <div className="ebp-header-divider">
 
                 </div>
@@ -19,10 +26,22 @@ export default class extends StandardPage {
 
                     </div>
 
-                    TODO: member page
+                    {!this.state.loading &&
+                    <PublicProfileDetail member={this.state.member}/>
+                    }
                 </div>
                 <Footer />
             </div>
         )
+    }
+
+    async getMember() {
+        const userId = this.props.match.params.userId
+        const member = await this.props.getMember(userId)
+
+        this.setState({
+            loading: false,
+            member: member
+        })
     }
 }

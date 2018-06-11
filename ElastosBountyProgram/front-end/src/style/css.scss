@@ -107,7 +107,8 @@ table {
   text-align: center;
 }
 
-.right-align {
+.right-align,
+.ant-table-thead > tr > th.right-align {
   text-align: right;
 }
 

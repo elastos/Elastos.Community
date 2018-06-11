@@ -1,5 +1,6 @@
 import Base from '../Base';
 
+import get from './get';
 import login from './login';
 import register from './register';
 import update from './update';
@@ -22,6 +23,11 @@ export default Base.setRouter([
         path : '/:userId',
         router : update,
         method : 'put'
+    },
+    {
+        path : '/public/:userId',
+        router : get,
+        method : 'get'
     },
     {
         path : '/current_user',

@@ -79,6 +79,14 @@ export default class extends BaseService {
         return result
     }
 
+    // restrictive getter - public profile should never return email / private info
+    getMember(userId) {
+        return api_request({
+            path: `/user/public/${userId}`,
+            method: 'get'
+        })
+    }
+
     async update(userId, doc) {
 
         const userRedux = this.store.getRedux('user')

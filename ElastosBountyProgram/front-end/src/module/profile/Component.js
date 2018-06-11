@@ -3,7 +3,7 @@ import BaseComponent from '@/model/BaseComponent'
 import UserEditForm from '@/module/form/UserEditForm/Container'
 import { Col, Row, Icon, Divider, Button, Spin } from 'antd'
 
-// import UserPublicDetail from './detail/Container'
+import UserPublicDetail from './detail/Container'
 
 import {TASK_STATUS} from '@/constant'
 import config from '@/config'
@@ -49,15 +49,14 @@ export default class extends BaseComponent {
     // for now public and your profile view looks the same
     renderDetail() {
 
-        return this.renderPersonalDetail()
 
-        /*
-        if (this.props.page === 'ADMIN') {
-            return this.renderAdminDetail()
+
+        if (this.props.page === 'ADMIN' || this.props.page === 'LEADER') {
+            return this.renderPersonalDetail()
         } else {
+            // Not used
             return <UserPublicDetail task={this.props.user} page={this.props.page}/>
         }
-        */
     }
 
     renderHeader() {
