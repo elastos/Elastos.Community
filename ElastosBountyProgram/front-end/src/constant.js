@@ -29,11 +29,15 @@ export const TASK_TYPE = {
 }
 
 export const TASK_STATUS = {
-    PROPOSAL: 'PROPOSAL',
-    CREATED: 'CREATED',
-    APPROVED: 'APPROVED',
+    // PROPOSAL: 'PROPOSAL',
+
+    CREATED: 'CREATED', // if no ELA
+    PENDING: 'PENDING', // if ELA > 0
+
+    APPROVED: 'APPROVED', // Approved by admin
+
     ASSIGNED: 'ASSIGNED', // when max candidates are accepted
-    PENDING: 'PENDING',
+
     SUCCESS: 'SUCCESS',
     CANCELED: 'CANCELED',
     EXPIRED: 'EXPIRED'

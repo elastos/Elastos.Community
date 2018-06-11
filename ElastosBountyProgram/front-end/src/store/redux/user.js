@@ -7,6 +7,8 @@ class UserRedux extends BaseRedux {
 
     defineDefaultState() {
         return {
+            loading: false,
+
             is_login: false,
             is_admin: false,
 

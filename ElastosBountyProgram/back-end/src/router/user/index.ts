@@ -2,6 +2,7 @@ import Base from '../Base';
 
 import login from './login';
 import register from './register';
+import update from './update';
 import current_user from './current_user';
 import change_password from './change_password';
 import list_users from './list_users';
@@ -16,6 +17,11 @@ export default Base.setRouter([
         path : '/register',
         router : register,
         method : 'post'
+    },
+    {
+        path : '/:userId',
+        router : update,
+        method : 'put'
     },
     {
         path : '/current_user',

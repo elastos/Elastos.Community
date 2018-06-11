@@ -79,9 +79,9 @@ export default class extends StandardPage {
 
                 </div>
                 <div className="ebp-page-title">
-                    <h2>
+                    <h3 className="page-header">
                         Contribute to Open Source Projects and dApps
-                    </h2>
+                    </h3>
                 </div>
                 <div className="ebp-page-desc d_rowGrey">
                     <p>

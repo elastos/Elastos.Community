@@ -89,7 +89,7 @@ export default class extends StandardPage {
             <div className="c_Home">
                 <div className="d_topBackdrop" style={backdropStyle}>
                     <div className="d_topBackdrop_title">
-                        &lt;Name Goes Here&gt;
+                        Elastos - Cyber Republic
                     </div>
                 </div>
                 <div className="horizGap">

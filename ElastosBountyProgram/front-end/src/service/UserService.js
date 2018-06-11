@@ -39,10 +39,6 @@ export default class extends BaseService {
         }
     }
 
-    async getCurrentUser() {
-
-    }
-
     async register(username, password, profile) {
         const res = await api_request({
             path : '/user/register',
@@ -53,7 +49,51 @@ export default class extends BaseService {
             })
         });
 
+        const result = await api_request({
+            path: `/user/${userId}`,
+            method: 'put',
+            data: doc
+        })
+
         return true
+    }
+
+    async getCurrentUser() {
+
+        const userRedux = this.store.getRedux('user')
+
+        const result = await api_request({
+            path : '/user/current_user',
+            success : (data)=>{
+                this.dispatch(userRedux.actions.is_login_update(true));
+                if ([USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(data.role)) {
+                    this.dispatch(userRedux.actions.is_admin_update(true))
+                }
+                this.dispatch(userRedux.actions.username_update(data.username))
+                this.dispatch(userRedux.actions.profile_update(data.profile))
+                this.dispatch(userRedux.actions.role_update(data.role))
+                this.dispatch(userRedux.actions.current_user_id_update(data._id))
+            }
+        })
+
+        return result
+    }
+
+    async update(userId, doc) {
+
+        const userRedux = this.store.getRedux('user')
+
+        this.dispatch(userRedux.actions.loading_update(true))
+
+        const result = await api_request({
+            path: `/user/${userId}`,
+            method: 'put',
+            data: doc
+        })
+
+        this.dispatch(userRedux.actions.loading_update(false))
+
+        return result
     }
 
     async logout(){

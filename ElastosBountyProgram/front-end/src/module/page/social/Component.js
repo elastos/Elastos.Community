@@ -78,9 +78,9 @@ export default class extends StandardPage {
 
                 </div>
                 <div className="ebp-page-title">
-                    <h2>
+                    <h3 className="page-header">
                         General Events and Community Tasks
-                    </h2>
+                    </h3>
                 </div>
                 <div className="ebp-page-desc d_rowGrey">
                     <p>

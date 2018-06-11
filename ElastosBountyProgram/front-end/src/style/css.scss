@@ -31,6 +31,10 @@ h2 {
 h3 {
   font-size: 24px;
   padding: $gap_1 0;
+
+  &.page-header {
+    color: $text_dark_gray;
+  }
 }
 
 h4 {

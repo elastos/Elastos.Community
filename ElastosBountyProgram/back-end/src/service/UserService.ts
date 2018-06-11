@@ -6,6 +6,15 @@ import {validate, crypto, uuid} from '../utility';
 
 const {USER_ROLE} = constant;
 
+const restrictedFields = {
+    update: [
+        '_id',
+        'username',
+        'role',
+        'profile'
+    ]
+}
+
 export default class extends Base {
     public async registerNewUser(param): Promise<Document>{
         const db_user = this.getDBModel('User');
@@ -58,6 +67,31 @@ export default class extends Base {
             throw 'invalid username';
         }
         return user.salt;
+    }
+
+    public async update(param) {
+
+        const {userId} = param
+
+        const updateObj:any = _.omit(param, restrictedFields.update)
+
+        const db_user = this.getDBModel('User');
+
+        const user = await db_user.findById(userId)
+
+        if (!user) {
+            throw `userId: ${userId} not found`
+        }
+
+        if (param.profile) {
+            updateObj.profile = Object.assign(user.profile, param.profile)
+        }
+
+        debugger
+
+        await db_user.update({_id: userId}, updateObj)
+
+        return db_user.findById(userId)
     }
 
     public async findUser(query): Promise<Document>{

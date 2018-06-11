@@ -5,9 +5,9 @@ import { message } from 'antd/lib/index'
 
 export default createContainer(Component, (state) => {
 
-
     return {
-        ...state.user
+        user: state.user,
+        loading: false
     }
 }, () => {
 
