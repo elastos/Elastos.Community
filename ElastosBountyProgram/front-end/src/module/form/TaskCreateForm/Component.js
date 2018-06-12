@@ -101,6 +101,11 @@ class C extends BaseComponent {
         const hasLeaderEditRestrictions = this.props.page === 'LEADER' &&
             ![TASK_STATUS.CREATED, TASK_STATUS.PENDING].includes(existingTask.status)
 
+        const assignSelf_fn = getFieldDecorator('assignSelf')
+        const assignSelf_el = (
+            <Checkbox/>
+        )
+
         const taskName_fn = getFieldDecorator('taskName', {
             rules: [{required: true, message: 'Please input a task name'}],
             initialValue: this.state.editing ? existingTask.name : ''
@@ -116,7 +121,9 @@ class C extends BaseComponent {
         const taskCategory_el = (
             <Select disabled={hasLeaderEditRestrictions}>
                 <Option value={TASK_CATEGORY.SOCIAL}>Social</Option>
+                {this.props.is_admin &&
                 <Option value={TASK_CATEGORY.DEVELOPER}>Developer</Option>
+                }
             </Select>
         )
 
@@ -128,8 +135,7 @@ class C extends BaseComponent {
         const taskType_el = (
             <Select disabled={hasLeaderEditRestrictions}>
                 <Option value={TASK_TYPE.EVENT}>Event</Option>
-                <Option value={TASK_TYPE.PROJECT}>Project</Option>
-                {this.props.is_admin && <Option value={TASK_TYPE.TASK}>Task</Option>}
+                <Option value={TASK_TYPE.TASK}>Task</Option>
             </Select>
         )
 
@@ -263,6 +269,8 @@ class C extends BaseComponent {
 
 
         return {
+            assignSelf: assignSelf_fn(assignSelf_el),
+
             taskName: taskName_fn(taskName_el),
             taskCategory: taskCategory_fn(taskCategory_el),
             taskType: taskType_fn(taskType_el),
@@ -322,6 +330,9 @@ class C extends BaseComponent {
 
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
                     <div>
+                        <FormItem label="Assign to Self" {...formItemLayout}>
+                            {p.assignSelf} - assigns you as the applicant and automatically submits to an admin for approval
+                        </FormItem>
                         <FormItem label="Task Name" {...formItemLayout}>
                             {p.taskName}
                         </FormItem>

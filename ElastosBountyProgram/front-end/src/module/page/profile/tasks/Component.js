@@ -150,8 +150,13 @@ export default class extends StandardPage {
                         <div className="p_ProfileTasks p_admin_content">
                             <Row>
                                 <Col span={20} className="c_ProfileContainer admin-left-column wrap-box-user">
+                                    {(this.props.is_leader || this.props.is_admin) &&
+                                    <div className="pull-right">
+                                        <Button onClick={() => this.props.history.push('/task-create/')}>Create Task</Button>
+                                    </div>
+                                    }
 
-                                    <Divider>Active Tasks</Divider>
+                                    <Divider className="clearfix">Active Tasks</Divider>
 
                                     <Table
                                         columns={columns}

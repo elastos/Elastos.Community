@@ -15,8 +15,6 @@ in the developer page.
 Unlike Community Events where organizers are looking for help to organize an event, the events and
 training sessions listed under Developer Events are for members/developers to register to attend the events.
 
-![home-page](http://d72wx65dsgs48.cloudfront.net/images/MD/3.png)
-
 After reviewing a Developer Event simply click "Join Event" under Registrants to join the event
 
 ### Tasks
