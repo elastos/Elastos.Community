@@ -195,8 +195,13 @@ export default class extends Base {
             }
         }
 
+        // TODO: check if user is owner
+        if (param.status === constant.TASK_STATUS.SUCCESS || param.status === constant.TASK_STATUS.ASSIGNED) {
+            updateObj.status = param.status
+        }
+
         // TODO: check if user is approved candidate
-        if (param.status === constant.TASK_STATUS.SUCCESS) {
+        if (param.status === constant.TASK_STATUS.SUBMITTED) {
             updateObj.status = param.status
         }
 
