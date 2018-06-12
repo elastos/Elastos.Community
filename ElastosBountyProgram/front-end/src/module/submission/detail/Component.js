@@ -37,6 +37,20 @@ export default class extends BaseComponent {
                                 </Row>
                             </Col>
                         </Row>
+                        <Row>
+                            <Col span={24}>
+                                <Row>
+                                    <Col span={4} className="label-col">
+                                        Created by
+                                    </Col>
+                                    <Col span={20}>
+                                        <p>
+                                            {this.props.submission.createdBy}
+                                        </p>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
                         <div className="vert-gap"/>
                     </Col>
                 </Row>

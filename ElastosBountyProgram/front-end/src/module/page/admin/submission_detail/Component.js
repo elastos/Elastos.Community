@@ -15,7 +15,8 @@ export default class extends AdminPage {
         editing: false
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        await super.componentDidMount()
         const submissionId = this.props.match.params.submissionId
         this.props.getSubmissionDetail(submissionId)
     }

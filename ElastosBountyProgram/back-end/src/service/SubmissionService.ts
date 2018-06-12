@@ -14,12 +14,9 @@ const restrictedFields = {
 
 export default class extends Base {
     public async show(param): Promise<Document> {
-        const db_submission = this.getDBModel('Submission');
+        const db_submission = this.getDBModel('Submission')
 
         const submission = await db_submission.getDBInstance().findOne({_id: param.submissionId})
-            .populate('description')
-            .populate('type')
-            .populate('createdBy')
 
         return submission
     }
@@ -53,7 +50,7 @@ export default class extends Base {
 
     public validate_description(description) {
         if(!validate.valid_string(description, 1)){
-            throw 'invalid submission description';
+            throw 'invalid submission description'
         }
     }
 
