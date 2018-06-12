@@ -5,7 +5,7 @@ import { Col, Row, Icon, Divider, Button, Spin } from 'antd'
 
 import UserPublicDetail from './detail/Container'
 
-import {TASK_STATUS} from '@/constant'
+import {TASK_STATUS, USER_GENDER} from '@/constant'
 import config from '@/config'
 
 import './style.scss'
@@ -116,6 +116,23 @@ export default class extends BaseComponent {
                 </Row>
                 <Row>
                     <Col span={8} className="gridCol right-align">
+                        Gender
+                    </Col>
+                    <Col span={16} className="gridCol">
+                        {this.getGenderName(this.props.user.profile.gender)}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span={8} className="gridCol right-align">
+                        Avatar
+                    </Col>
+                    <Col span={16} className="gridCol">
+                        <img src={this.getAvatarUrl(this.props.user.profile)} class="user-avatar"/>
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col span={8} className="gridCol right-align">
                         Country
                     </Col>
                     <Col span={16} className="gridCol">
@@ -154,12 +171,38 @@ export default class extends BaseComponent {
                         {this.props.user.profile.isDeveloper ? 'Yes' : 'No'}
                     </Col>
                 </Row>
+                <Row>
+                    <Col span={8} className="gridCol right-align">
+                        Wallet Address
+                    </Col>
+                    <Col span={16} className="gridCol">
+                        {this.props.user.profile.walletAddress}
+                    </Col>
+                </Row>
             </div>
         )
     }
 
     getCountryName(countryCode) {
         return config.data.mappingCountryCodeToName[countryCode]
+    }
+
+    getGenderName(key) {
+        return config.data.mappingGenderKeyToName[key];
+    }
+
+    getAvatarUrl(profile) {
+        if (profile.avatar) {
+            return profile.avatar;
+        }
+
+        const avatarDefault = {
+            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Male.png',
+            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Female.png',
+            [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png',
+        };
+
+        return avatarDefault[profile.gender];
     }
 
     switchEditMode() {

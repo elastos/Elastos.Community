@@ -27,7 +27,6 @@ export default createContainer(Component, (state)=>{
         },
 
         async updateUser(formData, state) {
-
             // TODO: refactor this, if it's current user it's current_user_id and otherwise it's _id
             // should always be _id
             const userId = this.user.current_user_id || this.user._id
@@ -39,11 +38,14 @@ export default createContainer(Component, (state)=>{
                     profile: {
                         firstName: formData.firstName,
                         lastName: formData.lastName,
+                        gender: formData.gender,
                         country: formData.country,
                         state: formData.state,
                         city: formData.city,
                         beOrganizer: formData.beOrganizer === 'yes',
-                        isDeveloper: formData.isDeveloper === 'yes'
+                        isDeveloper: formData.isDeveloper === 'yes',
+                        walletAddress: formData.walletAddress,
+                        avatar: state.upload_url,
                     }
                 });
 
