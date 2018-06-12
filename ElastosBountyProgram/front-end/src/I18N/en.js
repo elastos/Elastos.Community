@@ -39,9 +39,11 @@ export default {
     '1301': 'Community',
     '1302': 'Users',
     '1303': 'Teams',
+    '1304': 'Submissions',
 
     // Profile navigator
     '2300': 'Info',
     '2301': 'Tasks',
-    '2302': 'Teams'
+    '2302': 'Teams',
+    '2303': 'Submissions'
 };

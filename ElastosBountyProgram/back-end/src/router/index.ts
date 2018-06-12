@@ -9,6 +9,7 @@ import user from './user';
 import team from './team';
 import task from './task';
 import community from './community';
+import submission from './submission';
 
 import upload from './upload';
 
@@ -75,6 +76,7 @@ router.use('/team', team);
 router.use('/task', task);
 router.use('/community', community);
 router.use('/upload', upload);
+router.use('/submission', submission);
 
 router.use((req, res)=>{
     return res.sendStatus(403);
