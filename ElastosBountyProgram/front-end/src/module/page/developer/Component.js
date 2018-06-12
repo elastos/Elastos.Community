@@ -179,7 +179,7 @@ export default class extends StandardPage {
             dataIndex: 'name',
             key: 'name',
             width: '30%',
-            className: 'fontWeight500',
+            className: 'fontWeight500 col-name',
             render: (name, record) => {
                 return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
             }
@@ -233,6 +233,7 @@ export default class extends StandardPage {
                     </p>
                 </div>
                 <div className="ebp-page">
+                    {/*
                     <div className="ebp-page-breadcrumb">
                         <Row>
                             <Col span={24}>
@@ -251,6 +252,7 @@ export default class extends StandardPage {
                             </Col>
                         </Row>
                     </div>
+                    */}
 
                     <Row className="d_row d_rowTop">
                         <Col span={16} className="d_leftContainer d_box">
