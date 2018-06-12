@@ -1,5 +1,6 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
+import UserContactForm from '@/module/form/UserContactForm/Container'
 import moment from 'moment'
 
 import { Col, Row, Button, Divider, message, List, Icon, Tooltip, Popconfirm } from 'antd'
@@ -102,7 +103,11 @@ export default class extends BaseComponent {
                         </Row>
                         <Row>
                             <Col span={24}>
-
+                                {!this.props.is_login ? <div>
+                                    You must login/register first to send a message
+                                </div> :
+                                <UserContactForm recipient={this.props.member}/>
+                                }
                             </Col>
                         </Row>
                     </Col>

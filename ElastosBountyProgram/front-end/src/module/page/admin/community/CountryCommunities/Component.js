@@ -156,7 +156,7 @@ export default class extends AdminPage {
                                value={geolocation}>{config.data.mappingCountryCodeToName[geolocation]}</Select.Option>
             )
         })
-    
+
         const menuCountriesEl = (
             <Select
                 allowClear
@@ -170,10 +170,10 @@ export default class extends AdminPage {
                 {listCountriesEl}
             </Select>
         )
-        
+
         return menuCountriesEl
     }
-    
+
     renderListCommunities() {
         const listCommunitiesEl = this.state.communities.map((community, index) => {
             return (
@@ -204,7 +204,7 @@ export default class extends AdminPage {
                 </Col>
             )
         })
-        
+
         return listCommunitiesEl
     }
 
@@ -235,7 +235,7 @@ export default class extends AdminPage {
                                  className="admin-left-column wrap-box-user">
                                 <div>
                                     <Button className="ant-btn-ebp pull-right" onClick={this.showModalAddCountry} type="primary">Add country</Button>
-                                    <h2 className="without-padding">Country Organizers</h2>
+                                    <h3 className="without-padding">&nbsp;</h3>
                                     <Row>
                                         {listCommunitiesEl}
                                     </Row>

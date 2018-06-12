@@ -1,287 +1,106 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import {Form, Icon, Input, Button, Checkbox, message, Select, Divider} from 'antd'
-import ReCAPTCHA from 'react-google-recaptcha'
 import {
-    RECAPTCHA_KEY,
-    MIN_LENGTH_PASSWORD
-} from '@/config/constant'
-import config from '@/config'
+    Form,
+    Icon,
+    Input,
+    InputNumber,
+    Button,
+    Checkbox,
+    Select,
+    message,
+    Row,
+    Col,
+    Upload,
+    Divider
 
+} from 'antd'
+
+import {upload_file} from "@/util";
 import './style.scss'
 
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS} from '@/constant'
+
 const FormItem = Form.Item
+const TextArea = Input.TextArea
 
 class C extends BaseComponent {
 
-    handleSubmit(e) {
+    handleSubmit (e) {
         e.preventDefault()
-        this.props.form.validateFields((err, values) => {
-
+        this.props.form.validateFields((err, formData) => {
             if (!err) {
-                console.log('Register - received values of form: ', values)
-                this.props.register(values.username, values.password, _.omit(values, ['username', 'password']))
-
+                this.props.sendEmail(this.props.recipient._id, formData)
             }
         })
     }
 
-    compareToFirstPassword(rule, value, callback) {
-        const form = this.props.form
-        if (value && value !== form.getFieldValue('password')) {
-          callback('Two passwords that you entered do not match')
-        } else {
-          callback()
-        }
-    }
+    getInputProps () {
 
-    validateToNextPassword(rule, value, callback) {
-        const form = this.props.form
-        if (value && this.state.confirmDirty) {
-            form.validateFields(['confirmPassword'], { force: true })
-        }
-        if (value && value.length < MIN_LENGTH_PASSWORD) {
-            callback(`The password must be at least ${MIN_LENGTH_PASSWORD} characters.`)
-        }
-        callback()
-    }
-
-    getInputProps() {
         const {getFieldDecorator} = this.props.form
 
-        const firstName_fn = getFieldDecorator('firstName', {
-            rules: [{required: true, message: 'Please input your first name'}],
-            initialValue: ''
+        const subject_fn = getFieldDecorator('subject', {
+            rules: [{required: true, message: 'Please enter a subject'}]
         })
-        const firstName_el = (
-            <Input size="large"
-                   prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                   placeholder="First name"/>
+        const subject_el = (
+            <Input size="large"/>
         )
 
-        const lastName_fn = getFieldDecorator('lastName', {
-            rules: [{required: true, message: 'Please input your last name'}],
-            initialValue: ''
+        const message_fn = getFieldDecorator('message', {
+            rules: [{required: true, message: 'You must have a message'}]
         })
-        const lastName_el = (
-            <Input size="large"
-                   prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                   placeholder="Last name"/>
-        )
-
-        const username_fn = getFieldDecorator('username', {
-            rules: [
-                {required: true, message: 'Please input your username'},
-                {min: 6, message: 'Username must be more than 6 characters'}
-            ],
-            initialValue: ''
-        })
-        const username_el = (
-            <Input size="large"
-                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                placeholder="Username"/>
-        )
-
-        const email_fn = getFieldDecorator('email', {
-            rules: [{
-                required: true, message: 'Please input your email'
-            }, {
-                type: 'email', message: 'The input is not valid E-mail!'
-            }],
-        })
-        const email_el = (
-            <Input size="large"
-                prefix={<Icon type="mail" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                placeholder="Email"/>
-        )
-
-        const pwd_fn = getFieldDecorator('password', {
-            rules: [{
-                required: true, message: 'Please input a Password'
-            }, {
-                validator: this.validateToNextPassword.bind(this)
-            }]
-        })
-        const pwd_el = (
-            <Input size="large"
-                prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                type="password" placeholder="Password"/>
-        )
-
-        const pwdConfirm_fn = getFieldDecorator('passwordConfirm', {
-            rules: [{
-                required: true, message: 'Please input your password again'
-            }, {
-                validator: this.compareToFirstPassword.bind(this)
-            }]
-        })
-        const pwdConfirm_el = (
-            <Input size="large"
-                   prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                   type="password" placeholder="Password confirm"/>
-        )
-
-        const country_fn = getFieldDecorator('country', {
-            rules: [{required: true, message: 'Please select your country'}]
-        })
-        const country_el = (
-            <Select size="large"
-                    showSearch
-                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                placeholder="Country">
-                {_.entries(config.data.mappingCountryCodeToName).map(([key, val]) => {
-                    return <Select.Option key={key} value={key}>
-                        {val}
-                    </Select.Option>
-                })}
-            </Select>
-        )
-
-        const recaptcha_fn = getFieldDecorator('recaptcha', {
-            rules: [{required: false}]
-        })
-        const recaptcha_el = (
-            <ReCAPTCHA
-                 ref={(el) => { this.captcha = el }}
-                 sitekey={RECAPTCHA_KEY}
-             />
-        )
-
-        const state_fn = getFieldDecorator('state')
-        const state_el = (
-            <Input size="large"
-                   placeholder="State/Province"/>
-        )
-
-        const city_fn = getFieldDecorator('city')
-        const city_el = (
-            <Input size="large"
-                   placeholder="City"/>
-        )
-
-        const organizer_fn = getFieldDecorator('beOrganizer', {
-            rules: [{message: 'Please select an option'}]
-        })
-        const organizer_el = (
-            <Select size="large"
-                    placeholder="Do you want to be an organizer?">
-                <Select.Option value="yes">Yes</Select.Option>
-                <Select.Option value="no">No</Select.Option>
-            </Select>
-        )
-
-        const developer_fn = getFieldDecorator('isDeveloper', {
-            rules: [{message: 'Please select an option'}]
-        })
-        const developer_el = (
-            <Select size="large"
-                    placeholder="Are you a software developer or engineer?">
-                <Select.Option value="yes">Yes</Select.Option>
-                <Select.Option value="no">No</Select.Option>
-            </Select>
-        )
-
-        const source_fn = getFieldDecorator('source', {
-            rules: [{message: ''}],
-        })
-        const source_el = (
-            <Input size="large"
-                   placeholder="Where did you hear about us?"/>
+        const message_el = (
+            <TextArea rows={4} name="message"></TextArea>
         )
 
         return {
-            firstName: firstName_fn(firstName_el),
-            lastName: lastName_fn(lastName_el),
-            userName: username_fn(username_el),
-            email: email_fn(email_el),
-            pwd: pwd_fn(pwd_el),
-            pwdConfirm: pwdConfirm_fn(pwdConfirm_el),
-
-            country: country_fn(country_el),
-            state: state_fn(state_el),
-            city: city_fn(city_el),
-
-            organizer: organizer_fn(organizer_el),
-            developer: developer_fn(developer_el),
-
-            source: source_fn(source_el),
-
-            recaptcha: recaptcha_fn(recaptcha_el)
+            subject: subject_fn(subject_el),
+            message: message_fn(message_el)
         }
     }
 
-    ord_render() {
+    ord_render () {
         const {getFieldDecorator} = this.props.form
         const p = this.getInputProps()
 
-        // TODO: terms of service checkbox
-
-        // TODO: react-motion animate slide left
+        const formItemLayout = {
+            labelCol: {
+                xs: {span: 24},
+                sm: {span: 8},
+            },
+            wrapperCol: {
+                xs: {span: 24},
+                sm: {span: 12},
+            },
+        }
+        // TODO: description CKE Editor
 
         return (
-            <div className="c_registerContainer">
+            <div className="c_taskCreateFormContainer">
 
-                <h2>
-                    Become a Contributor
-                </h2>
+                <span class="no-info">
+                    The email reply to will be set to your account's email
+                </span>
+                <br/>
+                <Form onSubmit={this.handleSubmit.bind(this)} className="d_userContactForm">
+                    <div>
+                        <FormItem label="Subject" {...formItemLayout}>
+                            {p.subject}
+                        </FormItem>
+                        <FormItem label="Message"  {...formItemLayout}>
+                            {p.message}
+                        </FormItem>
 
-                <p>
-                    As a member you can sign up for bounties on EBP, <br/>
-                    you do not need to be a member to join events.
-                </p>
-
-                <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
-                    <Divider>Required Fields</Divider>
-                    <FormItem>
-                        {p.firstName}
-                    </FormItem>
-                    <FormItem>
-                        {p.lastName}
-                    </FormItem>
-                    <FormItem>
-                        {p.userName}
-                    </FormItem>
-                    <FormItem>
-                        {p.email}
-                    </FormItem>
-                    <FormItem>
-                        {p.pwd}
-                    </FormItem>
-                    <FormItem>
-                        {p.pwdConfirm}
-                    </FormItem>
-                    <FormItem>
-                        {p.country}
-                    </FormItem>
-                    <Divider>Optional Info</Divider>
-                    <FormItem>
-                        {p.state}
-                    </FormItem>
-                    <FormItem>
-                        {p.city}
-                    </FormItem>
-                    <FormItem>
-                        {p.organizer}
-                    </FormItem>
-                    <FormItem>
-                        {p.developer}
-                    </FormItem>
-                    <FormItem>
-                        {p.source}
-                    </FormItem>
-                    <FormItem>
-                        {p.recaptcha}
-                    </FormItem>
-                    <FormItem>
-                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn" onClick={this.handleSubmit.bind(this)}>
-                            Register
-                        </Button>
-                    </FormItem>
+                        <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
+                            <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
+                                Send Message
+                            </Button>
+                        </FormItem>
+                    </div>
                 </Form>
             </div>
         )
-
     }
-}
 
+}
 export default Form.create()(C)

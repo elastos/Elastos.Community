@@ -1,40 +1,26 @@
-import {createContainer, goPath} from "@/util"
-import Component from './Component'
-import UserService from '@/service/UserService'
+import {createContainer, goPath} from "@/util";
+import Component from './Component';
+import UserService from '@/service/UserService';
 import {message} from 'antd'
+import _ from 'lodash'
 
 message.config({
     top: 100
 })
 
 
-export default createContainer(Component, (state) => {
+export default createContainer(Component, (state)=>{
 
     return {
-        ...state.user.register_form
-    }
+        currentUserId: state.user.current_user_id,
+        is_admin: state.user.is_admin
+    };
 }, ()=>{
-    const userService = new UserService()
+    const userService = new UserService();
 
     return {
-        async changeStep(step) {
-            await userService.changeStep(step)
+        async sendEmail(toUserId, formData) {
+            return userService.sendEmail(this.currentUserId, toUserId, formData)
         },
-
-        async register(username, password, profile){
-            try {
-                const rs = await userService.register(username, password, profile)
-
-                debugger
-
-                if (rs) {
-                    message.success('Successfully Registered - Please Login', 10)
-                    this.history.replace('/login')
-                }
-            } catch (err) {
-                console.error(err)
-                message.error('Registration Failed - Please Contact Our Support')
-            }
-        }
-    }
-})
+    };
+});

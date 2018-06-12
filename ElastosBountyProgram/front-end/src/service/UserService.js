@@ -172,4 +172,19 @@ export default class extends BaseService {
 
         return result
     }
+
+    async sendEmail(fromUserId, toUserId, formData) {
+
+        const result = await api_request({
+            path: '/user/send-email',
+            method: 'post',
+            data: {
+                fromUserId,
+                toUserId,
+                ...formData
+            }
+        })
+
+        return result
+    }
 }
