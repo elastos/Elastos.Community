@@ -24,7 +24,7 @@ A general simplification has been done, there are now two main programs to earn 
 
 ## The New EBP Site - To Be Named
 
-![alt text](http://d72wx65dsgs48.cloudfront.net/images/MD/1.png)
+![home-page](http://d72wx65dsgs48.cloudfront.net/images/MD/1.png)
 
 ### Getting Started Guide
 
@@ -35,4 +35,4 @@ Please read the following for a general idea of the task flow and how to earn EL
 Upon registration you are automatically a member, you can apply for tasks and help out with organizing events
 You can also apply for developer tasks or join training events if you are a developer or aspiring developer.
 
-[Members Guide(./MembersGuide.md)
+[Members Guide](./MembersGuide.md)
