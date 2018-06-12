@@ -36,3 +36,13 @@ Upon registration you are automatically a member, you can apply for tasks and he
 You can also apply for developer tasks or join training events if you are a developer or aspiring developer.
 
 [Members Guide](./MembersGuide.md)
+
+
+#### Members Guide
+
+All members can apply to be Organizers, as an organizer you can propose tasks and ELA rewards for those tasks.
+Hosting an event is also considered a task worth ELA, all proposals go through an approval process
+with an admin and an acceptance process after completion.
+
+[Organizers Guide](./OrganizerGuide.md)
+
