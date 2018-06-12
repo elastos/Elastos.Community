@@ -1,12 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import StandardPage from '../../StandardPage'
-import { Button, Card, Col, Select, Row, Icon, message, Divider, Breadcrumb, Tabs, List, Avatar } from 'antd'
+import { Button, Card, Col, Select, Row, Icon, message, Divider, Breadcrumb, Tabs, List, Avatar, Input } from 'antd'
 import config from '@/config'
 import { COMMUNITY_TYPE } from '@/constant'
 import Footer from '@/module/layout/Footer/Container'
 import ListTasks from '../shared/ListTasks/Component'
 import ListEvents from '../shared/ListEvents/Component'
+import _ from 'lodash'
 
 const TabPane = Tabs.TabPane
 import '../style.scss'
@@ -16,6 +17,7 @@ export default class extends StandardPage {
         breadcrumbRegions: [],
         community: null,
         communityMembers: [],
+        communityMembersClone: [],
         subCommunities: [],
         listSubCommunitiesByType: {
             STATE: [],
@@ -45,7 +47,8 @@ export default class extends StandardPage {
             const keyValueCommunityMembers = _.keyBy(communityMembers, '_id')
             this.setState({
                 keyValueCommunityMembers,
-                communityMembers
+                communityMembers,
+                communityMembersClone: communityMembers
             })
         });
     }
@@ -339,6 +342,22 @@ export default class extends StandardPage {
         )
     }
 
+    handleSearchMember(value) {
+        let communities
+
+        if (!value) {
+            communities = this.state.communityMembersClone
+        } else {
+            communities = _.filter(this.state.communityMembersClone, (community) => {
+                return community.profile.firstName.toLowerCase().indexOf(value.toLowerCase()) > -1 || community.profile.lastName.toLowerCase().indexOf(value.toLowerCase()) > -1;
+            })
+        }
+
+        this.setState({
+            communityMembers: communities
+        })
+    }
+
     ord_renderContent () {
         const menuCountriesEl = this.renderBreadcrumbCountries()
         const menuListRegionsEl = this.renderBreadcrumbRegions()
@@ -381,6 +400,9 @@ export default class extends StandardPage {
                                      className="community-right-column">
                                     <div>
                                         <h3 className="without-padding">Members</h3>
+                                        <Input.Search onSearch={this.handleSearchMember.bind(this)}
+                                            prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                            placeholder="Username"/>
                                         <div className="list-members">
                                             <List
                                                 dataSource={this.state.communityMembers}
