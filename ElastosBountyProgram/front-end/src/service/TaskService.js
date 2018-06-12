@@ -96,7 +96,10 @@ export default class extends BaseService {
         if (curTaskDetail.status !== TASK_STATUS.APPROVED && result.status === TASK_STATUS.APPROVED) {
             updateStatus = true
         } else if (curTaskDetail.status !== TASK_STATUS.SUCCESS && result.status === TASK_STATUS.SUCCESS) {
-            // if we are marking complete
+            // if we are marking accept it as complete
+            updateStatus = true
+        } else if (curTaskDetail.status !== TASK_STATUS.SUBMITTED && result.status === TASK_STATUS.SUBMITTED) {
+            // if we are marking submitted
             updateStatus = true
         } else if (curTaskDetail.status !== TASK_STATUS.ASSIGNED && result.status === TASK_STATUS.ASSIGNED) {
             // if we are doing a force start

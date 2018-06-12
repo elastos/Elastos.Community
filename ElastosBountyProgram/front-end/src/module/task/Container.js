@@ -50,10 +50,23 @@ export default createContainer(Component, (state) => {
 
             try {
                 await taskService.update(taskId, {
-                    status: TASK_STATUS.SUCCESS
+                    status: TASK_STATUS.SUBMITTED
                 })
 
                 message.success('Task marked as complete');
+            } catch (err) {
+                message.error(err.message)
+            }
+        },
+
+        async acceptAsCompleteTask(taskId) {
+
+            try {
+                await taskService.update(taskId, {
+                    status: TASK_STATUS.SUCCESS
+                })
+
+                message.success('Task completion accepted');
             } catch (err) {
                 message.error(err.message)
             }

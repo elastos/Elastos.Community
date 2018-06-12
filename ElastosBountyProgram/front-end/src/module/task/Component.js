@@ -85,6 +85,9 @@ export default class extends BaseComponent {
                 {this.props.task.status === TASK_STATUS.ASSIGNED &&
                 <span className="help-text">&nbsp; - this task is active</span>
                 }
+                {this.props.task.status === TASK_STATUS.SUBMITTED &&
+                <span className="help-text">&nbsp; - you have submitted this task, pending owner approval</span>
+                }
                 {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) && isTaskOwner &&
                 <span className="help-text">&nbsp; -
                     Please accept applicants up to the max accepted number
@@ -93,8 +96,13 @@ export default class extends BaseComponent {
             </div>
             <div className="pull-right right-align">
                 {this.props.task.status === TASK_STATUS.ASSIGNED && isTaskOwner &&
+                <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.acceptAsComplete.bind(this)}>
+                    <Button>Accept as Complete</Button>
+                </Popconfirm>
+                }
+                {this.props.task.status === TASK_STATUS.ASSIGNED && !isTaskOwner &&
                 <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsComplete.bind(this)}>
-                    <Button>Mark as Complete</Button>
+                    <Button>Submit as Complete</Button>
                 </Popconfirm>
                 }
                 {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) && isTaskOwner &&
@@ -225,6 +233,11 @@ export default class extends BaseComponent {
         const taskId = this.props.task._id
         await this.props.approveTask(taskId)
 
+    }
+
+    async acceptAsComplete() {
+        const taskId = this.props.task._id
+        await this.props.acceptAsCompleteTask(taskId)
     }
 
     async markAsComplete() {

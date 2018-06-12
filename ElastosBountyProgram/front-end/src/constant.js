@@ -37,9 +37,9 @@ export const TASK_STATUS = {
     APPROVED: 'APPROVED', // Approved by admin
 
     ASSIGNED: 'ASSIGNED', // when max candidates are accepted
-
-    SUCCESS: 'SUCCESS',
-    DISTRIBUTED: 'DISTRIBUTED',
+    SUBMITTED: 'SUBMITTED', // when user says it is complete
+    SUCCESS: 'SUCCESS', // when owner accepts it as complete
+    DISTRIBUTED: 'DISTRIBUTED', // when admin distributes ELA rewards
     CANCELED: 'CANCELED',
     EXPIRED: 'EXPIRED'
 }

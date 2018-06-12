@@ -40,6 +40,7 @@ export const TASK_STATUS = {
     APPROVED: 'APPROVED',
     ASSIGNED: 'ASSIGNED',
     PENDING: 'PENDING',
+    SUBMITTED: 'SUBMITTED', // when user says it is complete
     SUCCESS: 'SUCCESS',
     DISTRIBUTED: 'DISTRIBUTED',
     CANCELED: 'CANCELED',
