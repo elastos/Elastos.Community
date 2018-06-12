@@ -4,7 +4,7 @@
 
 
 .c_Member {
-
+  padding: 0 20%;
   text-align: left;
 
   .ant-btn-primary {
@@ -14,6 +14,12 @@
   .gridCol {
     padding: 0 $gap_2;
     margin: $gap_0 0;
+
+    min-height: 40vh;
+
+    &.left-vert-sep {
+      border-left: 1px solid $border_gray;
+    }
   }
 
   .form-wrapper {
@@ -21,6 +27,10 @@
   }
 
   &.public {
+
+    .section-title > h4 {
+      color: $text_dark_gray;
+    }
 
     .label-col {
       color: $text_light_gray;
