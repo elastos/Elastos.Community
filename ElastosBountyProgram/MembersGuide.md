@@ -46,7 +46,7 @@ should be emailed directly to the owner of the task.
 
 *(Comments thread feature will be ready on June 13)*
 
-When you are done the task click the **"Mark as Complete"** button
+When you are done the task click the **"Submit as Complete"** button (the image is out of date)
 
 ![home-page](http://d72wx65dsgs48.cloudfront.net/images/MD/6.png)
 
