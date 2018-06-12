@@ -44,5 +44,6 @@ export default {
     // Profile navigator
     '2300': 'Info',
     '2301': 'Tasks',
-    '2302': 'Teams'
+    '2302': 'Teams',
+    '2303': 'Submissions'
 };

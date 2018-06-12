@@ -17,6 +17,7 @@ import ProfileInfoPage from '@/module/page/profile/info/Container'
 import ProfileTasksPage from '@/module/page/profile/tasks/Container'
 import ProfileTaskDetailPage from '@/module/page/profile/task_detail/Container'
 import ProfileTeamsPage from '@/module/page/profile/teams/Container'
+import ProfileSubmissionsPage from '@/module/page/profile/submissions/Container'
 
 import MemberPage from '@/module/page/member/Container'
 
@@ -104,6 +105,10 @@ export default [
     {
         path: '/profile/teams',
         page: ProfileTeamsPage
+    },
+    {
+        path: '/profile/submissions',
+        page: ProfileSubmissionsPage
     },
     {
         // public profile page

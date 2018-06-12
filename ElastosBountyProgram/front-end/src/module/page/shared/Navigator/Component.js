@@ -22,6 +22,10 @@ export default class extends BaseComponent {
             case 'profileTeams':
                 this.props.history.push('/profile/teams')
                 break
+
+            case 'profileSubmissions':
+                this.props.history.push('/profile/submissions')
+                break
         }
     }
 
@@ -44,6 +48,9 @@ export default class extends BaseComponent {
                     {I18N.get('2302')}
                 </Menu.Item>
                 */}
+                <Menu.Item key="profileSubmissions">
+                    {I18N.get('2303')}
+                </Menu.Item>
             </Menu>
         )
     }
