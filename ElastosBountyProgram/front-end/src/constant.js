@@ -10,6 +10,12 @@ export const USER_LANGUAGE = {
     zh: 'zh'
 }
 
+export const USER_GENDER = {
+    MALE: 'male',
+    FEMALE: 'female',
+    OTHER: 'other'
+}
+
 export const TEAM_ROLE = {
     MEMBER : 'MEMBER',
     OWNER : 'OWNER'
