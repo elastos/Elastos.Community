@@ -45,7 +45,9 @@ export default class extends BaseComponent {
                                     </Col>
                                     <Col span={20}>
                                         <p>
-                                            {this.props.submission.createdBy}
+                                            <a onClick={() => {this.props.history.push(`/member/${this.props.submission.createdBy._id}`)}}>
+                                                {this.props.submission.createdBy.username}
+                                            </a>
                                         </p>
                                     </Col>
                                 </Row>

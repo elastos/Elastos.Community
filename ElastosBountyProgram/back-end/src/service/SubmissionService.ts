@@ -17,6 +17,7 @@ export default class extends Base {
         const db_submission = this.getDBModel('Submission')
 
         const submission = await db_submission.getDBInstance().findOne({_id: param.submissionId})
+            .populate('createdBy')
 
         return submission
     }
