@@ -7,6 +7,7 @@ import {
     InputNumber,
     Button,
     Checkbox,
+    Radio,
     Select,
     message,
     Row,
@@ -22,10 +23,11 @@ import config from '@/config'
 import {upload_file} from "@/util";
 import './style.scss'
 
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS} from '@/constant'
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, USER_GENDER} from '@/constant'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
+const RadioGroup = Radio.Group
 
 /**
  * This is generic task create form for both Developer and Social Bounties / Events
@@ -99,6 +101,56 @@ class C extends BaseComponent {
             <Input size="large"/>
         )
 
+        const gender_fn = getFieldDecorator('gender', {
+            rules: [],
+            initialValue: user.profile.gender
+        });
+        const gender_el = (
+            <RadioGroup>
+                <Radio key={USER_GENDER.MALE} value={USER_GENDER.MALE}>
+                    {config.data.mappingGenderKeyToName[USER_GENDER.MALE]}
+                </Radio>
+                <Radio key={USER_GENDER.FEMALE} value={USER_GENDER.FEMALE}>
+                    {config.data.mappingGenderKeyToName[USER_GENDER.FEMALE]}
+                </Radio>
+                <Radio key={USER_GENDER.OTHER} value={USER_GENDER.OTHER}>
+                    {config.data.mappingGenderKeyToName[USER_GENDER.OTHER]}
+                </Radio>
+            </RadioGroup>
+        )
+
+        const avatar_fn = getFieldDecorator('avatar', {
+            rules: []
+        });
+        const p_avatar = {
+            showUploadList: false,
+            customRequest :(info)=>{
+                this.setState({
+                    upload_loading: true
+                });
+                upload_file(info.file).then((d)=>{
+                    const url = d.url;
+                    this.setState({
+                        upload_loading: false,
+                        upload_url : url
+                    });
+                })
+            }
+        };
+        const avatar_el = (
+            <Upload name="logo" listType="picture" {...p_avatar}>
+                {
+                    this.state.upload_url ? (
+                        <img style={{height:'100px'}} src={this.state.upload_url} />
+                        ) : (
+                        <Button loading={this.state.upload_loading}>
+                            <Icon type="upload" /> Click to upload
+                        </Button>
+                    )
+                }
+            </Upload>
+        );
+
         const country_fn = getFieldDecorator('country', {
             rules: [{required: true, message: 'Please select your country'}],
             initialValue: user.profile.country
@@ -156,18 +208,29 @@ class C extends BaseComponent {
             </Select>
         )
 
+        const walletAddress_fn = getFieldDecorator('walletAddress', {
+            rules: [],
+            initialValue: user.profile.walletAddress
+        })
+        const walletAddress_el = (
+            <Input size="large"/>
+        )
+
         return {
             username: username_fn(username_el),
             email: email_fn(email_el),
 
             firstName: firstName_fn(firstName_el),
             lastName: lastName_fn(lastName_el),
+            gender: gender_fn(gender_el),
+            avatar: avatar_fn(avatar_el),
             country: country_fn(country_el),
 
             state: state_fn(state_el),
             city: city_fn(city_el),
             organizer: organizer_fn(organizer_el),
-            developer: developer_fn(developer_el)
+            developer: developer_fn(developer_el),
+            walletAddress: walletAddress_fn(walletAddress_el)
         }
     }
 
@@ -215,6 +278,12 @@ class C extends BaseComponent {
                         <FormItem label="Last Name" {...formItemLayout}>
                             {p.lastName}
                         </FormItem>
+                        <FormItem label="Gender" {...formItemLayout}>
+                            {p.gender}
+                        </FormItem>
+                        <FormItem label="Avatar" {...formItemLayout}>
+                            {p.avatar}
+                        </FormItem>
                         <FormItem label="Country" {...formItemLayout}>
                             {p.country}
                         </FormItem>
@@ -229,6 +298,9 @@ class C extends BaseComponent {
                         </FormItem>
                         <FormItem label="Are you a software developer or organizer?" {...formItemLayout}>
                             {p.developer}
+                        </FormItem>
+                        <FormItem label="Wallet Address" {...formItemLayout}>
+                            {p.walletAddress}
                         </FormItem>
 
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>

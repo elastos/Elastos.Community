@@ -369,5 +369,10 @@ export default {
             addNewText: 'Add school',
             pluralName: 'Schools',
         },
-    }
+    },
+    mappingGenderKeyToName: {
+        male: 'Male',
+        female: 'Female',
+        other: 'Other',
+    },
 }
