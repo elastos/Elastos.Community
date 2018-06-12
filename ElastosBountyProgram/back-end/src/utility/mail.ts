@@ -12,7 +12,9 @@ export default {
      * @param {any} replyTo - {name, email}
      * @returns {Promise<any>}
      */
-    async send({to, toName, subject, body, replyTo}) {
+    async send(options) {
+
+        const {to, toName, subject, body, replyTo} = options
 
         const mailgun = Mailgun({
             apiKey: process.env.MAILGUN_API_KEY,
