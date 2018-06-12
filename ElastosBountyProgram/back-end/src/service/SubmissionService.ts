@@ -30,14 +30,6 @@ export default class extends Base {
             updatedAt: -1
         });
 
-        for (let submission of submissions) {
-            await db_submission.getDBInstance().populate(submission, [
-                'description',
-                'type',
-                'createdBy'
-            ])
-        }
-
         return submissions
     }
 

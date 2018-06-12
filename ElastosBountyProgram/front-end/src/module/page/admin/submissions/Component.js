@@ -26,7 +26,7 @@ export default class extends AdminPage {
 
         const columns = [{
             title: 'Name',
-            dataIndex: 'name',
+            dataIndex: 'description',
             width: '30%',
             className: 'fontWeight500 allow-wrap',
             render: (name, record) => {
