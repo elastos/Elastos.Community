@@ -17,7 +17,7 @@ export default createContainer(Component, (state) => {
             return submissionService.get(submissionId)
         },
 
-        async resetTaskDetail () {
+        async resetSubmissionDetail () {
             return submissionService.resetSubmissionDetail()
         }
     }
