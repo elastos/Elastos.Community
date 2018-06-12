@@ -15,6 +15,7 @@ const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
 export default class extends BaseComponent {
 
+    // TODO: add twitter, telegram, linkedIn, FB
     ord_render () {
 
         if (!this.props.member) {

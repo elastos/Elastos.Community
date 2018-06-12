@@ -2,7 +2,7 @@ import Base from './Base';
 import {Document} from 'mongoose';
 import * as _ from 'lodash';
 import {constant} from '../constant';
-import {validate, crypto, uuid} from '../utility';
+import {validate, crypto, uuid, mail} from '../utility';
 
 const {USER_ROLE} = constant;
 
@@ -208,5 +208,52 @@ export default class extends Base {
         if(!validate.email(email)){
             throw 'invalid email';
         }
+    }
+
+    /**
+     * Send an Email
+     *
+     * @param param {Object}
+     * @param param.fromUserId {String}
+     * @param param.toUserId {String}
+     * @param param.subject {String}
+     * @param param.message {String}
+     */
+    public async sendEmail(param) {
+
+        const {fromUserId, toUserId, subject, message} = param
+
+        // ensure fromUser is logged in
+        if (this.currentUser._id.toString() !== fromUserId) {
+            throw 'User mismatch - from user must = sender'
+        }
+
+        const db_user = this.getDBModel('User');
+
+        const fromUser = await db_user.findById(fromUserId)
+        const toUser = await db_user.findById(toUserId)
+
+        if (!fromUser){
+            throw 'From user not found'
+        }
+
+        if (!toUser){
+            throw 'From user not found'
+        }
+
+        // we assume users must have entered an email
+
+        await mail.send({
+            to: toUser.email,
+            toName: `${toUser.profile.firstName} ${toUser.profile.lastName}`,
+            subject: subject,
+            body: message,
+            replyTo: {
+                name: `${fromUser.profile.firstName} ${fromUser.profile.lastName}`,
+                email: fromUser.email
+            }
+        })
+
+        return true
     }
 }

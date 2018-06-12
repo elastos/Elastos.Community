@@ -2,17 +2,9 @@ import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import {
     Form,
-    Icon,
     Input,
-    InputNumber,
     Button,
-    Checkbox,
-    Select,
-    message,
-    Row,
-    Col,
-    Upload,
-    Divider
+    message
 
 } from 'antd'
 
@@ -30,7 +22,9 @@ class C extends BaseComponent {
         e.preventDefault()
         this.props.form.validateFields((err, formData) => {
             if (!err) {
-                this.props.sendEmail(this.props.recipient._id, formData)
+                this.props.sendEmail(this.props.recipient._id, formData).then(() => {
+                    message.success('Email sent successfully')
+                })
             }
         })
     }
@@ -79,7 +73,8 @@ class C extends BaseComponent {
             <div className="c_taskCreateFormContainer">
 
                 <span class="no-info">
-                    The email reply to will be set to your account's email
+                    The email reply-to address will be set to your account's email, responses
+                    will go directly to your email
                 </span>
                 <br/>
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_userContactForm">
