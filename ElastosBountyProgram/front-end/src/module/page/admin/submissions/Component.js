@@ -25,7 +25,7 @@ export default class extends AdminPage {
         const submissionData = this.props.all_submissions
 
         const columns = [{
-            title: 'Name',
+            title: 'Description',
             dataIndex: 'description',
             width: '30%',
             className: 'fontWeight500 allow-wrap',
