@@ -12,6 +12,9 @@ export const Submission = {
     createdBy : {
         type: Schema.Types.ObjectId,
         ref: 'users'
+    },
+    comments: {
+        type: Schema.Types.Array
     }
 };
 

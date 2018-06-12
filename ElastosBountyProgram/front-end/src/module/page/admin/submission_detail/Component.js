@@ -1,6 +1,7 @@
 import React from 'react'
 import AdminPage from '../BaseAdmin'
 import SubmissionDetail from '@/module/submission/Container'
+import Comments from '@/module/common/comments/Container'
 
 import '../admin.scss'
 import './style.scss'
@@ -48,6 +49,7 @@ export default class extends AdminPage {
                             <Row className="clearfix">
                                 <Col span={20} className="admin-left-column wrap-box-user">
                                     <SubmissionDetail submission={this.props.submission}/>
+                                    <Comments type="submission" model={this.props.submission}/>
                                 </Col>
                                 <Col span={4} className="admin-right-column wrap-box-navigator">
                                     <Navigator selectedItem={'submissions'}/>

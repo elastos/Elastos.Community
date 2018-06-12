@@ -84,8 +84,6 @@ export default class extends BaseService {
             data: doc
         })
 
-        // TODO show a message that the issue has been created
-
         return res;
     }
 
