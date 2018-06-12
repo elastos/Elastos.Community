@@ -16,8 +16,8 @@ export default class extends AdminPage {
     }
 
     componentDidMount() {
-        const taskId = this.props.match.params.taskId
-        this.props.getSubmissionDetail(taskId)
+        const submissionId = this.props.match.params.submissionId
+        this.props.getSubmissionDetail(submissionId)
     }
 
     componentWillUnmount() {

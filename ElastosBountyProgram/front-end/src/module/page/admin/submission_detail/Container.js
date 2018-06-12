@@ -4,7 +4,7 @@ import SubmissionService from '@/service/SubmissionService'
 
 export default createContainer(Component, (state) => {
     return {
-        task: state.submission.detail,
+        submission: state.submission.detail,
         loading: state.submission.loading
     }
 }, () => {
