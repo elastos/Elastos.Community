@@ -7,6 +7,7 @@ import Task from './Task';
 import Community from './Community';
 import User_Community from './User_Community';
 import Task_Candidate from './Task_Candidate';
+import Submission from './Submission';
 
 import Log from './Log';
 
@@ -90,6 +91,7 @@ export default class {
         this.db.Community = new Community(db);
         this.db.User_Community = new User_Community(db);
         this.db.Log = new Log(db);
+        this.db.Submission = new Submission(db);
     }
 
     public getModel(name: string){

@@ -71,13 +71,6 @@ export const TRANS_STATUS = {
     SUCCESSFUL: 'SUCCESSFUL'
 }
 
-export const ISSUE_CATEGORY = {
-    BUG: 'BUG',
-    SECURITY: 'SECURITY',
-    SUGGESTION: 'SUGGESTION',
-    OTHER: 'OTHER'
-}
-
 export const CONTRIB_CATEGORY = {
     BLOG: 'BLOG',
     VIDEO: 'VIDEO',
@@ -87,4 +80,11 @@ export const CONTRIB_CATEGORY = {
 
 export const DEFAULT_IMAGE = {
     TASK : '/assets/images/task_thumbs/12.jpg'
+};
+
+export const SUBMISSION_TYPE = {
+    BUG: 'BUG',
+    SECURITY_ISSUE: 'SECURITY_ISSUE',
+    SUGGESTION: 'SUGGESTION',
+    OTHER: 'OTHER'
 };

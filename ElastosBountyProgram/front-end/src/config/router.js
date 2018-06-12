@@ -17,6 +17,8 @@ import ProfileInfoPage from '@/module/page/profile/info/Container'
 import ProfileTasksPage from '@/module/page/profile/tasks/Container'
 import ProfileTaskDetailPage from '@/module/page/profile/task_detail/Container'
 import ProfileTeamsPage from '@/module/page/profile/teams/Container'
+import ProfileSubmissionsPage from '@/module/page/profile/submissions/Container'
+import ProfileSubmissionDetailPage from '@/module/page/profile/submission_detail/Container'
 
 import MemberPage from '@/module/page/member/Container'
 
@@ -24,6 +26,8 @@ import AdminUsersPage from '@/module/page/admin/users/Container'
 import AdminProfileDetailPage from '@/module/page/admin/profile_detail/Container'
 import AdminTasksPage from '@/module/page/admin/tasks/Container'
 import AdminTaskDetailPage from '@/module/page/admin/task_detail/Container'
+import AdminSubmissionsPage from '@/module/page/admin/submissions/Container'
+import AdminSubmissionDetailPage from '@/module/page/admin/submission_detail/Container'
 
 import CountryCommunitiesPage from '@/module/page/admin/community/CountryCommunities/Container'
 import CommunityDetailPage from '@/module/page/admin/community/CommunityDetail/Container'
@@ -104,6 +108,14 @@ export default [
         page: ProfileTeamsPage
     },
     {
+        path: '/profile/submissions',
+        page: ProfileSubmissionsPage
+    },
+    {
+        path: '/profile/submission-detail/:submissionId',
+        page: ProfileSubmissionDetailPage
+    },
+    {
         // public profile page
         path: '/member/:userId',
         page: MemberPage
@@ -123,6 +135,14 @@ export default [
     {
         path: '/admin/profile/:userId',
         page: AdminProfileDetailPage
+    },
+    {
+        path: '/admin/submissions',
+        page: AdminSubmissionsPage
+    },
+    {
+        path: '/admin/submission-detail/:submissionId',
+        page: AdminSubmissionDetailPage
     },
     {
         path: '/community',

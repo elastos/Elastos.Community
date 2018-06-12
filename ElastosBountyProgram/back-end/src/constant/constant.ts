@@ -82,3 +82,10 @@ export const TEAM_TYPE = create(['DEVELOP', 'MARKET', 'DESIGN', 'PROJECT', 'OTHE
 export const LOG_TYPE = {
     'APPLY_TEAM' : 'apply_team'
 };
+
+export const SUBMISSION_TYPE = {
+    BUG: 'BUG',
+    SECURITY_ISSUE: 'SECURITY_ISSUE',
+    SUGGESTION: 'SUGGESTION',
+    OTHER: 'OTHER'
+};
