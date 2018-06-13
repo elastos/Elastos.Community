@@ -23,11 +23,17 @@ class C extends BaseComponent {
     }
 
     componentWillUnmount() {
-        const taskId = this.props.match.params.taskId
-        const submissionId = this.props.match.params.submissionId
-
-        taskId && this.props.resetTaskDetail()
-        submissionId && this.props.resetSubmissionDetail()
+        switch (this.props.type) {
+            case 'task':
+                this.props.resetTaskDetail()
+                break
+            case 'sumbission':
+                this.props.resetSubmissionDetail()
+                break
+            default:
+                // do nothing
+                break
+        }
     }
 
     // only wraps loading / renderMain
