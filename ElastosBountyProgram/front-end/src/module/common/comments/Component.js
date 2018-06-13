@@ -1,9 +1,9 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import { Form, Col, Row, Icon, Input, Divider, Button, Spin } from 'antd'
+import { Form, Col, Row, List, Icon, Input, Divider, Button, Spin } from 'antd'
 import config from '@/config'
 import './style.scss'
-import store from '@/store';
+import moment from 'moment'
 
 const FormItem = Form.Item
 
@@ -84,15 +84,17 @@ class C extends BaseComponent {
         const type = this.props.type
         const curDetail = this.props[this.props.type]
         const comments = curDetail.comments || []
+        const dateFormatter = (createdAt) => moment(createdAt).format('MMM D HH:mm')
 
         const p = this.getInputProps()
 
         const commentItems = _.map(comments, (comment, ind) =>
-            <Row key={ind}>
-                <h4>
-                    {_.first(comment).comment}
-                </h4>
-            </Row>
+            {
+                return {
+                    title: _.first(comment).comment,
+                    description: _.first(comment).createdBy + ', ' + dateFormatter(_.first(comment).createdAt),
+                }
+            }
         )
 
         // Show in reverse chronological order
@@ -100,20 +102,35 @@ class C extends BaseComponent {
 
         return (
             <div>
-                {commentItems}
-                <Row>
-                    <Form onSubmit={this.handleSubmit.bind(this)} className="c_commentForm">
-                        <FormItem>
-                            {p.comment}
-                        </FormItem>
-                        <FormItem>
-                            <Button className="ant-btn-ebp pull-right" type="primary" size="small"
-                                htmlType="submit">
-                                Post
-                            </Button>
-                        </FormItem>
-                    </Form>
-                </Row>
+                <List
+                    itemLayout="vertical"
+                    pagination={{
+                        pageSize: 5,
+                    }}
+                    dataSource={commentItems}
+                    footer={
+                        <Form onSubmit={this.handleSubmit.bind(this)} className="c_commentForm">
+                            <FormItem>
+                                {p.comment}
+                            </FormItem>
+                            <FormItem>
+                                <Button className="ant-btn-ebp pull-right" type="primary" size="small"
+                                    htmlType="submit">
+                                    Post
+                                </Button>
+                            </FormItem>
+                        </Form>
+                    }
+                    renderItem={(item, ind) => (
+                        <List.Item key={ind}>
+                            <List.Item.Meta
+                                title={item.title}
+                                description={item.description}
+                            />
+                            {item.content}
+                        </List.Item>
+                    )}
+                />
             </div>
         )
     }
