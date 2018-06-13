@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import StandardPage from '../../StandardPage'
 import { Button, Card, Col, Select, Row, Icon, message, Divider, Breadcrumb, Tabs, List, Avatar, Input } from 'antd'
 import config from '@/config'
-import { COMMUNITY_TYPE } from '@/constant'
+import { COMMUNITY_TYPE, USER_GENDER } from '@/constant'
 import Footer from '@/module/layout/Footer/Container'
 import ListTasks from '../shared/ListTasks/Component'
 import ListEvents from '../shared/ListEvents/Component'
@@ -41,7 +41,7 @@ export default class extends StandardPage {
 
     loadCommunityMembers() {
         this.props.getCommunityMembers(this.props.match.params['community']).then((communityMembers) => {
-            communityMembers = this.mockAvatarToUsers(communityMembers)
+            communityMembers = this.getAvatarUrl(communityMembers)
 
             // Convert array members to key (id) value (object user), so we can check if current user joined or not
             const keyValueCommunityMembers = _.keyBy(communityMembers, '_id')
@@ -79,9 +79,19 @@ export default class extends StandardPage {
         })
     }
 
-    mockAvatarToUsers(users) {
+    getAvatarUrl(users) {
+        const avatarDefault = {
+            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Male.png',
+            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Female.png',
+            [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png',
+        };
+
         users.forEach((user) => {
-            user.profile.avatar = config.data.mockAvatarUrl
+            if (!user.profile.avatar && user.profile.gender) {
+                user.profile.avatar = avatarDefault[user.profile.gender]
+            } else if (!user.profile.gender) {
+                user.profile.avatar = avatarDefault[USER_GENDER.MALE]
+            }
         })
 
         return users
@@ -95,7 +105,7 @@ export default class extends StandardPage {
                 return resolve([])
             }
             this.props.getUserByIds(userIds).then((users) => {
-                users = this.mockAvatarToUsers(users) // Mock avatar url
+                users = this.getAvatarUrl(users) // Mock avatar url
                 const mappingIdToUserList = _.keyBy(users, '_id')
                 community.leaders = community.leaders || []
                 community.leaderIds.forEach((leaderId) => {
@@ -122,7 +132,7 @@ export default class extends StandardPage {
             }
 
             this.props.getUserByIds(userIds).then((users) => {
-                users = this.mockAvatarToUsers(users) // Mock avatar url
+                users = this.getAvatarUrl(users) // Mock avatar url
                 const mappingIdToUserList = _.keyBy(users, '_id');
                 communities.forEach((community) => {
                     community.leaders = community.leaders || [];

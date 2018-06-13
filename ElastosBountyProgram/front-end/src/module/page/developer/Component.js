@@ -110,7 +110,7 @@ export default class extends StandardPage {
             </Select>
         )
     }
-    
+
     handleChangeRegion(region) {
         if (region) {
             this.props.history.push(`/developer/country/${this.props.match.params['country']}/region/${region}`);
@@ -118,7 +118,7 @@ export default class extends StandardPage {
             this.props.history.push(`/developer/country/${this.props.match.params['country']}`);
         }
     }
-    
+
     renderBreadcrumbRegions() {
         if (!this.state.breadcrumbMappingCountryAndCommunities[this.props.match.params['country']]) {
             return null
@@ -129,7 +129,7 @@ export default class extends StandardPage {
                 <Select.Option key={index} title={region.community.name} value={region.community.name}>{region.community.name}</Select.Option>
             )
         })
-        
+
         const menuListRegionsEl = (
             <Select
                 allowClear
@@ -143,7 +143,7 @@ export default class extends StandardPage {
                 {listRegionsEl}
             </Select>
         )
-        
+
         return menuListRegionsEl
     }
 
@@ -188,7 +188,7 @@ export default class extends StandardPage {
     componentWillUnmount () {
         this.props.resetTasks()
     }
-    
+
     filterDataByBreadcrumb(data) {
         const country = this.props.match.params['country']
         const region = this.props.match.params['region']
@@ -208,7 +208,7 @@ export default class extends StandardPage {
                 return item.community && item.community.name === region && item.communityParent && item.communityParent.geolocation === country
             })
         }
-        
+
     }
 
     ord_renderContent () {
@@ -276,7 +276,6 @@ export default class extends StandardPage {
                     </p>
                 </div>
                 <div className="ebp-page">
-                    {/*
                     <div className="ebp-page-breadcrumb">
                         <Row>
                             <Col span={24}>
@@ -300,7 +299,6 @@ export default class extends StandardPage {
                             </Col>
                         </Row>
                     </div>
-                    */}
 
                     <Row className="d_row d_rowTop">
                         <Col span={16} className="d_leftContainer d_box">
