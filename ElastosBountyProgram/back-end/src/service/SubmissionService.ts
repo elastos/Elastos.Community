@@ -19,6 +19,14 @@ export default class extends Base {
         const submission = await db_submission.getDBInstance().findOne({_id: param.submissionId})
             .populate('createdBy')
 
+        if (submission) {
+            for (let comment of submission.comments) {
+                for (let thread of comment) {
+                    await db_submission.getDBInstance().populate(thread, [ 'createdBy' ])
+                }
+            }
+        }
+
         return submission
     }
 
@@ -33,6 +41,12 @@ export default class extends Base {
                 await db_submission.getDBInstance().populate(submission, [
                     'createdBy'
                 ])
+
+                for (let comment of submission.comments) {
+                    for (let thread of comment) {
+                        await db_submission.getDBInstance().populate(thread, [ 'createdBy' ])
+                    }
+                }
             }
         }
 

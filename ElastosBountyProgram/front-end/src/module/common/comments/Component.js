@@ -92,7 +92,8 @@ class C extends BaseComponent {
             {
                 return {
                     title: _.first(comment).comment,
-                    description: _.first(comment).createdBy + ', ' + dateFormatter(_.first(comment).createdAt),
+                    description: _.first(comment).createdBy.username +
+                        ', ' + dateFormatter(_.first(comment).createdAt),
                 }
             }
         )
