@@ -130,7 +130,7 @@ class C extends BaseComponent {
         // sub-tasks are not here because those can only be created from an existing Task Detail Page
         const taskType_fn = getFieldDecorator('taskType', {
             rules: [{required: true, message: 'Please select a task type'}],
-            initialValue: this.state.editing ? existingTask.type : TASK_TYPE.EVENT
+            initialValue: this.state.editing ? existingTask.type : (this.props.taskType || TASK_TYPE.EVENT)
         })
         const taskType_el = (
             <Select disabled={hasLeaderEditRestrictions}>
@@ -319,7 +319,7 @@ class C extends BaseComponent {
 
         // const existingTask = this.props.existingTask
 
-        // TODO: terms of service checkbox
+        // TODO: terms of service checkbox\
 
         // TODO: react-motion animate slide left
 

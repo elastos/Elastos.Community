@@ -10,7 +10,7 @@ import { Col, Row, Icon, Form, message, Button, Select, Table, List, Tooltip } f
 
 const Option = Select.Option
 
-import { TASK_STATUS } from '@/constant'
+import { TASK_STATUS, TASK_TYPE } from '@/constant'
 
 export default class extends StandardPage {
 
@@ -95,7 +95,7 @@ export default class extends StandardPage {
                                 </h3>
                             </div>
                             <div className="pull-right btnContainer">
-                                <Button onClick={this.createTaskLink.bind(this)}>
+                                <Button onClick={this.createTaskLink.bind(this, TASK_TYPE.EVENT)}>
                                     Create Event
                                 </Button>
                             </div>
@@ -156,7 +156,7 @@ export default class extends StandardPage {
                                     Available Tasks
                                 </h3>
                                 <div className="pull-right btnContainer">
-                                    <Button onClick={this.createTaskLink.bind(this)}>
+                                    <Button onClick={this.createTaskLink.bind(this, TASK_TYPE.TASK)}>
                                         Create Task
                                     </Button>
                                 </div>
@@ -217,11 +217,11 @@ export default class extends StandardPage {
         this.props.history.push(`/task-detail/${taskId}`)
     }
 
-    createTaskLink () {
+    createTaskLink (taskType) {
         if (!this.props.is_login || !(this.props.is_leader || this.props.is_admin)) {
-            message.info('Only organizers can create events and tasks, we welcome anyone to email us for further information and to apply - community@elastos.org', 8)
+            message.info('Only organizers can create events and tasks, we welcome anyone to email us for further information and to apply', 8)
         } else {
-            this.props.history.push('/task-create')
+            this.props.history.push(`/task-create?type=${taskType}`)
         }
     }
 }
