@@ -77,7 +77,7 @@ export default class extends Base {
 
         const {
             name, description, thumbnail, infoLink, community, communityParent, category, type, startTime, endTime,
-            candidateLimit, candidateSltLimit, rewardUpfront, reward,
+            candidateLimit, candidateSltLimit, rewardUpfront, reward, assignSelf,
 
             attachment, attachmentType, attachmentFilename
         } = param;
@@ -91,6 +91,12 @@ export default class extends Base {
 
         if (rewardUpfront.ela > 0 || reward.ela > 0) {
             status = constant.TASK_STATUS.PENDING;
+        } else {
+            // if there is no ELA and you are assigning yourself,
+            // it'll automatically go to ASSIGNED
+            if (assignSelf) {
+                status = constant.TASK_STATUS.ASSIGNED
+            }
         }
 
         const doc = {
@@ -108,6 +114,7 @@ export default class extends Base {
                 ela : reward.ela,
                 votePower : reward.votePower
             },
+            assignSelf: assignSelf,
             status : status,
             createdBy : this.currentUser._id
         };
@@ -134,12 +141,26 @@ export default class extends Base {
         }
         */
 
+        if (assignSelf) {
+            // override the candidate select limit
+            // TODO: visually note this in UI
+            doc.candidateLimit = 1
+            doc.candidateSltLimit = 1
+        }
+
         const db_task = this.getDBModel('Task');
 
         this.sendCreateEmail(this.currentUser, doc)
 
         console.log('create task => ', doc);
-        return await db_task.save(doc);
+        const task = await db_task.save(doc);
+
+        // if assignSelf = true, we add self as the candidate
+        if (assignSelf) {
+            await this.addCandidate({taskId: task._id, userId: this.currentUser._id, assignSelf: true})
+        }
+
+        return task
     }
 
     /**
@@ -192,17 +213,19 @@ export default class extends Base {
                 const taskOwner = await db_user.findById(task.createdBy)
 
                 await this.sendTaskApproveEmail(this.currentUser, taskOwner, task)
+
+                // TODO: if assignSelf = true, then we push the status to ASSIGNED
             }
         }
 
         // TODO: check if user is owner
         if (param.status === constant.TASK_STATUS.SUCCESS || param.status === constant.TASK_STATUS.ASSIGNED) {
-            updateObj.status = param.status
+            updateObj.status = constant.TASK_STATUS.SUCCESS
         }
 
         // TODO: check if user is approved candidate
         if (param.status === constant.TASK_STATUS.SUBMITTED) {
-            updateObj.status = param.status
+            updateObj.status = constant.TASK_STATUS.SUBMITTED
         }
 
         await db_task.update({_id: taskId}, updateObj)
@@ -249,7 +272,7 @@ export default class extends Base {
     *
     * */
     public async addCandidate(param): Promise<boolean> {
-        const {teamId, userId, taskId, applyMsg} = param;
+        const {teamId, userId, taskId, applyMsg, assignSelf} = param;
         const doc: any = {
             task: taskId,
             applyMsg
@@ -284,6 +307,11 @@ export default class extends Base {
 
         doc.status = constant.TASK_CANDIDATE_STATUS.PENDING;
 
+        // if we are assigning ourselves we automatically set to APPROVED
+        if (assignSelf) {
+            doc.status = constant.TASK_CANDIDATE_STATUS.APPROVED;
+        }
+
         const db_task = this.getDBModel('Task');
         const task = await db_task.findOne({_id: taskId});
         if(!task){
@@ -312,9 +340,11 @@ export default class extends Base {
         await db_tc.db.populate(taskCandidate, ['user', 'team'])
 
         // send the email - first get the task owner
-        const taskOwner = await db_user.findById(task.createdBy)
+        if (!assignSelf) {
+            const taskOwner = await db_user.findById(task.createdBy)
 
-        await this.sendAddCandidateEmail(this.currentUser, taskOwner, task)
+            await this.sendAddCandidateEmail(this.currentUser, taskOwner, task)
+        }
 
         return taskCandidate
     }

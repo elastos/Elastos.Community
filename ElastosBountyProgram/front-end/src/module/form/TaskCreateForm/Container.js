@@ -22,6 +22,9 @@ export default createContainer(Component, (state)=>{
         async createTask(formData, st){
             try {
                 const rs = await taskService.create({
+
+                    assignSelf: formData.assignSelf,
+
                     name: formData.taskName,
                     category: formData.taskCategory,
                     type: formData.taskType,

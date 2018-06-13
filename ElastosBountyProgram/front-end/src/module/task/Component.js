@@ -91,6 +91,9 @@ export default class extends BaseComponent {
                 {this.props.task.status === TASK_STATUS.SUBMITTED &&
                 <span className="help-text">&nbsp; - you have submitted this task, pending owner approval</span>
                 }
+                {this.props.task.status === TASK_STATUS.SUCCESS &&
+                <span className="help-text">&nbsp; - an admin will review and disburse the ELA reward if any</span>
+                }
                 {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) && isTaskOwner &&
                 <span className="help-text">&nbsp; -
                     Please accept applicants up to the max accepted number
@@ -99,9 +102,9 @@ export default class extends BaseComponent {
             </div>
             <div className="pull-right right-align">
                 {this.props.task.status === TASK_STATUS.ASSIGNED && isTaskOwner &&
-                <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.acceptAsComplete.bind(this)}>
-                    <Button>Accept as Complete</Button>
-                </Popconfirm>
+                    <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.acceptAsComplete.bind(this)}>
+                        <Button>{this.props.task.assignSelf ? 'Mark as Complete' : 'Accept as Complete'}</Button>
+                    </Popconfirm>
                 }
                 {this.props.task.status === TASK_STATUS.ASSIGNED && !isTaskOwner &&
                 <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsComplete.bind(this)}>
@@ -124,6 +127,8 @@ export default class extends BaseComponent {
 
     }
 
+    // this is confusing and should maybe also belong in detail,
+    // it just has a few different fields...
     renderAdminDetail() {
 
         return (

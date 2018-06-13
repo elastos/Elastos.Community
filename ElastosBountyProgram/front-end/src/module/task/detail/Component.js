@@ -288,7 +288,7 @@ export default class extends BaseComponent {
                                 } else if (candidate.status === TASK_CANDIDATE_STATUS.APPROVED){
                                     // this should be the leader's view - they can approve applicants
                                     listItemActions.unshift(
-                                        <Tooltip title={isTaskOwner ? 'candidate already accepted' : 'accepted candidate'}>
+                                        <Tooltip title={isTaskOwner ? (candidateIsUserOrTeam ? 'you are automatically accepted' : 'candidate already accepted') : 'accepted candidate'}>
                                             <a>✓</a>
                                         </Tooltip>)
                                 } else if (!isTaskOwner) {
@@ -314,7 +314,7 @@ export default class extends BaseComponent {
                                 }
 
                                 return <List.Item actions={listItemActions}>
-                                    {this.props.page === 'LEADER' && isTaskOwner ?
+                                    {this.props.page === 'LEADER' && isTaskOwner && !candidateIsUserOrTeam ?
                                         <Tooltip title="view user info / application">
                                             <a href="#" onClick={this.showModalAcceptApplicant.bind(this, candidate)}>{userOrTeamName}</a>
                                         </Tooltip> :

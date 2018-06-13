@@ -164,6 +164,8 @@ export const Task = {
     rewardUpfront: TaskUpfront,
     reward : TaskReward,
 
+    assignSelf: Boolean,
+
     approvedBy: {type: Schema.Types.ObjectId, ref: 'users'},
 
     candidates: [{type: Schema.Types.ObjectId, ref: 'task_candidate'}],
