@@ -279,7 +279,7 @@ export default class extends Base {
 
         const db_tc = this.getDBModel('Task_Candidate');
         if(await db_tc.findOne(doc)){
-            throw 'candidate is exist';
+            throw 'candidate already exists';
         }
 
         doc.status = constant.TASK_CANDIDATE_STATUS.PENDING;

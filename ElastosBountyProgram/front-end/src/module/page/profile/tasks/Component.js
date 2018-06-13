@@ -168,7 +168,7 @@ export default class extends StandardPage {
                                     <div className="vert-gap"/>
                                     }
 
-                                    <Divider>Pending Tasks</Divider>
+                                    <Divider>Tasks Waiting for Approval</Divider>
 
                                     <Table
                                         columns={columns}

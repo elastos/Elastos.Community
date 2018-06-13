@@ -4,6 +4,8 @@
 
 .c_TaskDetail {
 
+  margin-top: $gap_1;
+
   .ant-btn-primary {
     margin-right: $gap_0;
   }
@@ -40,9 +42,12 @@
       color: $text_light_gray;
     }
 
+    .main-area {
+      border-right: 1px solid $border_gray;
+    }
+
     .applicants {
       text-align: center;
-      border-left: 1px solid $border_gray;
 
       min-height: 40vh;
 

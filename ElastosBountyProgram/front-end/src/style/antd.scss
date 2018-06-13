@@ -39,6 +39,12 @@
   border: 1px solid #777;
 }
 
+@media only screen and (max-width: 1200px) {
+  .ant-message-notice-content {
+    padding: 24px 48px;
+  }
+}
+
 #ebp-root {
   .ant-table-thead > tr > th,
   .ant-table-tbody > tr > td {

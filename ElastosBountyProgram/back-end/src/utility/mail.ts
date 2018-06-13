@@ -33,6 +33,10 @@ export default {
         }
 
         return new Promise((resolve, reject) => {
+
+            resolve()
+
+            /* // temp
             mailgun.messages().send(data, function (err, body) {
                 if (err) {
                     console.error(err);
@@ -42,6 +46,7 @@ export default {
                 // console.log(body);
                 resolve()
             });
+            */
         })
 
     }
