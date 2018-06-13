@@ -107,11 +107,14 @@ class C extends BaseComponent {
 
         const commentItems = _.map(comments, (comment, ind) =>
             {
+                const thread = _.first(comment)
+                const createdByUsername = (thread.createdBy && thread.createdBy.username) || ''
+                const avatar = (thread.createdBy && thread.createdBy.profile.avatar) || ''
+
                 return {
-                    title: _.first(comment).comment,
-                    description: _.first(comment).createdBy.username +
-                        ', ' + dateFormatter(_.first(comment).createdAt),
-                    avatar: _.first(comment).createdBy.profile.avatar
+                    title: thread.comment,
+                    description: `${createdByUsername}, ${dateFormatter(thread.createdAt)}`,
+                    avatar,
                 }
             }
         )
