@@ -8,7 +8,7 @@ export default class extends BaseService {
         const redux = this.store.getRedux(type)
         const data = {
             comment: commentData,
-            createdBy: this.store.getState().user.current_user_id,
+            createdBy: this.store.getState().user,
             createdAt: new Date().toISOString()
         }
         const rs = await api_request({
