@@ -4,7 +4,7 @@ import Footer from '@/module/layout/Footer/Container'
 import { Link } from 'react-router-dom'
 import config from '@/config'
 import SubmissionForm from './formSubmission/Container'
-
+import _ from 'lodash'
 import './style.scss'
 
 import { Col, Row, Icon, Form, Input, Button, Modal, Select, Table, List, Tooltip, Breadcrumb, Card } from 'antd'
@@ -18,33 +18,36 @@ import { TASK_STATUS } from '@/constant'
 export default class extends StandardPage {
     state = {
         communities: [],
+        breadcrumbCountries: [],
+        breadcrumbMappingCountryAndCommunities: {}
     }
 
     componentDidMount () {
-        this.props.getDeveloperEvents()
-        this.loadCommunities()
-        this.props.getUserTeams(this.props.currentUserId)
-    }
+        this.props.getDeveloperEvents().then((data) => {
+            // Get data dropdown breadcrumb countries
+            let breadcrumbCountries = [];
+            data.list.forEach((item) => {
+                if (item.community && item.communityParent) {
+                    breadcrumbCountries.push(item.communityParent)
+                } else if (item.community && !item.communityParent) {
+                    breadcrumbCountries.push(item.community)
+                }
+            })
 
-    loadCommunities() {
-        const currentCountry = this.props.match.params['country'];
-        if (currentCountry) {
-            this.props.getSpecificCountryCommunities(currentCountry).then((communities) => {
-                this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
-                    this.setState({
-                        communities
-                    })
+            let breadcrumbMappingCountryAndCommunities = {};
+            // Mapping countries and it's community
+            breadcrumbCountries.forEach((country) => {
+                breadcrumbMappingCountryAndCommunities[country.geolocation] = _.filter(data.list, (item) => {
+                    return item.communityParent && item.communityParent.geolocation === country.geolocation
                 })
             })
-        } else {
-            this.props.getAllCountryCommunity().then((communities) => {
-                this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
-                    this.setState({
-                        communities
-                    })
-                })
+
+            this.setState({
+                breadcrumbCountries,
+                breadcrumbMappingCountryAndCommunities
             })
-        }
+        })
+        this.props.getUserTeams(this.props.currentUserId)
     }
 
     renderListCommunities() {
@@ -78,30 +81,14 @@ export default class extends StandardPage {
 
     handleChangeCountry(geolocation) {
         if (geolocation) {
-            this.props.getSpecificCountryCommunities(geolocation).then((communities) => {
-                this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
-                    this.setState({
-                        communities
-                    })
-
-                    this.props.history.push(`/developer/country/${geolocation}`)
-                })
-            })
+            this.props.history.push(`/developer/country/${geolocation}`)
         } else {
-            this.props.getAllCountryCommunity().then((communities) => {
-                this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
-                    this.setState({
-                        communities
-                    })
-
-                    this.props.history.push('/developer')
-                })
-            })
+            this.props.history.push('/developer')
         }
     }
 
     renderBreadcrumbCountries() {
-        const geolocationKeys = _.keyBy(this.state.communities, 'geolocation');
+        const geolocationKeys = _.keyBy(this.state.breadcrumbCountries, 'geolocation');
         const listCountriesEl = Object.keys(geolocationKeys).map((geolocation, index) => {
             return (
                 <Select.Option title={config.data.mappingCountryCodeToName[geolocation]} key={index}
@@ -122,6 +109,42 @@ export default class extends StandardPage {
                 {listCountriesEl}
             </Select>
         )
+    }
+    
+    handleChangeRegion(region) {
+        if (region) {
+            this.props.history.push(`/developer/country/${this.props.match.params['country']}/region/${region}`);
+        } else {
+            this.props.history.push(`/developer/country/${this.props.match.params['country']}`);
+        }
+    }
+    
+    renderBreadcrumbRegions() {
+        if (!this.state.breadcrumbMappingCountryAndCommunities[this.props.match.params['country']]) {
+            return null
+        }
+
+        const listRegionsEl = this.state.breadcrumbMappingCountryAndCommunities[this.props.match.params['country']].map((region, index) => {
+            return (
+                <Select.Option key={index} title={region.community.name} value={region.community.name}>{region.community.name}</Select.Option>
+            )
+        })
+        
+        const menuListRegionsEl = (
+            <Select
+                allowClear
+                value={this.props.match.params['region']}
+                showSearch
+                style={{width: 200}}
+                placeholder="Select a region / place"
+                optionFilterProp="children"
+                onChange={this.handleChangeRegion.bind(this)}
+            >
+                {listRegionsEl}
+            </Select>
+        )
+        
+        return menuListRegionsEl
     }
 
     // API only return list leader ids [leaderIds], so we need convert it to array object leader [leaders]
@@ -165,14 +188,33 @@ export default class extends StandardPage {
     componentWillUnmount () {
         this.props.resetTasks()
     }
+    
+    filterDataByBreadcrumb(data) {
+        const country = this.props.match.params['country']
+        const region = this.props.match.params['region']
+
+        if (!country && !region) {
+            return data
+        }
+
+        if (country && !region) {
+            return _.filter(data, (item) => {
+                return item.community && item.community.geolocation === country
+            })
+        }
+
+        if (country && region) {
+            return _.filter(data, (item) => {
+                return item.community && item.community.name === region && item.communityParent && item.communityParent.geolocation === country
+            })
+        }
+        
+    }
 
     ord_renderContent () {
-
-        const eventData = this.props.events
-        const taskData = this.props.tasks
-
-        const availTasksData = this.props.availTasks
-        const myTasksData = this.props.myTasks
+        const eventData = this.filterDataByBreadcrumb(this.props.events)
+        const availTasksData = this.filterDataByBreadcrumb(this.props.availTasks)
+        const myTasksData = this.filterDataByBreadcrumb(this.props.myTasks)
 
         const columns = [{
             title: 'Name',
@@ -214,6 +256,7 @@ export default class extends StandardPage {
 
         const listCommunitiesEl = this.renderListCommunities()
         const menuCountriesEl = this.renderBreadcrumbCountries()
+        const menuListRegionsEl = this.props.match.params['country'] ? this.renderBreadcrumbRegions() : null
 
         return (
             <div className="p_Developer">
@@ -248,6 +291,11 @@ export default class extends StandardPage {
                                     <Breadcrumb.Item>
                                         {menuCountriesEl}
                                     </Breadcrumb.Item>
+                                    {this.props.match.params['country'] && (
+                                        <Breadcrumb.Item>
+                                            {menuListRegionsEl}
+                                        </Breadcrumb.Item>
+                                    )}
                                 </Breadcrumb>
                             </Col>
                         </Row>

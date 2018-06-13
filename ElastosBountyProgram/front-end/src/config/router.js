@@ -60,6 +60,14 @@ export default [
         page: DeveloperPage
     },
     {
+        path: '/developer/country/:country',
+        page: DeveloperPage
+    },
+    {
+        path: '/developer/country/:country/region/:region',
+        page: DeveloperPage
+    },
+    {
         path: '/leader',
         page: LeaderPage
     },
