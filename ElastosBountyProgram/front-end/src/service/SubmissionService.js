@@ -45,11 +45,9 @@ export default class extends BaseService {
         })
 
         this.dispatch(submissionRedux.actions.loading_update(false))
+        this.dispatch(submissionRedux.actions.detail_update(result))
 
-        if (result) {
-            this.dispatch(submissionRedux.actions.detail_update(result))
-            return result
-        }
+        return result
     }
 
     /**

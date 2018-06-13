@@ -75,17 +75,26 @@ class C extends BaseComponent {
     }
 
     renderComments() {
-        //this.props.type - the type of model
-        //take comments from store details
-
         const type = this.props.type
         const storeState = store.getState()
         const curDetail = storeState[type] && storeState[type].detail
         const comments = curDetail.comments || []
+
         const p = this.getInputProps()
+
+        const commentItems = _.map(comments, (comment, ind) =>
+            <Row key={ind}>
+                <h4>
+                    {_.first(comment).comment}
+                </h4>
+            </Row>
+        )
+
+        commentItems && commentItems.reverse();
 
         return (
             <div>
+                {commentItems}
                 <Row>
                     <Form onSubmit={this.handleSubmit.bind(this)} className="c_commentForm">
                         <FormItem>
@@ -99,17 +108,6 @@ class C extends BaseComponent {
                         </FormItem>
                     </Form>
                 </Row>
-                {
-                    _.map(comments, (comment) => {
-                        <Row>
-                            <Col span={24} className="gridCol">
-                                <h4>
-                                    {comment.message}
-                                </h4>
-                            </Col>
-                        </Row>
-                    })
-                }
             </div>
         )
     }
