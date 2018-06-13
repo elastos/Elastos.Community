@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import { Form, Col, Row, List, Icon, Input, Divider, Button, Spin } from 'antd'
+import { Form, Col, Row, List, Avatar, Icon, Input, Divider, Button, Spin } from 'antd'
 import config from '@/config'
 import './style.scss'
 import moment from 'moment'
@@ -94,6 +94,7 @@ class C extends BaseComponent {
                     title: _.first(comment).comment,
                     description: _.first(comment).createdBy.username +
                         ', ' + dateFormatter(_.first(comment).createdAt),
+                    avatar: _.first(comment).createdBy.profile.avatar
                 }
             }
         )
@@ -104,7 +105,8 @@ class C extends BaseComponent {
         return (
             <div>
                 <List
-                    itemLayout="vertical"
+                    size="large"
+                    itemLayout="horizontal"
                     pagination={{
                         pageSize: 5,
                     }}
@@ -125,6 +127,7 @@ class C extends BaseComponent {
                     renderItem={(item, ind) => (
                         <List.Item key={ind}>
                             <List.Item.Meta
+                                avatar={<Avatar src={item.avatar} />}
                                 title={item.title}
                                 description={item.description}
                             />
