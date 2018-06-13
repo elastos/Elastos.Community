@@ -106,6 +106,28 @@ export default class extends Base {
     }
 
     /**
+     * Get list community
+     *
+     * @param param
+     * @returns {Promise<"mongoose".Document>}
+     */
+    public async listCommunity(param): Promise<Document[]>{
+        const {userId} = param;
+        const db_user_community = this.getDBModel('User_Community');
+
+        return await db_user_community.find({userId});
+    }
+
+    public async findCommunities(query): Promise<Document[]>{
+        const db_community = this.getDBModel('Community');
+        return await db_community.find({
+            '_id' : {
+                $in : query.communityIds
+            }
+        });
+    }
+
+    /**
      * Add member to Community
      *
      * @param param

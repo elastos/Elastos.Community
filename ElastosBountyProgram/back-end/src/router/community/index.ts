@@ -10,6 +10,7 @@ import get_with_country from './get_with_country';
 import get_child from './get_child';
 import delete_community from './delete';
 import get_all from './get_all';
+import get_communities_with_user from './get_communities_with_user';
 
 export default Base.setRouter([
     {
@@ -65,6 +66,11 @@ export default Base.setRouter([
     {
         path : '/parent/:communityId',
         router : get_child,
+        method : 'get'
+    },
+    {
+        path : '/:userId/communities',
+        router : get_communities_with_user,
         method : 'get'
     }
 ]);
