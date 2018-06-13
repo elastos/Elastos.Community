@@ -76,8 +76,7 @@ class C extends BaseComponent {
 
     renderComments() {
         const type = this.props.type
-        const storeState = store.getState()
-        const curDetail = storeState[type] && storeState[type].detail
+        const curDetail = this.props[this.props.type]
         const comments = curDetail.comments || []
 
         const p = this.getInputProps()
@@ -90,6 +89,7 @@ class C extends BaseComponent {
             </Row>
         )
 
+        // Show in reverse chronological order
         commentItems && commentItems.reverse();
 
         return (

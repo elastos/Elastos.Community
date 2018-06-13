@@ -6,13 +6,15 @@ import {api_request} from '@/util'
 export default class extends BaseService {
     async postComment(type, id, commentData) {
         const redux = this.store.getRedux(type)
+        const data = {
+            comment: commentData,
+            createdBy: this.store.getState().user.current_user_id,
+            createdAt: new Date().toISOString()
+        }
         const rs = await api_request({
             path: `/${type}/${id}/comment`,
             method: 'post',
-            data: {
-                comment: commentData,
-                createdBy: this.store.getState().user.current_user_id
-            },
+            data
         })
         const curDetail = this.store.getState()[type] && this.store.getState()[type].detail;
 
@@ -21,7 +23,7 @@ export default class extends BaseService {
         }
 
         curDetail.comments = curDetail.comments || [];
-        curDetail.comments.push(commentData);
+        curDetail.comments.push([data]);
 
         this.dispatch(redux.actions.detail_update(curDetail))
 

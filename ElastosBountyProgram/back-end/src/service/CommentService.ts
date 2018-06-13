@@ -7,7 +7,7 @@ import {validate, crypto, uuid} from '../utility';
 export default class extends Base {
     public async create(type, param): Promise<boolean> {
         const {
-            comment, createdBy, id
+            comment, createdBy, createdAt, id
         } = param
 
         const db_submission = this.getDBModel(type)
@@ -20,7 +20,7 @@ export default class extends Base {
             updateObj.comments.push({
                 comment,
                 createdBy,
-                createdAt: new Date().toISOString()
+                createdAt
             })
 
             return await db_submission.update({_id: id}, updateObj)

@@ -7,7 +7,9 @@ import {message} from 'antd'
 
 export default createContainer(Component, (state) => {
     return {
-        ...state
+        task: state.task.detail,
+        submission: state.submission.detail,
+        loading: state.task.loading || state.submission.loading
     }
 }, () => {
 
