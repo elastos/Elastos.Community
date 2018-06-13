@@ -10,12 +10,12 @@ export default class extends Base {
             comment, createdBy, createdAt, id
         } = param
 
-        const db_submission = this.getDBModel(type)
-        const submission = await db_submission.findById(id)
+        const db_commentable = this.getDBModel(type)
+        const commentable = await db_commentable.findById(id)
 
-        if (submission) {
+        if (commentable) {
             const updateObj = {
-                comments: submission.comments || []
+                comments: commentable.comments || []
             }
             updateObj.comments.push({
                 comment,
@@ -23,9 +23,9 @@ export default class extends Base {
                 createdAt
             })
 
-            return await db_submission.update({_id: id}, updateObj)
+            return await db_commentable.update({_id: id}, updateObj)
         } else {
-            throw 'submission id is not valid'
+            throw 'commentable id is not valid'
         }
     }
 }
