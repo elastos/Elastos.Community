@@ -36,7 +36,6 @@ export default {
 
             resolve()
 
-            /* // temp
             mailgun.messages().send(data, function (err, body) {
                 if (err) {
                     console.error(err);
@@ -46,7 +45,6 @@ export default {
                 // console.log(body);
                 resolve()
             });
-            */
         })
 
     }
