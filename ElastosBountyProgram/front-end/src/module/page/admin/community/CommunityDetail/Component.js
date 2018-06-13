@@ -8,7 +8,7 @@ import ModalUpdateSubCommunity from '../../shared/ModalUpdateSubCommunity/Compon
 import ModalAddOrganizer from '../../shared/ModalAddOrganizer/Component'
 import Navigator from '../../shared/Navigator/Component'
 import config from '@/config'
-import { COMMUNITY_TYPE } from '@/constant'
+import { COMMUNITY_TYPE, USER_GENDER } from '@/constant'
 
 import '../style.scss'
 
@@ -112,9 +112,19 @@ export default class extends AdminPage {
         });
     }
 
-    mockAvatarToUsers(users) {
+    getAvatarUrl(users) {
+        const avatarDefault = {
+            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Male.png',
+            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Female.png',
+            [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png',
+        };
+
         users.forEach((user) => {
-            user.profile.avatar = config.data.mockAvatarUrl
+            if (!user.profile.avatar && user.profile.gender) {
+                user.profile.avatar = avatarDefault[user.profile.gender]
+            } else if (!user.profile.gender) {
+                user.profile.avatar = avatarDefault[USER_GENDER.MALE]
+            }
         })
 
         return users
@@ -128,7 +138,7 @@ export default class extends AdminPage {
                 return resolve([])
             }
             this.props.getUserByIds(userIds).then((users) => {
-                users = this.mockAvatarToUsers(users) // Mock avatar url
+                users = this.getAvatarUrl(users) // Mock avatar url
                 const mappingIdToUserList = _.keyBy(users, '_id')
                 community.leaders = community.leaders || []
                 community.leaderIds.forEach((leaderId) => {
@@ -155,7 +165,7 @@ export default class extends AdminPage {
             }
 
             this.props.getUserByIds(userIds).then((users) => {
-                users = this.mockAvatarToUsers(users) // Mock avatar url
+                users = this.getAvatarUrl(users) // Mock avatar url
                 const mappingIdToUserList = _.keyBy(users, '_id');
                 communities.forEach((community) => {
                     community.leaders = community.leaders || [];

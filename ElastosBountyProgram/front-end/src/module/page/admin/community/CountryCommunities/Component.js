@@ -5,6 +5,7 @@ import { Button, Card, Select, Col, message, Row, Breadcrumb, Icon, List, Avatar
 import _ from 'lodash'
 import ModalAddCountry from '../../shared/ModalAddCountry/Component'
 import config from '@/config'
+import { USER_GENDER } from '@/constant'
 import Navigator from '../../shared/Navigator/Component'
 
 import '../style.scss'
@@ -90,9 +91,19 @@ export default class extends AdminPage {
         }
     }
 
-    mockAvatarToUsers(users) {
+    getAvatarUrl(users) {
+        const avatarDefault = {
+            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Male.png',
+            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Female.png',
+            [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png',
+        };
+
         users.forEach((user) => {
-            user.profile.avatar = config.data.mockAvatarUrl
+            if (!user.profile.avatar && user.profile.gender) {
+                user.profile.avatar = avatarDefault[user.profile.gender]
+            } else if (!user.profile.gender) {
+                user.profile.avatar = avatarDefault[USER_GENDER.MALE]
+            }
         })
 
         return users
@@ -112,7 +123,7 @@ export default class extends AdminPage {
             }
 
             this.props.getUserByIds(userIds).then((users) => {
-                users = this.mockAvatarToUsers(users) // Mock avatar url
+                users = this.getAvatarUrl(users) // Mock avatar url
                 const mappingIdToUserList = _.keyBy(users, '_id');
                 communities.forEach((community) => {
                     community.leaders = community.leaders || [];
