@@ -49,7 +49,6 @@ export default class extends AdminPage {
                             <Row className="clearfix">
                                 <Col span={20} className="admin-left-column wrap-box-user">
                                     <SubmissionDetail submission={this.props.submission}/>
-                                    <Comments type="submission" canPost={true} model={this.props.submission}/>
                                 </Col>
                                 <Col span={4} className="admin-right-column wrap-box-navigator">
                                     <Navigator selectedItem={'submissions'}/>
