@@ -80,13 +80,30 @@ class C extends BaseComponent {
         }
     }
 
+    getFooter() {
+        const p = this.getInputProps()
+
+        return this.props.canPost ?
+            (<Form onSubmit={this.handleSubmit.bind(this)} className="c_commentForm">
+                <FormItem>
+                    {p.comment}
+                </FormItem>
+                <FormItem>
+                    <Button className="ant-btn-ebp pull-right" type="primary" size="small"
+                        htmlType="submit">
+                        Post
+                    </Button>
+                </FormItem>
+            </Form>) : null;
+    }
+
     renderComments() {
         const type = this.props.type
         const curDetail = this.props[this.props.type]
         const comments = curDetail.comments || []
         const dateFormatter = (createdAt) => moment(createdAt).format('MMM D HH:mm')
 
-        const p = this.getInputProps()
+        const footer = this.getFooter()
 
         const commentItems = _.map(comments, (comment, ind) =>
             {
@@ -111,19 +128,7 @@ class C extends BaseComponent {
                         pageSize: 5,
                     }}
                     dataSource={commentItems}
-                    footer={
-                        <Form onSubmit={this.handleSubmit.bind(this)} className="c_commentForm">
-                            <FormItem>
-                                {p.comment}
-                            </FormItem>
-                            <FormItem>
-                                <Button className="ant-btn-ebp pull-right" type="primary" size="small"
-                                    htmlType="submit">
-                                    Post
-                                </Button>
-                            </FormItem>
-                        </Form>
-                    }
+                    footer={footer}
                     renderItem={(item, ind) => (
                         <List.Item key={ind}>
                             <List.Item.Meta
