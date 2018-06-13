@@ -45,5 +45,6 @@ export default {
     '2300': 'Info',
     '2301': 'Tasks',
     '2302': 'Teams',
-    '2303': 'Submissions'
+    '2303': 'Submissions',
+    '2304': 'Communities'
 };
