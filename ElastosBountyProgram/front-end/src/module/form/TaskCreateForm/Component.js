@@ -330,9 +330,11 @@ class C extends BaseComponent {
 
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
                     <div>
-                        <FormItem label="Assign to Self" {...formItemLayout}>
-                            {p.assignSelf} - assigns you as the applicant and automatically submits to an admin for approval
-                        </FormItem>
+                        {!this.props.existingTask &&
+                            <FormItem label="Assign to Self" {...formItemLayout}>
+                                {p.assignSelf} - assigns you as the applicant and automatically submits to an admin for approval
+                            </FormItem>
+                        }
                         <FormItem label="Task Name" {...formItemLayout}>
                             {p.taskName}
                         </FormItem>

@@ -204,17 +204,25 @@ export default class extends Base {
         if (this.currentUser.role === constant.USER_ROLE.ADMIN) {
 
             if (param.status) {
-                updateObj.status = param.status
 
                 if (param.status === constant.TASK_STATUS.APPROVED) {
+
+                    updateObj.status = constant.TASK_STATUS.APPROVED
                     updateObj.approvedBy = this.currentUser._id
+
+                    // if assignSelf = true, then we push the status to ASSIGNED
+                    if (task.assignSelf) {
+                        updateObj.status = constant.TASK_STATUS.ASSIGNED
+                    }
+
+                    const taskOwner = await db_user.findById(task.createdBy)
+
+                    await this.sendTaskApproveEmail(this.currentUser, taskOwner, task)
+
+                } else {
+                    // always allow admin to change to any status
+                    updateObj.status = param.status
                 }
-
-                const taskOwner = await db_user.findById(task.createdBy)
-
-                await this.sendTaskApproveEmail(this.currentUser, taskOwner, task)
-
-                // TODO: if assignSelf = true, then we push the status to ASSIGNED
             }
         }
 

@@ -55,11 +55,22 @@ export default class extends BaseComponent {
                 {this.props.task.status === TASK_STATUS.APPROVED && this.props.task.approvedBy &&
                 <span className="help-text">&nbsp; - this task is approved by {this.props.task.approvedBy.username}</span>
                 }
+                {this.props.task.status === TASK_STATUS.SUCCESS &&
+                ((this.props.task.reward.ela > 0 || this.props.task.rewardUpfront.ela > 0) ?
+                    <span className="help-text">&nbsp; - this task is awaiting ELA disbursement</span> :
+                    <span className="help-text">&nbsp; - this task does not require ELA, no further action is needed</span>
+                )
+                }
             </div>
             <div className="pull-right right-align">
                 {!this.state.editing && this.props.task.status === TASK_STATUS.PENDING &&
                 <Popconfirm title="Are you sure you want to approve this task?" placement="left" okText="Yes" onConfirm={this.approveTask.bind(this)}>
                     <Button type="primary">Approve</Button>
+                </Popconfirm>
+                }
+                {!this.state.editing && this.props.task.status === TASK_STATUS.SUCCESS && (this.props.task.reward.ela > 0 || this.props.task.rewardUpfront.ela > 0) &&
+                <Popconfirm title="Are you sure you want to mark the ELA as disbursed?" placement="left" okText="Yes" onConfirm={this.markAsDisbursed.bind(this)}>
+                    <Button type="primary">Mark as Disbursed</Button>
                 </Popconfirm>
                 }
                 {/*this.state.editing && <Button onClick={this.resetEdit.bind(this)}>Reset</Button>*/}
@@ -80,7 +91,7 @@ export default class extends BaseComponent {
                 Status: <span className="status">{this.props.task.status}</span>
 
                 {this.props.task.status === TASK_STATUS.PENDING &&
-                <span className="help-text">&nbsp; - this task is awaiting approval by council</span>
+                <span className="help-text">&nbsp; - this task is awaiting approval by an admin</span>
                 }
                 {this.props.task.status === TASK_STATUS.APPROVED &&
                 <span className="help-text">&nbsp; - this task is waiting on applicants to be selected</span>
@@ -251,6 +262,11 @@ export default class extends BaseComponent {
     async markAsComplete() {
         const taskId = this.props.task._id
         await this.props.completeTask(taskId)
+    }
+
+    async markAsDisbursed() {
+        const taskId = this.props.task._id
+        await this.props.markAsDisbursed(taskId)
     }
 
     async forceStart() {

@@ -59,6 +59,19 @@ export default createContainer(Component, (state) => {
             }
         },
 
+        async markAsDisbursed(taskId) {
+
+            try {
+                await taskService.update(taskId, {
+                    status: TASK_STATUS.DISTRIBUTED
+                })
+
+                message.success('Task marked as ELA disbursed');
+            } catch (err) {
+                message.error(err.message)
+            }
+        },
+
         async acceptAsCompleteTask(taskId) {
 
             try {
