@@ -1,15 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import StandardPage from '../../StandardPage';
-import { USER_GENDER } from '@/constant'
+import { DEFAULT_IMAGE, USER_GENDER } from '@/constant'
 
 import { Table, Card, Select, Col, Row, Breadcrumb, Icon, Button, Input } from 'antd'
 const Search = Input.Search;
 
 import config from '@/config'
 import Footer from '@/module/layout/Footer/Container'
-import ListTasks from '../shared/ListTasks/Component'
-import ListEvents from '../shared/ListEvents/Component'
 import '../style.scss'
 
 export default class extends StandardPage {
@@ -75,7 +73,7 @@ export default class extends StandardPage {
             userIds = _.uniq(userIds)
 
             if (!userIds.length) {
-                return resolve([])
+                return resolve(communities)
             }
 
             this.props.getUserByIds(userIds).then((users) => {
@@ -167,6 +165,21 @@ export default class extends StandardPage {
                             </Col>
                         )
                     })}
+                    
+                    {community.leaders.length === 0 && (
+                        <Col span={3} key={index} className="user-card">
+                            <Link to={'/community/' + community._id  + '/country/' + community.geolocation}>
+                                <Card
+                                    key={index}
+                                    cover={<img src={DEFAULT_IMAGE.UNSET_LEADER}/>}
+                                >
+                                    <h5>
+                                        {community.name}
+                                    </h5>
+                                </Card>
+                            </Link>
+                        </Col>
+                    )}
                 </div>
             )
         })
