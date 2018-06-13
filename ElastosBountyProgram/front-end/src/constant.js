@@ -85,7 +85,8 @@ export const CONTRIB_CATEGORY = {
 }
 
 export const DEFAULT_IMAGE = {
-    TASK : '/assets/images/task_thumbs/12.jpg'
+    TASK : '/assets/images/task_thumbs/12.jpg',
+    UNSET_LEADER: '/assets/images/User_Avatar_Other.png'
 };
 
 export const SUBMISSION_TYPE = {

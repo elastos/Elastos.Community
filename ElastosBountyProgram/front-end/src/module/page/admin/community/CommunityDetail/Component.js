@@ -8,7 +8,7 @@ import ModalUpdateSubCommunity from '../../shared/ModalUpdateSubCommunity/Compon
 import ModalAddOrganizer from '../../shared/ModalAddOrganizer/Component'
 import Navigator from '../../shared/Navigator/Component'
 import config from '@/config'
-import { COMMUNITY_TYPE, USER_GENDER } from '@/constant'
+import { COMMUNITY_TYPE, USER_GENDER, DEFAULT_IMAGE } from '@/constant'
 
 import '../style.scss'
 
@@ -61,7 +61,7 @@ export default class extends AdminPage {
             form.resetFields()
             this.setState({visibleModalAddOrganizer: false})
 
-            const leaderIds = [...this.state.community.leaderIds]
+            const leaderIds = this.state.community.leaderIds ? [...this.state.community.leaderIds] : []
             leaderIds.push(values['leader'])
             const communityClone = {
                 ...this.state.community,
@@ -135,7 +135,7 @@ export default class extends AdminPage {
         return new Promise((resolve, reject) => {
             const userIds = _.uniq(community.leaderIds)
             if (!userIds.length) {
-                return resolve([])
+                return resolve(community)
             }
             this.props.getUserByIds(userIds).then((users) => {
                 users = this.getAvatarUrl(users) // Mock avatar url
@@ -308,7 +308,7 @@ export default class extends AdminPage {
         this.formRefUpdateSubCommunity.props.form.setFieldsValue({
             country: this.props.match.params['country'],
             name: community.name,
-            leader: leader._id,
+            leader: leader ? leader._id : null,
         }, () => {
             this.setState({
                 visibleModalUpdateSubCommunity: true,
@@ -333,7 +333,7 @@ export default class extends AdminPage {
             this.props.updateCommunity({
                 ...this.state.editedSubCommunity,
                 name: values['name'],
-                leaderId: values['leader']
+                leaderIds: values['leader']
             }).then(() => {
                 form.resetFields()
                 this.setState({visibleModalUpdateSubCommunity: false})
@@ -442,8 +442,14 @@ export default class extends AdminPage {
     renderBreadcrumbCountries() {
         let geolocationKeys = {}
         if (this.state.community) {
-            geolocationKeys = {
-                [this.state.community.geolocation]: this.state.community.geolocation
+            if (this.state.community.geolocation !== undefined) {
+                geolocationKeys = {
+                    [this.state.community.geolocation]: this.state.community.geolocation
+                }
+            } else {
+                geolocationKeys = {
+                    [this.props.match.params['country']]: this.props.match.params['country']
+                }
             }
         }
         const listCountriesEl = Object.keys(geolocationKeys).map((geolocation, index) => {
@@ -504,7 +510,7 @@ export default class extends AdminPage {
                 <Col span={4}
                      className="user-card user-card--without-padding user-card--organizer">
                     <h3 className="without-padding overflow-ellipsis" title={this.state.community.name + ' Organizers'}>{this.state.community.name}</h3>
-                    {this.state.community.leaders.map((leader, index) => {
+                    {this.state.community.leaders && this.state.community.leaders.map((leader, index) => {
                         return (
                             <Card
                                 key={index}
@@ -560,6 +566,19 @@ export default class extends AdminPage {
                                                         </Card>
                                                     )
                                                 })}
+                                                
+                                                {community.leaders.length === 0 && (
+                                                    <Card
+                                                        key={index}
+                                                        hoverable
+                                                        onClick={this.showModalUpdateSubCommunity.bind(null, community, null)}
+                                                        cover={<img src={DEFAULT_IMAGE.UNSET_LEADER}/>}
+                                                    >
+                                                        <h5>
+                                                            {community.name}
+                                                        </h5>
+                                                    </Card>
+                                                )}
                                             </Col>
                                         );
                                     })}
