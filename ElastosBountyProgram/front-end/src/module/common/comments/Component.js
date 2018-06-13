@@ -110,10 +110,19 @@ class C extends BaseComponent {
                 const thread = _.first(comment)
                 const createdByUsername = (thread.createdBy && thread.createdBy.username) || ''
                 const avatar = (thread.createdBy && thread.createdBy.profile.avatar) || ''
+                const createdById = (thread.createdBy && thread.createdBy._id)
+                const dateFormatted = dateFormatter(thread.createdAt)
 
                 return {
                     title: thread.comment,
-                    description: `${createdByUsername}, ${dateFormatter(thread.createdAt)}`,
+                    description: (
+                        <div>
+                            <a onClick={() => {createdById && this.props.history.push(`/member/${createdById}`)}}>
+                                {createdByUsername}
+                            </a>
+                            <span>, {dateFormatted}</span>
+                        </div>
+                    ),
                     avatar,
                 }
             }
