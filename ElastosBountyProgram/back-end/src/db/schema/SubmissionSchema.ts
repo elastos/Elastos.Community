@@ -1,16 +1,5 @@
 import {Schema} from 'mongoose';
-
-const CommentSchema = {
-    createdBy: {
-        type: Schema.Types.ObjectId,
-        ref: 'users',
-        required: true
-    },
-    comment: {
-        type: String,
-        required: true
-    }
-}
+import {CommentSchema} from './CommentSchema';
 
 export const Submission = {
     type : {
