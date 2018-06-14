@@ -19,6 +19,8 @@ services:
       - ./env:/app/env
     ports:
       - 3000:3000
+    links:
+      - ebp-mongo
 
   swagger_ui:
     environment:
