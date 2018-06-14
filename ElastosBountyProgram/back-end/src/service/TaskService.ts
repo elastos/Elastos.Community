@@ -30,6 +30,12 @@ export default class extends Base {
             .populate('communityParent')
 
         if (task) {
+            for (let comment of task.comments) {
+                for (let thread of comment) {
+                    await db_task.getDBInstance().populate(thread, [ 'createdBy' ])
+                }
+            }
+
             for (let candidate of task.candidates) {
                 await db_task_candidate.getDBInstance().populate(candidate, ['user', 'team'])
             }
@@ -54,6 +60,12 @@ export default class extends Base {
                     'community',
                     'communityParent'
                 ])
+
+                for (let comment of task.comments) {
+                    for (let thread of comment) {
+                        await db_task.getDBInstance().populate(thread, [ 'createdBy' ])
+                    }
+                }
 
                 for (let candidate of task.candidates) {
                     await db_task_candidate.getDBInstance().populate(candidate, ['user', 'team'])
