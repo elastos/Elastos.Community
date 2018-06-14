@@ -54,7 +54,6 @@ import './config';
     // init router
     app.use(middleware);
     app.use(fileUpload());
-    app.use(express.static('web'))
     app.use('/api', router);
 
     const port = process.env.SERVER_PORT;
