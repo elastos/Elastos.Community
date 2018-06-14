@@ -9,7 +9,7 @@ services:
       - 27017:27017
 
   ebp-backend:
-  environment:
+    environment:
       - NODE_ENV=production
     container_name: ebp-backend
     image: ebp-backend
