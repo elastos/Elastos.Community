@@ -131,4 +131,13 @@ export default class extends BaseService {
 
         return result
     }
+    
+    async removeMember(memberId, communityId) {
+        const result = await api_request({
+            path: `/community/${communityId}/${memberId}`,
+            method: 'delete',
+        })
+        
+        return result
+    }
 }
