@@ -54,13 +54,8 @@ class C extends BaseComponent {
     }
 
     renderHeader() {
-        return <div className="l_banner">
-            <div className="pull-left">
-                Comments
-            </div>
-            <div className="pull-right right-align">
-
-            </div>
+        return <div>
+            <Divider>Comments</Divider>
             <div className="clearfix"/>
         </div>
     }

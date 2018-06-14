@@ -2,6 +2,7 @@ import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import TaskCreateForm from '@/module/form/TaskCreateForm/Container'
 import { Col, Row, Popconfirm, Divider, Button, Spin } from 'antd'
+import Comments from '@/module/common/comments/Container'
 
 import TaskPublicDetail from './detail/Container'
 
@@ -223,6 +224,7 @@ export default class extends BaseComponent {
                 </Row>
 
                 <Divider>Attachments</Divider>
+                <Comments type="task" canPost={true} model={this.props.task}/>
             </div>
         )
     }

@@ -8,6 +8,7 @@ import ModalAcceptApplicant from '../ModalAcceptApplicant/Component'
 import { Col, Row, Button, Divider, message, List, Icon, Tooltip, Popconfirm } from 'antd'
 
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_TYPE, TASK_CANDIDATE_STATUS} from '@/constant'
+import Comments from '@/module/common/comments/Container'
 
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
@@ -212,6 +213,8 @@ export default class extends BaseComponent {
                                 </Col>
                             </Row>
                         </div>}
+
+                        <Comments type="task" canPost={true} model={this.props.task}/>
                     </Col>
                     <Col span={6} className="gridCol applicants">
                         <h4>{this.state.isDeveloperEvent ? 'Registrants' : 'Applicants'}</h4>

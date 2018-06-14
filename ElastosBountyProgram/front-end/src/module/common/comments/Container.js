@@ -15,6 +15,7 @@ export default createContainer(Component, (state) => {
 
     const commentService = new CommentService()
     const submissionService = new SubmissionService()
+    const taskService = new TaskService()
 
     return {
         async postComment(type, parentId, comment) {
