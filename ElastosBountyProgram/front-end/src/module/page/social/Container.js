@@ -88,6 +88,10 @@ export default createContainer(Component, (state) => {
 
             const teamService = new TeamService()
             return teamService.getUserTeams(currentUserId)
+        },
+
+        async addCommunitySubmission(data) {
+            // TODO create a submission
         }
     }
 })
