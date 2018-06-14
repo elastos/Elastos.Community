@@ -12,6 +12,59 @@ const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 export default class extends BaseComponent {
 
     ord_render () {
+        const communityName = this.props.submission.type === SUBMISSION_TYPE.ADD_COMMUNITY &&
+        (
+            <Row>
+                <Col span={24}>
+                    <Row>
+                        <Col span={4} className="label-col">
+                            Community
+                        </Col>
+                        <Col span={20}>
+                            <p>
+                                {this.props.submission.community.name} ({this.props.submission.community.type})
+                            </p>
+                        </Col>
+                    </Row>
+                </Col>
+            </Row>
+        )
+
+        const communityState = this.props.submission.type === SUBMISSION_TYPE.ADD_COMMUNITY &&
+        (
+            <Row>
+                <Col span={24}>
+                    <Row>
+                        <Col span={4} className="label-col">
+                            State
+                        </Col>
+                        <Col span={20}>
+                            <p>
+                                {this.props.submission.state}
+                            </p>
+                        </Col>
+                    </Row>
+                </Col>
+            </Row>
+        )
+
+        const communityCity = this.props.submission.type === SUBMISSION_TYPE.ADD_COMMUNITY &&
+        (
+            <Row>
+                <Col span={24}>
+                    <Row>
+                        <Col span={4} className="label-col">
+                            City
+                        </Col>
+                        <Col span={20}>
+                            <p>
+                                {this.props.submission.city}
+                            </p>
+                        </Col>
+                    </Row>
+                </Col>
+            </Row>
+        )
 
         return (
             <div className="public">
@@ -68,6 +121,9 @@ export default class extends BaseComponent {
                                 </Row>
                             </Col>
                         </Row>
+                        {communityName}
+                        {communityState}
+                        {communityCity}
                         <div className="vert-gap"/>
                     </Col>
                 </Row>

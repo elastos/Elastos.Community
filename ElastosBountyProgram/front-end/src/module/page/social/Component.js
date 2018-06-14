@@ -3,7 +3,8 @@ import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import ContribForm from './formContribution/Container'
 import moment from 'moment'
-
+import ModalAddCommunity from '../admin/shared/ModalAddCommunity/Component'
+import {SUBMISSION_TYPE} from '@/constant'
 import './style.scss'
 
 import { Col, Row, Icon, Form, message, Button, Select, Table, List, Tooltip } from 'antd'
@@ -13,6 +14,9 @@ const Option = Select.Option
 import { TASK_STATUS, TASK_TYPE } from '@/constant'
 
 export default class extends StandardPage {
+    state = {
+        visibleModalAddCommunity: false
+    }
 
     componentDidMount () {
         this.props.getSocialEvents()
@@ -116,9 +120,16 @@ export default class extends StandardPage {
                                 </h3>
                             </div>
                             <div className="pull-right btnContainer">
-                                <Button className="view-all-btn" onClick={this.linkCommunities.bind(this)}>
-                                    Manage
+                                <Button className="view-all-btn" onClick={this.showModalAddCommunity.bind(this)}>
+                                    Add
                                 </Button>
+
+                                <ModalAddCommunity
+                                    wrappedComponentRef={this.saveFormAddCommunityRef.bind(this)}
+                                    visible={this.state.visibleModalAddCommunity}
+                                    onCancel={this.handleCancelModalAddCommunity.bind(this)}
+                                    onCreate={this.handleCreateCommunity.bind(this)}
+                                />
                             </div>
                             <div className="clearfix"/>
 
@@ -205,12 +216,16 @@ export default class extends StandardPage {
         )
     }
 
+    saveFormAddCommunityRef (formRef) {
+        this.formRefAddCommunity = formRef
+    }
+
     async handleEventFilterChange (val) {
 
     }
 
-    linkCommunities() {
-        this.props.history.push('/community')
+    addCommunity() {
+        // pop a modal with community suggestion submission form
     }
 
     linkTaskDetail(taskId) {
@@ -224,4 +239,51 @@ export default class extends StandardPage {
             this.props.history.push(`/task-create?type=${taskType}`)
         }
     }
+
+    showModalAddCommunity () {
+        this.formRefAddCommunity.props.form.setFieldsValue({
+            geolocation: this.props.match.params['country'],
+        }, () => {
+            this.setState({
+                visibleModalAddCommunity: true
+            })
+        })
+    }
+
+    handleCancelModalAddCommunity () {
+        const form = this.formRefAddCommunity.props.form
+        form.resetFields()
+
+        this.setState({
+            visibleModalAddCommunity: false
+        })
+    }
+
+    handleCreateCommunity () {
+        const form = this.formRefAddCommunity.props.form
+
+        form.validateFields((err, values) => {
+            if (err) {
+                return
+            }
+
+            form.resetFields()
+            this.setState({visibleModalAddCommunity: false})
+
+            this.props.addCommunitySubmission({
+                community: values.community,
+                state: values.state,
+                city: values.city,
+                type: SUBMISSION_TYPE.ADD_COMMUNITY,
+                title: 'Please add a new community',
+                description: 'Thank you'
+            }).then(() => {
+                message.success('Your submission for a new community is being processed. Thanks!')
+            }).catch((err) => {
+                console.error(err);
+                message.error('Error while creating a community submission')
+            })
+        })
+    }
+
 }

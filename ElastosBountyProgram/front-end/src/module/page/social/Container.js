@@ -3,6 +3,7 @@ import Component from './Component'
 import TaskService from '@/service/TaskService'
 import TeamService from '@/service/TeamService'
 import CommunityService from '@/service/CommunityService'
+import SubmissionService from '@/service/SubmissionService'
 import _ from 'lodash'
 
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS} from '@/constant'
@@ -88,6 +89,11 @@ export default createContainer(Component, (state) => {
 
             const teamService = new TeamService()
             return teamService.getUserTeams(currentUserId)
+        },
+
+        async addCommunitySubmission(data) {
+            const submissionService = new SubmissionService()
+            return submissionService.create(data)
         }
     }
 })

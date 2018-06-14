@@ -18,6 +18,7 @@ export default class extends Base {
 
         const submission = await db_submission.getDBInstance().findOne({_id: param.submissionId})
             .populate('createdBy')
+            .populate('community')
 
         if (submission) {
             for (let comment of submission.comments) {
@@ -39,7 +40,8 @@ export default class extends Base {
         if (submissions.length) {
             for (let submission of submissions) {
                 await db_submission.getDBInstance().populate(submission, [
-                    'createdBy'
+                    'createdBy',
+                    'community'
                 ])
 
                 for (let comment of submission.comments) {
@@ -55,7 +57,7 @@ export default class extends Base {
 
     public async create(param): Promise<Document> {
         const {
-            type, title, description
+            type, title, description, community, state, city
         } = param;
         this.validate_title(title)
         this.validate_description(description)
@@ -65,6 +67,9 @@ export default class extends Base {
             type,
             title,
             description,
+            community,
+            state,
+            city,
             createdBy: this.currentUser._id
         }
 
