@@ -64,13 +64,17 @@ export const api_request = (opts = {})=>{
     }
 
     return fetch(server_url, option).then((response)=>{
-        if(response.status === 200){
-            // fetch success
-            return response.json();
+        try {
+            if (response.status === 200) {
+                // fetch success
+                return response.json()
+            }
+            else {
+                throw new Error(response.statusText);
+            }
+        } catch(err) {
         }
-        else{
-            throw new Error(response.statusText);
-        }
+
     }).then((data)=>{
         if(data.code > 0){
             // return data correct
@@ -81,7 +85,7 @@ export const api_request = (opts = {})=>{
             opts.error && opts.error(data);
             throw new Error(data.error);
         }
-    });
+    })
 };
 
 /*

@@ -30,7 +30,7 @@ export default class extends StandardPage {
 
         const backdropStyle = {
             backgroundPosition: '0 50%',
-            backgroundImage: `url('http://d72wx65dsgs48.cloudfront.net/images/HomeHeader.jpg')`
+            backgroundImage: `url('/assets/images/HomeHeader.jpg')`
         }
 
         const renderEventRow = (task, rowIndex) => {
