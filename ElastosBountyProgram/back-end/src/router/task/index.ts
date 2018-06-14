@@ -44,5 +44,10 @@ export default Base.setRouter([
         path : '/acceptCandidate',
         router : acceptCandidate,
         method : 'post'
+    },
+    {
+        path : '/:id/comment',
+        router : comment,
+        method : 'post'
     }
 ]);
