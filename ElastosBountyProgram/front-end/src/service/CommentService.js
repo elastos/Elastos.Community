@@ -12,7 +12,7 @@ export default class extends BaseService {
             createdAt: new Date().toISOString()
         }
         const rs = await api_request({
-            path: `/${type}/${id}/comment`,
+            path: `/api/${type}/${id}/comment`,
             method: 'post',
             data
         })
@@ -36,7 +36,7 @@ export default class extends BaseService {
         this.dispatch(redux.actions.loading_update(true))
 
         const result = await api_request({
-            path: `/${type}/${id}`,
+            path: `/api/${type}/${id}`,
             method: 'get',
         })
 

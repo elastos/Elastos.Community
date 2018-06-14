@@ -284,30 +284,30 @@ export default class extends Base {
         }
     }
 
-    // public async listMember(param): Promise<Document[]>{
-    //     const {teamId} = param;
-    //     const db_team = this.getDBModel('Team');
-    //     const aggregate = db_team.getAggregate();
-    //
-    //     const rs = await aggregate.match({_id : Types.ObjectId(teamId)})
-    //         .unwind('$members')
-    //         .lookup({
-    //             from : 'users',
-    //             localField : 'members.userId',
-    //             foreignField : '_id',
-    //             as : 'members.user'
-    //         })
-    //         .unwind('$members.user')
-    //         .group({
-    //             _id : '$_id',
-    //             list : {
-    //                 $push : '$members'
-    //             }
-    //         })
-    //         .project({'list.user.password' : 0, 'list._id' : 0});
-    //
-    //     return rs[0].list;
-    // }
+    public async listMember(param): Promise<Document[]>{
+        const {teamId} = param;
+        const db_team = this.getDBModel('Team');
+        const aggregate = db_team.getAggregate();
+
+        const rs = await aggregate.match({_id : Types.ObjectId(teamId)})
+            .unwind('$members')
+            .lookup({
+                from : 'users',
+                localField : 'members.userId',
+                foreignField : '_id',
+                as : 'members.user'
+            })
+            .unwind('$members.user')
+            .group({
+                _id : '$_id',
+                list : {
+                    $push : '$members'
+                }
+            })
+            .project({'list.user.password' : 0, 'list._id' : 0});
+
+        return rs[0].list;
+    }
 
     public validate_name(name){
         if(!validate.valid_string(name, 4)){

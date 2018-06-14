@@ -11,7 +11,7 @@ export default class extends BaseService {
 
         // call API /login
         const res = await api_request({
-            path : '/user/login',
+            path : '/api/user/login',
             method : 'get',
             data : {
                 username,
@@ -42,7 +42,7 @@ export default class extends BaseService {
     async register(username, password, profile) {
 
         const res = await api_request({
-            path : '/user/register',
+            path : '/api/user/register',
             method : 'post',
             data : Object.assign(profile, {
                 username,
@@ -58,7 +58,7 @@ export default class extends BaseService {
         const userRedux = this.store.getRedux('user')
 
         const result = await api_request({
-            path : '/user/current_user',
+            path : '/api/user/current_user',
             success : (data)=>{
                 this.dispatch(userRedux.actions.is_login_update(true));
                 if ([USER_ROLE.LEADER].includes(data.role)) {
@@ -82,7 +82,7 @@ export default class extends BaseService {
     // TODO: I am using member to refer to a profile other than yourself, might want to change it
     async getMember(userId, options = {}) {
 
-        let path = `/user/public/${userId}`
+        let path = `/api/user/public/${userId}`
         const memberRedux = this.store.getRedux('member')
 
         if (options.admin) {
@@ -113,7 +113,7 @@ export default class extends BaseService {
         await this.dispatch(memberRedux.actions.loading_update(true))
 
         const result = await api_request({
-            path: `/user/${userId}`,
+            path: `/api/user/${userId}`,
             method: 'put',
             data: doc
         })
@@ -149,7 +149,7 @@ export default class extends BaseService {
 
     async getByIds(ids) {
         const result = await api_request({
-            path : `/user/${ids}/users`,
+            path : `/api/user/${ids}/users`,
             method : 'get',
         });
 
@@ -162,7 +162,7 @@ export default class extends BaseService {
         await this.dispatch(memberRedux.actions.loading_update(true))
 
         const result = await api_request({
-            path : `/user/list`,
+            path : `/api/user/list`,
             method : 'get',
         });
 
@@ -176,7 +176,7 @@ export default class extends BaseService {
     async sendEmail(fromUserId, toUserId, formData) {
 
         return await api_request({
-            path: '/user/send-email',
+            path: '/api/user/send-email',
             method: 'post',
             data: {
                 fromUserId,
