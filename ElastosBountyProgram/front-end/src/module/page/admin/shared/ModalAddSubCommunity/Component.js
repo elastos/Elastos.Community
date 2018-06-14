@@ -83,7 +83,7 @@ export default Form.create()(
                             {...formItemLayout}
                             label="Leader">
                             {getFieldDecorator('leader', {
-                                rules: [{required: true, message: 'This field is required'}]
+                                rules: [{required: false, message: 'This field is required'}]
                             })(
                                 <Select
                                     showSearch

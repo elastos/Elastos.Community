@@ -46,7 +46,7 @@ export default class extends AdminPage {
 
             this.props.addCountry({
                 geolocation: values.geolocation,
-                leaderIds: values['leader'],
+                leaderIds: values['leader'] || '',
             }).then(() => {
                 message.success('Add new country successfully')
 

@@ -3,10 +3,8 @@ import { Link } from 'react-router-dom'
 import StandardPage from '../../StandardPage'
 import { Button, Card, Col, Select, Row, Icon, message, Divider, Breadcrumb, Tabs, List, Avatar, Input } from 'antd'
 import config from '@/config'
-import { COMMUNITY_TYPE, USER_GENDER } from '@/constant'
+import { DEFAULT_IMAGE, USER_GENDER } from '@/constant'
 import Footer from '@/module/layout/Footer/Container'
-import ListTasks from '../shared/ListTasks/Component'
-import ListEvents from '../shared/ListEvents/Component'
 import _ from 'lodash'
 
 const TabPane = Tabs.TabPane
@@ -222,10 +220,17 @@ export default class extends StandardPage {
     renderBreadcrumbCountries() {
         let geolocationKeys = {}
         if (this.state.community) {
-            geolocationKeys = {
-                [this.state.community.geolocation]: this.state.community.geolocation
+            if (this.state.community.geolocation !== undefined) {
+                geolocationKeys = {
+                    [this.state.community.geolocation]: this.state.community.geolocation
+                }
+            } else {
+                geolocationKeys = {
+                    [this.props.match.params['country']]: this.props.match.params['country']
+                }
             }
         }
+
         const listCountriesEl = Object.keys(geolocationKeys).map((geolocation, index) => {
             return (
                 <Select.Option title={config.data.mappingCountryCodeToName[geolocation]} key={index}
@@ -288,7 +293,7 @@ export default class extends StandardPage {
                                              className="user-card">
                                             {community.leaders.map((leader, index) => {
                                                 return (
-                                                    <Link key={index} to={'/community/' + community.parentCommunityId  + '/country/' + community.geolocation + '/region/' + community._id}>
+                                                    <Link key={index} to={'/community/' + community.parentCommunityId  + '/country/' + community.geolocation + '/region/' + community.name}>
                                                         <Card
                                                             cover={<img src={leader.profile.avatar}/>}
                                                         >
@@ -306,6 +311,18 @@ export default class extends StandardPage {
                                                     </Link>
                                                 )
                                             })}
+                                            
+                                            {community.leaders.length === 0 && (
+                                                <Link key={index} to={'/community/' + community.parentCommunityId  + '/country/' + community.geolocation + '/region/' + community.name}>
+                                                    <Card
+                                                        cover={<img src={DEFAULT_IMAGE.UNSET_LEADER}/>}
+                                                    >
+                                                        <h5>
+                                                            {community.name}
+                                                        </h5>
+                                                    </Card>
+                                                </Link>
+                                            )}
                                         </Col>
                                     );
                                 })}
@@ -328,7 +345,7 @@ export default class extends StandardPage {
                 </Col>
                 <Col span={24}>
                     <Row>
-                        {this.state.community.leaders.map((leader, index) => {
+                        {this.state.community.leaders && this.state.community.leaders.map((leader, index) => {
                             return (
                                 <Col span={4} key={index} className="user-card">
                                     <Card
