@@ -8,7 +8,7 @@ export default class extends BaseService {
 
     async addCountry(country) {
         const res = await api_request({
-            path: '/community/create',
+            path: '/api/community/create',
             method: 'post',
             // Mock data
             data: {
@@ -22,7 +22,7 @@ export default class extends BaseService {
 
     async getSpecificCountryCommunities(countryCode) {
         const result = await api_request({
-            path: '/community/country/' + countryCode,
+            path: '/api/community/country/' + countryCode,
             method: 'get',
         })
 
@@ -31,7 +31,7 @@ export default class extends BaseService {
 
     async getAllCountryCommunities() {
         const result = await api_request({
-            path: '/community',
+            path: '/api/community',
             method: 'get',
             data: {
                 type: COMMUNITY_TYPE.COUNTRY
@@ -43,7 +43,7 @@ export default class extends BaseService {
 
     async getAll(qry) {
         const result = await api_request({
-            path: '/community/all',
+            path: '/api/community/all',
             method: 'get',
             data: qry
         })
@@ -56,7 +56,7 @@ export default class extends BaseService {
         this.dispatch(communityRedux.actions.loading_update(true))
 
         let result = await api_request({
-            path: '/community/all',
+            path: '/api/community/all',
             method: 'get',
             data: {
                 communityHasUser: userId
@@ -72,7 +72,7 @@ export default class extends BaseService {
 
     async update(community) {
         const result = await api_request({
-            path: '/community/update',
+            path: '/api/community/update',
             method: 'put',
             data: {
                 ...community,
@@ -86,7 +86,7 @@ export default class extends BaseService {
     async getLeadersACountry(countryCode) {
 
         const result = await api_request({
-            path: '/community/country/' + countryCode, method: 'get',
+            path: '/api/community/country/' + countryCode, method: 'get',
         })
 
         return result
@@ -94,7 +94,7 @@ export default class extends BaseService {
 
     async getMembers(communityId) {
         const result = await api_request({
-            path: '/community/' + communityId + '/members', method: 'get',
+            path: '/api/community/' + communityId + '/members', method: 'get',
         })
 
         return result
@@ -102,7 +102,7 @@ export default class extends BaseService {
 
     async getSubCommunities(parentCommunityId) {
         const result = await api_request({
-            path: '/community/parent/' + parentCommunityId, method: 'get',
+            path: '/api/community/parent/' + parentCommunityId, method: 'get',
         })
 
         return result
@@ -110,7 +110,7 @@ export default class extends BaseService {
 
     async get(communityId) {
         const result = await api_request({
-            path: '/community/' + communityId, method: 'get',
+            path: '/api/community/' + communityId, method: 'get',
         })
 
         return result
@@ -118,7 +118,7 @@ export default class extends BaseService {
 
     async create(community) {
         const result = await api_request({
-            path: '/community/create', method: 'POST', data: community
+            path: '/api/community/create', method: 'POST', data: community
         })
 
         return result
@@ -126,7 +126,7 @@ export default class extends BaseService {
 
     async addMember(memberId, communityId) {
         const result = await api_request({
-            path: `/community/${communityId}/${memberId}`,
+            path: `/api/community/${communityId}/${memberId}`,
             method: 'post',
         })
 

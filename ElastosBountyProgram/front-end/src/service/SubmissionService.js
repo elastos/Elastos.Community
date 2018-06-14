@@ -6,7 +6,7 @@ export default class extends BaseService {
 
     async list(filter={}){
         const result = await api_request({
-            path: '/submission/list',
+            path: '/api/submission/list',
             method: 'get',
             data: filter
         });
@@ -21,7 +21,7 @@ export default class extends BaseService {
         this.dispatch(submissionRedux.actions.loading_update(true))
 
         const result = await api_request({
-            path: '/submission/list',
+            path: '/api/submission/list',
             method: 'get',
             data: qry
         })
@@ -40,7 +40,7 @@ export default class extends BaseService {
         this.dispatch(submissionRedux.actions.loading_update(true))
 
         const result = await api_request({
-            path: `/submission/${submissionId}`,
+            path: `/api/submission/${submissionId}`,
             method: 'get'
         })
 
@@ -62,7 +62,7 @@ export default class extends BaseService {
         this.dispatch(submissionRedux.actions.loading_update(true))
 
         const result = await api_request({
-            path: `/submission/${submissionId}`,
+            path: `/api/submission/${submissionId}`,
             method: 'put',
             data: doc
         })
@@ -77,7 +77,7 @@ export default class extends BaseService {
 
     async create(doc) {
         const res = await api_request({
-            path: '/submission/create',
+            path: '/api/submission/create',
             method: 'post',
             data: doc
         })
