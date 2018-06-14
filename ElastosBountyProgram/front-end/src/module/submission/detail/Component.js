@@ -12,7 +12,6 @@ const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 export default class extends BaseComponent {
 
     ord_render () {
-
         const communityName = this.props.submission.type === SUBMISSION_TYPE.ADD_COMMUNITY &&
         (
             <Row>
@@ -23,7 +22,7 @@ export default class extends BaseComponent {
                         </Col>
                         <Col span={20}>
                             <p>
-                                {this.props.submission.community}
+                                {this.props.submission.community.name} ({this.props.submission.community.type})
                             </p>
                         </Col>
                     </Row>

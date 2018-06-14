@@ -3,7 +3,8 @@ import {CommentSchema} from './CommentSchema';
 
 const communityProps = {
     community : {
-        type : String
+        type: Schema.Types.ObjectId,
+        ref: 'community'
     },
     state : {
         type : String
