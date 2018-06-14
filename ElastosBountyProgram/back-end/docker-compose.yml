@@ -1,5 +1,13 @@
 version : "3"
 services:
+  ebp-mongo:
+    image: mongo:3.7
+    container_name: ebp-mongo
+    volumes:
+      - ./.data/db:/data/db
+    ports:
+      - 27017:27017
+
   ebp-backend:
     container_name: ebp-backend
     image: ebp-backend
