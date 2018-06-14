@@ -55,7 +55,7 @@ export default class extends Base {
 
     public async create(param): Promise<Document> {
         const {
-            type, title, description
+            type, title, description, community, state, city
         } = param;
         this.validate_title(title)
         this.validate_description(description)
@@ -65,6 +65,9 @@ export default class extends Base {
             type,
             title,
             description,
+            community,
+            state,
+            city,
             createdBy: this.currentUser._id
         }
 

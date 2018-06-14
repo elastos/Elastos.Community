@@ -1,6 +1,18 @@
 import {Schema} from 'mongoose';
 import {CommentSchema} from './CommentSchema';
 
+const communityProps = {
+    community : {
+        type : String
+    },
+    state : {
+        type : String
+    },
+    city : {
+        type : String
+    }
+}
+
 export const Submission = {
     type : {
         type : String,
@@ -18,6 +30,7 @@ export const Submission = {
         type: Schema.Types.ObjectId,
         ref: 'users'
     },
-    comments: [[CommentSchema]]
+    comments: [[CommentSchema]],
+    ...communityProps
 };
 
