@@ -4,7 +4,7 @@ import Footer from '@/module/layout/Footer/Container'
 import ContribForm from './formContribution/Container'
 import moment from 'moment'
 import ModalAddCommunity from '../admin/shared/ModalAddCommunity/Component'
-
+import {SUBMISSION_TYPE} from '@/constant'
 import './style.scss'
 
 import { Col, Row, Icon, Form, message, Button, Select, Table, List, Tooltip } from 'antd'
@@ -273,7 +273,10 @@ export default class extends StandardPage {
             this.props.addCommunitySubmission({
                 community: values.community,
                 state: values.state,
-                city: values.city
+                city: values.city,
+                type: SUBMISSION_TYPE.ADD_COMMUNITY,
+                title: 'Please add a new community',
+                description: 'Thank you'
             }).then(() => {
                 message.success('Your submission for a new community is being processed. Thanks!')
             }).catch((err) => {
