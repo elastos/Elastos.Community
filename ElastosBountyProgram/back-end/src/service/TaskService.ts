@@ -166,6 +166,8 @@ export default class extends Base {
     /**
      * Changing a task's reward/upfront after approval is only allowed by admins/council
      *
+     * TODO: move status change triggers to a separate function
+     *
      * @param param
      * @returns {Promise<boolean>}
      */
@@ -192,6 +194,7 @@ export default class extends Base {
         // reward should only change if ela amount changed
         if ([constant.TASK_STATUS.PENDING, constant.TASK_STATUS.CREATED].includes(task.status)) {
             if ((rewardUpfront && rewardUpfront.ela > 0) || (reward && reward.ela > 0)) {
+                // TODO: send notification to admin
                 updateObj.status = constant.TASK_STATUS.PENDING;
             } else {
                 updateObj.status = constant.TASK_STATUS.CREATED;
@@ -217,10 +220,12 @@ export default class extends Base {
 
                     const taskOwner = await db_user.findById(task.createdBy)
 
+                    // TODO: move this to agenda/queue
                     await this.sendTaskApproveEmail(this.currentUser, taskOwner, task)
 
                 } else {
                     // always allow admin to change to any status
+                    // TODO: this can still trigger alerts
                     updateObj.status = param.status
                 }
             }
