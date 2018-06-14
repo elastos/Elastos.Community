@@ -15,7 +15,7 @@ const resolve = util.resolve;
 const prodEnv = {
     NODE_ENV: JSON.stringify('production'),
     PLATFORM_ENV: JSON.stringify('web'),
-    SERVER_URL: JSON.stringify('https://ebp-beta.elastos.org')
+    SERVER_URL: JSON.stringify('http://13.228.218.132:3000')
 };
 
 const stagingEnv = {
