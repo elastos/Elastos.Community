@@ -54,6 +54,9 @@ export default createContainer(Component, (state, ownProps) => {
         },
         async addMember(memberId, communityId) {
             return communityService.addMember(memberId, communityId)
+        },
+        async removeMember(memberId, communityId) {
+            return communityService.removeMember(memberId, communityId)
         }
     }
 })

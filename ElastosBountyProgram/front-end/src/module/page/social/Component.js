@@ -129,7 +129,7 @@ export default class extends StandardPage {
 
                                     let communityLink = '/community/'
                                     if (community.parentCommunityId) {
-                                        communityLink += community.parentCommunityId + '/country/' + community.geolocation + '/region/' + community._id
+                                        communityLink += community.parentCommunityId + '/country/' + community.geolocation + '/region/' + community.name
                                     } else {
                                         communityLink += community._id + '/country/' + community.geolocation
                                     }
