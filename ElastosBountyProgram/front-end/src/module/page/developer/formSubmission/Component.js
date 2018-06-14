@@ -14,7 +14,8 @@ class C extends BaseComponent {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values)
-                this.props.createSubmission(values.submissionType, values.submissionDescription)
+                this.props.createSubmission(values.submissionType,
+                    values.submissionTitle, values.submissionDescription)
             }
         })
     }
@@ -36,6 +37,14 @@ class C extends BaseComponent {
             </Select>
         )
 
+        const submissionTitle_fn = getFieldDecorator('submissionTitle', {
+            rules: [{required: true, message: 'Please put in some title'}],
+            initialValue: ''
+        })
+        const submissionTitle_el = (
+            <Input name="title" placeholder="Subject"/>
+        )
+
         const submissionDescription_fn = getFieldDecorator('submissionDescription', {
             rules: [{required: true, message: 'Please put in some description'}],
             initialValue: ''
@@ -46,6 +55,7 @@ class C extends BaseComponent {
 
         return {
             submissionType: submissionType_fn(submissionType_el),
+            submissionTitle: submissionTitle_fn(submissionTitle_el),
             submissionDescription: submissionDescription_fn(submissionDescription_el)
         }
     }
@@ -57,6 +67,9 @@ class C extends BaseComponent {
             <Form onSubmit={this.handleSubmit.bind(this)} className="c_issueForm">
                 <FormItem>
                     {p.submissionType}
+                </FormItem>
+                <FormItem>
+                    {p.submissionTitle}
                 </FormItem>
                 <FormItem>
                     {p.submissionDescription}
