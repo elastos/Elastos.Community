@@ -48,7 +48,7 @@ export default class extends BaseComponent {
 
     ord_render () {
 
-        const isTaskOwner = this.props.task.createdBy._id === this.props.userId
+        const isTaskOwner = this.isTaskOwner()
 
         return (
             <div className="public">
@@ -214,7 +214,7 @@ export default class extends BaseComponent {
                             </Row>
                         </div>}
 
-                        <Comments type="task" canPost={true} model={this.props.task}/>
+                        <Comments type="task" canPost={this.canPost()} model={this.props.task}/>
                     </Col>
                     <Col span={6} className="gridCol applicants">
                         <h4>{this.state.isDeveloperEvent ? 'Registrants' : 'Applicants'}</h4>
@@ -517,4 +517,14 @@ export default class extends BaseComponent {
     }
     // TODO: after max applicants are selected, we should send an email to those
     // that were not selected
+
+    canPost = () => {
+        return !_.includes([ TASK_STATUS.CREATED, TASK_STATUS.PENDING ], this.props.task.status) ||
+            this.isTaskOwner() ||
+            this.props.is_admin
+    }
+
+    isTaskOwner = () => {
+        return this.props.task.createdBy._id === this.props.userId
+    }
 }
