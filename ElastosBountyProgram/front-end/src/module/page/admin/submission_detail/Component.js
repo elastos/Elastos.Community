@@ -1,6 +1,7 @@
 import React from 'react'
 import AdminPage from '../BaseAdmin'
 import SubmissionDetail from '@/module/submission/Container'
+import Comments from '@/module/common/comments/Container'
 
 import '../admin.scss'
 import './style.scss'

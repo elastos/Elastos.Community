@@ -1,6 +1,7 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
+import Comments from '@/module/common/comments/Container'
 
 import { Col, Row } from 'antd'
 
@@ -56,6 +57,7 @@ export default class extends BaseComponent {
                         <div className="vert-gap"/>
                     </Col>
                 </Row>
+                <Comments type="submission" canPost={true} model={this.props.submission}/>
             </div>
         )
     }

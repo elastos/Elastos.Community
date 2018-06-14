@@ -1,5 +1,17 @@
 import {Schema} from 'mongoose';
 
+const CommentSchema = {
+    createdBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'users',
+        required: true
+    },
+    comment: {
+        type: String,
+        required: true
+    }
+}
+
 export const Submission = {
     type : {
         type : String,
@@ -12,6 +24,7 @@ export const Submission = {
     createdBy : {
         type: Schema.Types.ObjectId,
         ref: 'users'
-    }
+    },
+    comments: [[CommentSchema]]
 };
 
