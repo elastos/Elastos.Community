@@ -12,10 +12,11 @@ export default createContainer(Component, (state) => {
     const submissionService = new SubmissionService()
 
     return {
-        async createSubmission (type, description) {
+        async createSubmission (type, title, description) {
             try {
                 const rs = await submissionService.create({
                     type,
+                    title,
                     description
                 })
 

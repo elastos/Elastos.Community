@@ -55,13 +55,15 @@ export default class extends Base {
 
     public async create(param): Promise<Document> {
         const {
-            type, description
+            type, title, description
         } = param;
+        this.validate_title(title)
         this.validate_description(description)
         this.validate_type(type)
 
         const submission = {
             type,
+            title,
             description,
             createdBy: this.currentUser._id
         }
@@ -69,6 +71,12 @@ export default class extends Base {
         const db_submission = this.getDBModel('Submission')
 
         return await db_submission.save(submission)
+    }
+
+    public validate_title(title) {
+        if(!validate.valid_string(title, 1)){
+            throw 'invalid submission title'
+        }
     }
 
     public validate_description(description) {

@@ -20,8 +20,22 @@ export default class extends BaseComponent {
                         <Row>
                             <Col>
                                 <h4 className="center">
-                                    {this.props.submission.description}
+                                    {this.props.submission.title}
                                 </h4>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={24}>
+                                <Row>
+                                    <Col span={4} className="label-col">
+                                        Description
+                                    </Col>
+                                    <Col span={20}>
+                                        <p>
+                                            {this.props.submission.description}
+                                        </p>
+                                    </Col>
+                                </Row>
                             </Col>
                         </Row>
                         <Row>

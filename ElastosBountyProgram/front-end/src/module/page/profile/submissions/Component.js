@@ -22,7 +22,17 @@ export default class extends StandardPage {
 
     ord_renderContent () {
         const submissionsOwnedData = this.props.all_submissions
-        const columns = [{
+        const columns = [
+        {
+            title: 'Title',
+            dataIndex: 'title',
+            width: '20%',
+            className: 'fontWeight500 allow-wrap',
+            render: (name, record) => {
+                return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">{name}</a>
+            }
+        },
+        {
             title: 'Description',
             dataIndex: 'description',
             width: '30%',
