@@ -8,7 +8,7 @@ export default class extends BaseService {
 
     async list(filter={}){
         const result = await api_request({
-            path: '/task/list',
+            path: '/api/task/list',
             method: 'get',
             data: filter
         });
@@ -23,7 +23,7 @@ export default class extends BaseService {
         this.dispatch(taskRedux.actions.loading_update(true))
 
         const result = await api_request({
-            path: '/task/list',
+            path: '/api/task/list',
             method: 'get',
             data: qry
         })
@@ -43,7 +43,7 @@ export default class extends BaseService {
         this.dispatch(taskRedux.actions.loading_update(true))
 
         const result = await api_request({
-            path: `/task/${taskId}`,
+            path: `/api/task/${taskId}`,
             method: 'get'
         })
 
@@ -83,7 +83,7 @@ export default class extends BaseService {
         this.dispatch(taskRedux.actions.loading_update(true))
 
         const result = await api_request({
-            path: `/task/${taskId}`,
+            path: `/api/task/${taskId}`,
             method: 'put',
             data: doc
         })
@@ -131,7 +131,7 @@ export default class extends BaseService {
         const taskRedux = this.store.getRedux('task')
 
         const result = await api_request({
-            path: '/task/addCandidate',
+            path: '/api/task/addCandidate',
             method: 'post',
             data: {
                 taskId,
@@ -153,7 +153,7 @@ export default class extends BaseService {
     async pullCandidate(taskId, taskCandidateId) {
         const taskRedux = this.store.getRedux('task')
         const result = await api_request({
-            path: '/task/removeCandidate',
+            path: '/api/task/removeCandidate',
             method: 'post',
             data: {
                 taskId,
@@ -175,7 +175,7 @@ export default class extends BaseService {
     async acceptCandidate(taskCandidateId) {
         const taskRedux = this.store.getRedux('task')
         const task = await api_request({
-            path: '/task/acceptCandidate',
+            path: '/api/task/acceptCandidate',
             method: 'post',
             data: {
                 taskCandidateId
@@ -218,7 +218,7 @@ export default class extends BaseService {
     async create(doc) {
 
         const res = await api_request({
-            path: '/task/create',
+            path: '/api/task/create',
             method: 'post',
             data: doc
         })

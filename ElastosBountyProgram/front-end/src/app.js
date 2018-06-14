@@ -48,7 +48,7 @@ const render = () => {
 if(sessionStorage.getItem('api-token')){
     const userRedux = store.getRedux('user');
     api_request({
-        path : '/user/current_user',
+        path : '/api/user/current_user',
         success : (data)=>{
             store.dispatch(userRedux.actions.is_login_update(true));
             if ([USER_ROLE.LEADER].includes(data.role)) {

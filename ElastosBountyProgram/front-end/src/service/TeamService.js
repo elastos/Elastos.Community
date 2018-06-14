@@ -6,7 +6,7 @@ export default class extends BaseService {
 
     async list(filter={}){
         const result = await api_request({
-            path: '/team/list',
+            path: '/api/team/list',
             method: 'get',
             data: filter
         });
@@ -19,7 +19,7 @@ export default class extends BaseService {
         const userRedux = this.store.getRedux('user')
 
         const result = await api_request({
-            path: '/team/list',
+            path: '/api/team/list',
             method: 'get',
             data: {
                 teamHasUser: userId
