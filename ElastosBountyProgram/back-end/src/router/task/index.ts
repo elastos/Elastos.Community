@@ -7,6 +7,7 @@ import update from './update';
 import addCandidate from './add_candidate';
 import removeCandidate from './remove_candidate';
 import acceptCandidate from './accept_candidate';
+import comment from './comment';
 
 export default Base.setRouter([
 
