@@ -213,6 +213,8 @@ export default class extends BaseComponent {
                                 </Col>
                             </Row>
                         </div>}
+
+                        <Comments type="task" canPost={true} model={this.props.task}/>
                     </Col>
                     <Col span={6} className="gridCol applicants">
                         <h4>{this.state.isDeveloperEvent ? 'Registrants' : 'Applicants'}</h4>
@@ -334,8 +336,6 @@ export default class extends BaseComponent {
 
                     </Col>
                 </Row>
-
-                <Comments type="task" canPost={true} model={this.props.task}/>
 
                 <ModalApplyTask
                     wrappedComponentRef={this.saveFormApplyTaskRef}
