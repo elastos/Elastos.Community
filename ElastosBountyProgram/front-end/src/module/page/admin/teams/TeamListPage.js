@@ -53,7 +53,10 @@ const Component = class extends BaseAdmin {
                 dataIndex: 'name',
                 key: 'name',
                 width: '20%',
-                className: 'fontWeight500'
+                className: 'fontWeight500',
+                render : (name, record)=>{
+                    return <a onClick={this.goDetail.bind(this, record._id)} className="tableLink">{name}</a>
+                }
             },
             {
                 title: 'Description',
@@ -83,6 +86,10 @@ const Component = class extends BaseAdmin {
                 loading={this.state.loading}
             />
         );
+    }
+
+    goDetail(teamId){
+        this.props.history.push(`/admin/teams/${teamId}`);
     }
 
     async componentDidMount(){

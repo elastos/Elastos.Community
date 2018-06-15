@@ -10,7 +10,10 @@
 
 }
 .h-center{
-
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
 }
 .flex-space{
   display: flex;
@@ -27,6 +30,10 @@
   //outline: 1px solid red;
 
   padding: 0 $gap_3;
+}
+
+.w100{
+  width: 100%;
 }
 
 .ebp-admin-wrap{
