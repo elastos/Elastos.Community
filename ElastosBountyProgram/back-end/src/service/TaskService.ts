@@ -16,13 +16,14 @@ const restrictedFields = {
     ]
 }
 
+const sanitize = '-password -salt -email'
+
 export default class extends Base {
 
     public async show(param): Promise<Document> {
         const db_task = this.getDBModel('Task');
         const db_task_candidate = this.getDBModel('Task_Candidate');
 
-        const sanitize = '-password -salt -email'
         const task = await db_task.getDBInstance().findOne({_id: param.taskId})
             .populate('candidates')
             .populate('createdBy', sanitize)
@@ -61,8 +62,6 @@ export default class extends Base {
 
         if (tasks.length) {
             for (let task of tasks) {
-                const sanitize = '-password -salt -email'
-
                 await db_task.getDBInstance().populate(task, {
                     path: 'createdBy',
                     select: sanitize,
