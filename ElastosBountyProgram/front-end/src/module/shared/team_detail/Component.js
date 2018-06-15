@@ -2,6 +2,7 @@ import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import { Col, Row, Icon, Divider, Button, Spin } from 'antd'
 import _ from 'lodash';
+import TeamEditForm from '@/module/form/TeamEditForm/Container';
 
 
 import {TASK_STATUS, USER_GENDER} from '@/constant'
@@ -29,7 +30,7 @@ export default class extends BaseComponent {
     renderEditForm() {
         return (
             <div className="form-wrapper">
-
+                <TeamEditForm data={this.props.data} />
             </div>
         );
     }

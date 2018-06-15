@@ -36,12 +36,19 @@ class C extends BaseComponent {
 
     handleSubmit (e) {
         e.preventDefault()
-        this.props.form.validateFields((err, values) => {
+        this.props.form.validateFields(async (err, values) => {
             if (!err) {
-                this.props.updateUser(values, this.state).then(() => {
-                    this.props.getCurrentUser()
+                const res = await this.props.update({
+                    id : this.props.data._id,
+                    name : values.name,
+                    type : values.type,
+                    description : values.description,
+                    recruiting: values.recruiting
                 });
-                this.props.switchEditMode()
+                if(res){
+                    location.reload();
+                }
+
             }
         })
     }
@@ -54,12 +61,12 @@ class C extends BaseComponent {
             <Input size="large"/>
         );
 
-        const name_fn = getFieldDecorator('Name', {
+        const name_fn = getFieldDecorator('name', {
             rules: [{required: true, message: 'team name is required'}],
             initialValue: team.name
         })
 
-        const type_fn = getFieldDecorator('Type', {
+        const type_fn = getFieldDecorator('type', {
             rules: [{required: true, message: 'type is required'}],
             initialValue: team.type
         })
@@ -76,7 +83,7 @@ class C extends BaseComponent {
             </RadioGroup>
         )
 
-        const recruiting_fn = getFieldDecorator('Recruiting', {
+        const recruiting_fn = getFieldDecorator('recruiting', {
             rules: [{required: true}],
             initialValue: team.recruiting
         })
@@ -92,14 +99,14 @@ class C extends BaseComponent {
             </RadioGroup>
         )
 
-        const description_fn = getFieldDecorator('Description', {
+        const description_fn = getFieldDecorator('description', {
             rules: [],
             initialValue: team.profile.description
         })
 
-        const tags_fn = getFieldDecorator('Tags', {
+        const tags_fn = getFieldDecorator('tags', {
             rules: [],
-            initialValue: data.tags.join(', ')
+            initialValue: team.tags.join(', ')
         })
         const tags_el = <Input size="large" disabled={true} />
 
@@ -132,7 +139,7 @@ class C extends BaseComponent {
         }
 
         return (
-            <div className="c_userEditFormContainer">
+            <div className="layout-pt">
 
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
                     <div>
