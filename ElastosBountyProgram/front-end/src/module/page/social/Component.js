@@ -39,7 +39,6 @@ export default class extends StandardPage {
         const columns = [{
             title: 'Name',
             dataIndex: 'name',
-            key: 'name',
             width: '20%',
             className: 'fontWeight500 allow-wrap',
             render: (name, record) => {
@@ -49,12 +48,10 @@ export default class extends StandardPage {
             title: 'Description',
             dataIndex: 'description',
             className: 'allow-wrap',
-            key: 'name',
             width: '30%'
         }, {
             title: 'Community',
             dataIndex: 'community',
-            key: 'community',
             render: (community, data) => {
                 if (!community) {
                     return null;
