@@ -42,7 +42,7 @@ export default class extends Base {
                 await db_submission.getDBInstance().populate(submission, [
                     'createdBy',
                     'community'
-                ], '-password -salt -email')
+                ])
 
                 for (let comment of submission.comments) {
                     for (let thread of comment) {
