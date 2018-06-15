@@ -14,7 +14,7 @@ services:
     container_name: ebp-backend
     image: ebp-backend
     build: .
-    command: npm start
+    command: npm run start:production
     volumes:
       - ./src:/app/src
       - ./node_modules:/app/node_modules
