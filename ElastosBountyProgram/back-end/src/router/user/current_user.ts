@@ -7,6 +7,8 @@ export default class extends Base {
     async action(){
         if (this.session.user) {
             return this.result(1, this.session.user);
+        } else {
+            return this.result(-1, 'no session')
         }
     }
 }

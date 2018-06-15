@@ -33,11 +33,33 @@ export default class extends Base {
             for (let comment of task.comments) {
                 for (let thread of comment) {
                     await db_task.getDBInstance().populate(thread, [ 'createdBy' ])
+
+                    if (thread.createdBy) {
+                        delete thread._doc.createdBy._doc.password
+                        delete thread._doc.createdBy._doc.salt
+                        delete thread._doc.createdBy._doc.email
+                    }
                 }
             }
 
             for (let candidate of task.candidates) {
                 await db_task_candidate.getDBInstance().populate(candidate, ['user', 'team'])
+
+                if (candidate.user) {
+                    delete candidate._doc.user._doc.password
+                    delete candidate._doc.user._doc.salt
+                    delete candidate._doc.user._doc.email
+                }
+            }
+
+            delete task._doc.createdBy._doc.password
+            delete task._doc.createdBy._doc.salt
+            delete task._doc.createdBy._doc.email
+
+            if (task._doc.approvedBy) {
+                delete task._doc.approvedBy._doc.password
+                delete task._doc.approvedBy._doc.salt
+                delete task._doc.approvedBy._doc.email
             }
         }
 
@@ -63,12 +85,34 @@ export default class extends Base {
 
                 for (let comment of task.comments) {
                     for (let thread of comment) {
-                        await db_task.getDBInstance().populate(thread, [ 'createdBy' ])
+                        await db_task.getDBInstance().populate(thread, [ 'createdBy'])
+
+                        if (thread.createdBy) {
+                            delete thread._doc.createdBy._doc.password
+                            delete thread._doc.createdBy._doc.salt
+                            delete thread._doc.createdBy._doc.email
+                        }
                     }
                 }
 
                 for (let candidate of task.candidates) {
                     await db_task_candidate.getDBInstance().populate(candidate, ['user', 'team'])
+
+                    if (candidate.user) {
+                        delete candidate._doc.user._doc.password
+                        delete candidate._doc.user._doc.salt
+                        delete candidate._doc.user._doc.email
+                    }
+                }
+
+                delete task._doc.createdBy._doc.password
+                delete task._doc.createdBy._doc.salt
+                delete task._doc.createdBy._doc.email
+
+                if (task._doc.approvedBy) {
+                    delete task._doc.approvedBy._doc.password
+                    delete task._doc.approvedBy._doc.salt
+                    delete task._doc.approvedBy._doc.email
                 }
             }
         }

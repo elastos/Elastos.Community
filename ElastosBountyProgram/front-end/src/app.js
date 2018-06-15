@@ -66,6 +66,7 @@ if(sessionStorage.getItem('api-token')){
         },
         error: () => {
             sessionStorage.clear()
+            render()
         }
     });
 }

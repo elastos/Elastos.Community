@@ -262,7 +262,7 @@ export default class extends Base {
         }
 
         // get all teams that include the userId val of teamHasUser
-        if (param.teamHasUser) {
+        if (param.teamHasUser && param.teamHasUser.length === 24) {
             const userTeams = await this.ut_model.find({
                 userId: param.teamHasUser
             })
