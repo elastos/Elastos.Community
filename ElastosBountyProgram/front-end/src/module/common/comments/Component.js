@@ -157,7 +157,7 @@ class C extends BaseComponent {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 this.props.postComment(this.props.type, this.props.model._id, values.comment).then(() => {
-                    // TODO: clear comment
+                    this.props.form.resetFields()
                 })
             }
         })
