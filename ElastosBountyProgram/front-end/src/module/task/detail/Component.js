@@ -42,7 +42,7 @@ export default class extends BaseComponent {
 
         this.setState({
             loading: false,
-            teamsOwned: teamsOwned.list || []
+            teamsOwned: (teamsOwned && teamsOwned.list) || []
         })
     }
 
