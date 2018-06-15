@@ -16,14 +16,18 @@ export default class extends Base {
     public async show(param): Promise<Document> {
         const db_submission = this.getDBModel('Submission')
 
+        const sanitize = '-password -salt -email'
         const submission = await db_submission.getDBInstance().findOne({_id: param.submissionId})
-            .populate('createdBy', '-password -salt -email')
+            .populate('createdBy', sanitize)
             .populate('community')
 
         if (submission) {
             for (let comment of submission.comments) {
                 for (let thread of comment) {
-                    await db_submission.getDBInstance().populate(thread, [ 'createdBy' ])
+                    await db_submission.getDBInstance().populate(thread, {
+                        path: 'createdBy',
+                        select: sanitize
+                    })
                 }
             }
         }
@@ -36,17 +40,22 @@ export default class extends Base {
         const submissions = await db_submission.list(query, {
             updatedAt: -1
         });
+        const sanitize = '-password -salt -email'
 
         if (submissions.length) {
             for (let submission of submissions) {
-                await db_submission.getDBInstance().populate(submission, [
-                    'createdBy',
-                    'community'
-                ])
+                await db_submission.getDBInstance().populate(submission, {
+                    path: 'createdBy',
+                    select: sanitize
+                })
+                await db_submission.getDBInstance().populate(submission, ['community'])
 
                 for (let comment of submission.comments) {
                     for (let thread of comment) {
-                        await db_submission.getDBInstance().populate(thread, [ 'createdBy' ])
+                        await db_submission.getDBInstance().populate(thread, {
+                            path: 'createdBy',
+                            select: sanitize
+                        })
                     }
                 }
             }

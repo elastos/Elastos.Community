@@ -33,12 +33,19 @@ export default class extends Base {
         if (task) {
             for (let comment of task.comments) {
                 for (let thread of comment) {
-                    await db_task.getDBInstance().populate(thread, [ 'createdBy' ], sanitize)
+                    await db_task.getDBInstance().populate(thread, {
+                        path: 'createdBy',
+                        select: sanitize
+                    })
                 }
             }
 
             for (let candidate of task.candidates) {
-                await db_task_candidate.getDBInstance().populate(candidate, ['user', 'team'], sanitize)
+                await db_task_candidate.getDBInstance().populate(candidate, {
+                    path: 'user',
+                    select: sanitize
+                })
+                await db_task_candidate.getDBInstance().populate(candidate, ['team'])
             }
         }
 
@@ -56,10 +63,15 @@ export default class extends Base {
             for (let task of tasks) {
                 const sanitize = '-password -salt -email'
 
-                await db_task.getDBInstance().populate(task, [
-                    'createdBy',
-                    'approvedBy',
-                ], sanitize)
+                await db_task.getDBInstance().populate(task, {
+                    path: 'createdBy',
+                    select: sanitize,
+                })
+
+                await db_task.getDBInstance().populate(task, {
+                    path: 'approvedBy',
+                    select: sanitize,
+                })
 
                 await db_task.getDBInstance().populate(task, [
                     'candidates',
@@ -69,12 +81,18 @@ export default class extends Base {
 
                 for (let comment of task.comments) {
                     for (let thread of comment) {
-                        await db_task.getDBInstance().populate(thread, [ 'createdBy' ], sanitize)
+                        await db_task.getDBInstance().populate(thread, {
+                            path: 'createdBy',
+                            select: sanitize
+                        })
                     }
                 }
 
                 for (let candidate of task.candidates) {
-                    await db_task_candidate.getDBInstance().populate(candidate, ['user'], sanitize)
+                    await db_task_candidate.getDBInstance().populate(candidate, {
+                        path: 'user',
+                        select: sanitize
+                    })
                     await db_task_candidate.getDBInstance().populate(candidate, ['team'])
                 }
             }
