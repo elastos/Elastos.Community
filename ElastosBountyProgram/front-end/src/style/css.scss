@@ -89,7 +89,7 @@ td {
 table {
   td.allow-wrap,
   th.allow-wrap {
-    white-space: normal;
+    white-space: normal !important;
   }
 }
 
