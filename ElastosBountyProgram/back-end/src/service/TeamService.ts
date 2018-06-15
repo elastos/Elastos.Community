@@ -253,7 +253,7 @@ export default class extends Base {
         // TODO add filter
         const query:any = {};
 
-        if (param.owner) {
+        if (param.owner && param.owner.length === 24) {
             query.owner = param.owner
         }
 
