@@ -44,6 +44,7 @@ export default class extends BaseComponent {
     }
 
     renderAdminHeader() {
+
         return <div className="l_banner">
             <div className="pull-left">
                 Status: <span className="status">{this.props.task.status}</span>

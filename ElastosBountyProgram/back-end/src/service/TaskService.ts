@@ -192,6 +192,10 @@ export default class extends Base {
             attachment, attachmentType, attachmentFilename
         } = param;
 
+        if (!this.currentUser || !this.currentUser._id) {
+            return
+        }
+
         const db_task = this.getDBModel('Task');
         const db_user = this.getDBModel('User');
 
