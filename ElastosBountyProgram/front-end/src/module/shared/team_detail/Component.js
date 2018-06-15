@@ -1,6 +1,5 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import UserEditForm from '@/module/form/UserEditForm/Container'
 import { Col, Row, Icon, Divider, Button, Spin } from 'antd'
 import _ from 'lodash';
 
@@ -28,9 +27,11 @@ export default class extends BaseComponent {
 
 
     renderEditForm() {
-        return <div className="form-wrapper">
-            <UserEditForm user={this.props.user} page={this.props.page} switchEditMode={this.switchEditMode.bind(this)}/>
-        </div>
+        return (
+            <div className="form-wrapper">
+
+            </div>
+        );
     }
 
 
