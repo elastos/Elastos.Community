@@ -63,6 +63,9 @@ if(sessionStorage.getItem('api-token')){
             store.dispatch(userRedux.actions.role_update(data.role))
             store.dispatch(userRedux.actions.current_user_id_update(data._id))
             render()
+        },
+        error: () => {
+            sessionStorage.clear()
         }
     });
 }
