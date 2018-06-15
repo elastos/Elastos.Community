@@ -1,48 +1,28 @@
 import {createContainer} from '@/util'
 import Component from './Component'
-import SubmissionService from '@/service/SubmissionService'
+import CommunityService from '@/service/CommunityService'
 import _ from 'lodash'
-import {USER_ROLE} from '@/constant'
-
 
 export default createContainer(Component, (state) => {
-
-
-    const currentUserId = state.user.current_user_id
-    const submissionState = {
-        ...state.submission,
-        currentUserId,
-        is_leader: state.user.role === USER_ROLE.LEADER,
-        is_admin: state.user.role === USER_ROLE.ADMIN
+    const profileState = {
+        currentUserId: state.user.current_user_id,
+        myCommunities: state.community.my_communities,
+        loading: state.community.loading,
     }
-
-    if (!_.isArray(submissionState.all_submissions)) {
-        submissionState.all_submissions = _.values(submissionState.all_submissions)
+    if (!_.isArray(profileState.myCommunities)) {
+        profileState.myCommunities = _.values(state.community.my_communities)
     }
-
-    return submissionState
-
+    
+    return profileState
 }, () => {
-
-    const submissionService = new SubmissionService()
+    const communityService = new CommunityService()
 
     return {
-
-        /**
-         * @returns {Promise<*>}
-         */
-        async getSubmissions(currentUserId) {
-            return submissionService.index({
-                profileListFor: currentUserId
-            })
+        async getMyCommunities(currentUserId) {
+            return communityService.getMyCommunities(currentUserId)
         },
-
-        async resetSubmissions () {
-            return submissionService.resetAllSubmissions()
-        },
-
-        async setFilter(options) {
-
+        async removeMember(memberId, communityId) {
+            return communityService.removeMember(memberId, communityId)
         }
     }
 })

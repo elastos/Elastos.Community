@@ -1,48 +1,50 @@
 import React from 'react';
 import StandardPage from '../../StandardPage';
-import Footer from '@/module/layout/Footer/Container'
 import Navigator from '@/module/page/shared/Navigator/Container'
-
+import { message } from 'antd'
+import config from '@/config'
 import './style.scss'
 import '../../admin/admin.scss'
 
 import { Col, Row, Icon, Form, Breadcrumb, Button, Table, Divider } from 'antd'
 import moment from 'moment/moment'
-const FormItem = Form.Item;
 
 export default class extends StandardPage {
-
     componentDidMount() {
-        this.props.getSubmissions(this.props.currentUserId)
+        this.props.getMyCommunities(this.props.currentUserId)
     }
-
-    componentWillUnmount() {
-        this.props.resetSubmissions()
+    
+    leaveCommunity(communityId) {
+        this.props.removeMember(this.props.currentUserId, communityId).then(() => {
+            this.props.getMyCommunities(this.props.currentUserId)
+            message.success('You left community successfully')
+        })
     }
 
     ord_renderContent () {
-        const submissionsOwnedData = this.props.all_submissions
+        const myCommunities = this.props.myCommunities
         const columns = [{
-            title: 'Description',
-            dataIndex: 'description',
+            title: 'Name',
+            dataIndex: 'name',
             width: '30%',
             className: 'fontWeight500 allow-wrap',
-            render: (name, record) => {
-                return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">{name}</a>
+        }, {
+            title: 'Geolocation',
+            dataIndex: 'geolocation',
+            render: (geolocation, record) => {
+                return config.data.mappingCountryCodeToName[geolocation] || geolocation
             }
         }, {
             title: 'Type',
             dataIndex: 'type',
         }, {
-            title: 'Created',
-            dataIndex: 'createdAt',
-            render: (createdAt) => moment(createdAt).format('MMM D')
-        }, {
-            title: '',
+            title: 'Actions',
             dataIndex: '_id',
             key: 'actions',
             render: (id, record) => {
-
+                return (
+                    <Button onClick={this.leaveCommunity.bind(this, id)}>Leave</Button>
+                )
             }
         }]
 
@@ -62,15 +64,15 @@ export default class extends StandardPage {
                                 <Breadcrumb.Item>Communities</Breadcrumb.Item>
                             </Breadcrumb>
                         </div>
-                        <div className="p_ProfileSubmissions p_admin_content">
+                        <div className="p_ProfileCommunities p_admin_content">
                             <Row>
                                 <Col span={20} className="c_ProfileContainer admin-left-column wrap-box-user">
-                                    <Divider>Owned Submissions</Divider>
+                                    <Divider>Joined Communities</Divider>
 
                                     <Table
                                         columns={columns}
                                         rowKey={(item) => item._id}
-                                        dataSource={submissionsOwnedData}
+                                        dataSource={myCommunities}
                                         loading={this.props.loading}
                                     />
                                 </Col>
