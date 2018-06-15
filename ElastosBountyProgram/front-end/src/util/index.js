@@ -23,6 +23,7 @@ export const constant = (moduleName, detailArray)=>{
     return result;
 };
 
+
 export {
     api_request,
     upload_file

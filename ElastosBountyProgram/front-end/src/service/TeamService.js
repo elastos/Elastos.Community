@@ -43,4 +43,14 @@ export default class extends BaseService {
 
         return result;
     }
+
+    async update(param){
+        const result = await api_request({
+            path : '/api/team/update',
+            method : 'post',
+            data : param
+        });
+
+        return result;
+    }
 }
