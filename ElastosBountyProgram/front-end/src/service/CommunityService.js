@@ -62,7 +62,8 @@ export default class extends BaseService {
                 communityHasUser: userId
             }
         })
-
+    
+        this.dispatch(communityRedux.actions.my_communities_reset())
         this.dispatch(communityRedux.actions.my_communities_update(result))
         this.dispatch(communityRedux.actions.loading_update(false))
 
