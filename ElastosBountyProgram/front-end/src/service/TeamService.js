@@ -30,4 +30,17 @@ export default class extends BaseService {
 
         return result
     }
+
+    async getDetail(teamId){
+        const result = await api_request({
+            path : '/api/team/get',
+            method : 'get',
+            data : {
+                teamId,
+                status : 'NORMAL'
+            }
+        });
+
+        return result;
+    }
 }

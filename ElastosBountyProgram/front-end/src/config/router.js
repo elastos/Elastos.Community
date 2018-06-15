@@ -40,6 +40,7 @@ import TaskCreatePage from '@/module/page/task_create/Container'
 
 // admin team page
 import TeamListPage from '../module/page/admin/teams/TeamListPage';
+import TeamDetailPage from '../module/page/admin/teams/TeamDetailPage';
 
 import NotFound from '@/module/page/error/NotFound'
 
@@ -194,6 +195,10 @@ export default [
     {
         path : '/admin/teams',
         page : TeamListPage
+    },
+    {
+        path : '/admin/teams/:teamId',
+        page : TeamDetailPage
     },
 
     {

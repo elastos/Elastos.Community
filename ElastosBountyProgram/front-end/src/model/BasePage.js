@@ -76,4 +76,8 @@ export default class extends BaseComponent {
 
     ord_checkLogin() {
     }
+
+    $getParam(key){
+        return key ? this.props.match.params[key] : this.props.match.params[key];
+    }
 }
