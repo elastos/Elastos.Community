@@ -348,7 +348,7 @@ export default class extends BaseComponent {
                                 </List.Item>
                             }}
                         /> : <span className="no-info">
-                                {this.props.task.status === TASK_STATUS.PENDING ? 'task must be approved first' : 'no applicants'}
+                                {this.props.task.status === TASK_STATUS.PENDING ? 'task must be approved first' : (this.state.isDeveloperEvent ? 'no registrants' : 'no applicants')}
                             </span>
                         }
 
