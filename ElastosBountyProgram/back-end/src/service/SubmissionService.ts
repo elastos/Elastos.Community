@@ -17,7 +17,7 @@ export default class extends Base {
         const db_submission = this.getDBModel('Submission')
 
         const submission = await db_submission.getDBInstance().findOne({_id: param.submissionId})
-            .populate('createdBy')
+            .populate('createdBy', '-password -salt -email')
             .populate('community')
 
         if (submission) {
@@ -42,7 +42,7 @@ export default class extends Base {
                 await db_submission.getDBInstance().populate(submission, [
                     'createdBy',
                     'community'
-                ])
+                ], '-password -salt -email')
 
                 for (let comment of submission.comments) {
                     for (let thread of comment) {

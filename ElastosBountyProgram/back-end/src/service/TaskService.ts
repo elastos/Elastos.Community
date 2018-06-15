@@ -22,44 +22,23 @@ export default class extends Base {
         const db_task = this.getDBModel('Task');
         const db_task_candidate = this.getDBModel('Task_Candidate');
 
+        const sanitize = '-password -salt -email'
         const task = await db_task.getDBInstance().findOne({_id: param.taskId})
             .populate('candidates')
-            .populate('createdBy')
-            .populate('approvedBy')
+            .populate('createdBy', sanitize)
+            .populate('approvedBy', sanitize)
             .populate('community')
             .populate('communityParent')
 
         if (task) {
             for (let comment of task.comments) {
                 for (let thread of comment) {
-                    await db_task.getDBInstance().populate(thread, [ 'createdBy' ])
-
-                    if (thread.createdBy) {
-                        delete thread._doc.createdBy._doc.password
-                        delete thread._doc.createdBy._doc.salt
-                        delete thread._doc.createdBy._doc.email
-                    }
+                    await db_task.getDBInstance().populate(thread, [ 'createdBy' ], sanitize)
                 }
             }
 
             for (let candidate of task.candidates) {
-                await db_task_candidate.getDBInstance().populate(candidate, ['user', 'team'])
-
-                if (candidate.user) {
-                    delete candidate._doc.user._doc.password
-                    delete candidate._doc.user._doc.salt
-                    delete candidate._doc.user._doc.email
-                }
-            }
-
-            delete task._doc.createdBy._doc.password
-            delete task._doc.createdBy._doc.salt
-            delete task._doc.createdBy._doc.email
-
-            if (task._doc.approvedBy) {
-                delete task._doc.approvedBy._doc.password
-                delete task._doc.approvedBy._doc.salt
-                delete task._doc.approvedBy._doc.email
+                await db_task_candidate.getDBInstance().populate(candidate, ['user', 'team'], sanitize)
             }
         }
 
@@ -75,44 +54,28 @@ export default class extends Base {
 
         if (tasks.length) {
             for (let task of tasks) {
+                const sanitize = '-password -salt -email'
+
                 await db_task.getDBInstance().populate(task, [
-                    'candidates',
                     'createdBy',
                     'approvedBy',
+                ], sanitize)
+
+                await db_task.getDBInstance().populate(task, [
+                    'candidates',
                     'community',
                     'communityParent'
                 ])
 
                 for (let comment of task.comments) {
                     for (let thread of comment) {
-                        await db_task.getDBInstance().populate(thread, [ 'createdBy'])
-
-                        if (thread.createdBy) {
-                            delete thread._doc.createdBy._doc.password
-                            delete thread._doc.createdBy._doc.salt
-                            delete thread._doc.createdBy._doc.email
-                        }
+                        await db_task.getDBInstance().populate(thread, [ 'createdBy' ], sanitize)
                     }
                 }
 
                 for (let candidate of task.candidates) {
-                    await db_task_candidate.getDBInstance().populate(candidate, ['user', 'team'])
-
-                    if (candidate.user) {
-                        delete candidate._doc.user._doc.password
-                        delete candidate._doc.user._doc.salt
-                        delete candidate._doc.user._doc.email
-                    }
-                }
-
-                delete task._doc.createdBy._doc.password
-                delete task._doc.createdBy._doc.salt
-                delete task._doc.createdBy._doc.email
-
-                if (task._doc.approvedBy) {
-                    delete task._doc.approvedBy._doc.password
-                    delete task._doc.approvedBy._doc.salt
-                    delete task._doc.approvedBy._doc.email
+                    await db_task_candidate.getDBInstance().populate(candidate, ['user'], sanitize)
+                    await db_task_candidate.getDBInstance().populate(candidate, ['team'])
                 }
             }
         }
