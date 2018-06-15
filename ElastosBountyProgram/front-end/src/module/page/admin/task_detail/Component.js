@@ -28,7 +28,6 @@ export default class extends AdminPage {
     }
 
     ord_renderContent () {
-
         return (
             <div>
                 <div className="ebp-header-divider">

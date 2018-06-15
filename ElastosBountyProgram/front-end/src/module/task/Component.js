@@ -6,7 +6,7 @@ import Comments from '@/module/common/comments/Container'
 
 import TaskPublicDetail from './detail/Container'
 
-import {TASK_STATUS} from '@/constant'
+import {TASK_STATUS, TASK_CATEGORY, TASK_TYPE} from '@/constant'
 
 import './style.scss'
 
@@ -94,36 +94,37 @@ export default class extends BaseComponent {
                 {this.props.task.status === TASK_STATUS.PENDING &&
                 <span className="help-text">&nbsp; - this task is awaiting approval by an admin</span>
                 }
-                {this.props.task.status === TASK_STATUS.APPROVED &&
+                {this.props.task.status === TASK_STATUS.APPROVED && !(this.props.task.category === TASK_CATEGORY.DEVELOPER && this.props.task.type === TASK_TYPE.EVENT) &&
                 <span className="help-text">&nbsp; - this task is waiting on applicants to be selected</span>
                 }
                 {this.props.task.status === TASK_STATUS.ASSIGNED &&
                 <span className="help-text">&nbsp; - this task is active</span>
                 }
-                {this.props.task.status === TASK_STATUS.SUBMITTED &&
-                <span className="help-text">&nbsp; - you have submitted this task, pending owner approval</span>
-                }
+                {this.props.task.status === TASK_STATUS.SUBMITTED && (isTaskOwner ?
+                    <span className="help-text">&nbsp; - one or more of your applicants have submitted their proposal</span> :
+                    <span className="help-text">&nbsp; - you have submitted this task, pending owner approval</span>
+                )}
                 {this.props.task.status === TASK_STATUS.SUCCESS &&
                 <span className="help-text">&nbsp; - an admin will review and disburse the ELA reward if any</span>
                 }
-                {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) && isTaskOwner &&
-                <span className="help-text">&nbsp; -
+                {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) && isTaskOwner && !(this.props.task.category === TASK_CATEGORY.DEVELOPER && this.props.task.type === TASK_TYPE.EVENT) &&
+                <div className="help-text">&nbsp; -
                     Please accept applicants up to the max accepted number
-                </span>
+                </div>
                 }
             </div>
             <div className="pull-right right-align">
-                {this.props.task.status === TASK_STATUS.ASSIGNED && isTaskOwner &&
+                {this.props.task.status === TASK_STATUS.SUBMITTED && isTaskOwner &&
                     <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.acceptAsComplete.bind(this)}>
                         <Button>{this.props.task.assignSelf ? 'Mark as Complete' : 'Accept as Complete'}</Button>
                     </Popconfirm>
                 }
                 {this.props.task.status === TASK_STATUS.ASSIGNED && !isTaskOwner &&
-                <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsComplete.bind(this)}>
+                <Popconfirm title="Are you sure you want to submit this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsComplete.bind(this)}>
                     <Button>Submit as Complete</Button>
                 </Popconfirm>
                 }
-                {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) && isTaskOwner &&
+                {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) && isTaskOwner && !(this.props.task.category === TASK_CATEGORY.DEVELOPER && this.props.task.type === TASK_TYPE.EVENT) &&
                 <Popconfirm title="Are you sure you want to start this task with the current applicants?" placement="left" okText="Yes" onConfirm={this.forceStart.bind(this)}>
                     <Button>Force Start</Button>
                 </Popconfirm>

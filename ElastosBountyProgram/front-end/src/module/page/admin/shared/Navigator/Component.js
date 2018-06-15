@@ -17,15 +17,19 @@ export default class extends BaseComponent {
                 <Menu.Item key="tasks">
                     <Link to="/admin/tasks">{I18N.get('1300')}</Link>
                 </Menu.Item>
+                {/*
                 <Menu.Item key="community">
                     <Link to="/admin/community">{I18N.get('1301')}</Link>
                 </Menu.Item>
+                */}
                 <Menu.Item key="users">
                     <Link to="/admin/users">{I18N.get('1302')}</Link>
                 </Menu.Item>
+                {/*
                 <Menu.Item key="teams">
                     <Link to="/admin/teams">{I18N.get('1303')}</Link>
                 </Menu.Item>
+                */}
                 <Menu.Item key="submissions">
                     <Link to="/admin/submissions">{I18N.get('1304')}</Link>
                 </Menu.Item>

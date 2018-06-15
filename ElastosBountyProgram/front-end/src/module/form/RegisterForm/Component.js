@@ -138,7 +138,7 @@ class C extends BaseComponent {
         )
 
         const recaptcha_fn = getFieldDecorator('recaptcha', {
-            rules: [{required: false}]
+            rules: [{required: true}]
         })
         const recaptcha_el = (
             <ReCAPTCHA

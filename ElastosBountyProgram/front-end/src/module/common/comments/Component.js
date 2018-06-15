@@ -25,7 +25,8 @@ class C extends BaseComponent {
     componentWillUnmount() {
         switch (this.props.type) {
             case 'task':
-                this.props.resetTaskDetail()
+                // can't do this - we need to keep detail data sometimes when switching to an edit form
+                // this.props.resetTaskDetail()
                 break
             case 'sumbission':
                 this.props.resetSubmissionDetail()
@@ -67,7 +68,7 @@ class C extends BaseComponent {
             initialValue: ''
         })
         const comment_el = (
-            <Input placeholder="What's on your mind?"/>
+            <Input placeholder="Comments or updates"/>
         )
 
         return {
@@ -135,7 +136,7 @@ class C extends BaseComponent {
                         pageSize: 5,
                     }}
                     dataSource={commentItems}
-                    footer={footer}
+                    header={footer}
                     renderItem={(item, ind) => (
                         <List.Item key={ind}>
                             <List.Item.Meta
@@ -155,7 +156,9 @@ class C extends BaseComponent {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.props.postComment(this.props.type, this.props.model._id, values.comment)
+                this.props.postComment(this.props.type, this.props.model._id, values.comment).then(() => {
+                    // TODO: clear comment
+                })
             }
         })
     }

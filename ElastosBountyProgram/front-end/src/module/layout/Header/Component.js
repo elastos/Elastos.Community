@@ -122,7 +122,6 @@ export default class extends BaseComponent {
                         </Dropdown>
                     </Menu.Item>
                 </Menu>
-
                 <Menu onClick={this.clickItem.bind(this)} className="c_MenuTopRight" mode="horizontal">
                     <Menu.Item key="how-to-earn">
                         {I18N.get('0007')}

@@ -20,7 +20,6 @@ export default class extends StandardPage {
     }
 
     ord_renderContent () {
-
         return (
             <div className="p_Tasks">
                 <div className="ebp-header-divider">
@@ -66,14 +65,15 @@ export default class extends StandardPage {
         );
     }
 
-    async componentDidMount(){
+    componentDidMount(){
         this.setState({loading : true});
-        const d = await this.props.fetchTaskList();
+        this.props.fetchTaskList().then(() => {
 
-        this.setState({
-            loading : false,
-            list : d.list,
-            total : d.total
-        });
+            this.setState({
+                loading: false,
+                list: d.list,
+                total: d.total
+            })
+        })
     }
 }

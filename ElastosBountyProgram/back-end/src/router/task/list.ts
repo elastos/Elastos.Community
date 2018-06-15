@@ -66,6 +66,9 @@ export default class extends Base{
                     constant.TASK_STATUS.PENDING,
                     constant.TASK_STATUS.APPROVED,
                     constant.TASK_STATUS.ASSIGNED,
+                    constant.TASK_STATUS.SUBMITTED,
+                    constant.TASK_STATUS.SUCCESS,
+                    constant.TASK_STATUS.DISTRIBUTED
             ]}
 
         } else if (!param.status) {
@@ -73,7 +76,10 @@ export default class extends Base{
             query.status = {$in: [
                     constant.TASK_STATUS.CREATED,
                     constant.TASK_STATUS.APPROVED,
-                    constant.TASK_STATUS.ASSIGNED
+                    constant.TASK_STATUS.ASSIGNED,
+                    constant.TASK_STATUS.SUBMITTED,
+                    constant.TASK_STATUS.SUCCESS,
+                    constant.TASK_STATUS.DISTRIBUTED
                 ]}
         }
 

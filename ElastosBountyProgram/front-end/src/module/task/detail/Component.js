@@ -155,6 +155,28 @@ export default class extends BaseComponent {
                                     </Col>
                                 </Row>
                                 }
+                                {this.props.task.rewardUpfront.ela > 0 &&
+                                <Row>
+                                    <Col span={4} className="label-col">
+                                        ELA Upfront
+                                    </Col>
+                                    <Col span={20}>
+                                        <p>
+                                            {this.props.task.reward.ela / 1000}
+                                        </p>
+                                    </Col>
+                                </Row>
+                                }
+                                <Row>
+                                    <Col span={4} className="label-col">
+                                        ELA Reward
+                                    </Col>
+                                    <Col span={20}>
+                                        <p>
+                                            {this.props.task.reward.ela / 1000}
+                                        </p>
+                                    </Col>
+                                </Row>
                             </Col>
                             {this.props.task.thumbnail &&
                             <Col span={6}>

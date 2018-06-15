@@ -23,9 +23,11 @@ export default class extends StandardPage {
         this.props.getTaskDetail(taskId)
     }
 
+    /*
     componentWillUnmount() {
         this.props.resetTaskDetail()
     }
+    */
 
     ord_renderContent () {
 

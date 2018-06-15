@@ -197,6 +197,7 @@ export default class extends Base {
 
         // get current
         const task = await db_task.findById(taskId)
+        const taskOwner = await db_user.findById(task.createdBy)
 
         // TODO: ensure reward cannot change if status APPROVED or after
 
@@ -208,6 +209,8 @@ export default class extends Base {
             if ((rewardUpfront && rewardUpfront.ela > 0) || (reward && reward.ela > 0)) {
                 // TODO: send notification to admin
                 updateObj.status = constant.TASK_STATUS.PENDING;
+
+                await this.sendTaskPendingEmail(this.currentUser, task)
             } else {
                 updateObj.status = constant.TASK_STATUS.CREATED;
             }
@@ -230,8 +233,6 @@ export default class extends Base {
                         updateObj.status = constant.TASK_STATUS.ASSIGNED
                     }
 
-                    const taskOwner = await db_user.findById(task.createdBy)
-
                     // TODO: move this to agenda/queue
                     await this.sendTaskApproveEmail(this.currentUser, taskOwner, task)
 
@@ -243,12 +244,31 @@ export default class extends Base {
             }
         }
 
-        // TODO: check if user is owner
-        if (param.status === constant.TASK_STATUS.SUCCESS || param.status === constant.TASK_STATUS.ASSIGNED) {
-            updateObj.status = constant.TASK_STATUS.SUCCESS
+
+        if (this.currentUser._id.toString() === task.createdBy.toString() && (param.status === constant.TASK_STATUS.SUCCESS || param.status === constant.TASK_STATUS.ASSIGNED)) {
+            updateObj.status = param.status
+
+            if (param.status === constant.TASK_STATUS.ASSIGNED) {
+                await this.sendTaskAssignedEmail(taskOwner, task)
+
+            } else if (param.status === constant.TASK_STATUS.SUCCESS) {
+                await this.sendTaskSuccessEmail(taskOwner, task)
+            }
         }
 
+        if (param.status === constant.TASK_STATUS.SUBMITTED) {
+
+        }
+
+        // TODO: check if candidate is the owner, then we auto .... ?
+        /*
+        if (param.status === constant.TASK_STATUS.ASSIGNED) {
+
+        }
+        */
+
         // TODO: check if user is approved candidate
+        // TODO: accept as complete should not be allowed unless at least one candidate has submitted
         if (param.status === constant.TASK_STATUS.SUBMITTED) {
             updateObj.status = constant.TASK_STATUS.SUBMITTED
         }
@@ -539,12 +559,47 @@ export default class extends Base {
             body += ' and it requires approval'
         }
 
-        await mail.send({
-            to: 'clarence@elastosjs.com',
-            toName: 'Clarence Liu',
-            subject: subject,
-            body: body
-        })
+        const adminUsers = await this.getAdminUsers()
+
+        for (let admin of adminUsers) {
+            await mail.send({
+                to: admin.email,
+                toName: `${admin.profile.firstName} ${admin.profile.lastName}`,
+                subject: subject,
+                body: body
+            })
+        }
+    }
+
+    public async sendTaskPendingEmail(curUser, doc) {
+
+        let subject = 'Task ELA Reward Changed: ' + doc.name;
+        let body = `${this.currentUser.profile.firstName} ${this.currentUser.profile.lastName} has changed the ELA reward for task ${doc.name}`
+
+        if (doc.status === constant.TASK_STATUS.PENDING) {
+            subject = 'ACTION REQUIRED: ' + subject
+            body += ' and it requires approval'
+        }
+
+        const adminUsers = await this.getAdminUsers()
+
+        for (let admin of adminUsers) {
+            await mail.send({
+                to: admin.email,
+                toName: `${admin.profile.firstName} ${admin.profile.lastName}`,
+                subject: subject,
+                body: body
+            })
+        }
+    }
+
+    // this email goes to all candidates
+    public async sendTaskAssignedEmail(taskOwner, doc) {
+
+    }
+
+    // this email goes to all candidates
+    public async sendTaskSuccessEmail(taskOwner, doc) {
 
     }
 
@@ -595,6 +650,15 @@ export default class extends Base {
             toName: ownerToName,
             subject: ownerSubject,
             body: ownerBody
+        })
+    }
+
+    protected async getAdminUsers() {
+        const db_user = this.getDBModel('User');
+
+        return db_user.find({
+            role: constant.USER_ROLE.ADMIN,
+            active: true
         })
     }
 }

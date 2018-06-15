@@ -40,11 +40,17 @@ export default class extends StandardPage {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
-            width: '30%',
-            className: 'fontWeight500',
+            width: '20%',
+            className: 'fontWeight500 allow-wrap',
             render: (name, record) => {
                 return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
             }
+        }, {
+            title: 'Description',
+            dataIndex: 'description',
+            className: 'allow-wrap',
+            key: 'name',
+            width: '30%'
         }, {
             title: 'Community',
             dataIndex: 'community',
@@ -92,7 +98,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row d_rowTop">
-                        <Col span={this.props.is_login ? 16 : 24} className="d_leftContainer d_box">
+                        <Col span={false && this.props.is_login ? 16 : 24} className="d_leftContainer d_box">
                             <div className="pull-left">
                                 <h3>
                                     Events Looking for Help
@@ -112,7 +118,7 @@ export default class extends StandardPage {
                                 loading={this.props.loading}
                             />
                         </Col>
-                        {this.props.is_login &&
+                        {false && this.props.is_login &&
                         <Col span={8} className="d_rightContainer d_box d_communities">
                             <div className="pull-left">
                                 <h3>
@@ -161,7 +167,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row">
-                        <Col span={this.props.is_login ? 16 : 24} className="d_leftContainer d_box">
+                        <Col span={false && this.props.is_login ? 16 : 24} className="d_leftContainer d_box">
                             <div>
                                 <h3 className="pull-left">
                                     Available Tasks
@@ -181,7 +187,7 @@ export default class extends StandardPage {
                                 loading={this.props.loading}
                             />
                         </Col>
-                        {this.props.is_login &&
+                        {false && this.props.is_login &&
                         <Col span={8} className="d_rightContainer d_box">
                             <h3>
                                 My Tasks

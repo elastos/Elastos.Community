@@ -104,6 +104,9 @@ export default class extends BaseService {
         } else if (curTaskDetail.status !== TASK_STATUS.ASSIGNED && result.status === TASK_STATUS.ASSIGNED) {
             // if we are doing a force start
             updateStatus = true
+        } else if (curTaskDetail.status !== TASK_STATUS.DISTRIBUTED && result.status === TASK_STATUS.DISTRIBUTED) {
+            // mark as distributed
+            updateStatus = true
         }
 
         if (updateStatus) {
