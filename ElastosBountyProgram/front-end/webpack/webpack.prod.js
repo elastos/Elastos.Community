@@ -16,6 +16,7 @@ const prodEnv = {
     NODE_ENV: JSON.stringify('production'),
     PLATFORM_ENV: JSON.stringify('web'),
     SERVER_URL: JSON.stringify('https://ebp-api-beta.elastos.org')
+    // SERVER_URL: JSON.stringify('http://127.0.0.1:3000')
 };
 
 const stagingEnv = {
@@ -37,7 +38,7 @@ module.exports = merge(common, {
         path: resolve('dist'),
         chunkFilename: 'static/js/[name].bundle.js?[hash:8]',
         filename: 'static/js/[name].js?[hash:8]',
-        publicPath: '',
+        publicPath: '/',
     },
     //devtool: 'inline-source-map',
     stats: {
