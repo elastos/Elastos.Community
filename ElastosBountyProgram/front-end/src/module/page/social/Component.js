@@ -7,7 +7,7 @@ import ModalAddCommunity from '../admin/shared/ModalAddCommunity/Component'
 import {SUBMISSION_TYPE} from '@/constant'
 import './style.scss'
 
-import { Col, Row, Icon, Form, message, Button, Select, Table, List, Tooltip } from 'antd'
+import { Col, Row, Icon, Form, message, Button, Select, Table, List, Tooltip, Cascader } from 'antd'
 
 const Option = Select.Option
 
@@ -15,27 +15,79 @@ import { TASK_STATUS, TASK_TYPE } from '@/constant'
 
 export default class extends StandardPage {
     state = {
-        visibleModalAddCommunity: false
+        visibleModalAddCommunity: false,
+        communityTrees: [],
+        filterCommunity: []
     }
 
     componentDidMount () {
         this.props.getSocialEvents()
         this.props.getMyCommunities(this.props.currentUserId)
         this.props.getUserTeams(this.props.currentUserId)
+        this.getCommunityTrees()
+    }
+    
+    getCommunityTrees() {
+        this.props.getAllCommunities().then((communityTrees) => {
+            this.setState({
+                communityTrees
+            })
+        })
     }
 
     componentWillUnmount () {
         this.props.resetTasks()
     }
+    
+    handleOnChangeFilter(value, selectedOption) {
+        this.setState({
+            filterCommunity: value
+        })
+    }
 
+    filterByMyCommunity(community) {
+        let filterCommunity = []
+        
+        if (community.parentCommunityId) {
+            filterCommunity.push(community.parentCommunityId)
+        }
+    
+        filterCommunity.push(community._id)
+        
+        this.setState({
+            filterCommunity: filterCommunity
+        })
+    }
+    
     ord_renderContent () {
-
-        const eventData = this.props.events
+        let eventData = this.props.events
         const taskData = this.props.tasks
-
-        const availTasksData = this.props.availTasks
+        let availTasksData = this.props.availTasks
         const myTasksData = this.props.myTasks
-
+    
+        const filterTreeLevel = this.state.filterCommunity.length
+        if (filterTreeLevel) {
+            if (filterTreeLevel === 1) {
+                eventData = eventData.filter((event) => {
+                    return event && event.community && event.community._id === this.state.filterCommunity[0]
+                })
+    
+                availTasksData = availTasksData.filter((event) => {
+                    return event && event.community && event.community._id === this.state.filterCommunity[0]
+                })
+            } else if (filterTreeLevel === 2) {
+                eventData = eventData.filter((event) => {
+                    return event && event.community && event.communityParent && event.communityParent._id === this.state.filterCommunity[0] && event.community._id === this.state.filterCommunity[1]
+                })
+    
+                availTasksData = availTasksData.filter((event) => {
+                    return event && event.community && event.communityParent && event.communityParent._id === this.state.filterCommunity[0] && event.community._id === this.state.filterCommunity[1]
+                })
+            }
+        }
+        
+        const filterCommunityEl = <Cascader defaultValue={[...this.state.filterCommunity]} style={{width: '300px'}} options={this.state.communityTrees} placeholder="Filter by community" onChange={this.handleOnChangeFilter.bind(this)}/>
+    
         const columns = [{
             title: 'Name',
             dataIndex: 'name',
@@ -98,7 +150,10 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row d_rowTop">
-                        <Col span={false && this.props.is_login ? 16 : 24} className="d_leftContainer d_box">
+                        <Col span={this.props.is_login ? 16 : 24} className="d_leftContainer d_box">
+                            <div>
+                                {filterCommunityEl}
+                            </div>
                             <div className="pull-left">
                                 <h3>
                                     Events Looking for Help
@@ -118,7 +173,7 @@ export default class extends StandardPage {
                                 loading={this.props.loading}
                             />
                         </Col>
-                        {false && this.props.is_login &&
+                        {this.props.is_login &&
                         <Col span={8} className="d_rightContainer d_box d_communities">
                             <div className="pull-left">
                                 <h3>
@@ -143,16 +198,8 @@ export default class extends StandardPage {
                                 size="small"
                                 dataSource={this.props.myCommunities}
                                 renderItem={(community) => {
-
-                                    let communityLink = '/community/'
-                                    if (community.parentCommunityId) {
-                                        communityLink += community.parentCommunityId + '/country/' + community.geolocation + '/region/' + community.name
-                                    } else {
-                                        communityLink += community._id + '/country/' + community.geolocation
-                                    }
-
                                     return <List.Item>
-                                        <a onClick={() => {this.props.history.push(communityLink)}}>
+                                        <a onClick={this.filterByMyCommunity.bind(this, community)}>
                                             {community.name}
                                         </a>
                                     </List.Item>
@@ -167,7 +214,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row">
-                        <Col span={false && this.props.is_login ? 16 : 24} className="d_leftContainer d_box">
+                        <Col span={this.props.is_login ? 16 : 24} className="d_leftContainer d_box">
                             <div>
                                 <h3 className="pull-left">
                                     Available Tasks
@@ -187,7 +234,7 @@ export default class extends StandardPage {
                                 loading={this.props.loading}
                             />
                         </Col>
-                        {false && this.props.is_login &&
+                        {this.props.is_login &&
                         <Col span={8} className="d_rightContainer d_box">
                             <h3>
                                 My Tasks
