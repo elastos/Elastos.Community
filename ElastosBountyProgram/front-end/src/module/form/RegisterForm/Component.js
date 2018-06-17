@@ -20,8 +20,8 @@ class C extends BaseComponent {
 
     handleSubmit(e) {
         e.preventDefault()
-        this.props.form.validateFields((err, values) => {
 
+        this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Register - received values of form: ', values)
 
@@ -49,7 +49,9 @@ class C extends BaseComponent {
 
     validateRegCode(rule, value, callback) {
         const reqCode = this.state.requestedCode
-        if (reqCode && reqCode !== form.getFieldValue('reg_code')) {
+        const form = this.props.form
+
+        if (reqCode && reqCode.toString() !== value) {
             callback('The code you entered does not match')
         } else {
             callback()
@@ -74,6 +76,23 @@ class C extends BaseComponent {
             callback(`The password must be at least ${MIN_LENGTH_PASSWORD} characters.`)
         }
         callback()
+    }
+
+    getConfirmInputProps() {
+        const {getFieldDecorator} = this.props.form
+
+        const regCode_fn = getFieldDecorator('reg_code', {
+            rules: [{required: true, message: 'Please input your code'},
+                {validator: this.validateRegCode.bind(this)}]
+        })
+        const regCode_el = (
+            <Input size="large"
+                   placeholder="Confirmation code"/>
+        )
+
+        return {
+            regCode: regCode_fn(regCode_el)
+        }
     }
 
     getInputProps() {
@@ -219,16 +238,6 @@ class C extends BaseComponent {
                    placeholder="Where did you hear about us?"/>
         )
 
-        const regCode_fn = getFieldDecorator('reg_code', {
-            rules: [{message: 'Please input your code'}]
-        }, {
-            validator: this.validateRegCode.bind(this)
-        })
-        const regCode_el = (
-            <Input size="large"
-                   placeholder="Confirmation code"/>
-        )
-
         return {
             firstName: firstName_fn(firstName_el),
             lastName: lastName_fn(lastName_el),
@@ -247,15 +256,12 @@ class C extends BaseComponent {
             source: source_fn(source_el),
 
             recaptcha: recaptcha_fn(recaptcha_el),
-
-            regCode: regCode_fn(regCode_el)
         }
     }
 
     getForm() {
-        const p = this.getInputProps()
-
         if (this.state.requestedCode) {
+            const p = this.getConfirmInputProps()
             return (
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
                     <Divider>We have sent a confirmation code to your email.</Divider>
@@ -270,6 +276,7 @@ class C extends BaseComponent {
                 </Form>
             )
         } else {
+            const p = this.getInputProps()
             return (
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
                     <Divider>Required Fields</Divider>
