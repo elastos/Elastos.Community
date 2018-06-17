@@ -33,6 +33,14 @@ export default createContainer(Component, (state) => {
                 console.error(err)
                 message.error('Registration Failed - Please Contact Our Support')
             }
+        },
+
+        async sendEmail(toUserId, formData) {
+            return userService.sendEmail(this.currentUserId, toUserId, formData)
+        },
+
+        async sendRegistrationCode(email, code) {
+            return userService.sendRegistrationCode(email, code)
         }
     }
 })
