@@ -42,6 +42,11 @@ export default Base.setRouter([
         method : 'post'
     },
     {
+        path: '/send-confirm',
+        router: send_confirm_email,
+        method: 'post'
+    },
+    {
         path : '/current_user',
         router : current_user,
         method : 'get'

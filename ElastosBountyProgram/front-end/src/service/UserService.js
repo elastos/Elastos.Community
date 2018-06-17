@@ -191,7 +191,17 @@ export default class extends BaseService {
             method: 'post',
             data: {
                 email,
-                code
+                code // TODO dont send this in clear text
+            }
+        })
+    }
+
+    async sendConfirmationEmail(email) {
+        return await api_request({
+            path: '/api/user/send-confirm',
+            method: 'post',
+            data: {
+                email
             }
         })
     }

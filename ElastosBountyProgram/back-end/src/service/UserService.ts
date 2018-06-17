@@ -268,4 +268,16 @@ export default class extends Base {
 
         return true
     }
+
+    public async sendConfirmation(param) {
+        const { email } = param
+
+        await mail.send({
+            to: email,
+            subject: 'Welcome to Cyber Republic',
+            body: 'Your registration is complete.'
+        })
+
+        return true
+    }
 }
