@@ -37,6 +37,11 @@ export default Base.setRouter([
         method : 'post'
     },
     {
+        path : '/send-code',
+        router : send_reg_email,
+        method : 'post'
+    },
+    {
         path : '/current_user',
         router : current_user,
         method : 'get'

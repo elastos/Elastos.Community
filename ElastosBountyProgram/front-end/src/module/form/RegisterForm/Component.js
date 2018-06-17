@@ -26,12 +26,14 @@ class C extends BaseComponent {
                 console.log('Register - received values of form: ', values)
 
                 if (this.state.requestedCode) {
-                    this.props.register(values.username, values.password, _.omit(values, ['username', 'password']))
+                    this.props.register(this.state.savedValues.username,
+                        this.state.savedValues.password, _.omit(this.state.savedValues, ['username', 'password']))
                 } else {
                     const code = this.generateRegCode()
                     this.props.sendRegistrationCode(values.email, code)
                     this.setState({
-                        requestedCode: code
+                        requestedCode: code,
+                        savedValues: values
                     })
                 }
             }
@@ -253,10 +255,10 @@ class C extends BaseComponent {
     getForm() {
         const p = this.getInputProps()
 
-        if (this.props.requestedCode) {
+        if (this.state.requestedCode) {
             return (
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
-                    <Divider>We have sent a confirmation code to your email. Please check your Spam folder if you do not receive it.</Divider>
+                    <Divider>We have sent a confirmation code to your email.</Divider>
                     <FormItem>
                         {p.regCode}
                     </FormItem>
