@@ -38,7 +38,7 @@ export const TASK_STATUS = {
     // PROPOSAL: 'PROPOSAL',
 
     CREATED: 'CREATED', // if no ELA
-    PENDING: 'D', // if ELA > 0
+    PENDING: 'PENDING', // if ELA > 0
 
     APPROVED: 'APPROVED', // Approved by admin
 

@@ -1,3 +1,5 @@
+import {TASK_STATUS, TASK_CATEGORY, TASK_TYPE} from '@/constant'
+
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import TaskCreateForm from '@/module/form/TaskCreateForm/Container'
@@ -5,8 +7,6 @@ import { Col, Row, Popconfirm, Divider, Button, Spin } from 'antd'
 import Comments from '@/module/common/comments/Container'
 
 import TaskPublicDetail from './detail/Container'
-
-import {TASK_STATUS, TASK_CATEGORY, TASK_TYPE} from '@/constant'
 
 import './style.scss'
 
