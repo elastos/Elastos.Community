@@ -71,16 +71,6 @@ export default class extends StandardPage {
                         </div>
                     </Col>
 
-                case 3:
-                    // Apply button
-                    return <Col key={task._id} md={{span:12}} lg={{span: 8}}>
-                        <div class="i_event">
-                            <Button>
-                                Apply to Help
-                            </Button>
-                        </div>
-                    </Col>
-
             }
 
         }
@@ -210,7 +200,7 @@ export default class extends StandardPage {
                                 Featured Events
                             </h3>
 
-                            {_.range(4).map((i) => {
+                            {_.range(3).map((i) => {
                                 return <Row key={i} className="d_devEventsContainer">
                                     {this.props.social_tasks.map((task) => {
                                         return renderEventRow(task, i)
