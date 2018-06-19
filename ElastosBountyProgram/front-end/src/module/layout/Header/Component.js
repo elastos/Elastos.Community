@@ -123,10 +123,11 @@ export default class extends BaseComponent {
                     </Menu.Item>
                 </Menu>
                 <Menu onClick={this.clickItem.bind(this)} className="c_MenuTopRight" mode="horizontal">
+                    {/*
                     <Menu.Item key="how-to-earn">
                         {I18N.get('0007')}
                     </Menu.Item>
-
+                    */}
                     <Menu.Item key="about">
                         {I18N.get('0008')}
                     </Menu.Item>
@@ -135,9 +136,14 @@ export default class extends BaseComponent {
                         {I18N.get('0009')}
                     </Menu.Item>
 
+                    <Menu.Item key="slack">
+                        {I18N.get('0011')}
+                    </Menu.Item>
+                    {/*
                     <Menu.Item key="contact">
                         {I18N.get('0010')}
                     </Menu.Item>
+                    */}
                 </Menu>
             </Header>
         )
@@ -163,7 +169,8 @@ export default class extends BaseComponent {
             'how-to-earn',
             'about',
             'faq',
-            'contact'
+            'contact',
+            'slack'
         ], key)) {
             this.props.history.push('/' + e.key)
         }

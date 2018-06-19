@@ -13,6 +13,10 @@ import TaskDetailPage from '@/module/page/task_detail/Container'
 import LoginPage from '@/module/page/login/Container'
 import RegisterPage from '@/module/page/register/Container'
 
+import FAQPage from '@/module/page/static/faq/Container'
+import AboutPage from '@/module/page/static/about/Container'
+import SlackPage from '@/module/page/static/slack/Container'
+
 import ProfileInfoPage from '@/module/page/profile/info/Container'
 import ProfileTasksPage from '@/module/page/profile/tasks/Container'
 import ProfileTaskDetailPage from '@/module/page/profile/task_detail/Container'
@@ -100,6 +104,18 @@ export default [
     {
         path: '/register',
         page: RegisterPage
+    },
+    {
+        path: '/faq',
+        page: FAQPage
+    },
+    {
+        path: '/about',
+        page: AboutPage
+    },
+    {
+        path: '/slack',
+        page: SlackPage
     },
     {
         path: '/profile/info',

@@ -10,6 +10,7 @@ export default {
     '0008': 'About',
     '0009': 'FAQ',
     '0010': 'Contact',
+    '0011': 'Join Slack',
 
     '0100': 'Developers',
     '0101': 'Community',
