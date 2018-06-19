@@ -51,6 +51,15 @@ class C extends BaseComponent {
     }
     */
 
+    componentDidMount() {
+        const taskId = this.props.match.params.taskId
+        taskId && this.props.getTaskDetail(taskId)
+    }
+
+    componentWillUnmount() {
+        this.props.resetTaskDetail()
+    }
+
     handleSubmit (e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
@@ -292,10 +301,6 @@ class C extends BaseComponent {
             thumbnail: thumbnail_fn(thumbnail_el),
             attachment: attachment_fn(attachment_el)
         }
-    }
-
-    componentDidMount() {
-        // this.getCommunityTrees()
     }
 
     /*
