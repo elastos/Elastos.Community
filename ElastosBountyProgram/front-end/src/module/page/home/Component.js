@@ -60,7 +60,7 @@ export default class extends StandardPage {
                 case 2:
                     // Desc
                     return <Col key={task._id} md={{span:12}} lg={{span: 8}}>
-                        <div class="i_event">
+                        <div class="i_event desc">
                             <p>
                                 {_.truncate(task.description, {length: 100})}
 
