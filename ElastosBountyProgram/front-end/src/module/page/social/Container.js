@@ -68,6 +68,7 @@ export default createContainer(Component, (state) => {
 }, () => {
 
     const taskService = new TaskService()
+    const communityService = new CommunityService()
 
     return {
         async getSocialEvents () {
@@ -77,7 +78,6 @@ export default createContainer(Component, (state) => {
         },
 
         async getMyCommunities(currentUserId) {
-            const communityService = new CommunityService()
             return communityService.getMyCommunities(currentUserId)
         },
 
@@ -94,6 +94,37 @@ export default createContainer(Component, (state) => {
         async addCommunitySubmission(data) {
             const submissionService = new SubmissionService()
             return submissionService.create(data)
+        },
+        async getAllCommunities() {
+            return new Promise((resolve, reject) => {
+                communityService.getAll().then((data) => {
+                    const cascaderItems =  data.map((item) => {
+                        return {
+                            value: item._id,
+                            label: item.name,
+                            parentId: item.parentCommunityId,
+                        }
+                    })
+                
+                    const rootCascaderItems = _.filter(cascaderItems, {
+                        parentId: null
+                    })
+                
+                    rootCascaderItems.forEach((rootCascaderItem) => {
+                        const children = _.filter(cascaderItems, {
+                            parentId: rootCascaderItem.value
+                        })
+                    
+                        if (children && children.length) {
+                            rootCascaderItem.children = children
+                        }
+                    })
+                
+                    resolve(rootCascaderItems)
+                }).catch((err) => {
+                    reject(err)
+                })
+            })
         }
     }
 })
