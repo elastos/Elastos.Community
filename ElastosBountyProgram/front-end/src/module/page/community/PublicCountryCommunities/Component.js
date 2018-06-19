@@ -47,8 +47,8 @@ export default class extends StandardPage {
 
     getAvatarUrl(users) {
         const avatarDefault = {
-            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Male.png',
-            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Female.png',
+            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png',
+            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Other.png',
             [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png',
         };
 
@@ -219,7 +219,7 @@ export default class extends StandardPage {
                                     <div>
                                         <Row>
                                             <Col span={20}>
-                                                <h3 className="without-padding">Under Development</h3>
+                                                <h3 className="without-padding">Select a Country</h3>
                                             </Col>
                                             <Col span={4}>
                                                 {/*

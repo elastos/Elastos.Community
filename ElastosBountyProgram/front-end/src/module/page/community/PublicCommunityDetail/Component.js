@@ -124,8 +124,8 @@ export default class extends StandardPage {
 
     getAvatarUrl(users) {
         const avatarDefault = {
-            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Male.png',
-            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Female.png',
+            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png',
+            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Other.png',
             [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png',
         };
 
@@ -496,9 +496,11 @@ export default class extends StandardPage {
                                     <Breadcrumb.Item>
                                         {menuCountriesEl}
                                     </Breadcrumb.Item>
+                                    {/*
                                     <Breadcrumb.Item>
                                         {menuListRegionsEl}
                                     </Breadcrumb.Item>
+                                    */}
                                 </Breadcrumb>
                             </Col>
                         </Row>
@@ -558,6 +560,7 @@ export default class extends StandardPage {
                                     </div>
                                 </Col>
                             </Row>
+                            {/*
                             <Row>
                                 <Col span={24}>
                                     {this.state.subCommunities.length > 0 &&
@@ -568,6 +571,7 @@ export default class extends StandardPage {
                                     {tabSubCommunities}
                                 </Col>
                             </Row>
+                            */}
                         </div>
                     </div>
                 </div>
