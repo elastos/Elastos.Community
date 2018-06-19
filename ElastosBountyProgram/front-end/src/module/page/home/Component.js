@@ -40,7 +40,7 @@ export default class extends StandardPage {
                     // Task Name
                     return <Col key={task._id} md={{span:12}} lg={{span: 8}}>
                         <div class="i_event">
-                            <h4>
+                            <h4 onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}>
                                 {task.name}
                             </h4>
                         </div>
@@ -65,7 +65,7 @@ export default class extends StandardPage {
                                 {_.truncate(task.description, {length: 100})}
 
                                 {task.description.length > 100 &&
-                                <a className="moreDetails"> more details</a>
+                                <a className="moreDetails" onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}> more details</a>
                                 }
                             </p>
                         </div>
