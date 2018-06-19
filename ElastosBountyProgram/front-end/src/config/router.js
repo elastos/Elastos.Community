@@ -21,6 +21,7 @@ import ProfileInfoPage from '@/module/page/profile/info/Container'
 import ProfileTasksPage from '@/module/page/profile/tasks/Container'
 import ProfileTaskDetailPage from '@/module/page/profile/task_detail/Container'
 import ProfileTeamsPage from '@/module/page/profile/teams/Container'
+import ProfileTeamDetailPage from '@/module/page/profile/team_detail/Container'
 import ProfileSubmissionsPage from '@/module/page/profile/submissions/Container'
 import ProfileCommunitiesPage from '@/module/page/profile/communities/Container'
 import ProfileSubmissionDetailPage from '@/module/page/profile/submission_detail/Container'
@@ -132,6 +133,10 @@ export default [
     {
         path: '/profile/teams',
         page: ProfileTeamsPage
+    },
+    {
+        path : '/profile/teams/:teamId',
+        page : ProfileTeamDetailPage
     },
     {
         path: '/profile/submissions',
