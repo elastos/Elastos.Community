@@ -13,6 +13,7 @@ import submission from './submission';
 
 import upload from './upload';
 
+import ping from './ping';
 
 export const middleware = (req: Request, res: Response, next: NextFunction)=>{
     // check token
@@ -70,6 +71,8 @@ const router = Router();
 if(getEnv() === 'dev'){
     router.use('/test', test);
 }
+
+router.use('/ping', ping);
 
 router.use('/user', user);
 router.use('/team', team);
