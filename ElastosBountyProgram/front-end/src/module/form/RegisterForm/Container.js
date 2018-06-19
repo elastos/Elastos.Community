@@ -26,6 +26,7 @@ export default createContainer(Component, (state) => {
                 const rs = await userService.register(username, password, profile)
 
                 if (rs) {
+                    userService.sendConfirmationEmail()
                     message.success('Successfully Registered - Please Login', 10)
                     this.history.replace('/login')
                 }
@@ -33,6 +34,14 @@ export default createContainer(Component, (state) => {
                 console.error(err)
                 message.error('Registration Failed - Please Contact Our Support')
             }
+        },
+
+        async sendEmail(toUserId, formData) {
+            return userService.sendEmail(this.currentUserId, toUserId, formData)
+        },
+
+        async sendRegistrationCode(email, code) {
+            return userService.sendRegistrationCode(email, code)
         }
     }
 })

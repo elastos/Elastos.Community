@@ -174,7 +174,6 @@ export default class extends BaseService {
     }
 
     async sendEmail(fromUserId, toUserId, formData) {
-
         return await api_request({
             path: '/api/user/send-email',
             method: 'post',
@@ -182,6 +181,27 @@ export default class extends BaseService {
                 fromUserId,
                 toUserId,
                 ...formData
+            }
+        })
+    }
+
+    async sendRegistrationCode(email, code) {
+        return await api_request({
+            path: '/api/user/send-code',
+            method: 'post',
+            data: {
+                email,
+                code // TODO dont send this in clear text
+            }
+        })
+    }
+
+    async sendConfirmationEmail(email) {
+        return await api_request({
+            path: '/api/user/send-confirm',
+            method: 'post',
+            data: {
+                email
             }
         })
     }
