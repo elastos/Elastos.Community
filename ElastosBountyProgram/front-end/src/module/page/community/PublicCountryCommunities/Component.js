@@ -165,9 +165,9 @@ export default class extends StandardPage {
                             </Col>
                         )
                     })}
-                    
+
                     {community.leaders.length === 0 && (
-                        <Col span={3} key={index} className="user-card">
+                        <Col span={3} key={index} className="user-card public-communities-page">
                             <Link to={'/community/' + community._id  + '/country/' + community.geolocation}>
                                 <Card
                                     key={index}
