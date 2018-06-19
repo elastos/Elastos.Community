@@ -93,6 +93,7 @@ export default class extends StandardPage {
         }
     }
 
+    // TODO: doesn't work if there is no leader
     loadCommunityDetail() {
         this.props.getCommunityDetail(this.props.match.params['community']).then((community) => {
             this.convertCommunityLeaderIdsToLeaderObjects(community).then((community) => {
@@ -261,8 +262,9 @@ export default class extends StandardPage {
 
     getMemberCommunityId() {
         let communityId;
+
         if (!this.props.match.params['region']) {
-            communityId = this.state.community._id;
+            communityId = this.props.match.params.community
         } else {
             // Find which sub community user selected
             const selectedSubCommunity = _.find(this.state.subCommunities, {
