@@ -1,5 +1,6 @@
 
 @import "../../../style/variable";
+@import "../../../style/color";
 
 @mixin homeContent {
   max-width: $main_width;
@@ -95,6 +96,11 @@
 
   .i_event {
     padding: 0 $gap_2;
+    cursor: pointer;
+
+    :hover {
+      color: $text_light_gray;
+    }
 
     > img {
       width: 100%;
