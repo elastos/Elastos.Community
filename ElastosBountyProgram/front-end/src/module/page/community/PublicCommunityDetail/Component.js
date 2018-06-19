@@ -37,11 +37,11 @@ export default class extends StandardPage {
         this.loadCommunityDetail()
         this.loadSubCommunities()
     }
-    
+
     formatCommunityMembers(communityMembers) {
         communityMembers = _.uniqBy(communityMembers, '_id')
         communityMembers = this.getAvatarUrl(communityMembers)
-    
+
         // Convert array members to key (id) value (object user), so we can check if current user joined or not
         const keyValueCommunityMembers = _.keyBy(communityMembers, '_id')
         this.setState({
@@ -57,12 +57,12 @@ export default class extends StandardPage {
             const listApiCalls = [
                 this.props.getCommunityMembers(this.props.match.params['community']) // Get member of community
             ];
-    
+
             // Get members of each sub community
             this.state.subCommunities.forEach((subCommunity) => {
                 listApiCalls.push(this.props.getCommunityMembers(subCommunity._id))
             })
-    
+
             Promise.all(listApiCalls).then((apiResponses) => {
                 // Save list all member ids belong to community
                 const keyValueMembersWithoutSubCommunity = _.keyBy(apiResponses[0], '_id')
@@ -74,7 +74,7 @@ export default class extends StandardPage {
                 apiResponses.forEach((apiResponse) => {
                     communityMembers.push(...apiResponse)
                 })
-        
+
                 this.formatCommunityMembers(communityMembers)
             })
         } else {
@@ -82,7 +82,7 @@ export default class extends StandardPage {
             const selectedSubCommunity = _.find(this.state.subCommunities, {
                 name: this.props.match.params['region']
             })
-            
+
             if (!selectedSubCommunity) {
                 return
             }
@@ -115,7 +115,7 @@ export default class extends StandardPage {
                     listSubCommunitiesByType,
                     breadcrumbRegions,
                 })
-                
+
                 // After have sub-community we get all members
                 this.loadCommunityMembers()
             })
@@ -245,10 +245,10 @@ export default class extends StandardPage {
             this.setState({
                 listSubCommunitiesByType
             })
-            
+
             const isChangeRegion = !!this.props.match.params['region'];
             this.props.history.push(`/community/${this.props.match.params['community']}/country/${this.props.match.params['country']}/region/${region}`);
-    
+
             if (isChangeRegion) {
                 setTimeout(() => {
                     this.loadCommunityMembers()
@@ -258,7 +258,7 @@ export default class extends StandardPage {
             this.props.history.push(`/community/${this.props.match.params['community']}/country/${this.props.match.params['country']}`);
         }
     }
-    
+
     getMemberCommunityId() {
         let communityId;
         if (!this.props.match.params['region']) {
@@ -268,30 +268,30 @@ export default class extends StandardPage {
             const selectedSubCommunity = _.find(this.state.subCommunities, {
                 name: this.props.match.params['region']
             })
-        
+
             if (!selectedSubCommunity) {
                 return;
             }
-        
+
             communityId = selectedSubCommunity._id
         }
-        
+
         return communityId
     }
 
     joinToCommunity() {
         const communityId = this.getMemberCommunityId()
-    
+
         this.props.addMember(this.props.current_user_id, communityId).then(() => {
             message.success('You were added to community')
-        
+
             this.loadCommunityMembers()
         }).catch((err) => {
             console.error(err)
             message.error('Error while adding you to community')
         })
     }
-    
+
     leaveFromCommunity() {
         const communityId = this.getMemberCommunityId()
 
@@ -364,6 +364,9 @@ export default class extends StandardPage {
     }
 
     renderTabSubCommunities() {
+        if (this.state.subCommunities.length === 0) {
+            return null
+        }
         return (
             <Tabs type="card">
                 {Object.keys(config.data.mappingSubCommunityTypesAndName).map((key) => {
@@ -395,7 +398,7 @@ export default class extends StandardPage {
                                                     </Link>
                                                 )
                                             })}
-                                            
+
                                             {community.leaders.length === 0 && (
                                                 <Link key={index} to={'/community/' + community.parentCommunityId  + '/country/' + community.geolocation + '/region/' + community.name}>
                                                     <Card
@@ -540,15 +543,15 @@ export default class extends StandardPage {
                                         {this.props.current_user_id && this.props.match.params['region'] && !this.state.keyValueCommunityMembers[this.props.current_user_id] && (
                                             <Button onClick={this.joinToCommunity.bind(this)}>Join</Button>
                                         )}
-    
+
                                         {this.props.current_user_id && !this.props.match.params['region'] && !this.state.keyValueMembersWithoutSubCommunity[this.props.current_user_id] && (
                                             <Button onClick={this.joinToCommunity.bind(this)}>Join</Button>
                                         )}
-    
+
                                         {this.props.current_user_id && this.props.match.params['region'] && this.state.keyValueCommunityMembers[this.props.current_user_id] && (
                                             <Button onClick={this.leaveFromCommunity.bind(this)}>Leave</Button>
                                         )}
-    
+
                                         {this.props.current_user_id && !this.props.match.params['region'] && this.state.keyValueMembersWithoutSubCommunity[this.props.current_user_id] && (
                                             <Button onClick={this.leaveFromCommunity.bind(this)}>Leave</Button>
                                         )}
@@ -557,7 +560,9 @@ export default class extends StandardPage {
                             </Row>
                             <Row>
                                 <Col span={24}>
+                                    {this.state.subCommunities.length > 0 &&
                                     <h3 className="without-padding overflow-ellipsis">Sub-Communities</h3>
+                                    }
                                 </Col>
                                 <Col span={24}>
                                     {tabSubCommunities}

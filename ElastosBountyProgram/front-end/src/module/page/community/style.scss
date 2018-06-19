@@ -10,6 +10,14 @@
     padding-bottom: $gap_0;
   }
 
+  .ant-card-body {
+    padding: 0px;
+  }
+
+  .public-communities-page .ant-card {
+    min-height: 220px;
+  }
+
   .d_box {
     padding: 0 $gap_3;
 
