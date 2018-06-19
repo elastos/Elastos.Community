@@ -47,10 +47,10 @@ export default class extends BaseComponent {
                 <Menu.Item key="profileTasks">
                     {I18N.get('2301')}
                 </Menu.Item>
-                {/*
                 <Menu.Item key="profileCommunities">
                     {I18N.get('2304')}
                 </Menu.Item>
+                {/*
                 <Menu.Item key="profileTeams">
                     {I18N.get('2302')}
                 </Menu.Item>
