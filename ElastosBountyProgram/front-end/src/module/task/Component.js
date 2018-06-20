@@ -20,6 +20,15 @@ import './style.scss'
  */
 export default class extends BaseComponent {
 
+    componentDidMount() {
+        const taskId = this.props.match.params.taskId
+        taskId && this.props.getTaskDetail(taskId)
+    }
+
+    componentWillUnmount() {
+        this.props.resetTaskDetail()
+    }
+
     renderMain() {
         return (
             <div className="c_TaskDetail">

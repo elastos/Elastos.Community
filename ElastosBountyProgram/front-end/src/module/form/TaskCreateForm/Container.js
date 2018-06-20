@@ -108,6 +108,10 @@ export default createContainer(Component, (state)=>{
             return taskService.get(taskId)
         },
 
+        async resetTaskDetail() {
+            return taskService.resetTaskDetail()
+        },
+
         async getAllCommunities() {
             return new Promise((resolve, reject) => {
                 communityService.getAll().then((data) => {
