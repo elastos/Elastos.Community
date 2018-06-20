@@ -161,7 +161,7 @@ class C extends BaseComponent {
 
 
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
-                            <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
+                            <Button loading={this.state.loading} type="ebp" htmlType="submit" className="d_btn">
                                 Save Changes
                             </Button>
                         </FormItem>

@@ -34,7 +34,7 @@ export default class extends StandardPage {
                             <Row>
                                 <Col span={20} className="c_ProfileContainer admin-left-column wrap-box-user">
                                     <div className="pull-right">
-                                        <Button>Create Team</Button>
+                                        <Button onClick={this.goCreatepage.bind(this)}>Create Team</Button>
                                     </div>
                                     <Divider className="">My teams</Divider>
                                     {this.renderList()}
@@ -94,6 +94,9 @@ export default class extends StandardPage {
 
     goDetail(teamId){
         this.props.history.push(`/profile/teams/${teamId}`);
+    }
+    goCreatepage(){
+        this.props.history.push('/profile/teams/create');
     }
 
     async componentDidMount(){

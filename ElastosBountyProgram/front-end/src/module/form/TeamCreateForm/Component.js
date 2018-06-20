@@ -19,6 +19,8 @@ import {
 
 } from 'antd'
 
+import InputTags from '@/module/shared/InputTags/Component'
+
 
 
 const FormItem = Form.Item
@@ -36,12 +38,22 @@ class C extends BaseComponent {
 
     handleSubmit (e) {
         e.preventDefault()
-        this.props.form.validateFields((err, values) => {
+
+        const tags = this.props.form.getFieldInstance('tags').getValue();
+        this.props.form.validateFields(async (err, values) => {
             if (!err) {
-                this.props.updateUser(values, this.state).then(() => {
-                    this.props.getCurrentUser()
+                this.setState({loading : true});
+                const res = await this.props.create({
+                    ...values,
+                    tags : tags.join(','),
+                    logo : '',
+                    metadata : ''
                 });
-                this.props.switchEditMode()
+
+                console.log(res);
+
+                this.setState({loading : false});
+                this.props.history.push('/profile/teams');
             }
         })
     }
@@ -54,14 +66,14 @@ class C extends BaseComponent {
             <Input size="large"/>
         );
 
-        const name_fn = getFieldDecorator('Name', {
+        const name_fn = getFieldDecorator('name', {
             rules: [{required: true, message: 'team name is required'}],
-            initialValue: team.name
+            initialValue: ''
         })
 
-        const type_fn = getFieldDecorator('Type', {
+        const type_fn = getFieldDecorator('type', {
             rules: [{required: true, message: 'type is required'}],
-            initialValue: team.type
+            initialValue: 'DEVELOP'
         })
         const type_el = (
             <RadioGroup>
@@ -76,9 +88,9 @@ class C extends BaseComponent {
             </RadioGroup>
         )
 
-        const recruiting_fn = getFieldDecorator('Recruiting', {
+        const recruiting_fn = getFieldDecorator('recruiting', {
             rules: [{required: true}],
-            initialValue: team.recruiting
+            initialValue: true
         })
         const recruiting_el = (
             <RadioGroup>
@@ -92,16 +104,16 @@ class C extends BaseComponent {
             </RadioGroup>
         )
 
-        const description_fn = getFieldDecorator('Description', {
+        const description_fn = getFieldDecorator('description', {
             rules: [],
-            initialValue: team.profile.description
+            initialValue: ''
         })
 
-        const tags_fn = getFieldDecorator('Tags', {
+        const tags_fn = getFieldDecorator('tags', {
             rules: [],
-            initialValue: data.tags.join(', ')
+            initialValue: ''
         })
-        const tags_el = <Input size="large" disabled={true} />
+        const tags_el = <InputTags />
 
 
         return {
@@ -113,9 +125,6 @@ class C extends BaseComponent {
         }
     }
 
-    componentDidMount() {
-
-    }
 
     ord_render () {
         const p = this.getInputProps()
@@ -154,8 +163,8 @@ class C extends BaseComponent {
 
 
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
-                            <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
-                                Save Changes
+                            <Button loading={this.state.loading} type="ebp" htmlType="submit" className="d_btn">
+                                Create Team
                             </Button>
                         </FormItem>
                     </div>

@@ -31,13 +31,13 @@ export default class extends Base {
                 logo : param.logo,
                 description : param.description
             },
-            recruiting : true,
+            recruiting : param.recruiting || false,
             owner : this.currentUser._id
         };
 
         console.log('create team => ', doc);
         const res = await db_team.save(doc);
-
+console.log(res);
         // save to user team
         const doc_user_team = {
             userId : this.currentUser._id,
