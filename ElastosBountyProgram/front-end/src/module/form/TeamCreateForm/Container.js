@@ -11,7 +11,10 @@ export default createContainer(Component, (state)=>{
 
     };
 }, ()=>{
+    const ts = new TeamService();
     return {
-
+        async create(param){
+            return await ts.create(param);
+        }
     };
 });

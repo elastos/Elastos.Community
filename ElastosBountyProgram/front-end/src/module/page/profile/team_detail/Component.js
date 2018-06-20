@@ -1,14 +1,14 @@
 import React from 'react';
-import BaseAdmin from '../BaseAdmin';
 import {createContainer} from '@/util';
+import _ from 'lodash';
 
-import Navigator from '../shared/Navigator/Component'
+import Navigator from '@/module/page/shared/Navigator/Container'
 import { Breadcrumb, Col, Icon, Row, Spin } from 'antd';
-import TeamService from '@/service/TeamService';
 
 import TeamDetail from '@/module/shared/team_detail/Component';
+import StandardPage from "../../StandardPage";
 
-const Component = class extends BaseAdmin {
+export default class extends StandardPage {
     ord_states(){
         return {
             loading : true,
@@ -25,7 +25,7 @@ const Component = class extends BaseAdmin {
                             <Breadcrumb.Item href="/">
                                 <Icon type="home" />
                             </Breadcrumb.Item>
-                            <Breadcrumb.Item>Admin</Breadcrumb.Item>
+                            <Breadcrumb.Item>profile</Breadcrumb.Item>
                             <Breadcrumb.Item>teams</Breadcrumb.Item>
                             <Breadcrumb.Item>teamid</Breadcrumb.Item>
                         </Breadcrumb>
@@ -37,7 +37,7 @@ const Component = class extends BaseAdmin {
 
                             </Col>
                             <Col span={4} className="admin-right-column wrap-box-navigator">
-                                <Navigator selectedItem={'teams'}/>
+                                <Navigator selectedItem={'profileTeams'}/>
                             </Col>
                         </Row>
                     </div>
@@ -53,8 +53,12 @@ const Component = class extends BaseAdmin {
             );
         }
 
+        const member = _.find(this.state.data.members, (item)=>{
+            return item.user._id === this.props.current.id;
+        })
+        const canEdit = member && member.role === 'LEADER' ? true : false;
         return (
-            <TeamDetail canEdit={true} data={this.state.data} />
+            <TeamDetail canEdit={canEdit} data={this.state.data} />
         )
     }
 
@@ -71,15 +75,3 @@ const Component = class extends BaseAdmin {
         });
     }
 };
-
-export default createContainer(Component, ()=>{
-    return {};
-}, ()=>{
-    const teamService = new TeamService();
-
-    return {
-        async detail(teamId){
-            return await teamService.getDetail(teamId);
-        }
-    };
-});
