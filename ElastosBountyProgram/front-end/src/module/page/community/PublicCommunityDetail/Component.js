@@ -377,7 +377,7 @@ export default class extends StandardPage {
                             <Row>
                                 {this.state.listSubCommunitiesByType[key].map((community, index) => {
                                     return (
-                                        <Col span={3}
+                                        <Col md={{span:12}} lg={{span: 3}}
                                              key={index}
                                              className="user-card">
                                             {community.leaders.map((leader, index) => {
@@ -436,7 +436,7 @@ export default class extends StandardPage {
                     <Row>
                         {this.state.community.leaders && this.state.community.leaders.map((leader, index) => {
                             return (
-                                <Col span={4} key={index} className="user-card">
+                                <Col md={{span:12}} lg={{span: 4}} key={index} className="user-card">
                                     <Card
                                         key={index}
                                         cover={<img src={leader.profile.avatar}/>}
@@ -510,11 +510,11 @@ export default class extends StandardPage {
                     <div className="ebp-page">
                         <div className="ebp-page-content">
                             <Row>
-                                <Col span={18}
+                                <Col md={{span:24}} lg={{span: 18}}
                                      className="community-left-column">
                                     {listOrganizers}
                                 </Col>
-                                <Col span={6}
+                                <Col md={{span:24}} lg={{span: 6}}
                                      className="community-right-column">
                                     <div>
                                         <h3 className="without-padding">Members</h3>

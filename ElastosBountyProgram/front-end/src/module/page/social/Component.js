@@ -26,7 +26,7 @@ export default class extends StandardPage {
         this.props.getUserTeams(this.props.currentUserId)
         this.getCommunityTrees()
     }
-    
+
     getCommunityTrees() {
         this.props.getAllCommunities().then((communityTrees) => {
             this.setState({
@@ -38,7 +38,7 @@ export default class extends StandardPage {
     componentWillUnmount () {
         this.props.resetTasks()
     }
-    
+
     handleOnChangeFilter(value, selectedOption) {
         this.setState({
             filterCommunity: value
@@ -47,31 +47,31 @@ export default class extends StandardPage {
 
     filterByMyCommunity(community) {
         let filterCommunity = []
-        
+
         if (community.parentCommunityId) {
             filterCommunity.push(community.parentCommunityId)
         }
-    
+
         filterCommunity.push(community._id)
-        
+
         this.setState({
             filterCommunity: filterCommunity
         })
     }
-    
+
     ord_renderContent () {
         let eventData = this.props.events
         const taskData = this.props.tasks
         let availTasksData = this.props.availTasks
         const myTasksData = this.props.myTasks
-    
+
         const filterTreeLevel = this.state.filterCommunity.length
         if (filterTreeLevel) {
             if (filterTreeLevel === 1) {
                 eventData = eventData.filter((event) => {
                     return event && event.community && event.community._id === this.state.filterCommunity[0]
                 })
-    
+
                 availTasksData = availTasksData.filter((event) => {
                     return event && event.community && event.community._id === this.state.filterCommunity[0]
                 })
@@ -79,15 +79,15 @@ export default class extends StandardPage {
                 eventData = eventData.filter((event) => {
                     return event && event.community && event.communityParent && event.communityParent._id === this.state.filterCommunity[0] && event.community._id === this.state.filterCommunity[1]
                 })
-    
+
                 availTasksData = availTasksData.filter((event) => {
                     return event && event.community && event.communityParent && event.communityParent._id === this.state.filterCommunity[0] && event.community._id === this.state.filterCommunity[1]
                 })
             }
         }
-        
+
         const filterCommunityEl = <Cascader defaultValue={[...this.state.filterCommunity]} style={{width: '300px'}} options={this.state.communityTrees} placeholder="Filter by community" onChange={this.handleOnChangeFilter.bind(this)}/>
-    
+
         const columns = [{
             title: 'Name',
             dataIndex: 'name',
@@ -147,7 +147,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row d_rowTop">
-                        <Col span={this.props.is_login ? 16 : 24} className="d_leftContainer d_box">
+                        <Col md={{span:24}} lg={{span: 16}} className="d_leftContainer d_box">
                             <div>
                                 {filterCommunityEl}
                             </div>
@@ -170,8 +170,7 @@ export default class extends StandardPage {
                                 loading={this.props.loading}
                             />
                         </Col>
-                        {this.props.is_login &&
-                        <Col span={8} className="d_rightContainer d_box d_communities">
+                        <Col md={{span:24}} lg={{span: 8}} className="d_rightContainer d_box d_communities">
                             <div className="pull-left">
                                 <h3>
                                     My Communities
@@ -203,7 +202,6 @@ export default class extends StandardPage {
                                 }}
                             />
                         </Col>
-                        }
                     </Row>
                     <div className="horizGap">
 
@@ -211,7 +209,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row">
-                        <Col span={this.props.is_login ? 16 : 24} className="d_leftContainer d_box">
+                        <Col md={{span:24}} lg={{span: 16}} className="d_leftContainer d_box">
                             <div>
                                 <h3 className="pull-left">
                                     Available Tasks
@@ -231,8 +229,7 @@ export default class extends StandardPage {
                                 loading={this.props.loading}
                             />
                         </Col>
-                        {this.props.is_login &&
-                        <Col span={8} className="d_rightContainer d_box">
+                        <Col md={{span:24}} lg={{span: 8}} className="d_rightContainer d_box">
                             <h3>
                                 My Tasks
                             </h3>
@@ -258,7 +255,6 @@ export default class extends StandardPage {
                                 }}
                             />
                         </Col>
-                        }
                     </Row>
                 </div>
                 <Footer/>

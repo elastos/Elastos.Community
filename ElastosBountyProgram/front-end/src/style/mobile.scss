@@ -1,0 +1,47 @@
+@media only screen and (max-width: 720px) {
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .c_Header {
+
+    .c_Header_Menu {
+
+      .c_MenuItem {
+
+        &.link {
+          padding: 0 4px;
+          display: inline-block;
+          height: auto;
+          margin-top: 8px;
+        }
+
+        &.account {
+          display: none;
+        }
+      }
+    }
+
+    .c_MenuTopRight {
+      display: none;
+    }
+  }
+
+  .c_Home {
+    .d_colEvents {
+      border-left: none;
+    }
+  }
+
+  .d_topBackdrop_title {
+    font-size: 22px;
+  }
+
+  .ebp-page {
+    .d_leftContainer {
+      border-right: none;
+    }
+  }
+
+}

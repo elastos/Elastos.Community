@@ -147,7 +147,7 @@ export default class extends StandardPage {
                 <div key={index}>
                     {community.leaders && community.leaders.map((leader) => {
                         return (
-                            <Col span={3} key={index} className="user-card">
+                            <Col md={{span:12}} lg={{span: 3}} key={index} className="user-card">
                                 <Link to={'/community/' + community._id  + '/country/' + community.geolocation}>
                                     <Card
                                         key={index}
@@ -167,7 +167,7 @@ export default class extends StandardPage {
                     })}
 
                     {(!community.leaders || community.leaders.length === 0) && (
-                        <Col span={3} key={index} className="user-card public-communities-page">
+                        <Col md={{span:12}} lg={{span: 3}} key={index} className="user-card public-communities-page">
                             <Link to={'/community/' + community._id  + '/country/' + community.geolocation}>
                                 <Card
                                     key={index}
