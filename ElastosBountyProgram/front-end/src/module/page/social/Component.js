@@ -26,7 +26,7 @@ export default class extends StandardPage {
         this.props.getUserTeams(this.props.currentUserId)
         this.getCommunityTrees()
     }
-    
+
     getCommunityTrees() {
         this.props.getAllCommunities().then((communityTrees) => {
             this.setState({
@@ -38,7 +38,7 @@ export default class extends StandardPage {
     componentWillUnmount () {
         this.props.resetTasks()
     }
-    
+
     handleOnChangeFilter(value, selectedOption) {
         this.setState({
             filterCommunity: value
@@ -47,31 +47,31 @@ export default class extends StandardPage {
 
     filterByMyCommunity(community) {
         let filterCommunity = []
-        
+
         if (community.parentCommunityId) {
             filterCommunity.push(community.parentCommunityId)
         }
-    
+
         filterCommunity.push(community._id)
-        
+
         this.setState({
             filterCommunity: filterCommunity
         })
     }
-    
+
     ord_renderContent () {
         let eventData = this.props.events
         const taskData = this.props.tasks
         let availTasksData = this.props.availTasks
         const myTasksData = this.props.myTasks
-    
+
         const filterTreeLevel = this.state.filterCommunity.length
         if (filterTreeLevel) {
             if (filterTreeLevel === 1) {
                 eventData = eventData.filter((event) => {
                     return event && event.community && event.community._id === this.state.filterCommunity[0]
                 })
-    
+
                 availTasksData = availTasksData.filter((event) => {
                     return event && event.community && event.community._id === this.state.filterCommunity[0]
                 })
@@ -79,15 +79,15 @@ export default class extends StandardPage {
                 eventData = eventData.filter((event) => {
                     return event && event.community && event.communityParent && event.communityParent._id === this.state.filterCommunity[0] && event.community._id === this.state.filterCommunity[1]
                 })
-    
+
                 availTasksData = availTasksData.filter((event) => {
                     return event && event.community && event.communityParent && event.communityParent._id === this.state.filterCommunity[0] && event.community._id === this.state.filterCommunity[1]
                 })
             }
         }
-        
-        const filterCommunityEl = <Cascader defaultValue={[...this.state.filterCommunity]} style={{width: '300px'}} options={this.state.communityTrees} placeholder="Filter by community" onChange={this.handleOnChangeFilter.bind(this)}/>
-    
+
+        const filterCommunityEl = <Cascader value={[...this.state.filterCommunity]} style={{width: '300px'}} options={this.state.communityTrees} placeholder="Filter by community" onChange={this.handleOnChangeFilter.bind(this)}/>
+
         const columns = [{
             title: 'Name',
             dataIndex: 'name',
