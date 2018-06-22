@@ -45,11 +45,9 @@ const TextArea = Input.TextArea
  */
 class C extends BaseComponent {
 
-    /*
     state = {
         communityTrees: []
     }
-    */
 
     handleSubmit (e) {
         e.preventDefault()
@@ -143,13 +141,12 @@ class C extends BaseComponent {
         )
 
         // TODO: restrict community to only the one you are in
-        {/*
         const taskCommunity_fn = getFieldDecorator('taskCommunity', {
             initialValue: existingTask ? existingTask.taskCommunity : []
         })
         const taskCommunity_el = (
             <Cascader options={this.state.communityTrees} placeholder="" />
-        )*/}
+        )
 
         const taskDesc_fn = getFieldDecorator('taskDesc', {
             rules: [{required: true, message: 'You must have a description'}],
@@ -279,7 +276,7 @@ class C extends BaseComponent {
             taskCategory: taskCategory_fn(taskCategory_el),
             taskType: taskType_fn(taskType_el),
 
-            // taskCommunity: taskCommunity_fn(taskCommunity_el),
+            taskCommunity: taskCommunity_fn(taskCommunity_el),
 
             taskDesc: taskDesc_fn(taskDesc_el),
             taskLink: taskLink_fn(taskLink_el),
@@ -295,10 +292,9 @@ class C extends BaseComponent {
     }
 
     componentDidMount() {
-        // this.getCommunityTrees()
+        this.getCommunityTrees()
     }
 
-    /*
     getCommunityTrees() {
         this.props.getAllCommunities().then((communityTrees) => {
             this.setState({
@@ -306,7 +302,6 @@ class C extends BaseComponent {
             })
         })
     }
-    */
 
     ord_render () {
         const {getFieldDecorator} = this.props.form
@@ -344,11 +339,9 @@ class C extends BaseComponent {
                         <FormItem label="Task Name" {...formItemLayout}>
                             {p.taskName}
                         </FormItem>
-                        {/*
                         <FormItem label="Community"  {...formItemLayout}>
                             {p.taskCommunity}
                         </FormItem>
-                        */}
                         <FormItem label="Thumbnail" {...formItemLayout}>
                             {p.thumbnail}
                         </FormItem>
