@@ -16,6 +16,7 @@ const restrictedFields = {
 }
 
 export default class extends Base {
+
     public async registerNewUser(param): Promise<Document>{
         const db_user = this.getDBModel('User');
 

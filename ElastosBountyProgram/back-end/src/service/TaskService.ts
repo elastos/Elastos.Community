@@ -232,18 +232,6 @@ export default class extends Base {
         // explictly copy over fields, do not accept param as is
         const updateObj:any = _.omit(param, restrictedFields.update)
 
-        // reward should only change if ela amount changed
-        if ([constant.TASK_STATUS.PENDING, constant.TASK_STATUS.CREATED].includes(task.status)) {
-            if ((rewardUpfront && rewardUpfront.ela > 0) || (reward && reward.ela > 0)) {
-                // TODO: send notification to admin
-                updateObj.status = constant.TASK_STATUS.PENDING;
-
-                await this.sendTaskPendingEmail(this.currentUser, task)
-            } else {
-                updateObj.status = constant.TASK_STATUS.CREATED;
-            }
-        }
-
         // TODO: if status changed to APPROVED - send notification
 
         // only allow approving these fields if user is admin
@@ -270,10 +258,26 @@ export default class extends Base {
                     updateObj.status = param.status
                 }
             }
+        } else if ([constant.TASK_STATUS.PENDING, constant.TASK_STATUS.CREATED].includes(task.status)) {
+
+            // reward should only change if ela amount changed from 0 to > 0
+            if ((task.reward.ela === 0 && task.rewardUpfront.ela === 0) &&
+                (rewardUpfront && rewardUpfront.ela > 0) || (reward && reward.ela > 0)
+            ) {
+                // TODO: send notification to admin
+                updateObj.status = constant.TASK_STATUS.PENDING;
+
+                await this.sendTaskPendingEmail(this.currentUser, task)
+            }
         }
 
-
-        if (this.currentUser._id.toString() === task.createdBy.toString() && (param.status === constant.TASK_STATUS.SUCCESS || param.status === constant.TASK_STATUS.ASSIGNED)) {
+        // if you're the owner
+        if (this.currentUser._id.toString() === task.createdBy.toString() &&
+            (
+                param.status === constant.TASK_STATUS.SUCCESS ||
+                param.status === constant.TASK_STATUS.ASSIGNED
+            )
+        ) {
             updateObj.status = param.status
 
             if (param.status === constant.TASK_STATUS.ASSIGNED) {
@@ -303,7 +307,12 @@ export default class extends Base {
 
         await db_task.update({_id: taskId}, updateObj)
 
-        return db_task.findById(taskId);
+        let updatedTask = db_task.findById(taskId);
+
+        // post update checks
+        // TODO: if reward changed to 0, force status to CREATED
+
+        return updatedTask
     }
 
     /**
