@@ -1,6 +1,10 @@
-declare var global, describe, test, expect, assert, require, process, beforeAll, afterAll, sinon
+declare var global, describe, test, expect, require, process, beforeAll, afterAll, sinon
 
 const sinon = require('sinon')
+
+import * as chai from 'chai'
+
+const assert = chai.assert
 
 import db from '../../db'
 import '../../config'
@@ -17,12 +21,15 @@ import {constant} from '../../constant';
 
 /**
  * global.DB is declared in test/unit/setup.js
+ *
+ * TODO: find a reload function for a sequelize object
  */
 beforeAll(async ()=>{
     DB = await db.create()
 
     // stub mail
     mailMethod = sinon.stub(mail, 'send', (options) => {
+        console.log('mail suppressed', options)
         return Promise.resolve();
     });
 
@@ -59,6 +66,10 @@ beforeAll(async ()=>{
     })
 
     testData.member = await userService.registerNewUser(global.DB.MEMBER_USER)
+
+    taskServiceMember = new TaskService(DB, {
+        user: testData.member
+    })
 })
 
 describe('Tests for Task Update', () => {
@@ -67,21 +78,26 @@ describe('Tests for Task Update', () => {
         expect(testData.taskSocialEvent.status).toBe(constant.TASK_STATUS.PENDING)
     })
 
-    test('Make sure only admin can set to APPROVED', async () => {
-        await taskServiceMember.update({
-            taskId: testData.taskSocialEvent._id,
-            status: constant.TASK_STATUS.APPROVED
-        })
+    test('Member cannot change anything', async () => {
 
-        testData.taskSocialEvent = await DB.getModel('Task').findOne({
-            _id: testData.taskSocialEvent._id
-        })
+        try {
+            await taskServiceMember.update({
+                taskId: testData.taskSocialEvent._id,
+                status: constant.TASK_STATUS.SUCCESS
+            })
 
-        expect(testData.taskSocialEvent.status).toBe(constant.TASK_STATUS.PENDING)
+            assert.fail('Should fail with Access Denied')
 
+        } catch (err) {
+            expect(err).toBe('Access Denied')
+        }
+    })
+
+    test('Task cannot be set from PENDING to ASSIGNED by organizer', async () => {
+        // however admin can change it to anything
         await taskServiceOrganizer.update({
             taskId: testData.taskSocialEvent._id,
-            status: constant.TASK_STATUS.APPROVED
+            status: constant.TASK_STATUS.ASSIGNED
         })
 
         testData.taskSocialEvent = await DB.getModel('Task').findOne({
@@ -89,11 +105,31 @@ describe('Tests for Task Update', () => {
         })
 
         expect(testData.taskSocialEvent.status).toBe(constant.TASK_STATUS.PENDING)
+    })
+
+    test('Make sure only admin can set to APPROVED', async () => {
+
+        try {
+
+            await taskServiceOrganizer.update({
+                taskId: testData.taskSocialEvent._id,
+                status: constant.TASK_STATUS.APPROVED
+            })
+
+            assert.fail('Should fail with Access Denied')
+
+        } catch (err) {
+            expect(err).toBe('Access Denied')
+        }
+
+        mailMethod.reset()
 
         await taskServiceAdmin.update({
             taskId: testData.taskSocialEvent._id,
             status: constant.TASK_STATUS.APPROVED
         })
+
+        expect(mailMethod.calledOnce).toBe(true)
 
         testData.taskSocialEvent = await DB.getModel('Task').findOne({
             _id: testData.taskSocialEvent._id
@@ -102,7 +138,123 @@ describe('Tests for Task Update', () => {
         expect(testData.taskSocialEvent.status).toBe(constant.TASK_STATUS.APPROVED)
     })
 
-    test('Both organizer/leader can set to ASSIGNED', async () => {
+    test('Both organizer/admin can set to ASSIGNED/SUBMITTED', async () => {
+
+        await taskServiceOrganizer.update({
+            taskId: testData.taskSocialEvent._id,
+            status: constant.TASK_STATUS.ASSIGNED
+        })
+
+        testData.taskSocialEvent = await DB.getModel('Task').findOne({
+            _id: testData.taskSocialEvent._id
+        })
+
+        expect(testData.taskSocialEvent.status).toBe(constant.TASK_STATUS.ASSIGNED)
+
+        // admin can change back to approved
+        await taskServiceAdmin.update({
+            taskId: testData.taskSocialEvent._id,
+            status: constant.TASK_STATUS.APPROVED
+        })
+        testData.taskSocialEvent = await DB.getModel('Task').findOne({
+            _id: testData.taskSocialEvent._id
+        })
+        expect(testData.taskSocialEvent.status).toBe(constant.TASK_STATUS.APPROVED)
+
+        // admin can assign too
+        await taskServiceAdmin.update({
+            taskId: testData.taskSocialEvent._id,
+            status: constant.TASK_STATUS.ASSIGNED
+        })
+
+        testData.taskSocialEvent = await DB.getModel('Task').findOne({
+            _id: testData.taskSocialEvent._id
+        })
+
+        expect(testData.taskSocialEvent.status).toBe(constant.TASK_STATUS.ASSIGNED)
+
+        // reset to APPROVED
+        await taskServiceAdmin.update({
+            taskId: testData.taskSocialEvent._id,
+            status: constant.TASK_STATUS.APPROVED
+        })
+
+        // test SUBMITTED status - but only if assigned
+        try {
+            await taskServiceOrganizer.update({
+                taskId: testData.taskSocialEvent._id,
+                status: constant.TASK_STATUS.SUBMITTED
+            })
+
+            assert.fail('Should fail with Invalid Action')
+
+        } catch (err) {
+            expect(err).toBe('Invalid Action')
+        }
+
+        await taskServiceOrganizer.update({
+            taskId: testData.taskSocialEvent._id,
+            status: constant.TASK_STATUS.ASSIGNED
+        })
+
+        await taskServiceOrganizer.update({
+            taskId: testData.taskSocialEvent._id,
+            status: constant.TASK_STATUS.SUBMITTED
+        })
+
+        testData.taskSocialEvent = await DB.getModel('Task').findOne({
+            _id: testData.taskSocialEvent._id
+        })
+
+        expect(testData.taskSocialEvent.status).toBe(constant.TASK_STATUS.SUBMITTED)
+    })
+
+    test('Only admin can set to APPROVED / CANCELED / DISTRIBUTED', async () => {
+
+        // reset to PENDING
+        await taskServiceAdmin.update({
+            taskId: testData.taskSocialEvent._id,
+            status: constant.TASK_STATUS.PENDING
+        })
+
+        // for organizers we already tested APPROVED
+        try {
+
+            await taskServiceOrganizer.update({
+                taskId: testData.taskSocialEvent._id,
+                status: constant.TASK_STATUS.DISTRIBUTED
+            })
+
+            assert.fail('Should fail with Access Denied')
+
+        } catch (err) {
+            expect(err).toBe('Access Denied')
+        }
+
+        try {
+
+            await taskServiceOrganizer.update({
+                taskId: testData.taskSocialEvent._id,
+                status: constant.TASK_STATUS.CANCELED
+            })
+
+            assert.fail('Should fail with Access Denied')
+
+        } catch (err) {
+            expect(err).toBe('Access Denied')
+        }
+
+        // now try for admins, should work
+        await taskServiceAdmin.update({
+            taskId: testData.taskSocialEvent._id,
+            status: constant.TASK_STATUS.DISTRIBUTED
+        })
+
+        testData.taskSocialEvent = await DB.getModel('Task').findOne({
+            _id: testData.taskSocialEvent._id
+        })
+
+        expect(testData.taskSocialEvent.status).toBe(constant.TASK_STATUS.DISTRIBUTED)
 
     })
 

@@ -37,11 +37,19 @@ export const TASK_CATEGORY = {
 export const TASK_STATUS = {
     PROPOSAL: 'PROPOSAL',
     CREATED: 'CREATED',
+    PENDING: 'PENDING',
     APPROVED: 'APPROVED',
     ASSIGNED: 'ASSIGNED',
-    PENDING: 'PENDING',
-    SUBMITTED: 'SUBMITTED', // when user says it is complete
-    SUCCESS: 'SUCCESS',
+
+    // in between ASSIGNED and SUBMITTED, individual task candidates
+    // can mark their completion which is recorded in the array candidateCompleted
+    // this is only for reference, the task is not fully completed until the owner
+    //
+
+    // owner acknowledges task is done - by enough parties (note it does not have to be all)
+    SUBMITTED: 'SUBMITTED',
+
+    SUCCESS: 'SUCCESS', // only admin can do this
     DISTRIBUTED: 'DISTRIBUTED',
     CANCELED: 'CANCELED',
     EXPIRED: 'EXPIRED'

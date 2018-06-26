@@ -114,18 +114,23 @@ export const Task = {
 
     infoLink: String,
 
+    // only used if this is an event - not used in logic
     startTime : {
         type : Date,
         required : false,
         min : Date.now
     },
-
     endTime : {
         type : Date,
         required : false
     },
 
+    // TODO: after this date task automatically moves to ASSIGNED,
+    // or CANCELED if there are no candidates
     applicationDeadline: Date,
+
+    // TODO: after this date, if the task is not marked
+    completionDeadline: Date,
 
     /*
     * constants.TASK_STATUS
@@ -171,6 +176,9 @@ export const Task = {
     approvedBy: {type: Schema.Types.ObjectId, ref: 'users'},
 
     candidates: [{type: Schema.Types.ObjectId, ref: 'task_candidate'}],
+
+    /* ids of candidates that marked themselves as complete */
+    candidateCompleted: [{type: Schema.Types.ObjectId, ref: 'task_candidate'}],
 
     createdBy: {type: Schema.Types.ObjectId, ref: 'users'},
 
