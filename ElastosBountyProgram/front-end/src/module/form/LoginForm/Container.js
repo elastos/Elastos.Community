@@ -30,6 +30,7 @@ export default createContainer(Component, (state)=>{
                     }
                 }
             } catch (err) {
+                console.error(err)
                 message.error(err.message)
             }
         },

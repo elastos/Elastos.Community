@@ -26,11 +26,11 @@ export default class extends BaseService {
         if ([USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(res.user.role)) {
             await this.dispatch(userRedux.actions.is_admin_update(true))
         }
-        if ([USER_ROLE.LEADER].includes(data.role)) {
+        if ([USER_ROLE.LEADER].includes(res.user.role)) {
             await this.dispatch(userRedux.actions.is_leader_update(true))
         }
 
-        await this.dispatch(userRedux.actions.email_update(data.email))
+        await this.dispatch(userRedux.actions.email_update(res.user.email))
         await this.dispatch(userRedux.actions.username_update(res.user.username))
         await this.dispatch(userRedux.actions.profile_update(res.user.profile))
         await this.dispatch(userRedux.actions.role_update(res.user.role))
