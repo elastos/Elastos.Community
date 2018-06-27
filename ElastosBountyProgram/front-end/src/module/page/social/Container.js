@@ -105,21 +105,21 @@ export default createContainer(Component, (state) => {
                             parentId: item.parentCommunityId,
                         }
                     })
-                
+
                     const rootCascaderItems = _.filter(cascaderItems, {
                         parentId: null
                     })
-                
+
                     rootCascaderItems.forEach((rootCascaderItem) => {
                         const children = _.filter(cascaderItems, {
                             parentId: rootCascaderItem.value
                         })
-                    
+
                         if (children && children.length) {
                             rootCascaderItem.children = children
                         }
                     })
-                
+
                     resolve(rootCascaderItems)
                 }).catch((err) => {
                     reject(err)
