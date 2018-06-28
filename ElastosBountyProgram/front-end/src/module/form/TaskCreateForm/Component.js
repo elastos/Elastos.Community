@@ -119,7 +119,10 @@ class C extends BaseComponent {
         )
 
         const taskName_fn = getFieldDecorator('taskName', {
-            rules: [{required: true, message: 'Please input a task name'}],
+            rules: [
+                {required: true, message: 'Please input a task name'},
+                {min: 4, message: 'Task Name too short'}
+            ],
             initialValue: this.state.editing ? existingTask.name : ''
         })
         const taskName_el = (
@@ -161,7 +164,10 @@ class C extends BaseComponent {
         )*/}
 
         const taskDesc_fn = getFieldDecorator('taskDesc', {
-            rules: [{required: true, message: 'You must have a description'}],
+            rules: [
+                {required: true, message: 'You must have a description'},
+                {max: 4048, message: 'Task description too long'}
+            ],
             initialValue: this.state.editing ? existingTask.description : ''
         })
         const taskDesc_el = (

@@ -46,7 +46,7 @@ export default createContainer(Component, (state) => {
             }
         },
 
-        async completeTask(taskId) {
+        async markAsSubmitted(taskId) {
 
             try {
                 await taskService.update(taskId, {
@@ -72,7 +72,8 @@ export default createContainer(Component, (state) => {
             }
         },
 
-        async acceptAsCompleteTask(taskId) {
+        // TODO: language here needs work
+        async markAsSuccessful(taskId) {
 
             try {
                 await taskService.update(taskId, {

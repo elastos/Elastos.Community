@@ -79,6 +79,11 @@ export default class extends BaseComponent {
                     <Button type="primary">Approve</Button>
                 </Popconfirm>
                 }
+                {!this.state.editing && this.props.task.status === TASK_STATUS.SUBMITTED &&
+                <Popconfirm title="Are you sure you want to accept this task as completed?" placement="left" okText="Yes" onConfirm={this.markAsSuccessful.bind(this)}>
+                    <Button>Accept as Complete</Button>
+                </Popconfirm>
+                }
                 {!this.state.editing && this.props.task.status === TASK_STATUS.SUCCESS && (this.props.task.reward.ela > 0 || this.props.task.rewardUpfront.ela > 0) &&
                 <Popconfirm title="Are you sure you want to mark the ELA as disbursed?" placement="left" okText="Yes" onConfirm={this.markAsDisbursed.bind(this)}>
                     <Button type="primary">Mark as Disbursed</Button>
@@ -110,10 +115,9 @@ export default class extends BaseComponent {
                 {this.props.task.status === TASK_STATUS.ASSIGNED &&
                 <span className="help-text">&nbsp; - this task is active</span>
                 }
-                {this.props.task.status === TASK_STATUS.SUBMITTED && (isTaskOwner ?
-                    <span className="help-text">&nbsp; - one or more of your applicants have submitted their proposal</span> :
-                    <span className="help-text">&nbsp; - you have submitted this task, pending owner approval</span>
-                )}
+                {this.props.task.status === TASK_STATUS.SUBMITTED &&
+                    <span className="help-text">&nbsp; - this task is awaiting council sign off</span>
+                }
                 {this.props.task.status === TASK_STATUS.SUCCESS &&
                 <span className="help-text">&nbsp; - an admin will review and disburse the ELA reward if any</span>
                 }
@@ -124,14 +128,9 @@ export default class extends BaseComponent {
                 }
             </div>
             <div className="pull-right right-align">
-                {this.props.task.status === TASK_STATUS.SUBMITTED && isTaskOwner &&
-                    <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.acceptAsComplete.bind(this)}>
-                        <Button>{this.props.task.assignSelf ? 'Mark as Complete' : 'Accept as Complete'}</Button>
-                    </Popconfirm>
-                }
-                {this.props.task.status === TASK_STATUS.ASSIGNED && !isTaskOwner &&
-                <Popconfirm title="Are you sure you want to submit this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsComplete.bind(this)}>
-                    <Button>Submit as Complete</Button>
+                {this.props.task.status === TASK_STATUS.ASSIGNED && isTaskOwner &&
+                <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsSubmitted.bind(this)}>
+                    <Button>Mark as Complete</Button>
                 </Popconfirm>
                 }
                 {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) && isTaskOwner && !(this.props.task.category === TASK_CATEGORY.DEVELOPER && this.props.task.type === TASK_TYPE.EVENT) &&
@@ -267,14 +266,14 @@ export default class extends BaseComponent {
 
     }
 
-    async acceptAsComplete() {
+    async markAsSuccessful() {
         const taskId = this.props.task._id
-        await this.props.acceptAsCompleteTask(taskId)
+        await this.props.markAsSuccessful(taskId)
     }
 
-    async markAsComplete() {
+    async markAsSubmitted() {
         const taskId = this.props.task._id
-        await this.props.completeTask(taskId)
+        await this.props.markAsSubmitted(taskId)
     }
 
     async markAsDisbursed() {

@@ -104,7 +104,7 @@ export const upload_file = async (fileObject, opts={})=>{
 
     try{
         const url = await api_request({
-            path : '/upload/file',
+            path : '/api/upload/file',
             method : 'post',
             headers : {
                 'Content-Type' : 'multipart/form-data'

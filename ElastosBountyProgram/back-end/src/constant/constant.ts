@@ -44,13 +44,12 @@ export const TASK_STATUS = {
     // in between ASSIGNED and SUBMITTED, individual task candidates
     // can mark their completion which is recorded in the array candidateCompleted
     // this is only for reference, the task is not fully completed until the owner
-    //
 
     // owner acknowledges task is done - by enough parties (note it does not have to be all)
     SUBMITTED: 'SUBMITTED',
 
-    SUCCESS: 'SUCCESS', // only admin can do this
-    DISTRIBUTED: 'DISTRIBUTED',
+    SUCCESS: 'SUCCESS', // when admin accepts it as complete
+    DISTRIBUTED: 'DISTRIBUTED', // when admin distributes ELA rewards
     CANCELED: 'CANCELED',
     EXPIRED: 'EXPIRED'
 }

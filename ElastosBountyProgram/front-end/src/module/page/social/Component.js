@@ -12,6 +12,7 @@ import { Col, Row, Icon, Form, message, Button, Select, Table, List, Tooltip, Ca
 const Option = Select.Option
 
 import { TASK_STATUS, TASK_TYPE } from '@/constant'
+import _ from 'lodash'
 
 export default class extends StandardPage {
     state = {
@@ -100,7 +101,10 @@ export default class extends StandardPage {
             title: 'Description',
             dataIndex: 'description',
             className: 'allow-wrap',
-            width: '30%'
+            width: '30%',
+            render: (desc) => {
+                return _.truncate(desc, {length: 100})
+            }
         }, {
             title: 'Community',
             dataIndex: 'community',
