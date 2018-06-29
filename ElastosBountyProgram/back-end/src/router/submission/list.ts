@@ -40,6 +40,13 @@ export default class extends Base{
             }
         }
 
+        if (!param.type) {
+            // by default we only show tasks with these statuses
+            query.type = {$ne: constant.SUBMISSION_TYPE.FORM_EXT}
+        } else {
+            query.type = param.type
+        }
+
         const list = await submissionService.list(query);
         const count = await submissionService.getDBModel('Submission').count(query);
 

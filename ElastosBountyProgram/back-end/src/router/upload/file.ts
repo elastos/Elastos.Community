@@ -4,7 +4,7 @@ import UploadService from '../../service/UploadService';
 
 
 export default class extends Base {
-    protected needLogin = true;
+    // protected needLogin = true;
     async action(){
         const uploadService = this.buildService(UploadService);
         if(!this.req['files'] || !this.req['files'].file){

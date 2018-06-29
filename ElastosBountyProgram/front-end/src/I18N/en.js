@@ -41,6 +41,7 @@ export default {
     '1302': 'Users',
     '1303': 'Teams',
     '1304': 'Submissions',
+    '1305': 'Forms',
 
     // Profile navigator
     '2300': 'Info',
