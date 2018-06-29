@@ -38,13 +38,13 @@ export default class extends AdminPage {
             title: 'Name',
             dataIndex: 'fullLegalName'
         }, {
+            title: 'Email',
+            dataIndex: 'email'
+        }, {
             title: 'Campaign',
             dataIndex: 'campaign',
             width: '30%',
             className: 'fontWeight500 allow-wrap'
-        }, {
-            title: 'Owner',
-            dataIndex: 'createdBy.username'
         }, {
             title: 'Created',
             dataIndex: 'createdAt',
