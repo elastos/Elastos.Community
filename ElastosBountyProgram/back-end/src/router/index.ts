@@ -8,6 +8,7 @@ import test from './test';
 import user from './user';
 import team from './team';
 import task from './task';
+import taskCandidate from './task_candidate';
 import community from './community';
 import submission from './submission';
 
@@ -77,6 +78,7 @@ router.use('/ping', ping);
 router.use('/user', user);
 router.use('/team', team);
 router.use('/task', task);
+router.use('/task_candidate', taskCandidate)
 router.use('/community', community);
 router.use('/upload', upload);
 router.use('/submission', submission);

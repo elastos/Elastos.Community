@@ -54,6 +54,7 @@ export default class extends BaseComponent {
             <div className="public">
                 <Row>
                     <Col span={18} className="gridCol main-area">
+
                     </Col>
                     <Col span={6} className="gridCol applicants">
                         <h4>{this.state.isDeveloperEvent ? 'Registrants' : 'Applicants'}</h4>
