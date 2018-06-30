@@ -9,6 +9,7 @@ import DirectoryPage from '@/module/page/directory/Container'
 import TeamsPage from '@/module/page/teams/Container'
 import TasksPage from '@/module/page/tasks/Container'
 import TaskDetailPage from '@/module/page/task_detail/Container'
+import TaskApplicationPage from '@/module/page/task_application/Container'
 
 import LoginPage from '@/module/page/login/Container'
 import RegisterPage from '@/module/page/register/Container'
@@ -98,6 +99,10 @@ export default [
     {
         path: '/task-detail/:taskId',
         page: TaskDetailPage
+    },
+    {
+        path: '/task-app/:taskId/:applicantId',
+        page: TaskApplicationPage
     },
     {
         path: '/task-create',

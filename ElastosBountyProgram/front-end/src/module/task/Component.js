@@ -240,7 +240,6 @@ export default class extends BaseComponent {
     }
 
     ord_render () {
-
         return (_.isEmpty(this.props.task) || this.props.task.loading ?
             <div class="center"><Spin size="large" /></div> :
             this.renderMain()
