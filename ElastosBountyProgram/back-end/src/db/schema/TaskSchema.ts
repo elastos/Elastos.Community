@@ -46,7 +46,9 @@ export const TaskCandidate = {
     // this is the admin that approved the candidate
     approvedBy: Schema.Types.ObjectId,
 
-    output : TaskOutput
+    output : TaskOutput,
+
+    comments: [[CommentSchema]]
 };
 
 export const TaskActivity = {

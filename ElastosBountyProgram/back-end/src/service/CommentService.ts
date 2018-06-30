@@ -24,7 +24,10 @@ export default class extends Base {
                 createdAt
             })
 
-            this.sendNotificationEmail(type, param, createdBy, commentable.createdBy)
+            if (commentable.createdBy) {
+                // TODO send notification emails on TaskCandidate commenting
+                this.sendNotificationEmail(type, param, createdBy, commentable.createdBy)
+            }
 
             return await db_commentable.update({_id: id}, updateObj)
         } else {
