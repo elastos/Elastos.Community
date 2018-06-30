@@ -15,6 +15,10 @@ import {TASK_STATUS} from '@/constant'
 
 export default class extends AdminPage {
 
+    state = {
+        filteredInfo: null
+    }
+
     async componentDidMount() {
         await super.componentDidMount()
         this.props.getTasks()
@@ -24,9 +28,17 @@ export default class extends AdminPage {
         this.props.resetTasks()
     }
 
+    handleChange = (pagination, filters, sorter) => {
+        this.setState({
+            filteredInfo: filters
+        });
+    }
+
     ord_renderContent () {
+        let { filteredInfo } = this.state;
 
         const taskData = this.props.all_tasks
+        filteredInfo = filteredInfo || {};
 
         const columns = [{
             title: 'Name',
@@ -71,6 +83,8 @@ export default class extends AdminPage {
                 {text: 'Pending', value: TASK_STATUS.PENDING},
                 {text: 'Approved', value: TASK_STATUS.APPROVED}
             ],
+            filteredValue: filteredInfo.status || null,
+            onFilter: (value, record) => record.status.includes(value),
             className: 'fontWeight500'
         }, {
             title: 'Date',
@@ -109,6 +123,7 @@ export default class extends AdminPage {
                                     rowKey={(item) => item._id}
                                     dataSource={taskData}
                                     loading={this.props.loading}
+                                    onChange={this.handleChange}
                                />
                             </Col>
                             <Col span={4} className="admin-right-column wrap-box-navigator">
