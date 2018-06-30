@@ -21,6 +21,8 @@ import ProfileInfoPage from '@/module/page/profile/info/Container'
 import ProfileTasksPage from '@/module/page/profile/tasks/Container'
 import ProfileTaskDetailPage from '@/module/page/profile/task_detail/Container'
 import ProfileTeamsPage from '@/module/page/profile/teams/Container'
+import ProfileTeamDetailPage from '@/module/page/profile/team_detail/Container'
+import ProfileTeamCreatePage from '@/module/page/profile/team_create/Container'
 import ProfileSubmissionsPage from '@/module/page/profile/submissions/Container'
 import ProfileCommunitiesPage from '@/module/page/profile/communities/Container'
 import ProfileSubmissionDetailPage from '@/module/page/profile/submission_detail/Container'
@@ -33,6 +35,7 @@ import AdminTasksPage from '@/module/page/admin/tasks/Container'
 import AdminTaskDetailPage from '@/module/page/admin/task_detail/Container'
 import AdminSubmissionsPage from '@/module/page/admin/submissions/Container'
 import AdminSubmissionDetailPage from '@/module/page/admin/submission_detail/Container'
+import AdminFormsPage from '@/module/page/admin/forms/Container'
 
 import CountryCommunitiesPage from '@/module/page/admin/community/CountryCommunities/Container'
 import CommunityDetailPage from '@/module/page/admin/community/CommunityDetail/Container'
@@ -41,6 +44,9 @@ import PublicCountryCommunitiesPage from '@/module/page/community/PublicCountryC
 import PublicCommunityDetailPage from '@/module/page/community/PublicCommunityDetail/Container'
 
 import TaskCreatePage from '@/module/page/task_create/Container'
+
+// external forms
+import FormTraining1Page from '@/module/page/form_ext/training_1/Container'
 
 // admin team page
 import TeamListPage from '../module/page/admin/teams/TeamListPage';
@@ -134,6 +140,14 @@ export default [
         page: ProfileTeamsPage
     },
     {
+        path : '/profile/teams/create',
+        page : ProfileTeamCreatePage
+    },
+    {
+        path : '/profile/teams/:teamId',
+        page : ProfileTeamDetailPage
+    },
+    {
         path: '/profile/submissions',
         page: ProfileSubmissionsPage
     },
@@ -144,6 +158,11 @@ export default [
     {
         path: '/profile/submission-detail/:submissionId',
         page: ProfileSubmissionDetailPage
+    },
+    {
+        // external forms
+        path: '/form/training1',
+        page: FormTraining1Page
     },
     {
         // public profile page
@@ -169,6 +188,10 @@ export default [
     {
         path: '/admin/submissions',
         page: AdminSubmissionsPage
+    },
+    {
+        path: '/admin/forms',
+        page: AdminFormsPage
     },
     {
         path: '/admin/submission-detail/:submissionId',

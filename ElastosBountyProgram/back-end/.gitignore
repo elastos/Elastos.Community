@@ -32,6 +32,8 @@ jspm_packages/
 
 .idea
 yarn.lock
+
+# TODO: add test to ensure this is ignored!
 dist/
 test-results.xml
 coverage/

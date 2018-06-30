@@ -16,6 +16,7 @@ const restrictedFields = {
 }
 
 export default class extends Base {
+
     public async registerNewUser(param): Promise<Document>{
         const db_user = this.getDBModel('User');
 
@@ -252,6 +253,30 @@ export default class extends Base {
                 name: `${fromUser.profile.firstName} ${fromUser.profile.lastName}`,
                 email: fromUser.email
             }
+        })
+
+        return true
+    }
+
+    public async sendRegistrationCode(param) {
+        const { email, code } = param
+
+        await mail.send({
+            to: email,
+            subject: 'Your Cyber Republic registration code',
+            body: `Your code: ${code}`
+        })
+
+        return true
+    }
+
+    public async sendConfirmation(param) {
+        const { email } = param
+
+        await mail.send({
+            to: email,
+            subject: 'Welcome to Cyber Republic',
+            body: 'Your registration is complete.'
         })
 
         return true

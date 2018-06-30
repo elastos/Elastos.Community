@@ -60,7 +60,7 @@ export default class extends StandardPage {
                 case 2:
                     // Desc
                     return <Col key={task._id} md={{span:12}} lg={{span: 8}}>
-                        <div class="i_event">
+                        <div class="i_event desc">
                             <p>
                                 {_.truncate(task.description, {length: 100})}
 
@@ -182,31 +182,69 @@ export default class extends StandardPage {
                 <div className="horizGap d_rowGrey"/>
                 <div className="d_rowEvents">
                     <Row>
-                        <Col span={12} className="d_colTasks">
+                        <Col md={{span:24}} lg={{span: 12}} className="d_colTasks">
                             <h3>
                                 Featured Developer Bounties
                             </h3>
 
-                            {_.range(4).map((i) => {
-                                return <Row key={i} className="d_devEventsContainer">
-                                    {this.props.dev_tasks.map((task) => {
-                                        return renderEventRow(task, i)
-                                    })}
-                                </Row>
-                            })}
+                            <Row>
+                                {this.props.dev_tasks.map((task) => {
+                                    return <Col key={task._id} md={{span:24}} lg={{span: 8}}>
+                                        <div className="i_event">
+                                            <h4 onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}>
+                                                {task.name}
+                                            </h4>
+                                        </div>
+                                        <div className="i_event">
+                                            <p className="event-date">
+                                                {moment(task.createdAt).format('MMM D, YYYY')}
+                                            </p>
+                                            {false && task.thumbnail && <img src={task.thumbnail}/>}
+                                        </div>
+                                        <div className="i_event desc">
+                                            <p>
+                                                {_.truncate(task.description, {length: 100})}
+
+                                                {task.description.length > 100 &&
+                                                <a className="moreDetails" onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}> more details</a>
+                                                }
+                                            </p>
+                                        </div>
+                                    </Col>
+                                })}
+                            </Row>
                         </Col>
-                        <Col span={12} className="d_colEvents">
+                        <Col md={{span:24}} lg={{span: 12}} className="d_colEvents">
                             <h3>
                                 Featured Events
                             </h3>
 
-                            {_.range(3).map((i) => {
-                                return <Row key={i} className="d_devEventsContainer">
-                                    {this.props.social_tasks.map((task) => {
-                                        return renderEventRow(task, i)
-                                    })}
-                                </Row>
-                            })}
+                            <Row>
+                                {this.props.social_tasks.map((task) => {
+                                    return <Col key={task._id} md={{span:24}} lg={{span: 8}}>
+                                        <div className="i_event">
+                                            <h4 onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}>
+                                                {task.name}
+                                            </h4>
+                                        </div>
+                                        <div className="i_event">
+                                            <p className="event-date">
+                                                {moment(task.createdAt).format('MMM D, YYYY')}
+                                            </p>
+                                            {false && task.thumbnail && <img src={task.thumbnail}/>}
+                                        </div>
+                                        <div className="i_event desc">
+                                            <p>
+                                                {_.truncate(task.description, {length: 100})}
+
+                                                {task.description.length > 100 &&
+                                                <a className="moreDetails" onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}> more details</a>
+                                                }
+                                            </p>
+                                        </div>
+                                    </Col>
+                                })}
+                            </Row>
                         </Col>
                     </Row>
                 </div>

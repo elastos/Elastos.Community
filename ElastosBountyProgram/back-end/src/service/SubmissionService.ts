@@ -66,7 +66,23 @@ export default class extends Base {
 
     public async create(param): Promise<Document> {
         const {
-            type, title, description, community, state, city
+            type, campaign, title, description, community, state, city,
+
+            email,
+            fullLegalName,
+            audienceInfo,
+            publicSpeakingExp,
+            previousExp,
+
+            isDeveloper,
+            devBackground,
+
+            reason,
+
+            attachment,
+            attachmentType,
+            attachmentFilename
+
         } = param;
         this.validate_title(title)
         this.validate_description(description)
@@ -74,12 +90,30 @@ export default class extends Base {
 
         const submission = {
             type,
+            campaign,
             title,
             description,
             community,
             state,
             city,
-            createdBy: this.currentUser._id
+
+            // training1 form
+            email,
+            fullLegalName,
+            audienceInfo,
+            publicSpeakingExp,
+            previousExp,
+
+            isDeveloper,
+            devBackground,
+
+            reason,
+
+            attachment,
+            attachmentType,
+            attachmentFilename,
+
+            createdBy: this.currentUser ? this.currentUser._id : null
         }
 
         const db_submission = this.getDBModel('Submission')

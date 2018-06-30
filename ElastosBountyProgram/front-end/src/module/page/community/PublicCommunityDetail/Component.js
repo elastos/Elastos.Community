@@ -93,6 +93,7 @@ export default class extends StandardPage {
         }
     }
 
+    // TODO: doesn't work if there is no leader
     loadCommunityDetail() {
         this.props.getCommunityDetail(this.props.match.params['community']).then((community) => {
             this.convertCommunityLeaderIdsToLeaderObjects(community).then((community) => {
@@ -124,8 +125,8 @@ export default class extends StandardPage {
 
     getAvatarUrl(users) {
         const avatarDefault = {
-            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Male.png',
-            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Female.png',
+            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png',
+            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Other.png',
             [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png',
         };
 
@@ -261,8 +262,9 @@ export default class extends StandardPage {
 
     getMemberCommunityId() {
         let communityId;
+
         if (!this.props.match.params['region']) {
-            communityId = this.state.community._id;
+            communityId = this.props.match.params.community
         } else {
             // Find which sub community user selected
             const selectedSubCommunity = _.find(this.state.subCommunities, {
@@ -375,7 +377,7 @@ export default class extends StandardPage {
                             <Row>
                                 {this.state.listSubCommunitiesByType[key].map((community, index) => {
                                     return (
-                                        <Col span={3}
+                                        <Col md={{span:12}} lg={{span: 3}}
                                              key={index}
                                              className="user-card">
                                             {community.leaders.map((leader, index) => {
@@ -434,7 +436,7 @@ export default class extends StandardPage {
                     <Row>
                         {this.state.community.leaders && this.state.community.leaders.map((leader, index) => {
                             return (
-                                <Col span={4} key={index} className="user-card">
+                                <Col md={{span:12}} lg={{span: 4}} key={index} className="user-card">
                                     <Card
                                         key={index}
                                         cover={<img src={leader.profile.avatar}/>}
@@ -496,9 +498,11 @@ export default class extends StandardPage {
                                     <Breadcrumb.Item>
                                         {menuCountriesEl}
                                     </Breadcrumb.Item>
+                                    {/*
                                     <Breadcrumb.Item>
                                         {menuListRegionsEl}
                                     </Breadcrumb.Item>
+                                    */}
                                 </Breadcrumb>
                             </Col>
                         </Row>
@@ -506,11 +510,11 @@ export default class extends StandardPage {
                     <div className="ebp-page">
                         <div className="ebp-page-content">
                             <Row>
-                                <Col span={18}
+                                <Col md={{span:24}} lg={{span: 18}}
                                      className="community-left-column">
                                     {listOrganizers}
                                 </Col>
-                                <Col span={6}
+                                <Col md={{span:24}} lg={{span: 6}}
                                      className="community-right-column">
                                     <div>
                                         <h3 className="without-padding">Members</h3>
@@ -558,6 +562,7 @@ export default class extends StandardPage {
                                     </div>
                                 </Col>
                             </Row>
+                            {/*
                             <Row>
                                 <Col span={24}>
                                     {this.state.subCommunities.length > 0 &&
@@ -568,6 +573,7 @@ export default class extends StandardPage {
                                     {tabSubCommunities}
                                 </Col>
                             </Row>
+                            */}
                         </div>
                     </div>
                 </div>

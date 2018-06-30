@@ -18,6 +18,8 @@ const restrictedFields = {
 
 const sanitize = '-password -salt -email'
 
+// TODO: we need some sort of status -> status permitted map
+
 export default class extends Base {
 
     public async show(param): Promise<Document> {
@@ -220,6 +222,26 @@ export default class extends Base {
             return
         }
 
+        // permission shortcuts
+        if (this.currentUser.role === constant.USER_ROLE.MEMBER) {
+            throw 'Access Denied'
+        }
+
+        if (this.currentUser.role === constant.USER_ROLE.LEADER) {
+
+            if ([
+                constant.TASK_STATUS.DISTRIBUTED,
+                constant.TASK_STATUS.CANCELED,
+                constant.TASK_STATUS.APPROVED
+
+            ].includes(param.status)) {
+                throw 'Access Denied'
+            }
+
+        }
+
+
+        // start logic
         const db_task = this.getDBModel('Task');
         const db_user = this.getDBModel('User');
 
@@ -232,21 +254,12 @@ export default class extends Base {
         // explictly copy over fields, do not accept param as is
         const updateObj:any = _.omit(param, restrictedFields.update)
 
-        // reward should only change if ela amount changed
-        if ([constant.TASK_STATUS.PENDING, constant.TASK_STATUS.CREATED].includes(task.status)) {
-            if ((rewardUpfront && rewardUpfront.ela > 0) || (reward && reward.ela > 0)) {
-                // TODO: send notification to admin
-                updateObj.status = constant.TASK_STATUS.PENDING;
-
-                await this.sendTaskPendingEmail(this.currentUser, task)
-            } else {
-                updateObj.status = constant.TASK_STATUS.CREATED;
-            }
-        }
-
-        // TODO: if status changed to APPROVED - send notification
-
         // only allow approving these fields if user is admin
+
+        // TODO: there are likely bugs here since owners are admins as well as organizers
+        // but the same logic should execute for both and we are not doing that
+
+        // TODO: we need a state diagram and a helper for this
         if (this.currentUser.role === constant.USER_ROLE.ADMIN) {
 
             if (param.status) {
@@ -270,17 +283,43 @@ export default class extends Base {
                     updateObj.status = param.status
                 }
             }
+        } else if ([constant.TASK_STATUS.PENDING, constant.TASK_STATUS.CREATED].includes(task.status)) {
+
+            // reward should only change if ela amount changed from 0 to > 0
+            if ((task.reward.ela === 0 && task.rewardUpfront.ela === 0) &&
+                (rewardUpfront && rewardUpfront.ela > 0) || (reward && reward.ela > 0)
+            ) {
+                // TODO: send notification to admin
+                updateObj.status = constant.TASK_STATUS.PENDING;
+
+                await this.sendTaskPendingEmail(this.currentUser, task)
+            }
         }
 
+        // if you're the owner - applies for admins and organizers
+        if (this.currentUser._id.toString() === task.createdBy.toString()) {
 
-        if (this.currentUser._id.toString() === task.createdBy.toString() && (param.status === constant.TASK_STATUS.SUCCESS || param.status === constant.TASK_STATUS.ASSIGNED)) {
-            updateObj.status = param.status
+            // shortcut with error for these
+            if (task.status !== constant.TASK_STATUS.ASSIGNED &&
+                param.status === constant.TASK_STATUS.SUBMITTED
+            ) {
+                throw 'Invalid Action'
+            }
 
-            if (param.status === constant.TASK_STATUS.ASSIGNED) {
-                await this.sendTaskAssignedEmail(taskOwner, task)
+            if (task.status !== constant.TASK_STATUS.PENDING &&
+                (
+                    param.status === constant.TASK_STATUS.SUBMITTED ||
+                    param.status === constant.TASK_STATUS.ASSIGNED
+                )
+            ) {
+                updateObj.status = param.status
 
-            } else if (param.status === constant.TASK_STATUS.SUCCESS) {
-                await this.sendTaskSuccessEmail(taskOwner, task)
+                if (param.status === constant.TASK_STATUS.ASSIGNED) {
+                    await this.sendTaskAssignedEmail(taskOwner, task)
+
+                } else if (param.status === constant.TASK_STATUS.SUBMITTED) {
+                    await this.sendTaskSuccessEmail(taskOwner, task)
+                }
             }
         }
 
@@ -303,7 +342,12 @@ export default class extends Base {
 
         await db_task.update({_id: taskId}, updateObj)
 
-        return db_task.findById(taskId);
+        let updatedTask = db_task.findById(taskId);
+
+        // post update checks
+        // TODO: if reward changed to 0, force status to CREATED
+
+        return updatedTask
     }
 
     /**

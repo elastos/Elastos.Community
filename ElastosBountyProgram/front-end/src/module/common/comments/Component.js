@@ -26,7 +26,7 @@ class C extends BaseComponent {
         switch (this.props.type) {
             case 'task':
                 // can't do this - we need to keep detail data sometimes when switching to an edit form
-                // this.props.resetTaskDetail()
+                this.props.resetTaskDetail()
                 break
             case 'sumbission':
                 this.props.resetSubmissionDetail()

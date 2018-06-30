@@ -37,12 +37,19 @@ export const TASK_CATEGORY = {
 export const TASK_STATUS = {
     PROPOSAL: 'PROPOSAL',
     CREATED: 'CREATED',
+    PENDING: 'PENDING',
     APPROVED: 'APPROVED',
     ASSIGNED: 'ASSIGNED',
-    PENDING: 'PENDING',
-    SUBMITTED: 'SUBMITTED', // when user says it is complete
-    SUCCESS: 'SUCCESS',
-    DISTRIBUTED: 'DISTRIBUTED',
+
+    // in between ASSIGNED and SUBMITTED, individual task candidates
+    // can mark their completion which is recorded in the array candidateCompleted
+    // this is only for reference, the task is not fully completed until the owner
+
+    // owner acknowledges task is done - by enough parties (note it does not have to be all)
+    SUBMITTED: 'SUBMITTED',
+
+    SUCCESS: 'SUCCESS', // when admin accepts it as complete
+    DISTRIBUTED: 'DISTRIBUTED', // when admin distributes ELA rewards
     CANCELED: 'CANCELED',
     EXPIRED: 'EXPIRED'
 }
@@ -89,5 +96,6 @@ export const SUBMISSION_TYPE = {
     SECURITY_ISSUE: 'SECURITY_ISSUE',
     SUGGESTION: 'SUGGESTION',
     ADD_COMMUNITY: 'ADD_COMMUNITY',
-    OTHER: 'OTHER'
+    OTHER: 'OTHER',
+    FORM_EXT: 'FORM_EXT'
 };

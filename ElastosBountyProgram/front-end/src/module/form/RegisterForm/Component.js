@@ -14,24 +14,56 @@ const FormItem = Form.Item
 
 class C extends BaseComponent {
 
+    state: {
+        requestedCode: null,
+    }
+
     handleSubmit(e) {
         e.preventDefault()
-        this.props.form.validateFields((err, values) => {
 
+        this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Register - received values of form: ', values)
-                this.props.register(values.username, values.password, _.omit(values, ['username', 'password']))
 
+                if (this.state.requestedCode) {
+                    this.props.register(this.state.savedValues.username,
+                        this.state.savedValues.password, _.omit(this.state.savedValues, ['username', 'password']))
+                } else {
+                    const code = this.generateRegCode()
+                    this.props.sendRegistrationCode(values.email, code)
+                    this.setState({
+                        requestedCode: code,
+                        savedValues: values
+                    })
+                }
             }
         })
+    }
+
+    generateRegCode() {
+        // Generate a random six digit code
+        const min = 100000
+        const max = 1000000
+        return Math.round(Math.random() * (max - min) + min);
+    }
+
+    validateRegCode(rule, value, callback) {
+        const reqCode = this.state.requestedCode
+        const form = this.props.form
+
+        if (reqCode && reqCode.toString() !== value) {
+            callback('The code you entered does not match')
+        } else {
+            callback()
+        }
     }
 
     compareToFirstPassword(rule, value, callback) {
         const form = this.props.form
         if (value && value !== form.getFieldValue('password')) {
-          callback('Two passwords that you entered do not match')
+            callback('Two passwords you entered do not match')
         } else {
-          callback()
+            callback()
         }
     }
 
@@ -44,6 +76,23 @@ class C extends BaseComponent {
             callback(`The password must be at least ${MIN_LENGTH_PASSWORD} characters.`)
         }
         callback()
+    }
+
+    getConfirmInputProps() {
+        const {getFieldDecorator} = this.props.form
+
+        const regCode_fn = getFieldDecorator('reg_code', {
+            rules: [{required: true, message: 'Please input your code'},
+                {validator: this.validateRegCode.bind(this)}]
+        })
+        const regCode_el = (
+            <Input size="large"
+                   placeholder="Confirmation code"/>
+        )
+
+        return {
+            regCode: regCode_fn(regCode_el)
+        }
     }
 
     getInputProps() {
@@ -206,30 +255,29 @@ class C extends BaseComponent {
 
             source: source_fn(source_el),
 
-            recaptcha: recaptcha_fn(recaptcha_el)
+            recaptcha: recaptcha_fn(recaptcha_el),
         }
     }
 
-    ord_render() {
-        const {getFieldDecorator} = this.props.form
-        const p = this.getInputProps()
-
-        // TODO: terms of service checkbox
-
-        // TODO: react-motion animate slide left
-
-        return (
-            <div className="c_registerContainer">
-
-                <h2>
-                    Become a Contributor
-                </h2>
-
-                <p>
-                    As a member you can sign up for bounties on EBP, <br/>
-                    you do not need to be a member to join events.
-                </p>
-
+    getForm() {
+        if (this.state.requestedCode) {
+            const p = this.getConfirmInputProps()
+            return (
+                <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
+                    <Divider>We have sent a confirmation code to your email.</Divider>
+                    <FormItem>
+                        {p.regCode}
+                    </FormItem>
+                    <FormItem>
+                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn" onClick={this.handleSubmit.bind(this)}>
+                            Register
+                        </Button>
+                    </FormItem>
+                </Form>
+            )
+        } else {
+            const p = this.getInputProps()
+            return (
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
                     <Divider>Required Fields</Divider>
                     <FormItem>
@@ -278,6 +326,31 @@ class C extends BaseComponent {
                         </Button>
                     </FormItem>
                 </Form>
+            )
+        }
+    }
+
+    ord_render() {
+        const {getFieldDecorator} = this.props.form
+        const form = this.getForm()
+
+        // TODO: terms of service checkbox
+
+        // TODO: react-motion animate slide left
+
+        return (
+            <div className="c_registerContainer">
+
+                <h2>
+                    Become a Contributor
+                </h2>
+
+                <p>
+                    As a member you can sign up for bounties on EBP, <br/>
+                    you do not need to be a member to join events.
+                </p>
+
+                {form}
             </div>
         )
 

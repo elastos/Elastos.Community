@@ -47,8 +47,8 @@ export default class extends StandardPage {
 
     getAvatarUrl(users) {
         const avatarDefault = {
-            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Male.png',
-            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Female.png',
+            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png',
+            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Other.png',
             [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png',
         };
 
@@ -145,9 +145,9 @@ export default class extends StandardPage {
         return this.state.communities.map((community, index) => {
             return (
                 <div key={index}>
-                    {community.leaders.map((leader) => {
+                    {community.leaders && community.leaders.map((leader) => {
                         return (
-                            <Col span={3} key={index} className="user-card">
+                            <Col md={{span:12}} lg={{span: 3}} key={index} className="user-card">
                                 <Link to={'/community/' + community._id  + '/country/' + community.geolocation}>
                                     <Card
                                         key={index}
@@ -166,8 +166,8 @@ export default class extends StandardPage {
                         )
                     })}
 
-                    {community.leaders.length === 0 && (
-                        <Col span={3} key={index} className="user-card public-communities-page">
+                    {(!community.leaders || community.leaders.length === 0) && (
+                        <Col md={{span:12}} lg={{span: 3}} key={index} className="user-card public-communities-page">
                             <Link to={'/community/' + community._id  + '/country/' + community.geolocation}>
                                 <Card
                                     key={index}
@@ -219,7 +219,7 @@ export default class extends StandardPage {
                                     <div>
                                         <Row>
                                             <Col span={20}>
-                                                <h3 className="without-padding">Under Development</h3>
+                                                <h3 className="without-padding">Select a Country</h3>
                                             </Col>
                                             <Col span={4}>
                                                 {/*

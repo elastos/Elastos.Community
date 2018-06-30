@@ -19,6 +19,9 @@ export const Submission = {
         type : String,
         required : true
     },
+    campaign: {
+        type: String
+    },
     title : {
         type : String,
         required : true
@@ -27,6 +30,23 @@ export const Submission = {
         type : String,
         required : true
     },
+
+    email: String,
+    fullLegalName: String,
+    audienceInfo: String,
+    publicSpeakingExp: String,
+    previousExp: String,
+
+    isDeveloper: Boolean,
+
+    devBackground: String,
+
+    reason: String,
+
+    attachment: String,
+    attachmentType: String,
+    attachmentFilename: String,
+
     createdBy : {
         type: Schema.Types.ObjectId,
         ref: 'users'

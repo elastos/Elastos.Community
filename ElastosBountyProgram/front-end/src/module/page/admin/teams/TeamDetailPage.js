@@ -54,7 +54,7 @@ const Component = class extends BaseAdmin {
         }
 
         return (
-            <TeamDetail data={this.state.data} />
+            <TeamDetail canEdit={true} data={this.state.data} />
         )
     }
 

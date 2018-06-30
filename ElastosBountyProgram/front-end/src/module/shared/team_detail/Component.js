@@ -35,17 +35,21 @@ export default class extends BaseComponent {
         );
     }
 
-
     renderHeader() {
-
+        const canEdit = this.props.canEdit || false;
         return <div className="l_banner">
             <div className="pull-left">
                 Team Detail
             </div>
             <div className="pull-right right-align">
-                <Button onClick={this.switchEditMode.bind(this)}>
-                    {this.state.editing ? 'Cancel' : 'Edit'}
-                </Button>
+                {
+                    canEdit
+                    &&
+                    <Button onClick={this.switchEditMode.bind(this)}>
+                        {this.state.editing ? 'Cancel' : 'Edit'}
+                    </Button>
+                }
+
             </div>
             <div className="clearfix"/>
         </div>

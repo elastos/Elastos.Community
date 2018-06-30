@@ -26,7 +26,11 @@ export default class extends BaseService {
         if ([USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(res.user.role)) {
             await this.dispatch(userRedux.actions.is_admin_update(true))
         }
+        if ([USER_ROLE.LEADER].includes(res.user.role)) {
+            await this.dispatch(userRedux.actions.is_leader_update(true))
+        }
 
+        await this.dispatch(userRedux.actions.email_update(res.user.email))
         await this.dispatch(userRedux.actions.username_update(res.user.username))
         await this.dispatch(userRedux.actions.profile_update(res.user.profile))
         await this.dispatch(userRedux.actions.role_update(res.user.role))
@@ -174,7 +178,6 @@ export default class extends BaseService {
     }
 
     async sendEmail(fromUserId, toUserId, formData) {
-
         return await api_request({
             path: '/api/user/send-email',
             method: 'post',
@@ -182,6 +185,27 @@ export default class extends BaseService {
                 fromUserId,
                 toUserId,
                 ...formData
+            }
+        })
+    }
+
+    async sendRegistrationCode(email, code) {
+        return await api_request({
+            path: '/api/user/send-code',
+            method: 'post',
+            data: {
+                email,
+                code // TODO dont send this in clear text
+            }
+        })
+    }
+
+    async sendConfirmationEmail(email) {
+        return await api_request({
+            path: '/api/user/send-confirm',
+            method: 'post',
+            data: {
+                email
             }
         })
     }

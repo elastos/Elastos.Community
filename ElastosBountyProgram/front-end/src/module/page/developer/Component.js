@@ -301,7 +301,7 @@ export default class extends StandardPage {
                     </div>
 
                     <Row className="d_row d_rowTop">
-                        <Col span={16} className="d_leftContainer d_box">
+                        <Col md={{span:24}} lg={{span: 16}} className="d_leftContainer d_box">
                             <div className="pull-left">
                                 <h3>
                                     Join Training and Developer Events
@@ -324,7 +324,7 @@ export default class extends StandardPage {
                                 loading={this.props.loading}
                             />
                         </Col>
-                        <Col span={8} className="d_rightContainer d_box">
+                        <Col md={{span:24}} lg={{span: 8}} className="d_rightContainer d_box">
                             <h3>
                                 Submit an Issue
                             </h3>
@@ -337,7 +337,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row">
-                        <Col span={16} className="d_leftContainer d_box">
+                        <Col md={{span:24}} lg={{span: 16}} className="d_leftContainer d_box">
                             <div>
                                 <h3 className="pull-left">
                                     Available Developer Tasks and Open Issues
@@ -358,7 +358,7 @@ export default class extends StandardPage {
                                 loading={this.props.loading}
                             />
                         </Col>
-                        <Col span={8} className="d_rightContainer d_box">
+                        <Col md={{span:24}} lg={{span: 8}} className="d_rightContainer d_box">
                             <h3>
                                 My Tasks
                             </h3>

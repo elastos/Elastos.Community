@@ -40,4 +40,17 @@
       color: $text_light_gray;
     }
   }
+
+  .col-label {
+    color: $text_light_gray;
+    font-weight: 500;
+    padding: 0 $gap_1;
+    text-align: right;
+  }
+
+  .form-detail-desc {
+    color: $text_light_gray;
+    padding-top: $gap_1;
+    padding-bottom: $gap_0;
+  }
 }

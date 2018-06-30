@@ -53,4 +53,14 @@ export default class extends BaseService {
 
         return result;
     }
+
+    async create(param){
+        const result = await api_request({
+            path : '/api/team/create',
+            method : 'post',
+            data : param
+        });
+
+        return result;
+    }
 }

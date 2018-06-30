@@ -114,8 +114,8 @@ export default class extends AdminPage {
 
     getAvatarUrl(users) {
         const avatarDefault = {
-            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Male.png',
-            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Female.png',
+            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png',
+            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Other.png',
             [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png',
         };
 
@@ -566,7 +566,7 @@ export default class extends AdminPage {
                                                         </Card>
                                                     )
                                                 })}
-                                                
+
                                                 {community.leaders.length === 0 && (
                                                     <Card
                                                         key={index}

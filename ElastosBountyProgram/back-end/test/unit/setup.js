@@ -1,41 +1,57 @@
+
+const {constant} = require('../../src/constant')
+
 global.DB = {
     MEMBER_USER : {
         username: `test_member`,
-        password: 'ebp1234',
-        email: 'test_member@ebp.com',
+        password: 'ebp12345',
+        email: 'clarence+test_member@elastosjs.com',
         firstName: 'Hello',
         lastName: 'World',
-        country: 'Canada',
+        country: 'ca',
+        city: 'Vancouver'
+    },
+    ORGANIZER_USER : {
+        username: `test_organizer`,
+        password: 'ebp12345',
+        email: 'clarence+test_organizer@elastosjs.com',
+        firstName: 'Clarence',
+        lastName: 'Liu',
+        country: 'ca',
         city: 'Vancouver'
     },
     ADMIN_USER : {
-        username: 'admin@ebp.com'
+        username: 'ebpadmin'
     },
 
     TASK_1 : {
-        "name": "test_task",
-        "description": "This is a test campaign, user must put their requirements and rewards here.",
-        "communityId": "",
-        "type": "TASK",
-        "startTime": "",
-        "endTime": "",
-        "candidateLimit": 1,
-        "candidateSltLimit": 1,
-        "reward_ela": 1000,
-        "reward_evp": 10
+        name: 'Test Social Event',
+        description: 'This is a test campaign, user must put their requirements and rewards here',
+        category: constant.TASK_CATEGORY.SOCIAL,
+        type: constant.TASK_TYPE.EVENT,
+        candidateLimit: 10,
+        candidateSltLimit: 3,
+        reward: {
+            ela: 1000
+        },
+        rewardUpfront: {
+            ela: 0
+        }
     },
 
     TASK_2 : {
-        "name": "test_event",
-        "description": "This is a test event",
-        "communityId": "",
-        "type": "EVENT",
-        "startTime": "",
-        "endTime": "",
-        "candidateLimit": 0,
-        "candidateSltLimit": 0,
-        "reward_ela": 1000,
-        "reward_evp": 10
+        name: 'Test Social Task',
+        description: 'This is a test task',
+        category: constant.TASK_CATEGORY.SOCIAL,
+        type: constant.TASK_TYPE.TASK,
+        candidateLimit: 10,
+        candidateSltLimit: 3,
+        reward: {
+            ela: 0
+        },
+        rewardUpfront: {
+            ela: 750
+        }
     },
 
     TEAM_1 : {

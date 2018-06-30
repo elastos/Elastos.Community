@@ -98,8 +98,12 @@
     padding: 0 $gap_2;
     cursor: pointer;
 
-    :hover {
+    > h4:hover {
       color: $text_light_gray;
+    }
+
+    &.desc {
+      text-align: left;
     }
 
     > img {

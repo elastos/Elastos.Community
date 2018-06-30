@@ -37,14 +37,14 @@ class C extends BaseComponent {
             rules: [{required: true, message: 'Please enter a subject'}]
         })
         const subject_el = (
-            <Input size="large"/>
+            <Input size="large" placeholder="subject"/>
         )
 
         const message_fn = getFieldDecorator('message', {
             rules: [{required: true, message: 'You must have a message'}]
         })
         const message_el = (
-            <TextArea rows={4} name="message"></TextArea>
+            <TextArea rows={4} name="message" placeholder="message"></TextArea>
         )
 
         return {
@@ -57,16 +57,6 @@ class C extends BaseComponent {
         const {getFieldDecorator} = this.props.form
         const p = this.getInputProps()
 
-        const formItemLayout = {
-            labelCol: {
-                xs: {span: 24},
-                sm: {span: 8},
-            },
-            wrapperCol: {
-                xs: {span: 24},
-                sm: {span: 12},
-            },
-        }
         // TODO: description CKE Editor
 
         return (
@@ -79,10 +69,10 @@ class C extends BaseComponent {
                 <br/>
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_userContactForm">
                     <div>
-                        <FormItem label="Subject" {...formItemLayout}>
+                        <FormItem>
                             {p.subject}
                         </FormItem>
-                        <FormItem label="Message"  {...formItemLayout}>
+                        <FormItem>
                             {p.message}
                         </FormItem>
 

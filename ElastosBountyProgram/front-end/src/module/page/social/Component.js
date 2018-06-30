@@ -12,6 +12,7 @@ import { Col, Row, Icon, Form, message, Button, Select, Table, List, Tooltip, Ca
 const Option = Select.Option
 
 import { TASK_STATUS, TASK_TYPE } from '@/constant'
+import _ from 'lodash'
 
 export default class extends StandardPage {
     state = {
@@ -100,7 +101,10 @@ export default class extends StandardPage {
             title: 'Description',
             dataIndex: 'description',
             className: 'allow-wrap',
-            width: '30%'
+            width: '30%',
+            render: (desc) => {
+                return _.truncate(desc, {length: 100})
+            }
         }, {
             title: 'Community',
             dataIndex: 'community',
@@ -147,7 +151,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row d_rowTop">
-                        <Col span={this.props.is_login ? 16 : 24} className="d_leftContainer d_box">
+                        <Col md={{span:24}} lg={{span: 16}} className="d_leftContainer d_box">
                             <div>
                                 {filterCommunityEl}
                             </div>
@@ -170,8 +174,7 @@ export default class extends StandardPage {
                                 loading={this.props.loading}
                             />
                         </Col>
-                        {this.props.is_login &&
-                        <Col span={8} className="d_rightContainer d_box d_communities">
+                        <Col md={{span:24}} lg={{span: 8}} className="d_rightContainer d_box d_communities">
                             <div className="pull-left">
                                 <h3>
                                     My Communities
@@ -203,7 +206,6 @@ export default class extends StandardPage {
                                 }}
                             />
                         </Col>
-                        }
                     </Row>
                     <div className="horizGap">
 
@@ -211,7 +213,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row">
-                        <Col span={this.props.is_login ? 16 : 24} className="d_leftContainer d_box">
+                        <Col md={{span:24}} lg={{span: 16}} className="d_leftContainer d_box">
                             <div>
                                 <h3 className="pull-left">
                                     Available Tasks
@@ -231,8 +233,7 @@ export default class extends StandardPage {
                                 loading={this.props.loading}
                             />
                         </Col>
-                        {this.props.is_login &&
-                        <Col span={8} className="d_rightContainer d_box">
+                        <Col md={{span:24}} lg={{span: 8}} className="d_rightContainer d_box">
                             <h3>
                                 My Tasks
                             </h3>
@@ -258,7 +259,6 @@ export default class extends StandardPage {
                                 }}
                             />
                         </Col>
-                        }
                     </Row>
                 </div>
                 <Footer/>

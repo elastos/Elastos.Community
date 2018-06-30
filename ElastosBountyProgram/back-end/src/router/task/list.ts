@@ -75,11 +75,7 @@ export default class extends Base{
             // by default we only show tasks with these statuses
             query.status = {$in: [
                     constant.TASK_STATUS.CREATED,
-                    constant.TASK_STATUS.APPROVED,
-                    constant.TASK_STATUS.ASSIGNED,
-                    constant.TASK_STATUS.SUBMITTED,
-                    constant.TASK_STATUS.SUCCESS,
-                    constant.TASK_STATUS.DISTRIBUTED
+                    constant.TASK_STATUS.APPROVED
                 ]}
         }
 
