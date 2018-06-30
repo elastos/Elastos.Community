@@ -49,6 +49,15 @@ export default class extends Base {
                     select: sanitize
                 })
                 await db_task_candidate.getDBInstance().populate(candidate, ['team'])
+
+                for (let comment of candidate.comments) {
+                    for (let thread of comment) {
+                        await db_task.getDBInstance().populate(thread, {
+                            path: 'createdBy',
+                            select: sanitize
+                        })
+                    }
+                }
             }
         }
 
@@ -60,6 +69,15 @@ export default class extends Base {
         const taskCandidate = await db_task_candidate.getDBInstance().findOne({_id: param.id})
             .populate('user', sanitize)
             .populate('team')
+
+        for (let comment of taskCandidate.comments) {
+            for (let thread of comment) {
+                await db_task_candidate.getDBInstance().populate(thread, {
+                    path: 'createdBy',
+                    select: sanitize
+                })
+            }
+        }
 
         return taskCandidate
     }
