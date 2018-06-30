@@ -46,12 +46,14 @@ export default class extends BaseComponent {
 
     renderMain () {
         const isTaskOwner = this.props.task.createdBy._id === this.props.userId
+        const applicant = this.props.task.candidates.find((candidate) => {
+            return candidate.user._id === this.props.applicantId
+        })
 
         return (
             <div className="public">
                 <Row>
                     <Col span={18} className="gridCol main-area">
-
                     </Col>
                     <Col span={6} className="gridCol applicants">
                         <h4>{this.state.isDeveloperEvent ? 'Registrants' : 'Applicants'}</h4>

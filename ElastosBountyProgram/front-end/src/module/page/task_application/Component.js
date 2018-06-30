@@ -18,11 +18,16 @@ export default class extends StandardPage {
         this.props.getTaskDetail(taskId)
     }
 
-    // componentWillUnmount() {
-    //     this.props.resetTaskDetail()
-    // }
+    componentWillUnmount() {
+        this.props.resetTaskDetail()
+    }
 
     ord_renderContent () {
+        const candidate = (!_.isEmpty(this.props.task.candidates) &&
+            this.props.task.candidates.find((candidate) => {
+                return candidate.user._id === this.props.match.params.applicantId
+            }))
+
         return (
             <div className="p_TaskApplication">
                 <div className="ebp-header-divider">
@@ -44,11 +49,11 @@ export default class extends StandardPage {
                             {this.props.task.name}
                         </Breadcrumb.Item>
                         <Breadcrumb.Item>
-                            {this.props.applicantId} // TODO - show name or email
+                            {candidate && candidate.user.username || ''}
                         </Breadcrumb.Item>
                     </Breadcrumb>
 
-                    <TaskApplicationDetail task={this.props.task} applicant={this.props.applicantId}/>
+                    <TaskApplicationDetail task={this.props.task} applicantId={this.props.match.params.applicantId}/>
                 </div>
                 <Footer />
             </div>
