@@ -409,15 +409,28 @@ export default class extends BaseComponent {
         }
 
         let buttonText = ''
-        if (this.props.task.type === TASK_TYPE.TASK) {
-            buttonText = 'Apply for Task'
-        } else {
-            buttonText = 'Apply to Help'
-        }
+        const appliedAlready = _.find(this.props.task.candidates, (candidate) => {
+            return candidate.user._id === this.props.userId
+        })
 
-        return <Button className="join-btn" onClick={this.showModalApplyTask}>
-            {buttonText}
-        </Button>
+        if (!appliedAlready) {
+            if (this.props.task.type === TASK_TYPE.TASK) {
+                buttonText = 'Apply for Task'
+            } else {
+                buttonText = 'Apply to Help'
+            }
+
+            return <Button className="join-btn" onClick={this.showModalApplyTask}>
+                {buttonText}
+            </Button>
+        } else {
+            buttonText = 'My Application'
+            return <Button className="join-btn" onClick={this.showApplicationDetail}>
+                <a onClick={() => {this.props.history.push(`/task-app/${this.props.task._id}/${this.props.userId}`)}}>
+                    {buttonText}
+                </a>
+            </Button>
+        }
     }
 
     /**
