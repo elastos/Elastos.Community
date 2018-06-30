@@ -78,7 +78,7 @@ router.use('/ping', ping);
 router.use('/user', user);
 router.use('/team', team);
 router.use('/task', task);
-router.use('/task_candidate', taskCandidate)
+router.use('/taskCandidate', taskCandidate)
 router.use('/community', community);
 router.use('/upload', upload);
 router.use('/submission', submission);

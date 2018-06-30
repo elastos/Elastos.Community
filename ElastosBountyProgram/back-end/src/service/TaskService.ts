@@ -55,6 +55,15 @@ export default class extends Base {
         return task
     }
 
+    public async showCandidate(param): Promise<Document> {
+        const db_task_candidate = this.getDBModel('Task_Candidate');
+        const taskCandidate = await db_task_candidate.getDBInstance().findOne({_id: param.id})
+            .populate('user', sanitize)
+            .populate('team')
+
+        return taskCandidate
+    }
+
     public async list(query): Promise<Document> {
         const db_task = this.getDBModel('Task');
         const db_task_candidate = this.getDBModel('Task_Candidate');

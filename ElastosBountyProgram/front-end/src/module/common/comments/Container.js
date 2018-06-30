@@ -8,6 +8,7 @@ import {message} from 'antd'
 export default createContainer(Component, (state) => {
     return {
         task: state.task.detail,
+        taskCandidate: state.taskCandidate.detail,
         submission: state.submission.detail,
         loading: state.task.loading || state.submission.loading
     }
@@ -38,8 +39,16 @@ export default createContainer(Component, (state) => {
             return taskService.get(taskId)
         },
 
+        async getTaskCandidateDetail(taskCandidateId) {
+            return taskService.getCandidate(taskCandidateId)
+        },
+
         async resetTaskDetail() {
             return taskService.resetTaskDetail()
+        },
+
+        async resetTaskCandidateDetail() {
+            return taskService.resetTaskCandidateDetail()
         },
 
         async getSubmissionDetail(submissionId) {

@@ -68,6 +68,27 @@ export default class extends BaseService {
 
     }
 
+    async getCandidate(taskCandidateId) {
+
+        const taskCandidateRedux = this.store.getRedux('taskCandidate')
+
+        this.dispatch(taskCandidateRedux.actions.loading_update(true))
+
+        const result = await api_request({
+            path: `/api/task_candidate/${taskCandidateId}`,
+            method: 'get'
+        })
+
+        this.dispatch(taskCandidateRedux.actions.loading_update(false))
+
+        // Format data for dropdown select community
+        if (result) {
+            this.dispatch(taskCandidateRedux.actions.detail_update(result))
+            return result
+        }
+
+    }
+
     /**
      * Need to rework this to return the updated doc, though this isn't a true
      * PUT the issue is it's just easier to have side effects
@@ -216,6 +237,11 @@ export default class extends BaseService {
     async resetTaskDetail() {
         const taskRedux = this.store.getRedux('task')
         this.dispatch(taskRedux.actions.detail_reset())
+    }
+
+    async resetTaskCandidateDetail() {
+        const taskCandidateRedux = this.store.getRedux('taskCandidate')
+        this.dispatch(taskCandidateRedux.actions.detail_reset())
     }
 
     async create(doc) {

@@ -12,25 +12,33 @@ class C extends BaseComponent {
     componentDidMount() {
         const taskId = this.props.match.params.taskId
         const submissionId = this.props.match.params.submissionId
+        const taskCandidateId = this.props.match.params.applicantId
 
-        if (taskId) {
-            this.props.getTaskDetail(taskId)
-        }
-
-        if (submissionId) {
-            this.props.getSubmissionDetail(submissionId)
+        switch (this.props.type) {
+            case 'task':
+                this.props.getTaskDetail(taskId)
+                break
+            case 'sumbission':
+                this.props.getSubmissionDetail(submissionId)
+                break
+            case 'taskCandidate':
+                this.props.getTaskCandidateDetail(taskCandidateId)
+            default:
+                // do nothing
+                break
         }
     }
 
     componentWillUnmount() {
         switch (this.props.type) {
             case 'task':
-                // can't do this - we need to keep detail data sometimes when switching to an edit form
                 this.props.resetTaskDetail()
                 break
             case 'sumbission':
                 this.props.resetSubmissionDetail()
                 break
+            case 'taskCandidate':
+                this.props.resetTaskCandidateDetail()
             default:
                 // do nothing
                 break
@@ -95,7 +103,14 @@ class C extends BaseComponent {
 
     renderComments() {
         const type = this.props.type
-        const curDetail = this.props[this.props.type]
+        let curDetail = this.props[this.props.type]
+
+        if (type === 'taskCandidate') {
+            curDetail = _.find(curDetail.candidates, (candidate) => {
+                return candidate.user._id === this.props.match.params.applicantId
+            })
+        }
+
         const comments = curDetail.comments || []
         const dateFormatter = (createdAt) => moment(createdAt).format('MMM D HH:mm')
 
