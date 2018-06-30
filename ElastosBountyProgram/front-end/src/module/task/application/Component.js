@@ -54,6 +54,13 @@ export default class extends BaseComponent {
             <div className="public">
                 <Row>
                     <Col span={18} className="gridCol main-area">
+                        <Row>
+                            <Col>
+                                <h4 className="center">
+                                    {applicant.applyMsg}
+                                </h4>
+                            </Col>
+                        </Row>
                         <Comments type="taskCandidate" canPost={true} model={applicant}/>
                     </Col>
                     <Col span={6} className="gridCol applicants">
