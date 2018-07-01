@@ -37,5 +37,9 @@ export default createContainer(Component, (state) => {
         async resetTaskDetail() {
             return taskService.resetTaskDetail()
         },
+
+        async markComplete(taskCandidateId) {
+            return taskService.markComplete(taskCandidateId)
+        }
     }
 })

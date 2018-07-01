@@ -44,15 +44,59 @@ export default class extends BaseComponent {
         )
     }
 
-    renderMain () {
+    getBanner() {
         const isTaskOwner = this.props.task.createdBy._id === this.props.userId
-        const applicant = this.props.task.candidates.find((candidate) => {
+        const applicant = this.getApplicant()
+
+        let bannerInsides = null
+        if (applicant.complete) {
+            bannerInsides = (
+                <span className="help-text">Task marked as complete</span>
+            )
+        } else if (isTaskOwner && !applicant.complete) {
+            bannerInsides = (
+                <span className="help-text">Task incomplete</span>
+            )
+        } else if (!applicant.complete) {
+            bannerInsides = (
+                <div>
+                    <div className="pull-right right-align">
+                        <Popconfirm title="Are you sure you want to mark this complete?" placement="left" okText="Yes" onConfirm={this.markComplete.bind(this)}>
+                            <Button type="primary">Mark Complete</Button>
+                        </Popconfirm>
+                    </div>
+                    <div className="clearfix"/>
+                </div>
+            )
+        }
+
+        return bannerInsides
+    }
+
+    getApplicant () {
+        return this.props.task.candidates.find((candidate) => {
             return candidate.user._id === this.props.applicantId
         })
+    }
+
+    markComplete () {
+        const applicant = this.getApplicant()
+        this.props.markComplete(applicant._id)
+    }
+
+    renderMain () {
+        const isTaskOwner = this.props.task.createdBy._id === this.props.userId
+        const applicant = this.getApplicant()
+        const banner = this.getBanner()
 
         return (
             <div className="public">
                 <Row>
+                    <Col span={24} className="gridCol banner-area">
+                        <div class="l_banner">
+                            {banner}
+                        </div>
+                    </Col>
                     <Col span={18} className="gridCol main-area">
                         <Row>
                             <Col>
