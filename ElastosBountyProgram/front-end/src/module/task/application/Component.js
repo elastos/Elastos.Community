@@ -213,7 +213,8 @@ export default class extends BaseComponent {
                                     )
                                 }
 
-                                return <List.Item actions={listItemActions}>
+                                const currentClass = candidate.id === applicant.id ? 'active' : ''
+                                return <List.Item actions={listItemActions} className={currentClass}>
                                     {isLeader ?
                                         <Tooltip title="View application">
                                             <a href="#" onClick={() => {this.props.history.push(`/profile/task-app/${this.props.task._id}/${candidate.user._id}`)}}>{userOrTeamName}</a>
