@@ -346,7 +346,7 @@ export default class extends BaseComponent {
                                 }
 
                                 return <List.Item actions={listItemActions}>
-                                    {this.props.page === 'LEADER' && isTaskOwner && !candidateIsUserOrTeam ?
+                                    {isLeader ?
                                         <Tooltip title="View application">
                                             <a href="#" onClick={() => {this.props.history.push(`/profile/task-app/${this.props.task._id}/${candidate.user._id}`)}}>{userOrTeamName}</a>
                                         </Tooltip> : nonOwnerLink
