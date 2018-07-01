@@ -202,6 +202,25 @@ export default class extends BaseService {
         return task
     }
 
+    async markComplete(taskCandidateId) {
+        const taskRedux = this.store.getRedux('task')
+        const task = await api_request({
+            path: '/api/task/markTaskComplete',
+            method: 'post',
+            data: {
+                taskCandidateId
+            }
+        })
+
+        const curTaskDetail = this.store.getState().task.detail
+        const candidate = _.find(curTaskDetail.candidates, (o) => o._id === taskCandidateId)
+        candidate.complete = true
+
+        this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
+
+        return task
+    }
+
     async setFilter(options) {
         const taskRedux = this.store.getRedux('task')
 

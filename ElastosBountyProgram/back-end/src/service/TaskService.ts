@@ -64,6 +64,17 @@ export default class extends Base {
         return task
     }
 
+    public async markComplete(param): Promise<Document> {
+        const { taskCandidateId } = param;
+
+        const db_task_candidate = this.getDBModel('Task_Candidate');
+        const updateObj = { complete: true }
+        await db_task_candidate.update({ _id: taskCandidateId }, updateObj)
+
+        const updatedTask = db_task_candidate.findById(taskCandidateId);
+        return updatedTask
+    }
+
     public async showCandidate(param): Promise<Document> {
         const db_task_candidate = this.getDBModel('Task_Candidate');
         const taskCandidate = await db_task_candidate.getDBInstance().findOne({_id: param.id})
