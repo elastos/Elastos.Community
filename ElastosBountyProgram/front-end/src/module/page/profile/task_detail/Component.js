@@ -45,7 +45,9 @@ export default class extends StandardPage {
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>Profile</Breadcrumb.Item>
                                 <Breadcrumb.Item href="/profile/tasks">Tasks</Breadcrumb.Item>
-                                <Breadcrumb.Item></Breadcrumb.Item>
+                                <Breadcrumb.Item>
+                                    {this.props.task.name}
+                                </Breadcrumb.Item>
                             </Breadcrumb>
                         </div>
                         <div className="p_ProfileTaskDetail p_admin_content">
