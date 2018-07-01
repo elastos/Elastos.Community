@@ -60,7 +60,7 @@ export default class extends StandardPage {
                         <div className="p_ProfileTaskCandidateDetail p_admin_content">
                             <Row>
                                 <Col span={20} className="c_ProfileContainer admin-left-column wrap-box-user">
-                                    <TaskApplicationDetail task={this.props.task} applicantId={this.props.match.params.applicantId}/>
+                                    <TaskApplicationDetail task={this.props.task} page={this.props.page} applicantId={this.props.match.params.applicantId}/>
                                 </Col>
                                 <Col span={4} className="admin-right-column wrap-box-navigator">
                                     <Navigator selectedItem={'profileTasks'} />
