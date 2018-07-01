@@ -5,8 +5,7 @@ import TaskService from '@/service/TaskService'
 export default createContainer(Component, (state) => {
     return {
         task: state.task.detail,
-        loading: state.task.loading,
-        applicantId: state.applicantId // TODO ?
+        loading: state.task.loading
     }
 }, () => {
     const taskService = new TaskService()

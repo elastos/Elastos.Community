@@ -12,7 +12,6 @@ class C extends BaseComponent {
     componentDidMount() {
         const taskId = this.props.match.params.taskId
         const submissionId = this.props.match.params.submissionId
-        const taskCandidateId = this.props.match.params.applicantId
 
         switch (this.props.type) {
             case 'task':
@@ -22,7 +21,7 @@ class C extends BaseComponent {
                 this.props.getSubmissionDetail(submissionId)
                 break
             case 'taskCandidate':
-                this.props.getTaskCandidateDetail(taskCandidateId)
+                this.props.getTaskDetail(taskId)
             default:
                 // do nothing
                 break
@@ -38,7 +37,7 @@ class C extends BaseComponent {
                 this.props.resetSubmissionDetail()
                 break
             case 'taskCandidate':
-                this.props.resetTaskCandidateDetail()
+                this.props.resetTaskDetail()
             default:
                 // do nothing
                 break
@@ -103,12 +102,10 @@ class C extends BaseComponent {
 
     renderComments() {
         const type = this.props.type
-        let curDetail = this.props[this.props.type]
+        let curDetail = this.props[this.props.reduxType || this.props.type]
 
-        if (type === 'taskCandidate') {
-            curDetail = _.find(curDetail.candidates, (candidate) => {
-                return candidate.user._id === this.props.match.params.applicantId
-            })
+        if (this.props.detailReducer) {
+            curDetail = this.props.detailReducer(curDetail)
         }
 
         const comments = curDetail.comments || []
