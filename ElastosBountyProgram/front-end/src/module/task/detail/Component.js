@@ -359,7 +359,7 @@ export default class extends BaseComponent {
                         }
 
                         {this.props.is_login &&
-                        this.props.page !== 'LEADER' &&
+                        !isTaskOwner &&
                         this.renderJoinButton.call(this)}
 
                     </Col>
