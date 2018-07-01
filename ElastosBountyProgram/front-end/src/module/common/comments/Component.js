@@ -168,9 +168,13 @@ class C extends BaseComponent {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.props.postComment(this.props.type, this.props.model._id, values.comment).then(() => {
-                    this.props.form.resetFields()
-                })
+                this.props.postComment(this.props.type,
+                    this.props.reduxType,
+                    this.props.detailReducer,
+                    this.props.model._id,
+                    values.comment).then(() => {
+                        this.props.form.resetFields()
+                    })
             }
         })
     }
