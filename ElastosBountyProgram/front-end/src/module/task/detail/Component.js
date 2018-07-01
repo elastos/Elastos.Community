@@ -49,7 +49,6 @@ export default class extends BaseComponent {
     ord_render () {
 
         const isTaskOwner = this.props.task.createdBy._id === this.props.userId
-
         return (
             <div className="public">
                 <Row>
@@ -267,6 +266,7 @@ export default class extends BaseComponent {
                                     candidateIsUserOrTeam = true
                                 }
 
+                                const isLeader = this.props.page === 'LEADER' && isTaskOwner && !candidateIsUserOrTeam
                                 // we either show the remove icon or the approved icon,
                                 // after approval the user cannot rescind their application
 
@@ -313,14 +313,21 @@ export default class extends BaseComponent {
                                 } else if (candidate.status === TASK_CANDIDATE_STATUS.APPROVED){
                                     // this should be the leader's view - they can approve applicants
                                     listItemActions.unshift(
-                                        <Tooltip title={isTaskOwner ? (candidateIsUserOrTeam ? 'you are automatically accepted' : 'candidate already accepted') : 'accepted candidate'}>
+                                        <Tooltip title={isTaskOwner ? (candidateIsUserOrTeam ? 'You are automatically accepted' : 'Candidate already accepted') : 'Accepted candidate'}>
                                             <a>✓</a>
                                         </Tooltip>)
                                 } else if (!isTaskOwner) {
                                     // awaiting approval
                                     listItemActions.unshift(
-                                        <Tooltip title="awaiting organizer/owner approval">
+                                        <Tooltip title="Awaiting organizer/owner approval">
                                             <a>o</a>
+                                        </Tooltip>)
+                                } else if (isLeader) {
+                                    listItemActions.unshift(
+                                        <Tooltip title="Accept application">
+                                            <a onClick={this.showModalAcceptApplicant.bind(this, candidate)}>
+                                                <Icon type="check-circle-o" />
+                                            </a>
                                         </Tooltip>)
                                 }
 
@@ -338,12 +345,13 @@ export default class extends BaseComponent {
                                     )
                                 }
 
+                                console.log('props_page ', this.props.page, ' isTaskOwner ', isTaskOwner, ' candidateIsUserOrTeam ', candidateIsUserOrTeam)
+
                                 return <List.Item actions={listItemActions}>
                                     {this.props.page === 'LEADER' && isTaskOwner && !candidateIsUserOrTeam ?
-                                        <Tooltip title="view user info / application">
-                                            <a href="#" onClick={this.showModalAcceptApplicant.bind(this, candidate)}>{userOrTeamName}</a>
-                                        </Tooltip> :
-                                        nonOwnerLink
+                                        <Tooltip title="View application">
+                                            <a href="#" onClick={() => {this.props.history.push(`/profile/task-app/${this.props.task._id}/${candidate.user._id}`)}}>{userOrTeamName}</a>
+                                        </Tooltip> : nonOwnerLink
                                     }
                                 </List.Item>
                             }}

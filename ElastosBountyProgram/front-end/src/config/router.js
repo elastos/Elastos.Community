@@ -21,6 +21,7 @@ import SlackPage from '@/module/page/static/slack/Container'
 import ProfileInfoPage from '@/module/page/profile/info/Container'
 import ProfileTasksPage from '@/module/page/profile/tasks/Container'
 import ProfileTaskDetailPage from '@/module/page/profile/task_detail/Container'
+import ProfileTaskApplicationDetailPage from '@/module/page/profile/task_candidate_detail/Container'
 import ProfileTeamsPage from '@/module/page/profile/teams/Container'
 import ProfileTeamDetailPage from '@/module/page/profile/team_detail/Container'
 import ProfileTeamCreatePage from '@/module/page/profile/team_create/Container'
@@ -139,6 +140,10 @@ export default [
     {
         path: '/profile/task-detail/:taskId',
         page: ProfileTaskDetailPage
+    },
+    {
+        path: '/profile/task-app/:taskId/:applicantId',
+        page: ProfileTaskApplicationDetailPage
     },
     {
         path: '/profile/teams',
