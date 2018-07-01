@@ -60,6 +60,7 @@ export default class extends BaseComponent {
         } else if (!applicant.complete) {
             bannerInsides = (
                 <div>
+                    <span className="help-text">Task incomplete</span>
                     <div className="pull-right right-align">
                         <Popconfirm title="Are you sure you want to mark this complete?" placement="left" okText="Yes" onConfirm={this.markComplete.bind(this)}>
                             <Button type="primary">Mark Complete</Button>
