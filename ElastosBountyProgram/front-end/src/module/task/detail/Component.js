@@ -345,8 +345,6 @@ export default class extends BaseComponent {
                                     )
                                 }
 
-                                console.log('props_page ', this.props.page, ' isTaskOwner ', isTaskOwner, ' candidateIsUserOrTeam ', candidateIsUserOrTeam)
-
                                 return <List.Item actions={listItemActions}>
                                     {this.props.page === 'LEADER' && isTaskOwner && !candidateIsUserOrTeam ?
                                         <Tooltip title="View application">
