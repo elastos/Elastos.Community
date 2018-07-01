@@ -431,8 +431,10 @@ export default class extends BaseComponent {
             </Button>
         } else {
             buttonText = 'My Application'
+            const prefix = this.props.page === 'LEADER' ? '/profile' : ''
+
             return <Button className="join-btn" onClick={this.showApplicationDetail}>
-                <a onClick={() => {this.props.history.push(`/task-app/${this.props.task._id}/${this.props.userId}`)}}>
+                <a onClick={() => {this.props.history.push(`${prefix}/task-app/${this.props.task._id}/${this.props.userId}`)}}>
                     {buttonText}
                 </a>
             </Button>
