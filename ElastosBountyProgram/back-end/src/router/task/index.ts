@@ -48,7 +48,7 @@ export default Base.setRouter([
         method : 'post'
     },
     {
-        path: '/markComplete',
+        path: '/markTaskComplete',
         router: markComplete,
         method: 'post'
     },
