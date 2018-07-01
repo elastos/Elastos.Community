@@ -27,6 +27,7 @@ export default class extends StandardPage {
             this.props.task.candidates.find((candidate) => {
                 return candidate.user._id === this.props.match.params.applicantId
             }))
+        const detailLink = `/task-detail/${this.props.task._id}`
 
         return (
             <div className="p_TaskApplication">
@@ -45,7 +46,7 @@ export default class extends StandardPage {
                                 <Link to="/developer">Developer {_.capitalize(this.props.task.type)}s</Link>
                             }
                         </Breadcrumb.Item>
-                        <Breadcrumb.Item>
+                        <Breadcrumb.Item href={detailLink}>
                             {this.props.task.name}
                         </Breadcrumb.Item>
                         <Breadcrumb.Item>
