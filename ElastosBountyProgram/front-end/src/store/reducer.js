@@ -6,7 +6,6 @@ import user from './redux/user'
 import community from './redux/community'
 import member from './redux/member'
 import submission from './redux/submission'
-import taskCandidate from './redux/taskCandidate'
 
 const default_state = {
     init: false
@@ -28,5 +27,4 @@ export default combineReducers({
     community: community.getReducer(),
     member: member.getReducer(),
     submission: submission.getReducer(),
-    taskCandidate: taskCandidate.getReducer()
 })
