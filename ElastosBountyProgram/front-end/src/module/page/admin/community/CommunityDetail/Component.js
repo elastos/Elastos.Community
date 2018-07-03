@@ -627,9 +627,9 @@ export default class extends AdminPage {
                             <Breadcrumb.Item>
                                 {menuCountriesEl}
                             </Breadcrumb.Item>
-                            <Breadcrumb.Item>
-                                {menuListRegionsEl}
-                            </Breadcrumb.Item>
+                            {/*<Breadcrumb.Item>*/}
+                                {/*{menuListRegionsEl}*/}
+                            {/*</Breadcrumb.Item>*/}
                         </Breadcrumb>
                     </div>
                     <div className="p_admin_content">
