@@ -43,7 +43,7 @@ export default class extends Base {
 
         //validate
         this.validate_name(param.name);
-        const {communityId, name, parentCommunityId, geolocation, type, leaderIds} = param;
+        const {_id, name, parentCommunityId, geolocation, type, leaderIds} = param;
 
         const doc = {
             $set : {
@@ -55,7 +55,7 @@ export default class extends Base {
             }
         };
 
-        return await db_community.update({_id : communityId}, doc);
+        return await db_community.update({_id : _id}, doc);
     }
 
     /**
@@ -202,7 +202,7 @@ export default class extends Base {
     public param_leaderIds(leaderIds: string){
         let rs = [];
         if(leaderIds){
-            rs = leaderIds.split(',');
+            rs = leaderIds.split(",");
         }
         return rs;
     }
