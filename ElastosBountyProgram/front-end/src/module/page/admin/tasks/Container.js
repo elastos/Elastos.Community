@@ -9,8 +9,6 @@ export default createContainer(Component, (state) => {
 
     let taskState = state.task
 
-    taskState.loading = false
-
     if (!_.isArray(state.task.all_tasks)) {
         taskState.all_tasks = _.values(state.task.all_tasks)
     }
