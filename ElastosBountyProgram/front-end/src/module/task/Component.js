@@ -184,7 +184,7 @@ export default class extends BaseComponent {
                         Organizer
                     </Col>
                     <Col span={16} className="grid-col">
-                        {this.props.task.createdBy.username}
+                        {this.props.task.createdBy && this.props.task.createdBy.username}
                     </Col>
                 </Row>
                 <Row>
@@ -347,7 +347,6 @@ export default class extends BaseComponent {
     }
 
     ord_render () {
-
         return (_.isEmpty(this.props.task) || this.props.task.loading ?
             <div class="center"><Spin size="large" /></div> :
             this.renderMain()

@@ -13,24 +13,31 @@ class C extends BaseComponent {
         const taskId = this.props.match.params.taskId
         const submissionId = this.props.match.params.submissionId
 
-        if (taskId) {
-            this.props.getTaskDetail(taskId)
-        }
-
-        if (submissionId) {
-            this.props.getSubmissionDetail(submissionId)
+        switch (this.props.type) {
+            case 'task':
+                this.props.getTaskDetail(taskId)
+                break
+            case 'sumbission':
+                this.props.getSubmissionDetail(submissionId)
+                break
+            case 'taskCandidate':
+                this.props.getTaskDetail(taskId)
+            default:
+                // do nothing
+                break
         }
     }
 
     componentWillUnmount() {
         switch (this.props.type) {
             case 'task':
-                // can't do this - we need to keep detail data sometimes when switching to an edit form
                 this.props.resetTaskDetail()
                 break
             case 'sumbission':
                 this.props.resetSubmissionDetail()
                 break
+            case 'taskCandidate':
+                this.props.resetTaskDetail()
             default:
                 // do nothing
                 break
@@ -95,7 +102,12 @@ class C extends BaseComponent {
 
     renderComments() {
         const type = this.props.type
-        const curDetail = this.props[this.props.type]
+        let curDetail = this.props[this.props.reduxType || this.props.type]
+
+        if (this.props.detailReducer) {
+            curDetail = this.props.detailReducer(curDetail)
+        }
+
         const comments = curDetail.comments || []
         const dateFormatter = (createdAt) => moment(createdAt).format('MMM D HH:mm')
 
@@ -156,9 +168,13 @@ class C extends BaseComponent {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.props.postComment(this.props.type, this.props.model._id, values.comment).then(() => {
-                    this.props.form.resetFields()
-                })
+                this.props.postComment(this.props.type,
+                    this.props.reduxType,
+                    this.props.detailReducer,
+                    this.props.model._id,
+                    values.comment).then(() => {
+                        this.props.form.resetFields()
+                    })
             }
         })
     }

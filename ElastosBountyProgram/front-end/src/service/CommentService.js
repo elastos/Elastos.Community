@@ -4,8 +4,8 @@ import {api_request} from '@/util'
 
 
 export default class extends BaseService {
-    async postComment(type, id, commentData) {
-        const redux = this.store.getRedux(type)
+    async postComment(type, reduxType, detailReducer, id, commentData) {
+        const redux = this.store.getRedux(reduxType || type)
         const data = {
             comment: commentData,
             createdBy: this.store.getState().user,
@@ -16,35 +16,22 @@ export default class extends BaseService {
             method: 'post',
             data
         })
-        const curDetail = this.store.getState()[type] && this.store.getState()[type].detail;
+        const curDetail = this.store.getState()[reduxType || type] && this.store.getState()[reduxType || type].detail;
 
         if (!curDetail) {
             return;
         }
 
-        curDetail.comments = curDetail.comments || [];
-        curDetail.comments.push([data]);
+        let subDetail = curDetail
+        if (detailReducer) {
+            subDetail = detailReducer(curDetail)
+        }
+
+        subDetail.comments = subDetail.comments || [];
+        subDetail.comments.push([data]);
 
         this.dispatch(redux.actions.detail_update(curDetail))
 
         return rs
-    }
-
-    async get(type, id) {
-        const redux = this.store.getRedux(type)
-
-        this.dispatch(redux.actions.loading_update(true))
-
-        const result = await api_request({
-            path: `/api/${type}/${id}`,
-            method: 'get',
-        })
-
-        this.dispatch(redux.actions.loading_update(false))
-
-        if (result) {
-            this.dispatch(redux.actions.detail_update(result))
-            return result
-        }
     }
 }

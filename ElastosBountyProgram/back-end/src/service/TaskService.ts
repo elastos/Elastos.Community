@@ -49,10 +49,48 @@ export default class extends Base {
                     select: sanitize
                 })
                 await db_task_candidate.getDBInstance().populate(candidate, ['team'])
+
+                for (let comment of candidate.comments) {
+                    for (let thread of comment) {
+                        await db_task.getDBInstance().populate(thread, {
+                            path: 'createdBy',
+                            select: sanitize
+                        })
+                    }
+                }
             }
         }
 
         return task
+    }
+
+    public async markComplete(param): Promise<Document> {
+        const { taskCandidateId } = param;
+
+        const db_task_candidate = this.getDBModel('Task_Candidate');
+        const updateObj = { complete: true }
+        await db_task_candidate.update({ _id: taskCandidateId }, updateObj)
+
+        const updatedTask = db_task_candidate.findById(taskCandidateId);
+        return updatedTask
+    }
+
+    public async showCandidate(param): Promise<Document> {
+        const db_task_candidate = this.getDBModel('Task_Candidate');
+        const taskCandidate = await db_task_candidate.getDBInstance().findOne({_id: param.id})
+            .populate('user', sanitize)
+            .populate('team')
+
+        for (let comment of taskCandidate.comments) {
+            for (let thread of comment) {
+                await db_task_candidate.getDBInstance().populate(thread, {
+                    path: 'createdBy',
+                    select: sanitize
+                })
+            }
+        }
+
+        return taskCandidate
     }
 
     public async list(query): Promise<Document> {

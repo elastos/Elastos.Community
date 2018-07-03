@@ -9,6 +9,7 @@ import DirectoryPage from '@/module/page/directory/Container'
 import TeamsPage from '@/module/page/teams/Container'
 import TasksPage from '@/module/page/tasks/Container'
 import TaskDetailPage from '@/module/page/task_detail/Container'
+import TaskApplicationPage from '@/module/page/task_application/Container'
 
 import LoginPage from '@/module/page/login/Container'
 import RegisterPage from '@/module/page/register/Container'
@@ -20,6 +21,7 @@ import SlackPage from '@/module/page/static/slack/Container'
 import ProfileInfoPage from '@/module/page/profile/info/Container'
 import ProfileTasksPage from '@/module/page/profile/tasks/Container'
 import ProfileTaskDetailPage from '@/module/page/profile/task_detail/Container'
+import ProfileTaskApplicationDetailPage from '@/module/page/profile/task_candidate_detail/Container'
 import ProfileTeamsPage from '@/module/page/profile/teams/Container'
 import ProfileTeamDetailPage from '@/module/page/profile/team_detail/Container'
 import ProfileTeamCreatePage from '@/module/page/profile/team_create/Container'
@@ -100,6 +102,10 @@ export default [
         page: TaskDetailPage
     },
     {
+        path: '/task-app/:taskId/:applicantId',
+        page: TaskApplicationPage
+    },
+    {
         path: '/task-create',
         page: TaskCreatePage
     },
@@ -134,6 +140,10 @@ export default [
     {
         path: '/profile/task-detail/:taskId',
         page: ProfileTaskDetailPage
+    },
+    {
+        path: '/profile/task-app/:taskId/:applicantId',
+        page: ProfileTaskApplicationDetailPage
     },
     {
         path: '/profile/teams',
