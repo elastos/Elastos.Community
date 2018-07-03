@@ -93,15 +93,11 @@ export default class extends AdminPage {
 
     getAvatarUrl(users) {
         const avatarDefault = {
-            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png',
-            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Other.png',
-            [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png',
+            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png'
         };
 
         users.forEach((user) => {
-            if (!user.profile.avatar && user.profile.gender) {
-                user.profile.avatar = avatarDefault[user.profile.gender]
-            } else if (!user.profile.gender) {
+            if (!user.profile.avatar) {
                 user.profile.avatar = avatarDefault[USER_GENDER.MALE]
             }
         })
