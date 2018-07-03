@@ -26,6 +26,9 @@ export default createContainer(Component, (state, ownProps) => {
     const taskService = new TaskService()
     
     return {
+        async getAllCountryCommunity () {
+            return communityService.getAllCountryCommunities()
+        },
         async getCommunityDetail(communityId) {
             return communityService.get(communityId)
         },
