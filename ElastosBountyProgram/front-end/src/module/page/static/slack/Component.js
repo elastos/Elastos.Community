@@ -25,11 +25,13 @@ export default class extends StandardPage {
                 <div className="ebp-page">
                     <Row className="d_row">
                         <h4>
-                            All members on sign-up will receive an email inviting them to Slack
+                            All members on sign-up should receive an email inviting them to Slack
                         </h4>
 
                         <p>
-                            Please use Slack to collaborate and find team members in your community.
+                            Please use Slack to collaborate and find team members in your community.<br/>
+                            <br/>
+                            If you do not receive one please email us at <a href="mailto:slack@elastos.org">slack@elastos.org</a>
                         </p>
                     </Row>
                 </div>
