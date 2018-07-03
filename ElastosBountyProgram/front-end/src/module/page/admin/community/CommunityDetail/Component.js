@@ -507,7 +507,7 @@ export default class extends AdminPage {
 
         return (
             <Row>
-                <Col span={4}
+                <Col span={3}
                      className="user-card user-card--without-padding user-card--organizer">
                     <h3 className="without-padding overflow-ellipsis" title={this.state.community.name + ' Organizers'}>{this.state.community.name}</h3>
                     {this.state.community.leaders && this.state.community.leaders.map((leader, index) => {
@@ -527,7 +527,7 @@ export default class extends AdminPage {
                     })}
                     <Button className="ant-btn-ebp" type="primary" size="small" onClick={this.showModalAddOrganizer}>Add Organizer</Button>
                 </Col>
-                <Col span={20} className="wrap-child-box-users">
+                <Col span={21} className="wrap-child-box-users">
                     {Object.keys(config.data.mappingSubCommunityTypesAndName).map((communityType, index) => {
                         return (
                             <div key={index} className="child-box-users">
