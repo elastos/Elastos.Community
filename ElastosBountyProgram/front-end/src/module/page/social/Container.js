@@ -63,6 +63,14 @@ export default createContainer(Component, (state) => {
         taskState.myCommunities = _.values(state.community.my_communities)
     }
 
+    taskState.loading = state.task.loading || state.community.loading || state.user.loading
+
+    taskState.task_loading = state.task.loading
+    taskState.community_loading = state.community.loading
+    taskState.user_loading = state.user.loading
+
+    console.log('page/social::Container loading changed to ', taskState.loading, ' (task ', state.task.loading, ' comm ', state.community.loading, ' user ', state.user.loading, ' )')
+
     return taskState
 
 }, () => {

@@ -18,6 +18,7 @@ export default class extends BaseService {
 
         const userRedux = this.store.getRedux('user')
 
+        this.dispatch(userRedux.actions.loading_update(true))
         const result = await api_request({
             path: '/api/team/list',
             method: 'get',
@@ -26,6 +27,7 @@ export default class extends BaseService {
             }
         });
 
+        this.dispatch(userRedux.actions.loading_update(false))
         this.dispatch(userRedux.actions.teams_update(result.list))
 
         return result

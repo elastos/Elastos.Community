@@ -7,7 +7,7 @@ class CommunityRedux extends BaseRedux {
 
     defineDefaultState(){
         return {
-            loading: false,
+            loading: true,
             my_communities: []
         };
     }

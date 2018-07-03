@@ -10,6 +10,15 @@ export default class {
         this.buildActions();
     }
 
+    getPathName() {
+        const userDefineTypes = this.defineTypes()
+        if(!_.isArray(userDefineTypes) || !_.isString(userDefineTypes[0])){
+            throw new Error('invalid redux types definition : '+userDefineTypes)
+        }
+
+        return userDefineTypes[0]
+    }
+
     buildTypes(){
         const userDefineTypes = this.defineTypes();
         if(!_.isArray(userDefineTypes) || !_.isString(userDefineTypes[0])){
@@ -32,7 +41,10 @@ export default class {
             this.actions[update_key] = (param)=>{
                 return {
                     type: update_key,
-                    param
+                    param: {
+                        key: param,
+                        pathname: pathName
+                    }
                 }
             };
 
@@ -57,11 +69,14 @@ export default class {
     }
 
     buildReducer(){
+        const pathName = this.getPathName()
         _.extend(this.reducers, this.defineReducers());
         return (state=this.defineDefaultState(), action)=>{
             const type = action.type;
-            if(this.types[type] && this.reducers[type]){
-                return this.reducers[type](state, action.param);
+            if (!action.param || action.param.pathname === pathName) {
+                if(this.types[type] && this.reducers[type]){
+                    return this.reducers[type](state, _.has(action.param, 'key') ? action.param.key : action.param)
+                }
             }
 
             return state;
