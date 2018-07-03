@@ -340,6 +340,13 @@ export default class extends AdminPage {
             })
         })
     }
+    handleDeleteSubCommunity = () => {
+        this.props.deleteCommunity(this.state.editedSubCommunity._id).then(() => {
+            this.setState({visibleModalUpdateSubCommunity: false})
+            message.success('Delete community successfully')
+            this.loadSubCommunities()
+        })
+    }
     saveFormUpdateSubCommunityRef = (formRef) => {
         this.formRefUpdateSubCommunity = formRef
     }
@@ -656,6 +663,7 @@ export default class extends AdminPage {
                                             visible={this.state.visibleModalUpdateSubCommunity}
                                             onCancel={this.handleCancelModalUpdateSubCommunity}
                                             onCreate={this.handleUpdateSubCommunity}
+                                            onDelete={this.handleDeleteSubCommunity}
                                         />
                                         <ModalAddOrganizer
                                             users={this.state.users}

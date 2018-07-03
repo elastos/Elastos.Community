@@ -62,7 +62,7 @@ export default class extends BaseService {
                 communityHasUser: userId
             }
         })
-    
+
         this.dispatch(communityRedux.actions.my_communities_reset())
         this.dispatch(communityRedux.actions.my_communities_update(result))
         this.dispatch(communityRedux.actions.loading_update(false))
@@ -78,6 +78,15 @@ export default class extends BaseService {
                 ...community,
                 leaderIds: (typeof community.leaderIds === 'object' ? community.leaderIds.toString() : community.leaderIds)
             }
+        })
+
+        return result
+    }
+
+    async delete(communityId) {
+        const result = await api_request({
+            path: `/api/community/${communityId}`,
+            method: 'delete'
         })
 
         return result
