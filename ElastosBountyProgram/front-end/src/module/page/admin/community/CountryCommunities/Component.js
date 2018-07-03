@@ -134,16 +134,21 @@ export default class extends AdminPage {
             })
         })
     }
+    
+    getCommunityIdByGeolocation(geolocation) {
+        const community = _.find(this.state.communities, {
+            geolocation: geolocation
+        })
+        
+        if (community) {
+            return community._id
+        }
+    }
 
     handleChangeCountry(geolocation) {
         if (geolocation) {
-            this.props.getSpecificCountryCommunities(geolocation).then((communities) => {
-                this.setState({
-                    communities
-                })
-
-                this.props.history.push(`/admin/community/country/${geolocation}`)
-            })
+            const communityId = this.getCommunityIdByGeolocation(geolocation)
+            this.props.history.push(`/admin/community/${communityId}/country/${geolocation}`)
         } else {
             this.props.getAllCountryCommunity().then((communities) => {
                 this.setState({
