@@ -184,7 +184,7 @@ export default class extends BaseComponent {
                         Organizer
                     </Col>
                     <Col span={16} className="grid-col">
-                        {this.props.task.createdBy.username}
+                        {this.props.task.createdBy && this.props.task.createdBy.username}
                     </Col>
                 </Row>
                 <Row>
