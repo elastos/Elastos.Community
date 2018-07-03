@@ -226,10 +226,10 @@ export default class extends Base {
 
         const db_task = this.getDBModel('Task');
 
-        this.sendCreateEmail(this.currentUser, doc)
-
         console.log('create task => ', doc);
         const task = await db_task.save(doc);
+
+        this.sendCreateEmail(this.currentUser, task)
 
         // if assignSelf = true, we add self as the candidate
         if (assignSelf) {
@@ -659,14 +659,25 @@ export default class extends Base {
 
     }
 
-    public async sendCreateEmail(curUser, doc) {
+    /**
+     * This is PENDING status if there is ELA > 0
+     *
+     * @param curUser
+     * @param task
+     * @returns {Promise<void>}
+     */
+    public async sendCreateEmail(curUser, task) {
 
-        let subject = 'New Task Created: ' + doc.name;
-        let body = `${this.currentUser.profile.firstName} ${this.currentUser.profile.lastName} has created the task ${doc.name}`
+        let subject = 'New Task Created: ' + task.name;
+        let body = `${this.currentUser.profile.firstName} ${this.currentUser.profile.lastName} has created the task ${task.name}`
 
-        if (doc.status === constant.TASK_STATUS.PENDING) {
+        if (task.status === constant.TASK_STATUS.PENDING) {
             subject = 'ACTION REQUIRED: ' + subject
-            body += ' and it requires approval'
+            body += ` and it requires approval
+                    <br/>
+                    <br/>
+                    <a href="${process.env.SERVER_URL}/admin/task-detail/${task._id}">Go to Admin/Task</a>
+                    `
         }
 
         const adminUsers = await this.getAdminUsers()
@@ -681,14 +692,18 @@ export default class extends Base {
         }
     }
 
-    public async sendTaskPendingEmail(curUser, doc) {
+    public async sendTaskPendingEmail(curUser, task) {
 
-        let subject = 'Task ELA Reward Changed: ' + doc.name;
-        let body = `${this.currentUser.profile.firstName} ${this.currentUser.profile.lastName} has changed the ELA reward for task ${doc.name}`
+        let subject = 'Task ELA Reward Changed: ' + task.name;
+        let body = `${this.currentUser.profile.firstName} ${this.currentUser.profile.lastName} has changed the ELA reward for task ${task.name}`
 
-        if (doc.status === constant.TASK_STATUS.PENDING) {
+        if (task.status === constant.TASK_STATUS.PENDING) {
             subject = 'ACTION REQUIRED: ' + subject
-            body += ' and it requires approval'
+            body += ` and it requires approval
+                    <br/>
+                    <br/>
+                    <a href="${process.env.SERVER_URL}/admin/task-detail/${task._id}">Go to Admin/Task</a>
+                    `
         }
 
         const adminUsers = await this.getAdminUsers()

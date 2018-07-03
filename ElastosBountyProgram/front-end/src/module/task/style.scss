@@ -22,13 +22,17 @@
     margin-right: $gap_0;
   }
 
-  .gridCol {
+  .grid-col {
     padding: 0 $gap_2;
     margin: $gap_0 0;
   }
 
   .form-wrapper {
     padding: $gap_2 0;
+  }
+
+  p {
+    white-space: pre-line;
   }
 
   .public {

@@ -5,6 +5,7 @@ import {
     Icon,
     Input,
     InputNumber,
+    DatePicker,
     Button,
     Checkbox,
     Select,
@@ -13,12 +14,14 @@ import {
     Col,
     Upload,
     Cascader,
-    Divider
+    Divider,
+    Popconfirm
 
 } from 'antd'
 
 import {upload_file} from "@/util";
 import './style.scss'
+import moment from 'moment'
 
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS} from '@/constant'
 
@@ -93,10 +96,12 @@ class C extends BaseComponent {
             upload_url : null,
             upload_loading : false,
 
-            attachment_url: null,
+            attachment_url: props.existingTask.attachment || null,
             attachment_loading: false,
-            attachment_filename: '',
+            attachment_filename: props.existingTask.attachmentFilename || '',
             attachment_type: '',
+
+            removeAttachment: false,
 
             editing: !!props.existingTask
         };
@@ -116,6 +121,13 @@ class C extends BaseComponent {
         const assignSelf_fn = getFieldDecorator('assignSelf')
         const assignSelf_el = (
             <Checkbox/>
+        )
+
+        const isUsd_fn = getFieldDecorator('isUsd', {
+            initialValue: this.state.editing ? existingTask.reward.isUsd : false
+        })
+        const isUsd_el = (
+            <Checkbox checked={this.state.editing ? this.props.form.getFieldValue('isUsd') : false}/>
         )
 
         const taskName_fn = getFieldDecorator('taskName', {
@@ -163,15 +175,43 @@ class C extends BaseComponent {
             <Cascader options={this.state.communityTrees} placeholder="" />
         )*/}
 
+        const applicationDeadline_fn = getFieldDecorator('taskApplicationDeadline', {
+            initialValue: this.state.editing &&
+                existingTask.applicationDeadline &&
+                moment(existingTask.applicationDeadline).isValid() ? moment(existingTask.applicationDeadline) : null
+        })
+        const applicationDeadline_el = (
+            <DatePicker/>
+        )
+
+        const completionDeadline_fn = getFieldDecorator('taskCompletionDeadline', {
+            initialValue: this.state.editing &&
+                existingTask.completionDeadline &&
+                moment(existingTask.completionDeadline).isValid() ? moment(existingTask.completionDeadline) : null
+        })
+        const completionDeadline_el = (
+            <DatePicker/>
+        )
+
         const taskDesc_fn = getFieldDecorator('taskDesc', {
             rules: [
                 {required: true, message: 'You must have a description'},
-                {max: 4048, message: 'Task description too long'}
+                {max: 4096, message: 'Task description too long'}
             ],
             initialValue: this.state.editing ? existingTask.description : ''
         })
         const taskDesc_el = (
-            <TextArea rows={4} name="taskDesc"></TextArea>
+            <TextArea rows={6}></TextArea>
+        )
+
+        const taskDescBreakdown_fn = getFieldDecorator('taskDescBreakdown', {
+            rules: [
+                {max: 4096, message: 'Task breakdown too long'}
+            ],
+            initialValue: this.state.editing ? existingTask.descBreakdown : ''
+        })
+        const taskDescBreakdown_el = (
+            <TextArea rows={4}></TextArea>
         )
 
         const taskLink_fn = getFieldDecorator('taskLink', {
@@ -184,7 +224,7 @@ class C extends BaseComponent {
 
         const taskCandLimit_fn = getFieldDecorator('taskCandLimit', {
             rules: [{required: true, type: 'integer', message: 'You must set a limit'}],
-            initialValue: this.state.editing ? existingTask.candidateLimit : 1
+            initialValue: this.state.editing ? existingTask.candidateLimit : 10
         })
         const taskCandLimit_el = (
             <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
@@ -199,18 +239,46 @@ class C extends BaseComponent {
         )
 
         const taskRewardUpfront_fn = getFieldDecorator('taskRewardUpfront', {
-            rules: [{type: 'number', message: 'Please explictly enter 0 if intended'}],
             initialValue: this.state.editing ? existingTask.rewardUpfront.ela / 1000 : null
         })
         const taskRewardUpfront_el = (
             <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
         )
 
+        const taskRewardUpfrontUsd_fn = getFieldDecorator('taskRewardUpfrontUsd', {
+            initialValue: this.state.editing ? existingTask.rewardUpfront.usd / 100 : null
+        })
+        const taskRewardUpfrontUsd_el = (
+            <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
+        )
+
+        const taskRewardUpfrontElaPerUsd_fn = getFieldDecorator('taskRewardUpfrontElaPerUsd', {
+            rules: [{required: this.props.form.getFieldValue('taskRewardUpfrontUsd') > 0 && this.props.form.getFieldValue('isUsd'), message: 'Required for USD'}],
+            initialValue: this.state.editing ? existingTask.rewardUpfront.elaPerUsd : null
+        })
+        const taskRewardUpfrontElaPerUsd_el = (
+            <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
+        )
+
+        const taskRewardUsd_fn = getFieldDecorator('taskRewardUsd', {
+            initialValue: this.state.editing ? existingTask.reward.usd / 100 : null
+        })
+        const taskRewardUsd_el = (
+            <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
+        )
+
         const taskReward_fn = getFieldDecorator('taskReward', {
-            rules: [{type: 'number', message: 'Please explictly enter 0 if intended'}],
             initialValue: this.state.editing ? existingTask.reward.ela / 1000 : null
         })
         const taskReward_el = (
+            <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
+        )
+
+        const taskRewardElaPerUsd_fn = getFieldDecorator('taskRewardElaPerUsd', {
+            rules: [{required: this.props.form.getFieldValue('taskRewardUsd') > 0 && this.props.form.getFieldValue('isUsd'), message: 'Required for USD'}],
+            initialValue: this.state.editing ? existingTask.reward.elaPerUsd : null
+        })
+        const taskRewardElaPerUsd_el = (
             <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
         )
 
@@ -261,7 +329,9 @@ class C extends BaseComponent {
                         attachment_loading: false,
                         attachment_url : url,
                         attachment_type: d.type,
-                        attachment_filename: d.filename
+                        attachment_filename: d.filename,
+
+                        removeAttachment: false
                     });
                 })
             }
@@ -289,22 +359,32 @@ class C extends BaseComponent {
 
         return {
             assignSelf: assignSelf_fn(assignSelf_el),
+            isUsd: isUsd_fn(isUsd_el),
 
             taskName: taskName_fn(taskName_el),
             taskCategory: taskCategory_fn(taskCategory_el),
             taskType: taskType_fn(taskType_el),
 
-            // taskCommunity: taskCommunity_fn(taskCommunity_el),
+            taskApplicationDeadline: applicationDeadline_fn(applicationDeadline_el),
+            taskCompletionDeadline: completionDeadline_fn(completionDeadline_el),
 
             taskDesc: taskDesc_fn(taskDesc_el),
+            taskDescBreakdown: taskDescBreakdown_fn(taskDescBreakdown_el),
             taskLink: taskLink_fn(taskLink_el),
             taskCandLimit: taskCandLimit_fn(taskCandLimit_el),
             taskCandSltLimit: taskCandSltLimit_fn(taskCandSltLimit_el),
 
             taskRewardUpfront: taskRewardUpfront_fn(taskRewardUpfront_el),
-            taskReward: taskReward_fn(taskReward_el),
+            taskRewardUpfrontUsd: taskRewardUpfrontUsd_fn(taskRewardUpfrontUsd_el),
+            taskRewardUpfrontElaPerUsd: taskRewardUpfrontElaPerUsd_fn(taskRewardUpfrontElaPerUsd_el),
 
-            thumbnail: thumbnail_fn(thumbnail_el),
+            taskReward: taskReward_fn(taskReward_el),
+            taskRewardUsd: taskRewardUsd_fn(taskRewardUsd_el),
+            taskRewardElaPerUsd: taskRewardElaPerUsd_fn(taskRewardElaPerUsd_el),
+
+            // thumbnail: thumbnail_fn(thumbnail_el),
+
+            // TODO: fix issue where existing attachment can't be removed
             attachment: attachment_fn(attachment_el)
         }
     }
@@ -334,6 +414,35 @@ class C extends BaseComponent {
             },
         }
 
+        const formItemLayoutAdjLeft = {
+            labelCol: {
+                xs: {span: 24},
+                sm: {span: 16},
+            },
+            wrapperCol: {
+                xs: {span: 24},
+                sm: {span: 8},
+            },
+        }
+
+        const formItemLayoutAdjRight = {
+            labelCol: {
+                xs: {span: 24},
+                sm: {span: 10},
+            },
+            wrapperCol: {
+                xs: {span: 24},
+                sm: {span: 14},
+            },
+        }
+
+        const formItemNoLabelLayout = {
+            wrapperCol: {
+                xs: {span: 24},
+                sm: {offset: 8, span: 12},
+            },
+        }
+
         // const existingTask = this.props.existingTask
 
         // TODO: terms of service checkbox\
@@ -359,52 +468,125 @@ class C extends BaseComponent {
                         <FormItem label="Community"  {...formItemLayout}>
                             {p.taskCommunity}
                         </FormItem>
-                        */}
                         <FormItem label="Thumbnail" {...formItemLayout}>
                             {p.thumbnail}
                         </FormItem>
+                        */}
                         <FormItem label="Category" {...formItemLayout}>
                             {p.taskCategory}
                         </FormItem>
                         <FormItem label="Type"  {...formItemLayout}>
                             {p.taskType}
                         </FormItem>
+                        <FormItem label="Application Deadline" {...formItemLayout}>
+                            {p.taskApplicationDeadline}
+                        </FormItem>
+                        <FormItem label="Completion Deadline" {...formItemLayout}>
+                            {p.taskCompletionDeadline}
+                        </FormItem>
                         <FormItem label="Description" {...formItemLayout}>
                             {p.taskDesc}
+                        </FormItem>
+
+                        <Row>
+                            <Col offset="8" span="12">
+                                For larger events/tasks please breakdown the budget/rewards
+                            </Col>
+                        </Row>
+                        <FormItem {...formItemNoLabelLayout}>
+                            {p.taskDescBreakdown}
                         </FormItem>
                         <FormItem label="Info Link" {...formItemLayout}>
                             {p.taskLink}
                         </FormItem>
-                        <FormItem label="Candidates" {...formItemLayout}>
-                            <Row>
-                                <Col span={3}>
-                                    {/*<InputNumber size="large" defaultValue={this.state.editing ? existingTask.candidateLimit : null} name="taskCandLimit"/>*/}
+                        <Row>
+                            <Col span={12}>
+                                <FormItem label="Max Applicants" {...formItemLayoutAdjLeft}>
                                     {p.taskCandLimit}
-                                </Col>
-                                <Col class="midLabel" span={8}>
-                                    Max Accepted:
-                                </Col>
-                                <Col span={3}>
-                                    {/*<InputNumber size="large" defaultValue={this.state.editing ? existingTask.candidateSltLimit : null} name="taskCandSltLimit"/>*/}
+                                </FormItem>
+                            </Col>
+                            <Col span={12}>
+                                <FormItem label="Applicants Accepted" {...formItemLayoutAdjRight}>
                                     {p.taskCandSltLimit}
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <Divider>Budget / Reward <Icon className="help-icon" type="question-circle-o" onClick={() => {this.props.history.push('/faq')}}/></Divider>
+
+                        <FormItem label="Fiat ($USD)" {...formItemLayout}>
+                            {p.isUsd} - for larger tasks/events only - payment is always in ELA equivalent
+                        </FormItem>
+
+                        {this.props.form.getFieldValue('isUsd') ?
+                            <div>
+                                <Row>
+                                    <Col span={12}>
+                                        <FormItem label="USD Budget" {...formItemLayoutAdjLeft}>
+                                            {p.taskRewardUpfrontUsd}
+                                        </FormItem>
+                                    </Col>
+                                    <Col span={12}>
+                                        <FormItem label="ELA/USD" {...formItemLayoutAdjRight}>
+                                            {p.taskRewardUpfrontElaPerUsd}
+                                        </FormItem>
+
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col span={12}>
+                                        <FormItem label="USD Reward" {...formItemLayoutAdjLeft}>
+                                            {p.taskRewardUsd}
+                                        </FormItem>
+                                    </Col>
+                                    <Col span={12}>
+                                        <FormItem label="ELA/USD" {...formItemLayoutAdjRight}>
+                                            {p.taskRewardElaPerUsd}
+                                        </FormItem>
+                                    </Col>
+                                </Row>
+                            </div> :
+                            <Row>
+                                <Col>
+                                    <FormItem label="ELA Budget" {...formItemLayout}>
+                                        {p.taskRewardUpfront}
+                                    </FormItem>
+                                    <FormItem label="ELA Reward" {...formItemLayout}>
+                                        {p.taskReward}
+                                    </FormItem>
                                 </Col>
                             </Row>
-                        </FormItem>
 
-                        <FormItem label="ELA Upfront" {...formItemLayout}>
-                            {p.taskRewardUpfront}
-                        </FormItem>
-                        <FormItem label="ELA Reward" {...formItemLayout}>
-                            {p.taskReward}
-                        </FormItem>
+                        }
 
-                        <Divider>Attachments</Divider>
+                        <Divider>Attachment</Divider>
 
-                        <FormItem label="Attachment" {...formItemLayout}>
-                            {p.attachment}
-                        </FormItem>
-
-                        <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
+                        {/*
+                        ********************************************************************************
+                        * Attachment
+                        ********************************************************************************
+                        */}
+                        {!this.state.attachment_url ?
+                            <FormItem {...formItemNoLabelLayout}>
+                                {p.attachment}
+                            </FormItem> :
+                            <Row>
+                                <Col offset={8} span={16}>
+                                    <a target="_blank" href={this.state.attachment_url}>
+                                        {this.state.attachment_type === 'application/pdf' ?
+                                            <Icon type="file-pdf"/> :
+                                            <Icon type="file"/>
+                                        } &nbsp;
+                                        {this.state.attachment_filename}
+                                    </a>
+                                    <Popconfirm title="Are you sure you want to remove this attachment?" okText="Yes" onConfirm={this.removeAttachment.bind(this)}>
+                                        <Icon className="remove-attachment" type="close-circle"/>
+                                    </Popconfirm>
+                                    <br/>
+                                </Col>
+                            </Row>
+                        }
+                        <br/>
+                        <FormItem {...formItemNoLabelLayout}>
                             <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
                                 {this.state.editing ? 'Save Changes' : (this.props.is_admin ? 'Create Task' : 'Submit Proposal')}
                             </Button>
@@ -413,6 +595,17 @@ class C extends BaseComponent {
                 </Form>
             </div>
         )
+    }
+
+    removeAttachment() {
+        this.setState({
+            attachment_loading: false,
+            attachment_url : null,
+            attachment_type: '',
+            attachment_filename: '',
+
+            removeAttachment: true
+        })
     }
 
 }
