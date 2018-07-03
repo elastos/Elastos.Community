@@ -15,6 +15,14 @@ export default class extends Base {
             .populate('createdBy')
 
         if (commentable) {
+            if (type === 'Task') {
+                if (_.includes([ constant.TASK_STATUS.CREATED, constant.TASK_STATUS.PENDING ], commentable.status) &&
+                    commentable.createdBy._id !== createdBy.current_user_id &&
+                    !createdBy.is_admin) {
+                    throw 'not allowed to post on this task'
+                }
+            }
+
             const updateObj = {
                 comments: commentable.comments || []
             }
