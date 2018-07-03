@@ -6,6 +6,7 @@ import TaskCreateForm from '@/module/form/TaskCreateForm/Container'
 import { Col, Row, Popconfirm, Divider, Button, Spin } from 'antd'
 import Comments from '@/module/common/comments/Container'
 
+// TODO: admin detail should also be in a new component too to be consistent
 import TaskPublicDetail from './detail/Container'
 
 import './style.scss'
@@ -206,7 +207,7 @@ export default class extends BaseComponent {
                 <Col span={16} className="gridCol">
                     <p>
                         {this.props.task.description ?
-                            this.props.task.description :
+                            <pre>this.props.task.description</pre> :
                             <span className="no-info">no description</span>
                         }
                     </p>

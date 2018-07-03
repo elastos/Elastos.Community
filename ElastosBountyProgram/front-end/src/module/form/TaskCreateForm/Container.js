@@ -21,14 +21,20 @@ export default createContainer(Component, (state)=>{
     return {
         async createTask(formData, st){
             try {
-                const rs = await taskService.create({
+                let createObj = {
 
                     assignSelf: formData.assignSelf,
 
                     name: formData.taskName,
                     category: formData.taskCategory,
                     type: formData.taskType,
+
+                    applicationDeadline: formData.taskApplicationDeadline,
+                    completionDeadline: formData.taskCompletionDeadline,
+
                     description: formData.taskDesc,
+                    descBreakdown: formData.taskDescBreakdown,
+
                     infoLink: formData.taskLink,
                     thumbnail: st.upload_url,
                     attachment: st.attachment_url,
@@ -39,17 +45,52 @@ export default createContainer(Component, (state)=>{
 
                     candidateLimit: formData.taskCandLimit,
                     candidateSltLimit: formData.taskCandSltLimit,
+                }
 
-                    rewardUpfront: {
-                        ela: formData.taskRewardUpfront * 1000,
-                        elaDisbursed: 0
-                    },
-                    reward: {
-                        ela: formData.taskReward * 1000,
-                        elaDisbursed: 0,
-                        votePower: parseFloat(formData.reward) * 100
-                    }
-                });
+                if (formData.isUsd) {
+                    // we don't track ela which is a derived value
+                    Object.assign(createObj, {
+                        rewardUpfront: {
+                            ela: null,
+                            elaDisbursed: 0,
+
+                            usd: formData.taskRewardUpfrontUsd * 100,
+                            elaPerUsd: formData.taskRewardUpfrontElaPerUsd,
+                            isUsd: true
+                        },
+                        reward: {
+                            ela: null,
+                            elaDisbursed: 0,
+                            votePower: parseFloat(formData.reward) * 100,
+
+                            usd: formData.taskRewardUsd * 100,
+                            elaPerUsd: formData.taskRewardElaPerUsd,
+                            isUsd: true
+                        }
+                    })
+                } else {
+                    Object.assign(createObj, {
+                        rewardUpfront: {
+                            ela: formData.taskRewardUpfront * 1000,
+                            elaDisbursed: 0,
+
+                            usd: null,
+                            elaPerUsd: null,
+                            isUsd: false
+                        },
+                        reward: {
+                            ela: formData.taskReward * 1000,
+                            elaDisbursed: 0,
+                            votePower: parseFloat(formData.reward) * 100,
+
+                            usd: null,
+                            elaPerUsd: null,
+                            isUsd: false
+                        }
+                    })
+                }
+
+                const rs = await taskService.create(createObj);
 
                 if (rs) {
                     message.success('Task created successfully');
@@ -66,11 +107,17 @@ export default createContainer(Component, (state)=>{
             const taskId = this.existingTask._id
 
             try {
-                const rs = await taskService.update(taskId, {
+                let updateObj = {
                     name: formData.taskName,
                     category: formData.taskCategory,
                     type: formData.taskType,
+
+                    applicationDeadline: formData.taskApplicationDeadline,
+                    completionDeadline: formData.taskCompletionDeadline,
+
                     description: formData.taskDesc,
+                    descBreakdown: formData.taskDescBreakdown,
+
                     infoLink: formData.taskLink,
                     thumbnail: state.upload_url,
                     community: formData.community,
@@ -80,17 +127,53 @@ export default createContainer(Component, (state)=>{
 
                     candidateLimit: formData.taskCandLimit,
                     candidateSltLimit: formData.taskCandSltLimit,
+                }
 
-                    rewardUpfront: {
-                        ela: formData.taskRewardUpfront * 1000,
-                        elaDisbursed: 0
-                    },
-                    reward: {
-                        ela: formData.taskReward * 1000,
-                        elaDisbursed: 0,
-                        votePower: parseFloat(formData.taskReward) * 100
-                    }
-                });
+                // TODO: now ensure we don't delete the other currency value
+                if (formData.isUsd) {
+                    // we don't track ela which is a derived value
+                    Object.assign(updateObj, {
+                        rewardUpfront: {
+                            ela: null,
+                            elaDisbursed: 0,
+
+                            usd: formData.taskRewardUpfrontUsd * 100,
+                            elaPerUsd: formData.taskRewardUpfrontElaPerUsd,
+                            isUsd: true
+                        },
+                        reward: {
+                            ela: null,
+                            elaDisbursed: 0,
+                            votePower: parseFloat(formData.reward) * 100,
+
+                            usd: formData.taskRewardUsd * 100,
+                            elaPerUsd: formData.taskRewardElaPerUsd,
+                            isUsd: true
+                        }
+                    })
+                } else {
+                    Object.assign(updateObj, {
+                        rewardUpfront: {
+                            ela: formData.taskRewardUpfront * 1000,
+                            elaDisbursed: 0,
+
+                            usd: null,
+                            elaPerUsd: null,
+                            isUsd: false
+                        },
+                        reward: {
+                            ela: formData.taskReward * 1000,
+                            elaDisbursed: 0,
+                            votePower: parseFloat(formData.reward) * 100,
+
+                            usd: null,
+                            elaPerUsd: null,
+                            isUsd: false
+                        }
+                    })
+                }
+
+                const rs = await taskService.update(taskId, updateObj);
 
                 if (rs) {
                     message.success('Task updated successfully');

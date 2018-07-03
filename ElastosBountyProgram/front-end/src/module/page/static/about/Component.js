@@ -28,18 +28,18 @@ export default class extends StandardPage {
                             There are now two main programs to earn ELA,
                         </h4>
 
-                        <h5>
+                        <h3>
                             The Developer Program
-                        </h5>
+                        </h3>
                         <p>
                             As a developer there are training related events and also tasks such as writing tutorials, example apps/demos or fixing bugs.
                             We also accept submissions of bugs, issues or security issues which will be reviewed and possibly turned into tasks and the
                             submitter of the issue rewarded with ELA.
                         </p>
 
-                        <h5>
+                        <h3>
                             The Community EBP Program
-                        </h5>
+                        </h3>
                         <p>
                             Anyone and also developers alike can participate in the community program which rewards organizers who host events or do tasks
                             that promote Elastos in their community and online.

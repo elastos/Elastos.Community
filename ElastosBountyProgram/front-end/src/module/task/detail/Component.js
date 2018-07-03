@@ -107,6 +107,26 @@ export default class extends BaseComponent {
                                     </Col>
                                 </Row>
                                 }
+                                {this.props.task.applicationDeadline &&
+                                <Row>
+                                    <Col span={4} className="label-col">
+                                        Application Deadline
+                                    </Col>
+                                    <Col span={20}>
+                                        {moment(this.props.task.applicationDeadline).format('MMM D, YYYY')}
+                                    </Col>
+                                </Row>
+                                }
+                                {this.props.task.completionDeadline &&
+                                <Row>
+                                    <Col span={4} className="label-col">
+                                        Completion Deadline
+                                    </Col>
+                                    <Col span={20}>
+                                        {moment(this.props.task.completionDeadline).format('MMM D, YYYY')}
+                                    </Col>
+                                </Row>
+                                }
                                 <Row>
                                     <Col span={4} className="label-col">
                                         Description
@@ -117,6 +137,16 @@ export default class extends BaseComponent {
                                         </p>
                                     </Col>
                                 </Row>
+                                {this.props.task.descBreakdown &&
+                                <Row>
+                                    <Col span={20} offset={4}>
+                                        <span className="no-info">Breakdown of Budget/Reward</span>
+                                        <p>
+                                            {this.props.task.descBreakdown}
+                                        </p>
+                                    </Col>
+                                </Row>
+                                }
                                 {this.props.task.infoLink &&
                                 <Row>
                                     <Col span={4} className="label-col">
@@ -162,7 +192,7 @@ export default class extends BaseComponent {
                                     </Col>
                                     <Col span={20}>
                                         <p>
-                                            {this.props.task.reward.ela / 1000}
+                                            {this.props.task.rewardUpfront.ela / 1000}
                                         </p>
                                     </Col>
                                 </Row>
@@ -202,17 +232,6 @@ export default class extends BaseComponent {
                             </Col>
                             <Col span={8}>
                                 {this.props.task.candidateSltLimit}
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={4} className="label-col">
-                                Deadline
-                            </Col>
-                            <Col span={20}>
-                                {this.props.task.applicationDeadline ?
-                                    moment(this.props.task.applicationDeadline).format(dateTimeFormat) :
-                                    'none - applicant selected when max applicants reached'
-                                }
                             </Col>
                         </Row>
 

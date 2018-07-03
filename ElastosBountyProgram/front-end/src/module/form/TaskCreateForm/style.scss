@@ -1,12 +1,20 @@
 
 @import "../../../style/variable";
+@import "../../../style/color";
 
 .c_taskCreateFormContainer {
 
-  .midLabel {
+  .mid-label {
     white-space: nowrap;
     padding: 0 $gap_1;
     text-align: right;
   }
 
+  .help-icon {
+    cursor: pointer;
+
+    &:hover {
+      color: $text_light_gray;
+    }
+  }
 }
