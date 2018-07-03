@@ -9,8 +9,6 @@ export default createContainer(Component, (state) => {
 
     let submissionState = state.submission
 
-    submissionState.loading = false
-
     if (!_.isArray(state.submission.all_submissions)) {
         submissionState.all_submissions = _.values(state.submission.all_submissions)
     }
