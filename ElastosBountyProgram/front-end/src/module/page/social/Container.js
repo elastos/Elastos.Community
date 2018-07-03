@@ -69,8 +69,6 @@ export default createContainer(Component, (state) => {
     taskState.community_loading = state.community.loading
     taskState.user_loading = state.user.loading
 
-    console.log('page/social::Container loading changed to ', taskState.loading, ' (task ', state.task.loading, ' comm ', state.community.loading, ' user ', state.user.loading, ' )')
-
     return taskState
 
 }, () => {
