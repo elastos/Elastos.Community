@@ -185,28 +185,73 @@ export default class extends BaseComponent {
                                     </Col>
                                 </Row>
                                 }
-                                {this.props.task.rewardUpfront.ela > 0 &&
-                                <Row>
-                                    <Col span={4} className="label-col">
-                                        ELA Upfront
-                                    </Col>
-                                    <Col span={20}>
-                                        <p>
-                                            {this.props.task.rewardUpfront.ela / 1000}
-                                        </p>
-                                    </Col>
-                                </Row>
+                                <Divider>Budget/Reward</Divider>
+                                {this.props.task.reward.isUsd ?
+                                    <div>
+                                        <Row>
+                                            <Col span={4} className="label-col">
+                                                USD Budget
+                                            </Col>
+                                            <Col span={8}>
+                                                <p>
+                                                    {this.props.task.rewardUpfront.usd / 100}
+                                                </p>
+                                            </Col>
+                                            {this.props.task.rewardUpfront.usd > 0 &&
+                                            <Col span={4} className="label-col">
+                                                ELA/USD
+                                            </Col>}
+                                            {this.props.task.rewardUpfront.usd > 0 &&
+                                            <Col span={8}>
+                                                <p>
+                                                    {this.props.task.rewardUpfront.elaPerUsd}
+                                                </p>
+                                            </Col>}
+                                        </Row>
+                                        <Row>
+                                            <Col span={4} className="label-col">
+                                                USD Reward
+                                            </Col>
+                                            <Col span={8}>
+                                                <p>
+                                                    {this.props.task.reward.usd / 100}
+                                                </p>
+                                            </Col>
+                                            {this.props.task.reward.usd > 0 &&
+                                            <Col span={4} className="label-col">
+                                                ELA/USD
+                                            </Col>}
+                                            {this.props.task.reward.usd > 0 &&
+                                            <Col span={8}>
+                                                <p>
+                                                    {this.props.task.reward.elaPerUsd}
+                                                </p>
+                                            </Col>}
+                                        </Row>
+                                    </div> :
+                                    <div>
+                                        <Row>
+                                            <Col span={4} className="label-col">
+                                                ELA Budget
+                                            </Col>
+                                            <Col span={20}>
+                                                <p>
+                                                    {this.props.task.rewardUpfront.ela / 1000}
+                                                </p>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col span={4} className="label-col">
+                                                ELA Reward
+                                            </Col>
+                                            <Col span={20}>
+                                                <p>
+                                                    {this.props.task.reward.ela / 1000}
+                                                </p>
+                                            </Col>
+                                        </Row>
+                                    </div>
                                 }
-                                <Row>
-                                    <Col span={4} className="label-col">
-                                        ELA Reward
-                                    </Col>
-                                    <Col span={20}>
-                                        <p>
-                                            {this.props.task.reward.ela / 1000}
-                                        </p>
-                                    </Col>
-                                </Row>
                             </Col>
                             {this.props.task.thumbnail &&
                             <Col span={6}>
@@ -235,6 +280,11 @@ export default class extends BaseComponent {
                             </Col>
                         </Row>
 
+                        {/*
+                        ********************************************************************************
+                        * Attachment
+                        ********************************************************************************
+                        */}
                         {this.props.task.attachment && <div>
                             <div className="vert-gap"/>
                             <Divider>Attachment</Divider>
@@ -250,7 +300,7 @@ export default class extends BaseComponent {
                                             <Icon type="file"/>
                                         } &nbsp;
                                         {this.props.task.attachmentFilename}
-                                        </a>
+                                    </a>
                                 </Col>
                             </Row>
                         </div>}

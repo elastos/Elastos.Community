@@ -14,7 +14,8 @@ import {
     Col,
     Upload,
     Cascader,
-    Divider
+    Divider,
+    Popconfirm
 
 } from 'antd'
 
@@ -95,10 +96,12 @@ class C extends BaseComponent {
             upload_url : null,
             upload_loading : false,
 
-            attachment_url: null,
+            attachment_url: props.existingTask.attachment || null,
             attachment_loading: false,
-            attachment_filename: '',
+            attachment_filename: props.existingTask.attachmentFilename || '',
             attachment_type: '',
+
+            removeAttachment: false,
 
             editing: !!props.existingTask
         };
@@ -198,7 +201,7 @@ class C extends BaseComponent {
             initialValue: this.state.editing ? existingTask.description : ''
         })
         const taskDesc_el = (
-            <TextArea rows={4}></TextArea>
+            <TextArea rows={6}></TextArea>
         )
 
         const taskDescBreakdown_fn = getFieldDecorator('taskDescBreakdown', {
@@ -250,7 +253,7 @@ class C extends BaseComponent {
         )
 
         const taskRewardUpfrontElaPerUsd_fn = getFieldDecorator('taskRewardUpfrontElaPerUsd', {
-            rules: [{required: this.props.form.getFieldValue('isUsd'), message: 'Required for USD'}],
+            rules: [{required: this.props.form.getFieldValue('taskRewardUpfrontUsd') > 0 && this.props.form.getFieldValue('isUsd'), message: 'Required for USD'}],
             initialValue: this.state.editing ? existingTask.rewardUpfront.elaPerUsd : null
         })
         const taskRewardUpfrontElaPerUsd_el = (
@@ -272,7 +275,7 @@ class C extends BaseComponent {
         )
 
         const taskRewardElaPerUsd_fn = getFieldDecorator('taskRewardElaPerUsd', {
-            rules: [{required: this.props.form.getFieldValue('isUsd'), message: 'Required for USD'}],
+            rules: [{required: this.props.form.getFieldValue('taskRewardUsd') > 0 && this.props.form.getFieldValue('isUsd'), message: 'Required for USD'}],
             initialValue: this.state.editing ? existingTask.reward.elaPerUsd : null
         })
         const taskRewardElaPerUsd_el = (
@@ -326,7 +329,9 @@ class C extends BaseComponent {
                         attachment_loading: false,
                         attachment_url : url,
                         attachment_type: d.type,
-                        attachment_filename: d.filename
+                        attachment_filename: d.filename,
+
+                        removeAttachment: false
                     });
                 })
             }
@@ -378,6 +383,8 @@ class C extends BaseComponent {
             taskRewardElaPerUsd: taskRewardElaPerUsd_fn(taskRewardElaPerUsd_el),
 
             // thumbnail: thumbnail_fn(thumbnail_el),
+
+            // TODO: fix issue where existing attachment can't be removed
             attachment: attachment_fn(attachment_el)
         }
     }
@@ -421,11 +428,11 @@ class C extends BaseComponent {
         const formItemLayoutAdjRight = {
             labelCol: {
                 xs: {span: 24},
-                sm: {span: 6},
+                sm: {span: 10},
             },
             wrapperCol: {
                 xs: {span: 24},
-                sm: {span: 18},
+                sm: {span: 14},
             },
         }
 
@@ -553,9 +560,31 @@ class C extends BaseComponent {
 
                         <Divider>Attachment</Divider>
 
-                        <FormItem {...formItemNoLabelLayout}>
-                            {p.attachment}
-                        </FormItem>
+                        {/*
+                        ********************************************************************************
+                        * Attachment
+                        ********************************************************************************
+                        */}
+                        {!this.state.attachment_url ?
+                            <FormItem {...formItemNoLabelLayout}>
+                                {p.attachment}
+                            </FormItem> :
+                            <Row>
+                                <Col offset={8} span={16}>
+                                    <a target="_blank" href={this.state.attachment_url}>
+                                        {this.state.attachment_type === 'application/pdf' ?
+                                            <Icon type="file-pdf"/> :
+                                            <Icon type="file"/>
+                                        } &nbsp;
+                                        {this.state.attachment_filename}
+                                    </a>
+                                    <Popconfirm title="Are you sure you want to remove this attachment?" okText="Yes" onConfirm={this.removeAttachment.bind(this)}>
+                                        <Icon className="remove-attachment" type="close-circle"/>
+                                    </Popconfirm>
+                                    <br/>
+                                </Col>
+                            </Row>
+                        }
                         <br/>
                         <FormItem {...formItemNoLabelLayout}>
                             <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
@@ -568,8 +597,15 @@ class C extends BaseComponent {
         )
     }
 
-    usdToggle () {
-        debugger
+    removeAttachment() {
+        this.setState({
+            attachment_loading: false,
+            attachment_url : null,
+            attachment_type: '',
+            attachment_filename: '',
+
+            removeAttachment: true
+        })
     }
 
 }

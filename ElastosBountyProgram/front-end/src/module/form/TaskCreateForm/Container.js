@@ -47,48 +47,25 @@ export default createContainer(Component, (state)=>{
                     candidateSltLimit: formData.taskCandSltLimit,
                 }
 
-                if (formData.isUsd) {
-                    // we don't track ela which is a derived value
-                    Object.assign(createObj, {
-                        rewardUpfront: {
-                            ela: null,
-                            elaDisbursed: 0,
+                Object.assign(createObj, {
+                    rewardUpfront: {
+                        ela: formData.taskRewardUpfront * 1000,
+                        elaDisbursed: 0,
 
-                            usd: formData.taskRewardUpfrontUsd * 100,
-                            elaPerUsd: formData.taskRewardUpfrontElaPerUsd,
-                            isUsd: true
-                        },
-                        reward: {
-                            ela: null,
-                            elaDisbursed: 0,
-                            votePower: parseFloat(formData.reward) * 100,
+                        usd: formData.taskRewardUpfrontUsd * 100,
+                        elaPerUsd: formData.taskRewardUpfrontElaPerUsd,
+                        isUsd: formData.isUsd
+                    },
+                    reward: {
+                        ela: formData.taskReward ? formData.taskReward * 1000 : null,
+                        elaDisbursed: 0,
+                        votePower: parseFloat(formData.reward) * 100,
 
-                            usd: formData.taskRewardUsd * 100,
-                            elaPerUsd: formData.taskRewardElaPerUsd,
-                            isUsd: true
-                        }
-                    })
-                } else {
-                    Object.assign(createObj, {
-                        rewardUpfront: {
-                            ela: formData.taskRewardUpfront * 1000,
-                            elaDisbursed: 0,
-
-                            usd: null,
-                            elaPerUsd: null,
-                            isUsd: false
-                        },
-                        reward: {
-                            ela: formData.taskReward * 1000,
-                            elaDisbursed: 0,
-                            votePower: parseFloat(formData.reward) * 100,
-
-                            usd: null,
-                            elaPerUsd: null,
-                            isUsd: false
-                        }
-                    })
-                }
+                        usd: formData.taskRewardUsd * 100,
+                        elaPerUsd: formData.taskRewardElaPerUsd,
+                        isUsd: formData.isUsd
+                    }
+                })
 
                 const rs = await taskService.create(createObj);
 
@@ -102,7 +79,7 @@ export default createContainer(Component, (state)=>{
             }
         },
 
-        async updateTask(formData, state) {
+        async updateTask(formData, st) {
 
             const taskId = this.existingTask._id
 
@@ -119,7 +96,7 @@ export default createContainer(Component, (state)=>{
                     descBreakdown: formData.taskDescBreakdown,
 
                     infoLink: formData.taskLink,
-                    thumbnail: state.upload_url,
+                    thumbnail: st.upload_url,
                     community: formData.community,
                     communityParent: formData.communityParent,
 
@@ -129,47 +106,37 @@ export default createContainer(Component, (state)=>{
                     candidateSltLimit: formData.taskCandSltLimit,
                 }
 
-                // TODO: now ensure we don't delete the other currency value
-                if (formData.isUsd) {
-                    // we don't track ela which is a derived value
+                Object.assign(updateObj, {
+                    rewardUpfront: {
+                        ela: formData.taskRewardUpfront ? formData.taskRewardUpfront * 1000 : this.existingTask.rewardUpfront.ela,
+                        elaDisbursed: 0,
+
+                        usd: formData.taskRewardUpfrontUsd ? formData.taskRewardUpfrontUsd * 100 : this.existingTask.rewardUpfront.usd,
+                        elaPerUsd: formData.taskRewardUpfrontElaPerUsd ? formData.taskRewardUpfrontElaPerUsd : this.existingTask.rewardUpfront.elaPerUsd,
+                        isUsd: formData.isUsd
+                    },
+                    reward: {
+                        ela: formData.taskReward ? formData.taskReward * 1000 : this.existingTask.reward.ela,
+                        elaDisbursed: 0,
+                        votePower: parseFloat(formData.reward) * 100,
+
+                        usd: formData.taskRewardUsd ? formData.taskRewardUsd * 100 : this.existingTask.reward.usd,
+                        elaPerUsd: formData.taskRewardElaPerUsd ? formData.taskRewardElaPerUsd : this.existingTask.reward.elaPerUsd,
+                        isUsd: formData.isUsd
+                    }
+                })
+
+                if (st.removeAttachment) {
                     Object.assign(updateObj, {
-                        rewardUpfront: {
-                            ela: null,
-                            elaDisbursed: 0,
-
-                            usd: formData.taskRewardUpfrontUsd * 100,
-                            elaPerUsd: formData.taskRewardUpfrontElaPerUsd,
-                            isUsd: true
-                        },
-                        reward: {
-                            ela: null,
-                            elaDisbursed: 0,
-                            votePower: parseFloat(formData.reward) * 100,
-
-                            usd: formData.taskRewardUsd * 100,
-                            elaPerUsd: formData.taskRewardElaPerUsd,
-                            isUsd: true
-                        }
+                        attachment: null,
+                        attachmentFilename: null,
+                        attachmentType: null
                     })
-                } else {
+                } else if (st.attachment_url) {
                     Object.assign(updateObj, {
-                        rewardUpfront: {
-                            ela: formData.taskRewardUpfront * 1000,
-                            elaDisbursed: 0,
-
-                            usd: null,
-                            elaPerUsd: null,
-                            isUsd: false
-                        },
-                        reward: {
-                            ela: formData.taskReward * 1000,
-                            elaDisbursed: 0,
-                            votePower: parseFloat(formData.reward) * 100,
-
-                            usd: null,
-                            elaPerUsd: null,
-                            isUsd: false
-                        }
+                        attachment: st.attachment_url,
+                        attachmentFilename: st.attachment_filename,
+                        attachmentType: st.attachment_type,
                     })
                 }
 
@@ -178,7 +145,7 @@ export default createContainer(Component, (state)=>{
                 if (rs) {
                     message.success('Task updated successfully');
 
-                    state.editing = false
+                    st.editing = false
                     // this.setState({editing: false})
                 }
             } catch (err) {

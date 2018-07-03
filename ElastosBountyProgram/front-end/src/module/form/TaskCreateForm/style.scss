@@ -17,4 +17,13 @@
       color: $text_light_gray;
     }
   }
+
+  .remove-attachment {
+    margin-left: $gap_0;
+    cursor: pointer;
+
+    &:hover {
+      color: $text_light_gray;
+    }
+  }
 }
