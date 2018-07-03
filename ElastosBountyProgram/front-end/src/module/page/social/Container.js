@@ -71,6 +71,10 @@ export default createContainer(Component, (state) => {
     const communityService = new CommunityService()
 
     return {
+        async addMemberToCommunity(memberId, communityId) {
+            return communityService.addMember(memberId, communityId)
+        },
+
         async getSocialEvents () {
             return taskService.index({
                 category: TASK_CATEGORY.SOCIAL
