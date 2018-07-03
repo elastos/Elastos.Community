@@ -211,12 +211,12 @@ export default class extends StandardPage {
 
         return breadcrumbRegions;
     }
-    
+
     getCommunityIdByGeolocation(geolocation) {
         const community = _.find(this.state.communities, {
             geolocation: geolocation
         })
-        
+
         if (community) {
             return community._id
         }
@@ -325,7 +325,7 @@ export default class extends StandardPage {
 
     renderBreadcrumbCountries() {
         let geolocationKeys = {}
-    
+
         this.state.communities.forEach((community) => {
             geolocationKeys[community.geolocation] = community.geolocation
         })
@@ -575,7 +575,7 @@ export default class extends StandardPage {
                                     </div>
                                 </Col>
                             </Row>
-                            {/*
+                            {
                             <Row>
                                 <Col span={24}>
                                     {this.state.subCommunities.length > 0 &&
@@ -586,7 +586,7 @@ export default class extends StandardPage {
                                     {tabSubCommunities}
                                 </Col>
                             </Row>
-                            */}
+                            }
                         </div>
                     </div>
                 </div>
