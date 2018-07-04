@@ -32,6 +32,9 @@
     }
   }
 
+  &.ant-btn-sm.ant-btn-loading:not(.ant-btn-circle):not(.ant-btn-circle-outline):not(.ant-btn-icon-only) {
+    padding-left: 40px;
+  }
 }
 
 .ant-message-notice-content {

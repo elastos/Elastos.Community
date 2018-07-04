@@ -11,6 +11,9 @@ export default class extends BaseService {
             createdBy: this.store.getState().user,
             createdAt: new Date().toISOString()
         }
+
+        this.dispatch(redux.actions.loading_update(true))
+
         const rs = await api_request({
             path: `/api/${type}/${id}/comment`,
             method: 'post',
@@ -31,12 +34,16 @@ export default class extends BaseService {
         subDetail.comments.push([data]);
 
         this.dispatch(redux.actions.detail_update(curDetail))
+        this.dispatch(redux.actions.loading_update(false))
 
         return rs
     }
 
     async subscribe(type, id) {
         const redux = this.store.getRedux(type)
+
+        this.dispatch(redux.actions.loading_update(true))
+
         const rs = await api_request({
             path: `/api/${type}/${id}/subscribe`,
             method: 'post',
@@ -55,12 +62,16 @@ export default class extends BaseService {
         })
 
         this.dispatch(redux.actions.detail_update(curDetail))
+        this.dispatch(redux.actions.loading_update(false))
 
         return rs
     }
 
     async unsubscribe(type, id) {
         const redux = this.store.getRedux(type)
+
+        this.dispatch(redux.actions.loading_update(true))
+
         const rs = await api_request({
             path: `/api/${type}/${id}/unsubscribe`,
             method: 'post',
@@ -78,6 +89,7 @@ export default class extends BaseService {
         })
 
         this.dispatch(redux.actions.detail_update(curDetail))
+        this.dispatch(redux.actions.loading_update(false))
 
         return rs
     }
