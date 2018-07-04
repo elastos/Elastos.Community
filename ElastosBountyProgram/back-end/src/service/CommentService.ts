@@ -49,7 +49,7 @@ export default class extends Base {
 
     public async subscribe(type, param): Promise<boolean> {
         const {
-            createdBy, id
+            id
         } = param
 
         const db_commentable = this.getDBModel(type)
@@ -102,7 +102,7 @@ export default class extends Base {
         let ownerSubject = `Someone has commented on a ${type} you subscribed to`
         let ownerBody = `${curUser.profile.firstName} ${curUser.profile.lastName} says:<br/>${comment}`
 
-        for (let subscriber in subscribers) {
+        for (let subscriber of subscribers) {
             let ownerTo = subscriber.email
             let ownerToName = `${subscriber.profile.firstName} ${subscriber.profile.lastName}`
 

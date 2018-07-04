@@ -61,7 +61,6 @@ export const TaskCandidate = {
     output : TaskOutput,
 
     comments: [[CommentSchema]],
-    subscribers: [{type: Schema.Types.ObjectId, ref: 'user'}]
 };
 
 export const TaskActivity = {
@@ -199,8 +198,8 @@ export const Task = {
 
     createdBy: {type: Schema.Types.ObjectId, ref: 'users'},
 
-    comments: [[CommentSchema]]
-
+    comments: [[CommentSchema]],
+    subscribers: [{type: Schema.Types.ObjectId, ref: 'users'}]
 };
 
 

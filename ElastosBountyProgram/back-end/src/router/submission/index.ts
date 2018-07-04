@@ -5,7 +5,7 @@ import create from './create';
 import list from './list';
 import update from './update';
 import comment from './comment';
-import subscribe fromm './subscribe';
+import subscribe from './subscribe';
 
 export default Base.setRouter([
 

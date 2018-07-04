@@ -9,7 +9,7 @@ import removeCandidate from './remove_candidate';
 import acceptCandidate from './accept_candidate';
 import markComplete from './mark_complete';
 import comment from './comment';
-import subscribe fromm './subscribe';
+import subscribe from './subscribe';
 
 export default Base.setRouter([
 
