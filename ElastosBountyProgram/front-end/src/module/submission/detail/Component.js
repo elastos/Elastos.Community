@@ -246,6 +246,12 @@ export default class extends BaseComponent {
         </Row>
     }
 
+    canSubscribe() {
+        return !this.props.submission.createdBy ||
+            (this.props.submission.createdBy &&
+                this.props.submission.createdBy._id !== this.props.currentUserId)
+    }
+
     ord_render() {
 
         return (
@@ -254,7 +260,8 @@ export default class extends BaseComponent {
                     this.renderFormExt() :
                     this.renderDetail()
                 }
-                <Comments type="submission" canPost={true} model={this.props.submission}/>
+                <Comments type="submission" canPost={true} model={this.props.submission}
+                    canSubscribe={this.canSubscribe()}/>
             </div>
         )
     }

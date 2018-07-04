@@ -304,7 +304,7 @@ export default class extends BaseComponent {
                             </Row>
                         </div>}
 
-                        <Comments type="task" canPost={true} model={this.props.task}/>
+                        <Comments type="task" canPost={true} canSubscribe={!isTaskOwner} model={this.props.task}/>
                     </Col>
                     <Col span={6} className="gridCol applicants">
                         <h4>{this.state.isDeveloperEvent ? 'Registrants' : 'Applicants'}</h4>

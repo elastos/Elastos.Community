@@ -154,6 +154,7 @@ export default class extends BaseComponent {
     // this is confusing and should maybe also belong in detail,
     // it just has a few different fields...
     renderAdminDetail() {
+        const isTaskOwner = this.props.current_user_id === this.props.task.createdBy._id
 
         return (
             <div>
@@ -341,7 +342,8 @@ export default class extends BaseComponent {
                         </Col>
                     </Row>
                 </div>}
-                <Comments type="task" canPost={true} model={this.props.task}/>
+                <Comments type="task" canPost={true} model={this.props.task}
+                    canSubscribe={!isTaskOwner}/>
             </div>
         )
     }

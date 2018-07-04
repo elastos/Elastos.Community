@@ -34,4 +34,25 @@ export default class extends BaseService {
 
         return rs
     }
+
+    async subscribe(type, id) {
+        const redux = this.store.getRedux(type)
+        const rs = await api_request({
+            path: `/api/${type}/${id}/subscribe`,
+            method: 'post',
+            data: {}
+        })
+        const curDetail = this.store.getState()[type] && this.store.getState()[type].detail
+
+        if (!curDetail) {
+            return;
+        }
+
+        curDetail.subscribers = curDetail.subscribers || []
+        curDetail.subscribers.push(this.store.getState().user)
+
+        this.dispatch(redux.actions.detail_update(curDetail))
+
+        return rs
+    }
 }

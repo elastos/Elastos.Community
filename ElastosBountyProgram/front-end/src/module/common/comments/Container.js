@@ -30,6 +30,14 @@ export default createContainer(Component, (state) => {
             }
         },
 
+        async subscribe(type, parentId) {
+            try {
+                await commentService.subscribe(type, parentId)
+            } catch (err) {
+                message.error(err.message)
+            }
+        },
+
         async getTaskDetail(taskId) {
             return taskService.get(taskId)
         },

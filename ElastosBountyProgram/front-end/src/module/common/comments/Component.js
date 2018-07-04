@@ -83,8 +83,21 @@ class C extends BaseComponent {
         }
     }
 
+    isUserSubscribed() {
+
+    }
+
+    getSubscribeButton() {
+        return this.props.canSubscribe ?
+            (<Button className="ant-btn-ebp pull-left" size="small"
+                onClick={this.subscribe.bind(this)}>
+                Subscribe
+            </Button>) : null
+    }
+
     getFooter() {
         const p = this.getInputProps()
+        const subscribeButton = this.getSubscribeButton()
 
         return this.props.canPost ?
             (<Form onSubmit={this.handleSubmit.bind(this)} className="c_commentForm">
@@ -92,12 +105,17 @@ class C extends BaseComponent {
                     {p.comment}
                 </FormItem>
                 <FormItem>
+                    {subscribeButton}
                     <Button className="ant-btn-ebp pull-right" type="primary" size="small"
                         htmlType="submit">
                         Post
                     </Button>
                 </FormItem>
             </Form>) : null;
+    }
+
+    subscribe() {
+
     }
 
     renderComments() {
