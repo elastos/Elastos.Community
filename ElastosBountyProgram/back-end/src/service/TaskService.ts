@@ -27,7 +27,8 @@ export default class extends Base {
         const db_task_candidate = this.getDBModel('Task_Candidate');
 
         const task = await db_task.getDBInstance().findOne({_id: param.taskId})
-            .populate('candidates')
+            .populate('candidates', sanitize)
+            .populate('subscribers', sanitize)
             .populate('createdBy', sanitize)
             .populate('approvedBy', sanitize)
             .populate('community')
@@ -113,10 +114,19 @@ export default class extends Base {
                 })
 
                 await db_task.getDBInstance().populate(task, [
-                    'candidates',
                     'community',
-                    'communityParent'
+                    'communityParent',
                 ])
+
+                await db_task.getDBInstance().populate(task, {
+                    path: 'candidates',
+                    select: sanitize,
+                })
+
+                await db_task.getDBInstance().populate(task, {
+                    path: 'subscribers',
+                    select: sanitize,
+                })
 
                 for (let comment of task.comments) {
                     for (let thread of comment) {
