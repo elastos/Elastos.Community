@@ -140,7 +140,7 @@ export default class extends BaseComponent {
                     <Button>Force Start</Button>
                 </Popconfirm>
                 }
-                {this.props.task.status !== TASK_STATUS.SUCCESS && isTaskOwner &&
+                {this.props.task.status !== TASK_STATUS.SUCCESS &&
                 <Button onClick={this.switchEditMode.bind(this)}>
                     {this.state.editing ? 'Cancel' : 'Edit'}
                 </Button>

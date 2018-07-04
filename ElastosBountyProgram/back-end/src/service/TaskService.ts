@@ -155,7 +155,7 @@ export default class extends Base {
             name, description, thumbnail, infoLink, community, communityParent, category, type, startTime, endTime,
             candidateLimit, candidateSltLimit, rewardUpfront, reward, assignSelf,
 
-            attachment, attachmentType, attachmentFilename
+            attachment, attachmentType, attachmentFilename, isUsd
         } = param;
         this.validate_name(name);
         this.validate_description(description);
@@ -165,7 +165,7 @@ export default class extends Base {
 
         let status = constant.TASK_STATUS.CREATED;
 
-        if (rewardUpfront.ela > 0 || reward.ela > 0) {
+        if (rewardUpfront.ela > 0 || reward.ela > 0 || rewardUpfront.usd > 0 || reward.usd > 0) {
             status = constant.TASK_STATUS.PENDING;
         } else {
             // if there is no ELA and you are assigning yourself,
@@ -183,13 +183,8 @@ export default class extends Base {
             attachment, attachmentType, attachmentFilename,
             candidateLimit,
             candidateSltLimit,
-            rewardUpfront: {
-                ela: rewardUpfront.ela
-            },
-            reward : {
-                ela : reward.ela,
-                votePower : reward.votePower
-            },
+            rewardUpfront: rewardUpfront,
+            reward : reward,
             assignSelf: assignSelf,
             status : status,
             createdBy : this.currentUser._id
@@ -244,6 +239,8 @@ export default class extends Base {
      *
      * TODO: move status change triggers to a separate function
      *
+     * TODO: no security to check if u own the task if you are leader
+     *
      * @param param
      * @returns {Promise<boolean>}
      */
@@ -255,6 +252,9 @@ export default class extends Base {
 
             attachment, attachmentType, attachmentFilename
         } = param;
+
+        // we need to set this for the end of the fn so we have the updated task
+        let sendTaskPendingRequiredApprovalEmail = false
 
         if (!this.currentUser || !this.currentUser._id) {
             return
@@ -325,12 +325,13 @@ export default class extends Base {
 
             // reward should only change if ela amount changed from 0 to > 0
             if ((task.reward.ela === 0 && task.rewardUpfront.ela === 0) &&
-                (rewardUpfront && rewardUpfront.ela > 0) || (reward && reward.ela > 0)
+                (rewardUpfront && (rewardUpfront.ela > 0 || rewardUpfront.usd > 0)) ||
+                (reward && (reward.ela > 0 || reward.usd > 0))
             ) {
                 // TODO: send notification to admin
                 updateObj.status = constant.TASK_STATUS.PENDING;
 
-                await this.sendTaskPendingEmail(this.currentUser, task)
+                sendTaskPendingRequiredApprovalEmail = true
             }
         }
 
@@ -380,10 +381,14 @@ export default class extends Base {
 
         await db_task.update({_id: taskId}, updateObj)
 
-        let updatedTask = db_task.findById(taskId);
+        let updatedTask = await db_task.findById(taskId);
 
         // post update checks
         // TODO: if reward changed to 0, force status to CREATED
+
+        if (sendTaskPendingRequiredApprovalEmail) {
+            await this.sendTaskPendingEmail(this.currentUser, updatedTask)
+        }
 
         return updatedTask
     }
@@ -676,7 +681,7 @@ export default class extends Base {
             body += ` and it requires approval
                     <br/>
                     <br/>
-                    <a href="${process.env.SERVER_URL}/admin/task-detail/${task._id}">Go to Admin/Task</a>
+                    <a href="${process.env.SERVER_URL}/admin/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
                     `
         }
 
@@ -702,7 +707,7 @@ export default class extends Base {
             body += ` and it requires approval
                     <br/>
                     <br/>
-                    <a href="${process.env.SERVER_URL}/admin/task-detail/${task._id}">Go to Admin/Task</a>
+                    <a href="${process.env.SERVER_URL}/admin/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
                     `
         }
 

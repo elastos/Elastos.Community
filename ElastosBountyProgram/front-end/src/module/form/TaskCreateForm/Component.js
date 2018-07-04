@@ -103,7 +103,9 @@ class C extends BaseComponent {
 
             removeAttachment: false,
 
-            editing: !!props.existingTask
+            editing: !!props.existingTask,
+
+            isUsd: (props.existingTask && props.existingTask.reward.isUsd) || false
         };
     }
 
@@ -123,19 +125,12 @@ class C extends BaseComponent {
             <Checkbox/>
         )
 
-        const isUsd_fn = getFieldDecorator('isUsd', {
-            initialValue: this.state.editing ? existingTask.reward.isUsd : false
-        })
-        const isUsd_el = (
-            <Checkbox checked={this.state.editing ? this.props.form.getFieldValue('isUsd') : false}/>
-        )
-
         const taskName_fn = getFieldDecorator('taskName', {
             rules: [
                 {required: true, message: 'Please input a task name'},
                 {min: 4, message: 'Task Name too short'}
             ],
-            initialValue: this.state.editing ? existingTask.name : ''
+            initialValue: this.state.editing && existingTask ? existingTask.name : ''
         })
         const taskName_el = (
             <Input size="large"/>
@@ -359,7 +354,6 @@ class C extends BaseComponent {
 
         return {
             assignSelf: assignSelf_fn(assignSelf_el),
-            isUsd: isUsd_fn(isUsd_el),
 
             taskName: taskName_fn(taskName_el),
             taskCategory: taskCategory_fn(taskCategory_el),
@@ -402,6 +396,7 @@ class C extends BaseComponent {
     ord_render () {
         const {getFieldDecorator} = this.props.form
         const p = this.getInputProps()
+        const existingTask = this.props.existingTask
 
         const formItemLayout = {
             labelCol: {
@@ -514,10 +509,11 @@ class C extends BaseComponent {
                         <Divider>Budget / Reward <Icon className="help-icon" type="question-circle-o" onClick={() => {this.props.history.push('/faq')}}/></Divider>
 
                         <FormItem label="Fiat ($USD)" {...formItemLayout}>
-                            {p.isUsd} - for larger tasks/events only - payment is always in ELA equivalent
+                            <Checkbox name="isUsd" checked={this.state.isUsd} onChange={() => {this.setState({isUsd: !this.state.isUsd})}}/>
+                            &nbsp; - for larger tasks/events only - payment is always in ELA equivalent
                         </FormItem>
 
-                        {this.props.form.getFieldValue('isUsd') ?
+                        {this.state.isUsd ?
                             <div>
                                 <Row>
                                     <Col span={12}>

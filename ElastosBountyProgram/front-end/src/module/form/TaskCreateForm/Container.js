@@ -54,7 +54,7 @@ export default createContainer(Component, (state)=>{
 
                         usd: formData.taskRewardUpfrontUsd * 100,
                         elaPerUsd: formData.taskRewardUpfrontElaPerUsd,
-                        isUsd: formData.isUsd
+                        isUsd: st.isUsd
                     },
                     reward: {
                         ela: formData.taskReward ? formData.taskReward * 1000 : null,
@@ -63,7 +63,7 @@ export default createContainer(Component, (state)=>{
 
                         usd: formData.taskRewardUsd * 100,
                         elaPerUsd: formData.taskRewardElaPerUsd,
-                        isUsd: formData.isUsd
+                        isUsd: st.isUsd
                     }
                 })
 
@@ -113,7 +113,7 @@ export default createContainer(Component, (state)=>{
 
                         usd: formData.taskRewardUpfrontUsd ? formData.taskRewardUpfrontUsd * 100 : this.existingTask.rewardUpfront.usd,
                         elaPerUsd: formData.taskRewardUpfrontElaPerUsd ? formData.taskRewardUpfrontElaPerUsd : this.existingTask.rewardUpfront.elaPerUsd,
-                        isUsd: formData.isUsd
+                        isUsd: st.isUsd
                     },
                     reward: {
                         ela: formData.taskReward ? formData.taskReward * 1000 : this.existingTask.reward.ela,
@@ -122,7 +122,7 @@ export default createContainer(Component, (state)=>{
 
                         usd: formData.taskRewardUsd ? formData.taskRewardUsd * 100 : this.existingTask.reward.usd,
                         elaPerUsd: formData.taskRewardElaPerUsd ? formData.taskRewardElaPerUsd : this.existingTask.reward.elaPerUsd,
-                        isUsd: formData.isUsd
+                        isUsd: st.isUsd
                     }
                 })
 
