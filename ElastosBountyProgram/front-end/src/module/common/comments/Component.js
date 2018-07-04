@@ -84,10 +84,20 @@ class C extends BaseComponent {
     }
 
     isUserSubscribed() {
-
+        const curDetail = this.props[this.props.type]
+        const subscribers = curDetail.subscribers || []
+        return !!_.find(subscribers, { _id: this.props.currentUserId })
     }
 
     getSubscribeButton() {
+        if (this.isUserSubscribed()) {
+            return (
+                <Button className="ant-btn-ebp pull-left" size="small" disabled="true">
+                    You are subscribed
+                </Button>
+            )
+        }
+
         return this.props.canSubscribe ?
             (<Button className="ant-btn-ebp pull-left" size="small"
                 onClick={this.subscribe.bind(this)}>
@@ -115,7 +125,7 @@ class C extends BaseComponent {
     }
 
     subscribe() {
-
+        this.props.subscribe(this.props.type, this.props.model._id)
     }
 
     renderComments() {

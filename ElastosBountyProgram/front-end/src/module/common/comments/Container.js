@@ -9,7 +9,8 @@ export default createContainer(Component, (state) => {
     return {
         task: state.task.detail,
         submission: state.submission.detail,
-        loading: state.task.loading || state.submission.loading
+        loading: state.task.loading || state.submission.loading,
+        currentUserId: state.user.current_user_id
     }
 }, () => {
 
