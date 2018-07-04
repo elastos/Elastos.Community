@@ -52,7 +52,7 @@ export const Submission = {
         ref: 'users'
     },
     comments: [[CommentSchema]],
-    subscribers: [{type: Schema.Types.ObjectId, ref: 'user'}],
+    subscribers: [{type: Schema.Types.ObjectId, ref: 'users'}],
     ...communityProps
 };
 

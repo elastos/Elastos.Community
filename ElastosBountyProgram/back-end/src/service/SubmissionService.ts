@@ -21,6 +21,7 @@ export default class extends Base {
         const submission = await db_submission.getDBInstance().findOne({_id: param.submissionId})
             .populate('createdBy', sanitize)
             .populate('community')
+            .populate('subscribers', sanitize)
 
         if (submission) {
             for (let comment of submission.comments) {
@@ -46,6 +47,10 @@ export default class extends Base {
             for (let submission of submissions) {
                 await db_submission.getDBInstance().populate(submission, {
                     path: 'createdBy',
+                    select: sanitize
+                })
+                await db_submission.getDBInstance().populate(submission, {
+                    path: 'subscribers',
                     select: sanitize
                 })
                 await db_submission.getDBInstance().populate(submission, ['community'])
