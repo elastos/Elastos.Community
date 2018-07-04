@@ -34,6 +34,8 @@ export default class extends Base{
                 {createdBy: currentUserId}
             ]
 
+            query.$or.push({subscribers: {$in: [currentUserId]}})
+
             // make sure this is the logged in user
             if (this.session.userId !== currentUserId.toString()) {
                 throw 'submission.list API - profileListFor does not match session.userId'

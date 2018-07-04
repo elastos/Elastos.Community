@@ -59,6 +59,9 @@ export default class extends Base{
             if (taskCandidatesForUser.length) {
                 query.$or.push({candidates: {$in: _.map(taskCandidatesForUser, '_id')}})
             }
+
+            query.$or.push({subscribers: {$in: [currentUserId]}})
+
             // TODO: how about teams? Probably needs to be done too
 
             query.status = {$in: [

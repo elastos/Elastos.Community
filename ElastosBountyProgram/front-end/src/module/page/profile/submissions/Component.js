@@ -21,7 +21,7 @@ export default class extends StandardPage {
     }
 
     ord_renderContent () {
-        const submissionsOwnedData = this.props.all_submissions
+        const submissionsOwnedData = this.props.owned_submissions
         const submissionsSubscribedData = this.props.subscribed_submissions
 
         const columns = [
