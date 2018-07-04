@@ -44,12 +44,11 @@ export default createContainer(Component, (state) => {
                 // find the one we are a user of (should be only one ever for a user)
                 // TODO: teams
                 let taskCandidate = _.find(task.candidates, (candidate) => {
-
-                    if (candidate.type === 'USER') {
+                    if (candidate.type === 'USER' && candidate.user) {
                         return candidate.user._id === currentUserId
                     }
 
-                    if (candidate.type === 'TEAM') {
+                    if (candidate.type === 'TEAM' && candidate.team) {
                         return _.map(state.user.teams, '_id').includes(candidate.team._id)
                     }
                 })
