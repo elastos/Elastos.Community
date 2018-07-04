@@ -44,12 +44,36 @@ export default class extends BaseService {
         })
         const curDetail = this.store.getState()[type] && this.store.getState()[type].detail
 
+        debugger
         if (!curDetail) {
             return;
         }
 
         curDetail.subscribers = curDetail.subscribers || []
         curDetail.subscribers.push(this.store.getState().user)
+
+        this.dispatch(redux.actions.detail_update(curDetail))
+
+        return rs
+    }
+
+    async unsubscribe(type, id) {
+        const redux = this.store.getRedux(type)
+        const rs = await api_request({
+            path: `/api/${type}/${id}/unsubscribe`,
+            method: 'post',
+            data: {}
+        })
+        const curDetail = this.store.getState()[type] && this.store.getState()[type].detail
+
+        if (!curDetail) {
+            return;
+        }
+
+        curDetail.subscribers = curDetail.subscribers || []
+        curDetail.subscribers = _.filter(curDetail.subscribers, (subscriber) => {
+            return subscriber._id !== this.store.getState().user._id
+        })
 
         this.dispatch(redux.actions.detail_update(curDetail))
 

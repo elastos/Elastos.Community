@@ -4,6 +4,8 @@ import * as _ from 'lodash';
 import {constant} from '../constant';
 import {validate, crypto, uuid, mail} from '../utility';
 
+const sanitize = '-password -salt -email'
+
 export default class extends Base {
     public async create(type, param): Promise<boolean> {
         const {
@@ -13,7 +15,7 @@ export default class extends Base {
         const db_commentable = this.getDBModel(type)
         let commentable = await db_commentable.getDBInstance().findOne({_id: id})
             .populate('createdBy')
-            .populate('subscribers')
+            .populate('subscribers', sanitize)
 
         if (commentable) {
             const updateObj = {
@@ -70,6 +72,31 @@ export default class extends Base {
         }
     }
 
+    public async unsubscribe(type, param): Promise<boolean> {
+        const {
+            id
+        } = param
+
+        const db_commentable = this.getDBModel(type)
+        let commentable = await db_commentable.getDBInstance().findOne({_id: id})
+            .populate('createdBy')
+            .populate('subscribers', sanitize)
+
+        if (commentable) {
+            const updateObj = {
+                subscribers: commentable.subscribers || []
+            }
+
+            updateObj.subscribers = _.filter(updateObj.subscribers, (subscriber) => {
+                return subscriber._id.toString() !== this.currentUser._id.toString()
+            })
+
+            return await db_commentable.update({_id: id}, updateObj)
+        } else {
+            throw 'commentable id is not valid'
+        }
+    }
+
     public async sendNotificationEmail(type, param, curUser, owner, notifier) {
         if (curUser.current_user_id === owner._id.toString() && !notifier) {
             return; // Dont notify about own comments
@@ -103,6 +130,10 @@ export default class extends Base {
         let ownerBody = `${curUser.profile.firstName} ${curUser.profile.lastName} says:<br/>${comment}`
 
         for (let subscriber of subscribers) {
+            if (curUser.current_user_id === subscriber._id) {
+                return; // Dont notify about own comments
+            }
+
             let ownerTo = subscriber.email
             let ownerToName = `${subscriber.profile.firstName} ${subscriber.profile.lastName}`
 

@@ -10,6 +10,7 @@ import acceptCandidate from './accept_candidate';
 import markComplete from './mark_complete';
 import comment from './comment';
 import subscribe from './subscribe';
+import unsubscribe from './unsubscribe';
 
 export default Base.setRouter([
 
@@ -61,6 +62,11 @@ export default Base.setRouter([
     {
         path : '/:id/subscribe',
         router : subscribe,
+        method : 'post'
+    },
+    {
+        path : '/:id/unsubscribe',
+        router : unsubscribe,
         method : 'post'
     }
 ]);

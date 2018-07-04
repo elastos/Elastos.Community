@@ -92,8 +92,10 @@ class C extends BaseComponent {
     getSubscribeButton() {
         if (this.isUserSubscribed()) {
             return (
-                <Button className="ant-btn-ebp pull-left" size="small" disabled="true">
-                    You are subscribed
+                <Button className="ant-btn-ebp pull-left" size="small"
+                    onClick={this.unsubscribe.bind(this)}>
+                    <Icon type="pushpin"/>
+                    Unsubscribe
                 </Button>
             )
         }
@@ -101,6 +103,7 @@ class C extends BaseComponent {
         return this.props.canSubscribe ?
             (<Button className="ant-btn-ebp pull-left" size="small"
                 onClick={this.subscribe.bind(this)}>
+                <Icon type="pushpin-o"/>
                 Subscribe
             </Button>) : null
     }
@@ -126,6 +129,10 @@ class C extends BaseComponent {
 
     subscribe() {
         this.props.subscribe(this.props.type, this.props.model._id)
+    }
+
+    unsubscribe() {
+        this.props.unsubscribe(this.props.type, this.props.model._id)
     }
 
     renderComments() {

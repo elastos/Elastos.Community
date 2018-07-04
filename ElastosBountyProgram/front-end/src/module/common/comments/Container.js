@@ -39,6 +39,14 @@ export default createContainer(Component, (state) => {
             }
         },
 
+        async unsubscribe(type, parentId) {
+            try {
+                await commentService.unsubscribe(type, parentId)
+            } catch (err) {
+                message.error(err.message)
+            }
+        },
+
         async getTaskDetail(taskId) {
             return taskService.get(taskId)
         },
