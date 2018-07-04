@@ -55,7 +55,7 @@ export default class extends BaseComponent {
                                     <br/>
                                     <a href="mailto:support@elastos.org">support@elastos.org</a>
                                     <br/>
-                                    v0.0.42 (beta) - property of Elastos.org
+                                    v0.0.43 (beta) - property of Elastos.org
                                 </p>
                             </div>
                         </Col>

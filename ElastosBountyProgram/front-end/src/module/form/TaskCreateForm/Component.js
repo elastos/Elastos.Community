@@ -234,14 +234,14 @@ class C extends BaseComponent {
         )
 
         const taskRewardUpfront_fn = getFieldDecorator('taskRewardUpfront', {
-            initialValue: this.state.editing ? existingTask.rewardUpfront.ela / 1000 : null
+            initialValue: this.state.editing && existingTask.rewardUpfront.ela ? existingTask.rewardUpfront.ela / 1000 : null
         })
         const taskRewardUpfront_el = (
             <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
         )
 
         const taskRewardUpfrontUsd_fn = getFieldDecorator('taskRewardUpfrontUsd', {
-            initialValue: this.state.editing ? existingTask.rewardUpfront.usd / 100 : null
+            initialValue: this.state.editing && existingTask.rewardUpfront.usd ? existingTask.rewardUpfront.usd / 100 : null
         })
         const taskRewardUpfrontUsd_el = (
             <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
@@ -249,21 +249,21 @@ class C extends BaseComponent {
 
         const taskRewardUpfrontElaPerUsd_fn = getFieldDecorator('taskRewardUpfrontElaPerUsd', {
             rules: [{required: this.props.form.getFieldValue('taskRewardUpfrontUsd') > 0 && this.props.form.getFieldValue('isUsd'), message: 'Required for USD'}],
-            initialValue: this.state.editing ? existingTask.rewardUpfront.elaPerUsd : null
+            initialValue: this.state.editing && existingTask.rewardUpfront.elaPerUsd ? existingTask.rewardUpfront.elaPerUsd : null
         })
         const taskRewardUpfrontElaPerUsd_el = (
             <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
         )
 
         const taskRewardUsd_fn = getFieldDecorator('taskRewardUsd', {
-            initialValue: this.state.editing ? existingTask.reward.usd / 100 : null
+            initialValue: this.state.editing && existingTask.reward.usd ? existingTask.reward.usd / 100 : null
         })
         const taskRewardUsd_el = (
             <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
         )
 
         const taskReward_fn = getFieldDecorator('taskReward', {
-            initialValue: this.state.editing ? existingTask.reward.ela / 1000 : null
+            initialValue: this.state.editing && existingTask.reward.ela ? existingTask.reward.ela / 1000 : null
         })
         const taskReward_el = (
             <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
@@ -271,7 +271,7 @@ class C extends BaseComponent {
 
         const taskRewardElaPerUsd_fn = getFieldDecorator('taskRewardElaPerUsd', {
             rules: [{required: this.props.form.getFieldValue('taskRewardUsd') > 0 && this.props.form.getFieldValue('isUsd'), message: 'Required for USD'}],
-            initialValue: this.state.editing ? existingTask.reward.elaPerUsd : null
+            initialValue: this.state.editing && existingTask.reward.elaPerUsd ? existingTask.reward.elaPerUsd : null
         })
         const taskRewardElaPerUsd_el = (
             <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>

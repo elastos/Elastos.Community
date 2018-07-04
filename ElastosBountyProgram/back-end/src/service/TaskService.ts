@@ -738,13 +738,20 @@ export default class extends Base {
      *
      * @param curUser
      * @param taskOwner
-     * @param doc
+     * @param task
      * @returns {Promise<void>}
      */
-    public async sendAddCandidateEmail(curUser, taskOwner, doc) {
+    public async sendAddCandidateEmail(curUser, taskOwner, task) {
 
-        let ownerSubject = `A candidate has applied for your task - ${doc.name}`
-        let ownerBody = `${curUser.profile.firstName} ${curUser.profile.lastName} has applied for your task ${doc.name}<br/>Please review their application`
+        let ownerSubject = `A candidate has applied for your task - ${task.name}`
+        let ownerBody = `
+            ${curUser.profile.firstName} ${curUser.profile.lastName} has applied for your task ${task.name}
+            <br/>
+            Please review their application
+            <br/>
+            <br/>
+            <a href="${process.env.SERVER_URL}/profile/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
+            `
         let ownerTo = taskOwner.email
         let ownerToName = `${taskOwner.profile.firstName} ${taskOwner.profile.lastName}`
 
@@ -755,7 +762,7 @@ export default class extends Base {
             body: ownerBody
         })
 
-        let candidateSubject = `Your application for task ${doc.name} has been received`
+        let candidateSubject = `Your application for task ${task.name} has been received`
         let candidateBody = `Thank you, the task owner ${taskOwner.profile.firstName} ${taskOwner.profile.lastName} will review your application and be in contact`
         let candidateTo = curUser.email
         let candidateToName = `${curUser.profile.firstName} ${curUser.profile.lastName}`
@@ -771,7 +778,12 @@ export default class extends Base {
     public async sendTaskApproveEmail(curUser, taskOwner, task) {
 
         let ownerSubject = `Your task proposal - ${task.name} has been approved`
-        let ownerBody = `${curUser.profile.firstName} ${curUser.profile.lastName} has approved your task proposal ${task.name}`
+        let ownerBody = `
+            ${curUser.profile.firstName} ${curUser.profile.lastName} has approved your task proposal ${task.name}
+            <br/>
+            <br/>
+            <a href="${process.env.SERVER_URL}/profile/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
+            `
         let ownerTo = taskOwner.email
         let ownerToName = `${taskOwner.profile.firstName} ${taskOwner.profile.lastName}`
 

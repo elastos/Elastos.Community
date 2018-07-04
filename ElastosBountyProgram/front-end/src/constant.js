@@ -54,6 +54,8 @@ export const TASK_STATUS = {
     SUCCESS: 'SUCCESS', // when admin accepts it as complete
     DISTRIBUTED: 'DISTRIBUTED', // when admin distributes ELA rewards
     CANCELED: 'CANCELED',
+
+    // TODO: application deadline passed without any applicants
     EXPIRED: 'EXPIRED'
 }
 
