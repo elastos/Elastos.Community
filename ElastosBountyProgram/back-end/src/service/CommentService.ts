@@ -19,7 +19,8 @@ export default class extends Base {
 
         if (commentable) {
             const updateObj = {
-                comments: commentable.comments || []
+                comments: commentable.comments || [],
+                subscribers: commentable.subscribers || []
             }
             updateObj.comments.push({
                 comment,
@@ -31,6 +32,11 @@ export default class extends Base {
 
             if (commentable.createdBy) {
                 this.sendNotificationEmail(type, param, createdBy, commentable.createdBy, null)
+
+                // TODO only do this if not there already
+                if (commentable.createdBy._id.toString() !== this.currentUser._id.toString()) {
+                    updateObj.subscribers.push(this.currentUser)
+                }
             } else {
                 commentable = await db_commentable.getDBInstance().findOne({_id: id})
                     .populate('createdBy')

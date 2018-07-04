@@ -33,6 +33,12 @@ export default class extends BaseService {
         subDetail.comments = subDetail.comments || [];
         subDetail.comments.push([data]);
 
+        subDetail.subscribers = subDetail.subscribers || [];
+        subDetail.subscribers.push({
+            ...this.store.getState().user,
+            _id: this.store.getState().user.current_user_id
+        })
+
         this.dispatch(redux.actions.detail_update(curDetail))
         this.dispatch(redux.actions.loading_update(false))
 
