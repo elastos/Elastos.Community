@@ -193,6 +193,9 @@ export default class extends StandardPage {
                                         />
                                     </div>
                                     }
+                                    {tasksOwnedData.length === 0 &&
+                                    <div className="vert-gap"/>
+                                    }
 
                                     <div>
                                         <Divider>Subscribed Tasks</Divider>

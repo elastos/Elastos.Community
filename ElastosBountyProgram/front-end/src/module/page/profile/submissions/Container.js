@@ -20,6 +20,15 @@ export default createContainer(Component, (state) => {
         submissionState.all_submissions = _.values(submissionState.all_submissions)
     }
 
+    if (submissionState.all_submissions.length) {
+        for (let submission of submissionState.all_submissions) {
+            if (_.find(submission.subscribers, { _id: state.user.current_user_id })) {
+                submissionState.subscribed_submissions.push(submission)
+            }
+        }
+    }
+
+
     return submissionState
 
 }, () => {

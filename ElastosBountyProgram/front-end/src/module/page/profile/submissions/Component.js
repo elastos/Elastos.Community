@@ -22,6 +22,8 @@ export default class extends StandardPage {
 
     ord_renderContent () {
         const submissionsOwnedData = this.props.all_submissions
+        const submissionsSubscribedData = this.props.subscribed_submissions
+
         const columns = [
         {
             title: 'Title',
@@ -75,14 +77,29 @@ export default class extends StandardPage {
                         <div className="p_ProfileSubmissions p_admin_content">
                             <Row>
                                 <Col span={20} className="c_ProfileContainer admin-left-column wrap-box-user">
-                                    <Divider>Owned Submissions</Divider>
+                                    <div>
+                                        <Divider>Owned Submissions</Divider>
 
-                                    <Table
-                                        columns={columns}
-                                        rowKey={(item) => item._id}
-                                        dataSource={submissionsOwnedData}
-                                        loading={this.props.loading}
-                                    />
+                                        <Table
+                                            columns={columns}
+                                            rowKey={(item) => item._id}
+                                            dataSource={submissionsOwnedData}
+                                            loading={this.props.loading}
+                                        />
+                                    </div>
+                                    {submissionsOwnedData.length === 0 &&
+                                        <div className="vert-gap"/>
+                                    }
+                                    <div>
+                                        <Divider>Subscribed Submissions</Divider>
+
+                                        <Table
+                                            columns={columns}
+                                            rowKey={(item) => item._id}
+                                            dataSource={submissionsSubscribedData}
+                                            loading={this.props.loading}
+                                        />
+                                    </div>
                                 </Col>
                                 <Col span={4} className="admin-right-column wrap-box-navigator">
                                     <Navigator selectedItem={'profileSubmissions'}/>
