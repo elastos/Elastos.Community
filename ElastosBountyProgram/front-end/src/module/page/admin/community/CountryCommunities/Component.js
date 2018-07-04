@@ -247,8 +247,7 @@ export default class extends AdminPage {
                                  className="admin-left-column wrap-box-user">
                                 <div>
                                     <Button className="ant-btn-ebp pull-right" onClick={this.showModalAddCountry} type="primary">Add country</Button>
-                                    <h3 className="without-padding">&nbsp;</h3>
-                                    <Row>
+                                    <Row className="clearfix">
                                         {listCommunitiesEl}
                                     </Row>
 

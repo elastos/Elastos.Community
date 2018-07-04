@@ -49,7 +49,6 @@ export default class extends BaseComponent {
     ord_render () {
 
         const isTaskOwner = this.props.task.createdBy._id === this.props.userId
-
         return (
             <div className="public">
                 <Row>
@@ -107,6 +106,26 @@ export default class extends BaseComponent {
                                     </Col>
                                 </Row>
                                 }
+                                {this.props.task.applicationDeadline &&
+                                <Row>
+                                    <Col span={4} className="label-col">
+                                        Application Deadline
+                                    </Col>
+                                    <Col span={20}>
+                                        {moment(this.props.task.applicationDeadline).format('MMM D, YYYY')}
+                                    </Col>
+                                </Row>
+                                }
+                                {this.props.task.completionDeadline &&
+                                <Row>
+                                    <Col span={4} className="label-col">
+                                        Completion Deadline
+                                    </Col>
+                                    <Col span={20}>
+                                        {moment(this.props.task.completionDeadline).format('MMM D, YYYY')}
+                                    </Col>
+                                </Row>
+                                }
                                 <Row>
                                     <Col span={4} className="label-col">
                                         Description
@@ -117,6 +136,16 @@ export default class extends BaseComponent {
                                         </p>
                                     </Col>
                                 </Row>
+                                {this.props.task.descBreakdown &&
+                                <Row>
+                                    <Col span={20} offset={4}>
+                                        <span className="no-info">Breakdown of Budget/Reward</span>
+                                        <p>
+                                            {this.props.task.descBreakdown}
+                                        </p>
+                                    </Col>
+                                </Row>
+                                }
                                 {this.props.task.infoLink &&
                                 <Row>
                                     <Col span={4} className="label-col">
@@ -155,28 +184,73 @@ export default class extends BaseComponent {
                                     </Col>
                                 </Row>
                                 }
-                                {this.props.task.rewardUpfront.ela > 0 &&
-                                <Row>
-                                    <Col span={4} className="label-col">
-                                        ELA Upfront
-                                    </Col>
-                                    <Col span={20}>
-                                        <p>
-                                            {this.props.task.reward.ela / 1000}
-                                        </p>
-                                    </Col>
-                                </Row>
+                                <Divider>Budget/Reward</Divider>
+                                {this.props.task.reward.isUsd ?
+                                    <div>
+                                        <Row>
+                                            <Col span={4} className="label-col">
+                                                USD Budget
+                                            </Col>
+                                            <Col span={8}>
+                                                <p>
+                                                    {this.props.task.rewardUpfront.usd / 100}
+                                                </p>
+                                            </Col>
+                                            {this.props.task.rewardUpfront.usd > 0 &&
+                                            <Col span={4} className="label-col">
+                                                ELA/USD
+                                            </Col>}
+                                            {this.props.task.rewardUpfront.usd > 0 &&
+                                            <Col span={8}>
+                                                <p>
+                                                    {this.props.task.rewardUpfront.elaPerUsd}
+                                                </p>
+                                            </Col>}
+                                        </Row>
+                                        <Row>
+                                            <Col span={4} className="label-col">
+                                                USD Reward
+                                            </Col>
+                                            <Col span={8}>
+                                                <p>
+                                                    {this.props.task.reward.usd / 100}
+                                                </p>
+                                            </Col>
+                                            {this.props.task.reward.usd > 0 &&
+                                            <Col span={4} className="label-col">
+                                                ELA/USD
+                                            </Col>}
+                                            {this.props.task.reward.usd > 0 &&
+                                            <Col span={8}>
+                                                <p>
+                                                    {this.props.task.reward.elaPerUsd}
+                                                </p>
+                                            </Col>}
+                                        </Row>
+                                    </div> :
+                                    <div>
+                                        <Row>
+                                            <Col span={4} className="label-col">
+                                                ELA Budget
+                                            </Col>
+                                            <Col span={20}>
+                                                <p>
+                                                    {this.props.task.rewardUpfront.ela / 1000}
+                                                </p>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col span={4} className="label-col">
+                                                ELA Reward
+                                            </Col>
+                                            <Col span={20}>
+                                                <p>
+                                                    {this.props.task.reward.ela / 1000}
+                                                </p>
+                                            </Col>
+                                        </Row>
+                                    </div>
                                 }
-                                <Row>
-                                    <Col span={4} className="label-col">
-                                        ELA Reward
-                                    </Col>
-                                    <Col span={20}>
-                                        <p>
-                                            {this.props.task.reward.ela / 1000}
-                                        </p>
-                                    </Col>
-                                </Row>
                             </Col>
                             {this.props.task.thumbnail &&
                             <Col span={6}>
@@ -204,18 +278,12 @@ export default class extends BaseComponent {
                                 {this.props.task.candidateSltLimit}
                             </Col>
                         </Row>
-                        <Row>
-                            <Col span={4} className="label-col">
-                                Deadline
-                            </Col>
-                            <Col span={20}>
-                                {this.props.task.applicationDeadline ?
-                                    moment(this.props.task.applicationDeadline).format(dateTimeFormat) :
-                                    'none - applicant selected when max applicants reached'
-                                }
-                            </Col>
-                        </Row>
 
+                        {/*
+                        ********************************************************************************
+                        * Attachment
+                        ********************************************************************************
+                        */}
                         {this.props.task.attachment && <div>
                             <div className="vert-gap"/>
                             <Divider>Attachment</Divider>
@@ -231,7 +299,7 @@ export default class extends BaseComponent {
                                             <Icon type="file"/>
                                         } &nbsp;
                                         {this.props.task.attachmentFilename}
-                                        </a>
+                                    </a>
                                 </Col>
                             </Row>
                         </div>}
@@ -267,6 +335,7 @@ export default class extends BaseComponent {
                                     candidateIsUserOrTeam = true
                                 }
 
+                                const isLeader = this.props.page === 'LEADER' && isTaskOwner && !candidateIsUserOrTeam
                                 // we either show the remove icon or the approved icon,
                                 // after approval the user cannot rescind their application
 
@@ -313,14 +382,21 @@ export default class extends BaseComponent {
                                 } else if (candidate.status === TASK_CANDIDATE_STATUS.APPROVED){
                                     // this should be the leader's view - they can approve applicants
                                     listItemActions.unshift(
-                                        <Tooltip title={isTaskOwner ? (candidateIsUserOrTeam ? 'you are automatically accepted' : 'candidate already accepted') : 'accepted candidate'}>
+                                        <Tooltip title={isTaskOwner ? (candidateIsUserOrTeam ? 'You are automatically accepted' : 'Candidate already accepted') : 'Accepted candidate'}>
                                             <a>✓</a>
                                         </Tooltip>)
                                 } else if (!isTaskOwner) {
                                     // awaiting approval
                                     listItemActions.unshift(
-                                        <Tooltip title="awaiting organizer/owner approval">
+                                        <Tooltip title="Awaiting organizer/owner approval">
                                             <a>o</a>
+                                        </Tooltip>)
+                                } else if (isLeader) {
+                                    listItemActions.unshift(
+                                        <Tooltip title="Accept application">
+                                            <a onClick={this.showModalAcceptApplicant.bind(this, candidate)}>
+                                                <Icon type="check-circle-o" />
+                                            </a>
                                         </Tooltip>)
                                 }
 
@@ -339,11 +415,10 @@ export default class extends BaseComponent {
                                 }
 
                                 return <List.Item actions={listItemActions}>
-                                    {this.props.page === 'LEADER' && isTaskOwner && !candidateIsUserOrTeam ?
-                                        <Tooltip title="view user info / application">
-                                            <a href="#" onClick={this.showModalAcceptApplicant.bind(this, candidate)}>{userOrTeamName}</a>
-                                        </Tooltip> :
-                                        nonOwnerLink
+                                    {isLeader ?
+                                        <Tooltip title="View application">
+                                            <a href="#" onClick={() => {this.props.history.push(`/profile/task-app/${this.props.task._id}/${candidate.user._id}`)}}>{userOrTeamName}</a>
+                                        </Tooltip> : nonOwnerLink
                                     }
                                 </List.Item>
                             }}
@@ -353,7 +428,7 @@ export default class extends BaseComponent {
                         }
 
                         {this.props.is_login &&
-                        this.props.page !== 'LEADER' &&
+                        !isTaskOwner &&
                         this.renderJoinButton.call(this)}
 
                     </Col>
@@ -409,15 +484,30 @@ export default class extends BaseComponent {
         }
 
         let buttonText = ''
-        if (this.props.task.type === TASK_TYPE.TASK) {
-            buttonText = 'Apply for Task'
-        } else {
-            buttonText = 'Apply to Help'
-        }
+        const appliedAlready = _.find(this.props.task.candidates, (candidate) => {
+            return candidate.user._id === this.props.userId
+        })
 
-        return <Button className="join-btn" onClick={this.showModalApplyTask}>
-            {buttonText}
-        </Button>
+        if (!appliedAlready) {
+            if (this.props.task.type === TASK_TYPE.TASK) {
+                buttonText = 'Apply for Task'
+            } else {
+                buttonText = 'Apply to Help'
+            }
+
+            return <Button className="join-btn" onClick={this.showModalApplyTask}>
+                {buttonText}
+            </Button>
+        } else {
+            buttonText = 'My Application'
+            const prefix = this.props.page === 'LEADER' ? '/profile' : ''
+
+            return <Button className="join-btn" onClick={this.showApplicationDetail}>
+                <a onClick={() => {this.props.history.push(`${prefix}/task-app/${this.props.task._id}/${this.props.userId}`)}}>
+                    {buttonText}
+                </a>
+            </Button>
+        }
     }
 
     /**

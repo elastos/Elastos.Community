@@ -74,7 +74,7 @@ class C extends BaseComponent {
             initialValue: user.username
         })
         const username_el = (
-            <Input size="large"/>
+            <Input size="large" disabled/>
         )
 
         const email_fn = getFieldDecorator('email', {

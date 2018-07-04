@@ -1,8 +1,7 @@
 import React from 'react'
 import StandardPage from '../../StandardPage'
 
-// TODO: proper naming scheme
-import TaskDetail from '@/module/task/Container'
+import TaskApplicationDetail from '@/module/task/application/Container'
 import Navigator from '@/module/page/shared/Navigator/Container'
 
 import config from '@/config'
@@ -30,6 +29,11 @@ export default class extends StandardPage {
     */
 
     ord_renderContent () {
+        const candidate = (!_.isEmpty(this.props.task.candidates) &&
+            this.props.task.candidates.find((candidate) => {
+                return candidate.user._id === this.props.match.params.applicantId
+            }))
+        const taskDetailLink = `/profile/task-detail/${this.props.task._id}`
 
         return (
             <div>
@@ -45,15 +49,18 @@ export default class extends StandardPage {
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>Profile</Breadcrumb.Item>
                                 <Breadcrumb.Item href="/profile/tasks">Tasks</Breadcrumb.Item>
-                                <Breadcrumb.Item>
+                                <Breadcrumb.Item href={taskDetailLink}>
                                     {this.props.task.name}
+                                </Breadcrumb.Item>
+                                <Breadcrumb.Item>
+                                    {candidate && candidate.user.username || ''}
                                 </Breadcrumb.Item>
                             </Breadcrumb>
                         </div>
-                        <div className="p_ProfileTaskDetail p_admin_content">
+                        <div className="p_ProfileTaskCandidateDetail p_admin_content">
                             <Row>
                                 <Col span={20} className="c_ProfileContainer admin-left-column wrap-box-user">
-                                    <TaskDetail task={this.props.task} />
+                                    <TaskApplicationDetail task={this.props.task} page={this.props.page} applicantId={this.props.match.params.applicantId}/>
                                 </Col>
                                 <Col span={4} className="admin-right-column wrap-box-navigator">
                                     <Navigator selectedItem={'profileTasks'} />

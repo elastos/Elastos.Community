@@ -3,12 +3,14 @@ import {TASK_STATUS, TASK_CATEGORY, TASK_TYPE} from '@/constant'
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import TaskCreateForm from '@/module/form/TaskCreateForm/Container'
-import { Col, Row, Popconfirm, Divider, Button, Spin } from 'antd'
+import { Col, Row, Popconfirm, Divider, Button, Spin, Icon } from 'antd'
 import Comments from '@/module/common/comments/Container'
 
+// TODO: admin detail should also be in a new component too to be consistent
 import TaskPublicDetail from './detail/Container'
 
 import './style.scss'
+import moment from 'moment/moment'
 
 /**
  * This has 3 views
@@ -156,91 +158,195 @@ export default class extends BaseComponent {
         return (
             <div>
                 <Row>
-                    <Col span={8} className="gridCol right-align">
+                    <Col span={8} className="grid-col right-align">
                         <h4>
                             Task Name
                         </h4>
                     </Col>
-                    <Col span={16} className="gridCol">
+                    <Col span={16} className="grid-col">
                         <h3>
                             {this.props.task.name}
                         </h3>
                     </Col>
                 </Row>
+                {/*
                 <Row>
-                <Col span={8} className="gridCol right-align">
-                Community
-                </Col>
-                <Col span={16} className="gridCol">
-                    {this.getCommunityDisp()}
-                </Col>
+                    <Col span={8} className="grid-col right-align">
+                        Community
+                    </Col>
+                    <Col span={16} className="grid-col">
+                        {this.getCommunityDisp()}
+                    </Col>
                 </Row>
+                */}
                 <Row>
-                    <Col span={8} className="gridCol right-align">
+                    <Col span={8} className="grid-col right-align">
                         Organizer
                     </Col>
-                    <Col span={16} className="gridCol">
-                        {this.props.task.createdBy.username}
+                    <Col span={16} className="grid-col">
+                        {this.props.task.createdBy && this.props.task.createdBy.username}
                     </Col>
                 </Row>
                 <Row>
-                <Col span={8} className="gridCol right-align">
+                <Col span={8} className="grid-col right-align">
                     Category
                     </Col>
-                <Col span={16} className="gridCol">
+                <Col span={16} className="grid-col">
                     {this.props.task.category}
                 </Col>
                 </Row>
                 <Row>
-                    <Col span={8} className="gridCol right-align">
+                    <Col span={8} className="grid-col right-align">
                         Type
                     </Col>
-                    <Col span={16} className="gridCol">
+                    <Col span={16} className="grid-col">
                         {this.props.task.type}
                     </Col>
                 </Row>
+                {this.props.task.applicationDeadline &&
                 <Row>
-                <Col span={8} className="gridCol right-align">
-                    Description
+                    <Col span={8} className="grid-col right-align">
+                        Application Deadline
                     </Col>
-                <Col span={16} className="gridCol">
-                    <p>
-                        {this.props.task.description ?
-                            this.props.task.description :
-                            <span className="no-info">no description</span>
-                        }
-                    </p>
-                </Col>
-                </Row>
-
-                <Divider>ELA Requested</Divider>
-
-                <Row>
-                <Col span={8} className="gridCol right-align">
-                    Upfront
-                    </Col>
-                <Col span={16} className="gridCol">
-                    {this.props.task.rewardUpfront.ela / 1000}
-                </Col>
-                </Row>
-
-                <Row>
-                    <Col span={8} className="gridCol right-align">
-                        Reward
-                    </Col>
-                    <Col span={16} className="gridCol">
-                        {this.props.task.reward.ela / 1000}
+                    <Col span={16} className="grid-col">
+                        {moment(this.props.task.applicationDeadline).format('MMM D, YYYY')}
                     </Col>
                 </Row>
+                }
+                {this.props.task.completionDeadline &&
+                <Row>
+                    <Col span={8} className="grid-col right-align">
+                        Completion Deadline
+                    </Col>
+                    <Col span={16} className="grid-col">
+                        {moment(this.props.task.completionDeadline).format('MMM D, YYYY')}
+                    </Col>
+                </Row>
+                }
+                <Row>
+                    <Col span={8} className="grid-col right-align">
+                        Description
+                        </Col>
+                    <Col span={16} className="grid-col">
+                        <p>
+                            {this.props.task.description ?
+                                this.props.task.description :
+                                <span className="no-info">no description</span>
+                            }
+                        </p>
+                    </Col>
+                </Row>
 
-                <Divider>Attachments</Divider>
+                {this.props.task.descBreakdown &&
+                <Row>
+                    <Col span={16} offset={8} className="grid-col" style={{'marginLeft': '33%'}}>
+                        <span className="no-info">Breakdown of Budget/Reward</span>
+                        <p>
+                            {this.props.task.descBreakdown}
+                        </p>
+                    </Col>
+                </Row>
+                }
+
+                <Divider>Budget/Reward</Divider>
+
+                {this.props.task.reward.isUsd ?
+                    <div>
+                        <Row>
+                            <Col span={8} className="grid-col right-align">
+                                USD Budget
+                            </Col>
+                            <Col span={4} className="grid-col">
+                                <p>
+                                    {this.props.task.rewardUpfront.usd / 100}
+                                </p>
+                            </Col>
+                            {this.props.task.rewardUpfront.usd > 0 &&
+                            <Col span={4} className="grid-col right-align">
+                                ELA/USD
+                            </Col>}
+                            {this.props.task.rewardUpfront.usd > 0 &&
+                            <Col span={8} className="grid-col">
+                                <p>
+                                    {this.props.task.rewardUpfront.elaPerUsd}
+                                </p>
+                            </Col>}
+                        </Row>
+                        <Row>
+                            <Col span={8} className="grid-col right-align">
+                                USD Reward
+                            </Col>
+                            <Col span={4} className="grid-col">
+                                <p>
+                                    {this.props.task.reward.usd / 100}
+                                </p>
+                            </Col>
+                            {this.props.task.reward.usd > 0 &&
+                            <Col span={4} className="grid-col right-align">
+                                ELA/USD
+                            </Col>}
+                            {this.props.task.reward.usd > 0 &&
+                            <Col span={8} className="grid-col">
+                                <p>
+                                    {this.props.task.reward.elaPerUsd}
+                                </p>
+                            </Col>}
+                        </Row>
+                    </div> :
+                    <div>
+                        <Row>
+                            <Col span={8} className="grid-col right-align">
+                                ELA Budget
+                            </Col>
+                            <Col span={16} className="grid-col">
+                                <p>
+                                    {this.props.task.rewardUpfront.ela / 1000}
+                                </p>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={8} className="grid-col right-align">
+                                ELA Reward
+                            </Col>
+                            <Col span={16} className="grid-col">
+                                <p>
+                                    {this.props.task.reward.ela / 1000}
+                                </p>
+                            </Col>
+                        </Row>
+                    </div>
+                }
+
+                {/*
+                ********************************************************************************
+                * Attachment
+                ********************************************************************************
+                */}
+                {this.props.task.attachment && <div>
+                    <div className="vert-gap"/>
+                    <Divider>Attachment</Divider>
+
+                    <Row>
+                        <Col span={8} className="grid-col right-align">
+                            File
+                        </Col>
+                        <Col span={16}  className="grid-col">
+                            <a target="_blank" href={this.props.task.attachment}>
+                                {this.props.task.attachmentType === 'application/pdf' ?
+                                    <Icon type="file-pdf"/> :
+                                    <Icon type="file"/>
+                                } &nbsp;
+                                {this.props.task.attachmentFilename}
+                            </a>
+                        </Col>
+                    </Row>
+                </div>}
                 <Comments type="task" canPost={true} model={this.props.task}/>
             </div>
         )
     }
 
     ord_render () {
-
         return (_.isEmpty(this.props.task) || this.props.task.loading ?
             <div class="center"><Spin size="large" /></div> :
             this.renderMain()

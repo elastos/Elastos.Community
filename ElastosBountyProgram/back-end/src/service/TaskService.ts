@@ -49,10 +49,48 @@ export default class extends Base {
                     select: sanitize
                 })
                 await db_task_candidate.getDBInstance().populate(candidate, ['team'])
+
+                for (let comment of candidate.comments) {
+                    for (let thread of comment) {
+                        await db_task.getDBInstance().populate(thread, {
+                            path: 'createdBy',
+                            select: sanitize
+                        })
+                    }
+                }
             }
         }
 
         return task
+    }
+
+    public async markComplete(param): Promise<Document> {
+        const { taskCandidateId } = param;
+
+        const db_task_candidate = this.getDBModel('Task_Candidate');
+        const updateObj = { complete: true }
+        await db_task_candidate.update({ _id: taskCandidateId }, updateObj)
+
+        const updatedTask = db_task_candidate.findById(taskCandidateId);
+        return updatedTask
+    }
+
+    public async showCandidate(param): Promise<Document> {
+        const db_task_candidate = this.getDBModel('Task_Candidate');
+        const taskCandidate = await db_task_candidate.getDBInstance().findOne({_id: param.id})
+            .populate('user', sanitize)
+            .populate('team')
+
+        for (let comment of taskCandidate.comments) {
+            for (let thread of comment) {
+                await db_task_candidate.getDBInstance().populate(thread, {
+                    path: 'createdBy',
+                    select: sanitize
+                })
+            }
+        }
+
+        return taskCandidate
     }
 
     public async list(query): Promise<Document> {
@@ -117,7 +155,7 @@ export default class extends Base {
             name, description, thumbnail, infoLink, community, communityParent, category, type, startTime, endTime,
             candidateLimit, candidateSltLimit, rewardUpfront, reward, assignSelf,
 
-            attachment, attachmentType, attachmentFilename
+            attachment, attachmentType, attachmentFilename, isUsd
         } = param;
         this.validate_name(name);
         this.validate_description(description);
@@ -127,7 +165,7 @@ export default class extends Base {
 
         let status = constant.TASK_STATUS.CREATED;
 
-        if (rewardUpfront.ela > 0 || reward.ela > 0) {
+        if (rewardUpfront.ela > 0 || reward.ela > 0 || rewardUpfront.usd > 0 || reward.usd > 0) {
             status = constant.TASK_STATUS.PENDING;
         } else {
             // if there is no ELA and you are assigning yourself,
@@ -145,13 +183,8 @@ export default class extends Base {
             attachment, attachmentType, attachmentFilename,
             candidateLimit,
             candidateSltLimit,
-            rewardUpfront: {
-                ela: rewardUpfront.ela
-            },
-            reward : {
-                ela : reward.ela,
-                votePower : reward.votePower
-            },
+            rewardUpfront: rewardUpfront,
+            reward : reward,
             assignSelf: assignSelf,
             status : status,
             createdBy : this.currentUser._id
@@ -188,10 +221,10 @@ export default class extends Base {
 
         const db_task = this.getDBModel('Task');
 
-        this.sendCreateEmail(this.currentUser, doc)
-
         console.log('create task => ', doc);
         const task = await db_task.save(doc);
+
+        this.sendCreateEmail(this.currentUser, task)
 
         // if assignSelf = true, we add self as the candidate
         if (assignSelf) {
@@ -206,6 +239,8 @@ export default class extends Base {
      *
      * TODO: move status change triggers to a separate function
      *
+     * TODO: no security to check if u own the task if you are leader
+     *
      * @param param
      * @returns {Promise<boolean>}
      */
@@ -217,6 +252,9 @@ export default class extends Base {
 
             attachment, attachmentType, attachmentFilename
         } = param;
+
+        // we need to set this for the end of the fn so we have the updated task
+        let sendTaskPendingRequiredApprovalEmail = false
 
         if (!this.currentUser || !this.currentUser._id) {
             return
@@ -287,12 +325,13 @@ export default class extends Base {
 
             // reward should only change if ela amount changed from 0 to > 0
             if ((task.reward.ela === 0 && task.rewardUpfront.ela === 0) &&
-                (rewardUpfront && rewardUpfront.ela > 0) || (reward && reward.ela > 0)
+                (rewardUpfront && (rewardUpfront.ela > 0 || rewardUpfront.usd > 0)) ||
+                (reward && (reward.ela > 0 || reward.usd > 0))
             ) {
                 // TODO: send notification to admin
                 updateObj.status = constant.TASK_STATUS.PENDING;
 
-                await this.sendTaskPendingEmail(this.currentUser, task)
+                sendTaskPendingRequiredApprovalEmail = true
             }
         }
 
@@ -342,10 +381,14 @@ export default class extends Base {
 
         await db_task.update({_id: taskId}, updateObj)
 
-        let updatedTask = db_task.findById(taskId);
+        let updatedTask = await db_task.findById(taskId);
 
         // post update checks
         // TODO: if reward changed to 0, force status to CREATED
+
+        if (sendTaskPendingRequiredApprovalEmail) {
+            await this.sendTaskPendingEmail(this.currentUser, updatedTask)
+        }
 
         return updatedTask
     }
@@ -621,14 +664,25 @@ export default class extends Base {
 
     }
 
-    public async sendCreateEmail(curUser, doc) {
+    /**
+     * This is PENDING status if there is ELA > 0
+     *
+     * @param curUser
+     * @param task
+     * @returns {Promise<void>}
+     */
+    public async sendCreateEmail(curUser, task) {
 
-        let subject = 'New Task Created: ' + doc.name;
-        let body = `${this.currentUser.profile.firstName} ${this.currentUser.profile.lastName} has created the task ${doc.name}`
+        let subject = 'New Task Created: ' + task.name;
+        let body = `${this.currentUser.profile.firstName} ${this.currentUser.profile.lastName} has created the task ${task.name}`
 
-        if (doc.status === constant.TASK_STATUS.PENDING) {
+        if (task.status === constant.TASK_STATUS.PENDING) {
             subject = 'ACTION REQUIRED: ' + subject
-            body += ' and it requires approval'
+            body += ` and it requires approval
+                    <br/>
+                    <br/>
+                    <a href="${process.env.SERVER_URL}/admin/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
+                    `
         }
 
         const adminUsers = await this.getAdminUsers()
@@ -643,14 +697,18 @@ export default class extends Base {
         }
     }
 
-    public async sendTaskPendingEmail(curUser, doc) {
+    public async sendTaskPendingEmail(curUser, task) {
 
-        let subject = 'Task ELA Reward Changed: ' + doc.name;
-        let body = `${this.currentUser.profile.firstName} ${this.currentUser.profile.lastName} has changed the ELA reward for task ${doc.name}`
+        let subject = 'Task ELA Reward Changed: ' + task.name;
+        let body = `${this.currentUser.profile.firstName} ${this.currentUser.profile.lastName} has changed the ELA reward for task ${task.name}`
 
-        if (doc.status === constant.TASK_STATUS.PENDING) {
+        if (task.status === constant.TASK_STATUS.PENDING) {
             subject = 'ACTION REQUIRED: ' + subject
-            body += ' and it requires approval'
+            body += ` and it requires approval
+                    <br/>
+                    <br/>
+                    <a href="${process.env.SERVER_URL}/admin/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
+                    `
         }
 
         const adminUsers = await this.getAdminUsers()
@@ -680,13 +738,20 @@ export default class extends Base {
      *
      * @param curUser
      * @param taskOwner
-     * @param doc
+     * @param task
      * @returns {Promise<void>}
      */
-    public async sendAddCandidateEmail(curUser, taskOwner, doc) {
+    public async sendAddCandidateEmail(curUser, taskOwner, task) {
 
-        let ownerSubject = `A candidate has applied for your task - ${doc.name}`
-        let ownerBody = `${curUser.profile.firstName} ${curUser.profile.lastName} has applied for your task ${doc.name}<br/>Please review their application`
+        let ownerSubject = `A candidate has applied for your task - ${task.name}`
+        let ownerBody = `
+            ${curUser.profile.firstName} ${curUser.profile.lastName} has applied for your task ${task.name}
+            <br/>
+            Please review their application
+            <br/>
+            <br/>
+            <a href="${process.env.SERVER_URL}/profile/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
+            `
         let ownerTo = taskOwner.email
         let ownerToName = `${taskOwner.profile.firstName} ${taskOwner.profile.lastName}`
 
@@ -697,7 +762,7 @@ export default class extends Base {
             body: ownerBody
         })
 
-        let candidateSubject = `Your application for task ${doc.name} has been received`
+        let candidateSubject = `Your application for task ${task.name} has been received`
         let candidateBody = `Thank you, the task owner ${taskOwner.profile.firstName} ${taskOwner.profile.lastName} will review your application and be in contact`
         let candidateTo = curUser.email
         let candidateToName = `${curUser.profile.firstName} ${curUser.profile.lastName}`
@@ -713,7 +778,12 @@ export default class extends Base {
     public async sendTaskApproveEmail(curUser, taskOwner, task) {
 
         let ownerSubject = `Your task proposal - ${task.name} has been approved`
-        let ownerBody = `${curUser.profile.firstName} ${curUser.profile.lastName} has approved your task proposal ${task.name}`
+        let ownerBody = `
+            ${curUser.profile.firstName} ${curUser.profile.lastName} has approved your task proposal ${task.name}
+            <br/>
+            <br/>
+            <a href="${process.env.SERVER_URL}/profile/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
+            `
         let ownerTo = taskOwner.email
         let ownerToName = `${taskOwner.profile.firstName} ${taskOwner.profile.lastName}`
 

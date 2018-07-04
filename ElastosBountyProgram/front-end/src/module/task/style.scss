@@ -2,7 +2,19 @@
 @import '../../style/variable';
 @import '../../style/color';
 
-.c_TaskDetail {
+.c_ProfileContainer {
+  .applicants {
+    .ant-list-item:not(.active) {
+      a {
+        color: $text_light_gray;
+      }
+    }
+  }
+}
+
+.c_TaskDetail,
+.p_TaskApplication,
+.c_ProfileContainer {
 
   margin-top: $gap_1;
 
@@ -10,13 +22,17 @@
     margin-right: $gap_0;
   }
 
-  .gridCol {
+  .grid-col {
     padding: 0 $gap_2;
     margin: $gap_0 0;
   }
 
   .form-wrapper {
     padding: $gap_2 0;
+  }
+
+  p {
+    white-space: pre-line;
   }
 
   .public {
@@ -58,9 +74,8 @@
       .join-btn {
         position: absolute;
         bottom: 0;
-        left: 0;
-        width: 45%;
-        margin: 0 25% 0 30%;
+        left: 20%;
+        width: 60%;
       }
     }
   }

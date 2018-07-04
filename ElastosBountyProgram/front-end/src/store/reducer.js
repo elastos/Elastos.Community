@@ -26,5 +26,5 @@ export default combineReducers({
     user: user.getReducer(),
     community: community.getReducer(),
     member: member.getReducer(),
-    submission: submission.getReducer()
+    submission: submission.getReducer(),
 })

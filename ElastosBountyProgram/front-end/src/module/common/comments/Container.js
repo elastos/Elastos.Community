@@ -18,9 +18,9 @@ export default createContainer(Component, (state) => {
     const taskService = new TaskService()
 
     return {
-        async postComment(type, parentId, comment) {
+        async postComment(type, reduxType, detailReducer, parentId, comment) {
             try {
-                const rs = await commentService.postComment(type, parentId, comment)
+                const rs = await commentService.postComment(type, reduxType, detailReducer, parentId, comment)
 
                 if (rs) {
                     message.success('Your comment has been posted.');
@@ -28,10 +28,6 @@ export default createContainer(Component, (state) => {
             } catch (err) {
                 message.error(err.message)
             }
-        },
-
-        async get(type, parentId) {
-            return commentService.get(type, parentId)
         },
 
         async getTaskDetail(taskId) {

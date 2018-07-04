@@ -7,6 +7,7 @@ import update from './update';
 import addCandidate from './add_candidate';
 import removeCandidate from './remove_candidate';
 import acceptCandidate from './accept_candidate';
+import markComplete from './mark_complete';
 import comment from './comment';
 
 export default Base.setRouter([
@@ -45,6 +46,11 @@ export default Base.setRouter([
         path : '/acceptCandidate',
         router : acceptCandidate,
         method : 'post'
+    },
+    {
+        path: '/markTaskComplete',
+        router: markComplete,
+        method: 'post'
     },
     {
         path : '/:id/comment',

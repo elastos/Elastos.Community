@@ -81,7 +81,13 @@ export default class extends AdminPage {
             filters: [
                 {text: 'Created', value: TASK_STATUS.CREATED},
                 {text: 'Pending', value: TASK_STATUS.PENDING},
-                {text: 'Approved', value: TASK_STATUS.APPROVED}
+                {text: 'Assigned', value: TASK_STATUS.ASSIGNED},
+                {text: 'Approved', value: TASK_STATUS.APPROVED},
+                {text: 'Submitted', value: TASK_STATUS.SUBMITTED},
+                {text: 'Success', value: TASK_STATUS.SUCCESS},
+                {text: 'Distributed', value: TASK_STATUS.DISTRIBUTED},
+                {text: 'Cancled', value: TASK_STATUS.CANCELED},
+                {text: 'Expired', value: TASK_STATUS.EXPIRED}
             ],
             filteredValue: filteredInfo.status || null,
             onFilter: (value, record) => record.status.includes(value),

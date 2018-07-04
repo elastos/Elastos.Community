@@ -11,7 +11,7 @@ export default class extends Base {
         } = param
 
         const db_commentable = this.getDBModel(type)
-        const commentable = await db_commentable.getDBInstance().findOne({_id: id})
+        let commentable = await db_commentable.getDBInstance().findOne({_id: id})
             .populate('createdBy')
 
         if (commentable) {
@@ -24,7 +24,19 @@ export default class extends Base {
                 createdAt
             })
 
-            this.sendNotificationEmail(type, param, createdBy, commentable.createdBy)
+            if (commentable.createdBy) {
+                this.sendNotificationEmail(type, param, createdBy, commentable.createdBy, null)
+            } else {
+                commentable = await db_commentable.getDBInstance().findOne({_id: id})
+                    .populate('createdBy')
+                    .populate('user')
+
+                const db_task = this.getDBModel('Task')
+                const task = await db_task.getDBInstance().findOne({_id: commentable.task.toString()})
+                    .populate('createdBy')
+
+                this.sendNotificationEmail('Application', param, createdBy, task.createdBy, commentable.user)
+            }
 
             return await db_commentable.update({_id: id}, updateObj)
         } else {
@@ -32,8 +44,8 @@ export default class extends Base {
         }
     }
 
-    public async sendNotificationEmail(type, param, curUser, owner) {
-        if (curUser.current_user_id === owner._id) {
+    public async sendNotificationEmail(type, param, curUser, owner, notifier) {
+        if (curUser.current_user_id === owner._id.toString() && !notifier) {
             return; // Dont notify about own comments
         }
 
@@ -43,8 +55,10 @@ export default class extends Base {
 
         let ownerSubject = `Someone has commented on your ${type}`
         let ownerBody = `${curUser.profile.firstName} ${curUser.profile.lastName} says:<br/>${comment}`
-        let ownerTo = owner.email
-        let ownerToName = `${owner.profile.firstName} ${owner.profile.lastName}`
+
+        const recipient = notifier || owner
+        let ownerTo = recipient.email
+        let ownerToName = `${recipient.profile.firstName} ${recipient.profile.lastName}`
 
         await mail.send({
             to: ownerTo,

@@ -151,7 +151,8 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row d_rowTop">
-                        <Col md={{span:24}} lg={{span: 16}} className="d_leftContainer d_box">
+                        {/*md={{span:24}} lg={{span: 16}}*/}
+                        <Col span={24} className="d_leftContainer d_box">
                             <div>
                                 {filterCommunityEl}
                             </div>
@@ -174,6 +175,7 @@ export default class extends StandardPage {
                                 loading={this.props.loading}
                             />
                         </Col>
+                        {/*
                         <Col md={{span:24}} lg={{span: 8}} className="d_rightContainer d_box d_communities">
                             <div className="pull-left">
                                 <h3>
@@ -206,6 +208,7 @@ export default class extends StandardPage {
                                 }}
                             />
                         </Col>
+                        */}
                     </Row>
                     <div className="horizGap">
 

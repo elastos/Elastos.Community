@@ -15,16 +15,26 @@ export const TaskOutput = {
  */
 export const TaskUpfront = {
     ela : Number,
+    usd: Number,
 
-    elaDisbursed: Number
+    elaDisbursed: Number,
+
+    elaPerUsd: Number,
+    isUsd: Boolean
 }
 
+// we should keep isUsd here in case we allow in the future
+// a budget in USD and payment in ELA
 export const TaskReward = {
     ela : Number,
+    usd: Number,
 
     // if ELA reward is allocated to sub-tasks (v1.5)
     elaDisbursed: Number,
-    votePower : Number
+    votePower : Number,
+
+    elaPerUsd: Number,
+    isUsd: Boolean
 };
 
 export const TaskCandidate = {
@@ -43,10 +53,14 @@ export const TaskCandidate = {
 
     applyMsg: String,
 
+    complete: Boolean,
+
     // this is the admin that approved the candidate
     approvedBy: Schema.Types.ObjectId,
 
-    output : TaskOutput
+    output : TaskOutput,
+
+    comments: [[CommentSchema]]
 };
 
 export const TaskActivity = {
@@ -63,6 +77,7 @@ export const TaskActivity = {
  *
  */
 export const Task = {
+
     name : {
         type : String,
         required : true
@@ -71,6 +86,7 @@ export const Task = {
         type : String,
         required : true
     },
+    descBreakdown: String,
 
     thumbnail : {
         type : String
@@ -129,7 +145,7 @@ export const Task = {
     // or CANCELED if there are no candidates
     applicationDeadline: Date,
 
-    // TODO: after this date, if the task is not marked
+    // TODO: after this date, if the task is not marked SUBMITTED it becomes CANCELED
     completionDeadline: Date,
 
     /*
