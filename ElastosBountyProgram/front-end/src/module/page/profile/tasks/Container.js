@@ -7,8 +7,6 @@ import _ from 'lodash'
 import {USER_ROLE, TASK_STATUS, TASK_CANDIDATE_STATUS} from '@/constant'
 
 export default createContainer(Component, (state) => {
-
-
     const currentUserId = state.user.current_user_id
     const taskState = {
         ...state.task,
@@ -24,8 +22,8 @@ export default createContainer(Component, (state) => {
 
 
     taskState.filter = state.task.filter || {}
-
     taskState.owned_tasks = []
+    taskState.subscribed_tasks = []
 
     // tasks I am candidate of and waiting approval
     taskState.candidate_pending_tasks = []
@@ -35,6 +33,9 @@ export default createContainer(Component, (state) => {
 
     if (taskState.all_tasks.length) {
         for (let task of taskState.all_tasks) {
+            if (_.find(task.subscribers, { _id: state.user.current_user_id })) {
+                taskState.subscribed_tasks.push(task)
+            }
 
             if (task.createdBy._id === currentUserId) {
                 taskState.owned_tasks.push(task)

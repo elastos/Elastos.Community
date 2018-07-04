@@ -22,10 +22,11 @@ export default class extends StandardPage {
     }
 
     ord_renderContent () {
-
         const tasksActiveData = this.props.candidate_active_tasks
         const tasksPendingData = this.props.candidate_pending_tasks
         const tasksOwnedData = this.props.owned_tasks
+        const tasksSubscribedData = this.props.subscribed_tasks
+
         const columns = [{
             title: 'Name',
             dataIndex: 'name',
@@ -192,6 +193,17 @@ export default class extends StandardPage {
                                         />
                                     </div>
                                     }
+
+                                    <div>
+                                        <Divider>Subscribed Tasks</Divider>
+
+                                        <Table
+                                            columns={ownedColumns}
+                                            rowKey={(item) => item._id}
+                                            dataSource={tasksSubscribedData}
+                                            loading={this.props.loading}
+                                        />
+                                    </div>
                                 </Col>
                                 <Col span={4} className="admin-right-column wrap-box-navigator">
                                     <Navigator selectedItem={'profileTasks'}/>
