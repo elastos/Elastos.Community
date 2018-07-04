@@ -5,6 +5,7 @@ import create from './create';
 import list from './list';
 import update from './update';
 import comment from './comment';
+import subscribe fromm './subscribe';
 
 export default Base.setRouter([
 
@@ -31,6 +32,11 @@ export default Base.setRouter([
     {
         path : '/:id/comment',
         router : comment,
+        method : 'post'
+    },
+    {
+        path : '/:id/subscribe',
+        router : subscribe,
         method : 'post'
     }
 ]);
