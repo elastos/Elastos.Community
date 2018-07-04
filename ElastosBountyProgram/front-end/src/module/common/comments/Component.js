@@ -110,6 +110,7 @@ class C extends BaseComponent {
         const p = this.getInputProps()
         const subscribeButton = this.getSubscribeButton()
 
+        // TODO - canSubscribe requires canPost here, could be improved
         return this.props.canPost ?
             (<Form onSubmit={this.handleSubmit.bind(this)} className="c_commentForm">
                 <FormItem>
