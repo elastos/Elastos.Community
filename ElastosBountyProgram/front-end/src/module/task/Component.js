@@ -27,9 +27,9 @@ export default class extends BaseComponent {
         taskId && this.props.getTaskDetail(taskId)
     }
 
-    componentWillUnmount() {
-        this.props.resetTaskDetail()
-    }
+    // componentWillUnmount() {
+    //     this.props.resetTaskDetail()
+    // }
 
     renderMain() {
         return (
