@@ -151,8 +151,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row d_rowTop">
-                        {/*md={{span:24}} lg={{span: 16}}*/}
-                        <Col span={24} className="d_leftContainer d_box">
+                        <Col md={{span:24}} lg={{span: 16}} className="d_leftContainer d_box">
                             <div>
                                 {filterCommunityEl}
                             </div>
@@ -175,7 +174,6 @@ export default class extends StandardPage {
                                 loading={this.props.loading}
                             />
                         </Col>
-                        {/*
                         <Col md={{span:24}} lg={{span: 8}} className="d_rightContainer d_box d_communities">
                             <div className="pull-left">
                                 <h3>
@@ -208,7 +206,6 @@ export default class extends StandardPage {
                                 }}
                             />
                         </Col>
-                        */}
                     </Row>
                     <div className="horizGap">
 
@@ -322,7 +319,7 @@ export default class extends StandardPage {
             const communityId = values['community'][values['community'].length - 1];
             this.props.addMemberToCommunity(this.props.currentUserId, communityId).then(() => {
                 message.success('You was added to the community. Thanks!')
-                
+
                 // Reload my communities
                 this.props.getMyCommunities(this.props.currentUserId)
             }).catch((err) => {

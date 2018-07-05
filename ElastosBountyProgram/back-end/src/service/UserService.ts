@@ -115,8 +115,6 @@ export default class extends Base {
         let user = await db_user.findById(userId)
         let countryChanged = false
 
-        debugger
-
         if (!user) {
             throw `userId: ${userId} not found`
         }
