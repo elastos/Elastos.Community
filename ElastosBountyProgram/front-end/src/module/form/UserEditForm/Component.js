@@ -287,12 +287,6 @@ class C extends BaseComponent {
                         <FormItem label="Country" {...formItemLayout}>
                             {p.country}
                         </FormItem>
-                        <FormItem label="State/Province" {...formItemLayout}>
-                            {p.state}
-                        </FormItem>
-                        <FormItem label="City" {...formItemLayout}>
-                            {p.city}
-                        </FormItem>
                         <FormItem label="Do you want to an organizer" {...formItemLayout}>
                             {p.organizer}
                         </FormItem>
