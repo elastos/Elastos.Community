@@ -26,8 +26,7 @@ export default class extends Base {
         const communityService = this.buildService(CommunityService);
         const rs = await communityService.index({
             query: {
-                type: constant.COMMUNITY_TYPE.COUNTRY,
-                leaderIds: { $exists: true, $ne: [] }
+                type: constant.COMMUNITY_TYPE.COUNTRY
             }
         });
 

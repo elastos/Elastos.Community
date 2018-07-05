@@ -559,7 +559,7 @@ export default class extends BaseComponent {
         // TODO: throwing an error in pushCandidate doesn't seem to trigger the catch error block
         this.props.pushCandidate(taskId, userId, teamId, applyMsg).then((result) => {
             if (result) {
-                message.success('You have applied, you will be contacted if approved', 7)
+                message.success('You have applied, you will be contacted if approved')
             }
 
         }).catch((err) => {
@@ -600,7 +600,7 @@ export default class extends BaseComponent {
         this.handleCancelModalAcceptApplicant()
 
         this.props.acceptCandidate(taskCandidateId).then((result) => {
-            message.success('Applicant has been accepted and contacted', 7)
+            message.success('Applicant has been accepted and contacted')
 
             let acceptedCnt = this.state.acceptedCnt
 

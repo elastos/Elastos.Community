@@ -25,8 +25,8 @@ export default class extends Base {
             parentCommunityId,
             geolocation,
             type,
-            leaderIds : this.param_leaderIds(leaderIds),
-            createdBy : this.currentUser._id
+            leaderIds: this.param_leaderIds(leaderIds),
+            createdBy: this.currentUser ? this.currentUser._id : null
         };
 
         return await db_community.save(doc);
@@ -131,6 +131,9 @@ export default class extends Base {
      * Add member to Community
      *
      * @param param
+     * @param.userId
+     * @param.communityId
+     *
      * @returns {Promise<boolean>}
      */
     public async addMember(param): Promise<boolean> {
@@ -143,7 +146,7 @@ export default class extends Base {
         });
 
         if (tmp) {
-            throw 'user is exist';
+            throw 'user already belongs to community';
         }
 
         await db_user_community.save({

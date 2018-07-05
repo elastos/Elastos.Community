@@ -130,29 +130,12 @@ export default class extends BaseComponent {
                         <img src={this.getAvatarUrl(this.props.user.profile)} class="user-avatar"/>
                     </Col>
                 </Row>
-
                 <Row>
                     <Col span={8} className="gridCol right-align">
                         Country
                     </Col>
                     <Col span={16} className="gridCol">
                         {this.getCountryName(this.props.user.profile.country)}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={8} className="gridCol right-align">
-                        State/Province
-                    </Col>
-                    <Col span={16} className="gridCol">
-                        {this.props.user.profile.state}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={8} className="gridCol right-align">
-                        City
-                    </Col>
-                    <Col span={16} className="gridCol">
-                        {this.props.user.profile.city}
                     </Col>
                 </Row>
                 <Row>
