@@ -71,6 +71,11 @@ export default class extends Base {
         const query:any = param.query || {};
 
         if (param.communityHasUser) {
+
+            if (param.communityHasUser === 'null') {
+                param.communityHasUser = null
+            }
+
             const userCommunities = await db_user_community.find({
                 userId: param.communityHasUser
             })
