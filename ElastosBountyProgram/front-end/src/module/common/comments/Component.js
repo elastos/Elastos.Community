@@ -93,7 +93,7 @@ class C extends BaseComponent {
         if (this.isUserSubscribed()) {
             return (
                 <Button className="ant-btn-ebp pull-left" size="small"
-                    onClick={this.unsubscribe.bind(this)} loading={this.props.loading}>
+                    onClick={this.unsubscribe.bind(this)} loading={this.props.loading[this.props.type]}>
                     Unsubscribe
                 </Button>
             )
@@ -101,7 +101,7 @@ class C extends BaseComponent {
 
         return this.props.canSubscribe ?
             (<Button className="ant-btn-ebp pull-left" size="small"
-                onClick={this.subscribe.bind(this)} loading={this.props.loading}>
+                onClick={this.subscribe.bind(this)} loading={this.props.loading[this.props.type]}>
                 Subscribe
             </Button>) : null
     }
@@ -119,7 +119,7 @@ class C extends BaseComponent {
                 <FormItem>
                     {subscribeButton}
                     <Button className="ant-btn-ebp pull-right" type="primary" size="small"
-                        htmlType="submit" loading={this.props.loading}>
+                        htmlType="submit" loading={this.props.loading[this.props.type]}>
                         Post
                     </Button>
                 </FormItem>
