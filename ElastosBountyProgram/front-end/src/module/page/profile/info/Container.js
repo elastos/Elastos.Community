@@ -6,19 +6,6 @@ import { message } from 'antd/lib/index'
 export default createContainer(Component, (state) => {
 
     return {
-        user: state.user,
-        loading: false
-    }
-}, () => {
-
-    return {
-        async getCurrentUser() {
-
-            try {
-                const rs = await userService.getCurrentUser()
-            } catch (err) {
-                message.error(err.message)
-            }
-        }
+        user: state.user
     }
 })

@@ -6,9 +6,14 @@ import SubmissionService from '@/service/SubmissionService'
 import {message} from 'antd'
 
 export default createContainer(Component, (state) => {
+
+    debugger
+
     return {
         task: state.task.detail,
         submission: state.submission.detail,
+
+        // passed in through item - BUG here with loading state
         loading: state.task.loading || state.submission.loading,
         currentUserId: state.user.current_user_id
     }
