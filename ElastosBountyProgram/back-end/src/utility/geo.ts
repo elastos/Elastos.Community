@@ -193,7 +193,7 @@ const geo = {
         re: 'Reunion',
         ro: 'Romania',
         rs: 'Serbia',
-        ru: 'Russian Federation',
+        ru: 'Russia',
         rw: 'Rwanda',
         sa: 'Saudi Arabia',
         sb: 'Solomon Islands',

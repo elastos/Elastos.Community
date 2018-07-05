@@ -51,10 +51,11 @@ export default abstract class {
         return await this.db.create(doc);
     }
 
+    // BUG: seems we can't chain sort on the result
     public async find(query, opts?): Promise<Document[]>{
         const option = this.buildFindOptions(opts);
         const reject_fields = option.reject ? this.reject_fields : {};
-        const res = await this.db.find(query, reject_fields);
+        let res = await this.db.find(query, reject_fields);
         return res
     }
 

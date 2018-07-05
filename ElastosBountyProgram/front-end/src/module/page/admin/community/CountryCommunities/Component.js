@@ -134,12 +134,12 @@ export default class extends AdminPage {
             })
         })
     }
-    
+
     getCommunityIdByGeolocation(geolocation) {
         const community = _.find(this.state.communities, {
             geolocation: geolocation
         })
-        
+
         if (community) {
             return community._id
         }
@@ -192,14 +192,18 @@ export default class extends AdminPage {
                 <Col span={6} key={index} className="user-card">
                     <Link to={'/admin/community/' + community._id  + '/country/' + community.geolocation}>
                         <Card title={community.name}>
-                            <List
+                            {community.leaders.length ?
+                                <p className="text-light-gray">Has Organizer(s)</p> :
+                                <p className="highlight-text">Needs an Organizer</p>
+                            }
+                            {/*<List
                                 dataSource={community.leaders}
                                 renderItem={item => (
                                     <List.Item className="organizerListItem">
                                         <table>
                                             <tbody>
                                             <tr>
-                                                <td>
+                                                <td className="avatar">
                                                     <Avatar size="large" icon="user" src={item.profile.avatar}/>
                                                 </td>
                                                 <td>
@@ -211,6 +215,7 @@ export default class extends AdminPage {
                                     </List.Item>
                                 )}
                             />
+                            */}
                         </Card>
                     </Link>
                 </Col>

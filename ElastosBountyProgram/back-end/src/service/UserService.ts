@@ -320,7 +320,8 @@ export default class extends Base {
             countryCommunity = await communityService.create({
                 name: geo.geolocationMap[user.profile.country],
                 type: constant.COMMUNITY_TYPE.COUNTRY,
-                geolocation: user.profile.country
+                geolocation: user.profile.country,
+                parentCommunityId: null
             })
 
         }

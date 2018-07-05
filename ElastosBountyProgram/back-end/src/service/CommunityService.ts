@@ -78,7 +78,7 @@ export default class extends Base {
             query._id = {$in: _.map(userCommunities, 'communityId')}
         }
 
-        return await db_community.find(query);;
+        return await db_community.getDBInstance().find(query).sort({name: 1})
     }
 
     /**

@@ -88,12 +88,12 @@ export default class extends StandardPage {
             })
         })
     }
-    
+
     getCommunityIdByGeolocation(geolocation) {
         const community = _.find(this.state.communities, {
             geolocation: geolocation
         })
-        
+
         if (community) {
             return community._id
         }
@@ -146,7 +146,7 @@ export default class extends StandardPage {
                 <div key={index}>
                     {community.leaders && community.leaders.map((leader) => {
                         return (
-                            <Col md={{span:12}} lg={{span: 3}} key={index} className="user-card">
+                            <Col md={{span:12}} lg={{span: 3}} key={index + '-' + leader._id} className="user-card public-communities-page">
                                 <Link to={'/community/' + community._id  + '/country/' + community.geolocation}>
                                     <Card
                                         key={index}
