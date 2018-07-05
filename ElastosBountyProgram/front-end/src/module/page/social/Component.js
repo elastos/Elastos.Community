@@ -171,7 +171,7 @@ export default class extends StandardPage {
                                 columns={columns}
                                 rowKey={(item) => item._id}
                                 dataSource={eventData}
-                                loading={this.props.loading}
+                                loading={this.props.task_loading}
                             />
                         </Col>
                         <Col md={{span:24}} lg={{span: 8}} className="d_rightContainer d_box d_communities">
@@ -197,6 +197,7 @@ export default class extends StandardPage {
                             <List
                                 size="small"
                                 dataSource={this.props.myCommunities}
+                                loading={this.props.loading}
                                 renderItem={(community) => {
                                     return <List.Item>
                                         <a onClick={this.filterByMyCommunity.bind(this, community)}>
@@ -230,7 +231,7 @@ export default class extends StandardPage {
                                 columns={columns}
                                 rowKey={(item) => item._id}
                                 dataSource={availTasksData}
-                                loading={this.props.loading}
+                                loading={this.props.task_loading}
                             />
                         </Col>
                         <Col md={{span:24}} lg={{span: 8}} className="d_rightContainer d_box">

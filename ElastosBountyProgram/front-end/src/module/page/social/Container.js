@@ -63,6 +63,12 @@ export default createContainer(Component, (state) => {
         taskState.myCommunities = _.values(state.community.my_communities)
     }
 
+    taskState.loading = state.task.loading || state.community.loading || state.user.loading
+
+    taskState.task_loading = state.task.loading
+    taskState.community_loading = state.community.loading
+    taskState.user_loading = state.user.loading
+
     return taskState
 
 }, () => {

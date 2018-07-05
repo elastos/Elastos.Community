@@ -6,7 +6,7 @@ import {TASK_CANDIDATE_STATUS, TASK_STATUS} from '@/constant'
 
 export default class extends BaseService {
 
-    async list(filter={}){
+    async list(filter = {}) {
         const result = await api_request({
             path: '/api/task/list',
             method: 'get',

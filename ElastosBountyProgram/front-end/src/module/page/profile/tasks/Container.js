@@ -11,7 +11,6 @@ export default createContainer(Component, (state) => {
     const taskState = {
         ...state.task,
         currentUserId,
-        loading: false,
         is_leader: state.user.role === USER_ROLE.LEADER,
         is_admin: state.user.role === USER_ROLE.ADMIN
     }
