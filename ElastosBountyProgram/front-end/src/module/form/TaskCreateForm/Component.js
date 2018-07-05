@@ -55,6 +55,7 @@ class C extends BaseComponent {
     componentDidMount() {
         const taskId = this.props.match.params.taskId
         taskId && this.props.getTaskDetail(taskId)
+        this.getCommunityTrees()
     }
 
     componentWillUnmount() {
@@ -382,10 +383,6 @@ class C extends BaseComponent {
         }
     }
 
-    componentDidMount() {
-        this.getCommunityTrees()
-    }
-
     getCommunityTrees() {
         this.props.getAllCommunities().then((communityTrees) => {
             this.setState({
@@ -463,6 +460,7 @@ class C extends BaseComponent {
                         <FormItem label="Community"  {...formItemLayout}>
                             {p.taskCommunity}
                         </FormItem>
+                        {/*
                         <FormItem label="Thumbnail" {...formItemLayout}>
                             {p.thumbnail}
                         </FormItem>
