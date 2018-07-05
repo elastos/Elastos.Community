@@ -11,6 +11,7 @@ export default createContainer(Component, (state) => {
         submission: state.submission.detail,
         loading: {
             task: state.task.loading,
+            taskCandidate: state.task.loading,
             submission: state.submission.loading,
         },
         currentUserId: state.user.current_user_id
