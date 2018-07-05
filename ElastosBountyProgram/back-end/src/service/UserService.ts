@@ -112,10 +112,17 @@ export default class extends Base {
 
         const db_user = this.getDBModel('User');
 
-        const user = await db_user.findById(userId)
+        let user = await db_user.findById(userId)
+        let countryChanged = false
+
+        debugger
 
         if (!user) {
             throw `userId: ${userId} not found`
+        }
+
+        if (param.profile.country !== user.profile.country) {
+            countryChanged = true
         }
 
         if (param.profile) {
@@ -126,13 +133,17 @@ export default class extends Base {
             updateObj.email = param.email
         }
 
-        if (param.username) {
-            updateObj.username = param.username
-        }
-
         await db_user.update({_id: userId}, updateObj)
 
-        return db_user.findById(userId)
+        user = await db_user.findById(userId)
+
+        // if we change the country, we add the new country as a community if not already
+        // keep the old one too - TODO: think through this logic, maybe we only keep the old one if the new one already exists
+        if (countryChanged) {
+            await this.linkCountryCommunity(user)
+        }
+
+        return user
     }
 
     public async findUser(query): Promise<Document>{
@@ -305,8 +316,6 @@ export default class extends Base {
             type: constant.COMMUNITY_TYPE.COUNTRY,
             geolocation: user.profile.country
         })
-
-        debugger
 
         if (!countryCommunity) {
             // create the country then attach

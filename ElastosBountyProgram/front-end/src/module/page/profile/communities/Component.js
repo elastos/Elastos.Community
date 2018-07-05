@@ -43,6 +43,7 @@ export default class extends StandardPage {
             key: 'actions',
             className: 'right-align',
             render: (id, record) => {
+                // cannot leave profile country
                 if (this.props.profileCountry === record.geolocation) {
                     return
                 }
