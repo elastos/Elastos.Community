@@ -96,7 +96,7 @@ class C extends BaseComponent {
 
             attachment_url: (props.existingTask && props.existingTask.attachment) || null,
             attachment_loading: false,
-            attachment_filename: (props.existingTask && props.existingTask.attachmentFilename )|| '',
+            attachment_filename: (props.existingTask && props.existingTask.attachmentFilename) || '',
             attachment_type: '',
 
             removeAttachment: false,
