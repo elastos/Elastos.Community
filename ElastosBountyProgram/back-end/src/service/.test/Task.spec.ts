@@ -163,4 +163,8 @@ describe('Tests for Tasks', () => {
 
         // expect EVP to be logged for all allocations
     })
+
+    test('Approval should send an email to owner + all admins too', async () => {
+        // TODO
+    })
 });

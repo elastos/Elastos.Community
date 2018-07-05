@@ -47,15 +47,11 @@ export default class extends StandardPage {
 
     getAvatarUrl(users) {
         const avatarDefault = {
-            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png',
-            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Other.png',
-            [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png',
+            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png'
         };
 
         users.forEach((user) => {
-            if (!user.profile.avatar && user.profile.gender) {
-                user.profile.avatar = avatarDefault[user.profile.gender]
-            } else if (!user.profile.gender) {
+            if (!user.profile.avatar) {
                 user.profile.avatar = avatarDefault[USER_GENDER.MALE]
             }
         })
@@ -93,17 +89,20 @@ export default class extends StandardPage {
         })
     }
 
+    getCommunityIdByGeolocation(geolocation) {
+        const community = _.find(this.state.communities, {
+            geolocation: geolocation
+        })
+
+        if (community) {
+            return community._id
+        }
+    }
+
     handleChangeCountry(geolocation) {
         if (geolocation) {
-            this.props.getSpecificCountryCommunities(geolocation).then((communities) => {
-                this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
-                    this.setState({
-                        communities
-                    })
-
-                    this.props.history.push(`/community/country/${geolocation}`)
-                })
-            })
+            const communityId = this.getCommunityIdByGeolocation(geolocation)
+            this.props.history.push(`/community/${communityId}/country/${geolocation}`)
         } else {
             this.props.getAllCountryCommunity().then((communities) => {
                 this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
@@ -147,7 +146,7 @@ export default class extends StandardPage {
                 <div key={index}>
                     {community.leaders && community.leaders.map((leader) => {
                         return (
-                            <Col md={{span:12}} lg={{span: 3}} key={index} className="user-card">
+                            <Col md={{span:12}} lg={{span: 3}} key={index + '-' + leader._id} className="user-card public-communities-page">
                                 <Link to={'/community/' + community._id  + '/country/' + community.geolocation}>
                                     <Card
                                         key={index}

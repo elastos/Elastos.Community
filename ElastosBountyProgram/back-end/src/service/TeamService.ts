@@ -37,7 +37,7 @@ export default class extends Base {
 
         console.log('create team => ', doc);
         const res = await db_team.save(doc);
-console.log(res);
+        console.log(res);
         // save to user team
         const doc_user_team = {
             userId : this.currentUser._id,

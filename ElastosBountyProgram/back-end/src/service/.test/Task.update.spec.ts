@@ -258,6 +258,10 @@ describe('Tests for Task Update', () => {
 
     })
 
+    test('Organizer cannot change budget/rewards after APPROVED status', async () => {
+
+    })
+
 })
 
 afterAll(async () => {

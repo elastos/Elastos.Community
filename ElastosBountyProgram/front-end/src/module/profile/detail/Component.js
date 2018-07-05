@@ -75,26 +75,6 @@ export default class extends BaseComponent {
                                 </p>
                             </Col>
                         </Row>
-                        <Row>
-                            <Col span={8} className="label-col">
-                                State/Province
-                            </Col>
-                            <Col span={16}>
-                                <p>
-                                    {this.props.member.profile.state ? this.props.member.profile.state : 'not entered'}
-                                </p>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={8} className="label-col">
-                                City
-                            </Col>
-                            <Col span={16}>
-                                <p>
-                                    {this.props.member.profile.city ? this.props.member.profile.city : 'not entered'}
-                                </p>
-                            </Col>
-                        </Row>
                     </Col>
                     <Col span={12} className="gridCol left-vert-sep">
                         <Row>

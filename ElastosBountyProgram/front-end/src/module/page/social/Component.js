@@ -3,7 +3,7 @@ import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import ContribForm from './formContribution/Container'
 import moment from 'moment'
-import ModalAddCommunity from '../admin/shared/ModalAddCommunity/Component'
+import ModalJoinCommunity from './ModalJoinCommunity/Component'
 import {SUBMISSION_TYPE} from '@/constant'
 import './style.scss'
 
@@ -16,7 +16,7 @@ import _ from 'lodash'
 
 export default class extends StandardPage {
     state = {
-        visibleModalAddCommunity: false,
+        visibleModalJoinCommunity: false,
         communityTrees: [],
         filterCommunity: []
     }
@@ -87,7 +87,7 @@ export default class extends StandardPage {
             }
         }
 
-        const filterCommunityEl = <Cascader defaultValue={[...this.state.filterCommunity]} style={{width: '300px'}} options={this.state.communityTrees} placeholder="Filter by community" onChange={this.handleOnChangeFilter.bind(this)}/>
+        const filterCommunityEl = <Cascader value={[...this.state.filterCommunity]} style={{width: '300px'}} options={this.state.communityTrees} placeholder="Filter by community" onChange={this.handleOnChangeFilter.bind(this)}/>
 
         const columns = [{
             title: 'Name',
@@ -151,8 +151,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row d_rowTop">
-                        {/*md={{span:24}} lg={{span: 16}}*/}
-                        <Col span={24} className="d_leftContainer d_box">
+                        <Col md={{span:24}} lg={{span: 16}} className="d_leftContainer d_box">
                             <div>
                                 {filterCommunityEl}
                             </div>
@@ -175,7 +174,6 @@ export default class extends StandardPage {
                                 loading={this.props.loading}
                             />
                         </Col>
-                        {/*
                         <Col md={{span:24}} lg={{span: 8}} className="d_rightContainer d_box d_communities">
                             <div className="pull-left">
                                 <h3>
@@ -183,14 +181,14 @@ export default class extends StandardPage {
                                 </h3>
                             </div>
                             <div className="pull-right btnContainer">
-                                <Button className="view-all-btn" onClick={this.showModalAddCommunity.bind(this)}>
+                                <Button className="view-all-btn" onClick={this.showModalJoinCommunity.bind(this)}>
                                     Add
                                 </Button>
 
-                                <ModalAddCommunity
-                                    wrappedComponentRef={this.saveFormAddCommunityRef.bind(this)}
-                                    visible={this.state.visibleModalAddCommunity}
-                                    onCancel={this.handleCancelModalAddCommunity.bind(this)}
+                                <ModalJoinCommunity
+                                    wrappedComponentRef={this.saveFormJoinCommunityRef.bind(this)}
+                                    visible={this.state.visibleModalJoinCommunity}
+                                    onCancel={this.handleCancelModalJoinCommunity.bind(this)}
                                     onCreate={this.handleCreateCommunity.bind(this)}
                                 />
                             </div>
@@ -208,7 +206,6 @@ export default class extends StandardPage {
                                 }}
                             />
                         </Col>
-                        */}
                     </Row>
                     <div className="horizGap">
 
@@ -269,8 +266,8 @@ export default class extends StandardPage {
         )
     }
 
-    saveFormAddCommunityRef (formRef) {
-        this.formRefAddCommunity = formRef
+    saveFormJoinCommunityRef (formRef) {
+        this.formRefJoinCommunity = formRef
     }
 
     async handleEventFilterChange (val) {
@@ -293,27 +290,23 @@ export default class extends StandardPage {
         }
     }
 
-    showModalAddCommunity () {
-        this.formRefAddCommunity.props.form.setFieldsValue({
-            geolocation: this.props.match.params['country'],
-        }, () => {
-            this.setState({
-                visibleModalAddCommunity: true
-            })
+    showModalJoinCommunity () {
+        this.setState({
+            visibleModalJoinCommunity: true
         })
     }
 
-    handleCancelModalAddCommunity () {
-        const form = this.formRefAddCommunity.props.form
+    handleCancelModalJoinCommunity () {
+        const form = this.formRefJoinCommunity.props.form
         form.resetFields()
 
         this.setState({
-            visibleModalAddCommunity: false
+            visibleModalJoinCommunity: false
         })
     }
 
     handleCreateCommunity () {
-        const form = this.formRefAddCommunity.props.form
+        const form = this.formRefJoinCommunity.props.form
 
         form.validateFields((err, values) => {
             if (err) {
@@ -321,20 +314,17 @@ export default class extends StandardPage {
             }
 
             form.resetFields()
-            this.setState({visibleModalAddCommunity: false})
+            this.setState({visibleModalJoinCommunity: false})
 
-            this.props.addCommunitySubmission({
-                community: values.community,
-                state: values.state,
-                city: values.city,
-                type: SUBMISSION_TYPE.ADD_COMMUNITY,
-                title: 'Please add a new community',
-                description: 'Thank you'
-            }).then(() => {
-                message.success('Your submission for a new community is being processed. Thanks!')
+            const communityId = values['community'][values['community'].length - 1];
+            this.props.addMemberToCommunity(this.props.currentUserId, communityId).then(() => {
+                message.success('You was added to the community. Thanks!')
+
+                // Reload my communities
+                this.props.getMyCommunities(this.props.currentUserId)
             }).catch((err) => {
                 console.error(err);
-                message.error('Error while creating a community submission')
+                message.error('Error while joining the community')
             })
         })
     }

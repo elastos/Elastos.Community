@@ -7,6 +7,10 @@ message.config({
     top: 100
 })
 
+/**
+ * Note at the moment we do lazy client side registration code generation
+ * TODO: move this to server side
+ */
 export default createContainer(Component, (state) => {
 
     return {
@@ -26,7 +30,7 @@ export default createContainer(Component, (state) => {
 
                 if (rs) {
                     userService.sendConfirmationEmail(profile.email)
-                    message.success('Successfully Registered - Please Login', 10)
+                    message.success('Successfully Registered - Please Login')
                     this.history.replace('/login')
                 }
             } catch (err) {

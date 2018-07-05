@@ -3,7 +3,7 @@ import {Document, Types} from 'mongoose';
 import * as _ from 'lodash';
 import {constant} from '../constant';
 import {validate, crypto, mail} from '../utility';
-import UserService from "./UserService";
+// import UserService from "./UserService";
 
 const ObjectId = Types.ObjectId;
 

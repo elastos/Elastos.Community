@@ -13,6 +13,7 @@ import '../style.scss'
 
 export default class extends StandardPage {
     state = {
+        communities: [],
         breadcrumbRegions: [],
         community: null,
         communityMembers: [],
@@ -33,9 +34,18 @@ export default class extends StandardPage {
     }
 
     componentDidMount() {
+        this.loadCommunities();
         this.props.getSocialEvents()
         this.loadCommunityDetail()
         this.loadSubCommunities()
+    }
+
+    loadCommunities() {
+        this.props.getAllCountryCommunity().then((communities) => {
+            this.setState({
+                communities
+            })
+        })
     }
 
     formatCommunityMembers(communityMembers) {
@@ -51,11 +61,11 @@ export default class extends StandardPage {
         })
     }
 
-    loadCommunityMembers() {
+    loadCommunityMembers(communityId) {
         // If user in community we need get member of it and members of sub community
         if (!this.props.match.params['region']) {
             const listApiCalls = [
-                this.props.getCommunityMembers(this.props.match.params['community']) // Get member of community
+                this.props.getCommunityMembers(communityId || this.props.match.params['community']) // Get member of community
             ];
 
             // Get members of each sub community
@@ -94,8 +104,8 @@ export default class extends StandardPage {
     }
 
     // TODO: doesn't work if there is no leader
-    loadCommunityDetail() {
-        this.props.getCommunityDetail(this.props.match.params['community']).then((community) => {
+    loadCommunityDetail(communityId) {
+        this.props.getCommunityDetail(communityId || this.props.match.params['community']).then((community) => {
             this.convertCommunityLeaderIdsToLeaderObjects(community).then((community) => {
                 this.setState({
                     community
@@ -104,8 +114,8 @@ export default class extends StandardPage {
         });
     }
 
-    loadSubCommunities() {
-        this.props.getSubCommunities(this.props.match.params['community']).then((subCommunities) => {
+    loadSubCommunities(communityId) {
+        this.props.getSubCommunities(communityId || this.props.match.params['community']).then((subCommunities) => {
             this.convertCommunitiesLeaderIdsToLeaderObjects(subCommunities).then((subCommunities) => {
                 // Check which communities we will use to render
                 const breadcrumbRegions = this.getBreadcrumbRegions(subCommunities);
@@ -126,14 +136,10 @@ export default class extends StandardPage {
     getAvatarUrl(users) {
         const avatarDefault = {
             [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png',
-            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Other.png',
-            [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png',
         };
 
         users.forEach((user) => {
-            if (!user.profile.avatar && user.profile.gender) {
-                user.profile.avatar = avatarDefault[user.profile.gender]
-            } else if (!user.profile.gender) {
+            if (!user.profile.avatar) {
                 user.profile.avatar = avatarDefault[USER_GENDER.MALE]
             }
         })
@@ -206,9 +212,23 @@ export default class extends StandardPage {
         return breadcrumbRegions;
     }
 
+    getCommunityIdByGeolocation(geolocation) {
+        const community = _.find(this.state.communities, {
+            geolocation: geolocation
+        })
+
+        if (community) {
+            return community._id
+        }
+    }
+
     handleChangeCountry(geolocation) {
         if (geolocation) {
-            this.props.history.push(`/community/country/${geolocation}`)
+            const communityId = this.getCommunityIdByGeolocation(geolocation)
+            this.props.history.push(`/community/${communityId}/country/${geolocation}`)
+
+            this.loadCommunityDetail(communityId)
+            this.loadSubCommunities(communityId)
         } else {
             this.props.history.push('/community')
         }
@@ -305,17 +325,10 @@ export default class extends StandardPage {
 
     renderBreadcrumbCountries() {
         let geolocationKeys = {}
-        if (this.state.community) {
-            if (this.state.community.geolocation !== undefined) {
-                geolocationKeys = {
-                    [this.state.community.geolocation]: this.state.community.geolocation
-                }
-            } else {
-                geolocationKeys = {
-                    [this.props.match.params['country']]: this.props.match.params['country']
-                }
-            }
-        }
+
+        this.state.communities.forEach((community) => {
+            geolocationKeys[community.geolocation] = community.geolocation
+        })
 
         const listCountriesEl = Object.keys(geolocationKeys).map((geolocation, index) => {
             return (
@@ -562,7 +575,7 @@ export default class extends StandardPage {
                                     </div>
                                 </Col>
                             </Row>
-                            {/*
+                            {
                             <Row>
                                 <Col span={24}>
                                     {this.state.subCommunities.length > 0 &&
@@ -573,7 +586,7 @@ export default class extends StandardPage {
                                     {tabSubCommunities}
                                 </Col>
                             </Row>
-                            */}
+                            }
                         </div>
                     </div>
                 </div>

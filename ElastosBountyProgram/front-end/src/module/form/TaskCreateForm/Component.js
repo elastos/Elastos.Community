@@ -48,11 +48,9 @@ const TextArea = Input.TextArea
  */
 class C extends BaseComponent {
 
-    /*
     state = {
         communityTrees: []
     }
-    */
 
     componentDidMount() {
         const taskId = this.props.match.params.taskId
@@ -98,7 +96,7 @@ class C extends BaseComponent {
 
             attachment_url: (props.existingTask && props.existingTask.attachment) || null,
             attachment_loading: false,
-            attachment_filename: (props.existingTask && props.existingTask.attachmentFilename )|| '',
+            attachment_filename: (props.existingTask && props.existingTask.attachmentFilename) || '',
             attachment_type: '',
 
             removeAttachment: false,
@@ -162,13 +160,12 @@ class C extends BaseComponent {
         )
 
         // TODO: restrict community to only the one you are in
-        {/*
         const taskCommunity_fn = getFieldDecorator('taskCommunity', {
             initialValue: existingTask ? existingTask.taskCommunity : []
         })
         const taskCommunity_el = (
             <Cascader options={this.state.communityTrees} placeholder="" />
-        )*/}
+        )
 
         const applicationDeadline_fn = getFieldDecorator('taskApplicationDeadline', {
             initialValue: this.state.editing &&
@@ -362,6 +359,8 @@ class C extends BaseComponent {
             taskApplicationDeadline: applicationDeadline_fn(applicationDeadline_el),
             taskCompletionDeadline: completionDeadline_fn(completionDeadline_el),
 
+            taskCommunity: taskCommunity_fn(taskCommunity_el),
+
             taskDesc: taskDesc_fn(taskDesc_el),
             taskDescBreakdown: taskDescBreakdown_fn(taskDescBreakdown_el),
             taskLink: taskLink_fn(taskLink_el),
@@ -383,7 +382,10 @@ class C extends BaseComponent {
         }
     }
 
-    /*
+    componentDidMount() {
+        this.getCommunityTrees()
+    }
+
     getCommunityTrees() {
         this.props.getAllCommunities().then((communityTrees) => {
             this.setState({
@@ -391,7 +393,6 @@ class C extends BaseComponent {
             })
         })
     }
-    */
 
     ord_render () {
         const {getFieldDecorator} = this.props.form
@@ -459,7 +460,6 @@ class C extends BaseComponent {
                         <FormItem label="Task Name" {...formItemLayout}>
                             {p.taskName}
                         </FormItem>
-                        {/*
                         <FormItem label="Community"  {...formItemLayout}>
                             {p.taskCommunity}
                         </FormItem>

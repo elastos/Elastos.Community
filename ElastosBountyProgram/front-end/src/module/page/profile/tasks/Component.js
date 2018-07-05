@@ -157,7 +157,7 @@ export default class extends StandardPage {
                                     </div>
                                     }
 
-                                    <Divider className="clearfix">Active Tasks</Divider>
+                                    <Divider>Active Tasks</Divider>
 
                                     <Table
                                         columns={columns}

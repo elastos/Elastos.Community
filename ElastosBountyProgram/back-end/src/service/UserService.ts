@@ -2,9 +2,10 @@ import Base from './Base';
 import {Document} from 'mongoose';
 import * as _ from 'lodash';
 import {constant} from '../constant';
+import {geo} from '../utility/geo'
 import {validate, crypto, uuid, mail} from '../utility';
-
-const {USER_ROLE} = constant;
+import CommunityService from "./CommunityService";
+import CommentService from "./CommentService";
 
 const restrictedFields = {
     update: [
@@ -17,7 +18,15 @@ const restrictedFields = {
 
 export default class extends Base {
 
+    /**
+     * On registration we also add them to the country community,
+     * if it doesn't exist yet we will create it as well
+     *
+     * @param param
+     * @returns {Promise<"mongoose".Document>}
+     */
     public async registerNewUser(param): Promise<Document>{
+
         const db_user = this.getDBModel('User');
 
         const username = param.username.toLowerCase();
@@ -51,11 +60,15 @@ export default class extends Base {
                 isDeveloper : param.isDeveloper === 'yes',
                 source : param.source
             },
-            role : USER_ROLE.MEMBER,
+            role : constant.USER_ROLE.MEMBER,
             active: true
         };
 
-        return await db_user.save(doc);
+        let newUser = await db_user.save(doc);
+
+        await this.linkCountryCommunity(newUser)
+
+        return newUser
     }
 
     public async getUserSalt(username): Promise<String>{
@@ -99,10 +112,15 @@ export default class extends Base {
 
         const db_user = this.getDBModel('User');
 
-        const user = await db_user.findById(userId)
+        let user = await db_user.findById(userId)
+        let countryChanged = false
 
         if (!user) {
             throw `userId: ${userId} not found`
+        }
+
+        if (param.profile.country !== user.profile.country) {
+            countryChanged = true
         }
 
         if (param.profile) {
@@ -113,13 +131,17 @@ export default class extends Base {
             updateObj.email = param.email
         }
 
-        if (param.username) {
-            updateObj.username = param.username
-        }
-
         await db_user.update({_id: userId}, updateObj)
 
-        return db_user.findById(userId)
+        user = await db_user.findById(userId)
+
+        // if we change the country, we add the new country as a community if not already
+        // keep the old one too - TODO: think through this logic, maybe we only keep the old one if the new one already exists
+        if (countryChanged) {
+            await this.linkCountryCommunity(user)
+        }
+
+        return user
     }
 
     public async findUser(query): Promise<Document>{
@@ -280,5 +302,34 @@ export default class extends Base {
         })
 
         return true
+    }
+
+    private async linkCountryCommunity(user) {
+
+        const db_community = this.getDBModel('Community');
+        const communityService = this.getService(CommunityService);
+
+        // 1st check if the country already exists
+        let countryCommunity = await db_community.findOne({
+            type: constant.COMMUNITY_TYPE.COUNTRY,
+            geolocation: user.profile.country
+        })
+
+        if (!countryCommunity) {
+            // create the country then attach
+            countryCommunity = await communityService.create({
+                name: geo.geolocationMap[user.profile.country],
+                type: constant.COMMUNITY_TYPE.COUNTRY,
+                geolocation: user.profile.country,
+                parentCommunityId: null
+            })
+
+        }
+
+        // now we should always have the community to attach it
+        await communityService.addMember({
+            userId: user._id,
+            communityId: countryCommunity._id
+        })
     }
 }

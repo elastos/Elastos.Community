@@ -13,7 +13,7 @@ export default class extends StandardPage {
     componentDidMount() {
         this.props.getMyCommunities(this.props.currentUserId)
     }
-    
+
     leaveCommunity(communityId) {
         this.props.removeMember(this.props.currentUserId, communityId).then(() => {
             this.props.getMyCommunities(this.props.currentUserId)
@@ -41,7 +41,13 @@ export default class extends StandardPage {
             title: 'Actions',
             dataIndex: '_id',
             key: 'actions',
+            className: 'right-align',
             render: (id, record) => {
+                // cannot leave profile country
+                if (this.props.profileCountry === record.geolocation) {
+                    return
+                }
+
                 return (
                     <Button onClick={this.leaveCommunity.bind(this, id)}>Leave</Button>
                 )

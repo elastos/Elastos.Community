@@ -1,101 +1,6 @@
-export default {
-    mockDataAllLeaders: [
-        {
-            id: 1,
-            name: 'Song',
-            country: 'China',
-            countryCode: 'cn',
-            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        },
-        {
-            id: 2,
-            name: 'John',
-            country: 'Vietnam',
-            countryCode: 'vn',
-            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        },
-        {
-            id: 3,
-            name: 'John Even',
-            country: 'USA',
-            countryCode: 'cn',
-            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        },
-        {
-            id: 4,
-            name: 'Obama',
-            country: 'USA',
-            countryCode: 'us',
-            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        },
-        {
-            id: 5,
-            name: 'Song King',
-            country: 'China',
-            countryCode: 'cn',
-            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        },
-        {
-            id: 6,
-            name: 'Caocao',
-            country: 'China',
-            countryCode: 'cn',
-            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        },
-        {
-            id: 7,
-            name: 'Song',
-            country: 'China',
-            countryCode: 'cn',
-            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        },
-        {
-            id: 8,
-            name: 'Henry',
-            country: 'Vietnam',
-            countryCode: 'vn',
-            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-        }
-    ],
-    mockDataLeaderByCountries: {
-        vn: [
-            {
-                id: 1,
-                name: 'Nguyen Van A',
-                country: 'Vietnam',
-                countryCode: 'vn',
-                avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-            },
-            {
-                id: 2,
-                name: 'John',
-                country: 'Vietnam',
-                countryCode: 'vn',
-                avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-            },
-        ],
-        cn: [
-            {
-                id: 3,
-                name: 'John Even',
-                country: 'China',
-                countryCode: 'cn',
-                avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-            }
-        ],
-        us: [
-            {
-                id: 4,
-                name: 'Obama',
-                country: 'USA',
-                countryCode: 'us',
-                avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-            }
-        ]
-    },
-    mockAvatarUrl: 'https://www.w3schools.com/howto/img_avatar.png',
-    mockDataLeaderId: '5b101cb5bb285e751d3c460c',
-    mappingCountryCodeToName: {
+
+const geo = {
+    geolocationMap: {
         ad: 'Andorra',
         ae: 'United Arab Emirates',
         af: 'Afghanistan',
@@ -347,32 +252,9 @@ export default {
         za: 'South Africa',
         zm: 'Zambia',
         zw: 'Zimbabwe'
-    },
-    mappingSubCommunityTypesAndName: {
-        STATE: {
-            tabName: 'State',
-            addNewText: 'Add state',
-            pluralName: 'States / Provinces',
-        },
-        CITY: {
-            tabName: 'City',
-            addNewText: 'Add city',
-            pluralName: 'Cities',
-        },
-        REGION: {
-            tabName: 'Region',
-            addNewText: 'Add region',
-            pluralName: 'Regions',
-        },
-        SCHOOL: {
-            tabName: 'School',
-            addNewText: 'Add school',
-            pluralName: 'Schools',
-        },
-    },
-    mappingGenderKeyToName: {
-        male: 'Male',
-        female: 'Female',
-        other: 'Other',
-    },
+    }
+}
+
+export {
+    geo
 }

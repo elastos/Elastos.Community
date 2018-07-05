@@ -14,8 +14,8 @@ const FormItem = Form.Item
 
 class C extends BaseComponent {
 
-    state: {
-        requestedCode: null,
+    state = {
+        requestedCode: null
     }
 
     handleSubmit(e) {
@@ -196,18 +196,6 @@ class C extends BaseComponent {
              />
         )
 
-        const state_fn = getFieldDecorator('state')
-        const state_el = (
-            <Input size="large"
-                   placeholder="State/Province"/>
-        )
-
-        const city_fn = getFieldDecorator('city')
-        const city_el = (
-            <Input size="large"
-                   placeholder="City"/>
-        )
-
         const organizer_fn = getFieldDecorator('beOrganizer', {
             rules: [{message: 'Please select an option'}]
         })
@@ -247,8 +235,6 @@ class C extends BaseComponent {
             pwdConfirm: pwdConfirm_fn(pwdConfirm_el),
 
             country: country_fn(country_el),
-            state: state_fn(state_el),
-            city: city_fn(city_el),
 
             organizer: organizer_fn(organizer_el),
             developer: developer_fn(developer_el),
@@ -302,12 +288,6 @@ class C extends BaseComponent {
                         {p.country}
                     </FormItem>
                     <Divider>Optional Info</Divider>
-                    <FormItem>
-                        {p.state}
-                    </FormItem>
-                    <FormItem>
-                        {p.city}
-                    </FormItem>
                     <FormItem>
                         {p.organizer}
                     </FormItem>

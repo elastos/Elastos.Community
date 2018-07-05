@@ -25,8 +25,8 @@ export default class extends Base {
             parentCommunityId,
             geolocation,
             type,
-            leaderIds : this.param_leaderIds(leaderIds),
-            createdBy : this.currentUser._id
+            leaderIds: this.param_leaderIds(leaderIds),
+            createdBy: this.currentUser ? this.currentUser._id : null
         };
 
         return await db_community.save(doc);
@@ -43,7 +43,7 @@ export default class extends Base {
 
         //validate
         this.validate_name(param.name);
-        const {communityId, name, parentCommunityId, geolocation, type, leaderIds} = param;
+        const {_id, name, parentCommunityId, geolocation, type, leaderIds} = param;
 
         const doc = {
             $set : {
@@ -55,7 +55,7 @@ export default class extends Base {
             }
         };
 
-        return await db_community.update({_id : communityId}, doc);
+        return await db_community.update({_id : _id}, doc);
     }
 
     /**
@@ -78,7 +78,7 @@ export default class extends Base {
             query._id = {$in: _.map(userCommunities, 'communityId')}
         }
 
-        return await db_community.find(query);;
+        return await db_community.getDBInstance().find(query).sort({name: 1})
     }
 
     /**
@@ -131,6 +131,9 @@ export default class extends Base {
      * Add member to Community
      *
      * @param param
+     * @param.userId
+     * @param.communityId
+     *
      * @returns {Promise<boolean>}
      */
     public async addMember(param): Promise<boolean> {
@@ -143,7 +146,7 @@ export default class extends Base {
         });
 
         if (tmp) {
-            throw 'user is exist';
+            throw 'user already belongs to community';
         }
 
         await db_user_community.save({
@@ -202,7 +205,7 @@ export default class extends Base {
     public param_leaderIds(leaderIds: string){
         let rs = [];
         if(leaderIds){
-            rs = leaderIds.split(',');
+            rs = leaderIds.split(",");
         }
         return rs;
     }

@@ -93,15 +93,11 @@ export default class extends AdminPage {
 
     getAvatarUrl(users) {
         const avatarDefault = {
-            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Male.png',
-            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Female.png',
-            [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png',
+            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png'
         };
 
         users.forEach((user) => {
-            if (!user.profile.avatar && user.profile.gender) {
-                user.profile.avatar = avatarDefault[user.profile.gender]
-            } else if (!user.profile.gender) {
+            if (!user.profile.avatar) {
                 user.profile.avatar = avatarDefault[USER_GENDER.MALE]
             }
         })
@@ -139,15 +135,20 @@ export default class extends AdminPage {
         })
     }
 
+    getCommunityIdByGeolocation(geolocation) {
+        const community = _.find(this.state.communities, {
+            geolocation: geolocation
+        })
+
+        if (community) {
+            return community._id
+        }
+    }
+
     handleChangeCountry(geolocation) {
         if (geolocation) {
-            this.props.getSpecificCountryCommunities(geolocation).then((communities) => {
-                this.setState({
-                    communities
-                })
-
-                this.props.history.push(`/admin/community/country/${geolocation}`)
-            })
+            const communityId = this.getCommunityIdByGeolocation(geolocation)
+            this.props.history.push(`/admin/community/${communityId}/country/${geolocation}`)
         } else {
             this.props.getAllCountryCommunity().then((communities) => {
                 this.setState({
@@ -191,14 +192,18 @@ export default class extends AdminPage {
                 <Col span={6} key={index} className="user-card">
                     <Link to={'/admin/community/' + community._id  + '/country/' + community.geolocation}>
                         <Card title={community.name}>
-                            <List
+                            {community.leaders.length ?
+                                <p className="text-light-gray">Has Organizer(s)</p> :
+                                <p className="highlight-text">Needs an Organizer</p>
+                            }
+                            {/*<List
                                 dataSource={community.leaders}
                                 renderItem={item => (
                                     <List.Item className="organizerListItem">
                                         <table>
                                             <tbody>
                                             <tr>
-                                                <td>
+                                                <td className="avatar">
                                                     <Avatar size="large" icon="user" src={item.profile.avatar}/>
                                                 </td>
                                                 <td>
@@ -210,6 +215,7 @@ export default class extends AdminPage {
                                     </List.Item>
                                 )}
                             />
+                            */}
                         </Card>
                     </Link>
                 </Col>

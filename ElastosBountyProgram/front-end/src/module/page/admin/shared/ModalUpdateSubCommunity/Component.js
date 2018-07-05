@@ -10,7 +10,7 @@ const FormItem = Form.Item
 export default Form.create()(
     class C extends BaseComponent {
         ord_render () {
-            const {visible, onCancel, onCreate, form, communityType} = this.props
+            const {visible, onCancel, onCreate, onDelete, form, communityType} = this.props
             const {getFieldDecorator} = form
             const formItemLayout = {
                 labelCol: {span: 6},
@@ -36,6 +36,7 @@ export default Form.create()(
             const footerModal = (
                 <div>
                     <Button onClick={onCreate} type="primary" className="ant-btn-ebp">{contextTitle}</Button>
+                    <Button onClick={onDelete} type="danger">Delete</Button>
                     <Button onClick={onCancel}>Cancel</Button>
                 </div>
             )

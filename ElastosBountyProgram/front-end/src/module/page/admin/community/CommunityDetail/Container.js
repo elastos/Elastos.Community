@@ -26,6 +26,9 @@ export default createContainer(Component, (state, ownProps) => {
         async updateCommunity(community) {
             return communityService.update(community)
         },
+        async deleteCommunity(communityId) {
+            return communityService.delete(communityId)
+        },
         async getUserByIds (ids) {
             return userService.getByIds(ids)
         },

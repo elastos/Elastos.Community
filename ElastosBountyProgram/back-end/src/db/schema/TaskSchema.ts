@@ -37,6 +37,20 @@ export const TaskReward = {
     isUsd: Boolean
 };
 
+// if any extra costs were incurred, they can be added here and will be
+// deliberated on for the
+export const TaskAdjustments = {
+    ela : Number,
+    usd: Number,
+
+    // if ELA reward is allocated to sub-tasks (v1.5)
+    elaDisbursed: Number,
+    votePower : Number,
+
+    elaPerUsd: Number,
+    isUsd: Boolean
+};
+
 export const TaskCandidate = {
     // constants.TASK_CANDIDATE_TYPE - PERSON, TEAM
     type : {
