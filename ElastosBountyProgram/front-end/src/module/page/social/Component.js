@@ -176,8 +176,10 @@ export default class extends StandardPage {
                                 </Button>
                             </div>
                             <div className="pull-right btnContainer">
+                                {/*
                                 Looking for Help&nbsp;
                                 <Checkbox checked={this.state.lookingForHelpOnly}/>
+                                */}
                                 {filterCommunityEl}
                                 {/*
                                 <Button onClick={this.createTaskLink.bind(this, TASK_TYPE.EVENT)}>
