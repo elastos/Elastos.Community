@@ -45,7 +45,11 @@ const render = () => {
     );
 };
 
-if(sessionStorage.getItem('api-token')){
+if (!sessionStorage.getItem('api-token') && localStorage.getItem('api-token')) {
+    sessionStorage.setItem('api-token', localStorage.getItem('api-token'))
+}
+
+if (sessionStorage.getItem('api-token')) {
     const userRedux = store.getRedux('user');
     api_request({
         path : '/api/user/current_user',

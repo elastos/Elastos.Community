@@ -5,15 +5,14 @@ import {api_request} from '@/util';
 
 export default class extends BaseService {
 
-    async login(username, password, opts={}){
-
+    async login(username, password, opts = {}) {
         const userRedux = this.store.getRedux('user')
 
         // call API /login
         const res = await api_request({
-            path : '/api/user/login',
-            method : 'get',
-            data : {
+            path: '/api/user/login',
+            method: 'get',
+            data: {
                 username,
                 password
             }
@@ -36,6 +35,7 @@ export default class extends BaseService {
         await this.dispatch(userRedux.actions.role_update(res.user.role))
         await this.dispatch(userRedux.actions.current_user_id_update(res.user._id))
         sessionStorage.setItem('api-token', res['api-token']);
+        localStorage.setItem('api-token', res['api-token']);
 
         return {
             success: true,
@@ -130,15 +130,16 @@ export default class extends BaseService {
         return result
     }
 
-    async logout(){
+    async logout() {
         const userRedux = this.store.getRedux('user')
         const tasksRedux = this.store.getRedux('task')
 
-        return new Promise((resolve)=>{
+        return new Promise((resolve) => {
             this.dispatch(userRedux.actions.is_login_update(false))
             this.dispatch(userRedux.actions.profile_reset())
             this.dispatch(tasksRedux.actions.all_tasks_reset())
             sessionStorage.clear()
+            localStorage.removeItem('api-token', '')
             resolve(true)
         })
     }
