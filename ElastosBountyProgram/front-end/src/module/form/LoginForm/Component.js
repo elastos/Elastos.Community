@@ -15,7 +15,7 @@ class C extends BaseComponent {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values)
-                this.props.login(values.username, values.password, values.remember)
+                this.props.login(values.username, values.password, values.persist)
 
             }
         })
@@ -42,9 +42,15 @@ class C extends BaseComponent {
                 type="password" placeholder="Password"/>
         )
 
+        const persist_fn = getFieldDecorator('persist')
+        const persist_el = (
+            <Checkbox>Save on this computer</Checkbox>
+        )
+
         return {
             userName: userName_fn(userName_el),
-            pwd: pwd_fn(pwd_el)
+            pwd: pwd_fn(pwd_el),
+            persist: persist_fn(persist_el)
         }
     }
 
@@ -58,6 +64,9 @@ class C extends BaseComponent {
                 </FormItem>
                 <FormItem>
                     {p.pwd}
+                </FormItem>
+                <FormItem>
+                    {p.persist}
                 </FormItem>
                 <FormItem className="d_item">
                     <a className="login-form-forgot" href="">Forgot password</a>

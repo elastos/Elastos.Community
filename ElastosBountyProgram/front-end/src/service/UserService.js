@@ -5,7 +5,7 @@ import {api_request} from '@/util';
 
 export default class extends BaseService {
 
-    async login(username, password, opts = {}) {
+    async login(username, password, persist) {
         const userRedux = this.store.getRedux('user')
 
         // call API /login
@@ -35,7 +35,12 @@ export default class extends BaseService {
         await this.dispatch(userRedux.actions.role_update(res.user.role))
         await this.dispatch(userRedux.actions.current_user_id_update(res.user._id))
         sessionStorage.setItem('api-token', res['api-token']);
-        localStorage.setItem('api-token', res['api-token']);
+
+        if (persist) {
+            localStorage.setItem('api-token', res['api-token'])
+        } else {
+            localStorage.removeItem('api-token')
+        }
 
         return {
             success: true,
