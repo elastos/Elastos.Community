@@ -1,6 +1,6 @@
 import {TASK_STATUS, TASK_CATEGORY, TASK_TYPE} from '@/constant'
 
-import React from 'react';
+import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import TaskCreateForm from '@/module/form/TaskCreateForm/Container'
 import { Col, Row, Popconfirm, Divider, Button, Spin, Icon } from 'antd'
@@ -21,7 +21,6 @@ import moment from 'moment/moment'
  *
  */
 export default class extends BaseComponent {
-
     componentDidMount() {
         const taskId = this.props.match.params.taskId
         taskId && this.props.getTaskDetail(taskId)
@@ -51,7 +50,6 @@ export default class extends BaseComponent {
     }
 
     renderAdminHeader() {
-
         return <div className="l_banner">
             <div className="pull-left">
                 Status: <span className="status">{this.props.task.status}</span>
@@ -65,9 +63,9 @@ export default class extends BaseComponent {
                 <span className="help-text">&nbsp; - this task is approved by {this.props.task.approvedBy.username}</span>
                 }
                 {this.props.task.status === TASK_STATUS.SUCCESS &&
-                ((this.props.task.reward.ela > 0 || this.props.task.rewardUpfront.ela > 0) ?
-                    <span className="help-text">&nbsp; - this task is awaiting ELA disbursement</span> :
-                    <span className="help-text">&nbsp; - this task does not require ELA, no further action is needed</span>
+                ((this.props.task.reward.ela > 0 || this.props.task.rewardUpfront.ela > 0)
+                    ? <span className="help-text">&nbsp; - this task is awaiting ELA disbursement</span>
+                    : <span className="help-text">&nbsp; - this task does not require ELA, no further action is needed</span>
                 )
                 }
             </div>
@@ -87,7 +85,7 @@ export default class extends BaseComponent {
                     <Button type="primary">Mark as Disbursed</Button>
                 </Popconfirm>
                 }
-                {/*this.state.editing && <Button onClick={this.resetEdit.bind(this)}>Reset</Button>*/}
+                {/* this.state.editing && <Button onClick={this.resetEdit.bind(this)}>Reset</Button> */}
                 <Button onClick={this.switchEditMode.bind(this)}>
                     {this.state.editing ? 'Cancel' : 'Edit'}
                 </Button>
@@ -97,7 +95,6 @@ export default class extends BaseComponent {
     }
 
     renderHeader() {
-
         const isTaskOwner = this.props.current_user_id === (this.props.task.createdBy && this.props.task.createdBy._id)
 
         return <div className="l_banner">
@@ -144,7 +141,6 @@ export default class extends BaseComponent {
             </div>
             <div className="clearfix"/>
         </div>
-
     }
 
     // this is confusing and should maybe also belong in detail,
@@ -185,12 +181,12 @@ export default class extends BaseComponent {
                     </Col>
                 </Row>
                 <Row>
-                <Col span={8} className="grid-col right-align">
+                    <Col span={8} className="grid-col right-align">
                     Category
                     </Col>
-                <Col span={16} className="grid-col">
-                    {this.props.task.category}
-                </Col>
+                    <Col span={16} className="grid-col">
+                        {this.props.task.category}
+                    </Col>
                 </Row>
                 <Row>
                     <Col span={8} className="grid-col right-align">
@@ -223,12 +219,12 @@ export default class extends BaseComponent {
                 <Row>
                     <Col span={8} className="grid-col right-align">
                         Description
-                        </Col>
+                    </Col>
                     <Col span={16} className="grid-col">
                         <p>
-                            {this.props.task.description ?
-                                this.props.task.description :
-                                <span className="no-info">no description</span>
+                            {this.props.task.description
+                                ? this.props.task.description
+                                : <span className="no-info">no description</span>
                             }
                         </p>
                     </Col>
@@ -247,8 +243,8 @@ export default class extends BaseComponent {
 
                 <Divider>Budget/Reward</Divider>
 
-                {this.props.task.reward.isUsd ?
-                    <div>
+                {this.props.task.reward.isUsd
+                    ? <div>
                         <Row>
                             <Col span={8} className="grid-col right-align">
                                 USD Budget
@@ -289,8 +285,8 @@ export default class extends BaseComponent {
                                 </p>
                             </Col>}
                         </Row>
-                    </div> :
-                    <div>
+                    </div>
+                    : <div>
                         <Row>
                             <Col span={8} className="grid-col right-align">
                                 ELA Budget
@@ -327,11 +323,11 @@ export default class extends BaseComponent {
                         <Col span={8} className="grid-col right-align">
                             File
                         </Col>
-                        <Col span={16}  className="grid-col">
+                        <Col span={16} className="grid-col">
                             <a target="_blank" href={this.props.task.attachment}>
-                                {this.props.task.attachmentType === 'application/pdf' ?
-                                    <Icon type="file-pdf"/> :
-                                    <Icon type="file"/>
+                                {this.props.task.attachmentType === 'application/pdf'
+                                    ? <Icon type="file-pdf"/>
+                                    : <Icon type="file"/>
                                 } &nbsp;
                                 {this.props.task.attachmentFilename}
                             </a>
@@ -345,9 +341,9 @@ export default class extends BaseComponent {
     }
 
     ord_render () {
-        return (_.isEmpty(this.props.task) || this.props.task.loading ?
-            <div class="center"><Spin size="large" /></div> :
-            this.renderMain()
+        return (_.isEmpty(this.props.task) || this.props.task.loading
+            ? <div class="center"><Spin size="large" /></div>
+            : this.renderMain()
         )
     }
 
@@ -367,7 +363,6 @@ export default class extends BaseComponent {
     async approveTask() {
         const taskId = this.props.task._id
         await this.props.approveTask(taskId)
-
     }
 
     async markAsSuccessful() {
@@ -401,5 +396,4 @@ export default class extends BaseComponent {
     switchEditMode() {
         this.setState({editing: !this.state.editing})
     }
-
 }

@@ -1,6 +1,6 @@
-import {createContainer, goPath} from "@/util";
-import Component from './Component';
-import UserService from '@/service/UserService';
+import {createContainer, goPath} from '@/util'
+import Component from './Component'
+import UserService from '@/service/UserService'
 import {message} from 'antd'
 import _ from 'lodash'
 
@@ -8,17 +8,15 @@ message.config({
     top: 100
 })
 
-
-export default createContainer(Component, (state)=>{
+export default createContainer(Component, (state) => {
     return {
         is_admin: state.user.is_admin
-    };
-}, ()=>{
-    const userService = new UserService();
+    }
+}, () => {
+    const userService = new UserService()
 
     return {
         async getCurrentUser() {
-
             try {
                 const rs = await userService.getCurrentUser()
             } catch (err) {
@@ -45,12 +43,12 @@ export default createContainer(Component, (state)=>{
                         beOrganizer: formData.beOrganizer === 'yes',
                         isDeveloper: formData.isDeveloper === 'yes',
                         walletAddress: formData.walletAddress,
-                        avatar: state.upload_url,
+                        avatar: state.upload_url
                     }
-                });
+                })
 
                 if (rs) {
-                    message.success('User updated successfully');
+                    message.success('User updated successfully')
 
                     // state.editing = false
                     // this.setState({editing: false})
@@ -60,5 +58,5 @@ export default createContainer(Component, (state)=>{
                 message.error(err.message) // TODO: add rollbar?
             }
         }
-    };
-});
+    }
+})

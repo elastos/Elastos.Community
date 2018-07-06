@@ -7,32 +7,32 @@ export default class extends BaseComponent {
         const columns = [{
             title: 'Short title',
             dataIndex: 'title',
-            key: 'title',
+            key: 'title'
         }, {
             title: 'Short description',
             dataIndex: 'description',
-            key: 'description',
+            key: 'description'
         }, {
             title: 'Location',
             dataIndex: 'location',
-            key: 'location',
+            key: 'location'
         }, {
             title: 'Action',
             key: 'action',
             render: (text, record) => (
                 <Button>Accept</Button>
-            ),
-        }];
+            )
+        }]
 
         const mockData = {
             id: 1,
             title: 'Build a website',
             description: 'Description of the project',
-            location: 'Online',
+            location: 'Online'
         }
 
         const tasks = this.props.tasks || []
-            // Mock data
+        // Mock data
         tasks.forEach((task) => {
             task.location = 'Location mock'
             task.title = 'Title mock'

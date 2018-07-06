@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
 
@@ -13,9 +13,7 @@ import Comments from '@/module/common/comments/Container'
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
 export default class extends BaseComponent {
-
     ord_states() {
-
         let acceptedCnt = 0
 
         if (this.props.task && _.isArray(this.props.task.candidates)) {
@@ -39,7 +37,7 @@ export default class extends BaseComponent {
     }
 
     async componentDidMount() {
-        this.setState({loading : true});
+        this.setState({loading: true})
         const teamsOwned = await this.props.listTeamsOwned(this.props.userId)
 
         this.setState({
@@ -49,7 +47,6 @@ export default class extends BaseComponent {
     }
 
     ord_render () {
-
         const isTaskOwner = (this.props.task && this.props.task.createdBy && this.props.task.createdBy._id) === this.props.userId
         return (
             <div className="public">
@@ -69,12 +66,12 @@ export default class extends BaseComponent {
                                         Organizer
                                     </Col>
                                     <Col span={20}>
-                                        {this.props.task && this.props.task.createdBy ?
-                                        <p>
-                                            <a onClick={() => {this.props.history.push(`/member/${this.props.task.createdBy._id}`)}}>
-                                                {this.props.task.createdBy.username}
-                                            </a>
-                                        </p> : <div className="center"><Spin size="small"/></div>}
+                                        {this.props.task && this.props.task.createdBy
+                                            ? <p>
+                                                <a onClick={() => { this.props.history.push(`/member/${this.props.task.createdBy._id}`) }}>
+                                                    {this.props.task.createdBy.username}
+                                                </a>
+                                            </p> : <div className="center"><Spin size="small"/></div>}
                                     </Col>
                                 </Row>
                                 <Row>
@@ -188,8 +185,8 @@ export default class extends BaseComponent {
                                 </Row>
                                 }
                                 <Divider>Budget/Reward</Divider>
-                                {this.props.task.reward && this.props.task.reward.isUsd ?
-                                    <div>
+                                {this.props.task.reward && this.props.task.reward.isUsd
+                                    ? <div>
                                         <Row>
                                             <Col span={4} className="label-col">
                                                 USD Budget
@@ -230,8 +227,8 @@ export default class extends BaseComponent {
                                                 </p>
                                             </Col>}
                                         </Row>
-                                    </div> :
-                                    <div>
+                                    </div>
+                                    : <div>
                                         <Row>
                                             <Col span={4} className="label-col">
                                                 ELA Budget
@@ -297,9 +294,9 @@ export default class extends BaseComponent {
                                 </Col>
                                 <Col span={20}>
                                     <a target="_blank" href={this.props.task.attachment}>
-                                        {this.props.task.attachmentType === 'application/pdf' ?
-                                            <Icon type="file-pdf"/> :
-                                            <Icon type="file"/>
+                                        {this.props.task.attachmentType === 'application/pdf'
+                                            ? <Icon type="file-pdf"/>
+                                            : <Icon type="file"/>
                                         } &nbsp;
                                         {this.props.task.attachmentFilename}
                                     </a>
@@ -312,120 +309,115 @@ export default class extends BaseComponent {
                     <Col span={6} className="gridCol applicants">
                         <h4>{this.state.isDeveloperEvent ? 'Registrants' : 'Applicants'}</h4>
 
-                        {(this.props.task.candidates && this.props.task.candidates.length) ?
-                        <List
-                            size="small"
-                            dataSource={this.props.task.candidates}
-                            renderItem={(candidate) => {
+                        {(this.props.task.candidates && this.props.task.candidates.length)
+                            ? <List
+                                size="small"
+                                dataSource={this.props.task.candidates}
+                                renderItem={(candidate) => {
+                                    const name = candidate.type === TASK_CANDIDATE_TYPE.USER ? candidate.user.username : candidate.team.name
+                                    const listItemActions = []
 
-                                const name = candidate.type === TASK_CANDIDATE_TYPE.USER ? candidate.user.username : candidate.team.name
-                                const listItemActions = []
-
-                                if (this.state.isDeveloperEvent) {
-                                    listItemActions.push(candidate.type === TASK_CANDIDATE_TYPE.USER ?
-                                        <Tooltip title="Solo User">
-                                            <Icon type="user"/>
-                                        </Tooltip> :
-                                        <Tooltip title="Team">
-                                            <Icon type="team"/>
-                                        </Tooltip>)
-                                }
-
-                                let candidateIsUserOrTeam = false
-                                if ((candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === this.props.userId) ||
-                                    (candidate.type === TASK_CANDIDATE_TYPE.TEAM && _.map(this.state.teamsOwned, '_id').includes(candidate.team._id))){
-
-                                    candidateIsUserOrTeam = true
-                                }
-
-                                const isLeader = this.props.page === 'LEADER' && isTaskOwner && !candidateIsUserOrTeam
-                                // we either show the remove icon or the approved icon,
-                                // after approval the user cannot rescind their application
-
-                                // if the candidate is the logged in user, show remove icon
-                                if (this.props.page === 'PUBLIC' && candidateIsUserOrTeam) {
                                     if (this.state.isDeveloperEvent) {
-                                        listItemActions.unshift(
-                                            <Tooltip title="remove self">
-                                                <a onClick={this.removeApplication.bind(this, candidate._id)}>x</a>
+                                        listItemActions.push(candidate.type === TASK_CANDIDATE_TYPE.USER
+                                            ? <Tooltip title="Solo User">
+                                                <Icon type="user"/>
                                             </Tooltip>
-                                        )
-                                    } else {
+                                            : <Tooltip title="Team">
+                                                <Icon type="team"/>
+                                            </Tooltip>)
+                                    }
 
-                                        // non developer events should confirm
-                                        if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
+                                    let candidateIsUserOrTeam = false
+                                    if ((candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === this.props.userId) ||
+                                    (candidate.type === TASK_CANDIDATE_TYPE.TEAM && _.map(this.state.teamsOwned, '_id').includes(candidate.team._id))) {
+                                        candidateIsUserOrTeam = true
+                                    }
+
+                                    const isLeader = this.props.page === 'LEADER' && isTaskOwner && !candidateIsUserOrTeam
+                                    // we either show the remove icon or the approved icon,
+                                    // after approval the user cannot rescind their application
+
+                                    // if the candidate is the logged in user, show remove icon
+                                    if (this.props.page === 'PUBLIC' && candidateIsUserOrTeam) {
+                                        if (this.state.isDeveloperEvent) {
                                             listItemActions.unshift(
                                                 <Tooltip title="remove self">
-                                                    <Popconfirm
-                                                        title="Are you sure you want to remove your application?"
-                                                        onConfirm={this.removeApplication.bind(this, candidate._id)}
-                                                        placement="left"
-                                                        okText="Yes"
-                                                        cancelText="No"
-                                                    >
-                                                        <a href="#">x</a>
-                                                    </Popconfirm>
-                                                </Tooltip>)
-                                        } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
-                                            listItemActions.unshift(
-                                                <Tooltip title="remove team">
-                                                    <Popconfirm
-                                                        title="Are you sure you want to remove your team's application?"
-                                                        onConfirm={this.removeApplication.bind(this, candidate._id)}
-                                                        placement="left"
-                                                        okText="Yes"
-                                                        cancelText="No"
-                                                    >
-                                                        <a href="#">x</a>
-                                                    </Popconfirm>
-                                                </Tooltip>)
+                                                    <a onClick={this.removeApplication.bind(this, candidate._id)}>x</a>
+                                                </Tooltip>
+                                            )
+                                        } else {
+                                        // non developer events should confirm
+                                            if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
+                                                listItemActions.unshift(
+                                                    <Tooltip title="remove self">
+                                                        <Popconfirm
+                                                            title="Are you sure you want to remove your application?"
+                                                            onConfirm={this.removeApplication.bind(this, candidate._id)}
+                                                            placement="left"
+                                                            okText="Yes"
+                                                            cancelText="No"
+                                                        >
+                                                            <a href="#">x</a>
+                                                        </Popconfirm>
+                                                    </Tooltip>)
+                                            } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
+                                                listItemActions.unshift(
+                                                    <Tooltip title="remove team">
+                                                        <Popconfirm
+                                                            title="Are you sure you want to remove your team's application?"
+                                                            onConfirm={this.removeApplication.bind(this, candidate._id)}
+                                                            placement="left"
+                                                            okText="Yes"
+                                                            cancelText="No"
+                                                        >
+                                                            <a href="#">x</a>
+                                                        </Popconfirm>
+                                                    </Tooltip>)
+                                            }
                                         }
-                                    }
-
-                                } else if (candidate.status === TASK_CANDIDATE_STATUS.APPROVED){
+                                    } else if (candidate.status === TASK_CANDIDATE_STATUS.APPROVED) {
                                     // this should be the leader's view - they can approve applicants
-                                    listItemActions.unshift(
-                                        <Tooltip title={isTaskOwner ? (candidateIsUserOrTeam ? 'You are automatically accepted' : 'Candidate already accepted') : 'Accepted candidate'}>
-                                            <a>✓</a>
-                                        </Tooltip>)
-                                } else if (!isTaskOwner) {
+                                        listItemActions.unshift(
+                                            <Tooltip title={isTaskOwner ? (candidateIsUserOrTeam ? 'You are automatically accepted' : 'Candidate already accepted') : 'Accepted candidate'}>
+                                                <a>✓</a>
+                                            </Tooltip>)
+                                    } else if (!isTaskOwner) {
                                     // awaiting approval
-                                    listItemActions.unshift(
-                                        <Tooltip title="Awaiting organizer/owner approval">
-                                            <a>o</a>
-                                        </Tooltip>)
-                                } else if (isLeader) {
-                                    listItemActions.unshift(
-                                        <Tooltip title="Accept application">
-                                            <a onClick={this.showModalAcceptApplicant.bind(this, candidate)}>
-                                                <Icon type="check-circle-o" />
-                                            </a>
-                                        </Tooltip>)
-                                }
-
-                                // TODO: link to dedicated profile/team page if it's yours
-                                let nonOwnerLink = ''
-
-                                let userOrTeamName = name
-                                if (candidateIsUserOrTeam) {
-                                    nonOwnerLink = `${userOrTeamName} (you)`
-                                } else {
-
-                                    nonOwnerLink = (candidate.type === TASK_CANDIDATE_TYPE.USER ?
-                                            <a onClick={() => {this.props.history.push(`/member/${candidate.user._id}`)}}>{userOrTeamName}</a> :
-                                            <a onClick={() => {this.props.history.push(`/team/${candidate.team._id}`)}}>{userOrTeamName}</a>
-                                    )
-                                }
-
-                                return <List.Item actions={listItemActions}>
-                                    {isLeader ?
-                                        <Tooltip title="View application">
-                                            <a href="#" onClick={() => {this.props.history.push(`/profile/task-app/${this.props.task._id}/${candidate.user._id}`)}}>{userOrTeamName}</a>
-                                        </Tooltip> : nonOwnerLink
+                                        listItemActions.unshift(
+                                            <Tooltip title="Awaiting organizer/owner approval">
+                                                <a>o</a>
+                                            </Tooltip>)
+                                    } else if (isLeader) {
+                                        listItemActions.unshift(
+                                            <Tooltip title="Accept application">
+                                                <a onClick={this.showModalAcceptApplicant.bind(this, candidate)}>
+                                                    <Icon type="check-circle-o" />
+                                                </a>
+                                            </Tooltip>)
                                     }
-                                </List.Item>
-                            }}
-                        /> : <span className="no-info">
+
+                                    // TODO: link to dedicated profile/team page if it's yours
+                                    let nonOwnerLink = ''
+
+                                    let userOrTeamName = name
+                                    if (candidateIsUserOrTeam) {
+                                        nonOwnerLink = `${userOrTeamName} (you)`
+                                    } else {
+                                        nonOwnerLink = (candidate.type === TASK_CANDIDATE_TYPE.USER
+                                            ? <a onClick={() => { this.props.history.push(`/member/${candidate.user._id}`) }}>{userOrTeamName}</a>
+                                            : <a onClick={() => { this.props.history.push(`/team/${candidate.team._id}`) }}>{userOrTeamName}</a>
+                                        )
+                                    }
+
+                                    return <List.Item actions={listItemActions}>
+                                        {isLeader
+                                            ? <Tooltip title="View application">
+                                                <a href="#" onClick={() => { this.props.history.push(`/profile/task-app/${this.props.task._id}/${candidate.user._id}`) }}>{userOrTeamName}</a>
+                                            </Tooltip> : nonOwnerLink
+                                        }
+                                    </List.Item>
+                                }}
+                            /> : <span className="no-info">
                                 {this.props.task.status === TASK_STATUS.PENDING ? 'task must be approved first' : (this.state.isDeveloperEvent ? 'no registrants' : 'no applicants')}
                             </span>
                         }
@@ -478,7 +470,6 @@ export default class extends BaseComponent {
      * Social Tasks - members must apply for task, with a certain # to be selected
      */
     renderJoinButton() {
-
         if (this.state.isDeveloperEvent) {
             return <Button className="join-btn" onClick={this.confirmDeveloperEventJoin}>
                 Join Event
@@ -506,7 +497,7 @@ export default class extends BaseComponent {
             const prefix = this.props.page === 'LEADER' ? '/profile' : ''
 
             return <Button className="join-btn" onClick={this.showApplicationDetail}>
-                <a onClick={() => {this.props.history.push(`${prefix}/task-app/${this.props.task._id}/${this.props.userId}`)}}>
+                <a onClick={() => { this.props.history.push(`${prefix}/task-app/${this.props.task._id}/${this.props.userId}`) }}>
                     {buttonText}
                 </a>
             </Button>
@@ -537,7 +528,6 @@ export default class extends BaseComponent {
     }
 
     handleModalApplyTask = () => {
-
         const form = this.formRefApplyTask.props.form
 
         // applyId is either literally 'self' or a teamId
@@ -564,12 +554,10 @@ export default class extends BaseComponent {
             if (result) {
                 message.success('You have applied, you will be contacted if approved')
             }
-
         }).catch((err) => {
             // never entered
             message.error(err.message, 10)
         })
-
     }
 
     async removeApplication(tcId) {
@@ -585,7 +573,6 @@ export default class extends BaseComponent {
             modalTaskCandidate: taskCandidate,
             visibleModalAcceptApplicant: true
         })
-
     }
 
     saveAcceptCandidateRef = (ref) => {
@@ -597,7 +584,6 @@ export default class extends BaseComponent {
     }
 
     handleModalAcceptApplicant = () => {
-
         // this is the candidate we are accepting
         const taskCandidateId = this.state.modalTaskCandidate._id
         this.handleCancelModalAcceptApplicant()
@@ -610,7 +596,6 @@ export default class extends BaseComponent {
             acceptedCnt += 1
 
             this.setState({acceptedCnt})
-
         }).catch((err) => {
             message.error(err.message, 10)
         })
@@ -622,7 +607,6 @@ export default class extends BaseComponent {
      * // TODO: send the reminder
      */
     confirmDeveloperEventJoin = () => {
-
         message.success('You have successfully registered for this event, a reminder will be sent closer to the event date')
 
         const taskId = this.props.task._id

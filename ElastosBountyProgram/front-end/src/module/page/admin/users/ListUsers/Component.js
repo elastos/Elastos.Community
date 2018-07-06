@@ -6,7 +6,6 @@ import I18N from '@/I18N'
 import './style.scss'
 
 export default class extends BaseComponent {
-
     ord_render () {
         const columns = [{
             title: I18N.get('1201'),
@@ -51,5 +50,4 @@ export default class extends BaseComponent {
     linkProfileInfo(userId) {
         this.props.history.push(`/admin/profile/${userId}`)
     }
-
 }

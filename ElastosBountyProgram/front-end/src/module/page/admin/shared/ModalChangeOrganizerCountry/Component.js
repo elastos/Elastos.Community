@@ -17,8 +17,8 @@ export default Form.create()(
             const footerModal = (
                 <div>
                     <Button onClick={onCreate} type="primary" className="ant-btn-ebp">Change organizer</Button>
-                    {/*Don't need on this pharse*/}
-                    {/*<Button onClick={handleRemoveCountry}>Remove country</Button>*/}
+                    {/* Don't need on this pharse */}
+                    {/* <Button onClick={handleRemoveCountry}>Remove country</Button> */}
                     <Button onClick={onCancel}>Cancel</Button>
                 </div>
             )
@@ -45,7 +45,7 @@ export default Form.create()(
                                     {Object.keys(config.data.mappingCountryCodeToName).map((key, index) => {
                                         return (
                                             <Select.Option title={config.data.mappingCountryCodeToName[key]} key={index}
-                                                           value={key}>{config.data.mappingCountryCodeToName[key]}</Select.Option>
+                                                value={key}>{config.data.mappingCountryCodeToName[key]}</Select.Option>
                                         )
                                     })}
                                 </Select>
@@ -72,5 +72,5 @@ export default Form.create()(
                 </Modal>
             )
         }
-    },
+    }
 )

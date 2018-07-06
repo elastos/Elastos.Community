@@ -9,7 +9,7 @@ import submission from './redux/submission'
 
 const default_state = {
     init: false
-};
+}
 
 const appReducer = (state = default_state, action) => {
     switch (action.type) {
@@ -26,5 +26,5 @@ export default combineReducers({
     user: user.getReducer(),
     community: community.getReducer(),
     member: member.getReducer(),
-    submission: submission.getReducer(),
+    submission: submission.getReducer()
 })

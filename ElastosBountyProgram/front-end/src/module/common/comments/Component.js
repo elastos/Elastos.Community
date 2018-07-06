@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import { Form, Col, Row, List, Avatar, Icon, Input, Divider, Button, Spin } from 'antd'
 import config from '@/config'
@@ -8,7 +8,6 @@ import moment from 'moment'
 const FormItem = Form.Item
 
 class C extends BaseComponent {
-
     componentDidMount() {
         const taskId = this.props.match.params.taskId
         const submissionId = this.props.match.params.submissionId
@@ -99,8 +98,8 @@ class C extends BaseComponent {
             )
         }
 
-        return this.props.canSubscribe ?
-            (<Button className="ant-btn-ebp pull-left" size="small"
+        return this.props.canSubscribe
+            ? (<Button className="ant-btn-ebp pull-left" size="small"
                 onClick={this.subscribe.bind(this)} loading={this.props.loading[this.props.type]}>
                 Subscribe
             </Button>) : null
@@ -111,8 +110,8 @@ class C extends BaseComponent {
         const subscribeButton = this.getSubscribeButton()
 
         // TODO - canSubscribe requires canPost here, could be improved
-        return this.props.canPost ?
-            (<Form onSubmit={this.handleSubmit.bind(this)} className="c_commentForm">
+        return this.props.canPost
+            ? (<Form onSubmit={this.handleSubmit.bind(this)} className="c_commentForm">
                 <FormItem>
                     {p.comment}
                 </FormItem>
@@ -123,7 +122,7 @@ class C extends BaseComponent {
                         Post
                     </Button>
                 </FormItem>
-            </Form>) : null;
+            </Form>) : null
     }
 
     subscribe() {
@@ -148,30 +147,30 @@ class C extends BaseComponent {
         const footer = this.getFooter()
 
         const commentItems = _.map(comments, (comment, ind) =>
-            {
-                const thread = _.first(comment)
-                const createdByUsername = (thread.createdBy && thread.createdBy.username) || ''
-                const avatar = (thread.createdBy && thread.createdBy.profile.avatar) || ''
-                const createdById = (thread.createdBy && thread.createdBy._id)
-                const dateFormatted = dateFormatter(thread.createdAt)
+        {
+            const thread = _.first(comment)
+            const createdByUsername = (thread.createdBy && thread.createdBy.username) || ''
+            const avatar = (thread.createdBy && thread.createdBy.profile.avatar) || ''
+            const createdById = (thread.createdBy && thread.createdBy._id)
+            const dateFormatted = dateFormatter(thread.createdAt)
 
-                return {
-                    title: thread.comment,
-                    description: (
-                        <div>
-                            <a onClick={() => {createdById && this.props.history.push(`/member/${createdById}`)}}>
-                                {createdByUsername}
-                            </a>
-                            <span>, {dateFormatted}</span>
-                        </div>
-                    ),
-                    avatar,
-                }
+            return {
+                title: thread.comment,
+                description: (
+                    <div>
+                        <a onClick={() => { createdById && this.props.history.push(`/member/${createdById}`) }}>
+                            {createdByUsername}
+                        </a>
+                        <span>, {dateFormatted}</span>
+                    </div>
+                ),
+                avatar
             }
+        }
         )
 
         // Show in reverse chronological order
-        commentItems && commentItems.reverse();
+        commentItems && commentItems.reverse()
 
         return (
             <div>
@@ -179,7 +178,7 @@ class C extends BaseComponent {
                     size="large"
                     itemLayout="horizontal"
                     pagination={{
-                        pageSize: 5,
+                        pageSize: 5
                     }}
                     dataSource={commentItems}
                     header={footer}
@@ -207,8 +206,8 @@ class C extends BaseComponent {
                     this.props.detailReducer,
                     this.props.model._id,
                     values.comment).then(() => {
-                        this.props.form.resetFields()
-                    })
+                    this.props.form.resetFields()
+                })
             }
         })
     }

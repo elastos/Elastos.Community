@@ -13,7 +13,6 @@ import store from '@/store'
 const springConfig = {stiffness: 180, damping: 14}
 export default class extends BaseComponent {
     ord_render(p) {
-
         /*
         const s = this.ord_animate()
         const defaultStyle = {}
@@ -77,7 +76,7 @@ export default class extends BaseComponent {
     ord_checkLogin() {
     }
 
-    $getParam(key){
-        return key ? this.props.match.params[key] : this.props.match.params[key];
+    $getParam(key) {
+        return key ? this.props.match.params[key] : this.props.match.params[key]
     }
 }

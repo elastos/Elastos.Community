@@ -20,10 +20,10 @@ export default class extends AdminPage {
     // Modal add country
     showModalAddCountry = () => {
         this.formRefAddCountry.props.form.setFieldsValue({
-            geolocation: this.props.match.params['country'],
+            geolocation: this.props.match.params['country']
         }, () => {
             this.setState({
-                visibleModalAddCountry: true,
+                visibleModalAddCountry: true
             })
         })
     }
@@ -46,13 +46,13 @@ export default class extends AdminPage {
 
             this.props.addCountry({
                 geolocation: values.geolocation,
-                leaderIds: values['leader'] || '',
+                leaderIds: values['leader'] || ''
             }).then(() => {
                 message.success('Add new country successfully')
 
-                this.loadCommunities();
+                this.loadCommunities()
             }).catch((err) => {
-                console.error(err);
+                console.error(err)
                 message.error('Error while add country')
             })
         })
@@ -62,7 +62,7 @@ export default class extends AdminPage {
     }
 
     componentDidMount() {
-        this.loadCommunities();
+        this.loadCommunities()
         this.props.getAllUsers().then((users) => {
             this.setState({
                 users
@@ -71,7 +71,7 @@ export default class extends AdminPage {
     }
 
     loadCommunities() {
-        const currentCountry = this.props.match.params['country'];
+        const currentCountry = this.props.match.params['country']
 
         if (currentCountry) {
             this.props.getSpecificCountryCommunities(currentCountry).then((communities) => {
@@ -91,7 +91,7 @@ export default class extends AdminPage {
     getAvatarUrl(users) {
         const avatarDefault = {
             [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png'
-        };
+        }
 
         users.forEach((user) => {
             if (!user.profile.avatar) {
@@ -158,11 +158,11 @@ export default class extends AdminPage {
     }
 
     renderBreadcrumbCountries() {
-        const geolocationKeys = _.keyBy(this.state.communities, 'geolocation');
+        const geolocationKeys = _.keyBy(this.state.communities, 'geolocation')
         const listCountriesEl = Object.keys(geolocationKeys).map((geolocation, index) => {
             return (
                 <Select.Option title={config.data.mappingCountryCodeToName[geolocation]} key={index}
-                               value={geolocation}>{config.data.mappingCountryCodeToName[geolocation]}</Select.Option>
+                    value={geolocation}>{config.data.mappingCountryCodeToName[geolocation]}</Select.Option>
             )
         })
 
@@ -187,13 +187,13 @@ export default class extends AdminPage {
         const listCommunitiesEl = this.state.communities.map((community, index) => {
             return (
                 <Col span={6} key={index} className="user-card">
-                    <Link to={'/admin/community/' + community._id  + '/country/' + community.geolocation}>
+                    <Link to={'/admin/community/' + community._id + '/country/' + community.geolocation}>
                         <Card title={community.name}>
-                            {community.leaderIds.length ?
-                                <p className="text-light-gray">Has Organizer(s)</p> :
-                                <p className="highlight-text">Needs an Organizer</p>
+                            {community.leaderIds.length
+                                ? <p className="text-light-gray">Has Organizer(s)</p>
+                                : <p className="highlight-text">Needs an Organizer</p>
                             }
-                            {/*<List
+                            {/* <List
                                 dataSource={community.leaders}
                                 renderItem={item => (
                                     <List.Item className="organizerListItem">
@@ -246,7 +246,7 @@ export default class extends AdminPage {
                     <div className="p_admin_content">
                         <Row>
                             <Col span={20}
-                                 className="admin-left-column wrap-box-user">
+                                className="admin-left-column wrap-box-user">
                                 <div>
                                     <Button className="ant-btn-ebp pull-right" onClick={this.showModalAddCountry} type="primary">Add country</Button>
                                     <Row className="clearfix">
@@ -263,7 +263,7 @@ export default class extends AdminPage {
                                 </div>
                             </Col>
                             <Col span={4}
-                                 className="admin-right-column wrap-box-navigator">
+                                className="admin-right-column wrap-box-navigator">
                                 <Navigator selectedItem={'community'}/>
                             </Col>
                         </Row>

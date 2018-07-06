@@ -1,6 +1,6 @@
-import {createContainer, goPath} from "@/util";
-import Component from './Component';
-import TaskService from '@/service/TaskService';
+import {createContainer, goPath} from '@/util'
+import Component from './Component'
+import TaskService from '@/service/TaskService'
 import CommunityService from '@/service/CommunityService'
 import {message} from 'antd'
 import _ from 'lodash'
@@ -9,17 +9,16 @@ message.config({
     top: 100
 })
 
-
-export default createContainer(Component, (state)=>{
+export default createContainer(Component, (state) => {
     return {
         is_admin: state.user.is_admin
-    };
-}, ()=>{
-    const taskService = new TaskService();
-    const communityService = new CommunityService();
+    }
+}, () => {
+    const taskService = new TaskService()
+    const communityService = new CommunityService()
 
     return {
-        async createTask(formData, st){
+        async createTask(formData, st) {
             try {
                 let createObj = {
 
@@ -44,7 +43,7 @@ export default createContainer(Component, (state)=>{
                     communityParent: formData.communityParent,
 
                     candidateLimit: formData.taskCandLimit,
-                    candidateSltLimit: formData.taskCandSltLimit,
+                    candidateSltLimit: formData.taskCandSltLimit
                 }
 
                 Object.assign(createObj, {
@@ -67,11 +66,11 @@ export default createContainer(Component, (state)=>{
                     }
                 })
 
-                const rs = await taskService.create(createObj);
+                const rs = await taskService.create(createObj)
 
                 if (rs) {
-                    message.success('Task created successfully');
-                    taskService.path.push(`/profile/task-detail/${rs._id}`);
+                    message.success('Task created successfully')
+                    taskService.path.push(`/profile/task-detail/${rs._id}`)
                 }
             } catch (err) {
                 // message.error('There was an error creating this task')
@@ -80,7 +79,6 @@ export default createContainer(Component, (state)=>{
         },
 
         async updateTask(formData, st) {
-
             const taskId = this.existingTask._id
 
             try {
@@ -103,7 +101,7 @@ export default createContainer(Component, (state)=>{
                     // TODO: attachment
 
                     candidateLimit: formData.taskCandLimit,
-                    candidateSltLimit: formData.taskCandSltLimit,
+                    candidateSltLimit: formData.taskCandSltLimit
                 }
 
                 Object.assign(updateObj, {
@@ -136,14 +134,14 @@ export default createContainer(Component, (state)=>{
                     Object.assign(updateObj, {
                         attachment: st.attachment_url,
                         attachmentFilename: st.attachment_filename,
-                        attachmentType: st.attachment_type,
+                        attachmentType: st.attachment_type
                     })
                 }
 
-                const rs = await taskService.update(taskId, updateObj);
+                const rs = await taskService.update(taskId, updateObj)
 
                 if (rs) {
-                    message.success('Task updated successfully');
+                    message.success('Task updated successfully')
 
                     st.editing = false
                     // this.setState({editing: false})
@@ -165,11 +163,11 @@ export default createContainer(Component, (state)=>{
         async getAllCommunities() {
             return new Promise((resolve, reject) => {
                 communityService.getAll().then((data) => {
-                    const cascaderItems =  data.map((item) => {
+                    const cascaderItems = data.map((item) => {
                         return {
                             value: item._id,
                             label: item.name,
-                            parentId: item.parentCommunityId,
+                            parentId: item.parentCommunityId
                         }
                     })
 
@@ -193,5 +191,5 @@ export default createContainer(Component, (state)=>{
                 })
             })
         }
-    };
-});
+    }
+})

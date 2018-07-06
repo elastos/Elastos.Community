@@ -1,4 +1,4 @@
-import {createContainer} from "@/util"
+import {createContainer} from '@/util'
 import Component from './Component'
 import CommentService from '@/service/CommentService'
 import TaskService from '@/service/TaskService'
@@ -12,12 +12,11 @@ export default createContainer(Component, (state) => {
         loading: {
             task: state.task.loading,
             taskCandidate: state.task.loading,
-            submission: state.submission.loading,
+            submission: state.submission.loading
         },
         currentUserId: state.user.current_user_id
     }
 }, () => {
-
     const commentService = new CommentService()
     const submissionService = new SubmissionService()
     const taskService = new TaskService()
@@ -28,7 +27,7 @@ export default createContainer(Component, (state) => {
                 const rs = await commentService.postComment(type, reduxType, detailReducer, parentId, comment)
 
                 if (rs) {
-                    message.success('Your comment has been posted.');
+                    message.success('Your comment has been posted.')
                 }
             } catch (err) {
                 message.error(err.message)

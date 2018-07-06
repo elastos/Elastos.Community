@@ -7,26 +7,23 @@ const FormItem = Form.Item
 const Option = Select.Option
 
 class C extends BaseComponent {
-
     handleSubmit(e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values)
                 this.props.login(values.username, values.password, values.remember)
-
             }
         })
     }
 
     getIssueFormProps() {
-
-        const {getFieldDecorator} = this.props.form;
+        const {getFieldDecorator} = this.props.form
 
         const contribCategory_fn = getFieldDecorator('contribCategory', {
             rules: [{required: true, message: 'Please select a category'}],
             initialValue: 'BLOG'
-        });
+        })
         const contribCategory_el = (
             <Select>
                 <Option value={CONTRIB_CATEGORY.BLOG}>Blog</Option>
@@ -34,7 +31,7 @@ class C extends BaseComponent {
                 <Option value={CONTRIB_CATEGORY.PODCAST}>Podcast</Option>
                 <Option value={CONTRIB_CATEGORY.OTHER}>Other</Option>
             </Select>
-        );
+        )
 
         return {
             contribCategory: contribCategory_fn(contribCategory_el)

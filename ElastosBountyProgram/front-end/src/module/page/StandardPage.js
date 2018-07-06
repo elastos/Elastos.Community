@@ -1,7 +1,7 @@
-import React from 'react';
-import BasePage from '@/model/BasePage';
-import {Layout} from 'antd';
-import Header from '../layout/Header/Container';
+import React from 'react'
+import BasePage from '@/model/BasePage'
+import {Layout} from 'antd'
+import Header from '../layout/Header/Container'
 
 export default class extends BasePage {
     ord_renderPage() {
@@ -13,10 +13,10 @@ export default class extends BasePage {
                 </Layout.Content>
 
             </Layout>
-        );
+        )
     }
 
     ord_renderContent() {
-        return null;
+        return null
     }
 }

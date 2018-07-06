@@ -12,16 +12,13 @@ import { Breadcrumb, Col, Icon, Row, Spin } from 'antd'
 import {TASK_STATUS} from '@/constant'
 
 export default class extends AdminPage {
-
     async componentDidMount() {
         await super.componentDidMount()
         const userId = this.props.match.params.userId
         this.props.getMember(userId)
-
     }
 
     ord_renderContent () {
-
         if (this.props.loading || !this.props.member) {
             return this.renderLoading()
         }
@@ -59,7 +56,7 @@ export default class extends AdminPage {
         )
     }
 
-    renderLoading(){
+    renderLoading() {
         return (
             <div className="flex-center">
                 <Spin size="large" />

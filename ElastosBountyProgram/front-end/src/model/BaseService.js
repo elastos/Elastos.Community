@@ -1,17 +1,16 @@
-import store from '@/store';
+import store from '@/store'
 
 export default class {
-    constructor(){
-        this.store = store;
-        this.path = store.history;
+    constructor() {
+        this.store = store
+        this.path = store.history
 
-        this.init();
+        this.init()
     }
 
-    init(){}
+    init() {}
 
-    dispatch(action){
-        return this.store.dispatch(action);
+    dispatch(action) {
+        return this.store.dispatch(action)
     }
-
 };

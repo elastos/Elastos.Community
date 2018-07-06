@@ -1,23 +1,21 @@
 import BaseService from '../model/BaseService'
 import _ from 'lodash'
 import {USER_ROLE} from '@/constant'
-import {api_request} from '@/util';
+import {api_request} from '@/util'
 
 export default class extends BaseService {
-
-    async login(username, password, opts={}){
-
+    async login(username, password, opts = {}) {
         const userRedux = this.store.getRedux('user')
 
         // call API /login
         const res = await api_request({
-            path : '/api/user/login',
-            method : 'get',
-            data : {
+            path: '/api/user/login',
+            method: 'get',
+            data: {
                 username,
                 password
             }
-        });
+        })
 
         await this.dispatch(userRedux.actions.login_form_reset())
 
@@ -35,7 +33,7 @@ export default class extends BaseService {
         await this.dispatch(userRedux.actions.profile_update(res.user.profile))
         await this.dispatch(userRedux.actions.role_update(res.user.role))
         await this.dispatch(userRedux.actions.current_user_id_update(res.user._id))
-        sessionStorage.setItem('api-token', res['api-token']);
+        sessionStorage.setItem('api-token', res['api-token'])
 
         return {
             success: true,
@@ -44,27 +42,25 @@ export default class extends BaseService {
     }
 
     async register(username, password, profile) {
-
         const res = await api_request({
-            path : '/api/user/register',
-            method : 'post',
-            data : Object.assign(profile, {
+            path: '/api/user/register',
+            method: 'post',
+            data: Object.assign(profile, {
                 username,
                 password
             })
-        });
+        })
 
         return true
     }
 
     async getCurrentUser() {
-
         const userRedux = this.store.getRedux('user')
 
         const result = await api_request({
-            path : '/api/user/current_user',
-            success : (data)=>{
-                this.dispatch(userRedux.actions.is_login_update(true));
+            path: '/api/user/current_user',
+            success: (data) => {
+                this.dispatch(userRedux.actions.is_login_update(true))
                 if ([USER_ROLE.LEADER].includes(data.role)) {
                     this.dispatch(userRedux.actions.is_leader_update(true))
                 }
@@ -87,7 +83,6 @@ export default class extends BaseService {
     // restrictive getter - public profile should never return email / private info
     // TODO: I am using member to refer to a profile other than yourself, might want to change it
     async getMember(userId, options = {}) {
-
         let path = `/api/user/public/${userId}`
         const memberRedux = this.store.getRedux('member')
 
@@ -104,7 +99,6 @@ export default class extends BaseService {
         // this is gross, if we are focused on a user, it shouldn't matter if it's you or another user
         // we should use the same base redux model
         if (options.admin) {
-
             await this.dispatch(memberRedux.actions.focus_user_update(result))
             await this.dispatch(memberRedux.actions.loading_update(false))
         }
@@ -113,7 +107,6 @@ export default class extends BaseService {
     }
 
     async update(userId, doc) {
-
         const memberRedux = this.store.getRedux('member')
 
         await this.dispatch(memberRedux.actions.loading_update(true))
@@ -130,11 +123,11 @@ export default class extends BaseService {
         return result
     }
 
-    async logout(){
+    async logout() {
         const userRedux = this.store.getRedux('user')
         const tasksRedux = this.store.getRedux('task')
 
-        return new Promise((resolve)=>{
+        return new Promise((resolve) => {
             this.dispatch(userRedux.actions.is_login_update(false))
             this.dispatch(userRedux.actions.profile_reset())
             this.dispatch(tasksRedux.actions.all_tasks_reset())
@@ -155,9 +148,9 @@ export default class extends BaseService {
 
     async getByIds(ids) {
         const result = await api_request({
-            path : `/api/user/${ids}/users`,
-            method : 'get',
-        });
+            path: `/api/user/${ids}/users`,
+            method: 'get'
+        })
 
         return result
     }
@@ -168,10 +161,9 @@ export default class extends BaseService {
         await this.dispatch(memberRedux.actions.loading_update(true))
 
         const result = await api_request({
-            path : `/api/user/list`,
-            method : 'get',
-        });
-
+            path: `/api/user/list`,
+            method: 'get'
+        })
 
         await this.dispatch(memberRedux.actions.users_update(result))
         await this.dispatch(memberRedux.actions.loading_update(false))

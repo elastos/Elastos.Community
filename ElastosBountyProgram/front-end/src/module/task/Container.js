@@ -1,16 +1,15 @@
-import {createContainer} from "@/util"
+import {createContainer} from '@/util'
 import Component from './Component'
 import TaskService from '@/service/TaskService'
 import {message} from 'antd'
 import {TASK_STATUS} from '@/constant'
 
 export default createContainer(Component, (state) => {
-
     let page = 'PUBLIC' // default
 
     if (/^\/admin/.test(state.router.location.pathname)) {
         page = 'ADMIN'
-    } else if (/^\/profile/.test(state.router.location.pathname)){
+    } else if (/^\/profile/.test(state.router.location.pathname)) {
         page = 'LEADER'
     }
 
@@ -21,7 +20,6 @@ export default createContainer(Component, (state) => {
         page: page
     }
 }, () => {
-
     const taskService = new TaskService()
 
     return {
@@ -34,39 +32,36 @@ export default createContainer(Component, (state) => {
         },
 
         async approveTask(taskId) {
-
             try {
                 await taskService.update(taskId, {
                     status: TASK_STATUS.APPROVED
                 })
 
-                message.success('Task approved successfully');
+                message.success('Task approved successfully')
             } catch (err) {
                 message.error(err.message)
             }
         },
 
         async markAsSubmitted(taskId) {
-
             try {
                 await taskService.update(taskId, {
                     status: TASK_STATUS.SUBMITTED
                 })
 
-                message.success('Task marked as complete');
+                message.success('Task marked as complete')
             } catch (err) {
                 message.error(err.message)
             }
         },
 
         async markAsDisbursed(taskId) {
-
             try {
                 await taskService.update(taskId, {
                     status: TASK_STATUS.DISTRIBUTED
                 })
 
-                message.success('Task marked as ELA disbursed');
+                message.success('Task marked as ELA disbursed')
             } catch (err) {
                 message.error(err.message)
             }
@@ -74,26 +69,24 @@ export default createContainer(Component, (state) => {
 
         // TODO: language here needs work
         async markAsSuccessful(taskId) {
-
             try {
                 await taskService.update(taskId, {
                     status: TASK_STATUS.SUCCESS
                 })
 
-                message.success('Task completion accepted');
+                message.success('Task completion accepted')
             } catch (err) {
                 message.error(err.message)
             }
         },
 
         async forceStart(taskId) {
-
             try {
                 await taskService.update(taskId, {
                     status: TASK_STATUS.ASSIGNED
                 })
 
-                message.success('Task marked as assigned');
+                message.success('Task marked as assigned')
             } catch (err) {
                 message.error(err.message)
             }

@@ -4,7 +4,6 @@ import {Layout, Menu, Icon, Badge, Avatar, Modal, Dropdown} from 'antd'
 import _ from 'lodash'
 import I18N from '@/I18N'
 
-
 import {USER_ROLE} from '@/constant'
 
 const {Header} = Layout
@@ -12,7 +11,6 @@ const SubMenu = Menu.SubMenu
 const MenuItemGroup = Menu.ItemGroup
 
 export default class extends BaseComponent {
-
     /*
     buildOverviewDropdown() {
         return (
@@ -32,17 +30,16 @@ export default class extends BaseComponent {
     */
 
     buildAcctDropdown() {
-
         const isLogin = this.props.isLogin
         const hasAdminAccess = [USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(this.props.role)
 
         return (
             <Menu onClick={this.clickItem.bind(this)}>
-                {isLogin ?
-                    <Menu.Item key="profile/info">
+                {isLogin
+                    ? <Menu.Item key="profile/info">
                         {I18N.get('0200')}
-                    </Menu.Item> :
-                    <Menu.Item key="login">
+                    </Menu.Item>
+                    : <Menu.Item key="login">
                         {I18N.get('0201')}
                     </Menu.Item>
                 }
@@ -66,7 +63,6 @@ export default class extends BaseComponent {
     }
 
     ord_render() {
-
         const isLogin = this.props.isLogin
 
         // const overviewDropdown = this.buildOverviewDropdown()

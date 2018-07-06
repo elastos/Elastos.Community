@@ -8,7 +8,7 @@ import {
 
 } from 'antd'
 
-import {upload_file} from "@/util";
+import {upload_file} from '@/util'
 import './style.scss'
 
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS} from '@/constant'
@@ -17,7 +17,6 @@ const FormItem = Form.Item
 const TextArea = Input.TextArea
 
 class C extends BaseComponent {
-
     handleSubmit (e) {
         e.preventDefault()
         this.props.form.validateFields((err, formData) => {
@@ -30,7 +29,6 @@ class C extends BaseComponent {
     }
 
     getInputProps () {
-
         const {getFieldDecorator} = this.props.form
 
         const subject_fn = getFieldDecorator('subject', {
@@ -86,6 +84,5 @@ class C extends BaseComponent {
             </div>
         )
     }
-
 }
 export default Form.create()(C)

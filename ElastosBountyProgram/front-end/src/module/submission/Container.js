@@ -1,14 +1,13 @@
-import {createContainer} from "@/util"
+import {createContainer} from '@/util'
 import Component from './Component'
 import SubmissionService from '@/service/SubmissionService'
 
 export default createContainer(Component, (state) => {
-
     let page = 'PUBLIC' // default
 
     if (/^\/admin/.test(state.router.location.pathname)) {
         page = 'ADMIN'
-    } else if (/^\/profile/.test(state.router.location.pathname)){
+    } else if (/^\/profile/.test(state.router.location.pathname)) {
         page = 'LEADER'
     }
 
@@ -19,7 +18,6 @@ export default createContainer(Component, (state) => {
         page: page
     }
 }, () => {
-
     const submissionService = new SubmissionService()
 
     return {
@@ -29,6 +27,6 @@ export default createContainer(Component, (state) => {
 
         async resetSubmissionDetail() {
             return submissionService.resetSubmissionDetail()
-        },
+        }
     }
 })

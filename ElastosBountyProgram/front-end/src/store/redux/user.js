@@ -1,8 +1,8 @@
-import BaseRedux from '@/model/BaseRedux';
+import BaseRedux from '@/model/BaseRedux'
 
 class UserRedux extends BaseRedux {
     defineTypes() {
-        return ['user'];
+        return ['user']
     }
 
     defineDefaultState() {
@@ -38,7 +38,7 @@ class UserRedux extends BaseRedux {
             current_user_id: null,
 
             teams: []
-        };
+        }
     }
 }
 

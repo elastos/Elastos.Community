@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import { Col, Row, Icon, Divider, Button, Spin } from 'antd'
 
@@ -17,7 +17,6 @@ import './style.scss'
  *
  */
 export default class extends BaseComponent {
-
     renderMain() {
         return (
             <div className="c_SubmissionDetail">
@@ -31,9 +30,9 @@ export default class extends BaseComponent {
     }
 
     ord_render () {
-        return (_.isEmpty(this.props.submission) || this.props.submission.loading ?
-            <div class="center"><Spin size="large" /></div> :
-            this.renderMain()
+        return (_.isEmpty(this.props.submission) || this.props.submission.loading
+            ? <div class="center"><Spin size="large" /></div>
+            : this.renderMain()
         )
     }
 }

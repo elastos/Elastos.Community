@@ -14,7 +14,6 @@ import { Link } from 'react-router-dom'
 import {TASK_STATUS} from '@/constant'
 
 export default class extends AdminPage {
-
     state = {
         filteredInfo: null,
 
@@ -33,7 +32,7 @@ export default class extends AdminPage {
     handleChange = (pagination, filters, sorter) => {
         this.setState({
             filteredInfo: filters
-        });
+        })
     }
 
     handleSearchTask(value) {
@@ -41,7 +40,7 @@ export default class extends AdminPage {
     }
 
     ord_renderContent () {
-        let { filteredInfo } = this.state;
+        let { filteredInfo } = this.state
 
         let taskData = this.props.all_tasks
 
@@ -52,7 +51,7 @@ export default class extends AdminPage {
             })
         }
 
-        filteredInfo = filteredInfo || {};
+        filteredInfo = filteredInfo || {}
 
         const columns = [{
             title: 'Name',
@@ -72,25 +71,24 @@ export default class extends AdminPage {
             render: (category) => _.capitalize(category)
         }, {
             title: 'Type',
-            dataIndex: 'type',
+            dataIndex: 'type'
         }, {
             title: 'Community',
             dataIndex: 'community',
             key: 'community',
             render: (community, data) => {
                 if (!community) {
-                    return null;
+                    return null
                 }
 
                 if (data.communityParent) {
-                    let nameParent = data.communityParent.name;
+                    let nameParent = data.communityParent.name
                     return (<p>{nameParent}/{community.name}</p>)
                 } else {
                     return (<p>{community.name}</p>)
                 }
-
             }
-        },{
+        }, {
             title: 'Status',
             dataIndex: 'status',
             filters: [
@@ -114,7 +112,7 @@ export default class extends AdminPage {
             sorter: (a, b) => {
                 return moment(a.createdAt).valueOf() - moment(b.createdAt).valueOf()
             },
-            defaultSortOrder: 'descend',
+            defaultSortOrder: 'descend'
         }, {
             title: '',
             dataIndex: '_id',
@@ -141,8 +139,8 @@ export default class extends AdminPage {
                             <Col span={20} className="c_TaskTableContainer admin-left-column wrap-box-user">
                                 <div className="pull-right">
                                     <Input.Search onSearch={this.handleSearchTask.bind(this)}
-                                                  prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                                                  placeholder="Task name"/>
+                                        prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                        placeholder="Task name"/>
                                 </div>
                                 <div className="clearfix"/>
                                 <Table
@@ -151,7 +149,7 @@ export default class extends AdminPage {
                                     dataSource={taskData}
                                     loading={this.props.loading}
                                     onChange={this.handleChange}
-                               />
+                                />
                             </Col>
                             <Col span={4} className="admin-right-column wrap-box-navigator">
                                 <Navigator selectedItem={'tasks'}/>

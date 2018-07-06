@@ -8,10 +8,10 @@ import './style.scss'
 
 import { Col, Row, Icon, message, Button, Select, Table, List, Checkbox, Cascader, Popconfirm } from 'antd'
 
-const Option = Select.Option
-
 import { SUBMISSION_TYPE, TASK_STATUS, TASK_TYPE } from '@/constant'
 import _ from 'lodash'
+
+const Option = Select.Option
 
 export default class extends StandardPage {
     state = {
@@ -125,16 +125,15 @@ export default class extends StandardPage {
             dataIndex: 'community',
             render: (community, data) => {
                 if (!community) {
-                    return null;
+                    return null
                 }
 
                 if (data.communityParent) {
-                    let nameParent = data.communityParent.name;
+                    let nameParent = data.communityParent.name
                     return (<p>{nameParent}/{community.name}</p>)
                 } else {
                     return (<p>{community.name}</p>)
                 }
-
             }
         }, {
             title: 'Reward',
@@ -166,7 +165,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row d_rowTop">
-                        <Col md={{span:24}} lg={{span: 18}} xxl={{span: 18}} className="d_leftContainer d_box">
+                        <Col md={{span: 24}} lg={{span: 18}} xxl={{span: 18}} className="d_leftContainer d_box">
                             <div className="pull-left btnContainer">
                                 <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.EVENT)}>
                                     Events
@@ -207,7 +206,7 @@ export default class extends StandardPage {
                             />
                             }
                         </Col>
-                        <Col md={{span:24}} lg={{span: 6}} xxl={{span: 6}}className="d_rightContainer d_box d_communities">
+                        <Col md={{span: 24}} lg={{span: 6}} xxl={{span: 6}}className="d_rightContainer d_box d_communities">
                             <h4>
                                 My Communities
                             </h4>
@@ -239,7 +238,7 @@ export default class extends StandardPage {
                                     return <List.Item>
                                         <Row style={{'width': '100%'}}>
                                             <Col span={18}>
-                                                <Popconfirm title="Go to community?" placement="left" okText="Yes" onConfirm={() => {this.props.history.push(`/community/${community._id}/country/${community.geolocation}`)}}>
+                                                <Popconfirm title="Go to community?" placement="left" okText="Yes" onConfirm={() => { this.props.history.push(`/community/${community._id}/country/${community.geolocation}`) }}>
                                                     <span className="community-link">{community.name}</span>
                                                 </Popconfirm>
                                             </Col>
@@ -363,17 +362,16 @@ export default class extends StandardPage {
             form.resetFields()
             this.setState({visibleModalJoinCommunity: false})
 
-            const communityId = values['community'][values['community'].length - 1];
+            const communityId = values['community'][values['community'].length - 1]
             this.props.addMemberToCommunity(this.props.currentUserId, communityId).then(() => {
                 message.success('You was added to the community. Thanks!')
 
                 // Reload my communities
                 this.props.getMyCommunities(this.props.currentUserId)
             }).catch((err) => {
-                console.error(err);
+                console.error(err)
                 message.error('Error while joining the community')
             })
         })
     }
-
 }

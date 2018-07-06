@@ -1,23 +1,23 @@
-import React from 'react';
-import BaseAdmin from '../BaseAdmin';
-import {createContainer} from '@/util';
+import React from 'react'
+import BaseAdmin from '../BaseAdmin'
+import {createContainer} from '@/util'
 
 import Navigator from '../shared/Navigator/Component'
-import { Breadcrumb, Col, Icon, Row, Menu, Select, Table } from 'antd';
+import { Breadcrumb, Col, Icon, Row, Menu, Select, Table } from 'antd'
 
-import TeamService from '@/service/TeamService';
-import moment from "moment/moment";
-import config from '@/config';
+import TeamService from '@/service/TeamService'
+import moment from 'moment/moment'
+import config from '@/config'
 
 const Component = class extends BaseAdmin {
-    ord_states(){
+    ord_states() {
         return {
-            loading : true,
-            total : 0,
-            list : []
-        };
+            loading: true,
+            total: 0,
+            list: []
+        }
     }
-    ord_renderContent(){
+    ord_renderContent() {
         return (
             <div className="p_admin_index ebp-wrap">
                 <div className="d_box">
@@ -43,7 +43,7 @@ const Component = class extends BaseAdmin {
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 
     renderList() {
@@ -54,19 +54,19 @@ const Component = class extends BaseAdmin {
                 key: 'name',
                 width: '20%',
                 className: 'fontWeight500',
-                render : (name, record)=>{
+                render: (name, record) => {
                     return <a onClick={this.goDetail.bind(this, record._id)} className="tableLink">{name}</a>
                 }
             },
             {
                 title: 'Description',
-                dataIndex: 'profile.description',
+                dataIndex: 'profile.description'
                 // key: 'profile.description'
             },
             {
                 title: 'Type',
                 dataIndex: 'type',
-                key: 'type',
+                key: 'type'
                 // render: (category) => _.capitalize(category)
             },
             {
@@ -75,8 +75,7 @@ const Component = class extends BaseAdmin {
                 key: 'createdAt',
                 render: (createdAt) => moment(createdAt).format(config.FORMAT.DATE)
             }
-        ];
-
+        ]
 
         return (
             <Table
@@ -85,33 +84,33 @@ const Component = class extends BaseAdmin {
                 dataSource={this.state.list}
                 loading={this.state.loading}
             />
-        );
+        )
     }
 
-    goDetail(teamId){
-        this.props.history.push(`/admin/teams/${teamId}`);
+    goDetail(teamId) {
+        this.props.history.push(`/admin/teams/${teamId}`)
     }
 
-    async componentDidMount(){
-        await super.componentDidMount();
+    async componentDidMount() {
+        await super.componentDidMount()
 
-        const d = await this.props.list();
+        const d = await this.props.list()
         this.setState({
-            total : d.total,
-            list : d.list,
-            loading : false
-        });
+            total: d.total,
+            list: d.list,
+            loading: false
+        })
     }
-};
+}
 
-export default createContainer(Component, ()=>{
-    return {};
-}, ()=>{
-    const teamService = new TeamService();
+export default createContainer(Component, () => {
+    return {}
+}, () => {
+    const teamService = new TeamService()
 
     return {
-        async list(){
-            return await teamService.list();
+        async list() {
+            return await teamService.list()
         }
-    };
-});
+    }
+})

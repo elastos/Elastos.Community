@@ -1,14 +1,13 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import { Form, Modal, Select, Button, Input } from 'antd'
-const TextArea = Input.TextArea
 import config from '@/config'
+const TextArea = Input.TextArea
 
 const FormItem = Form.Item
 
 export default Form.create()(
     class C extends BaseComponent {
-
         ord_render () {
             const {onCancel, onCreate, visible, taskCandidate, acceptedCnt, acceptedMax} = this.props
             if (!taskCandidate) {
@@ -49,12 +48,12 @@ export default Form.create()(
                         <p>
                             {taskCandidate.applyMsg ? taskCandidate.applyMsg : 'no message given'}
                         </p>
-                    </div> :
-                    <span className="strong-text">
+                    </div>
+                        : <span className="strong-text">
                         You cannot accept any more candidates for this task
-                    </span>}
+                        </span>}
                 </Modal>
             )
         }
-    },
+    }
 )

@@ -1,22 +1,20 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import {Form, Icon, Input, Button, Checkbox} from 'antd'
-import ReCAPTCHA from 'react-google-recaptcha';
-import {RECAPTCHA_KEY} from '@/config/constant';
+import ReCAPTCHA from 'react-google-recaptcha'
+import {RECAPTCHA_KEY} from '@/config/constant'
 
 import './style.scss'
 
 const FormItem = Form.Item
 
 class C extends BaseComponent {
-
     handleSubmit(e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values)
                 this.props.login(values.username, values.password, values.remember)
-
             }
         })
     }

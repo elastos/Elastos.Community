@@ -9,7 +9,7 @@ class SubmissionRedux extends BaseRedux {
         return ['submission']
     }
 
-    defineDefaultState(){
+    defineDefaultState() {
         return {
             active_submission: null,
 
@@ -23,7 +23,7 @@ class SubmissionRedux extends BaseRedux {
 
             // if we select a detail
             detail: {}
-        };
+        }
     }
 }
 

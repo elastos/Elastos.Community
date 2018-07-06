@@ -19,7 +19,6 @@ export default createContainer(Component, (state) => {
         taskState.all_tasks = _.values(taskState.all_tasks)
     }
 
-
     taskState.filter = state.task.filter || {}
     taskState.owned_tasks = []
     taskState.subscribed_tasks = []
@@ -64,9 +63,7 @@ export default createContainer(Component, (state) => {
     }
 
     return taskState
-
 }, () => {
-
     const taskService = new TaskService()
 
     return {
@@ -95,7 +92,6 @@ export default createContainer(Component, (state) => {
         },
 
         async getUserTeams(currentUserId) {
-
             const teamService = new TeamService()
 
             return teamService.getUserTeams(currentUserId)

@@ -17,20 +17,20 @@ export default Form.create()(
                 wrapperCol: {span: 18}
             }
 
-            let contextTitle;
+            let contextTitle
             switch (communityType) {
                 case COMMUNITY_TYPE.STATE:
-                    contextTitle = 'Update states / provinces';
-                    break;
+                    contextTitle = 'Update states / provinces'
+                    break
                 case COMMUNITY_TYPE.CITY:
-                    contextTitle = 'Update city';
-                    break;
+                    contextTitle = 'Update city'
+                    break
                 case COMMUNITY_TYPE.REGION:
-                    contextTitle = 'Update region';
-                    break;
+                    contextTitle = 'Update region'
+                    break
                 default:
-                    contextTitle = 'Update school';
-                    break;
+                    contextTitle = 'Update school'
+                    break
             }
 
             const footerModal = (
@@ -66,7 +66,7 @@ export default Form.create()(
                                     {Object.keys(config.data.mappingCountryCodeToName).map((key, index) => {
                                         return (
                                             <Select.Option title={config.data.mappingCountryCodeToName[key]} key={index}
-                                                           value={key}>{config.data.mappingCountryCodeToName[key]}</Select.Option>
+                                                value={key}>{config.data.mappingCountryCodeToName[key]}</Select.Option>
                                         )
                                     })}
                                 </Select>
@@ -102,5 +102,5 @@ export default Form.create()(
                 </Modal>
             )
         }
-    },
+    }
 )

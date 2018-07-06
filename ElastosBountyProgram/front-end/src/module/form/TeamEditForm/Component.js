@@ -19,18 +19,14 @@ import {
 
 } from 'antd'
 
-
-
 const FormItem = Form.Item
 const TextArea = Input.TextArea
 const RadioGroup = Radio.Group
 
-
 class C extends BaseComponent {
-
-    ord_states(){
+    ord_states() {
         return {
-            loading : false
+            loading: false
         }
     }
 
@@ -39,27 +35,26 @@ class C extends BaseComponent {
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
                 const res = await this.props.update({
-                    id : this.props.data._id,
-                    name : values.name,
-                    type : values.type,
-                    description : values.description,
+                    id: this.props.data._id,
+                    name: values.name,
+                    type: values.type,
+                    description: values.description,
                     recruiting: values.recruiting
-                });
-                if(res){
-                    location.reload();
+                })
+                if (res) {
+                    location.reload()
                 }
-
             }
         })
     }
 
     getInputProps () {
-        const {getFieldDecorator} = this.props.form;
-        const team = this.props.data;
+        const {getFieldDecorator} = this.props.form
+        const team = this.props.data
 
         const input_el = (
             <Input size="large"/>
-        );
+        )
 
         const name_fn = getFieldDecorator('name', {
             rules: [{required: true, message: 'team name is required'}],
@@ -72,12 +67,12 @@ class C extends BaseComponent {
         })
         const type_el = (
             <RadioGroup>
-                {_.map(['DEVELOP', 'MARKET', 'DESIGN', 'PROJECT', 'OTHER'], (v, i)=>{
+                {_.map(['DEVELOP', 'MARKET', 'DESIGN', 'PROJECT', 'OTHER'], (v, i) => {
                     return (
                         <Radio key={i} value={v}>
                             {v}
                         </Radio>
-                    );
+                    )
                 })}
 
             </RadioGroup>
@@ -110,13 +105,12 @@ class C extends BaseComponent {
         })
         const tags_el = <Input size="large" disabled={true} />
 
-
         return {
             name: name_fn(input_el),
             type: type_fn(type_el),
-            recruiting : recruiting_fn(recruiting_el),
-            description : description_fn(input_el),
-            tags : tags_fn(tags_el)
+            recruiting: recruiting_fn(recruiting_el),
+            description: description_fn(input_el),
+            tags: tags_fn(tags_el)
         }
     }
 
@@ -130,12 +124,12 @@ class C extends BaseComponent {
         const formItemLayout = {
             labelCol: {
                 xs: {span: 24},
-                sm: {span: 8},
+                sm: {span: 8}
             },
             wrapperCol: {
                 xs: {span: 24},
-                sm: {span: 12},
-            },
+                sm: {span: 12}
+            }
         }
 
         return (
@@ -159,7 +153,6 @@ class C extends BaseComponent {
                             {p.tags}
                         </FormItem>
 
-
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
                             <Button loading={this.state.loading} type="ebp" htmlType="submit" className="d_btn">
                                 Save Changes
@@ -170,6 +163,5 @@ class C extends BaseComponent {
             </div>
         )
     }
-
 }
 export default Form.create()(C)

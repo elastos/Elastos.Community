@@ -12,7 +12,6 @@ message.config({
  * TODO: move this to server side
  */
 export default createContainer(Component, (state) => {
-
     return {
         ...state.user.register_form
     }

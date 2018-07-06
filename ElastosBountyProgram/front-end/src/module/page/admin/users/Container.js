@@ -5,7 +5,6 @@ import { message } from 'antd/lib/index'
 import _ from 'lodash'
 
 export default createContainer(Component, (state) => {
-
     if (!_.isArray(state.member.users)) {
         state.member.users = _.values(state.member.users)
     }

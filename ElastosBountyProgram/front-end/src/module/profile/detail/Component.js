@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import UserContactForm from '@/module/form/UserContactForm/Container'
 import moment from 'moment'
@@ -14,10 +14,8 @@ import config from '@/config'
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
 export default class extends BaseComponent {
-
     // TODO: add twitter, telegram, linkedIn, FB
     ord_render () {
-
         if (!this.props.member) {
             return <div/>
         }
@@ -86,8 +84,8 @@ export default class extends BaseComponent {
                             <Col span={24}>
                                 {!this.props.is_login ? <div>
                                     You must login/register first to send a message
-                                </div> :
-                                <UserContactForm recipient={this.props.member}/>
+                                </div>
+                                    : <UserContactForm recipient={this.props.member}/>
                                 }
                             </Col>
                         </Row>
@@ -101,5 +99,4 @@ export default class extends BaseComponent {
     getCountryName(countryCode) {
         return config.data.mappingCountryCodeToName[countryCode]
     }
-
 }

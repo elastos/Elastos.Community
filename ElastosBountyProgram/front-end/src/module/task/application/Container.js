@@ -4,7 +4,6 @@ import TaskService from '@/service/TaskService'
 import TeamService from '@/service/TeamService'
 import { message } from 'antd/lib/index'
 
-
 export default createContainer(Component, (state) => {
     return {
         userId: state.user.current_user_id,
@@ -12,7 +11,6 @@ export default createContainer(Component, (state) => {
         is_admin: state.user.is_admin
     }
 }, () => {
-
     const teamService = new TeamService()
     const taskService = new TaskService()
 

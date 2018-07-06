@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import UserEditForm from '@/module/form/UserEditForm/Container'
 import { Col, Row, Icon, Divider, Button, Spin } from 'antd'
@@ -19,15 +19,13 @@ import './style.scss'
  *
  */
 export default class extends BaseComponent {
-
     // only wraps loading / renderMain
     ord_render () {
-        return (_.isEmpty(this.props.user) || this.props.user.loading ?
-                <div class="center"><Spin size="large" /></div> :
-                this.renderMain()
+        return (_.isEmpty(this.props.user) || this.props.user.loading
+            ? <div class="center"><Spin size="large" /></div>
+            : this.renderMain()
         )
     }
-
 
     // header + main area
     renderMain() {
@@ -48,7 +46,6 @@ export default class extends BaseComponent {
 
     // for now public and your profile view looks the same
     renderDetail() {
-
         if (this.props.page === 'ADMIN' || this.props.page === 'LEADER') {
             return this.renderPersonalDetail()
         } else {
@@ -58,7 +55,6 @@ export default class extends BaseComponent {
     }
 
     renderHeader() {
-
         // TODO: edit only if you're own profile / is admin
         return <div className="l_banner">
             <div className="pull-left">
@@ -71,11 +67,9 @@ export default class extends BaseComponent {
             </div>
             <div className="clearfix"/>
         </div>
-
     }
 
     renderPersonalDetail() {
-
         return (
             <div>
                 <Row>
@@ -171,25 +165,24 @@ export default class extends BaseComponent {
     }
 
     getGenderName(key) {
-        return config.data.mappingGenderKeyToName[key];
+        return config.data.mappingGenderKeyToName[key]
     }
 
     getAvatarUrl(profile) {
         if (profile.avatar) {
-            return profile.avatar;
+            return profile.avatar
         }
 
         const avatarDefault = {
             [USER_GENDER.MALE]: '/assets/images/User_Avatar_Male.png',
             [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Female.png',
-            [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png',
-        };
+            [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png'
+        }
 
-        return avatarDefault[profile.gender];
+        return avatarDefault[profile.gender]
     }
 
     switchEditMode() {
         this.setState({editing: !this.state.editing})
     }
-
 }

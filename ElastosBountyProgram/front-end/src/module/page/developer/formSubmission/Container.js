@@ -3,7 +3,6 @@ import Component from './Component'
 import SubmissionService from '@/service/SubmissionService'
 import { message } from 'antd'
 
-
 export default createContainer(Component, (state) => {
     return {
         ...state
@@ -21,7 +20,7 @@ export default createContainer(Component, (state) => {
                 })
 
                 if (rs) {
-                    message.success('Your issue has been submitted. Thanks!');
+                    message.success('Your issue has been submitted. Thanks!')
                 }
             } catch (err) {
                 message.error(err.message)

@@ -1,5 +1,5 @@
-import React from 'react';
-import StandardPage from '../../StandardPage';
+import React from 'react'
+import StandardPage from '../../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import Navigator from '@/module/page/shared/Navigator/Container'
 
@@ -8,10 +8,9 @@ import '../../admin/admin.scss'
 
 import { Col, Row, Icon, Form, Breadcrumb, Button, Table, Divider } from 'antd'
 import moment from 'moment/moment'
-const FormItem = Form.Item;
+const FormItem = Form.Item
 
 export default class extends StandardPage {
-
     componentDidMount() {
         this.props.getTasks(this.props.currentUserId)
         this.props.getUserTeams(this.props.currentUserId)
@@ -44,23 +43,22 @@ export default class extends StandardPage {
             render: (category) => _.capitalize(category)
         }, {
             title: 'Type',
-            dataIndex: 'type',
+            dataIndex: 'type'
         }, {
             title: 'Community',
             dataIndex: 'community',
             key: 'community',
             render: (community, data) => {
                 if (!community) {
-                    return null;
+                    return null
                 }
 
                 if (data.communityParent) {
-                    let nameParent = data.communityParent.name;
+                    let nameParent = data.communityParent.name
                     return (<p>{nameParent}/{community.name}</p>)
                 } else {
                     return (<p>{community.name}</p>)
                 }
-
             }
         }, {
             title: 'Date',
@@ -94,28 +92,27 @@ export default class extends StandardPage {
             render: (category) => _.capitalize(category)
         }, {
             title: 'Type',
-            dataIndex: 'type',
+            dataIndex: 'type'
         }, {
             title: 'Community',
             dataIndex: 'community',
             key: 'community',
             render: (community, data) => {
                 if (!community) {
-                    return null;
+                    return null
                 }
 
                 if (data.communityParent) {
-                    let nameParent = data.communityParent.name;
+                    let nameParent = data.communityParent.name
                     return (<p>{nameParent}/{community.name}</p>)
                 } else {
                     return (<p>{community.name}</p>)
                 }
-
             }
         }, {
             title: 'Status',
             dataIndex: 'status'
-        },{
+        }, {
             title: 'Date',
             dataIndex: 'startTime',
             render: (startTime) => moment(startTime).format('MMM D')

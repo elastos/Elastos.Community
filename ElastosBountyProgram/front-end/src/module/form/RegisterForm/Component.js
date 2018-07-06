@@ -13,7 +13,6 @@ import './style.scss'
 const FormItem = Form.Item
 
 class C extends BaseComponent {
-
     state = {
         requestedCode: null
     }
@@ -44,7 +43,7 @@ class C extends BaseComponent {
         // Generate a random six digit code
         const min = 100000
         const max = 1000000
-        return Math.round(Math.random() * (max - min) + min);
+        return Math.round(Math.random() * (max - min) + min)
     }
 
     validateRegCode(rule, value, callback) {
@@ -87,7 +86,7 @@ class C extends BaseComponent {
         })
         const regCode_el = (
             <Input size="large"
-                   placeholder="Confirmation code"/>
+                placeholder="Confirmation code"/>
         )
 
         return {
@@ -104,8 +103,8 @@ class C extends BaseComponent {
         })
         const firstName_el = (
             <Input size="large"
-                   prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                   placeholder="First name"/>
+                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                placeholder="First name"/>
         )
 
         const lastName_fn = getFieldDecorator('lastName', {
@@ -114,8 +113,8 @@ class C extends BaseComponent {
         })
         const lastName_el = (
             <Input size="large"
-                   prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                   placeholder="Last name"/>
+                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                placeholder="Last name"/>
         )
 
         const username_fn = getFieldDecorator('username', {
@@ -136,7 +135,7 @@ class C extends BaseComponent {
                 required: true, message: 'Please input your email'
             }, {
                 type: 'email', message: 'The input is not valid E-mail!'
-            }],
+            }]
         })
         const email_el = (
             <Input size="large"
@@ -166,8 +165,8 @@ class C extends BaseComponent {
         })
         const pwdConfirm_el = (
             <Input size="large"
-                   prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                   type="password" placeholder="Password confirm"/>
+                prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                type="password" placeholder="Password confirm"/>
         )
 
         const country_fn = getFieldDecorator('country', {
@@ -175,8 +174,8 @@ class C extends BaseComponent {
         })
         const country_el = (
             <Select size="large"
-                    showSearch
-                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                showSearch
+                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                 placeholder="Country">
                 {_.entries(config.data.mappingCountryCodeToName).map(([key, val]) => {
                     return <Select.Option key={key} value={key}>
@@ -191,9 +190,9 @@ class C extends BaseComponent {
         })
         const recaptcha_el = (
             <ReCAPTCHA
-                 ref={(el) => { this.captcha = el }}
-                 sitekey={RECAPTCHA_KEY}
-             />
+                ref={(el) => { this.captcha = el }}
+                sitekey={RECAPTCHA_KEY}
+            />
         )
 
         const organizer_fn = getFieldDecorator('beOrganizer', {
@@ -201,7 +200,7 @@ class C extends BaseComponent {
         })
         const organizer_el = (
             <Select size="large"
-                    placeholder="Do you want to be an organizer?">
+                placeholder="Do you want to be an organizer?">
                 <Select.Option value="yes">Yes</Select.Option>
                 <Select.Option value="no">No</Select.Option>
             </Select>
@@ -212,18 +211,18 @@ class C extends BaseComponent {
         })
         const developer_el = (
             <Select size="large"
-                    placeholder="Are you a software developer or engineer?">
+                placeholder="Are you a software developer or engineer?">
                 <Select.Option value="yes">Yes</Select.Option>
                 <Select.Option value="no">No</Select.Option>
             </Select>
         )
 
         const source_fn = getFieldDecorator('source', {
-            rules: [{message: ''}],
+            rules: [{message: ''}]
         })
         const source_el = (
             <Input size="large"
-                   placeholder="Where did you hear about us?"/>
+                placeholder="Where did you hear about us?"/>
         )
 
         return {
@@ -241,7 +240,7 @@ class C extends BaseComponent {
 
             source: source_fn(source_el),
 
-            recaptcha: recaptcha_fn(recaptcha_el),
+            recaptcha: recaptcha_fn(recaptcha_el)
         }
     }
 
@@ -333,7 +332,6 @@ class C extends BaseComponent {
                 {form}
             </div>
         )
-
     }
 }
 

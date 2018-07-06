@@ -9,7 +9,6 @@ import _ from 'lodash'
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS} from '@/constant'
 
 export default createContainer(Component, (state) => {
-
     let taskState = state.task
     const currentUserId = state.user.current_user_id
 
@@ -39,9 +38,7 @@ export default createContainer(Component, (state) => {
 
         // now check if the user or their team is a candidate for an assigned task
         if (task.status === TASK_STATUS.ASSIGNED) {
-
             let taskCandidate = _.find(task.candidates, (candidate) => {
-
                 if (candidate.type === 'USER') {
                     return candidate.user._id === currentUserId
                 }
@@ -59,7 +56,6 @@ export default createContainer(Component, (state) => {
 
     return taskState
 }, () => {
-
     const taskService = new TaskService()
     const userService = new UserService()
     const communityService = new CommunityService()
@@ -85,7 +81,6 @@ export default createContainer(Component, (state) => {
         },
 
         async getUserTeams(currentUserId) {
-
             const teamService = new TeamService()
             return teamService.getUserTeams(currentUserId)
         },
@@ -93,11 +88,11 @@ export default createContainer(Component, (state) => {
         async getAllCommunities() {
             return new Promise((resolve, reject) => {
                 communityService.getAll().then((data) => {
-                    const cascaderItems =  data.map((item) => {
+                    const cascaderItems = data.map((item) => {
                         return {
                             value: item._id,
                             label: item.name,
-                            parentId: item.parentCommunityId,
+                            parentId: item.parentCommunityId
                         }
                     })
 

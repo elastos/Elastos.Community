@@ -1,9 +1,9 @@
 export const USER_ROLE = {
-    MEMBER : 'MEMBER',
-    LEADER : 'LEADER',
-    ADMIN : 'ADMIN',
+    MEMBER: 'MEMBER',
+    LEADER: 'LEADER',
+    ADMIN: 'ADMIN',
     COUNCIL: 'COUNCIL'
-};
+}
 
 export const USER_LANGUAGE = {
     en: 'en',
@@ -17,9 +17,9 @@ export const USER_GENDER = {
 }
 
 export const TEAM_ROLE = {
-    MEMBER : 'MEMBER',
-    OWNER : 'OWNER'
-};
+    MEMBER: 'MEMBER',
+    OWNER: 'OWNER'
+}
 
 export const TASK_CATEGORY = {
     DEVELOPER: 'DEVELOPER',
@@ -94,9 +94,9 @@ export const CONTRIB_CATEGORY = {
 }
 
 export const DEFAULT_IMAGE = {
-    TASK : '/assets/images/task_thumbs/12.jpg',
+    TASK: '/assets/images/task_thumbs/12.jpg',
     UNSET_LEADER: '/assets/images/User_Avatar_Other.png'
-};
+}
 
 export const SUBMISSION_TYPE = {
     BUG: 'BUG',
@@ -105,4 +105,4 @@ export const SUBMISSION_TYPE = {
     ADD_COMMUNITY: 'ADD_COMMUNITY',
     OTHER: 'OTHER',
     FORM_EXT: 'FORM_EXT'
-};
+}

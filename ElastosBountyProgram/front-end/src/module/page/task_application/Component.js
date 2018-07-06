@@ -1,5 +1,5 @@
-import React from 'react';
-import StandardPage from '../StandardPage';
+import React from 'react'
+import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 
 import TaskApplicationDetail from '@/module/task/application/Container'
@@ -12,7 +12,6 @@ import { Breadcrumb, Icon } from 'antd'
 import {TASK_CATEGORY} from '@/constant'
 
 export default class extends StandardPage {
-
     componentDidMount() {
         const taskId = this.props.match.params.taskId
         this.props.getTaskDetail(taskId)
@@ -41,9 +40,9 @@ export default class extends StandardPage {
                             <Icon type="home"/>
                         </Breadcrumb.Item>
                         <Breadcrumb.Item>
-                            {this.props.task.category === TASK_CATEGORY.SOCIAL ?
-                                <Link to="/social">Social {_.capitalize(this.props.task.type)}s</Link> :
-                                <Link to="/developer">Developer {_.capitalize(this.props.task.type)}s</Link>
+                            {this.props.task.category === TASK_CATEGORY.SOCIAL
+                                ? <Link to="/social">Social {_.capitalize(this.props.task.type)}s</Link>
+                                : <Link to="/developer">Developer {_.capitalize(this.props.task.type)}s</Link>
                             }
                         </Breadcrumb.Item>
                         <Breadcrumb.Item href={detailLink}>

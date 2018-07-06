@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
 import Comments from '@/module/common/comments/Container'
@@ -6,12 +6,11 @@ import Comments from '@/module/common/comments/Container'
 import { Col, Row, Divider, Icon } from 'antd'
 
 import {SUBMISSION_TYPE} from '@/constant'
-
-const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 import '../style.scss'
 
-export default class extends BaseComponent {
+const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
+export default class extends BaseComponent {
     // special layout for external forms
     renderFormExt() {
         return <div>
@@ -195,9 +194,9 @@ export default class extends BaseComponent {
                     <Col span={24}>
                         <Row>
                             <Col span={6} className="label-col">
-                                {this.props.submission.campaign === 'Evangelist Training 1' ?
-                                    'Describe Elastos in your own words.' :
-                                    'Description'
+                                {this.props.submission.campaign === 'Evangelist Training 1'
+                                    ? 'Describe Elastos in your own words.'
+                                    : 'Description'
                                 }
                             </Col>
                             <Col span={18}>
@@ -230,7 +229,7 @@ export default class extends BaseComponent {
                             </Col>
                             <Col span={18}>
                                 <p>
-                                    <a onClick={() => {this.props.submission.createdBy && this.props.history.push(`/member/${this.props.submission.createdBy._id}`)}}>
+                                    <a onClick={() => { this.props.submission.createdBy && this.props.history.push(`/member/${this.props.submission.createdBy._id}`) }}>
                                         {this.props.submission.createdBy && this.props.submission.createdBy.username}
                                     </a>
                                 </p>
@@ -253,12 +252,11 @@ export default class extends BaseComponent {
     }
 
     ord_render() {
-
         return (
             <div className="public">
-                {this.props.submission.type === SUBMISSION_TYPE.FORM_EXT ?
-                    this.renderFormExt() :
-                    this.renderDetail()
+                {this.props.submission.type === SUBMISSION_TYPE.FORM_EXT
+                    ? this.renderFormExt()
+                    : this.renderDetail()
                 }
                 <Comments type="submission" canPost={true} model={this.props.submission}
                     canSubscribe={this.canSubscribe()}/>

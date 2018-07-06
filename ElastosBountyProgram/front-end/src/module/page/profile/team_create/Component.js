@@ -1,25 +1,24 @@
-import React from 'react';
-import StandardPage from '../../StandardPage';
+import React from 'react'
+import StandardPage from '../../StandardPage'
 import Navigator from '@/module/page/shared/Navigator/Container'
-import config from '@/config';
+import config from '@/config'
 import TeamCreateForm from '@/module/form/TeamCreateForm/Container'
 
 import '../../admin/admin.scss'
 
 import { Col, Row, Icon, Form, Input, Button, Divider, Table } from 'antd'
-import moment from "moment/moment";
-const FormItem = Form.Item;
+import moment from 'moment/moment'
+const FormItem = Form.Item
 
 export default class extends StandardPage {
-    ord_states(){
+    ord_states() {
         return {
-            loading : true,
-            total : 0,
-            list : []
-        };
+            loading: true,
+            total: 0,
+            list: []
+        }
     }
     ord_renderContent () {
-
         return (
             <div>
                 <div className="ebp-header-divider">
@@ -48,11 +47,7 @@ export default class extends StandardPage {
         )
     }
 
-
-
-    async componentDidMount(){
-        await super.componentDidMount();
-
-
+    async componentDidMount() {
+        await super.componentDidMount()
     }
 }

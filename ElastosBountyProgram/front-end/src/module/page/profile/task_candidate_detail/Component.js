@@ -12,7 +12,6 @@ import '../../admin/admin.scss'
 import { Col, Row, Breadcrumb, Icon } from 'antd'
 
 export default class extends StandardPage {
-
     state = {
         editing: false
     }

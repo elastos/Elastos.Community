@@ -51,8 +51,8 @@ import TaskCreatePage from '@/module/page/task_create/Container'
 import FormTraining1Page from '@/module/page/form_ext/training_1/Container'
 
 // admin team page
-import TeamListPage from '../module/page/admin/teams/TeamListPage';
-import TeamDetailPage from '../module/page/admin/teams/TeamDetailPage';
+import TeamListPage from '../module/page/admin/teams/TeamListPage'
+import TeamDetailPage from '../module/page/admin/teams/TeamDetailPage'
 
 import NotFound from '@/module/page/error/NotFound'
 
@@ -150,12 +150,12 @@ export default [
         page: ProfileTeamsPage
     },
     {
-        path : '/profile/teams/create',
-        page : ProfileTeamCreatePage
+        path: '/profile/teams/create',
+        page: ProfileTeamCreatePage
     },
     {
-        path : '/profile/teams/:teamId',
-        page : ProfileTeamDetailPage
+        path: '/profile/teams/:teamId',
+        page: ProfileTeamDetailPage
     },
     {
         path: '/profile/submissions',
@@ -242,12 +242,12 @@ export default [
 
     // admin team page
     {
-        path : '/admin/teams',
-        page : TeamListPage
+        path: '/admin/teams',
+        page: TeamListPage
     },
     {
-        path : '/admin/teams/:teamId',
-        page : TeamDetailPage
+        path: '/admin/teams/:teamId',
+        page: TeamDetailPage
     },
 
     {

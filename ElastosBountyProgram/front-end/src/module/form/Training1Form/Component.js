@@ -17,7 +17,7 @@ import {
 
 } from 'antd'
 
-import {upload_file} from "@/util";
+import {upload_file} from '@/util'
 import './style.scss'
 
 const FormItem = Form.Item
@@ -27,12 +27,11 @@ const TextArea = Input.TextArea
  * This is public form for the Evangelist Training
  */
 class C extends BaseComponent {
-
     handleSubmit (e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.props.submitForm(values, this.state);
+                this.props.submitForm(values, this.state)
             }
         })
     }
@@ -49,7 +48,6 @@ class C extends BaseComponent {
     }
 
     getInputProps () {
-
         const {getFieldDecorator} = this.props.form
         const existingTask = this.props.existingTask
 
@@ -149,24 +147,24 @@ class C extends BaseComponent {
         // attachment
         const attachment_fn = getFieldDecorator('attachment', {
             rules: []
-        });
+        })
         const p_attachment = {
             showUploadList: false,
-            customRequest :(info)=>{
+            customRequest: (info) => {
                 this.setState({
                     attachment_loading: true
-                });
-                upload_file(info.file).then((d)=>{
-                    const url = d.url;
+                })
+                upload_file(info.file).then((d) => {
+                    const url = d.url
                     this.setState({
                         attachment_loading: false,
-                        attachment_url : url,
+                        attachment_url: url,
                         attachment_type: d.type,
                         attachment_filename: d.filename
-                    });
+                    })
                 })
             }
-        };
+        }
         const attachment_el = (
             <Upload name="attachment" {...p_attachment}>
                 {
@@ -182,8 +180,7 @@ class C extends BaseComponent {
                     )
                 }
             </Upload>
-        );
-
+        )
 
         return {
             email: email_fn(email_el),
@@ -211,21 +208,20 @@ class C extends BaseComponent {
         const formItemLayout = {
             labelCol: {
                 xs: {span: 24},
-                sm: {span: 8},
+                sm: {span: 8}
             },
             wrapperCol: {
                 xs: {span: 24},
-                sm: {span: 12},
-            },
+                sm: {span: 12}
+            }
         }
 
         const formItemNoLabelLayout = {
             wrapperCol: {
                 xs: {span: 24},
-                sm: {offset: 8, span: 12},
-            },
+                sm: {offset: 8, span: 12}
+            }
         }
-
 
         // const existingTask = this.props.existingTask
 
@@ -321,6 +317,5 @@ class C extends BaseComponent {
             </div>
         )
     }
-
 }
 export default Form.create()(C)

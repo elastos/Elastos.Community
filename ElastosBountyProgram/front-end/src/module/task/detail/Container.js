@@ -10,13 +10,11 @@ export default createContainer(Component, (state) => {
         is_login: state.user.is_login
     }
 }, () => {
-
     const teamService = new TeamService()
     const taskService = new TaskService()
 
     return {
         async listTeamsOwned(userId) {
-
             try {
                 const result = await teamService.list({
                     owner: userId
@@ -30,7 +28,6 @@ export default createContainer(Component, (state) => {
         },
 
         async pushCandidate(taskId, userId, teamId, applyMsg) {
-
             try {
                 const result = await taskService.pushCandidate(taskId, userId, teamId, applyMsg)
 
@@ -39,7 +36,6 @@ export default createContainer(Component, (state) => {
                 console.error(err)
                 message.error(err.message)
             }
-
         },
 
         /**

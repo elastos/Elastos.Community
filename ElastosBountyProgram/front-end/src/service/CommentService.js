@@ -2,7 +2,6 @@ import BaseService from '../model/BaseService'
 import _ from 'lodash'
 import {api_request} from '@/util'
 
-
 export default class extends BaseService {
     async postComment(type, reduxType, detailReducer, id, commentData) {
         const redux = this.store.getRedux(reduxType || type)
@@ -19,10 +18,10 @@ export default class extends BaseService {
             method: 'post',
             data
         })
-        const curDetail = this.store.getState()[reduxType || type] && this.store.getState()[reduxType || type].detail;
+        const curDetail = this.store.getState()[reduxType || type] && this.store.getState()[reduxType || type].detail
 
         if (!curDetail) {
-            return;
+            return
         }
 
         let subDetail = curDetail
@@ -30,10 +29,10 @@ export default class extends BaseService {
             subDetail = detailReducer(curDetail)
         }
 
-        subDetail.comments = subDetail.comments || [];
-        subDetail.comments.push([data]);
+        subDetail.comments = subDetail.comments || []
+        subDetail.comments.push([data])
 
-        subDetail.subscribers = subDetail.subscribers || [];
+        subDetail.subscribers = subDetail.subscribers || []
         subDetail.subscribers.push({
             ...this.store.getState().user,
             _id: this.store.getState().user.current_user_id
@@ -58,7 +57,7 @@ export default class extends BaseService {
         const curDetail = this.store.getState()[type] && this.store.getState()[type].detail
 
         if (!curDetail) {
-            return;
+            return
         }
 
         curDetail.subscribers = curDetail.subscribers || []
@@ -86,7 +85,7 @@ export default class extends BaseService {
         const curDetail = this.store.getState()[type] && this.store.getState()[type].detail
 
         if (!curDetail) {
-            return;
+            return
         }
 
         curDetail.subscribers = curDetail.subscribers || []

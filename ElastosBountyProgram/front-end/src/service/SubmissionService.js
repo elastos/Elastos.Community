@@ -3,19 +3,17 @@ import _ from 'lodash'
 import {api_request} from '@/util'
 
 export default class extends BaseService {
-
-    async list(filter={}){
+    async list(filter = {}) {
         const result = await api_request({
             path: '/api/submission/list',
             method: 'get',
             data: filter
-        });
+        })
 
-        return result;
+        return result
     }
 
     async index(qry) {
-
         const submissionRedux = this.store.getRedux('submission')
 
         this.dispatch(submissionRedux.actions.loading_update(true))
@@ -34,7 +32,6 @@ export default class extends BaseService {
     }
 
     async get(submissionId) {
-
         const submissionRedux = this.store.getRedux('submission')
 
         this.dispatch(submissionRedux.actions.loading_update(true))
@@ -56,7 +53,6 @@ export default class extends BaseService {
      * @returns {Promise<*>}
      */
     async update(submissionId, doc) {
-
         const submissionRedux = this.store.getRedux('submission')
 
         this.dispatch(submissionRedux.actions.loading_update(true))
@@ -82,7 +78,7 @@ export default class extends BaseService {
             data: doc
         })
 
-        return res;
+        return res
     }
 
     async resetAllSubmissions() {
@@ -94,5 +90,4 @@ export default class extends BaseService {
         const submissionRedux = this.store.getRedux('submission')
         this.dispatch(submissionRedux.actions.detail_reset())
     }
-
 }

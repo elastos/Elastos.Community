@@ -9,7 +9,7 @@ class TaskRedux extends BaseRedux {
         return ['task']
     }
 
-    defineDefaultState(){
+    defineDefaultState() {
         return {
             active_task: null,
 
@@ -23,7 +23,7 @@ class TaskRedux extends BaseRedux {
 
             // if we select a detail
             detail: {}
-        };
+        }
     }
 }
 

@@ -6,7 +6,6 @@ import _ from 'lodash'
 import {TASK_STATUS} from '@/config/constant'
 
 export default createContainer(Component, (state) => {
-
     let taskState = state.task
 
     if (!_.isArray(state.task.all_tasks)) {
@@ -16,9 +15,7 @@ export default createContainer(Component, (state) => {
     taskState.filter = state.task.filter || {}
 
     return taskState
-
 }, () => {
-
     const taskService = new TaskService()
 
     return {

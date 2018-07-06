@@ -1,5 +1,5 @@
-import React from 'react';
-import StandardPage from '../../StandardPage';
+import React from 'react'
+import StandardPage from '../../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import Navigator from '@/module/page/shared/Navigator/Container'
 
@@ -8,10 +8,9 @@ import '../../admin/admin.scss'
 
 import { Col, Row, Icon, Form, Breadcrumb, Button, Table, Divider } from 'antd'
 import moment from 'moment/moment'
-const FormItem = Form.Item;
+const FormItem = Form.Item
 
 export default class extends StandardPage {
-
     componentDidMount() {
         this.props.getSubmissions(this.props.currentUserId)
     }
@@ -25,38 +24,38 @@ export default class extends StandardPage {
         const submissionsSubscribedData = this.props.subscribed_submissions
 
         const columns = [
-        {
-            title: 'Title',
-            dataIndex: 'title',
-            width: '20%',
-            className: 'fontWeight500 allow-wrap',
-            render: (name, record) => {
-                return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">{name}</a>
-            }
-        },
-        {
-            title: 'Description',
-            dataIndex: 'description',
-            width: '30%',
-            className: 'fontWeight500 allow-wrap',
-            render: (name, record) => {
-                return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">{name}</a>
-            }
-        }, {
-            title: 'Type',
-            dataIndex: 'type',
-        }, {
-            title: 'Created',
-            dataIndex: 'createdAt',
-            render: (createdAt) => moment(createdAt).format('MMM D')
-        }, {
-            title: '',
-            dataIndex: '_id',
-            key: 'actions',
-            render: (id, record) => {
+            {
+                title: 'Title',
+                dataIndex: 'title',
+                width: '20%',
+                className: 'fontWeight500 allow-wrap',
+                render: (name, record) => {
+                    return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">{name}</a>
+                }
+            },
+            {
+                title: 'Description',
+                dataIndex: 'description',
+                width: '30%',
+                className: 'fontWeight500 allow-wrap',
+                render: (name, record) => {
+                    return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">{name}</a>
+                }
+            }, {
+                title: 'Type',
+                dataIndex: 'type'
+            }, {
+                title: 'Created',
+                dataIndex: 'createdAt',
+                render: (createdAt) => moment(createdAt).format('MMM D')
+            }, {
+                title: '',
+                dataIndex: '_id',
+                key: 'actions',
+                render: (id, record) => {
 
-            }
-        }]
+                }
+            }]
 
         return (
             <div>
