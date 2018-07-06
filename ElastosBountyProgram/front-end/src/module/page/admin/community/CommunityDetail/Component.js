@@ -573,7 +573,7 @@ export default class extends AdminPage {
                                                             </h5>
                                                             <p>
                                                                 {leader.profile.firstName + ' ' + leader.profile.lastName}<br/>
-                                                                <span class="no-info">{leader.profile.username}</span>
+                                                                <span class="no-info">{leader.username}</span>
                                                             </p>
                                                         </Card>
                                                     )

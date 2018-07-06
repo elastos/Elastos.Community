@@ -404,10 +404,8 @@ export default class extends StandardPage {
                                                             </h5>
                                                             <p className="user-info">
                                                                 <a onClick={() => {this.props.history.push(`/member/${leader._id}`)}}>
-                                                                    {leader.profile.firstName + ' ' + leader.profile.lastName}
+                                                                    {leader.username}
                                                                 </a>
-                                                                <br/>
-                                                                <span class="no-info">{leader.profile.username}</span>
                                                             </p>
                                                         </Card>
                                                     </Link>
@@ -456,10 +454,8 @@ export default class extends StandardPage {
                                     >
                                         <p>
                                             <a onClick={() => {this.props.history.push(`/member/${leader._id}`)}}>
-                                                {leader.profile.firstName + ' ' + leader.profile.lastName}
+                                                {leader.username}
                                             </a>
-                                            <br/>
-                                            <span class="no-info">{leader.profile.username}</span>
                                         </p>
                                     </Card>
                                 </Col>
@@ -547,7 +543,7 @@ export default class extends StandardPage {
                                                                 </td>
                                                                 <td className="member-name">
                                                                     <a onClick={() => {this.props.history.push('/member/' + item._id)}}>
-                                                                        {item.profile.firstName} {item.profile.lastName}
+                                                                        {item.username}
                                                                     </a>
                                                                 </td>
                                                             </tr>

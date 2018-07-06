@@ -6,7 +6,7 @@ import moment from 'moment'
 import ModalJoinCommunity from './ModalJoinCommunity/Component'
 import './style.scss'
 
-import { Col, Row, Icon, message, Button, Select, Table, List, Tooltip, Cascader, Popconfirm } from 'antd'
+import { Col, Row, Icon, message, Button, Select, Table, List, Checkbox, Cascader, Popconfirm } from 'antd'
 
 const Option = Select.Option
 
@@ -19,7 +19,9 @@ export default class extends StandardPage {
         communityTrees: [],
         filterCommunity: [],
 
-        taskTypeSelected: this.props.match.type || TASK_TYPE.EVENT
+        taskTypeSelected: this.props.match.type || TASK_TYPE.EVENT,
+
+        lookingForHelpOnly: true
     }
 
     componentDidMount () {
@@ -96,7 +98,7 @@ export default class extends StandardPage {
 
         const filterCommunityEl = <Cascader
             value={[...this.state.filterCommunity]}
-            style={{width: '300px'}}
+            style={{width: '250px'}}
             options={this.state.communityTrees}
             placeholder="Filter by community"
             onChange={this.handleOnChangeFilter.bind(this)}
@@ -174,6 +176,8 @@ export default class extends StandardPage {
                                 </Button>
                             </div>
                             <div className="pull-right btnContainer">
+                                Looking for Help&nbsp;
+                                <Checkbox checked={this.state.lookingForHelpOnly}/>
                                 {filterCommunityEl}
                                 {/*
                                 <Button onClick={this.createTaskLink.bind(this, TASK_TYPE.EVENT)}>

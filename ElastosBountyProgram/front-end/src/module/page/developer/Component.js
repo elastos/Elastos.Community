@@ -104,7 +104,7 @@ export default class extends StandardPage {
 
         const filterCommunityEl = <Cascader
             value={[...this.state.filterCommunity]}
-            style={{width: '300px'}}
+            style={{width: '250px'}}
             options={this.state.communityTrees}
             placeholder="Filter by community"
             onChange={this.handleOnChangeFilter.bind(this)}

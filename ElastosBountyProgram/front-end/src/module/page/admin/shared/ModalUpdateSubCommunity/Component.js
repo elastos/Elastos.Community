@@ -93,7 +93,7 @@ export default Form.create()(
                                     filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                                 >
                                     {users.map((leader, index) => {
-                                        return (<Select.Option key={index} value={leader._id}>{leader.profile.firstName + ' ' + leader.profile.lastName}</Select.Option>)
+                                        return (<Select.Option key={index} value={leader._id}>{leader.username}</Select.Option>)
                                     })}
                                 </Select>
                             )}

@@ -157,7 +157,7 @@ export default class extends StandardPage {
                                         </h5>
                                         <p className="user-info">
                                             {leader.profile.firstName + ' ' + leader.profile.lastName}<br/>
-                                            <span class="no-info">{leader.profile.username}</span>
+                                            <span class="no-info">{leader.username}</span>
                                         </p>
                                     </Card>
                                 </Link>

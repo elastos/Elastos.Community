@@ -7,7 +7,7 @@ import './style.scss'
 
 import Navigator from '../shared/Navigator/Component'
 
-import { Breadcrumb, Col, Icon, Row, Menu, Select, Table } from 'antd'
+import { Breadcrumb, Col, Icon, Row, Input, Table } from 'antd'
 
 import { Link } from 'react-router-dom'
 
@@ -16,7 +16,9 @@ import {TASK_STATUS} from '@/constant'
 export default class extends AdminPage {
 
     state = {
-        filteredInfo: null
+        filteredInfo: null,
+
+        taskNameFilter: ''
     }
 
     async componentDidMount() {
@@ -34,10 +36,22 @@ export default class extends AdminPage {
         });
     }
 
+    handleSearchTask(value) {
+        this.setState({taskNameFilter: value})
+    }
+
     ord_renderContent () {
         let { filteredInfo } = this.state;
 
-        const taskData = this.props.all_tasks
+        let taskData = this.props.all_tasks
+
+        if (this.state.taskNameFilter) {
+            taskData = taskData.filter((task) => {
+                let regExp = new RegExp(this.state.taskNameFilter)
+                return regExp.test(task.name)
+            })
+        }
+
         filteredInfo = filteredInfo || {};
 
         const columns = [{
@@ -47,7 +61,8 @@ export default class extends AdminPage {
             className: 'fontWeight500 allow-wrap',
             render: (name, record) => {
                 return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
-            }
+            },
+            sorter: (a, b) => a.name.localeCompare(b.name)
         }, {
             title: 'Owner',
             dataIndex: 'createdBy.username'
@@ -95,7 +110,11 @@ export default class extends AdminPage {
         }, {
             title: 'Created',
             dataIndex: 'createdAt',
-            render: (createdAt) => moment(createdAt).format('MMM D')
+            render: (createdAt) => moment(createdAt).format('MMM D'),
+            sorter: (a, b) => {
+                return moment(a.createdAt).valueOf() - moment(b.createdAt).valueOf()
+            },
+            defaultSortOrder: 'descend',
         }, {
             title: '',
             dataIndex: '_id',
@@ -120,6 +139,12 @@ export default class extends AdminPage {
                     <div className="p_admin_content">
                         <Row>
                             <Col span={20} className="c_TaskTableContainer admin-left-column wrap-box-user">
+                                <div className="pull-right">
+                                    <Input.Search onSearch={this.handleSearchTask.bind(this)}
+                                                  prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                                  placeholder="Task name"/>
+                                </div>
+                                <div className="clearfix"/>
                                 <Table
                                     columns={columns}
                                     rowKey={(item) => item._id}

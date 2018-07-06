@@ -13,7 +13,7 @@ class SubmissionRedux extends BaseRedux {
         return {
             active_submission: null,
 
-            loading: true,
+            loading: false,
 
             create_form: {
                 submission_type: 'BUG'
