@@ -27,9 +27,6 @@
     "arrow-body-style": "off",
     "indent": [2, 4, {"SwitchCase": 1}],
     "camelcase": [0, { "properties": "never" }],
-    "no-unused-vars": [1, { "vars": "all", "args": "none" }],
-    "padding-line-between-statements": [
-        "error",
-        { "blankLine": "never", "prev": "function", "next": "return" }]
+    "no-unused-vars": [1, { "vars": "all", "args": "none" }]
   }
 }
