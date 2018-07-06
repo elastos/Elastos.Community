@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import StandardPage from '../../StandardPage';
+import StandardPage from '../../StandardPage'
 import { DEFAULT_IMAGE, USER_GENDER } from '@/constant'
 
 import { Table, Card, Select, Col, Row, Breadcrumb, Icon, Button, Input } from 'antd'
@@ -8,7 +8,7 @@ import { Table, Card, Select, Col, Row, Breadcrumb, Icon, Button, Input } from '
 import config from '@/config'
 import Footer from '@/module/layout/Footer/Container'
 import '../style.scss'
-const Search = Input.Search;
+const Search = Input.Search
 
 export default class extends StandardPage {
     state = {
@@ -21,11 +21,11 @@ export default class extends StandardPage {
 
     componentDidMount() {
         this.props.getSocialEvents()
-        this.loadCommunities();
+        this.loadCommunities()
     }
 
     loadCommunities() {
-        const currentCountry = this.props.match.params['country'];
+        const currentCountry = this.props.match.params['country']
         if (currentCountry) {
             this.props.getSpecificCountryCommunities(currentCountry).then((communities) => {
                 this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
@@ -48,7 +48,7 @@ export default class extends StandardPage {
     getAvatarUrl(users) {
         const avatarDefault = {
             [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png'
-        };
+        }
 
         users.forEach((user) => {
             if (!user.profile.avatar) {
@@ -74,9 +74,9 @@ export default class extends StandardPage {
 
             this.props.getUserByIds(userIds).then((users) => {
                 users = this.getAvatarUrl(users) // Mock avatar url
-                const mappingIdToUserList = _.keyBy(users, '_id');
+                const mappingIdToUserList = _.keyBy(users, '_id')
                 communities.forEach((community) => {
-                    community.leaders = community.leaders || [];
+                    community.leaders = community.leaders || []
                     community.leaderIds.forEach((leaderId) => {
                         if (mappingIdToUserList[leaderId]) {
                             community.leaders.push(mappingIdToUserList[leaderId])
@@ -117,7 +117,7 @@ export default class extends StandardPage {
     }
 
     renderBreadcrumbCountries() {
-        const geolocationKeys = _.keyBy(this.state.communities, 'geolocation');
+        const geolocationKeys = _.keyBy(this.state.communities, 'geolocation')
         const listCountriesEl = Object.keys(geolocationKeys).map((geolocation, index) => {
             return (
                 <Select.Option title={config.data.mappingCountryCodeToName[geolocation]} key={index}

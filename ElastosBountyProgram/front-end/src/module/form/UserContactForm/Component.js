@@ -8,7 +8,7 @@ import {
 
 } from 'antd'
 
-import {upload_file} from '@/util';
+import {upload_file} from '@/util'
 import './style.scss'
 
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS} from '@/constant'

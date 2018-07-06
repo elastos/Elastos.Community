@@ -10,7 +10,7 @@ class MemberRedux extends BaseRedux {
             loading: false,
             focus_user: null,
             users: []
-        };
+        }
     }
 }
 

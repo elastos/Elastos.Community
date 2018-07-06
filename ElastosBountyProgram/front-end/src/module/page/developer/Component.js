@@ -125,11 +125,11 @@ export default class extends StandardPage {
             key: 'community',
             render: (community, data) => {
                 if (!community) {
-                    return null;
+                    return null
                 }
 
                 if (data.communityParent) {
-                    let nameParent = data.communityParent.name;
+                    let nameParent = data.communityParent.name
                     return (<p>{nameParent}/{community.name}</p>)
                 } else {
                     return (<p>{community.name}</p>)

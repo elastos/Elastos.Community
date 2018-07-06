@@ -1,5 +1,5 @@
-import React from 'react';
-import StandardPage from '../StandardPage';
+import React from 'react'
+import StandardPage from '../StandardPage'
 import _ from 'lodash'
 
 import './style.scss'
@@ -252,6 +252,6 @@ export default class extends StandardPage {
 
                 <Footer />
             </div>
-        );
+        )
     }
 }

@@ -11,9 +11,9 @@ export default class extends BaseService {
             path: '/api/task/list',
             method: 'get',
             data: filter
-        });
+        })
 
-        return result;
+        return result
     }
 
     async index(qry) {
@@ -51,7 +51,7 @@ export default class extends BaseService {
 
         // Format data for dropdown select community
         if (result) {
-            result.taskCommunity = [];
+            result.taskCommunity = []
             if (result.communityParent) {
                 result.taskCommunity.push(result.communityParent._id)
             }
@@ -246,6 +246,6 @@ export default class extends BaseService {
 
         // TODO: take user to task detail page
 
-        return res;
+        return res
     }
 }

@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from 'lodash'
 
 /*
 * request api method
@@ -15,13 +15,13 @@ import _ from 'lodash';
 * TODO: add limit to qry
 * */
 export const api_request = (opts = {}) => {
-    const apiToken = sessionStorage.getItem('api-token');
-    const headers = {};
+    const apiToken = sessionStorage.getItem('api-token')
+    const headers = {}
     if (apiToken) {
-        headers['api-token'] = apiToken;
+        headers['api-token'] = apiToken
     }
 
-    let server_url = process.env.SERVER_URL;
+    let server_url = process.env.SERVER_URL
     opts = _.merge({
         method: 'get',
         headers,
@@ -30,10 +30,10 @@ export const api_request = (opts = {}) => {
         success: null,
         error: null,
         path: ''
-    }, opts);
-    server_url += opts.path;
+    }, opts)
+    server_url += opts.path
 
-    const method = opts.method.toLowerCase();
+    const method = opts.method.toLowerCase()
     const option = {
         headers: {
             'Content-Type': 'application/json',
@@ -42,25 +42,25 @@ export const api_request = (opts = {}) => {
         cache: opts.cache,
         method: opts.method,
         mode: 'cors'
-    };
+    }
     if (method === 'post' && option.headers['Content-Type'] === 'multipart/form-data') {
-        const formData = new FormData();
+        const formData = new FormData()
         _.each(opts.data, (v, k) => {
-            formData.append(k, v);
-        });
-        option.body = formData;
+            formData.append(k, v)
+        })
+        option.body = formData
 
-        delete option.headers['Content-Type'];
+        delete option.headers['Content-Type']
     }
     else if (method !== 'get' && method !== 'head') {
-        option.body = JSON.stringify(opts.data);
+        option.body = JSON.stringify(opts.data)
     }
     else {
-        server_url += '?';
+        server_url += '?'
         _.each(opts.data, (value, key) => {
             server_url += `${key}=${encodeURIComponent(value)}&`
-        });
-        server_url = server_url.replace(/&$/, '');
+        })
+        server_url = server_url.replace(/&$/, '')
     }
 
     return fetch(server_url, option).then((response) => {
@@ -70,7 +70,7 @@ export const api_request = (opts = {}) => {
                 return response.json()
             }
             else {
-                throw new Error(response.statusText);
+                throw new Error(response.statusText)
             }
         } catch (err) {
         }
@@ -78,15 +78,15 @@ export const api_request = (opts = {}) => {
     }).then((data) => {
         if (data.code > 0) {
             // return data correct
-            opts.success && opts.success(data.data, data);
-            return data.data;
+            opts.success && opts.success(data.data, data)
+            return data.data
         }
         else {
-            opts.error && opts.error(data);
-            throw new Error(data.error);
+            opts.error && opts.error(data)
+            throw new Error(data.error)
         }
     })
-};
+}
 
 /*
 *
@@ -112,16 +112,16 @@ export const upload_file = async (fileObject, opts = {}) => {
             data: {
                 file: fileObject
             }
-        });
+        })
 
         return {
             filename: fileObject.name,
             type: fileObject.type,
             ...url
-        };
+        }
     } catch (e) {
-        opts.error && opts.error(e);
-        throw e;
+        opts.error && opts.error(e)
+        throw e
     }
 
-};
+}

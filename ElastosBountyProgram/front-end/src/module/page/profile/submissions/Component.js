@@ -1,5 +1,5 @@
-import React from 'react';
-import StandardPage from '../../StandardPage';
+import React from 'react'
+import StandardPage from '../../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import Navigator from '@/module/page/shared/Navigator/Container'
 
@@ -8,7 +8,7 @@ import '../../admin/admin.scss'
 
 import { Col, Row, Icon, Form, Breadcrumb, Button, Table, Divider } from 'antd'
 import moment from 'moment/moment'
-const FormItem = Form.Item;
+const FormItem = Form.Item
 
 export default class extends StandardPage {
 

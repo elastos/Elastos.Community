@@ -1,5 +1,5 @@
-import React from 'react';
-import BaseComponent from '@/model/BaseComponent';
+import React from 'react'
+import BaseComponent from '@/model/BaseComponent'
 import { Col, Row, Icon } from 'antd'
 
 import './style.scss'
@@ -62,6 +62,6 @@ export default class extends BaseComponent {
                     </Row>
                 </div>
             </div>
-        );
+        )
     }
 }

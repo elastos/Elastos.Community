@@ -44,7 +44,7 @@ class C extends BaseComponent {
         // Generate a random six digit code
         const min = 100000
         const max = 1000000
-        return Math.round(Math.random() * (max - min) + min);
+        return Math.round(Math.random() * (max - min) + min)
     }
 
     validateRegCode(rule, value, callback) {

@@ -1,5 +1,5 @@
-import React from 'react';
-import StandardPage from '../StandardPage';
+import React from 'react'
+import StandardPage from '../StandardPage'
 
 export default class extends StandardPage {
     ord_renderContent() {
@@ -8,6 +8,6 @@ export default class extends StandardPage {
                 <h1>404, not found</h1>
             </div>
 
-        );
+        )
     }
 }

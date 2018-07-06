@@ -1,8 +1,8 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import {Form, Icon, Input, Button, Checkbox} from 'antd'
-import ReCAPTCHA from 'react-google-recaptcha';
-import {RECAPTCHA_KEY} from '@/config/constant';
+import ReCAPTCHA from 'react-google-recaptcha'
+import {RECAPTCHA_KEY} from '@/config/constant'
 
 import './style.scss'
 

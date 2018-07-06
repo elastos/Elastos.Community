@@ -9,9 +9,9 @@ export default class extends BaseService {
             path: '/api/team/list',
             method: 'get',
             data: filter
-        });
+        })
 
-        return result;
+        return result
     }
 
     async getUserTeams(userId) {
@@ -25,7 +25,7 @@ export default class extends BaseService {
             data: {
                 teamHasUser: userId
             }
-        });
+        })
 
         this.dispatch(userRedux.actions.loading_update(false))
         this.dispatch(userRedux.actions.teams_update(result.list))
@@ -41,9 +41,9 @@ export default class extends BaseService {
                 teamId,
                 status: 'NORMAL'
             }
-        });
+        })
 
-        return result;
+        return result
     }
 
     async update(param) {
@@ -51,9 +51,9 @@ export default class extends BaseService {
             path: '/api/team/update',
             method: 'post',
             data: param
-        });
+        })
 
-        return result;
+        return result
     }
 
     async create(param) {
@@ -61,8 +61,8 @@ export default class extends BaseService {
             path: '/api/team/create',
             method: 'post',
             data: param
-        });
+        })
 
-        return result;
+        return result
     }
 }

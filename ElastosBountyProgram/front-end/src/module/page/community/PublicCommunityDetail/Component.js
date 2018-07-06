@@ -34,7 +34,7 @@ export default class extends StandardPage {
     }
 
     componentDidMount() {
-        this.loadCommunities();
+        this.loadCommunities()
         this.props.getSocialEvents()
         this.loadCommunityDetail()
         this.loadSubCommunities()
@@ -66,7 +66,7 @@ export default class extends StandardPage {
         if (!this.props.match.params['region']) {
             const listApiCalls = [
                 this.props.getCommunityMembers(communityId || this.props.match.params['community']) // Get member of community
-            ];
+            ]
 
             // Get members of each sub community
             this.state.subCommunities.forEach((subCommunity) => {
@@ -80,7 +80,7 @@ export default class extends StandardPage {
                     keyValueMembersWithoutSubCommunity
                 })
 
-                let communityMembers = [];
+                let communityMembers = []
                 apiResponses.forEach((apiResponse) => {
                     communityMembers.push(...apiResponse)
                 })
@@ -111,15 +111,15 @@ export default class extends StandardPage {
                     community
                 })
             })
-        });
+        })
     }
 
     loadSubCommunities(communityId) {
         this.props.getSubCommunities(communityId || this.props.match.params['community']).then((subCommunities) => {
             this.convertCommunitiesLeaderIdsToLeaderObjects(subCommunities).then((subCommunities) => {
                 // Check which communities we will use to render
-                const breadcrumbRegions = this.getBreadcrumbRegions(subCommunities);
-                const listSubCommunitiesByType = this.getListSubCommunitiesByType(subCommunities, this.props.match.params['region']);
+                const breadcrumbRegions = this.getBreadcrumbRegions(subCommunities)
+                const listSubCommunitiesByType = this.getListSubCommunitiesByType(subCommunities, this.props.match.params['region'])
                 // Update to state
                 this.setState({
                     subCommunities,
@@ -136,7 +136,7 @@ export default class extends StandardPage {
     getAvatarUrl(users) {
         const avatarDefault = {
             [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png'
-        };
+        }
 
         users.forEach((user) => {
             if (!user.profile.avatar) {
@@ -183,9 +183,9 @@ export default class extends StandardPage {
 
             this.props.getUserByIds(userIds).then((users) => {
                 users = this.getAvatarUrl(users) // Mock avatar url
-                const mappingIdToUserList = _.keyBy(users, '_id');
+                const mappingIdToUserList = _.keyBy(users, '_id')
                 communities.forEach((community) => {
-                    community.leaders = community.leaders || [];
+                    community.leaders = community.leaders || []
                     community.leaderIds.forEach((leaderId) => {
                         if (mappingIdToUserList[leaderId]) {
                             community.leaders.push(mappingIdToUserList[leaderId])
@@ -200,16 +200,16 @@ export default class extends StandardPage {
 
     getBreadcrumbRegions(subCommunities) {
         // Filter communities to get breadcrumb regions
-        let breadcrumbRegions = [];
+        let breadcrumbRegions = []
         subCommunities.forEach((community) => {
             breadcrumbRegions.push({
                 name: community.name
             })
         })
 
-        breadcrumbRegions = _.sortBy(_.uniqBy(breadcrumbRegions, 'name'), 'name');
+        breadcrumbRegions = _.sortBy(_.uniqBy(breadcrumbRegions, 'name'), 'name')
 
-        return breadcrumbRegions;
+        return breadcrumbRegions
     }
 
     getCommunityIdByGeolocation(geolocation) {
@@ -235,7 +235,7 @@ export default class extends StandardPage {
     }
 
     getListSubCommunitiesByType(subCommunities, filterRegionName) {
-        let renderCommunities;
+        let renderCommunities
 
         if (filterRegionName) {
             renderCommunities = subCommunities.filter((community) => {
@@ -253,22 +253,22 @@ export default class extends StandardPage {
         }
 
         renderCommunities.forEach((community) => {
-            listSubCommunitiesByType[community.type] = listSubCommunitiesByType[community.type] || [];
-            listSubCommunitiesByType[community.type].push(community);
+            listSubCommunitiesByType[community.type] = listSubCommunitiesByType[community.type] || []
+            listSubCommunitiesByType[community.type].push(community)
         })
 
-        return listSubCommunitiesByType;
+        return listSubCommunitiesByType
     }
 
     handleChangeRegion(region) {
         if (region) {
-            const listSubCommunitiesByType = this.getListSubCommunitiesByType(this.state.subCommunities, region);
+            const listSubCommunitiesByType = this.getListSubCommunitiesByType(this.state.subCommunities, region)
             this.setState({
                 listSubCommunitiesByType
             })
 
-            const isChangeRegion = !!this.props.match.params['region'];
-            this.props.history.push(`/community/${this.props.match.params['community']}/country/${this.props.match.params['country']}/region/${region}`);
+            const isChangeRegion = !!this.props.match.params['region']
+            this.props.history.push(`/community/${this.props.match.params['community']}/country/${this.props.match.params['country']}/region/${region}`)
 
             if (isChangeRegion) {
                 setTimeout(() => {
@@ -276,12 +276,12 @@ export default class extends StandardPage {
                 }, 100)
             }
         } else {
-            this.props.history.push(`/community/${this.props.match.params['community']}/country/${this.props.match.params['country']}`);
+            this.props.history.push(`/community/${this.props.match.params['community']}/country/${this.props.match.params['country']}`)
         }
     }
 
     getMemberCommunityId() {
-        let communityId;
+        let communityId
 
         if (!this.props.match.params['region']) {
             communityId = this.props.match.params.community
@@ -292,7 +292,7 @@ export default class extends StandardPage {
             })
 
             if (!selectedSubCommunity) {
-                return;
+                return
             }
 
             communityId = selectedSubCommunity._id
@@ -424,7 +424,7 @@ export default class extends StandardPage {
                                                 </Link>
                                             )}
                                         </Col>
-                                    );
+                                    )
                                 })}
                             </Row>
                         </TabPane>
@@ -474,7 +474,7 @@ export default class extends StandardPage {
             communities = this.state.communityMembersClone
         } else {
             communities = _.filter(this.state.communityMembersClone, (community) => {
-                return community.profile.firstName.toLowerCase().indexOf(value.toLowerCase()) > -1 || community.profile.lastName.toLowerCase().indexOf(value.toLowerCase()) > -1;
+                return community.profile.firstName.toLowerCase().indexOf(value.toLowerCase()) > -1 || community.profile.lastName.toLowerCase().indexOf(value.toLowerCase()) > -1
             })
         }
 

@@ -41,9 +41,9 @@ class C extends BaseComponent {
                     type: values.type,
                     description: values.description,
                     recruiting: values.recruiting
-                });
+                })
                 if (res) {
-                    location.reload();
+                    location.reload()
                 }
 
             }
@@ -51,12 +51,12 @@ class C extends BaseComponent {
     }
 
     getInputProps () {
-        const {getFieldDecorator} = this.props.form;
-        const team = this.props.data;
+        const {getFieldDecorator} = this.props.form
+        const team = this.props.data
 
         const input_el = (
             <Input size="large"/>
-        );
+        )
 
         const name_fn = getFieldDecorator('name', {
             rules: [{required: true, message: 'team name is required'}],
@@ -74,7 +74,7 @@ class C extends BaseComponent {
                         <Radio key={i} value={v}>
                             {v}
                         </Radio>
-                    );
+                    )
                 })}
 
             </RadioGroup>

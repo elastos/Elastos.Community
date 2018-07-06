@@ -1,6 +1,6 @@
 import {TASK_STATUS, TASK_CATEGORY, TASK_TYPE} from '@/constant'
 
-import React from 'react';
+import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import TaskCreateForm from '@/module/form/TaskCreateForm/Container'
 import { Col, Row, Popconfirm, Divider, Button, Spin, Icon } from 'antd'

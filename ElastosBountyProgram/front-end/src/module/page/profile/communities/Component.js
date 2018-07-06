@@ -1,5 +1,5 @@
-import React from 'react';
-import StandardPage from '../../StandardPage';
+import React from 'react'
+import StandardPage from '../../StandardPage'
 import Navigator from '@/module/page/shared/Navigator/Container'
 import { message } from 'antd'
 import config from '@/config'

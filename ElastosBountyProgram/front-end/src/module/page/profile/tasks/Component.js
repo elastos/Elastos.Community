@@ -1,5 +1,5 @@
-import React from 'react';
-import StandardPage from '../../StandardPage';
+import React from 'react'
+import StandardPage from '../../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import Navigator from '@/module/page/shared/Navigator/Container'
 
@@ -8,7 +8,7 @@ import '../../admin/admin.scss'
 
 import { Col, Row, Icon, Form, Breadcrumb, Button, Table, Divider } from 'antd'
 import moment from 'moment/moment'
-const FormItem = Form.Item;
+const FormItem = Form.Item
 
 export default class extends StandardPage {
 
@@ -51,11 +51,11 @@ export default class extends StandardPage {
             key: 'community',
             render: (community, data) => {
                 if (!community) {
-                    return null;
+                    return null
                 }
 
                 if (data.communityParent) {
-                    let nameParent = data.communityParent.name;
+                    let nameParent = data.communityParent.name
                     return (<p>{nameParent}/{community.name}</p>)
                 } else {
                     return (<p>{community.name}</p>)
@@ -101,11 +101,11 @@ export default class extends StandardPage {
             key: 'community',
             render: (community, data) => {
                 if (!community) {
-                    return null;
+                    return null
                 }
 
                 if (data.communityParent) {
-                    let nameParent = data.communityParent.name;
+                    let nameParent = data.communityParent.name
                     return (<p>{nameParent}/{community.name}</p>)
                 } else {
                     return (<p>{community.name}</p>)

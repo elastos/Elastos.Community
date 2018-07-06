@@ -9,9 +9,9 @@ export default class extends BaseService {
             path: '/api/submission/list',
             method: 'get',
             data: filter
-        });
+        })
 
-        return result;
+        return result
     }
 
     async index(qry) {
@@ -82,7 +82,7 @@ export default class extends BaseService {
             data: doc
         })
 
-        return res;
+        return res
     }
 
     async resetAllSubmissions() {

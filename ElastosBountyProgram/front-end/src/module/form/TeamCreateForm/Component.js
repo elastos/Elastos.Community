@@ -36,32 +36,32 @@ class C extends BaseComponent {
     handleSubmit (e) {
         e.preventDefault()
 
-        const tags = this.props.form.getFieldInstance('tags').getValue();
+        const tags = this.props.form.getFieldInstance('tags').getValue()
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
-                this.setState({loading: true});
+                this.setState({loading: true})
                 const res = await this.props.create({
                     ...values,
                     tags: tags.join(','),
                     logo: '',
                     metadata: ''
-                });
+                })
 
-                console.log(res);
+                console.log(res)
 
-                this.setState({loading: false});
-                this.props.history.push('/profile/teams');
+                this.setState({loading: false})
+                this.props.history.push('/profile/teams')
             }
         })
     }
 
     getInputProps () {
-        const {getFieldDecorator} = this.props.form;
-        const team = this.props.data;
+        const {getFieldDecorator} = this.props.form
+        const team = this.props.data
 
         const input_el = (
             <Input size="large"/>
-        );
+        )
 
         const name_fn = getFieldDecorator('name', {
             rules: [{required: true, message: 'team name is required'}],
@@ -79,7 +79,7 @@ class C extends BaseComponent {
                         <Radio key={i} value={v}>
                             {v}
                         </Radio>
-                    );
+                    )
                 })}
 
             </RadioGroup>

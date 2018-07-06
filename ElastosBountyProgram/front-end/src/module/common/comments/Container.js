@@ -28,7 +28,7 @@ export default createContainer(Component, (state) => {
                 const rs = await commentService.postComment(type, reduxType, detailReducer, parentId, comment)
 
                 if (rs) {
-                    message.success('Your comment has been posted.');
+                    message.success('Your comment has been posted.')
                 }
             } catch (err) {
                 message.error(err.message)

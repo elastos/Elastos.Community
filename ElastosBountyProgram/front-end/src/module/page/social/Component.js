@@ -125,11 +125,11 @@ export default class extends StandardPage {
             dataIndex: 'community',
             render: (community, data) => {
                 if (!community) {
-                    return null;
+                    return null
                 }
 
                 if (data.communityParent) {
-                    let nameParent = data.communityParent.name;
+                    let nameParent = data.communityParent.name
                     return (<p>{nameParent}/{community.name}</p>)
                 } else {
                     return (<p>{community.name}</p>)
@@ -363,14 +363,14 @@ export default class extends StandardPage {
             form.resetFields()
             this.setState({visibleModalJoinCommunity: false})
 
-            const communityId = values['community'][values['community'].length - 1];
+            const communityId = values['community'][values['community'].length - 1]
             this.props.addMemberToCommunity(this.props.currentUserId, communityId).then(() => {
                 message.success('You was added to the community. Thanks!')
 
                 // Reload my communities
                 this.props.getMyCommunities(this.props.currentUserId)
             }).catch((err) => {
-                console.error(err);
+                console.error(err)
                 message.error('Error while joining the community')
             })
         })

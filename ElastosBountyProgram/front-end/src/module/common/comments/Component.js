@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import { Form, Col, Row, List, Avatar, Icon, Input, Divider, Button, Spin } from 'antd'
 import config from '@/config'
@@ -123,7 +123,7 @@ class C extends BaseComponent {
                         Post
                     </Button>
                 </FormItem>
-            </Form>) : null;
+            </Form>) : null
     }
 
     subscribe() {
@@ -171,7 +171,7 @@ class C extends BaseComponent {
         )
 
         // Show in reverse chronological order
-        commentItems && commentItems.reverse();
+        commentItems && commentItems.reverse()
 
         return (
             <div>

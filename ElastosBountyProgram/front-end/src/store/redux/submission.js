@@ -23,7 +23,7 @@ class SubmissionRedux extends BaseRedux {
 
             // if we select a detail
             detail: {}
-        };
+        }
     }
 }
 

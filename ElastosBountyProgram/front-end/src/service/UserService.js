@@ -1,7 +1,7 @@
 import BaseService from '../model/BaseService'
 import _ from 'lodash'
 import {USER_ROLE} from '@/constant'
-import {api_request} from '@/util';
+import {api_request} from '@/util'
 
 export default class extends BaseService {
 
@@ -17,7 +17,7 @@ export default class extends BaseService {
                 username,
                 password
             }
-        });
+        })
 
         await this.dispatch(userRedux.actions.login_form_reset())
 
@@ -35,7 +35,7 @@ export default class extends BaseService {
         await this.dispatch(userRedux.actions.profile_update(res.user.profile))
         await this.dispatch(userRedux.actions.role_update(res.user.role))
         await this.dispatch(userRedux.actions.current_user_id_update(res.user._id))
-        sessionStorage.setItem('api-token', res['api-token']);
+        sessionStorage.setItem('api-token', res['api-token'])
 
         return {
             success: true,
@@ -52,7 +52,7 @@ export default class extends BaseService {
                 username,
                 password
             })
-        });
+        })
 
         return true
     }
@@ -64,7 +64,7 @@ export default class extends BaseService {
         const result = await api_request({
             path: '/api/user/current_user',
             success: (data) => {
-                this.dispatch(userRedux.actions.is_login_update(true));
+                this.dispatch(userRedux.actions.is_login_update(true))
                 if ([USER_ROLE.LEADER].includes(data.role)) {
                     this.dispatch(userRedux.actions.is_leader_update(true))
                 }
@@ -157,7 +157,7 @@ export default class extends BaseService {
         const result = await api_request({
             path: `/api/user/${ids}/users`,
             method: 'get'
-        });
+        })
 
         return result
     }
@@ -170,7 +170,7 @@ export default class extends BaseService {
         const result = await api_request({
             path: `/api/user/list`,
             method: 'get'
-        });
+        })
 
         await this.dispatch(memberRedux.actions.users_update(result))
         await this.dispatch(memberRedux.actions.loading_update(false))

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import UserEditForm from '@/module/form/UserEditForm/Container'
 import { Col, Row, Icon, Divider, Button, Spin } from 'antd'
@@ -170,21 +170,21 @@ export default class extends BaseComponent {
     }
 
     getGenderName(key) {
-        return config.data.mappingGenderKeyToName[key];
+        return config.data.mappingGenderKeyToName[key]
     }
 
     getAvatarUrl(profile) {
         if (profile.avatar) {
-            return profile.avatar;
+            return profile.avatar
         }
 
         const avatarDefault = {
             [USER_GENDER.MALE]: '/assets/images/User_Avatar_Male.png',
             [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Female.png',
             [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png'
-        };
+        }
 
-        return avatarDefault[profile.gender];
+        return avatarDefault[profile.gender]
     }
 
     switchEditMode() {

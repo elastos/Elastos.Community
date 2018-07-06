@@ -49,4 +49,4 @@ export default {
     '2302': 'Teams',
     '2303': 'Submissions',
     '2304': 'Communities'
-};
+}

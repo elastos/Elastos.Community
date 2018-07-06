@@ -21,12 +21,12 @@ class C extends BaseComponent {
 
     getIssueFormProps() {
 
-        const {getFieldDecorator} = this.props.form;
+        const {getFieldDecorator} = this.props.form
 
         const contribCategory_fn = getFieldDecorator('contribCategory', {
             rules: [{required: true, message: 'Please select a category'}],
             initialValue: 'BLOG'
-        });
+        })
         const contribCategory_el = (
             <Select>
                 <Option value={CONTRIB_CATEGORY.BLOG}>Blog</Option>
@@ -34,7 +34,7 @@ class C extends BaseComponent {
                 <Option value={CONTRIB_CATEGORY.PODCAST}>Podcast</Option>
                 <Option value={CONTRIB_CATEGORY.OTHER}>Other</Option>
             </Select>
-        );
+        )
 
         return {
             contribCategory: contribCategory_fn(contribCategory_el)

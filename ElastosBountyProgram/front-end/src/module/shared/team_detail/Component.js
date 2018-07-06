@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import { Col, Row, Icon, Divider, Button, Spin } from 'antd'
-import _ from 'lodash';
-import TeamEditForm from '@/module/form/TeamEditForm/Container';
+import _ from 'lodash'
+import TeamEditForm from '@/module/form/TeamEditForm/Container'
 
 import {TASK_STATUS, USER_GENDER} from '@/constant'
 import config from '@/config'
@@ -12,7 +12,7 @@ export default class extends BaseComponent {
     ord_states() {
         return {
             editing: false
-        };
+        }
     }
 
     ord_render () {
@@ -29,11 +29,11 @@ export default class extends BaseComponent {
             <div className="form-wrapper">
                 <TeamEditForm data={this.props.data} />
             </div>
-        );
+        )
     }
 
     renderHeader() {
-        const canEdit = this.props.canEdit || false;
+        const canEdit = this.props.canEdit || false
         return <div className="l_banner">
             <div className="pull-left">
                 Team Detail
@@ -53,7 +53,7 @@ export default class extends BaseComponent {
     }
 
     renderTeamDetail() {
-        const data = this.props.data;
+        const data = this.props.data
         const list = [
             {key: 'Name', value: data.name},
             {key: 'Type', value: data.type},
@@ -63,15 +63,15 @@ export default class extends BaseComponent {
             {key: 'Tags', value: data.tags.join(', ')},
             {key: 'Create Time', value: data.createdAt}
 
-        ];
+        ]
 
         _.each(data.members, (item) => {
             list.push({key: '', value: ''}, {
                 key: 'Member - ' + item.user.username, value: item.user.profile.firstName + ' ' + item.user.profile.lastName
             }, {
                 key: 'Role', value: item.role
-            });
-        });
+            })
+        })
 
         return (
             <div>
@@ -86,7 +86,7 @@ export default class extends BaseComponent {
                                     {item.value}
                                 </Col>
                             </Row>
-                        );
+                        )
                     })
                 }
 

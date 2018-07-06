@@ -17,7 +17,7 @@ export default createContainer(Component, (state, ownProps) => {
 
     return {
         ...taskState
-    };
+    }
 }, () => {
 
     const communityService = new CommunityService()

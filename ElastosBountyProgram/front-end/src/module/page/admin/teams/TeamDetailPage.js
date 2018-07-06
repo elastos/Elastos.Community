@@ -1,19 +1,19 @@
-import React from 'react';
-import BaseAdmin from '../BaseAdmin';
-import {createContainer} from '@/util';
+import React from 'react'
+import BaseAdmin from '../BaseAdmin'
+import {createContainer} from '@/util'
 
 import Navigator from '../shared/Navigator/Component'
-import { Breadcrumb, Col, Icon, Row, Spin } from 'antd';
-import TeamService from '@/service/TeamService';
+import { Breadcrumb, Col, Icon, Row, Spin } from 'antd'
+import TeamService from '@/service/TeamService'
 
-import TeamDetail from '@/module/shared/team_detail/Component';
+import TeamDetail from '@/module/shared/team_detail/Component'
 
 const Component = class extends BaseAdmin {
     ord_states() {
         return {
             loading: true,
             data: {}
-        };
+        }
     }
 
     ord_renderContent() {
@@ -43,14 +43,14 @@ const Component = class extends BaseAdmin {
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 
     renderDetail() {
         if (this.state.loading) {
             return (
                 <Spin size="large" />
-            );
+            )
         }
 
         return (
@@ -59,27 +59,27 @@ const Component = class extends BaseAdmin {
     }
 
     async componentDidMount() {
-        await super.componentDidMount();
+        await super.componentDidMount()
 
-        const teamId = this.$getParam('teamId');
+        const teamId = this.$getParam('teamId')
 
-        const d = await this.props.detail(teamId);
-        console.log(d);
+        const d = await this.props.detail(teamId)
+        console.log(d)
         this.setState({
             data: d,
             loading: false
-        });
+        })
     }
-};
+}
 
 export default createContainer(Component, () => {
-    return {};
+    return {}
 }, () => {
-    const teamService = new TeamService();
+    const teamService = new TeamService()
 
     return {
         async detail(teamId) {
-            return await teamService.getDetail(teamId);
+            return await teamService.getDetail(teamId)
         }
-    };
-});
+    }
+})

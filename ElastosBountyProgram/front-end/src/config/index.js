@@ -1,6 +1,6 @@
-import _ from 'lodash';
-import router from './router';
-import data from './data';
+import _ from 'lodash'
+import router from './router'
+import data from './data'
 
 export default {
     data,
@@ -11,4 +11,4 @@ export default {
         DATE: 'MM/DD/YYYY',
         TIME: 'MM/DD/YYYY hh:mm:ss'
     }
-};
+}

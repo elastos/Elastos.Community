@@ -19,7 +19,7 @@ import {
 
 } from 'antd'
 
-import {upload_file} from '@/util';
+import {upload_file} from '@/util'
 import './style.scss'
 import moment from 'moment'
 
@@ -79,10 +79,10 @@ class C extends BaseComponent {
                 if (this.state.editing) {
                     this.props.updateTask(values, this.state).then(() => {
                         this.props.getTaskDetail(this.props.existingTask._id)
-                    });
+                    })
                     this.props.switchEditMode()
                 } else {
-                    this.props.createTask(values, this.state);
+                    this.props.createTask(values, this.state)
                 }
             }
         })
@@ -105,7 +105,7 @@ class C extends BaseComponent {
             editing: !!props.existingTask,
 
             isUsd: (props.existingTask && props.existingTask.reward.isUsd) || false
-        };
+        }
     }
 
     getInputProps () {
@@ -277,22 +277,22 @@ class C extends BaseComponent {
 
         const thumbnail_fn = getFieldDecorator('thumbnail', {
             rules: []
-        });
+        })
         const p_thumbnail = {
             showUploadList: false,
             customRequest: (info) => {
                 this.setState({
                     upload_loading: true
-                });
+                })
                 upload_file(info.file).then((d) => {
-                    const url = d.url;
+                    const url = d.url
                     this.setState({
                         upload_loading: false,
                         upload_url: url
-                    });
+                    })
                 })
             }
-        };
+        }
         const thumbnail_el = (
             <Upload name="logo" listType="picture" {...p_thumbnail}>
                 {
@@ -305,19 +305,19 @@ class C extends BaseComponent {
                     )
                 }
             </Upload>
-        );
+        )
 
         const attachment_fn = getFieldDecorator('attachment', {
             rules: []
-        });
+        })
         const p_attachment = {
             showUploadList: false,
             customRequest: (info) => {
                 this.setState({
                     attachment_loading: true
-                });
+                })
                 upload_file(info.file).then((d) => {
-                    const url = d.url;
+                    const url = d.url
                     this.setState({
                         attachment_loading: false,
                         attachment_url: url,
@@ -325,10 +325,10 @@ class C extends BaseComponent {
                         attachment_filename: d.filename,
 
                         removeAttachment: false
-                    });
+                    })
                 })
             }
-        };
+        }
         const attachment_el = (
             <Upload name="attachment" {...p_attachment}>
                 {
@@ -347,7 +347,7 @@ class C extends BaseComponent {
                     )
                 }
             </Upload>
-        );
+        )
 
         return {
             assignSelf: assignSelf_fn(assignSelf_el),

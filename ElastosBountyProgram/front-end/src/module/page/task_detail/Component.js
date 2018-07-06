@@ -1,5 +1,5 @@
-import React from 'react';
-import StandardPage from '../StandardPage';
+import React from 'react'
+import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 
 // TODO: this is backwards and confusing

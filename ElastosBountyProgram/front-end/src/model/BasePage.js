@@ -78,6 +78,6 @@ export default class extends BaseComponent {
     }
 
     $getParam(key) {
-        return key ? this.props.match.params[key] : this.props.match.params[key];
+        return key ? this.props.match.params[key] : this.props.match.params[key]
     }
 }

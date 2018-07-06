@@ -1,14 +1,14 @@
-import React from 'react';
-import StandardPage from '../../StandardPage';
+import React from 'react'
+import StandardPage from '../../StandardPage'
 import Navigator from '@/module/page/shared/Navigator/Container'
-import config from '@/config';
+import config from '@/config'
 
 import './style.scss'
 import '../../admin/admin.scss'
 
 import { Col, Row, Icon, Form, Input, Button, Divider, Table } from 'antd'
-import moment from 'moment/moment';
-const FormItem = Form.Item;
+import moment from 'moment/moment'
+const FormItem = Form.Item
 
 export default class extends StandardPage {
     ord_states() {
@@ -16,7 +16,7 @@ export default class extends StandardPage {
             loading: true,
             total: 0,
             list: []
-        };
+        }
     }
     ord_renderContent () {
 
@@ -79,7 +79,7 @@ export default class extends StandardPage {
                 key: 'createdAt',
                 render: (createdAt) => moment(createdAt).format(config.FORMAT.DATE)
             }
-        ];
+        ]
 
         return (
             <Table
@@ -88,26 +88,26 @@ export default class extends StandardPage {
                 dataSource={this.state.list}
                 loading={this.state.loading}
             />
-        );
+        )
     }
 
     goDetail(teamId) {
-        this.props.history.push(`/profile/teams/${teamId}`);
+        this.props.history.push(`/profile/teams/${teamId}`)
     }
     goCreatepage() {
-        this.props.history.push('/profile/teams/create');
+        this.props.history.push('/profile/teams/create')
     }
 
     async componentDidMount() {
-        await super.componentDidMount();
+        await super.componentDidMount()
 
         const d = await this.props.list({
             teamHasUser: this.props.current.id
-        });
+        })
         this.setState({
             total: d.total,
             list: d.list,
             loading: false
-        });
+        })
     }
 }

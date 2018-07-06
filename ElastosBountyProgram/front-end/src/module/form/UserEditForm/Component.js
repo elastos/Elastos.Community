@@ -20,7 +20,7 @@ import {
 
 import config from '@/config'
 
-import {upload_file} from '@/util';
+import {upload_file} from '@/util'
 import './style.scss'
 
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, USER_GENDER} from '@/constant'
@@ -58,7 +58,7 @@ class C extends BaseComponent {
             if (!err) {
                 this.props.updateUser(values, this.state).then(() => {
                     this.props.getCurrentUser()
-                });
+                })
                 this.props.switchEditMode()
             }
         })
@@ -104,7 +104,7 @@ class C extends BaseComponent {
         const gender_fn = getFieldDecorator('gender', {
             rules: [],
             initialValue: user.profile.gender
-        });
+        })
         const gender_el = (
             <RadioGroup>
                 <Radio key={USER_GENDER.MALE} value={USER_GENDER.MALE}>
@@ -121,22 +121,22 @@ class C extends BaseComponent {
 
         const avatar_fn = getFieldDecorator('avatar', {
             rules: []
-        });
+        })
         const p_avatar = {
             showUploadList: false,
             customRequest: (info) => {
                 this.setState({
                     upload_loading: true
-                });
+                })
                 upload_file(info.file).then((d) => {
-                    const url = d.url;
+                    const url = d.url
                     this.setState({
                         upload_loading: false,
                         upload_url: url
-                    });
+                    })
                 })
             }
-        };
+        }
         const avatar_el = (
             <Upload name="logo" listType="picture" {...p_avatar}>
                 {
@@ -149,7 +149,7 @@ class C extends BaseComponent {
                     )
                 }
             </Upload>
-        );
+        )
 
         const country_fn = getFieldDecorator('country', {
             rules: [{required: true, message: 'Please select your country'}],

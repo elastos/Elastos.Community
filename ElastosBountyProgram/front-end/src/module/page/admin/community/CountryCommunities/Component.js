@@ -50,9 +50,9 @@ export default class extends AdminPage {
             }).then(() => {
                 message.success('Add new country successfully')
 
-                this.loadCommunities();
+                this.loadCommunities()
             }).catch((err) => {
-                console.error(err);
+                console.error(err)
                 message.error('Error while add country')
             })
         })
@@ -62,7 +62,7 @@ export default class extends AdminPage {
     }
 
     componentDidMount() {
-        this.loadCommunities();
+        this.loadCommunities()
         this.props.getAllUsers().then((users) => {
             this.setState({
                 users
@@ -71,7 +71,7 @@ export default class extends AdminPage {
     }
 
     loadCommunities() {
-        const currentCountry = this.props.match.params['country'];
+        const currentCountry = this.props.match.params['country']
 
         if (currentCountry) {
             this.props.getSpecificCountryCommunities(currentCountry).then((communities) => {
@@ -91,7 +91,7 @@ export default class extends AdminPage {
     getAvatarUrl(users) {
         const avatarDefault = {
             [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png'
-        };
+        }
 
         users.forEach((user) => {
             if (!user.profile.avatar) {
@@ -158,7 +158,7 @@ export default class extends AdminPage {
     }
 
     renderBreadcrumbCountries() {
-        const geolocationKeys = _.keyBy(this.state.communities, 'geolocation');
+        const geolocationKeys = _.keyBy(this.state.communities, 'geolocation')
         const listCountriesEl = Object.keys(geolocationKeys).map((geolocation, index) => {
             return (
                 <Select.Option title={config.data.mappingCountryCodeToName[geolocation]} key={index}
