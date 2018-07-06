@@ -17,7 +17,6 @@ export default createContainer(Component, (state) => {
 
     return {
         async getCurrentUser() {
-
             try {
                 const rs = await userService.getCurrentUser()
             } catch (err) {

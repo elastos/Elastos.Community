@@ -21,7 +21,6 @@ import moment from 'moment/moment'
  *
  */
 export default class extends BaseComponent {
-
     componentDidMount() {
         const taskId = this.props.match.params.taskId
         taskId && this.props.getTaskDetail(taskId)
@@ -51,7 +50,6 @@ export default class extends BaseComponent {
     }
 
     renderAdminHeader() {
-
         return <div className="l_banner">
             <div className="pull-left">
                 Status: <span className="status">{this.props.task.status}</span>
@@ -97,7 +95,6 @@ export default class extends BaseComponent {
     }
 
     renderHeader() {
-
         const isTaskOwner = this.props.current_user_id === (this.props.task.createdBy && this.props.task.createdBy._id)
 
         return <div className="l_banner">
@@ -144,7 +141,6 @@ export default class extends BaseComponent {
             </div>
             <div className="clearfix"/>
         </div>
-
     }
 
     // this is confusing and should maybe also belong in detail,
@@ -367,7 +363,6 @@ export default class extends BaseComponent {
     async approveTask() {
         const taskId = this.props.task._id
         await this.props.approveTask(taskId)
-
     }
 
     async markAsSuccessful() {
@@ -401,5 +396,4 @@ export default class extends BaseComponent {
     switchEditMode() {
         this.setState({editing: !this.state.editing})
     }
-
 }

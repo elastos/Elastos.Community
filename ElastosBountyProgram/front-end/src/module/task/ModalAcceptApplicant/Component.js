@@ -8,7 +8,6 @@ const FormItem = Form.Item
 
 export default Form.create()(
     class C extends BaseComponent {
-
         ord_render () {
             const {onCancel, onCreate, visible, taskCandidate, acceptedCnt, acceptedMax} = this.props
             if (!taskCandidate) {

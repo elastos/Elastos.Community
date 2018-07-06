@@ -10,7 +10,6 @@ import Comments from '@/module/common/comments/Container'
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
 export default class extends BaseComponent {
-
     ord_states() {
         return {
             visibleModalMemberProfile: false,
@@ -119,7 +118,6 @@ export default class extends BaseComponent {
                                 size="small"
                                 dataSource={this.props.task.candidates}
                                 renderItem={(candidate) => {
-
                                     const name = candidate.type === TASK_CANDIDATE_TYPE.USER ? candidate.user.username : candidate.team.name
                                     const listItemActions = []
 
@@ -136,7 +134,6 @@ export default class extends BaseComponent {
                                     let candidateIsUserOrTeam = false
                                     if ((candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === this.props.userId) ||
                                     (candidate.type === TASK_CANDIDATE_TYPE.TEAM && _.map(this.state.teamsOwned, '_id').includes(candidate.team._id))) {
-
                                         candidateIsUserOrTeam = true
                                     }
 
@@ -154,7 +151,6 @@ export default class extends BaseComponent {
                                                 </Tooltip>
                                             )
                                         } else {
-
                                         // non developer events should confirm
                                             if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
                                                 listItemActions.unshift(
@@ -184,7 +180,6 @@ export default class extends BaseComponent {
                                                     </Tooltip>)
                                             }
                                         }
-
                                     } else if (candidate.status === TASK_CANDIDATE_STATUS.APPROVED) {
                                     // this should be the leader's view - they can approve applicants
                                         listItemActions.unshift(
@@ -206,7 +201,6 @@ export default class extends BaseComponent {
                                     if (candidateIsUserOrTeam) {
                                         nonOwnerLink = `${userOrTeamName} (you)`
                                     } else {
-
                                         nonOwnerLink = (candidate.type === TASK_CANDIDATE_TYPE.USER
                                             ? <a onClick={() => { this.props.history.push(`/member/${candidate.user._id}`) }}>{userOrTeamName}</a>
                                             : <a onClick={() => { this.props.history.push(`/team/${candidate.team._id}`) }}>{userOrTeamName}</a>

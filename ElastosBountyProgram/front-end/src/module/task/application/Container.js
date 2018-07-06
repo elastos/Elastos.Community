@@ -11,7 +11,6 @@ export default createContainer(Component, (state) => {
         is_admin: state.user.is_admin
     }
 }, () => {
-
     const teamService = new TeamService()
     const taskService = new TaskService()
 

@@ -10,7 +10,6 @@ const SubMenu = Menu.SubMenu
 const MenuItemGroup = Menu.ItemGroup
 
 export default class extends BaseComponent {
-
     buildDetailComponent () {
         const { profile } = this.props
 
@@ -60,7 +59,6 @@ export default class extends BaseComponent {
     }
 
     ord_render () {
-
         const { menu_el, logo_el } = this.buildDetailComponent()
         const isLogin = this.props.isLogin
 

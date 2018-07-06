@@ -28,7 +28,6 @@ export default class {
         const pathName = userDefineTypes[0]
         const types = {}
         _.each(this.defineDefaultState(), (value, key) => {
-
             // this adds a [field]_update action
             const update_key = `${key}_update`
             types[update_key] = `${pathName}/${key}_update`

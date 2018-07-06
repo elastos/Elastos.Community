@@ -12,7 +12,6 @@ import { Breadcrumb, Col, Icon, Row } from 'antd'
 import { SUBMISSION_TYPE } from '@/constant'
 
 export default class extends AdminPage {
-
     state = {
         editing: false
     }
@@ -28,7 +27,6 @@ export default class extends AdminPage {
     }
 
     ord_renderContent () {
-
         if (!this.props.submission.type) {
             return
         }

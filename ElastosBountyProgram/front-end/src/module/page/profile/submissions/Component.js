@@ -11,7 +11,6 @@ import moment from 'moment/moment'
 const FormItem = Form.Item
 
 export default class extends StandardPage {
-
     componentDidMount() {
         this.props.getSubmissions(this.props.currentUserId)
     }

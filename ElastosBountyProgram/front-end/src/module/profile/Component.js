@@ -19,7 +19,6 @@ import './style.scss'
  *
  */
 export default class extends BaseComponent {
-
     // only wraps loading / renderMain
     ord_render () {
         return (_.isEmpty(this.props.user) || this.props.user.loading
@@ -47,7 +46,6 @@ export default class extends BaseComponent {
 
     // for now public and your profile view looks the same
     renderDetail() {
-
         if (this.props.page === 'ADMIN' || this.props.page === 'LEADER') {
             return this.renderPersonalDetail()
         } else {
@@ -57,7 +55,6 @@ export default class extends BaseComponent {
     }
 
     renderHeader() {
-
         // TODO: edit only if you're own profile / is admin
         return <div className="l_banner">
             <div className="pull-left">
@@ -70,11 +67,9 @@ export default class extends BaseComponent {
             </div>
             <div className="clearfix"/>
         </div>
-
     }
 
     renderPersonalDetail() {
-
         return (
             <div>
                 <Row>
@@ -190,5 +185,4 @@ export default class extends BaseComponent {
     switchEditMode() {
         this.setState({editing: !this.state.editing})
     }
-
 }

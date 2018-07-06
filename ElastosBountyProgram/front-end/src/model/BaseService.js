@@ -13,5 +13,4 @@ export default class {
     dispatch(action) {
         return this.store.dispatch(action)
     }
-
 };

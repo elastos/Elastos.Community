@@ -8,7 +8,6 @@ const Option = Select.Option
 const TextArea = Input.TextArea
 
 class C extends BaseComponent {
-
     handleSubmit(e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
@@ -21,7 +20,6 @@ class C extends BaseComponent {
     }
 
     getSubmissionFormProps() {
-
         const {getFieldDecorator} = this.props.form
 
         const submissionType_fn = getFieldDecorator('submissionType', {

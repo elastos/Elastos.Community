@@ -4,9 +4,7 @@ import Footer from '@/module/layout/Footer/Container'
 import Training1Form from '@/module/form/Training1Form/Container'
 
 export default class extends StandardPage {
-
     ord_renderContent () {
-
         return (
             <div className="p_Social">
                 <div className="ebp-header-divider">

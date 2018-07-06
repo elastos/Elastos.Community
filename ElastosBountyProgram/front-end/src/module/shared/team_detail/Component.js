@@ -8,7 +8,6 @@ import {TASK_STATUS, USER_GENDER} from '@/constant'
 import config from '@/config'
 
 export default class extends BaseComponent {
-
     ord_states() {
         return {
             editing: false
@@ -49,7 +48,6 @@ export default class extends BaseComponent {
             </div>
             <div className="clearfix"/>
         </div>
-
     }
 
     renderTeamDetail() {
@@ -97,5 +95,4 @@ export default class extends BaseComponent {
     switchEditMode() {
         this.setState({editing: !this.state.editing})
     }
-
 }

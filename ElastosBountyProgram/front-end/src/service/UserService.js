@@ -4,9 +4,7 @@ import {USER_ROLE} from '@/constant'
 import {api_request} from '@/util'
 
 export default class extends BaseService {
-
     async login(username, password, opts = {}) {
-
         const userRedux = this.store.getRedux('user')
 
         // call API /login
@@ -44,7 +42,6 @@ export default class extends BaseService {
     }
 
     async register(username, password, profile) {
-
         const res = await api_request({
             path: '/api/user/register',
             method: 'post',
@@ -58,7 +55,6 @@ export default class extends BaseService {
     }
 
     async getCurrentUser() {
-
         const userRedux = this.store.getRedux('user')
 
         const result = await api_request({
@@ -87,7 +83,6 @@ export default class extends BaseService {
     // restrictive getter - public profile should never return email / private info
     // TODO: I am using member to refer to a profile other than yourself, might want to change it
     async getMember(userId, options = {}) {
-
         let path = `/api/user/public/${userId}`
         const memberRedux = this.store.getRedux('member')
 
@@ -104,7 +99,6 @@ export default class extends BaseService {
         // this is gross, if we are focused on a user, it shouldn't matter if it's you or another user
         // we should use the same base redux model
         if (options.admin) {
-
             await this.dispatch(memberRedux.actions.focus_user_update(result))
             await this.dispatch(memberRedux.actions.loading_update(false))
         }
@@ -113,7 +107,6 @@ export default class extends BaseService {
     }
 
     async update(userId, doc) {
-
         const memberRedux = this.store.getRedux('member')
 
         await this.dispatch(memberRedux.actions.loading_update(true))

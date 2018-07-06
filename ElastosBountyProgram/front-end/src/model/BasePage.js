@@ -13,7 +13,6 @@ import store from '@/store'
 const springConfig = {stiffness: 180, damping: 14}
 export default class extends BaseComponent {
     ord_render(p) {
-
         /*
         const s = this.ord_animate()
         const defaultStyle = {}

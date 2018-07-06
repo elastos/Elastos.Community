@@ -24,7 +24,6 @@ const TextArea = Input.TextArea
 const RadioGroup = Radio.Group
 
 class C extends BaseComponent {
-
     ord_states() {
         return {
             loading: false
@@ -45,7 +44,6 @@ class C extends BaseComponent {
                 if (res) {
                     location.reload()
                 }
-
             }
         })
     }
@@ -165,6 +163,5 @@ class C extends BaseComponent {
             </div>
         )
     }
-
 }
 export default Form.create()(C)

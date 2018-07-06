@@ -17,7 +17,6 @@ import './style.scss'
  *
  */
 export default class extends BaseComponent {
-
     renderMain() {
         return (
             <div className="c_SubmissionDetail">

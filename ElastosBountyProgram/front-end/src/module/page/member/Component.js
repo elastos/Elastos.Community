@@ -8,7 +8,6 @@ import PublicProfileDetail from '@/module/profile/detail/Container'
 import './style.scss'
 
 export default class extends StandardPage {
-
     async componentDidMount() {
         this.setState({loading: true})
         const userId = this.props.match.params.userId
@@ -20,7 +19,6 @@ export default class extends StandardPage {
     }
 
     ord_renderContent () {
-
         return (
             <div className="p_Member">
                 <div className="ebp-header-divider">

@@ -4,7 +4,6 @@ import UserService from '@/service/UserService'
 import { message } from 'antd/lib/index'
 
 export default createContainer(Component, (state) => {
-
     return {
         user: state.user
     }

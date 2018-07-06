@@ -65,7 +65,6 @@ class C extends BaseComponent {
     }
 
     getInputProps () {
-
         const {getFieldDecorator} = this.props.form
         const user = this.props.user
 
@@ -307,6 +306,5 @@ class C extends BaseComponent {
             </div>
         )
     }
-
 }
 export default Form.create()(C)

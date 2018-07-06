@@ -9,7 +9,6 @@ export default createContainer(Component, (state) => {
         is_login: state.user.is_login
     }
 }, () => {
-
     const userService = new UserService()
 
     return {

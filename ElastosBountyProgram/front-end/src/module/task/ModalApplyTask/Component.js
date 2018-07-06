@@ -8,7 +8,6 @@ const FormItem = Form.Item
 
 export default Form.create()(
     class C extends BaseComponent {
-
         ord_render () {
             const {onCancel, onCreate, form, visible} = this.props
             const {getFieldDecorator} = form

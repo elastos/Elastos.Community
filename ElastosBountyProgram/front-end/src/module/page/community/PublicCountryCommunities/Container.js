@@ -19,7 +19,6 @@ export default createContainer(Component, (state, ownProps) => {
         ...taskState
     }
 }, () => {
-
     const communityService = new CommunityService()
     const userService = new UserService()
     const taskService = new TaskService()

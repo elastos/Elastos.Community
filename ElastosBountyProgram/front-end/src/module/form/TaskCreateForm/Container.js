@@ -79,7 +79,6 @@ export default createContainer(Component, (state) => {
         },
 
         async updateTask(formData, st) {
-
             const taskId = this.existingTask._id
 
             try {

@@ -13,9 +13,7 @@ import Comments from '@/module/common/comments/Container'
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
 export default class extends BaseComponent {
-
     ord_states() {
-
         let acceptedCnt = 0
 
         if (this.props.task && _.isArray(this.props.task.candidates)) {
@@ -49,7 +47,6 @@ export default class extends BaseComponent {
     }
 
     ord_render () {
-
         const isTaskOwner = (this.props.task && this.props.task.createdBy && this.props.task.createdBy._id) === this.props.userId
         return (
             <div className="public">
@@ -317,7 +314,6 @@ export default class extends BaseComponent {
                                 size="small"
                                 dataSource={this.props.task.candidates}
                                 renderItem={(candidate) => {
-
                                     const name = candidate.type === TASK_CANDIDATE_TYPE.USER ? candidate.user.username : candidate.team.name
                                     const listItemActions = []
 
@@ -334,7 +330,6 @@ export default class extends BaseComponent {
                                     let candidateIsUserOrTeam = false
                                     if ((candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === this.props.userId) ||
                                     (candidate.type === TASK_CANDIDATE_TYPE.TEAM && _.map(this.state.teamsOwned, '_id').includes(candidate.team._id))) {
-
                                         candidateIsUserOrTeam = true
                                     }
 
@@ -351,7 +346,6 @@ export default class extends BaseComponent {
                                                 </Tooltip>
                                             )
                                         } else {
-
                                         // non developer events should confirm
                                             if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
                                                 listItemActions.unshift(
@@ -381,7 +375,6 @@ export default class extends BaseComponent {
                                                     </Tooltip>)
                                             }
                                         }
-
                                     } else if (candidate.status === TASK_CANDIDATE_STATUS.APPROVED) {
                                     // this should be the leader's view - they can approve applicants
                                         listItemActions.unshift(
@@ -410,7 +403,6 @@ export default class extends BaseComponent {
                                     if (candidateIsUserOrTeam) {
                                         nonOwnerLink = `${userOrTeamName} (you)`
                                     } else {
-
                                         nonOwnerLink = (candidate.type === TASK_CANDIDATE_TYPE.USER
                                             ? <a onClick={() => { this.props.history.push(`/member/${candidate.user._id}`) }}>{userOrTeamName}</a>
                                             : <a onClick={() => { this.props.history.push(`/team/${candidate.team._id}`) }}>{userOrTeamName}</a>
@@ -478,7 +470,6 @@ export default class extends BaseComponent {
      * Social Tasks - members must apply for task, with a certain # to be selected
      */
     renderJoinButton() {
-
         if (this.state.isDeveloperEvent) {
             return <Button className="join-btn" onClick={this.confirmDeveloperEventJoin}>
                 Join Event
@@ -537,7 +528,6 @@ export default class extends BaseComponent {
     }
 
     handleModalApplyTask = () => {
-
         const form = this.formRefApplyTask.props.form
 
         // applyId is either literally 'self' or a teamId
@@ -564,12 +554,10 @@ export default class extends BaseComponent {
             if (result) {
                 message.success('You have applied, you will be contacted if approved')
             }
-
         }).catch((err) => {
             // never entered
             message.error(err.message, 10)
         })
-
     }
 
     async removeApplication(tcId) {
@@ -585,7 +573,6 @@ export default class extends BaseComponent {
             modalTaskCandidate: taskCandidate,
             visibleModalAcceptApplicant: true
         })
-
     }
 
     saveAcceptCandidateRef = (ref) => {
@@ -597,7 +584,6 @@ export default class extends BaseComponent {
     }
 
     handleModalAcceptApplicant = () => {
-
         // this is the candidate we are accepting
         const taskCandidateId = this.state.modalTaskCandidate._id
         this.handleCancelModalAcceptApplicant()
@@ -610,7 +596,6 @@ export default class extends BaseComponent {
             acceptedCnt += 1
 
             this.setState({acceptedCnt})
-
         }).catch((err) => {
             message.error(err.message, 10)
         })
@@ -622,7 +607,6 @@ export default class extends BaseComponent {
      * // TODO: send the reminder
      */
     confirmDeveloperEventJoin = () => {
-
         message.success('You have successfully registered for this event, a reminder will be sent closer to the event date')
 
         const taskId = this.props.task._id

@@ -3,7 +3,6 @@ import _ from 'lodash'
 import {api_request} from '@/util'
 
 export default class extends BaseService {
-
     async list(filter = {}) {
         const result = await api_request({
             path: '/api/team/list',
@@ -15,7 +14,6 @@ export default class extends BaseService {
     }
 
     async getUserTeams(userId) {
-
         const userRedux = this.store.getRedux('user')
 
         this.dispatch(userRedux.actions.loading_update(true))

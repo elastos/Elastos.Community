@@ -5,7 +5,6 @@ import config from '@/config'
 import _ from 'lodash'
 
 export default class extends BaseService {
-
     async addCountry(country) {
         const res = await api_request({
             path: '/api/community/create',
@@ -93,7 +92,6 @@ export default class extends BaseService {
     }
 
     async getLeadersACountry(countryCode) {
-
         const result = await api_request({
             path: '/api/community/country/' + countryCode, method: 'get'
         })

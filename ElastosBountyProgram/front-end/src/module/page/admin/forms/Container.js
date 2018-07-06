@@ -6,7 +6,6 @@ import _ from 'lodash'
 import {SUBMISSION_TYPE} from '@/constant'
 
 export default createContainer(Component, (state) => {
-
     let submissionState = state.submission
 
     if (!_.isArray(state.submission.all_submissions)) {
@@ -16,9 +15,7 @@ export default createContainer(Component, (state) => {
     submissionState.filter = state.submission.filter || {}
 
     return submissionState
-
 }, () => {
-
     const submissionService = new SubmissionService()
 
     return {

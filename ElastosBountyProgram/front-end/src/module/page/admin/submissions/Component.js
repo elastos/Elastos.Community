@@ -11,7 +11,6 @@ import { Breadcrumb, Col, Icon, Row, Menu, Select, Table } from 'antd'
 import { Link } from 'react-router-dom'
 
 export default class extends AdminPage {
-
     componentDidMount() {
         this.props.getSubmissions()
     }
@@ -21,7 +20,6 @@ export default class extends AdminPage {
     }
 
     ord_renderContent () {
-
         const submissionData = this.props.all_submissions
 
         const columns = [

@@ -3,7 +3,6 @@ import Component from './Component'
 import SubmissionService from '@/service/SubmissionService'
 
 export default createContainer(Component, (state) => {
-
     let page = 'PUBLIC' // default
 
     if (/^\/admin/.test(state.router.location.pathname)) {
@@ -19,7 +18,6 @@ export default createContainer(Component, (state) => {
         page: page
     }
 }, () => {
-
     const submissionService = new SubmissionService()
 
     return {

@@ -11,7 +11,6 @@ import moment from 'moment/moment'
 const FormItem = Form.Item
 
 export default class extends StandardPage {
-
     componentDidMount() {
         this.props.getTasks(this.props.currentUserId)
         this.props.getUserTeams(this.props.currentUserId)
@@ -60,7 +59,6 @@ export default class extends StandardPage {
                 } else {
                     return (<p>{community.name}</p>)
                 }
-
             }
         }, {
             title: 'Date',
@@ -110,7 +108,6 @@ export default class extends StandardPage {
                 } else {
                     return (<p>{community.name}</p>)
                 }
-
             }
         }, {
             title: 'Status',

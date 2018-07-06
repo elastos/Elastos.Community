@@ -8,7 +8,6 @@ import moment from 'moment'
 const FormItem = Form.Item
 
 class C extends BaseComponent {
-
     componentDidMount() {
         const taskId = this.props.match.params.taskId
         const submissionId = this.props.match.params.submissionId

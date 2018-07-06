@@ -12,7 +12,6 @@ import { Breadcrumb, Col, Icon, Row } from 'antd'
 import {TASK_STATUS} from '@/constant'
 
 export default class extends AdminPage {
-
     state = {
         editing: false
     }

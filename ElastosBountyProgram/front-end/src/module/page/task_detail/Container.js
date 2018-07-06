@@ -3,7 +3,6 @@ import Component from './Component'
 import TaskService from '@/service/TaskService'
 
 export default createContainer(Component, (state) => {
-
     // TODO: need some more tracking of options here
 
     return {

@@ -5,7 +5,6 @@ import {api_request} from '@/util'
 import {TASK_CANDIDATE_STATUS, TASK_STATUS} from '@/constant'
 
 export default class extends BaseService {
-
     async list(filter = {}) {
         const result = await api_request({
             path: '/api/task/list',
@@ -17,7 +16,6 @@ export default class extends BaseService {
     }
 
     async index(qry) {
-
         const taskRedux = this.store.getRedux('task')
 
         this.dispatch(taskRedux.actions.loading_update(true))
@@ -37,7 +35,6 @@ export default class extends BaseService {
     }
 
     async get(taskId) {
-
         const taskRedux = this.store.getRedux('task')
 
         this.dispatch(taskRedux.actions.loading_update(true))
@@ -65,7 +62,6 @@ export default class extends BaseService {
 
             return result
         }
-
     }
 
     /**
@@ -77,7 +73,6 @@ export default class extends BaseService {
      * @returns {Promise<*>}
      */
     async update(taskId, doc) {
-
         const taskRedux = this.store.getRedux('task')
 
         this.dispatch(taskRedux.actions.loading_update(true))
@@ -130,7 +125,6 @@ export default class extends BaseService {
      * @returns {Promise<*>}
      */
     async pushCandidate(taskId, userId, teamId, applyMsg) {
-
         const taskRedux = this.store.getRedux('task')
 
         const result = await api_request({
@@ -223,7 +217,6 @@ export default class extends BaseService {
 
     async setFilter(options) {
         const taskRedux = this.store.getRedux('task')
-
     }
 
     async resetAllTasks() {
@@ -237,7 +230,6 @@ export default class extends BaseService {
     }
 
     async create(doc) {
-
         const res = await api_request({
             path: '/api/task/create',
             method: 'post',

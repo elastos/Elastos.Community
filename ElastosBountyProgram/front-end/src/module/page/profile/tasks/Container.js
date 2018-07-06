@@ -63,9 +63,7 @@ export default createContainer(Component, (state) => {
     }
 
     return taskState
-
 }, () => {
-
     const taskService = new TaskService()
 
     return {
@@ -94,7 +92,6 @@ export default createContainer(Component, (state) => {
         },
 
         async getUserTeams(currentUserId) {
-
             const teamService = new TeamService()
 
             return teamService.getUserTeams(currentUserId)

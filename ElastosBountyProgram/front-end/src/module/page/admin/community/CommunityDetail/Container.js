@@ -6,7 +6,6 @@ import UserService from '@/service/UserService'
 export default createContainer(Component, (state, ownProps) => {
     return {}
 }, () => {
-
     const communityService = new CommunityService()
     const userService = new UserService()
 

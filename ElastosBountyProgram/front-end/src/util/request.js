@@ -74,7 +74,6 @@ export const api_request = (opts = {}) => {
             }
         } catch (err) {
         }
-
     }).then((data) => {
         if (data.code > 0) {
             // return data correct
@@ -101,7 +100,6 @@ export const api_request = (opts = {}) => {
 *
 * */
 export const upload_file = async (fileObject, opts = {}) => {
-
     try {
         const url = await api_request({
             path: '/api/upload/file',
@@ -123,5 +121,4 @@ export const upload_file = async (fileObject, opts = {}) => {
         opts.error && opts.error(e)
         throw e
     }
-
 }

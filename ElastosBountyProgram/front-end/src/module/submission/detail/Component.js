@@ -11,7 +11,6 @@ import '../style.scss'
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
 export default class extends BaseComponent {
-
     // special layout for external forms
     renderFormExt() {
         return <div>
@@ -253,7 +252,6 @@ export default class extends BaseComponent {
     }
 
     ord_render() {
-
         return (
             <div className="public">
                 {this.props.submission.type === SUBMISSION_TYPE.FORM_EXT

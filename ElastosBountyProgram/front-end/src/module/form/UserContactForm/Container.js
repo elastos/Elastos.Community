@@ -9,7 +9,6 @@ message.config({
 })
 
 export default createContainer(Component, (state) => {
-
     return {
         currentUserId: state.user.current_user_id,
         is_admin: state.user.is_admin

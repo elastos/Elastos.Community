@@ -5,7 +5,6 @@ import {message} from 'antd'
 import {TASK_STATUS} from '@/constant'
 
 export default createContainer(Component, (state) => {
-
     let page = 'PUBLIC' // default
 
     if (/^\/admin/.test(state.router.location.pathname)) {
@@ -21,7 +20,6 @@ export default createContainer(Component, (state) => {
         page: page
     }
 }, () => {
-
     const taskService = new TaskService()
 
     return {
@@ -34,7 +32,6 @@ export default createContainer(Component, (state) => {
         },
 
         async approveTask(taskId) {
-
             try {
                 await taskService.update(taskId, {
                     status: TASK_STATUS.APPROVED
@@ -47,7 +44,6 @@ export default createContainer(Component, (state) => {
         },
 
         async markAsSubmitted(taskId) {
-
             try {
                 await taskService.update(taskId, {
                     status: TASK_STATUS.SUBMITTED
@@ -60,7 +56,6 @@ export default createContainer(Component, (state) => {
         },
 
         async markAsDisbursed(taskId) {
-
             try {
                 await taskService.update(taskId, {
                     status: TASK_STATUS.DISTRIBUTED
@@ -74,7 +69,6 @@ export default createContainer(Component, (state) => {
 
         // TODO: language here needs work
         async markAsSuccessful(taskId) {
-
             try {
                 await taskService.update(taskId, {
                     status: TASK_STATUS.SUCCESS
@@ -87,7 +81,6 @@ export default createContainer(Component, (state) => {
         },
 
         async forceStart(taskId) {
-
             try {
                 await taskService.update(taskId, {
                     status: TASK_STATUS.ASSIGNED

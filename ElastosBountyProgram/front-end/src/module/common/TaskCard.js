@@ -7,7 +7,6 @@ import {DEFAULT_IMAGE} from '../../constant'
 const { Meta } = Card
 
 export default class extends BaseComponent {
-
     ord_render() {
         const {thumbnail, name, reward} = this.props
         console.log(this.props)

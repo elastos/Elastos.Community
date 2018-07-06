@@ -12,7 +12,6 @@ import { Breadcrumb, Icon } from 'antd'
 import {TASK_CATEGORY} from '@/constant'
 
 export default class extends StandardPage {
-
     componentDidMount() {
         const taskId = this.props.match.params.taskId
         this.props.getTaskDetail(taskId)

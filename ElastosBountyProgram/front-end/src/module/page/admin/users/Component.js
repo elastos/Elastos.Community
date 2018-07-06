@@ -9,7 +9,6 @@ import ListUsers from './ListUsers/Component'
 import Navigator from '../shared/Navigator/Component'
 
 export default class extends AdminPage {
-
     state = {
         usernameFilter: ''
     }
@@ -24,7 +23,6 @@ export default class extends AdminPage {
     }
 
     ord_renderContent () {
-
         let users = this.props.users
 
         if (this.state.usernameFilter) {

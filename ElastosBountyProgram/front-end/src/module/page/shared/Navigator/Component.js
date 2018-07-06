@@ -7,9 +7,7 @@ import { Link } from 'react-router-dom'
 import './style.scss'
 
 export default class extends BaseComponent {
-
     handleMenuClick(item, key, keyPath) {
-
         switch (item.key) {
             case 'profileInfo':
                 this.props.history.push('/profile/info')

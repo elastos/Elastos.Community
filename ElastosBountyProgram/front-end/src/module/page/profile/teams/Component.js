@@ -19,7 +19,6 @@ export default class extends StandardPage {
         }
     }
     ord_renderContent () {
-
         return (
             <div>
                 <div className="ebp-header-divider">

@@ -4,7 +4,6 @@ import SubmissionService from '@/service/SubmissionService'
 import { message } from 'antd/lib/index'
 
 export default createContainer(Component, (state) => {
-
     return {
         submission: state.submission.detail,
         loading: state.submission.loading

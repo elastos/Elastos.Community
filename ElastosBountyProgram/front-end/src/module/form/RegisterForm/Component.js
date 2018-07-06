@@ -13,7 +13,6 @@ import './style.scss'
 const FormItem = Form.Item
 
 class C extends BaseComponent {
-
     state = {
         requestedCode: null
     }
@@ -333,7 +332,6 @@ class C extends BaseComponent {
                 {form}
             </div>
         )
-
     }
 }
 

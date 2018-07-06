@@ -11,7 +11,6 @@ const SubMenu = Menu.SubMenu
 const MenuItemGroup = Menu.ItemGroup
 
 export default class extends BaseComponent {
-
     /*
     buildOverviewDropdown() {
         return (
@@ -31,7 +30,6 @@ export default class extends BaseComponent {
     */
 
     buildAcctDropdown() {
-
         const isLogin = this.props.isLogin
         const hasAdminAccess = [USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(this.props.role)
 
@@ -65,7 +63,6 @@ export default class extends BaseComponent {
     }
 
     ord_render() {
-
         const isLogin = this.props.isLogin
 
         // const overviewDropdown = this.buildOverviewDropdown()

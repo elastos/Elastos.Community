@@ -27,7 +27,6 @@ const TextArea = Input.TextArea
  * This is public form for the Evangelist Training
  */
 class C extends BaseComponent {
-
     handleSubmit (e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
@@ -49,7 +48,6 @@ class C extends BaseComponent {
     }
 
     getInputProps () {
-
         const {getFieldDecorator} = this.props.form
         const existingTask = this.props.existingTask
 
@@ -319,6 +317,5 @@ class C extends BaseComponent {
             </div>
         )
     }
-
 }
 export default Form.create()(C)

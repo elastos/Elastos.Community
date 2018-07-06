@@ -19,7 +19,6 @@ export default class extends StandardPage {
         }
     }
     ord_renderContent () {
-
         return (
             <div>
                 <div className="ebp-header-divider">
@@ -50,6 +49,5 @@ export default class extends StandardPage {
 
     async componentDidMount() {
         await super.componentDidMount()
-
     }
 }

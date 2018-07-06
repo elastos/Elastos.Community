@@ -14,7 +14,6 @@ import { Link } from 'react-router-dom'
 import {TASK_STATUS} from '@/constant'
 
 export default class extends AdminPage {
-
     state = {
         filteredInfo: null,
 
@@ -88,7 +87,6 @@ export default class extends AdminPage {
                 } else {
                     return (<p>{community.name}</p>)
                 }
-
             }
         }, {
             title: 'Status',

@@ -7,7 +7,6 @@ import { Col, Row, Icon, Form, Input, Button, Modal, Select, Table, List, Toolti
 import moment from 'moment/moment'
 
 export default class extends StandardPage {
-
     ord_renderContent () {
         return (
             <div className="p_Slack">

@@ -7,20 +7,17 @@ const FormItem = Form.Item
 const Option = Select.Option
 
 class C extends BaseComponent {
-
     handleSubmit(e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values)
                 this.props.login(values.username, values.password, values.remember)
-
             }
         })
     }
 
     getIssueFormProps() {
-
         const {getFieldDecorator} = this.props.form
 
         const contribCategory_fn = getFieldDecorator('contribCategory', {

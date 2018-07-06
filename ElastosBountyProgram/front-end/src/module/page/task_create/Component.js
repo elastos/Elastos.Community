@@ -6,9 +6,7 @@ import TaskCreateForm from '@/module/form/TaskCreateForm/Container'
 import {TASK_TYPE} from '@/constant'
 
 export default class extends StandardPage {
-
     ord_renderContent () {
-
         // default
         let taskType = TASK_TYPE.EVENT
 

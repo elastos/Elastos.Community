@@ -8,9 +8,7 @@ import { Col, Row, Icon, Form, Input, Button, Dropdown } from 'antd'
 const FormItem = Form.Item
 
 export default class extends StandardPage {
-
     ord_renderContent () {
-
         return (
             <div className="p_Leader">
                 <div className="ebp-header-divider">

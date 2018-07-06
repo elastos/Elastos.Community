@@ -134,7 +134,6 @@ export default class extends StandardPage {
                 } else {
                     return (<p>{community.name}</p>)
                 }
-
             }
         }, {
             title: 'Reward',
@@ -375,5 +374,4 @@ export default class extends StandardPage {
             })
         })
     }
-
 }

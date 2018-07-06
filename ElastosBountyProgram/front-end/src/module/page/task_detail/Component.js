@@ -13,7 +13,6 @@ import { Breadcrumb, Icon } from 'antd'
 import {TASK_CATEGORY} from '@/constant'
 
 export default class extends StandardPage {
-
     componentDidMount() {
         const taskId = this.props.match.params.taskId
         this.props.getTaskDetail(taskId)
@@ -26,7 +25,6 @@ export default class extends StandardPage {
     */
 
     ord_renderContent () {
-
         return (
             <div className="p_TaskDetail">
                 <div className="ebp-header-divider">

@@ -47,7 +47,6 @@ const TextArea = Input.TextArea
  * - a local event can have sub tasks, these are shown as tasks in the Social page
  */
 class C extends BaseComponent {
-
     state = {
         communityTrees: []
     }
@@ -109,7 +108,6 @@ class C extends BaseComponent {
     }
 
     getInputProps () {
-
         const {getFieldDecorator} = this.props.form
         const existingTask = this.props.existingTask
 
@@ -600,6 +598,5 @@ class C extends BaseComponent {
             removeAttachment: true
         })
     }
-
 }
 export default Form.create()(C)

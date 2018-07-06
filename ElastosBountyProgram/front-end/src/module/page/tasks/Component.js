@@ -10,7 +10,6 @@ import { Col, Row, Icon, Form, Input, Button, Dropdown, Spin } from 'antd'
 const FormItem = Form.Item
 
 export default class extends StandardPage {
-
     ord_states() {
         return {
             list: [],
@@ -68,7 +67,6 @@ export default class extends StandardPage {
     componentDidMount() {
         this.setState({loading: true})
         this.props.fetchTaskList().then(() => {
-
             this.setState({
                 loading: false,
                 list: d.list,

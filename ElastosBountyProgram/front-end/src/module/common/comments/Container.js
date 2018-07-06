@@ -17,7 +17,6 @@ export default createContainer(Component, (state) => {
         currentUserId: state.user.current_user_id
     }
 }, () => {
-
     const commentService = new CommentService()
     const submissionService = new SubmissionService()
     const taskService = new TaskService()

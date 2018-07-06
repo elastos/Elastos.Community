@@ -4,7 +4,6 @@ import CommunityService from '@/service/CommunityService'
 import _ from 'lodash'
 
 export default createContainer(Component, (state) => {
-
     const profileState = {
         currentUserId: state.user.current_user_id,
         profileCountry: state.user.profile.country,

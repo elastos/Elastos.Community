@@ -9,7 +9,6 @@ import Footer from '@/module/layout/Footer/Container'
 import moment from 'moment/moment'
 
 export default class extends StandardPage {
-
     componentDidMount() {
         this.props.getTasks()
     }
@@ -27,14 +26,12 @@ export default class extends StandardPage {
     }
 
     ord_renderContent() {
-
         const backdropStyle = {
             backgroundPosition: '0 50%',
             backgroundImage: `url('/assets/images/HomeHeader.jpg')`
         }
 
         const renderEventRow = (task, rowIndex) => {
-
             switch (rowIndex) {
                 case 0:
                     // Task Name
@@ -70,9 +67,7 @@ export default class extends StandardPage {
                             </p>
                         </div>
                     </Col>
-
             }
-
         }
 
         return (
