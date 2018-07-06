@@ -7,9 +7,9 @@ import { DEFAULT_IMAGE, USER_GENDER } from '@/constant'
 import Footer from '@/module/layout/Footer/Container'
 import _ from 'lodash'
 import Promise from 'bluebird'
+import '../style.scss'
 
 const TabPane = Tabs.TabPane
-import '../style.scss'
 
 export default class extends StandardPage {
     state = {
@@ -23,7 +23,7 @@ export default class extends StandardPage {
             STATE: [],
             CITY: [],
             REGION: [],
-            SCHOOL: [],
+            SCHOOL: []
         },
         keyValueCommunityMembers: {}, // Contain all members
         keyValueMembersWithoutSubCommunity: {} // Only contain member without sub community
@@ -124,7 +124,7 @@ export default class extends StandardPage {
                 this.setState({
                     subCommunities,
                     listSubCommunitiesByType,
-                    breadcrumbRegions,
+                    breadcrumbRegions
                 })
 
                 // After have sub-community we get all members
@@ -135,7 +135,7 @@ export default class extends StandardPage {
 
     getAvatarUrl(users) {
         const avatarDefault = {
-            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png',
+            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png'
         };
 
         users.forEach((user) => {
@@ -203,7 +203,7 @@ export default class extends StandardPage {
         let breadcrumbRegions = [];
         subCommunities.forEach((community) => {
             breadcrumbRegions.push({
-                name: community.name,
+                name: community.name
             })
         })
 
@@ -249,7 +249,7 @@ export default class extends StandardPage {
             STATE: [],
             CITY: [],
             REGION: [],
-            SCHOOL: [],
+            SCHOOL: []
         }
 
         renderCommunities.forEach((community) => {
@@ -333,7 +333,7 @@ export default class extends StandardPage {
         const listCountriesEl = Object.keys(geolocationKeys).map((geolocation, index) => {
             return (
                 <Select.Option title={config.data.mappingCountryCodeToName[geolocation]} key={index}
-                               value={geolocation}>{config.data.mappingCountryCodeToName[geolocation]}</Select.Option>
+                    value={geolocation}>{config.data.mappingCountryCodeToName[geolocation]}</Select.Option>
             )
         })
 
@@ -390,12 +390,12 @@ export default class extends StandardPage {
                             <Row>
                                 {this.state.listSubCommunitiesByType[key].map((community, index) => {
                                     return (
-                                        <Col md={{span:12}} lg={{span: 3}}
-                                             key={index}
-                                             className="user-card">
+                                        <Col md={{span: 12}} lg={{span: 3}}
+                                            key={index}
+                                            className="user-card">
                                             {community.leaders.map((leader, index) => {
                                                 return (
-                                                    <Link key={index} to={'/community/' + community.parentCommunityId  + '/country/' + community.geolocation + '/region/' + community.name}>
+                                                    <Link key={index} to={'/community/' + community.parentCommunityId + '/country/' + community.geolocation + '/region/' + community.name}>
                                                         <Card
                                                             cover={<img src={leader.profile.avatar}/>}
                                                         >
@@ -403,7 +403,7 @@ export default class extends StandardPage {
                                                                 {community.name}
                                                             </h5>
                                                             <p className="user-info">
-                                                                <a onClick={() => {this.props.history.push(`/member/${leader._id}`)}}>
+                                                                <a onClick={() => { this.props.history.push(`/member/${leader._id}`) }}>
                                                                     {leader.username}
                                                                 </a>
                                                             </p>
@@ -413,7 +413,7 @@ export default class extends StandardPage {
                                             })}
 
                                             {community.leaders.length === 0 && (
-                                                <Link key={index} to={'/community/' + community.parentCommunityId  + '/country/' + community.geolocation + '/region/' + community.name}>
+                                                <Link key={index} to={'/community/' + community.parentCommunityId + '/country/' + community.geolocation + '/region/' + community.name}>
                                                     <Card
                                                         cover={<img src={DEFAULT_IMAGE.UNSET_LEADER}/>}
                                                     >
@@ -447,13 +447,13 @@ export default class extends StandardPage {
                     <Row>
                         {this.state.community.leaders && this.state.community.leaders.map((leader, index) => {
                             return (
-                                <Col md={{span:12}} lg={{span: 4}} key={index} className="user-card">
+                                <Col md={{span: 12}} lg={{span: 4}} key={index} className="user-card">
                                     <Card
                                         key={index}
                                         cover={<img src={leader.profile.avatar}/>}
                                     >
                                         <p>
-                                            <a onClick={() => {this.props.history.push(`/member/${leader._id}`)}}>
+                                            <a onClick={() => { this.props.history.push(`/member/${leader._id}`) }}>
                                                 {leader.username}
                                             </a>
                                         </p>
@@ -519,12 +519,12 @@ export default class extends StandardPage {
                     <div className="ebp-page">
                         <div className="ebp-page-content">
                             <Row>
-                                <Col md={{span:24}} lg={{span: 18}}
-                                     className="community-left-column">
+                                <Col md={{span: 24}} lg={{span: 18}}
+                                    className="community-left-column">
                                     {listOrganizers}
                                 </Col>
-                                <Col md={{span:24}} lg={{span: 6}}
-                                     className="community-right-column">
+                                <Col md={{span: 24}} lg={{span: 6}}
+                                    className="community-right-column">
                                     <div>
                                         <h4 className="without-padding">Members</h4>
                                         <Input.Search onSearch={this.handleSearchMember.bind(this)}
@@ -537,16 +537,16 @@ export default class extends StandardPage {
                                                     <List.Item>
                                                         <table>
                                                             <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <Avatar size="large" icon="user" src={item.profile.avatar}/>
-                                                                </td>
-                                                                <td className="member-name">
-                                                                    <a onClick={() => {this.props.history.push('/member/' + item._id)}}>
-                                                                        {item.username}
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <Avatar size="large" icon="user" src={item.profile.avatar}/>
+                                                                    </td>
+                                                                    <td className="member-name">
+                                                                        <a onClick={() => { this.props.history.push('/member/' + item._id) }}>
+                                                                            {item.username}
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </List.Item>

@@ -1,4 +1,4 @@
-import {createContainer} from "@/util"
+import {createContainer} from '@/util'
 import Component from './Component'
 import CommentService from '@/service/CommentService'
 import TaskService from '@/service/TaskService'
@@ -12,7 +12,7 @@ export default createContainer(Component, (state) => {
         loading: {
             task: state.task.loading,
             taskCandidate: state.task.loading,
-            submission: state.submission.loading,
+            submission: state.submission.loading
         },
         currentUserId: state.user.current_user_id
     }

@@ -6,17 +6,17 @@ import Navigator from '@/module/page/shared/Navigator/Container'
 import { Breadcrumb, Col, Icon, Row, Spin } from 'antd';
 
 import TeamDetail from '@/module/shared/team_detail/Component';
-import StandardPage from "../../StandardPage";
+import StandardPage from '../../StandardPage';
 
 export default class extends StandardPage {
-    ord_states(){
+    ord_states() {
         return {
-            loading : true,
-            data : {}
+            loading: true,
+            data: {}
         };
     }
 
-    ord_renderContent(){
+    ord_renderContent() {
         return (
             <div className="p_admin_index ebp-wrap">
                 <div className="d_box">
@@ -46,23 +46,23 @@ export default class extends StandardPage {
         );
     }
 
-    renderDetail(){
-        if(this.state.loading){
+    renderDetail() {
+        if (this.state.loading) {
             return (
                 <Spin size="large" />
             );
         }
 
-        const member = _.find(this.state.data.members, (item)=>{
+        const member = _.find(this.state.data.members, (item) => {
             return item.user._id === this.props.current.id;
         })
-        const canEdit = member && member.role === 'LEADER' ? true : false;
+        const canEdit = !!(member && member.role === 'LEADER');
         return (
             <TeamDetail canEdit={canEdit} data={this.state.data} />
         )
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         await super.componentDidMount();
 
         const teamId = this.$getParam('teamId');
@@ -70,8 +70,8 @@ export default class extends StandardPage {
         const d = await this.props.detail(teamId);
         console.log(d);
         this.setState({
-            data : d,
-            loading : false
+            data: d,
+            loading: false
         });
     }
 };

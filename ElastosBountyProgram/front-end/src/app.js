@@ -7,13 +7,13 @@ import {ConnectedRouter} from 'react-router-redux';
 import store from '@/store';
 import config from '@/config';
 import {USER_ROLE} from '@/constant'
-import {api_request} from "./util";
+import {api_request} from './util';
 
 import './boot';
 import './style/index.scss';
 
-const middleware = (render, props)=>{
-	return render;
+const middleware = (render, props) => {
+    return render;
 };
 
 const App = () => {
@@ -45,11 +45,11 @@ const render = () => {
     );
 };
 
-if(sessionStorage.getItem('api-token')){
+if (sessionStorage.getItem('api-token')) {
     const userRedux = store.getRedux('user');
     api_request({
-        path : '/api/user/current_user',
-        success : (data)=>{
+        path: '/api/user/current_user',
+        success: (data) => {
             store.dispatch(userRedux.actions.is_login_update(true));
             if ([USER_ROLE.LEADER].includes(data.role)) {
                 store.dispatch(userRedux.actions.is_leader_update(true))
@@ -71,7 +71,6 @@ if(sessionStorage.getItem('api-token')){
         }
     });
 }
-else{
+else {
     render();
 }
-

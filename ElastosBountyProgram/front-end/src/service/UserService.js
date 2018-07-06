@@ -5,15 +5,15 @@ import {api_request} from '@/util';
 
 export default class extends BaseService {
 
-    async login(username, password, opts={}){
+    async login(username, password, opts = {}) {
 
         const userRedux = this.store.getRedux('user')
 
         // call API /login
         const res = await api_request({
-            path : '/api/user/login',
-            method : 'get',
-            data : {
+            path: '/api/user/login',
+            method: 'get',
+            data: {
                 username,
                 password
             }
@@ -46,9 +46,9 @@ export default class extends BaseService {
     async register(username, password, profile) {
 
         const res = await api_request({
-            path : '/api/user/register',
-            method : 'post',
-            data : Object.assign(profile, {
+            path: '/api/user/register',
+            method: 'post',
+            data: Object.assign(profile, {
                 username,
                 password
             })
@@ -62,8 +62,8 @@ export default class extends BaseService {
         const userRedux = this.store.getRedux('user')
 
         const result = await api_request({
-            path : '/api/user/current_user',
-            success : (data)=>{
+            path: '/api/user/current_user',
+            success: (data) => {
                 this.dispatch(userRedux.actions.is_login_update(true));
                 if ([USER_ROLE.LEADER].includes(data.role)) {
                     this.dispatch(userRedux.actions.is_leader_update(true))
@@ -130,11 +130,11 @@ export default class extends BaseService {
         return result
     }
 
-    async logout(){
+    async logout() {
         const userRedux = this.store.getRedux('user')
         const tasksRedux = this.store.getRedux('task')
 
-        return new Promise((resolve)=>{
+        return new Promise((resolve) => {
             this.dispatch(userRedux.actions.is_login_update(false))
             this.dispatch(userRedux.actions.profile_reset())
             this.dispatch(tasksRedux.actions.all_tasks_reset())
@@ -155,8 +155,8 @@ export default class extends BaseService {
 
     async getByIds(ids) {
         const result = await api_request({
-            path : `/api/user/${ids}/users`,
-            method : 'get',
+            path: `/api/user/${ids}/users`,
+            method: 'get'
         });
 
         return result
@@ -168,10 +168,9 @@ export default class extends BaseService {
         await this.dispatch(memberRedux.actions.loading_update(true))
 
         const result = await api_request({
-            path : `/api/user/list`,
-            method : 'get',
+            path: `/api/user/list`,
+            method: 'get'
         });
-
 
         await this.dispatch(memberRedux.actions.users_update(result))
         await this.dispatch(memberRedux.actions.loading_update(false))

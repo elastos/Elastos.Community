@@ -1,16 +1,16 @@
 import store from '@/store';
 
 export default class {
-    constructor(){
+    constructor() {
         this.store = store;
         this.path = store.history;
 
         this.init();
     }
 
-    init(){}
+    init() {}
 
-    dispatch(action){
+    dispatch(action) {
         return this.store.dispatch(action);
     }
 

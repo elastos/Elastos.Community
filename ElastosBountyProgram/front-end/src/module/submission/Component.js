@@ -31,9 +31,9 @@ export default class extends BaseComponent {
     }
 
     ord_render () {
-        return (_.isEmpty(this.props.submission) || this.props.submission.loading ?
-            <div class="center"><Spin size="large" /></div> :
-            this.renderMain()
+        return (_.isEmpty(this.props.submission) || this.props.submission.loading
+            ? <div class="center"><Spin size="large" /></div>
+            : this.renderMain()
         )
     }
 }

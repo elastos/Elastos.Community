@@ -9,14 +9,14 @@ import TeamService from '@/service/TeamService';
 import TeamDetail from '@/module/shared/team_detail/Component';
 
 const Component = class extends BaseAdmin {
-    ord_states(){
+    ord_states() {
         return {
-            loading : true,
-            data : {}
+            loading: true,
+            data: {}
         };
     }
 
-    ord_renderContent(){
+    ord_renderContent() {
         return (
             <div className="p_admin_index ebp-wrap">
                 <div className="d_box">
@@ -46,8 +46,8 @@ const Component = class extends BaseAdmin {
         );
     }
 
-    renderDetail(){
-        if(this.state.loading){
+    renderDetail() {
+        if (this.state.loading) {
             return (
                 <Spin size="large" />
             );
@@ -58,7 +58,7 @@ const Component = class extends BaseAdmin {
         )
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         await super.componentDidMount();
 
         const teamId = this.$getParam('teamId');
@@ -66,19 +66,19 @@ const Component = class extends BaseAdmin {
         const d = await this.props.detail(teamId);
         console.log(d);
         this.setState({
-            data : d,
-            loading : false
+            data: d,
+            loading: false
         });
     }
 };
 
-export default createContainer(Component, ()=>{
+export default createContainer(Component, () => {
     return {};
-}, ()=>{
+}, () => {
     const teamService = new TeamService();
 
     return {
-        async detail(teamId){
+        async detail(teamId) {
             return await teamService.getDetail(teamId);
         }
     };

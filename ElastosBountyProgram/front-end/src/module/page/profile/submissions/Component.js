@@ -25,38 +25,38 @@ export default class extends StandardPage {
         const submissionsSubscribedData = this.props.subscribed_submissions
 
         const columns = [
-        {
-            title: 'Title',
-            dataIndex: 'title',
-            width: '20%',
-            className: 'fontWeight500 allow-wrap',
-            render: (name, record) => {
-                return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">{name}</a>
-            }
-        },
-        {
-            title: 'Description',
-            dataIndex: 'description',
-            width: '30%',
-            className: 'fontWeight500 allow-wrap',
-            render: (name, record) => {
-                return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">{name}</a>
-            }
-        }, {
-            title: 'Type',
-            dataIndex: 'type',
-        }, {
-            title: 'Created',
-            dataIndex: 'createdAt',
-            render: (createdAt) => moment(createdAt).format('MMM D')
-        }, {
-            title: '',
-            dataIndex: '_id',
-            key: 'actions',
-            render: (id, record) => {
+            {
+                title: 'Title',
+                dataIndex: 'title',
+                width: '20%',
+                className: 'fontWeight500 allow-wrap',
+                render: (name, record) => {
+                    return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">{name}</a>
+                }
+            },
+            {
+                title: 'Description',
+                dataIndex: 'description',
+                width: '30%',
+                className: 'fontWeight500 allow-wrap',
+                render: (name, record) => {
+                    return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">{name}</a>
+                }
+            }, {
+                title: 'Type',
+                dataIndex: 'type'
+            }, {
+                title: 'Created',
+                dataIndex: 'createdAt',
+                render: (createdAt) => moment(createdAt).format('MMM D')
+            }, {
+                title: '',
+                dataIndex: '_id',
+                key: 'actions',
+                render: (id, record) => {
 
-            }
-        }]
+                }
+            }]
 
         return (
             <div>

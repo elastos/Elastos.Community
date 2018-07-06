@@ -15,7 +15,7 @@ export default class extends BaseService {
                 ...country,
                 name: config.data.mappingCountryCodeToName[country.geolocation],
                 parentCommunityId: null,
-                type: COMMUNITY_TYPE.COUNTRY,
+                type: COMMUNITY_TYPE.COUNTRY
             }
         })
     }
@@ -23,7 +23,7 @@ export default class extends BaseService {
     async getSpecificCountryCommunities(countryCode) {
         const result = await api_request({
             path: '/api/community/country/' + countryCode,
-            method: 'get',
+            method: 'get'
         })
 
         return result
@@ -95,7 +95,7 @@ export default class extends BaseService {
     async getLeadersACountry(countryCode) {
 
         const result = await api_request({
-            path: '/api/community/country/' + countryCode, method: 'get',
+            path: '/api/community/country/' + countryCode, method: 'get'
         })
 
         return result
@@ -103,7 +103,7 @@ export default class extends BaseService {
 
     async getMembers(communityId) {
         const result = await api_request({
-            path: '/api/community/' + communityId + '/members', method: 'get',
+            path: '/api/community/' + communityId + '/members', method: 'get'
         })
 
         return result
@@ -111,7 +111,7 @@ export default class extends BaseService {
 
     async getSubCommunities(parentCommunityId) {
         const result = await api_request({
-            path: '/api/community/parent/' + parentCommunityId, method: 'get',
+            path: '/api/community/parent/' + parentCommunityId, method: 'get'
         })
 
         return result
@@ -119,7 +119,7 @@ export default class extends BaseService {
 
     async get(communityId) {
         const result = await api_request({
-            path: '/api/community/' + communityId, method: 'get',
+            path: '/api/community/' + communityId, method: 'get'
         })
 
         return result
@@ -136,7 +136,7 @@ export default class extends BaseService {
     async addMember(memberId, communityId) {
         const result = await api_request({
             path: `/api/community/${communityId}/${memberId}`,
-            method: 'post',
+            method: 'post'
         })
 
         return result
@@ -145,7 +145,7 @@ export default class extends BaseService {
     async removeMember(memberId, communityId) {
         const result = await api_request({
             path: `/api/community/${communityId}/${memberId}`,
-            method: 'delete',
+            method: 'delete'
         })
 
         return result

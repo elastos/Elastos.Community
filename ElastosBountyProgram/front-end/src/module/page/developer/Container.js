@@ -93,11 +93,11 @@ export default createContainer(Component, (state) => {
         async getAllCommunities() {
             return new Promise((resolve, reject) => {
                 communityService.getAll().then((data) => {
-                    const cascaderItems =  data.map((item) => {
+                    const cascaderItems = data.map((item) => {
                         return {
                             value: item._id,
                             label: item.name,
-                            parentId: item.parentCommunityId,
+                            parentId: item.parentCommunityId
                         }
                     })
 

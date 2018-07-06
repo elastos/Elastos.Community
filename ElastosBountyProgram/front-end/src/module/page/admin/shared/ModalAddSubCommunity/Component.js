@@ -64,7 +64,7 @@ export default Form.create()(
                                     {Object.keys(config.data.mappingCountryCodeToName).map((key, index) => {
                                         return (
                                             <Select.Option title={config.data.mappingCountryCodeToName[key]} key={index}
-                                                           value={key}>{config.data.mappingCountryCodeToName[key]}</Select.Option>
+                                                value={key}>{config.data.mappingCountryCodeToName[key]}</Select.Option>
                                         )
                                     })}
                                 </Select>
@@ -100,5 +100,5 @@ export default Form.create()(
                 </Modal>
             )
         }
-    },
+    }
 )

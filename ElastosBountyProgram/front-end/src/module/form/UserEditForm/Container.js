@@ -1,4 +1,4 @@
-import {createContainer, goPath} from "@/util";
+import {createContainer, goPath} from '@/util';
 import Component from './Component';
 import UserService from '@/service/UserService';
 import {message} from 'antd'
@@ -8,12 +8,11 @@ message.config({
     top: 100
 })
 
-
-export default createContainer(Component, (state)=>{
+export default createContainer(Component, (state) => {
     return {
         is_admin: state.user.is_admin
     };
-}, ()=>{
+}, () => {
     const userService = new UserService();
 
     return {
@@ -45,7 +44,7 @@ export default createContainer(Component, (state)=>{
                         beOrganizer: formData.beOrganizer === 'yes',
                         isDeveloper: formData.isDeveloper === 'yes',
                         walletAddress: formData.walletAddress,
-                        avatar: state.upload_url,
+                        avatar: state.upload_url
                     }
                 });
 

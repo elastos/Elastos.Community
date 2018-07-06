@@ -4,9 +4,7 @@ import SubmissionService from '@/service/SubmissionService'
 import _ from 'lodash'
 import {USER_ROLE} from '@/constant'
 
-
 export default createContainer(Component, (state) => {
-
 
     const currentUserId = state.user.current_user_id
     const submissionState = {
@@ -33,7 +31,6 @@ export default createContainer(Component, (state) => {
             }
         }
     }
-
 
     return submissionState
 

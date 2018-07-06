@@ -1,7 +1,7 @@
 export const USER_ROLE = {
-    MEMBER : 'MEMBER',
-    LEADER : 'LEADER',
-    ADMIN : 'ADMIN',
+    MEMBER: 'MEMBER',
+    LEADER: 'LEADER',
+    ADMIN: 'ADMIN',
     COUNCIL: 'COUNCIL'
 };
 
@@ -17,8 +17,8 @@ export const USER_GENDER = {
 }
 
 export const TEAM_ROLE = {
-    MEMBER : 'MEMBER',
-    OWNER : 'OWNER'
+    MEMBER: 'MEMBER',
+    OWNER: 'OWNER'
 };
 
 export const TASK_CATEGORY = {
@@ -94,7 +94,7 @@ export const CONTRIB_CATEGORY = {
 }
 
 export const DEFAULT_IMAGE = {
-    TASK : '/assets/images/task_thumbs/12.jpg',
+    TASK: '/assets/images/task_thumbs/12.jpg',
     UNSET_LEADER: '/assets/images/User_Avatar_Other.png'
 };
 

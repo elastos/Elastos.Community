@@ -150,12 +150,12 @@ export default [
         page: ProfileTeamsPage
     },
     {
-        path : '/profile/teams/create',
-        page : ProfileTeamCreatePage
+        path: '/profile/teams/create',
+        page: ProfileTeamCreatePage
     },
     {
-        path : '/profile/teams/:teamId',
-        page : ProfileTeamDetailPage
+        path: '/profile/teams/:teamId',
+        page: ProfileTeamDetailPage
     },
     {
         path: '/profile/submissions',
@@ -242,12 +242,12 @@ export default [
 
     // admin team page
     {
-        path : '/admin/teams',
-        page : TeamListPage
+        path: '/admin/teams',
+        page: TeamListPage
     },
     {
-        path : '/admin/teams/:teamId',
-        page : TeamDetailPage
+        path: '/admin/teams/:teamId',
+        page: TeamDetailPage
     },
 
     {

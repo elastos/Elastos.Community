@@ -7,8 +7,8 @@ export default {
     router,
     ...process.env,
 
-    FORMAT : {
-        DATE : 'MM/DD/YYYY',
-        TIME : 'MM/DD/YYYY hh:mm:ss'
+    FORMAT: {
+        DATE: 'MM/DD/YYYY',
+        TIME: 'MM/DD/YYYY hh:mm:ss'
     }
 };

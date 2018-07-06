@@ -4,7 +4,7 @@ import {api_request} from '@/util'
 
 export default class extends BaseService {
 
-    async list(filter={}){
+    async list(filter = {}) {
         const result = await api_request({
             path: '/api/submission/list',
             method: 'get',

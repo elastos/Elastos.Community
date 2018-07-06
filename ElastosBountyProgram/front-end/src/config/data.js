@@ -5,56 +5,56 @@ export default {
             name: 'Song',
             country: 'China',
             countryCode: 'cn',
-            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
+            avatar: 'https://www.w3schools.com/howto/img_avatar.png'
         },
         {
             id: 2,
             name: 'John',
             country: 'Vietnam',
             countryCode: 'vn',
-            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
+            avatar: 'https://www.w3schools.com/howto/img_avatar.png'
         },
         {
             id: 3,
             name: 'John Even',
             country: 'USA',
             countryCode: 'cn',
-            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
+            avatar: 'https://www.w3schools.com/howto/img_avatar.png'
         },
         {
             id: 4,
             name: 'Obama',
             country: 'USA',
             countryCode: 'us',
-            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
+            avatar: 'https://www.w3schools.com/howto/img_avatar.png'
         },
         {
             id: 5,
             name: 'Song King',
             country: 'China',
             countryCode: 'cn',
-            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
+            avatar: 'https://www.w3schools.com/howto/img_avatar.png'
         },
         {
             id: 6,
             name: 'Caocao',
             country: 'China',
             countryCode: 'cn',
-            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
+            avatar: 'https://www.w3schools.com/howto/img_avatar.png'
         },
         {
             id: 7,
             name: 'Song',
             country: 'China',
             countryCode: 'cn',
-            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
+            avatar: 'https://www.w3schools.com/howto/img_avatar.png'
         },
         {
             id: 8,
             name: 'Henry',
             country: 'Vietnam',
             countryCode: 'vn',
-            avatar: 'https://www.w3schools.com/howto/img_avatar.png',
+            avatar: 'https://www.w3schools.com/howto/img_avatar.png'
         }
     ],
     mockDataLeaderByCountries: {
@@ -64,15 +64,15 @@ export default {
                 name: 'Nguyen Van A',
                 country: 'Vietnam',
                 countryCode: 'vn',
-                avatar: 'https://www.w3schools.com/howto/img_avatar.png',
+                avatar: 'https://www.w3schools.com/howto/img_avatar.png'
             },
             {
                 id: 2,
                 name: 'John',
                 country: 'Vietnam',
                 countryCode: 'vn',
-                avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-            },
+                avatar: 'https://www.w3schools.com/howto/img_avatar.png'
+            }
         ],
         cn: [
             {
@@ -80,7 +80,7 @@ export default {
                 name: 'John Even',
                 country: 'China',
                 countryCode: 'cn',
-                avatar: 'https://www.w3schools.com/howto/img_avatar.png',
+                avatar: 'https://www.w3schools.com/howto/img_avatar.png'
             }
         ],
         us: [
@@ -89,7 +89,7 @@ export default {
                 name: 'Obama',
                 country: 'USA',
                 countryCode: 'us',
-                avatar: 'https://www.w3schools.com/howto/img_avatar.png',
+                avatar: 'https://www.w3schools.com/howto/img_avatar.png'
             }
         ]
     },
@@ -352,27 +352,27 @@ export default {
         STATE: {
             tabName: 'State',
             addNewText: 'Add state',
-            pluralName: 'States / Provinces',
+            pluralName: 'States / Provinces'
         },
         CITY: {
             tabName: 'City',
             addNewText: 'Add city',
-            pluralName: 'Cities',
+            pluralName: 'Cities'
         },
         REGION: {
             tabName: 'Region',
             addNewText: 'Add region',
-            pluralName: 'Regions',
+            pluralName: 'Regions'
         },
         SCHOOL: {
             tabName: 'School',
             addNewText: 'Add school',
-            pluralName: 'Schools',
-        },
+            pluralName: 'Schools'
+        }
     },
     mappingGenderKeyToName: {
         male: 'Male',
         female: 'Female',
-        other: 'Other',
-    },
+        other: 'Other'
+    }
 }

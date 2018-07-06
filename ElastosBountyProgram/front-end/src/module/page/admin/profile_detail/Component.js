@@ -59,7 +59,7 @@ export default class extends AdminPage {
         )
     }
 
-    renderLoading(){
+    renderLoading() {
         return (
             <div className="flex-center">
                 <Spin size="large" />

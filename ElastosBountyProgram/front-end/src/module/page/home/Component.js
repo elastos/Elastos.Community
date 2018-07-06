@@ -26,7 +26,7 @@ export default class extends StandardPage {
         ]
     }
 
-    ord_renderContent(){
+    ord_renderContent() {
 
         const backdropStyle = {
             backgroundPosition: '0 50%',
@@ -38,9 +38,9 @@ export default class extends StandardPage {
             switch (rowIndex) {
                 case 0:
                     // Task Name
-                    return <Col key={task._id} md={{span:12}} lg={{span: 8}}>
+                    return <Col key={task._id} md={{span: 12}} lg={{span: 8}}>
                         <div class="i_event">
-                            <h4 onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}>
+                            <h4 onClick={() => { this.props.history.push(`/task-detail/${task._id}`) }}>
                                 {task.name}
                             </h4>
                         </div>
@@ -48,7 +48,7 @@ export default class extends StandardPage {
 
                 case 1:
                     // Date + Thumb
-                    return <Col key={task._id} md={{span:12}} lg={{span: 8}}>
+                    return <Col key={task._id} md={{span: 12}} lg={{span: 8}}>
                         <div class="i_event">
                             <p className="event-date">
                                 {moment(task.date).format('MMM D, YYYY')}
@@ -59,13 +59,13 @@ export default class extends StandardPage {
 
                 case 2:
                     // Desc
-                    return <Col key={task._id} md={{span:12}} lg={{span: 8}}>
+                    return <Col key={task._id} md={{span: 12}} lg={{span: 8}}>
                         <div class="i_event desc">
                             <p>
                                 {_.truncate(task.description, {length: 100})}
 
                                 {task.description.length > 100 &&
-                                <a className="moreDetails" onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}> more details</a>
+                                <a className="moreDetails" onClick={() => { this.props.history.push(`/task-detail/${task._id}`) }}> more details</a>
                                 }
                             </p>
                         </div>
@@ -182,16 +182,16 @@ export default class extends StandardPage {
                 <div className="horizGap d_rowGrey"/>
                 <div className="d_rowEvents">
                     <Row>
-                        <Col md={{span:24}} lg={{span: 12}} className="d_colTasks">
+                        <Col md={{span: 24}} lg={{span: 12}} className="d_colTasks">
                             <h3>
                                 Featured Developer Bounties
                             </h3>
 
                             <Row>
                                 {this.props.dev_tasks.map((task) => {
-                                    return <Col key={task._id} md={{span:24}} lg={{span: 8}}>
+                                    return <Col key={task._id} md={{span: 24}} lg={{span: 8}}>
                                         <div className="i_event">
-                                            <h4 onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}>
+                                            <h4 onClick={() => { this.props.history.push(`/task-detail/${task._id}`) }}>
                                                 {task.name}
                                             </h4>
                                         </div>
@@ -206,7 +206,7 @@ export default class extends StandardPage {
                                                 {_.truncate(task.description, {length: 100})}
 
                                                 {task.description.length > 100 &&
-                                                <a className="moreDetails" onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}> more details</a>
+                                                <a className="moreDetails" onClick={() => { this.props.history.push(`/task-detail/${task._id}`) }}> more details</a>
                                                 }
                                             </p>
                                         </div>
@@ -214,16 +214,16 @@ export default class extends StandardPage {
                                 })}
                             </Row>
                         </Col>
-                        <Col md={{span:24}} lg={{span: 12}} className="d_colEvents">
+                        <Col md={{span: 24}} lg={{span: 12}} className="d_colEvents">
                             <h3>
                                 Featured Events
                             </h3>
 
                             <Row>
                                 {this.props.social_tasks.map((task) => {
-                                    return <Col key={task._id} md={{span:24}} lg={{span: 8}}>
+                                    return <Col key={task._id} md={{span: 24}} lg={{span: 8}}>
                                         <div className="i_event">
-                                            <h4 onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}>
+                                            <h4 onClick={() => { this.props.history.push(`/task-detail/${task._id}`) }}>
                                                 {task.name}
                                             </h4>
                                         </div>
@@ -238,7 +238,7 @@ export default class extends StandardPage {
                                                 {_.truncate(task.description, {length: 100})}
 
                                                 {task.description.length > 100 &&
-                                                <a className="moreDetails" onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}> more details</a>
+                                                <a className="moreDetails" onClick={() => { this.props.history.push(`/task-detail/${task._id}`) }}> more details</a>
                                                 }
                                             </p>
                                         </div>

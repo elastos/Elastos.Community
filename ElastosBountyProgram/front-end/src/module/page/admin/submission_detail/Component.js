@@ -46,9 +46,9 @@ export default class extends AdminPage {
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>Admin</Breadcrumb.Item>
-                                {this.props.submission.type === SUBMISSION_TYPE.FORM_EXT ?
-                                    <Breadcrumb.Item href="/admin/forms">Forms</Breadcrumb.Item> :
-                                    <Breadcrumb.Item href="/admin/submissions">Submissions</Breadcrumb.Item>
+                                {this.props.submission.type === SUBMISSION_TYPE.FORM_EXT
+                                    ? <Breadcrumb.Item href="/admin/forms">Forms</Breadcrumb.Item>
+                                    : <Breadcrumb.Item href="/admin/submissions">Submissions</Breadcrumb.Item>
                                 }
                                 <Breadcrumb.Item>{this.props.submission.name}</Breadcrumb.Item>
                             </Breadcrumb>

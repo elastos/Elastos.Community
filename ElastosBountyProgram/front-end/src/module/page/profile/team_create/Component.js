@@ -7,15 +7,15 @@ import TeamCreateForm from '@/module/form/TeamCreateForm/Container'
 import '../../admin/admin.scss'
 
 import { Col, Row, Icon, Form, Input, Button, Divider, Table } from 'antd'
-import moment from "moment/moment";
+import moment from 'moment/moment';
 const FormItem = Form.Item;
 
 export default class extends StandardPage {
-    ord_states(){
+    ord_states() {
         return {
-            loading : true,
-            total : 0,
-            list : []
+            loading: true,
+            total: 0,
+            list: []
         };
     }
     ord_renderContent () {
@@ -48,11 +48,8 @@ export default class extends StandardPage {
         )
     }
 
-
-
-    async componentDidMount(){
+    async componentDidMount() {
         await super.componentDidMount();
-
 
     }
 }

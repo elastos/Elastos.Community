@@ -3,7 +3,6 @@ import Component from './Component'
 import SubmissionService from '@/service/SubmissionService'
 import { message } from 'antd'
 
-
 export default createContainer(Component, (state) => {
     return {
         ...state

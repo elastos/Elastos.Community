@@ -22,7 +22,7 @@ export default createContainer(Component, (state, ownProps) => {
 
             } else if (task.category === TASK_CATEGORY.DEVELOPER && (
                 task.type === TASK_TYPE.TASK || task.type === TASK_TYPE.PROJECT
-            )){
+            )) {
                 taskState.dev_tasks.length < 3 && taskState.dev_tasks.push(task)
             }
         })

@@ -44,7 +44,7 @@ export default class extends StandardPage {
             render: (category) => _.capitalize(category)
         }, {
             title: 'Type',
-            dataIndex: 'type',
+            dataIndex: 'type'
         }, {
             title: 'Community',
             dataIndex: 'community',
@@ -94,7 +94,7 @@ export default class extends StandardPage {
             render: (category) => _.capitalize(category)
         }, {
             title: 'Type',
-            dataIndex: 'type',
+            dataIndex: 'type'
         }, {
             title: 'Community',
             dataIndex: 'community',
@@ -115,7 +115,7 @@ export default class extends StandardPage {
         }, {
             title: 'Status',
             dataIndex: 'status'
-        },{
+        }, {
             title: 'Date',
             dataIndex: 'startTime',
             render: (startTime) => moment(startTime).format('MMM D')

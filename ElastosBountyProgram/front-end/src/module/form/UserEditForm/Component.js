@@ -20,7 +20,7 @@ import {
 
 import config from '@/config'
 
-import {upload_file} from "@/util";
+import {upload_file} from '@/util';
 import './style.scss'
 
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, USER_GENDER} from '@/constant'
@@ -124,15 +124,15 @@ class C extends BaseComponent {
         });
         const p_avatar = {
             showUploadList: false,
-            customRequest :(info)=>{
+            customRequest: (info) => {
                 this.setState({
                     upload_loading: true
                 });
-                upload_file(info.file).then((d)=>{
+                upload_file(info.file).then((d) => {
                     const url = d.url;
                     this.setState({
                         upload_loading: false,
-                        upload_url : url
+                        upload_url: url
                     });
                 })
             }
@@ -141,8 +141,8 @@ class C extends BaseComponent {
             <Upload name="logo" listType="picture" {...p_avatar}>
                 {
                     this.state.upload_url ? (
-                        <img style={{height:'100px'}} src={this.state.upload_url} />
-                        ) : (
+                        <img style={{height: '100px'}} src={this.state.upload_url} />
+                    ) : (
                         <Button loading={this.state.upload_loading}>
                             <Icon type="upload" /> Click to upload
                         </Button>
@@ -157,9 +157,9 @@ class C extends BaseComponent {
         })
         const country_el = (
             <Select size="large"
-                    showSearch
-                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                    placeholder="Country">
+                showSearch
+                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                placeholder="Country">
                 {_.entries(config.data.mappingCountryCodeToName).map(([key, val]) => {
                     return <Select.Option key={key} value={key}>
                         {val}
@@ -173,7 +173,7 @@ class C extends BaseComponent {
         })
         const state_el = (
             <Input size="large"
-                   placeholder="State/Province"/>
+                placeholder="State/Province"/>
         )
 
         const city_fn = getFieldDecorator('city', {
@@ -181,7 +181,7 @@ class C extends BaseComponent {
         })
         const city_el = (
             <Input size="large"
-                   placeholder="City"/>
+                placeholder="City"/>
         )
 
         const organizer_fn = getFieldDecorator('beOrganizer', {
@@ -190,7 +190,7 @@ class C extends BaseComponent {
         })
         const organizer_el = (
             <Select size="large"
-                    placeholder="Do you want to be an organizer?">
+                placeholder="Do you want to be an organizer?">
                 <Select.Option value="yes">Yes</Select.Option>
                 <Select.Option value="no">No</Select.Option>
             </Select>
@@ -202,7 +202,7 @@ class C extends BaseComponent {
         })
         const developer_el = (
             <Select size="large"
-                    placeholder="Are you a software developer or engineer?">
+                placeholder="Are you a software developer or engineer?">
                 <Select.Option value="yes">Yes</Select.Option>
                 <Select.Option value="no">No</Select.Option>
             </Select>
@@ -245,12 +245,12 @@ class C extends BaseComponent {
         const formItemLayout = {
             labelCol: {
                 xs: {span: 24},
-                sm: {span: 8},
+                sm: {span: 8}
             },
             wrapperCol: {
                 xs: {span: 24},
-                sm: {span: 12},
-            },
+                sm: {span: 12}
+            }
         }
 
         // const existingTask = this.props.existingTask

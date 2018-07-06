@@ -19,7 +19,7 @@ import {
 
 } from 'antd'
 
-import {upload_file} from "@/util";
+import {upload_file} from '@/util';
 import './style.scss'
 import moment from 'moment'
 
@@ -92,8 +92,8 @@ class C extends BaseComponent {
         super(props)
 
         this.state = {
-            upload_url : null,
-            upload_loading : false,
+            upload_url: null,
+            upload_loading: false,
 
             attachment_url: (props.existingTask && props.existingTask.attachment) || null,
             attachment_loading: false,
@@ -280,15 +280,15 @@ class C extends BaseComponent {
         });
         const p_thumbnail = {
             showUploadList: false,
-            customRequest :(info)=>{
+            customRequest: (info) => {
                 this.setState({
                     upload_loading: true
                 });
-                upload_file(info.file).then((d)=>{
+                upload_file(info.file).then((d) => {
                     const url = d.url;
                     this.setState({
                         upload_loading: false,
-                        upload_url : url
+                        upload_url: url
                     });
                 })
             }
@@ -297,8 +297,8 @@ class C extends BaseComponent {
             <Upload name="logo" listType="picture" {...p_thumbnail}>
                 {
                     this.state.upload_url ? (
-                        <img style={{height:'100px'}} src={this.state.upload_url} />
-                        ) : (
+                        <img style={{height: '100px'}} src={this.state.upload_url} />
+                    ) : (
                         <Button loading={this.state.upload_loading}>
                             <Icon type="upload" /> Click to upload
                         </Button>
@@ -312,15 +312,15 @@ class C extends BaseComponent {
         });
         const p_attachment = {
             showUploadList: false,
-            customRequest :(info)=>{
+            customRequest: (info) => {
                 this.setState({
                     attachment_loading: true
                 });
-                upload_file(info.file).then((d)=>{
+                upload_file(info.file).then((d) => {
                     const url = d.url;
                     this.setState({
                         attachment_loading: false,
-                        attachment_url : url,
+                        attachment_url: url,
                         attachment_type: d.type,
                         attachment_filename: d.filename,
 
@@ -334,9 +334,9 @@ class C extends BaseComponent {
                 {
                     this.state.attachment_url ? (
                         <a target="_blank" href={this.state.attachment_url}>
-                            {this.state.attachment_type === 'application/pdf' ?
-                                <Icon type="file-pdf"/> :
-                                <Icon type="file"/>
+                            {this.state.attachment_type === 'application/pdf'
+                                ? <Icon type="file-pdf"/>
+                                : <Icon type="file"/>
                             } &nbsp;
                             {this.state.attachment_filename}
                         </a>
@@ -348,7 +348,6 @@ class C extends BaseComponent {
                 }
             </Upload>
         );
-
 
         return {
             assignSelf: assignSelf_fn(assignSelf_el),
@@ -399,41 +398,41 @@ class C extends BaseComponent {
         const formItemLayout = {
             labelCol: {
                 xs: {span: 24},
-                sm: {span: 8},
+                sm: {span: 8}
             },
             wrapperCol: {
                 xs: {span: 24},
-                sm: {span: 12},
-            },
+                sm: {span: 12}
+            }
         }
 
         const formItemLayoutAdjLeft = {
             labelCol: {
                 xs: {span: 24},
-                sm: {span: 16},
+                sm: {span: 16}
             },
             wrapperCol: {
                 xs: {span: 24},
-                sm: {span: 8},
-            },
+                sm: {span: 8}
+            }
         }
 
         const formItemLayoutAdjRight = {
             labelCol: {
                 xs: {span: 24},
-                sm: {span: 10},
+                sm: {span: 10}
             },
             wrapperCol: {
                 xs: {span: 24},
-                sm: {span: 14},
-            },
+                sm: {span: 14}
+            }
         }
 
         const formItemNoLabelLayout = {
             wrapperCol: {
                 xs: {span: 24},
-                sm: {offset: 8, span: 12},
-            },
+                sm: {offset: 8, span: 12}
+            }
         }
 
         // const existingTask = this.props.existingTask
@@ -457,7 +456,7 @@ class C extends BaseComponent {
                         <FormItem label="Task Name" {...formItemLayout}>
                             {p.taskName}
                         </FormItem>
-                        <FormItem label="Community"  {...formItemLayout}>
+                        <FormItem label="Community" {...formItemLayout}>
                             {p.taskCommunity}
                         </FormItem>
                         {/*
@@ -468,7 +467,7 @@ class C extends BaseComponent {
                         <FormItem label="Category" {...formItemLayout}>
                             {p.taskCategory}
                         </FormItem>
-                        <FormItem label="Type"  {...formItemLayout}>
+                        <FormItem label="Type" {...formItemLayout}>
                             {p.taskType}
                         </FormItem>
                         <FormItem label="Application Deadline" {...formItemLayout}>
@@ -504,15 +503,15 @@ class C extends BaseComponent {
                                 </FormItem>
                             </Col>
                         </Row>
-                        <Divider>Budget / Reward <Icon className="help-icon" type="question-circle-o" onClick={() => {this.props.history.push('/faq')}}/></Divider>
+                        <Divider>Budget / Reward <Icon className="help-icon" type="question-circle-o" onClick={() => { this.props.history.push('/faq') }}/></Divider>
 
                         <FormItem label="Fiat ($USD)" {...formItemLayout}>
-                            <Checkbox name="isUsd" checked={this.state.isUsd} onChange={() => {this.setState({isUsd: !this.state.isUsd})}}/>
+                            <Checkbox name="isUsd" checked={this.state.isUsd} onChange={() => { this.setState({isUsd: !this.state.isUsd}) }}/>
                             &nbsp; - for larger tasks/events only - payment is always in ELA equivalent
                         </FormItem>
 
-                        {this.state.isUsd ?
-                            <div>
+                        {this.state.isUsd
+                            ? <div>
                                 <Row>
                                     <Col span={12}>
                                         <FormItem label="USD Budget" {...formItemLayoutAdjLeft}>
@@ -538,8 +537,8 @@ class C extends BaseComponent {
                                         </FormItem>
                                     </Col>
                                 </Row>
-                            </div> :
-                            <Row>
+                            </div>
+                            : <Row>
                                 <Col>
                                     <FormItem label="ELA Budget" {...formItemLayout}>
                                         {p.taskRewardUpfront}
@@ -559,16 +558,16 @@ class C extends BaseComponent {
                         * Attachment
                         ********************************************************************************
                         */}
-                        {!this.state.attachment_url ?
-                            <FormItem {...formItemNoLabelLayout}>
+                        {!this.state.attachment_url
+                            ? <FormItem {...formItemNoLabelLayout}>
                                 {p.attachment}
-                            </FormItem> :
-                            <Row>
+                            </FormItem>
+                            : <Row>
                                 <Col offset={8} span={16}>
                                     <a target="_blank" href={this.state.attachment_url}>
-                                        {this.state.attachment_type === 'application/pdf' ?
-                                            <Icon type="file-pdf"/> :
-                                            <Icon type="file"/>
+                                        {this.state.attachment_type === 'application/pdf'
+                                            ? <Icon type="file-pdf"/>
+                                            : <Icon type="file"/>
                                         } &nbsp;
                                         {this.state.attachment_filename}
                                     </a>
@@ -594,7 +593,7 @@ class C extends BaseComponent {
     removeAttachment() {
         this.setState({
             attachment_loading: false,
-            attachment_url : null,
+            attachment_url: null,
             attachment_type: '',
             attachment_filename: '',
 

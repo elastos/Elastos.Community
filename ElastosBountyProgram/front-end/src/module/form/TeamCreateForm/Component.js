@@ -21,18 +21,15 @@ import {
 
 import InputTags from '@/module/shared/InputTags/Component'
 
-
-
 const FormItem = Form.Item
 const TextArea = Input.TextArea
 const RadioGroup = Radio.Group
 
-
 class C extends BaseComponent {
 
-    ord_states(){
+    ord_states() {
         return {
-            loading : false
+            loading: false
         }
     }
 
@@ -42,17 +39,17 @@ class C extends BaseComponent {
         const tags = this.props.form.getFieldInstance('tags').getValue();
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
-                this.setState({loading : true});
+                this.setState({loading: true});
                 const res = await this.props.create({
                     ...values,
-                    tags : tags.join(','),
-                    logo : '',
-                    metadata : ''
+                    tags: tags.join(','),
+                    logo: '',
+                    metadata: ''
                 });
 
                 console.log(res);
 
-                this.setState({loading : false});
+                this.setState({loading: false});
                 this.props.history.push('/profile/teams');
             }
         })
@@ -77,7 +74,7 @@ class C extends BaseComponent {
         })
         const type_el = (
             <RadioGroup>
-                {_.map(['DEVELOP', 'MARKET', 'DESIGN', 'PROJECT', 'OTHER'], (v, i)=>{
+                {_.map(['DEVELOP', 'MARKET', 'DESIGN', 'PROJECT', 'OTHER'], (v, i) => {
                     return (
                         <Radio key={i} value={v}>
                             {v}
@@ -115,16 +112,14 @@ class C extends BaseComponent {
         })
         const tags_el = <InputTags />
 
-
         return {
             name: name_fn(input_el),
             type: type_fn(type_el),
-            recruiting : recruiting_fn(recruiting_el),
-            description : description_fn(input_el),
-            tags : tags_fn(tags_el)
+            recruiting: recruiting_fn(recruiting_el),
+            description: description_fn(input_el),
+            tags: tags_fn(tags_el)
         }
     }
-
 
     ord_render () {
         const p = this.getInputProps()
@@ -132,12 +127,12 @@ class C extends BaseComponent {
         const formItemLayout = {
             labelCol: {
                 xs: {span: 24},
-                sm: {span: 8},
+                sm: {span: 8}
             },
             wrapperCol: {
                 xs: {span: 24},
-                sm: {span: 12},
-            },
+                sm: {span: 12}
+            }
         }
 
         return (
@@ -160,7 +155,6 @@ class C extends BaseComponent {
                         <FormItem label="Tags" {...formItemLayout}>
                             {p.tags}
                         </FormItem>
-
 
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
                             <Button loading={this.state.loading} type="ebp" htmlType="submit" className="d_btn">

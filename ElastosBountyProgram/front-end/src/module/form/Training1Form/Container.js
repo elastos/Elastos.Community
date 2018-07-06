@@ -1,4 +1,4 @@
-import {createContainer, goPath} from "@/util";
+import {createContainer, goPath} from '@/util';
 import Component from './Component';
 import SubmissionService from '@/service/SubmissionService'
 import {message} from 'antd'
@@ -10,14 +10,13 @@ message.config({
     top: 100
 })
 
-
-export default createContainer(Component, (state)=>{
+export default createContainer(Component, (state) => {
     return {};
-}, ()=>{
+}, () => {
     const submissionService = new SubmissionService();
 
     return {
-        async submitForm(formData, st){
+        async submitForm(formData, st) {
             try {
                 const rs = await submissionService.create({
 

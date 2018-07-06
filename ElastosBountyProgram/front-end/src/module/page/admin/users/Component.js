@@ -51,8 +51,8 @@ export default class extends AdminPage {
                             <Col span={20} className="admin-left-column wrap-box-user">
                                 <div class="pull-right">
                                     <Input.Search onSearch={this.handleSearchUser.bind(this)}
-                                                  prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                                                  placeholder="Username"/>
+                                        prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                        placeholder="Username"/>
                                 </div>
                                 <div class="clearfix"/>
                                 <ListUsers users={users} history={this.props.history} loading={this.props.loading}/>

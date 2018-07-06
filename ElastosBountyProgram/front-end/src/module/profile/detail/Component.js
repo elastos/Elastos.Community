@@ -86,8 +86,8 @@ export default class extends BaseComponent {
                             <Col span={24}>
                                 {!this.props.is_login ? <div>
                                     You must login/register first to send a message
-                                </div> :
-                                <UserContactForm recipient={this.props.member}/>
+                                </div>
+                                    : <UserContactForm recipient={this.props.member}/>
                                 }
                             </Col>
                         </Row>

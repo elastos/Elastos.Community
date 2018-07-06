@@ -10,10 +10,10 @@ import './style.scss'
 import { Col, Row, Icon, Form, Input, Button, Modal, Select, Table, List, Tooltip, Cascader } from 'antd'
 import moment from 'moment/moment'
 
+import { TASK_STATUS, TASK_TYPE } from '@/constant'
+
 const Option = Select.Option
 const FormItem = Form.Item
-
-import { TASK_STATUS, TASK_TYPE } from '@/constant'
 
 export default class extends StandardPage {
     state = {
@@ -167,7 +167,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row d_rowTop">
-                        <Col md={{span:24}} lg={{span: 18}} className="d_leftContainer d_box">
+                        <Col md={{span: 24}} lg={{span: 18}} className="d_leftContainer d_box">
                             <div className="pull-left btnContainer">
                                 <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.EVENT)}>
                                     Training
@@ -219,7 +219,7 @@ export default class extends StandardPage {
                             />
                             }
                         </Col>
-                        <Col md={{span:24}} lg={{span: 6}} className="d_rightContainer d_box">
+                        <Col md={{span: 24}} lg={{span: 6}} className="d_rightContainer d_box">
                             <h4>
                                 Submit an Issue
                             </h4>

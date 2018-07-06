@@ -3,18 +3,18 @@ import { Tag, Input, Tooltip, Icon } from 'antd';
 import BaseComponent from '@/model/BaseComponent';
 
 export default class extends BaseComponent {
-    ord_states(){
+    ord_states() {
         return {
-            tags : [],
-            inputVisable : false,
-            inputValue : ''
+            tags: [],
+            inputVisable: false,
+            inputValue: ''
         };
     }
 
-    handleInputChange(e){
+    handleInputChange(e) {
         this.setState({ inputValue: e.target.value });
     }
-    handleInputConfirm(){
+    handleInputConfirm() {
         const state = this.state;
         const inputValue = state.inputValue;
         let tags = state.tags;
@@ -25,25 +25,25 @@ export default class extends BaseComponent {
         this.setState({
             tags,
             inputVisible: false,
-            inputValue: '',
+            inputValue: ''
         });
     }
 
-    handleClose(removeTag){
+    handleClose(removeTag) {
         const tags = this.state.tags.filter(tag => tag !== removeTag);
         console.log(tags);
         this.setState({ tags });
     }
 
-    showInput(){
+    showInput() {
         this.setState({ inputVisible: true }, () => this.input.focus());
     }
 
-    saveInputRef(input){
+    saveInputRef(input) {
         this.input = input;
     }
 
-    ord_render(){
+    ord_render() {
         const { tags, inputVisible, inputValue } = this.state;
         return (
             <div>
@@ -80,7 +80,7 @@ export default class extends BaseComponent {
         );
     }
 
-    getValue(){
+    getValue() {
         return this.state.tags;
     }
 }

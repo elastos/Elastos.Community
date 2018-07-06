@@ -1,4 +1,4 @@
-import {createContainer, goPath} from "@/util";
+import {createContainer, goPath} from '@/util';
 import Component from './Component';
 import TaskService from '@/service/TaskService';
 import CommunityService from '@/service/CommunityService'
@@ -9,17 +9,16 @@ message.config({
     top: 100
 })
 
-
-export default createContainer(Component, (state)=>{
+export default createContainer(Component, (state) => {
     return {
         is_admin: state.user.is_admin
     };
-}, ()=>{
+}, () => {
     const taskService = new TaskService();
     const communityService = new CommunityService();
 
     return {
-        async createTask(formData, st){
+        async createTask(formData, st) {
             try {
                 let createObj = {
 
@@ -44,7 +43,7 @@ export default createContainer(Component, (state)=>{
                     communityParent: formData.communityParent,
 
                     candidateLimit: formData.taskCandLimit,
-                    candidateSltLimit: formData.taskCandSltLimit,
+                    candidateSltLimit: formData.taskCandSltLimit
                 }
 
                 Object.assign(createObj, {
@@ -103,7 +102,7 @@ export default createContainer(Component, (state)=>{
                     // TODO: attachment
 
                     candidateLimit: formData.taskCandLimit,
-                    candidateSltLimit: formData.taskCandSltLimit,
+                    candidateSltLimit: formData.taskCandSltLimit
                 }
 
                 Object.assign(updateObj, {
@@ -136,7 +135,7 @@ export default createContainer(Component, (state)=>{
                     Object.assign(updateObj, {
                         attachment: st.attachment_url,
                         attachmentFilename: st.attachment_filename,
-                        attachmentType: st.attachment_type,
+                        attachmentType: st.attachment_type
                     })
                 }
 
@@ -165,11 +164,11 @@ export default createContainer(Component, (state)=>{
         async getAllCommunities() {
             return new Promise((resolve, reject) => {
                 communityService.getAll().then((data) => {
-                    const cascaderItems =  data.map((item) => {
+                    const cascaderItems = data.map((item) => {
                         return {
                             value: item._id,
                             label: item.name,
-                            parentId: item.parentCommunityId,
+                            parentId: item.parentCommunityId
                         }
                     })
 

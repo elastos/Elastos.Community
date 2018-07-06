@@ -17,7 +17,7 @@ import {
 
 } from 'antd'
 
-import {upload_file} from "@/util";
+import {upload_file} from '@/util';
 import './style.scss'
 
 const FormItem = Form.Item
@@ -152,15 +152,15 @@ class C extends BaseComponent {
         });
         const p_attachment = {
             showUploadList: false,
-            customRequest :(info)=>{
+            customRequest: (info) => {
                 this.setState({
                     attachment_loading: true
                 });
-                upload_file(info.file).then((d)=>{
+                upload_file(info.file).then((d) => {
                     const url = d.url;
                     this.setState({
                         attachment_loading: false,
-                        attachment_url : url,
+                        attachment_url: url,
                         attachment_type: d.type,
                         attachment_filename: d.filename
                     });
@@ -183,7 +183,6 @@ class C extends BaseComponent {
                 }
             </Upload>
         );
-
 
         return {
             email: email_fn(email_el),
@@ -211,21 +210,20 @@ class C extends BaseComponent {
         const formItemLayout = {
             labelCol: {
                 xs: {span: 24},
-                sm: {span: 8},
+                sm: {span: 8}
             },
             wrapperCol: {
                 xs: {span: 24},
-                sm: {span: 12},
-            },
+                sm: {span: 12}
+            }
         }
 
         const formItemNoLabelLayout = {
             wrapperCol: {
                 xs: {span: 24},
-                sm: {offset: 8, span: 12},
-            },
+                sm: {offset: 8, span: 12}
+            }
         }
-
 
         // const existingTask = this.props.existingTask
 

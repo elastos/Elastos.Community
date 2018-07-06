@@ -2,7 +2,6 @@ import BaseService from '../model/BaseService'
 import _ from 'lodash'
 import {api_request} from '@/util'
 
-
 export default class extends BaseService {
     async postComment(type, reduxType, detailReducer, id, commentData) {
         const redux = this.store.getRedux(reduxType || type)

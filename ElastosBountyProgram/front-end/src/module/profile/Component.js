@@ -22,12 +22,11 @@ export default class extends BaseComponent {
 
     // only wraps loading / renderMain
     ord_render () {
-        return (_.isEmpty(this.props.user) || this.props.user.loading ?
-                <div class="center"><Spin size="large" /></div> :
-                this.renderMain()
+        return (_.isEmpty(this.props.user) || this.props.user.loading
+            ? <div class="center"><Spin size="large" /></div>
+            : this.renderMain()
         )
     }
-
 
     // header + main area
     renderMain() {
@@ -182,7 +181,7 @@ export default class extends BaseComponent {
         const avatarDefault = {
             [USER_GENDER.MALE]: '/assets/images/User_Avatar_Male.png',
             [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Female.png',
-            [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png',
+            [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png'
         };
 
         return avatarDefault[profile.gender];

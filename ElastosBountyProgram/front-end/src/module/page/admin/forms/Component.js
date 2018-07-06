@@ -25,38 +25,38 @@ export default class extends AdminPage {
         const submissionData = this.props.all_submissions
 
         const columns = [
-        {
-            title: 'Title',
-            dataIndex: 'title',
-            width: '20%',
-            className: 'fontWeight500 allow-wrap',
-            render: (name, record) => {
-                return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">{name}</a>
-            }
+            {
+                title: 'Title',
+                dataIndex: 'title',
+                width: '20%',
+                className: 'fontWeight500 allow-wrap',
+                render: (name, record) => {
+                    return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">{name}</a>
+                }
 
-        }, {
-            title: 'Name',
-            dataIndex: 'fullLegalName'
-        }, {
-            title: 'Email',
-            dataIndex: 'email'
-        }, {
-            title: 'Campaign',
-            dataIndex: 'campaign',
-            width: '30%',
-            className: 'fontWeight500 allow-wrap'
-        }, {
-            title: 'Created',
-            dataIndex: 'createdAt',
-            render: (createdAt) => moment(createdAt).format('MMM D')
-        }, {
-            title: '',
-            dataIndex: '_id',
-            key: 'actions',
-            render: (id, record) => {
+            }, {
+                title: 'Name',
+                dataIndex: 'fullLegalName'
+            }, {
+                title: 'Email',
+                dataIndex: 'email'
+            }, {
+                title: 'Campaign',
+                dataIndex: 'campaign',
+                width: '30%',
+                className: 'fontWeight500 allow-wrap'
+            }, {
+                title: 'Created',
+                dataIndex: 'createdAt',
+                render: (createdAt) => moment(createdAt).format('MMM D')
+            }, {
+                title: '',
+                dataIndex: '_id',
+                key: 'actions',
+                render: (id, record) => {
 
-            }
-        }]
+                }
+            }]
 
         return (
             <div className="p_admin_index ebp-wrap">
@@ -78,7 +78,7 @@ export default class extends AdminPage {
                                     rowKey={(item) => item._id}
                                     dataSource={submissionData}
                                     loading={this.props.loading}
-                               />
+                                />
                             </Col>
                             <Col span={4} className="admin-right-column wrap-box-navigator">
                                 <Navigator selectedItem={'forms'}/>

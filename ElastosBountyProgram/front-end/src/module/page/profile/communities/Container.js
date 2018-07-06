@@ -9,7 +9,7 @@ export default createContainer(Component, (state) => {
         currentUserId: state.user.current_user_id,
         profileCountry: state.user.profile.country,
         myCommunities: state.community.my_communities,
-        loading: state.community.loading,
+        loading: state.community.loading
     }
     if (!_.isArray(profileState.myCommunities)) {
         profileState.myCommunities = _.values(state.community.my_communities)

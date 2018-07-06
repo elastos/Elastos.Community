@@ -28,7 +28,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <div className="back-btn-container">
-                        <Button onClick={() => {this.props.history.goBack()}}>
+                        <Button onClick={() => { this.props.history.goBack() }}>
                             <Icon type="left" /> Back
                         </Button>
                     </div>

@@ -11,11 +11,11 @@ const FormItem = Form.Item;
 
 export default class extends StandardPage {
 
-    ord_states(){
+    ord_states() {
         return {
-            list : [],
-            loading : false,
-            total : 0
+            list: [],
+            loading: false,
+            total: 0
         };
     }
 
@@ -34,7 +34,7 @@ export default class extends StandardPage {
             </div>
         )
     }
-    renderLoading(){
+    renderLoading() {
         return (
             <div className="flex-center">
                 <Spin size="large" />
@@ -42,15 +42,15 @@ export default class extends StandardPage {
 
         )
     }
-    renderList(){
+    renderList() {
         const list = _.chunk(this.state.list, 4);
         return (
             <div className="">
-                {_.map(list, (d_list, i)=>{
+                {_.map(list, (d_list, i) => {
                     return (
-                        <Row key={i} gutter={16} style={{marginBottom:20}}>
+                        <Row key={i} gutter={16} style={{marginBottom: 20}}>
                             {
-                                _.map(d_list, (p, j)=>{
+                                _.map(d_list, (p, j) => {
                                     return (
                                         <Col key={j} className="gutter-row" span={4}>
                                             <TaskCard {...p} />
@@ -65,8 +65,8 @@ export default class extends StandardPage {
         );
     }
 
-    componentDidMount(){
-        this.setState({loading : true});
+    componentDidMount() {
+        this.setState({loading: true});
         this.props.fetchTaskList().then(() => {
 
             this.setState({

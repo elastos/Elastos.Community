@@ -24,7 +24,7 @@ export default class extends AdminPage {
             [COMMUNITY_TYPE.STATE]: false,
             [COMMUNITY_TYPE.CITY]: false,
             [COMMUNITY_TYPE.REGION]: false,
-            [COMMUNITY_TYPE.SCHOOL]: false,
+            [COMMUNITY_TYPE.SCHOOL]: false
         },
         showMoreMinimum: 4,
         breadcrumbRegions: [],
@@ -38,10 +38,10 @@ export default class extends AdminPage {
     // Modal add organizer
     showModalAddOrganizer = () => {
         this.formRefAddOrganizer.props.form.setFieldsValue({
-            geolocation: this.props.match.params['country'],
+            geolocation: this.props.match.params['country']
         }, () => {
             this.setState({
-                visibleModalAddOrganizer: true,
+                visibleModalAddOrganizer: true
             })
         })
     }
@@ -115,7 +115,7 @@ export default class extends AdminPage {
 
     getAvatarUrl(users) {
         const avatarDefault = {
-            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png',
+            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Other.png'
         };
 
         users.forEach((user) => {
@@ -189,7 +189,7 @@ export default class extends AdminPage {
                 this.setState({
                     subCommunities,
                     listSubCommunitiesByType,
-                    breadcrumbRegions,
+                    breadcrumbRegions
                 })
             })
         })
@@ -200,7 +200,7 @@ export default class extends AdminPage {
         let breadcrumbRegions = [];
         subCommunities.forEach((community) => {
             breadcrumbRegions.push({
-                name: community.name,
+                name: community.name
             })
         })
 
@@ -213,7 +213,7 @@ export default class extends AdminPage {
     showModalChangeOrganizer = (editedOrganizer) => {
         this.setState({
             editedOrganizer,
-            visibleModalChangeOrganizer: true,
+            visibleModalChangeOrganizer: true
         })
     }
     handleCancelModalChangeOrganizer = () => {
@@ -237,7 +237,7 @@ export default class extends AdminPage {
 
             this.props.updateCommunity({
                 ...this.state.community,
-                leaderIds,
+                leaderIds
             }).then(() => {
                 form.resetFields()
                 this.setState({visibleModalChangeOrganizer: false})
@@ -254,7 +254,7 @@ export default class extends AdminPage {
     openChangeOrganizerCountry (leader) {
         this.formRefChangeOrganizer.props.form.setFieldsValue({
             geolocation: this.props.match.params['country'],
-            leader: leader._id,
+            leader: leader._id
         }, this.showModalChangeOrganizer(leader._id))
     }
 
@@ -265,7 +265,7 @@ export default class extends AdminPage {
     // Modal add community
     showModalAddSubCommunity = (type) => {
         this.formRefAddSubCommunity.props.form.setFieldsValue({
-            country: this.props.match.params['country'],
+            country: this.props.match.params['country']
         }, () => {
             this.setState({
                 visibleModalAddSubCommunity: true,
@@ -305,7 +305,7 @@ export default class extends AdminPage {
         this.formRefUpdateSubCommunity.props.form.setFieldsValue({
             country: this.props.match.params['country'],
             name: community.name,
-            leader: leader ? leader._id : null,
+            leader: leader ? leader._id : null
         }, () => {
             this.setState({
                 visibleModalUpdateSubCommunity: true,
@@ -367,7 +367,7 @@ export default class extends AdminPage {
             leaderIds: formValues['leader'],
             // TODO check correct value of geolocation
             geolocation: this.props.match.params['country'],
-            name: formValues.name,
+            name: formValues.name
         }).then(() => {
             message.success('Add new sub community successfully')
             this.loadSubCommunities();
@@ -413,7 +413,7 @@ export default class extends AdminPage {
             STATE: [],
             CITY: [],
             REGION: [],
-            SCHOOL: [],
+            SCHOOL: []
         }
 
         renderCommunities.forEach((community) => {
@@ -450,7 +450,7 @@ export default class extends AdminPage {
             communities.push(country.name);
             return (
                 <Select.Option title={country.name} key={index}
-                               value={country.name}>{country.name}</Select.Option>
+                    value={country.name}>{country.name}</Select.Option>
             )
         })
 
@@ -465,7 +465,7 @@ export default class extends AdminPage {
         const listCountriesEl = Object.keys(geolocationKeys).map((geolocation, index) => {
             return (
                 <Select.Option title={config.data.mappingCountryCodeToName[geolocation]} key={index}
-                               value={geolocation}>{config.data.mappingCountryCodeToName[geolocation]}</Select.Option>
+                    value={geolocation}>{config.data.mappingCountryCodeToName[geolocation]}</Select.Option>
             )
         })
 
@@ -518,7 +518,7 @@ export default class extends AdminPage {
         return (
             <Row>
                 <Col span={4}
-                     className="user-card user-card--without-padding user-card--organizer">
+                    className="user-card user-card--without-padding user-card--organizer">
                     <h5 className="without-padding overflow-ellipsis" title={this.state.community.name + ' Organizers'}>
                         Country Organizers
                     </h5>
@@ -558,8 +558,8 @@ export default class extends AdminPage {
 
                                         return (
                                             <Col span={4}
-                                                 key={i}
-                                                 className="user-card">
+                                                key={i}
+                                                className="user-card">
                                                 {community.leaders.map((leader, index) => {
                                                     return (
                                                         <Card
@@ -636,15 +636,15 @@ export default class extends AdminPage {
                             <Breadcrumb.Item>
                                 {menuCountriesEl}
                             </Breadcrumb.Item>
-                            {/*<Breadcrumb.Item>*/}
-                                {/*{menuListRegionsEl}*/}
-                            {/*</Breadcrumb.Item>*/}
+                            {/* <Breadcrumb.Item> */}
+                            {/* {menuListRegionsEl} */}
+                            {/* </Breadcrumb.Item> */}
                         </Breadcrumb>
                     </div>
                     <div className="p_admin_content">
                         <Row>
                             <Col span={20}
-                                 className="admin-left-column wrap-box-user">
+                                className="admin-left-column wrap-box-user">
                                 <div>
                                     <div className="list-leaders-of-a-country">
                                         {subCommunitiesByType}
@@ -685,7 +685,7 @@ export default class extends AdminPage {
                                 </div>
                             </Col>
                             <Col span={4}
-                                 className="admin-right-column wrap-box-navigator">
+                                className="admin-right-column wrap-box-navigator">
                                 <Navigator selectedItem={'community'}/>
                             </Col>
                         </Row>

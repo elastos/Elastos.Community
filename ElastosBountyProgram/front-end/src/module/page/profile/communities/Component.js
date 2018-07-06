@@ -27,7 +27,7 @@ export default class extends StandardPage {
             title: 'Name',
             dataIndex: 'name',
             width: '30%',
-            className: 'fontWeight500 allow-wrap',
+            className: 'fontWeight500 allow-wrap'
         }, {
             title: 'Geolocation',
             dataIndex: 'geolocation',
@@ -36,7 +36,7 @@ export default class extends StandardPage {
             }
         }, {
             title: 'Type',
-            dataIndex: 'type',
+            dataIndex: 'type'
         }, {
             title: 'Actions',
             dataIndex: '_id',

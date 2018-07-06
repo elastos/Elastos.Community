@@ -224,7 +224,6 @@ export default class extends BaseService {
     async setFilter(options) {
         const taskRedux = this.store.getRedux('task')
 
-
     }
 
     async resetAllTasks() {

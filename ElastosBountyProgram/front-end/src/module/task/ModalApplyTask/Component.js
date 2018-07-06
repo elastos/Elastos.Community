@@ -1,8 +1,8 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import { Form, Modal, Select, Button, Input } from 'antd'
-const TextArea = Input.TextArea
 import config from '@/config'
+const TextArea = Input.TextArea
 
 const FormItem = Form.Item
 
@@ -15,12 +15,12 @@ export default Form.create()(
             const formItemLayout = {
                 labelCol: {
                     xs: {span: 24},
-                    sm: {span: 8},
+                    sm: {span: 8}
                 },
                 wrapperCol: {
                     xs: {span: 24},
-                    sm: {span: 12},
-                },
+                    sm: {span: 12}
+                }
             }
 
             const footerModal = (
@@ -32,7 +32,7 @@ export default Form.create()(
 
             const selectOptions = [{value: 'self', text: 'Apply as Self Only'}]
             if (this.props.teamsOwned.length) {
-                for (let team of this.props.teamsOwned){
+                for (let team of this.props.teamsOwned) {
                     selectOptions.push({
                         value: team._id,
                         text: team.name
@@ -81,5 +81,5 @@ export default Form.create()(
                 </Modal>
             )
         }
-    },
+    }
 )

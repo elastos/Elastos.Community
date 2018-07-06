@@ -24,17 +24,16 @@ export default Form.create()(
             })
         }
 
-
         async getAllCommunities() {
             const communityService = new CommunityService()
 
             return new Promise((resolve, reject) => {
                 communityService.getAll().then((data) => {
-                    const cascaderItems =  data.map((item) => {
+                    const cascaderItems = data.map((item) => {
                         return {
                             value: item._id,
                             label: item.name,
-                            parentId: item.parentCommunityId,
+                            parentId: item.parentCommunityId
                         }
                     })
 
@@ -99,5 +98,5 @@ export default Form.create()(
                 </Modal>
             )
         }
-    },
+    }
 )

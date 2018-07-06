@@ -72,7 +72,7 @@ export default class extends AdminPage {
             render: (category) => _.capitalize(category)
         }, {
             title: 'Type',
-            dataIndex: 'type',
+            dataIndex: 'type'
         }, {
             title: 'Community',
             dataIndex: 'community',
@@ -90,7 +90,7 @@ export default class extends AdminPage {
                 }
 
             }
-        },{
+        }, {
             title: 'Status',
             dataIndex: 'status',
             filters: [
@@ -114,7 +114,7 @@ export default class extends AdminPage {
             sorter: (a, b) => {
                 return moment(a.createdAt).valueOf() - moment(b.createdAt).valueOf()
             },
-            defaultSortOrder: 'descend',
+            defaultSortOrder: 'descend'
         }, {
             title: '',
             dataIndex: '_id',
@@ -141,8 +141,8 @@ export default class extends AdminPage {
                             <Col span={20} className="c_TaskTableContainer admin-left-column wrap-box-user">
                                 <div className="pull-right">
                                     <Input.Search onSearch={this.handleSearchTask.bind(this)}
-                                                  prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                                                  placeholder="Task name"/>
+                                        prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                        placeholder="Task name"/>
                                 </div>
                                 <div className="clearfix"/>
                                 <Table
@@ -151,7 +151,7 @@ export default class extends AdminPage {
                                     dataSource={taskData}
                                     loading={this.props.loading}
                                     onChange={this.handleChange}
-                               />
+                                />
                             </Col>
                             <Col span={4} className="admin-right-column wrap-box-navigator">
                                 <Navigator selectedItem={'tasks'}/>

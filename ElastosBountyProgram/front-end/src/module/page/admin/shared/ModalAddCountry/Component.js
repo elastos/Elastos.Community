@@ -78,5 +78,5 @@ export default Form.create()(
                 </Modal>
             )
         }
-    },
+    }
 )

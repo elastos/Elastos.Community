@@ -4,7 +4,6 @@ import {Layout, Menu, Icon, Badge, Avatar, Modal, Dropdown} from 'antd'
 import _ from 'lodash'
 import I18N from '@/I18N'
 
-
 import {USER_ROLE} from '@/constant'
 
 const {Header} = Layout
@@ -38,11 +37,11 @@ export default class extends BaseComponent {
 
         return (
             <Menu onClick={this.clickItem.bind(this)}>
-                {isLogin ?
-                    <Menu.Item key="profile/info">
+                {isLogin
+                    ? <Menu.Item key="profile/info">
                         {I18N.get('0200')}
-                    </Menu.Item> :
-                    <Menu.Item key="login">
+                    </Menu.Item>
+                    : <Menu.Item key="login">
                         {I18N.get('0201')}
                     </Menu.Item>
                 }
