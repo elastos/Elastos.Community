@@ -71,6 +71,7 @@ if (sessionStorage.getItem('api-token')) {
         },
         error: () => {
             sessionStorage.clear()
+            localStorage.removeItem('api-token')
             render()
         }
     });
