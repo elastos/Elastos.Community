@@ -27,10 +27,6 @@ export default class extends BaseComponent {
         taskId && this.props.getTaskDetail(taskId)
     }
 
-    // componentWillUnmount() {
-    //     this.props.resetTaskDetail()
-    // }
-
     renderMain() {
         return (
             <div className="c_TaskDetail">
@@ -102,7 +98,7 @@ export default class extends BaseComponent {
 
     renderHeader() {
 
-        const isTaskOwner = this.props.current_user_id === this.props.task.createdBy._id
+        const isTaskOwner = this.props.current_user_id === (this.props.task.createdBy && this.props.task.createdBy._id)
 
         return <div className="l_banner">
             <div className="pull-left">

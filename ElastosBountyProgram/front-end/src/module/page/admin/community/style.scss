@@ -52,6 +52,10 @@
   .ant-card {
     margin-bottom: 20px;
   }
+
+  .ant-btn-ebp.add-organizer {
+
+  }
 }
 
 .user-card.user-card--without-padding {
@@ -59,6 +63,7 @@
 }
 
 .list-leaders-of-a-country {
+
   .wrap-child-box-users {
     padding-left: 20px;
 
@@ -66,6 +71,10 @@
       border: 1px solid #e5e5e5;
       padding: 20px;
       margin-bottom: 20px;
+
+      .ant-btn-ebp.add-sub-community {
+        min-width: 165px;
+      }
     }
   }
 }

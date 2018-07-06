@@ -49,7 +49,7 @@ export default class extends StandardPage {
                 }
 
                 return (
-                    <Button onClick={this.leaveCommunity.bind(this, id)}>Leave</Button>
+                    <Button onClick={this.leaveCommunity.bind(this, id)} className="btn-leave">Leave</Button>
                 )
             }
         }]

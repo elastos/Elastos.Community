@@ -1,5 +1,6 @@
 
 @import "../../../style/variable";
+@import "../../../style/color";
 
 .p_Social {
 
@@ -12,6 +13,10 @@
     .btnContainer {
       padding-top: $gap_1;
       text-align: right;
+
+      .ant-cascader-picker-label {
+        text-align: left;
+      }
     }
   }
 
@@ -64,6 +69,31 @@
     min-height: 40vh;
 
     padding-bottom: $gap_3;
+
+    .my-community-add-container {
+      padding-top: 6px;
+
+      > button {
+        margin-right: 0;
+      }
+    }
+
+    .community-link {
+      color: $primary_color;
+      cursor: pointer;
+
+      &:hover {
+        color: $primary_light_color
+      }
+    }
+
+    .community-action {
+      cursor: pointer;
+
+      &:hover {
+        color: $primary_color
+      }
+    }
   }
 }
 

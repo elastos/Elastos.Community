@@ -93,10 +93,6 @@ export default class extends AdminPage {
             onFilter: (value, record) => record.status.includes(value),
             className: 'fontWeight500'
         }, {
-            title: 'Date',
-            dataIndex: 'startTime',
-            render: (startTime) => moment(startTime).format('MMM D')
-        }, {
             title: 'Created',
             dataIndex: 'createdAt',
             render: (createdAt) => moment(createdAt).format('MMM D')

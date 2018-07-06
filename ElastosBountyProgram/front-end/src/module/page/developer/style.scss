@@ -12,6 +12,10 @@
     .btnContainer {
       padding-top: $gap_1;
       text-align: right;
+
+      .ant-cascader-picker-label {
+        text-align: left;
+      }
     }
   }
 
@@ -33,6 +37,12 @@
       &.col-name {
         white-space: normal;
       }
+    }
+  }
+
+  .c_issueForm {
+    .ant-row.ant-form-item {
+      margin-bottom: 15px;
     }
   }
 }

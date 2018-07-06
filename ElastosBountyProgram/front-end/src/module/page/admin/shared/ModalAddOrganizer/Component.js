@@ -35,7 +35,7 @@ export default Form.create()(
             return (
                 <Modal
                     visible={visible}
-                    title="Add organizer"
+                    title="Add Organizer"
                     footer={footerModal}
                     okText="Create"
                     onCancel={onCancel}
@@ -59,7 +59,7 @@ export default Form.create()(
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
-                            label="Leader">
+                            label="Organizer">
                             {getFieldDecorator('leader', {
                                 rules: [{required: true, message: 'This field is required'}]
                             })(

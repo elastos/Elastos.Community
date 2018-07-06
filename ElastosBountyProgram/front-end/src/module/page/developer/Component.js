@@ -7,214 +7,108 @@ import SubmissionForm from './formSubmission/Container'
 import _ from 'lodash'
 import './style.scss'
 
-import { Col, Row, Icon, Form, Input, Button, Modal, Select, Table, List, Tooltip, Breadcrumb, Card } from 'antd'
+import { Col, Row, Icon, Form, Input, Button, Modal, Select, Table, List, Tooltip, Cascader } from 'antd'
 import moment from 'moment/moment'
 
 const Option = Select.Option
 const FormItem = Form.Item
 
-import { TASK_STATUS } from '@/constant'
+import { TASK_STATUS, TASK_TYPE } from '@/constant'
 
 export default class extends StandardPage {
     state = {
-        communities: [],
-        breadcrumbCountries: [],
-        breadcrumbMappingCountryAndCommunities: {}
+        communityTrees: [],
+        filterCommunity: [],
+
+        taskTypeSelected: this.props.match.type || TASK_TYPE.EVENT
     }
 
     componentDidMount () {
-        this.props.getDeveloperEvents().then((data) => {
-            // Get data dropdown breadcrumb countries
-            let breadcrumbCountries = [];
-            data.list.forEach((item) => {
-                if (item.community && item.communityParent) {
-                    breadcrumbCountries.push(item.communityParent)
-                } else if (item.community && !item.communityParent) {
-                    breadcrumbCountries.push(item.community)
-                }
-            })
-
-            let breadcrumbMappingCountryAndCommunities = {};
-            // Mapping countries and it's community
-            breadcrumbCountries.forEach((country) => {
-                breadcrumbMappingCountryAndCommunities[country.geolocation] = _.filter(data.list, (item) => {
-                    return item.communityParent && item.communityParent.geolocation === country.geolocation
-                })
-            })
-
-            this.setState({
-                breadcrumbCountries,
-                breadcrumbMappingCountryAndCommunities
-            })
-        })
+        this.props.getDeveloperEvents()
         this.props.getUserTeams(this.props.currentUserId)
+        this.getCommunityTrees()
     }
 
-    renderListCommunities() {
-        return this.state.communities.map((community, index) => {
-            return (
-                <div key={index}>
-                    {community.leaders.map((leader) => {
-                        return (
-                            <Col span={3} key={index} className="user-card">
-                                <Link to={'/developer/' + community._id  + '/country/' + community.geolocation}>
-                                    <Card
-                                        key={index}
-                                        cover={<img src={leader.profile.avatar}/>}
-                                    >
-                                        <h5>
-                                            {community.name}
-                                        </h5>
-                                        <p className="user-info">
-                                            {leader.profile.firstName + ' ' + leader.profile.lastName}<br/>
-                                            <span class="no-info">{leader.profile.username}</span>
-                                        </p>
-                                    </Card>
-                                </Link>
-                            </Col>
-                        )
-                    })}
-                </div>
-            )
-        })
-    }
-
-    handleChangeCountry(geolocation) {
-        if (geolocation) {
-            this.props.history.push(`/developer/country/${geolocation}`)
-        } else {
-            this.props.history.push('/developer')
-        }
-    }
-
-    renderBreadcrumbCountries() {
-        const geolocationKeys = _.keyBy(this.state.breadcrumbCountries, 'geolocation');
-        const listCountriesEl = Object.keys(geolocationKeys).map((geolocation, index) => {
-            return (
-                <Select.Option title={config.data.mappingCountryCodeToName[geolocation]} key={index}
-                               value={geolocation}>{config.data.mappingCountryCodeToName[geolocation]}</Select.Option>
-            )
-        })
-
-        return (
-            <Select
-                allowClear
-                value={this.props.match.params['country'] || undefined}
-                showSearch
-                style={{width: 160}}
-                placeholder="Select a country"
-                optionFilterProp="children"
-                onChange={this.handleChangeCountry.bind(this)}
-            >
-                {listCountriesEl}
-            </Select>
-        )
-    }
-
-    handleChangeRegion(region) {
-        if (region) {
-            this.props.history.push(`/developer/country/${this.props.match.params['country']}/region/${region}`);
-        } else {
-            this.props.history.push(`/developer/country/${this.props.match.params['country']}`);
-        }
-    }
-
-    renderBreadcrumbRegions() {
-        if (!this.state.breadcrumbMappingCountryAndCommunities[this.props.match.params['country']]) {
-            return null
-        }
-
-        const listRegionsEl = this.state.breadcrumbMappingCountryAndCommunities[this.props.match.params['country']].map((region, index) => {
-            return (
-                <Select.Option key={index} title={region.community.name} value={region.community.name}>{region.community.name}</Select.Option>
-            )
-        })
-
-        const menuListRegionsEl = (
-            <Select
-                allowClear
-                value={this.props.match.params['region']}
-                showSearch
-                style={{width: 200}}
-                placeholder="Select a region / place"
-                optionFilterProp="children"
-                onChange={this.handleChangeRegion.bind(this)}
-            >
-                {listRegionsEl}
-            </Select>
-        )
-
-        return menuListRegionsEl
-    }
-
-    // API only return list leader ids [leaderIds], so we need convert it to array object leader [leaders]
-    convertCommunitiesLeaderIdsToLeaderObjects(communities) {
-        return new Promise((resolve, reject) => {
-            let userIds = []
-            communities.forEach((community) => {
-                userIds.push(...community.leaderIds)
-            })
-            userIds = _.uniq(userIds)
-
-            if (!userIds.length) {
-                return resolve([])
-            }
-
-            this.props.getUserByIds(userIds).then((users) => {
-                users = this.mockAvatarToUsers(users) // Mock avatar url
-                const mappingIdToUserList = _.keyBy(users, '_id');
-                communities.forEach((community) => {
-                    community.leaders = community.leaders || [];
-                    community.leaderIds.forEach((leaderId) => {
-                        if (mappingIdToUserList[leaderId]) {
-                            community.leaders.push(mappingIdToUserList[leaderId])
-                        }
-                    })
-                })
-
-                resolve(communities)
+    getCommunityTrees() {
+        this.props.getAllCommunities().then((communityTrees) => {
+            this.setState({
+                communityTrees
             })
         })
-    }
-
-    mockAvatarToUsers(users) {
-        users.forEach((user) => {
-            user.profile.avatar = config.data.mockAvatarUrl
-        })
-
-        return users
     }
 
     componentWillUnmount () {
         this.props.resetTasks()
     }
 
-    filterDataByBreadcrumb(data) {
-        const country = this.props.match.params['country']
-        const region = this.props.match.params['region']
+    handleOnChangeFilter(value, selectedOption) {
+        this.setState({
+            filterCommunity: value
+        })
+    }
 
-        if (!country && !region) {
-            return data
+    filterByMyCommunity(community) {
+        let filterCommunity = []
+
+        if (community.parentCommunityId) {
+            filterCommunity.push(community.parentCommunityId)
         }
 
-        if (country && !region) {
-            return _.filter(data, (item) => {
-                return item.community && item.community.geolocation === country
-            })
-        }
+        filterCommunity.push(community._id)
 
-        if (country && region) {
-            return _.filter(data, (item) => {
-                return item.community && item.community.name === region && item.communityParent && item.communityParent.geolocation === country
-            })
-        }
+        this.setState({
+            filterCommunity: filterCommunity
+        })
+    }
 
+    changeTaskType(taskType) {
+        this.setState({
+            taskTypeSelected: taskType
+        })
     }
 
     ord_renderContent () {
-        const eventData = this.filterDataByBreadcrumb(this.props.events)
-        const availTasksData = this.filterDataByBreadcrumb(this.props.availTasks)
-        const myTasksData = this.filterDataByBreadcrumb(this.props.myTasks)
+        let eventData = this.props.events
+        let availTasksData = this.props.availTasks
+        let projectTaskData = this.props.projectTasks
+        // const myTasksData = this.props.myTasks
+
+        const filterTreeLevel = this.state.filterCommunity.length
+        if (filterTreeLevel) {
+            if (filterTreeLevel === 1) {
+                eventData = eventData.filter((event) => {
+                    return event && event.community && event.community._id === this.state.filterCommunity[0]
+                })
+
+                availTasksData = availTasksData.filter((event) => {
+                    return event && event.community && event.community._id === this.state.filterCommunity[0]
+                })
+
+                projectTaskData = projectTaskData.filter((event) => {
+                    return event && event.community && event.community._id === this.state.filterCommunity[0]
+                })
+            } else if (filterTreeLevel === 2) {
+                eventData = eventData.filter((event) => {
+                    return event && event.community && event.communityParent && event.communityParent._id === this.state.filterCommunity[0] && event.community._id === this.state.filterCommunity[1]
+                })
+
+                availTasksData = availTasksData.filter((event) => {
+                    return event && event.community && event.communityParent && event.communityParent._id === this.state.filterCommunity[0] && event.community._id === this.state.filterCommunity[1]
+                })
+
+                projectTaskData = projectTaskData.filter((event) => {
+                    return event && event.community && event.communityParent && event.communityParent._id === this.state.filterCommunity[0] && event.community._id === this.state.filterCommunity[1]
+                })
+            }
+        }
+
+        const filterCommunityEl = <Cascader
+            value={[...this.state.filterCommunity]}
+            style={{width: '300px'}}
+            options={this.state.communityTrees}
+            placeholder="Filter by community"
+            onChange={this.handleOnChangeFilter.bind(this)}
+            changeOnSelect />
 
         const columns = [{
             title: 'Name',
@@ -254,10 +148,6 @@ export default class extends StandardPage {
             render: (startTime) => moment(startTime).format('MMM D')
         }]
 
-        const listCommunitiesEl = this.renderListCommunities()
-        const menuCountriesEl = this.renderBreadcrumbCountries()
-        const menuListRegionsEl = this.props.match.params['country'] ? this.renderBreadcrumbRegions() : null
-
         return (
             <div className="p_Developer">
                 <div className="ebp-header-divider">
@@ -276,38 +166,21 @@ export default class extends StandardPage {
                     </p>
                 </div>
                 <div className="ebp-page">
-                    <div className="ebp-page-breadcrumb">
-                        <Row>
-                            <Col span={24}>
-                                <Breadcrumb>
-                                    <Breadcrumb.Item href="/">
-                                        <Icon type="home"/>
-                                    </Breadcrumb.Item>
-                                    <Breadcrumb.Item>Community</Breadcrumb.Item>
-                                    <Breadcrumb.Item>
-                                        <Link to="/developer">Global</Link>
-                                    </Breadcrumb.Item>
-                                    <Breadcrumb.Item>
-                                        {menuCountriesEl}
-                                    </Breadcrumb.Item>
-                                    {this.props.match.params['country'] && (
-                                        <Breadcrumb.Item>
-                                            {menuListRegionsEl}
-                                        </Breadcrumb.Item>
-                                    )}
-                                </Breadcrumb>
-                            </Col>
-                        </Row>
-                    </div>
-
                     <Row className="d_row d_rowTop">
-                        <Col md={{span:24}} lg={{span: 16}} className="d_leftContainer d_box">
-                            <div className="pull-left">
-                                <h3>
-                                    Join Training and Developer Events
-                                </h3>
+                        <Col md={{span:24}} lg={{span: 18}} className="d_leftContainer d_box">
+                            <div className="pull-left btnContainer">
+                                <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.EVENT)}>
+                                    Training
+                                </Button>
+                                <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.PROJECT ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.PROJECT)}>
+                                    Projects
+                                </Button>
+                                <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.TASK ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.TASK)}>
+                                    Tasks
+                                </Button>
                             </div>
                             <div className="pull-right btnContainer">
+                                {filterCommunityEl}
                                 {/*
                                 // TODO
                                 <Button onClick={this.createTaskLink.bind(this)}>
@@ -316,6 +189,9 @@ export default class extends StandardPage {
                                 */}
                             </div>
 
+                            <div className="vert-gap-sm clearfix"/>
+
+                            {this.state.taskTypeSelected === TASK_TYPE.EVENT &&
                             <Table
                                 className="clearfix"
                                 columns={columns}
@@ -323,11 +199,30 @@ export default class extends StandardPage {
                                 dataSource={eventData}
                                 loading={this.props.loading}
                             />
+                            }
+                            {this.state.taskTypeSelected === TASK_TYPE.TASK &&
+                            <Table
+                                className="clearfix"
+                                columns={columns}
+                                rowKey={(item) => item._id}
+                                dataSource={availTasksData}
+                                loading={this.props.loading}
+                            />
+                            }
+                            {this.state.taskTypeSelected === TASK_TYPE.PROJECT &&
+                            <Table
+                                className="clearfix"
+                                columns={columns}
+                                rowKey={(item) => item._id}
+                                dataSource={projectTaskData}
+                                loading={this.props.loading}
+                            />
+                            }
                         </Col>
-                        <Col md={{span:24}} lg={{span: 8}} className="d_rightContainer d_box">
-                            <h3>
+                        <Col md={{span:24}} lg={{span: 6}} className="d_rightContainer d_box">
+                            <h4>
                                 Submit an Issue
-                            </h3>
+                            </h4>
                             <SubmissionForm/>
                         </Col>
                     </Row>
@@ -335,6 +230,7 @@ export default class extends StandardPage {
 
                     </div>
                 </div>
+                {/*
                 <div className="ebp-page">
                     <Row className="d_row">
                         <Col md={{span:24}} lg={{span: 16}} className="d_leftContainer d_box">
@@ -350,13 +246,7 @@ export default class extends StandardPage {
                                     }
                                 </div>
                             </div>
-                            <Table
-                                className="clearfix"
-                                columns={columns}
-                                rowKey={(item) => item._id}
-                                dataSource={availTasksData}
-                                loading={this.props.loading}
-                            />
+
                         </Col>
                         <Col md={{span:24}} lg={{span: 8}} className="d_rightContainer d_box">
                             <h3>
@@ -386,6 +276,7 @@ export default class extends StandardPage {
                         </Col>
                     </Row>
                 </div>
+                */}
                 <Footer/>
             </div>
         )

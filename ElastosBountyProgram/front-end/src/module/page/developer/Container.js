@@ -21,6 +21,7 @@ export default createContainer(Component, (state) => {
 
     taskState.events = _.filter(taskState.all_tasks, {type: TASK_TYPE.EVENT})
     taskState.tasks = _.filter(taskState.all_tasks, {type: TASK_TYPE.TASK})
+    taskState.projectTasks = _.filter(taskState.all_tasks, {type: TASK_TYPE.PROJECT})
     taskState.is_admin = state.user.is_admin
 
     // available tasks are those that are CREATED / APPROVED
@@ -87,6 +88,38 @@ export default createContainer(Component, (state) => {
 
             const teamService = new TeamService()
             return teamService.getUserTeams(currentUserId)
+        },
+
+        async getAllCommunities() {
+            return new Promise((resolve, reject) => {
+                communityService.getAll().then((data) => {
+                    const cascaderItems =  data.map((item) => {
+                        return {
+                            value: item._id,
+                            label: item.name,
+                            parentId: item.parentCommunityId,
+                        }
+                    })
+
+                    const rootCascaderItems = _.filter(cascaderItems, {
+                        parentId: null
+                    })
+
+                    rootCascaderItems.forEach((rootCascaderItem) => {
+                        const children = _.filter(cascaderItems, {
+                            parentId: rootCascaderItem.value
+                        })
+
+                        if (children && children.length) {
+                            rootCascaderItem.children = children
+                        }
+                    })
+
+                    resolve(rootCascaderItems)
+                }).catch((err) => {
+                    reject(err)
+                })
+            })
         }
     }
 })

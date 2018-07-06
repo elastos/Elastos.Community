@@ -77,8 +77,6 @@ export default class extends BaseService {
                 this.dispatch(userRedux.actions.role_update(data.role))
                 this.dispatch(userRedux.actions.current_user_id_update(data._id))
 
-                debugger
-
                 this.dispatch(userRedux.actions.loading_update(false))
             }
         })

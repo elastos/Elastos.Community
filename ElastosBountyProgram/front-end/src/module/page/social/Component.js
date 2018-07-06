@@ -4,21 +4,22 @@ import Footer from '@/module/layout/Footer/Container'
 import ContribForm from './formContribution/Container'
 import moment from 'moment'
 import ModalJoinCommunity from './ModalJoinCommunity/Component'
-import {SUBMISSION_TYPE} from '@/constant'
 import './style.scss'
 
-import { Col, Row, Icon, Form, message, Button, Select, Table, List, Tooltip, Cascader } from 'antd'
+import { Col, Row, Icon, message, Button, Select, Table, List, Tooltip, Cascader, Popconfirm } from 'antd'
 
 const Option = Select.Option
 
-import { TASK_STATUS, TASK_TYPE } from '@/constant'
+import { SUBMISSION_TYPE, TASK_STATUS, TASK_TYPE } from '@/constant'
 import _ from 'lodash'
 
 export default class extends StandardPage {
     state = {
         visibleModalJoinCommunity: false,
         communityTrees: [],
-        filterCommunity: []
+        filterCommunity: [],
+
+        taskTypeSelected: this.props.match.type || TASK_TYPE.EVENT
     }
 
     componentDidMount () {
@@ -60,11 +61,17 @@ export default class extends StandardPage {
         })
     }
 
+    changeTaskType(taskType) {
+        this.setState({
+            taskTypeSelected: taskType
+        })
+    }
+
     ord_renderContent () {
         let eventData = this.props.events
         const taskData = this.props.tasks
         let availTasksData = this.props.availTasks
-        const myTasksData = this.props.myTasks
+        // const myTasksData = this.props.myTasks
 
         const filterTreeLevel = this.state.filterCommunity.length
         if (filterTreeLevel) {
@@ -87,7 +94,13 @@ export default class extends StandardPage {
             }
         }
 
-        const filterCommunityEl = <Cascader value={[...this.state.filterCommunity]} style={{width: '300px'}} options={this.state.communityTrees} placeholder="Filter by community" onChange={this.handleOnChangeFilter.bind(this)}/>
+        const filterCommunityEl = <Cascader
+            value={[...this.state.filterCommunity]}
+            style={{width: '300px'}}
+            options={this.state.communityTrees}
+            placeholder="Filter by community"
+            onChange={this.handleOnChangeFilter.bind(this)}
+            changeOnSelect />
 
         const columns = [{
             title: 'Name',
@@ -151,36 +164,54 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row d_rowTop">
-                        <Col md={{span:24}} lg={{span: 16}} className="d_leftContainer d_box">
-                            <div>
-                                {filterCommunityEl}
-                            </div>
-                            <div className="pull-left">
-                                <h3>
-                                    Events Looking for Help
-                                </h3>
+                        <Col md={{span:24}} lg={{span: 18}} xxl={{span: 18}} className="d_leftContainer d_box">
+                            <div className="pull-left btnContainer">
+                                <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.EVENT)}>
+                                    Events
+                                </Button>
+                                <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.TASK ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.TASK)}>
+                                    Tasks
+                                </Button>
                             </div>
                             <div className="pull-right btnContainer">
+                                {filterCommunityEl}
+                                {/*
                                 <Button onClick={this.createTaskLink.bind(this, TASK_TYPE.EVENT)}>
                                     Create Event
                                 </Button>
+                                */}
                             </div>
+                            <div class="vert-gap-sm clearfix"/>
 
+                            {this.state.taskTypeSelected === TASK_TYPE.EVENT &&
                             <Table
-                                className="clearfix"
                                 columns={columns}
                                 rowKey={(item) => item._id}
                                 dataSource={eventData}
                                 loading={this.props.task_loading}
                             />
+                            }
+                            {this.state.taskTypeSelected === TASK_TYPE.TASK &&
+                            <Table
+                                className="clearfix"
+                                columns={columns}
+                                rowKey={(item) => item._id}
+                                dataSource={availTasksData}
+                                loading={this.props.task_loading}
+                            />
+                            }
                         </Col>
-                        <Col md={{span:24}} lg={{span: 8}} className="d_rightContainer d_box d_communities">
+                        <Col md={{span:24}} lg={{span: 6}} xxl={{span: 6}}className="d_rightContainer d_box d_communities">
+                            <h4>
+                                My Communities
+                            </h4>
+                            {/*
                             <div className="pull-left">
-                                <h3>
+                                <h4>
                                     My Communities
-                                </h3>
+                                </h4>
                             </div>
-                            <div className="pull-right btnContainer">
+                            <div className="pull-right my-community-add-container right-align">
                                 <Button className="view-all-btn" onClick={this.showModalJoinCommunity.bind(this)}>
                                     Add
                                 </Button>
@@ -193,16 +224,23 @@ export default class extends StandardPage {
                                 />
                             </div>
                             <div className="clearfix"/>
-
+                            */}
                             <List
                                 size="small"
                                 dataSource={this.props.myCommunities}
                                 loading={this.props.loading}
                                 renderItem={(community) => {
                                     return <List.Item>
-                                        <a onClick={this.filterByMyCommunity.bind(this, community)}>
-                                            {community.name}
-                                        </a>
+                                        <Row style={{'width': '100%'}}>
+                                            <Col span={18}>
+                                                <Popconfirm title="Go to community?" placement="left" okText="Yes" onConfirm={() => {this.props.history.push(`/community/${community._id}/country/${community.geolocation}`)}}>
+                                                    <span className="community-link">{community.name}</span>
+                                                </Popconfirm>
+                                            </Col>
+                                            <Col span={6} className="right-align">
+                                                <Icon type="filter" className="community-action" onClick={this.filterByMyCommunity.bind(this, community)}/>
+                                            </Col>
+                                        </Row>
                                     </List.Item>
                                 }}
                             />
@@ -212,6 +250,7 @@ export default class extends StandardPage {
 
                     </div>
                 </div>
+                {/*
                 <div className="ebp-page">
                     <Row className="d_row">
                         <Col md={{span:24}} lg={{span: 16}} className="d_leftContainer d_box">
@@ -262,6 +301,7 @@ export default class extends StandardPage {
                         </Col>
                     </Row>
                 </div>
+                */}
                 <Footer/>
             </div>
         )

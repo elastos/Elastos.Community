@@ -163,9 +163,9 @@ export default class extends Base {
 
     public async findAll(): Promise<Document[]>{
         const db_user = this.getDBModel('User');
-        return await db_user.find({
+        return await db_user.getDBInstance().find({
             active : true
-        });
+        }).sort({username: 1});
     }
 
     public async changePassword(param): Promise<boolean>{

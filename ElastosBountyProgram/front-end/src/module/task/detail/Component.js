@@ -5,7 +5,7 @@ import moment from 'moment'
 import ModalApplyTask from '../ModalApplyTask/Component'
 import ModalAcceptApplicant from '../ModalAcceptApplicant/Component'
 
-import { Col, Row, Button, Divider, message, List, Icon, Tooltip, Popconfirm } from 'antd'
+import { Col, Row, Button, Divider, message, List, Icon, Tooltip, Popconfirm, Spin } from 'antd'
 
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_TYPE, TASK_CANDIDATE_STATUS} from '@/constant'
 import Comments from '@/module/common/comments/Container'
@@ -18,9 +18,11 @@ export default class extends BaseComponent {
 
         let acceptedCnt = 0
 
-        for (let candidate of this.props.task.candidates) {
-            if (candidate.status === TASK_CANDIDATE_STATUS.APPROVED) {
-                acceptedCnt += 1
+        if (this.props.task && _.isArray(this.props.task.candidates)) {
+            for (let candidate of this.props.task.candidates) {
+                if (candidate.status === TASK_CANDIDATE_STATUS.APPROVED) {
+                    acceptedCnt += 1
+                }
             }
         }
 
@@ -48,7 +50,7 @@ export default class extends BaseComponent {
 
     ord_render () {
 
-        const isTaskOwner = this.props.task.createdBy._id === this.props.userId
+        const isTaskOwner = (this.props.task && this.props.task.createdBy && this.props.task.createdBy._id) === this.props.userId
         return (
             <div className="public">
                 <Row>
@@ -67,11 +69,12 @@ export default class extends BaseComponent {
                                         Organizer
                                     </Col>
                                     <Col span={20}>
+                                        {this.props.task && this.props.task.createdBy ?
                                         <p>
                                             <a onClick={() => {this.props.history.push(`/member/${this.props.task.createdBy._id}`)}}>
                                                 {this.props.task.createdBy.username}
                                             </a>
-                                        </p>
+                                        </p> : <div className="center"><Spin size="small"/></div>}
                                     </Col>
                                 </Row>
                                 <Row>
@@ -185,7 +188,7 @@ export default class extends BaseComponent {
                                 </Row>
                                 }
                                 <Divider>Budget/Reward</Divider>
-                                {this.props.task.reward.isUsd ?
+                                {this.props.task.reward && this.props.task.reward.isUsd ?
                                     <div>
                                         <Row>
                                             <Col span={4} className="label-col">
@@ -235,7 +238,7 @@ export default class extends BaseComponent {
                                             </Col>
                                             <Col span={20}>
                                                 <p>
-                                                    {this.props.task.rewardUpfront.ela / 1000}
+                                                    {this.props.task.rewardUpfront && this.props.task.rewardUpfront.ela / 1000}
                                                 </p>
                                             </Col>
                                         </Row>
@@ -245,7 +248,7 @@ export default class extends BaseComponent {
                                             </Col>
                                             <Col span={20}>
                                                 <p>
-                                                    {this.props.task.reward.ela / 1000}
+                                                    {this.props.task.reward && this.props.task.reward.ela / 1000}
                                                 </p>
                                             </Col>
                                         </Row>

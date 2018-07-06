@@ -23,11 +23,11 @@ export default Form.create()(
                 })
             })
         }
-    
-    
+
+
         async getAllCommunities() {
             const communityService = new CommunityService()
-        
+
             return new Promise((resolve, reject) => {
                 communityService.getAll().then((data) => {
                     const cascaderItems =  data.map((item) => {
@@ -37,21 +37,21 @@ export default Form.create()(
                             parentId: item.parentCommunityId,
                         }
                     })
-                
+
                     const rootCascaderItems = _.filter(cascaderItems, {
                         parentId: null
                     })
-                
+
                     rootCascaderItems.forEach((rootCascaderItem) => {
                         const children = _.filter(cascaderItems, {
                             parentId: rootCascaderItem.value
                         })
-                    
+
                         if (children && children.length) {
                             rootCascaderItem.children = children
                         }
                     })
-                
+
                     resolve(rootCascaderItems)
                 }).catch((err) => {
                     reject(err)
@@ -79,7 +79,7 @@ export default Form.create()(
                 rules: [{required: true, message: 'This field is required'}]
             })
             const community_el = (
-                <Cascader options={this.state.communityTrees} placeholder="" />
+                <Cascader options={this.state.communityTrees} placeholder="" changeOnSelect/>
             )
 
             return (

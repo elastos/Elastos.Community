@@ -72,20 +72,17 @@ export default class extends AdminPage {
 
     loadCommunities() {
         const currentCountry = this.props.match.params['country'];
+
         if (currentCountry) {
             this.props.getSpecificCountryCommunities(currentCountry).then((communities) => {
-                this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
-                    this.setState({
-                        communities
-                    })
+                this.setState({
+                    communities
                 })
             })
         } else {
             this.props.getAllCountryCommunity().then((communities) => {
-                this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
-                    this.setState({
-                        communities
-                    })
+                this.setState({
+                    communities
                 })
             })
         }
@@ -106,17 +103,16 @@ export default class extends AdminPage {
     }
 
     // API only return list leader ids [leaderIds], so we need convert it to array object leader [leaders]
+    // TODO: this is buggy, and we should use populate?
+    /*
     convertCommunitiesLeaderIdsToLeaderObjects(communities) {
+
         return new Promise((resolve, reject) => {
             let userIds = []
             communities.forEach((community) => {
                 userIds.push(...community.leaderIds)
             })
             userIds = _.uniq(userIds)
-
-            if (!userIds.length) {
-                return resolve([])
-            }
 
             this.props.getUserByIds(userIds).then((users) => {
                 users = this.getAvatarUrl(users) // Mock avatar url
@@ -134,6 +130,7 @@ export default class extends AdminPage {
             })
         })
     }
+    */
 
     getCommunityIdByGeolocation(geolocation) {
         const community = _.find(this.state.communities, {
@@ -192,7 +189,7 @@ export default class extends AdminPage {
                 <Col span={6} key={index} className="user-card">
                     <Link to={'/admin/community/' + community._id  + '/country/' + community.geolocation}>
                         <Card title={community.name}>
-                            {community.leaders.length ?
+                            {community.leaderIds.length ?
                                 <p className="text-light-gray">Has Organizer(s)</p> :
                                 <p className="highlight-text">Needs an Organizer</p>
                             }

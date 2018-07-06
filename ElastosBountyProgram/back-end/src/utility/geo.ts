@@ -124,7 +124,7 @@ const geo = {
         km: 'Comoros',
         kn: 'Saint Kitts and Nevis',
         kp: "Korea, Democratic People's Republic of",
-        kr: 'Korea, Republic of',
+        kr: 'South Korea',
         kw: 'Kuwait',
         ky: 'Cayman Islands',
         kz: 'Kazakhstan',

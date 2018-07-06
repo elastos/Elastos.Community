@@ -114,3 +114,15 @@
 .text-light-gray {
   color: $text_light_gray;
 }
+
+.pill {
+
+  border-radius: 8px;
+  border-width: 0;
+
+  &.ant-btn.ant-btn-ebp {
+    font-size: 14px;
+    padding: 0 15px;
+    border-width: 0;
+  }
+}

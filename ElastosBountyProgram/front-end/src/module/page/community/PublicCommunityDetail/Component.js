@@ -443,7 +443,7 @@ export default class extends StandardPage {
         return (
             <Row>
                 <Col span={24}>
-                    <h2 className="without-padding overflow-ellipsis">{config.data.mappingCountryCodeToName[this.props.match.params['country']] + ' Organizers'}</h2>
+                    <h3 className="without-padding overflow-ellipsis">{config.data.mappingCountryCodeToName[this.props.match.params['country']] + ' Organizers'}</h3>
                 </Col>
                 <Col span={24}>
                     <Row>
@@ -489,8 +489,8 @@ export default class extends StandardPage {
 
     ord_renderContent () {
         const menuCountriesEl = this.renderBreadcrumbCountries()
-        const menuListRegionsEl = this.renderBreadcrumbRegions()
-        const tabSubCommunities = this.renderTabSubCommunities()
+        // const menuListRegionsEl = this.renderBreadcrumbRegions()
+        // const tabSubCommunities = this.renderTabSubCommunities()
         const listOrganizers = this.renderListOrganizers()
 
         return (
@@ -530,7 +530,7 @@ export default class extends StandardPage {
                                 <Col md={{span:24}} lg={{span: 6}}
                                      className="community-right-column">
                                     <div>
-                                        <h3 className="without-padding">Members</h3>
+                                        <h4 className="without-padding">Members</h4>
                                         <Input.Search onSearch={this.handleSearchMember.bind(this)}
                                             prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                             placeholder="Username"/>
@@ -558,24 +558,24 @@ export default class extends StandardPage {
                                             />
                                         </div>
                                         {this.props.current_user_id && this.props.match.params['region'] && !this.state.keyValueCommunityMembers[this.props.current_user_id] && (
-                                            <Button onClick={this.joinToCommunity.bind(this)}>Join</Button>
+                                            <Button onClick={this.joinToCommunity.bind(this)} className="btn-member-action">Join</Button>
                                         )}
 
                                         {this.props.current_user_id && !this.props.match.params['region'] && !this.state.keyValueMembersWithoutSubCommunity[this.props.current_user_id] && (
-                                            <Button onClick={this.joinToCommunity.bind(this)}>Join</Button>
+                                            <Button onClick={this.joinToCommunity.bind(this)} className="btn-member-action">Join</Button>
                                         )}
 
                                         {this.props.current_user_id && this.props.match.params['region'] && this.state.keyValueCommunityMembers[this.props.current_user_id] && (
-                                            <Button onClick={this.leaveFromCommunity.bind(this)}>Leave</Button>
+                                            <Button onClick={this.leaveFromCommunity.bind(this)} className="btn-member-action">Leave</Button>
                                         )}
 
                                         {this.props.current_user_id && !this.props.match.params['region'] && this.state.keyValueMembersWithoutSubCommunity[this.props.current_user_id] && (
-                                            <Button onClick={this.leaveFromCommunity.bind(this)}>Leave</Button>
+                                            <Button onClick={this.leaveFromCommunity.bind(this)} className="btn-member-action">Leave</Button>
                                         )}
                                     </div>
                                 </Col>
                             </Row>
-                            {
+                            {/*
                             <Row>
                                 <Col span={24}>
                                     {this.state.subCommunities.length > 0 &&
@@ -586,7 +586,7 @@ export default class extends StandardPage {
                                     {tabSubCommunities}
                                 </Col>
                             </Row>
-                            }
+                            */}
                         </div>
                     </div>
                 </div>

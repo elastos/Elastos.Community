@@ -375,12 +375,12 @@ export default class extends AdminPage {
             message.error('Error while adding new sub community')
         })
     }
-    
+
     getCommunityIdByGeolocation(geolocation) {
         const community = _.find(this.state.communities, {
             geolocation: geolocation
         })
-        
+
         if (community) {
             return community._id
         }
@@ -390,7 +390,7 @@ export default class extends AdminPage {
         if (geolocation) {
             const communityId = this.getCommunityIdByGeolocation(geolocation)
             this.props.history.push(`/admin/community/${communityId}/country/${geolocation}`)
-    
+
             this.loadCommunityDetail(communityId);
             this.loadSubCommunities(communityId);
         } else {
@@ -517,9 +517,11 @@ export default class extends AdminPage {
 
         return (
             <Row>
-                <Col span={3}
+                <Col span={4}
                      className="user-card user-card--without-padding user-card--organizer">
-                    <h3 className="without-padding overflow-ellipsis" title={this.state.community.name + ' Organizers'}>{this.state.community.name}</h3>
+                    <h5 className="without-padding overflow-ellipsis" title={this.state.community.name + ' Organizers'}>
+                        Country Organizers
+                    </h5>
                     {this.state.community.leaders && this.state.community.leaders.map((leader, index) => {
                         return (
                             <Card
@@ -535,19 +537,19 @@ export default class extends AdminPage {
                             </Card>
                         )
                     })}
-                    <Button className="ant-btn-ebp" type="primary" size="small" onClick={this.showModalAddOrganizer}>Add Organizer</Button>
+                    <Button className="ant-btn-ebp add-organizer" type="primary" size="small" onClick={this.showModalAddOrganizer}>Add</Button>
                 </Col>
-                <Col span={21} className="wrap-child-box-users">
+                <Col span={20} className="wrap-child-box-users">
                     {Object.keys(config.data.mappingSubCommunityTypesAndName).map((communityType, index) => {
                         return (
                             <div key={index} className="child-box-users">
-                                <Button className="ant-btn-ebp pull-right" type="primary" size="small" onClick={this.showModalAddSubCommunity.bind(null, COMMUNITY_TYPE[communityType])}>
+                                <Button className="ant-btn-ebp add-sub-community pull-right" type="primary" size="small" onClick={this.showModalAddSubCommunity.bind(null, COMMUNITY_TYPE[communityType])}>
                                     {config.data.mappingSubCommunityTypesAndName[communityType].addNewText}
                                 </Button>
-                                <h3 className="without-padding">
+                                <h4 className="without-padding">
                                     {config.data.mappingSubCommunityTypesAndName[communityType].pluralName} &nbsp;
                                     ({this.state.listSubCommunitiesByType[COMMUNITY_TYPE[communityType]].length})
-                                </h3>
+                                </h4>
                                 <Row>
                                     {this.state.listSubCommunitiesByType[COMMUNITY_TYPE[communityType]].map((community, i) => {
                                         if (!this.state.showAllSubCommunity[COMMUNITY_TYPE[communityType]] && i >= this.state.showMoreMinimum) {

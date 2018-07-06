@@ -13,8 +13,8 @@ export default {
     '0011': 'Join Slack',
 
     '0100': 'Developers',
-    '0101': 'Community',
-    '0102': 'Find Members',
+    '0101': 'Events',
+    '0102': 'Community',
 
     '0200': 'Profile',
     '0201': 'Login',

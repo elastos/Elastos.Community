@@ -165,7 +165,7 @@ class C extends BaseComponent {
             initialValue: existingTask ? existingTask.taskCommunity : []
         })
         const taskCommunity_el = (
-            <Cascader options={this.state.communityTrees} placeholder="" />
+            <Cascader options={this.state.communityTrees} placeholder="" changeOnSelect/>
         )
 
         const applicationDeadline_fn = getFieldDecorator('taskApplicationDeadline', {
