@@ -84,7 +84,7 @@ class C extends BaseComponent {
     }
 
     isUserSubscribed() {
-        const curDetail = this.props[this.props.type]
+        const curDetail = this.props[this.props.reduxType || this.props.type]
         const subscribers = curDetail.subscribers || []
         return !!_.find(subscribers, { _id: this.props.currentUserId })
     }
@@ -135,7 +135,6 @@ class C extends BaseComponent {
     }
 
     renderComments() {
-        const type = this.props.type
         let curDetail = this.props[this.props.reduxType || this.props.type]
 
         if (this.props.detailReducer) {
