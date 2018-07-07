@@ -3,7 +3,7 @@
 We will regularly schedule virtual meetups where the community members can directly interact with the developers on the status of the project and ask any questions they need clarification on. Each meetup will have a different agenda.
 
 ## Upcoming Meetups
-### Thursday July 12th 2018 at 13:00 Easter Daylight Time: Recap of Asia and Europe Tour
+### Thursday July 12th 2018 at 13:00 Easter Daylight Time: World Tour Recap
 - Join from PC, Mac, Linux, iOS or Android: https://elastos.zoom.us/j/651783992
 - Meeting ID: 651783992
 
