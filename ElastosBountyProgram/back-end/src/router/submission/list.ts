@@ -42,10 +42,12 @@ export default class extends Base{
             }
         }
 
-        if (!param.type) {
+        // for now the admin separates FORM_EXT to another menu item
+        // however this is not the case for users
+        if (param.admin) {
             // by default we only show tasks with these statuses
             query.type = {$ne: constant.SUBMISSION_TYPE.FORM_EXT}
-        } else {
+        } else if (param.type){
             query.type = param.type
         }
 

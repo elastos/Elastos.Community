@@ -354,6 +354,7 @@ export default class extends StandardPage {
         return menuCountriesEl
     }
 
+    /*
     renderBreadcrumbRegions() {
         const listRegionsEl = this.state.breadcrumbRegions.map((region, index) => {
             return (
@@ -433,6 +434,7 @@ export default class extends StandardPage {
             </Tabs>
         )
     }
+    */
 
     renderListOrganizers() {
         if (!this.state.community) {
@@ -441,11 +443,8 @@ export default class extends StandardPage {
         return (
             <Row>
                 <Col span={24}>
-                    <h3 className="without-padding overflow-ellipsis">{config.data.mappingCountryCodeToName[this.props.match.params['country']] + ' Organizers'}</h3>
-                </Col>
-                <Col span={24}>
                     <Row>
-                        {this.state.community.leaders && this.state.community.leaders.map((leader, index) => {
+                        {this.state.community.leaders && this.state.community.leaders.length ? this.state.community.leaders.map((leader, index) => {
                             return (
                                 <Col md={{span:12}} lg={{span: 4}} key={index} className="user-card">
                                     <Card
@@ -460,7 +459,9 @@ export default class extends StandardPage {
                                     </Card>
                                 </Col>
                             )
-                        })}
+                        }) : <div className="no-info"><br/>
+                            No organizers yet
+                        </div>}
                     </Row>
                 </Col>
             </Row>
@@ -521,7 +522,18 @@ export default class extends StandardPage {
                             <Row>
                                 <Col md={{span:24}} lg={{span: 18}}
                                      className="community-left-column">
+                                    <Row>
+                                        <Col span={24}>
+                                            <h3 className="without-padding overflow-ellipsis">
+                                                {config.data.mappingCountryCodeToName[this.props.match.params['country']] + ' Organizers'}
+                                            </h3>
+                                        </Col>
+                                    </Row>
                                     {listOrganizers}
+                                    <br/>
+                                    {this.props.current_user_id &&
+                                    <Button onClick={() => {this.props.history.push(`/form/organizer?communityId=${this.getMemberCommunityId()}`)}}>Apply to be an Organizer</Button>
+                                    }
                                 </Col>
                                 <Col md={{span:24}} lg={{span: 6}}
                                      className="community-right-column">
@@ -530,29 +542,34 @@ export default class extends StandardPage {
                                         <Input.Search onSearch={this.handleSearchMember.bind(this)}
                                             prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                             placeholder="Username"/>
+
                                         <div className="list-members">
-                                            <List
-                                                dataSource={this.state.communityMembers}
-                                                renderItem={item => (
-                                                    <List.Item>
-                                                        <table>
-                                                            <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <Avatar size="large" icon="user" src={item.profile.avatar}/>
-                                                                </td>
-                                                                <td className="member-name">
-                                                                    <a onClick={() => {this.props.history.push('/member/' + item._id)}}>
-                                                                        {item.username}
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </List.Item>
-                                                )}
-                                            />
+                                            {this.state.communityMembers.length ?
+                                                <List
+                                                    dataSource={this.state.communityMembers}
+                                                    renderItem={item => (
+                                                        <List.Item>
+                                                            <table>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <Avatar size="large" icon="user" src={item.profile.avatar}/>
+                                                                    </td>
+                                                                    <td className="member-name">
+                                                                        <a onClick={() => {this.props.history.push('/member/' + item._id)}}>
+                                                                            {item.username}
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </List.Item>
+                                                    )}
+                                                /> :
+                                                <div class="no-info"><br/>no members</div>
+                                            }
                                         </div>
+
                                         {this.props.current_user_id && this.props.match.params['region'] && !this.state.keyValueCommunityMembers[this.props.current_user_id] && (
                                             <Button onClick={this.joinToCommunity.bind(this)} className="btn-member-action">Join</Button>
                                         )}

@@ -28,34 +28,32 @@ export default class extends StandardPage {
         {
             title: 'Title',
             dataIndex: 'title',
-            width: '20%',
+            width: '75%',
             className: 'fontWeight500 allow-wrap',
             render: (name, record) => {
                 return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">{name}</a>
             }
         },
         {
-            title: 'Description',
-            dataIndex: 'description',
-            width: '30%',
-            className: 'fontWeight500 allow-wrap',
-            render: (name, record) => {
-                return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">{name}</a>
-            }
-        }, {
             title: 'Type',
             dataIndex: 'type',
+            render: (type) => {
+                if (type === 'FORM_EXT') {
+                    return 'FORM'
+                } else {
+                    return type
+                }
+            }
+
         }, {
             title: 'Created',
             dataIndex: 'createdAt',
-            render: (createdAt) => moment(createdAt).format('MMM D')
-        }, {
-            title: '',
-            dataIndex: '_id',
-            key: 'actions',
-            render: (id, record) => {
-
-            }
+            className: 'right-align',
+            render: (createdAt) => moment(createdAt).format('MMM D'),
+            sorter: (a, b) => {
+                return moment(a.createdAt).valueOf() - moment(b.createdAt).valueOf()
+            },
+            defaultSortOrder: 'descend',
         }]
 
         return (

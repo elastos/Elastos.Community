@@ -49,6 +49,7 @@ import TaskCreatePage from '@/module/page/task_create/Container'
 
 // external forms
 import FormTraining1Page from '@/module/page/form_ext/training_1/Container'
+import FormOrganizerApp from '@/module/page/form_ext/organizer_app/Container'
 
 // admin team page
 import TeamListPage from '../module/page/admin/teams/TeamListPage';
@@ -169,10 +170,14 @@ export default [
         path: '/profile/submission-detail/:submissionId',
         page: ProfileSubmissionDetailPage
     },
+    // external forms
     {
-        // external forms
         path: '/form/training1',
         page: FormTraining1Page
+    },
+    {
+        path: '/form/organizer',
+        page: FormOrganizerApp
     },
     {
         // public profile page

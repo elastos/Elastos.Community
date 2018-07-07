@@ -38,6 +38,24 @@ export default class extends BaseComponent {
                     {this.props.submission.fullLegalName}
                 </Col>
             </Row>
+            {this.props.submission.occupation &&
+            <Row>
+                <Col className="col-label" span={4}>
+                    Occupation
+                </Col>
+                <Col span={16}>
+                    {this.props.submission.occupation}
+                </Col>
+            </Row>}
+            {this.props.submission.education &&
+            <Row>
+                <Col className="col-label" span={4}>
+                    Education
+                </Col>
+                <Col span={16}>
+                    {this.props.submission.education}
+                </Col>
+            </Row>}
             <Row>
                 <Col className="form-detail-desc" offset={4} span={16}>
                     What is your native language, who is your audience and where are they located? What are the language(s) you plan to use to present Elastos.
@@ -58,6 +76,18 @@ export default class extends BaseComponent {
                     {this.props.submission.publicSpeakingExp}
                 </Col>
             </Row>
+            {this.props.submission.eventOrganizingExp && <div>
+            <Row>
+                <Col className="form-detail-desc" offset={4} span={16}>
+                    Do you have any experience organizing events and provide any examples.
+                </Col>
+            </Row>
+            <Row>
+                <Col offset={4} span={16}>
+                    {this.props.submission.eventOrganizingExp}
+                </Col>
+            </Row>
+            </div>}
             <Row>
                 <Col className="form-detail-desc" offset={4} span={16}>
                     Please list any current or past contributions promoting Elastos.

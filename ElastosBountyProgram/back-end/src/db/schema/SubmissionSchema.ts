@@ -33,8 +33,12 @@ export const Submission = {
 
     email: String,
     fullLegalName: String,
+    occupation: String,
+    education: String,
+
     audienceInfo: String,
     publicSpeakingExp: String,
+    eventOrganizingExp: String,
     previousExp: String,
 
     isDeveloper: Boolean,
@@ -53,6 +57,7 @@ export const Submission = {
     },
     comments: [[CommentSchema]],
     subscribers: [{type: Schema.Types.ObjectId, ref: 'users'}],
+
     ...communityProps
 };
 

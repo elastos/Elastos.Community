@@ -54,7 +54,7 @@ export default class extends AdminPage {
                                                   prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                                   placeholder="Username"/>
                                 </div>
-                                <div class="clearfix"/>
+                                <div class="vert-gap-sm clearfix"/>
                                 <ListUsers users={users} history={this.props.history} loading={this.props.loading}/>
                             </Col>
                             <Col span={4} className="admin-right-column wrap-box-navigator">

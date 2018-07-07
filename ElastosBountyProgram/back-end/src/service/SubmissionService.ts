@@ -75,8 +75,11 @@ export default class extends Base {
 
             email,
             fullLegalName,
+            occupation,
+            education,
             audienceInfo,
             publicSpeakingExp,
+            eventOrganizingExp,
             previousExp,
 
             isDeveloper,
@@ -102,12 +105,17 @@ export default class extends Base {
             state,
             city,
 
+            occupation,
+            education,
+
             // training1 form
             email,
             fullLegalName,
             audienceInfo,
             publicSpeakingExp,
             previousExp,
+
+            eventOrganizingExp,
 
             isDeveloper,
             devBackground,

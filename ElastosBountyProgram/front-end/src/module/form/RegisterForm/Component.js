@@ -135,7 +135,7 @@ class C extends BaseComponent {
             rules: [{
                 required: true, message: 'Please input your email'
             }, {
-                type: 'email', message: 'The input is not valid E-mail!'
+                type: 'email', message: 'Invalid email'
             }],
         })
         const email_el = (

@@ -24,7 +24,9 @@ const FormItem = Form.Item
 const TextArea = Input.TextArea
 
 /**
- * This is public form for the Evangelist Training
+ * This is form for members to apply to be an organizer
+ *
+ * TODO: this will later allow them to apply to be a vote candidate
  */
 class C extends BaseComponent {
 
@@ -44,25 +46,27 @@ class C extends BaseComponent {
             attachment_url: null,
             attachment_loading: false,
             attachment_filename: '',
-            attachment_type: ''
+            attachment_type: '',
+
+            community: null
+        }
+    }
+
+    async componentDidMount() {
+
+        if (this.props.location && this.props.location.search) {
+            const qry = this.props.location.search.match(/[\\?&]communityId=(\w+)/)
+            if (qry.length > 1) {
+                const communityId = qry[1]
+                const community = await this.props.getCommunityDetail(communityId)
+                this.setState({community})
+            }
         }
     }
 
     getInputProps () {
 
         const {getFieldDecorator} = this.props.form
-
-        // email
-        const email_fn = getFieldDecorator('email', {
-            rules: [
-                {required: true, message: 'Please input an email'},
-                {type: 'email', message: 'Invalid email'},
-                {min: 6, message: 'Email too short'}
-            ]
-        })
-        const email_el = (
-            <Input size="large"/>
-        )
 
         // name
         const fullLegalName_fn = getFieldDecorator('fullLegalName', {
@@ -117,6 +121,17 @@ class C extends BaseComponent {
         })
         const publicSpeakingExp_el = (
             <TextArea rows={2} name="publicSpeakingExp"></TextArea>
+        )
+
+        // eventOrganizingExp
+        const eventOrganizingExp_fn = getFieldDecorator('eventOrganizingExp', {
+            rules: [
+                {required: true, message: 'this is a required field'},
+                {max: 1024, message: 'text too long'}
+            ]
+        })
+        const eventOrganizingExp_el = (
+            <TextArea rows={2} name="eventOrganizingExp"></TextArea>
         )
 
         // previousExp
@@ -208,13 +223,13 @@ class C extends BaseComponent {
 
 
         return {
-            email: email_fn(email_el),
             fullLegalName: fullLegalName_fn(fullLegalName_el),
             occupation: occupation_fn(occupation_el),
             education: education_fn(education_el),
 
             audienceInfo: audienceInfo_fn(audienceInfo_el),
             publicSpeakingExp: publicSpeakingExp_fn(publicSpeakingExp_el),
+            eventOrganizingExp: eventOrganizingExp_fn(eventOrganizingExp_el),
             previousExp: previousExp_fn(previousExp_el),
 
             isDeveloper: isDeveloper_fn(isDeveloper_el),
@@ -259,14 +274,24 @@ class C extends BaseComponent {
 
         // TODO: description CKE Editor
 
-        return (
-            <div className="c_taskCreateFormContainer">
+        return (!this.props.is_login ?
+            <div>
+                <br/>
+                You must be logged in to apply for organizer
+            </div> :
+            <div className="c_organizerAppFormContainer">
 
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
                     <div>
-                        <FormItem label="Email" {...formItemLayout}>
-                            {p.email}
-                        </FormItem>
+                        <Row>
+                            <Col offset="8" span="12">
+                                <h4>
+                                    <span style={{'fontWeight': 200}}>Community Applying For:</span> &nbsp;
+                                    {this.state.community && this.state.community.name}
+                                </h4>
+                                <br/>
+                            </Col>
+                        </Row>
                         <FormItem label="Full Legal Name" {...formItemLayout}>
                             {p.fullLegalName}
                         </FormItem>
@@ -293,6 +318,15 @@ class C extends BaseComponent {
                         </Row>
                         <FormItem {...formItemNoLabelLayout}>
                             {p.publicSpeakingExp}
+                        </FormItem>
+
+                        <Row>
+                            <Col offset="8" span="12">
+                                Do you have any experience organizing events and provide any examples.
+                            </Col>
+                        </Row>
+                        <FormItem {...formItemNoLabelLayout}>
+                            {p.eventOrganizingExp}
                         </FormItem>
 
                         <Row>
@@ -335,7 +369,7 @@ class C extends BaseComponent {
                             {p.reason}
                         </FormItem>
 
-                        <Divider>Please submit a video of your introduction to Cyber Republic.</Divider>
+                        <Divider>Please submit a video explaining what Elastos means to you.</Divider>
 
                         <FormItem label="Attachment" {...formItemLayout}>
                             {p.attachment}

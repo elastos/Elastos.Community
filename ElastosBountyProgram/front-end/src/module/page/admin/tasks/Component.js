@@ -144,7 +144,7 @@ export default class extends AdminPage {
                                                   prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                                   placeholder="Task name"/>
                                 </div>
-                                <div className="clearfix"/>
+                                <div className="clearfix vert-gap-sm"/>
                                 <Table
                                     columns={columns}
                                     rowKey={(item) => item._id}
