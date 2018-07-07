@@ -8,17 +8,17 @@ message.config({
 })
 
 
-export default createContainer(Component, (state)=>{
+export default createContainer(Component, (state) => {
     return {
         ...state.user.login_form
     }
-}, ()=>{
+}, () => {
     const userService = new UserService()
 
     return {
-        async login(username, password, profile){
+        async login(username, password, persist) {
             try {
-                const rs = await userService.login(username, password)
+                const rs = await userService.login(username, password, persist)
 
                 if (rs) {
                     message.success('login success')
@@ -33,6 +33,6 @@ export default createContainer(Component, (state)=>{
                 console.error(err)
                 message.error(err.message)
             }
-        },
+        }
     }
 })
