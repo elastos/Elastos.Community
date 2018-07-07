@@ -44,7 +44,7 @@ class C extends BaseComponent {
 
         const persist_fn = getFieldDecorator('persist')
         const persist_el = (
-            <Checkbox>Save on this computer</Checkbox>
+            <Checkbox>Keep me logged in</Checkbox>
         )
 
         return {
