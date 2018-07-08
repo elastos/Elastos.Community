@@ -21,6 +21,31 @@ export default class extends StandardPage {
         this.props.resetTasks()
     }
 
+    getCandidateCommentActions(id, data) {
+        const candidate = _.find(data.candidates, (candidate) => {
+            return candidate.user && candidate.user._id === this.props.currentUserId
+        })
+
+        const lastDate = candidate.lastSeenByCandidate
+        const unread = _.filter(candidate.comments, (comment) => {
+            return !lastDate || new Date(_.first(comment).createdAt) > new Date(lastDate)
+        })
+        const tooltipSuffix = unread.length > 1 ? 's' : ''
+        const tooltip = `${unread.length} new message${tooltipSuffix}`
+
+        return unread.length
+            ? (
+                <Tooltip title={tooltip}>
+                    <Badge dot count={unread.length}>
+                        <a onClick={this.linkTaskCandidateDetail.bind(this, data._id, candidate.user._id)} className="tableLink">
+                            <Icon type="message"/>
+                        </a>
+                    </Badge>
+                </Tooltip>
+            )
+            : null
+    }
+
     getCommentActions(id, data) {
         const isOwner = data.createdBy._id === this.props.currentUserId
         const subscription = _.find(data.subscribers, (subscriber) => {
@@ -103,6 +128,56 @@ export default class extends StandardPage {
             dataIndex: '_id',
             key: 'actions',
             render: this.getCommentActions.bind(this)
+        }]
+
+        const appliedColumns = [{
+            title: 'Name',
+            dataIndex: 'name',
+            width: '30%',
+            className: 'fontWeight500 allow-wrap',
+            render: (name, record) => {
+                return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
+            }
+        }, {
+            title: 'Owner',
+            dataIndex: 'createdBy.username'
+        }, {
+            title: 'Category',
+            dataIndex: 'category',
+            render: (category) => _.capitalize(category)
+        }, {
+            title: 'Type',
+            dataIndex: 'type',
+        }, {
+            title: 'Community',
+            dataIndex: 'community',
+            key: 'community',
+            render: (community, data) => {
+                if (!community) {
+                    return null;
+                }
+
+                if (data.communityParent) {
+                    let nameParent = data.communityParent.name;
+                    return (<p>{nameParent}/{community.name}</p>)
+                } else {
+                    return (<p>{community.name}</p>)
+                }
+
+            }
+        }, {
+            title: 'Date',
+            dataIndex: 'startTime',
+            render: (startTime) => moment(startTime).format('MMM D')
+        }, {
+            title: 'Created',
+            dataIndex: 'createdAt',
+            render: (createdAt) => moment(createdAt).format('MMM D')
+        }, {
+            title: '',
+            dataIndex: '_id',
+            key: 'actions',
+            render: this.getCandidateCommentActions.bind(this)
         }]
 
         // TODO: this should be moved to a more restrictive admin
@@ -196,7 +271,7 @@ export default class extends StandardPage {
                                     <Divider>Tasks Applied</Divider>
 
                                     <Table
-                                        columns={columns}
+                                        columns={appliedColumns}
                                         rowKey={(item) => item._id}
                                         dataSource={tasksPendingData}
                                         loading={this.props.loading}
@@ -245,5 +320,9 @@ export default class extends StandardPage {
 
     linkTaskDetail(taskId) {
         this.props.history.push(`/profile/task-detail/${taskId}`)
+    }
+
+    linkTaskCandidateDetail(taskId, taskCandidateId) {
+        this.props.history.push(`/profile/task-app/${taskId}/${taskCandidateId}`)
     }
 }
