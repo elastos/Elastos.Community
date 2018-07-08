@@ -5,6 +5,7 @@ import {constant} from '../constant';
 import {validate, crypto, uuid, mail} from '../utility';
 
 const sanitize = '-password -salt -email'
+const sanitizeWithEmail = '-password -salt'
 
 export default class extends Base {
     public async create(type, param): Promise<boolean> {
@@ -17,7 +18,7 @@ export default class extends Base {
         const db_commentable = this.getDBModel(type)
         let commentable = await db_commentable.getDBInstance().findOne({_id: id})
             .populate('createdBy')
-            .populate('subscribers', sanitize)
+            .populate('subscribers', sanitizeWithEmail)
 
         if (commentable) {
             const updateObj = {
@@ -35,9 +36,11 @@ export default class extends Base {
             if (commentable.createdBy) {
                 this.sendNotificationEmail(type, param, createdBy, commentable.createdBy, null)
 
-                // TODO only do this if not there already
-                if (commentable.createdBy._id.toString() !== this.currentUser._id.toString()) {
-                    updateObj.subscribers.push(this.currentUser)
+                if (!_.map(commentable.subscribers, (sub) => sub._id.toString()).includes(this.currentUser._id.toString())) {
+
+                    if (commentable.createdBy._id.toString() !== this.currentUser._id.toString()) {
+                        updateObj.subscribers.push(this.currentUser)
+                    }
                 }
             } else {
                 commentable = await db_commentable.getDBInstance().findOne({_id: id})
@@ -67,11 +70,15 @@ export default class extends Base {
             .populate('createdBy')
 
         if (commentable) {
+
+            if (_.map(commentable.subscribers, (sub) => sub._id.toString()).includes(this.currentUser._id.toString())) {
+                return
+            }
+
             const updateObj = {
                 subscribers: commentable.subscribers || []
             }
 
-            // TODO check if already subscribed
             updateObj.subscribers.push(this.currentUser)
 
             return await db_commentable.update({_id: id}, updateObj)
@@ -126,8 +133,6 @@ export default class extends Base {
         let ownerTo = recipient.email
         let ownerToName = `${recipient.profile.firstName} ${recipient.profile.lastName}`
 
-        console.log('ownerTo', ownerTo)
-
         await mail.send({
             to: ownerTo,
             toName: ownerToName,
@@ -149,6 +154,9 @@ export default class extends Base {
             <a href="${process.env.SERVER_URL}/profile/task-detail/${param.id}">Click here to view the ${type}</a>    
         `
 
+        // hack for now, don't send more than 1 email to an individual subscriber
+        const seenEmails = {}
+
         for (let subscriber of subscribers) {
             if (curUser.current_user_id === subscriber._id) {
                 return; // Dont notify about own comments
@@ -157,7 +165,9 @@ export default class extends Base {
             let ownerTo = subscriber.email
             let ownerToName = `${subscriber.profile.firstName} ${subscriber.profile.lastName}`
 
-            console.log('ownerTo', ownerTo)
+            if (seenEmails[ownerTo]) {
+                continue
+            }
 
             await mail.send({
                 to: ownerTo,
@@ -165,6 +175,8 @@ export default class extends Base {
                 subject: ownerSubject,
                 body: ownerBody
             })
+
+            seenEmails[ownerTo] = true
         }
     }
 }
