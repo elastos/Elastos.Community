@@ -32,6 +32,8 @@ export default class extends Base {
                     })
                 }
             }
+
+            await this.markLastSeenComment(submission, submission.createdBy, db_submission)
         }
 
         return submission
@@ -39,29 +41,34 @@ export default class extends Base {
 
     public async list(query): Promise<Document> {
         const db_submission = this.getDBModel('Submission')
+        const db_user = this.getDBModel('User');
         const submissions = await db_submission.list(query, {
             updatedAt: -1
         });
 
-        if (submissions.length) {
-            for (let submission of submissions) {
-                await db_submission.getDBInstance().populate(submission, {
-                    path: 'createdBy',
+        for (let submission of submissions) {
+            for (let subscriber of submission.subscribers) {
+                await db_user.getDBInstance().populate(subscriber, {
+                    path: 'user',
                     select: sanitize
                 })
-                await db_submission.getDBInstance().populate(submission, {
-                    path: 'subscribers',
-                    select: sanitize
-                })
-                await db_submission.getDBInstance().populate(submission, ['community'])
+            }
+            await db_submission.getDBInstance().populate(submission, {
+                path: 'createdBy',
+                select: sanitize
+            })
+            await db_submission.getDBInstance().populate(submission, {
+                path: 'subscribers',
+                select: sanitize
+            })
+            await db_submission.getDBInstance().populate(submission, ['community'])
 
-                for (let comment of submission.comments) {
-                    for (let thread of comment) {
-                        await db_submission.getDBInstance().populate(thread, {
-                            path: 'createdBy',
-                            select: sanitize
-                        })
-                    }
+            for (let comment of submission.comments) {
+                for (let thread of comment) {
+                    await db_submission.getDBInstance().populate(thread, {
+                        path: 'createdBy',
+                        select: sanitize
+                    })
                 }
             }
         }

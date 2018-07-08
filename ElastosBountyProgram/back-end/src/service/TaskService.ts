@@ -75,28 +75,6 @@ export default class extends Base {
         return task
     }
 
-    private async markLastSeenComment(commentable, createdBy, db_commentable) {
-            console.log('  ##commentable ', commentable)
-        if (commentable.comments && commentable.comments.length) {
-            const subscriberInfo = _.find(commentable.subscribers, (subscriber) => {
-                return subscriber.user && subscriber.user._id.toString() === this.currentUser._id.toString()
-            })
-
-            if (subscriberInfo) {
-                subscriberInfo.lastSeen = new Date()
-            } else if (createdBy._id.toString() === this.currentUser._id.toString()) {
-                commentable.lastCommentSeenByOwner = new Date()
-            }
-
-            console.log('  commentable ', commentable)
-
-            await db_commentable.update({_id: commentable._id}, {
-                subscribers: commentable.subscribers,
-                lastCommentSeenByOwner: commentable.lastCommentSeenByOwner
-            })
-        }
-    }
-
     public async markComplete(param): Promise<Document> {
         const { taskCandidateId } = param;
 
