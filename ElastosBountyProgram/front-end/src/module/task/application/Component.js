@@ -31,8 +31,8 @@ export default class extends BaseComponent {
 
         const taskId = this.props.match.params.taskId
         taskId && this.props.getTaskDetail(taskId).then(() => {
-            const candidateId = this.props.match.params.applicantId
-            candidateId && this.props.markVisited(candidateId, this.isTaskOwner())
+            const candidate = this.getApplicant()
+            candidate && this.props.markVisited(candidate._id, this.isTaskOwner())
         })
     }
 
