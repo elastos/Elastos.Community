@@ -34,6 +34,10 @@ export default createContainer(Component, (state) => {
             return taskService.get(taskId)
         },
 
+        async markVisited (candidateId, owner) {
+            return taskService.markVisited(candidateId, owner)
+        },
+
         async resetTaskDetail() {
             return taskService.resetTaskDetail()
         },

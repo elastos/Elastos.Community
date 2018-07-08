@@ -76,6 +76,8 @@ export const TaskCandidate = {
     output : TaskOutput,
 
     comments: [[CommentSchema]],
+    lastSeenByOwner: Date,
+    lastSeenByCandidate: Date
 };
 
 export const TaskActivity = {

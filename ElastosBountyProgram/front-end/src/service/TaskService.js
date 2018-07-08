@@ -238,7 +238,6 @@ export default class extends BaseService {
     }
 
     async create(doc) {
-
         const res = await api_request({
             path: '/api/task/create',
             method: 'post',
@@ -247,6 +246,19 @@ export default class extends BaseService {
 
         // TODO: take user to task detail page
 
-        return res;
+        return res
+    }
+
+    async markVisited(taskCandidateId, owner) {
+        const res = await api_request({
+            path: `/api/task/markVisited`,
+            method: 'post',
+            data: {
+                taskCandidateId,
+                owner
+            }
+        })
+
+        return res
     }
 }

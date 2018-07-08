@@ -21,7 +21,6 @@ const sanitize = '-password -salt -email'
 // TODO: we need some sort of status -> status permitted map
 
 export default class extends Base {
-
     public async show(param): Promise<Document> {
         const db_task = this.getDBModel('Task');
         const db_task_candidate = this.getDBModel('Task_Candidate');
@@ -75,33 +74,28 @@ export default class extends Base {
         return task
     }
 
-    public async markComplete(param): Promise<Document> {
-        const { taskCandidateId } = param;
+    public async markCandidateVisited(param): Promise<Document> {
+        const { taskCandidateId, owner } = param;
 
         const db_task_candidate = this.getDBModel('Task_Candidate');
-        const updateObj = { complete: true }
+        const updateObj = owner
+            ? { lastSeenByOwner: new Date() }
+            : { lastSeenByCandidate: new Date() }
         await db_task_candidate.update({ _id: taskCandidateId }, updateObj)
 
-        const updatedTask = db_task_candidate.findById(taskCandidateId);
+        const updatedTask = db_task_candidate.findById(taskCandidateId)
         return updatedTask
     }
 
-    public async showCandidate(param): Promise<Document> {
-        const db_task_candidate = this.getDBModel('Task_Candidate');
-        const taskCandidate = await db_task_candidate.getDBInstance().findOne({_id: param.id})
-            .populate('user', sanitize)
-            .populate('team')
+    public async markComplete(param): Promise<Document> {
+        const { taskCandidateId } = param;
 
-        for (let comment of taskCandidate.comments) {
-            for (let thread of comment) {
-                await db_task_candidate.getDBInstance().populate(thread, {
-                    path: 'createdBy',
-                    select: sanitize
-                })
-            }
-        }
+        const db_task_candidate = this.getDBModel('Task_Candidate')
+        const updateObj = { complete: true }
+        await db_task_candidate.update({ _id: taskCandidateId }, updateObj)
 
-        return taskCandidate
+        const updatedTask = db_task_candidate.findById(taskCandidateId)
+        return updatedTask
     }
 
     public async list(query): Promise<Document> {

@@ -5,7 +5,7 @@ import moment from 'moment'
 import ModalApplyTask from '../ModalApplyTask/Component'
 import ModalAcceptApplicant from '../ModalAcceptApplicant/Component'
 
-import { Col, Row, Button, Divider, message, List, Icon, Tooltip, Popconfirm, Spin, Popover } from 'antd'
+import { Col, Row, Button, Divider, message, Badge, List, Icon, Tooltip, Popconfirm, Spin, Popover } from 'antd'
 
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_TYPE, TASK_CANDIDATE_STATUS} from '@/constant'
 import Comments from '@/module/common/comments/Container'
@@ -363,6 +363,12 @@ export default class extends BaseComponent {
                             renderItem={(candidate) => {
 
                                 const name = candidate.type === TASK_CANDIDATE_TYPE.USER ? candidate.user.username : candidate.team.name
+                                const lastSeen = isTaskOwner
+                                    ? candidate.lastSeenByOwner
+                                    : candidate.lastSeenByCandidate
+                                const unread = _.filter(candidate.comments, (comment) => {
+                                    return !lastSeen || comment.createdAt > lastSeen
+                                })
                                 const listItemActions = []
 
                                 if (this.state.isDeveloperEvent) {
@@ -445,6 +451,18 @@ export default class extends BaseComponent {
                                                 <Icon type="check-circle-o" />
                                             </a>
                                         </Tooltip>)
+                                }
+
+                                if (unread.length) {
+                                    const suffix = unread.length > 1 ? 's' : ''
+                                    const title = `${unread.length} new message${suffix}`
+                                    listItemActions.unshift(
+                                        <Tooltip title={title}>
+                                            <Badge dot count={unread.length}>
+                                                <Icon type="message"/>
+                                            </Badge>
+                                        </Tooltip>
+                                    )
                                 }
 
                                 // TODO: link to dedicated profile/team page if it's yours
@@ -549,11 +567,11 @@ export default class extends BaseComponent {
             buttonText = 'My Application'
             const prefix = this.props.page === 'LEADER' ? '/profile' : ''
 
-            return <Button className="join-btn" onClick={this.showApplicationDetail}>
-                <a onClick={() => {this.props.history.push(`${prefix}/task-app/${this.props.task._id}/${this.props.userId}`)}}>
-                    {buttonText}
-                </a>
-            </Button>
+            return (<Button className="join-btn" onClick={() => {
+                this.props.history.push(`${prefix}/task-app/${this.props.task._id}/${this.props.userId}`)
+            }}>
+                {buttonText}
+            </Button>)
         }
     }
 
