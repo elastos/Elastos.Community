@@ -162,8 +162,12 @@ export default class extends Base {
     public async create(param): Promise<Document> {
 
         const {
-            name, description, thumbnail, infoLink, community, communityParent, category, type, startTime, endTime,
+            name, description, descBreakdown, goals,
+            thumbnail, infoLink, community, communityParent, category, type, startTime, endTime,
             candidateLimit, candidateSltLimit, rewardUpfront, reward, assignSelf,
+
+            eventDateRange, eventDateRangeStart, eventDateRangeEnd, eventDateStatus,
+            location,
 
             attachment, attachmentType, attachmentFilename, isUsd
         } = param;
@@ -186,10 +190,14 @@ export default class extends Base {
         }
 
         const doc = {
-            name, description, infoLink, category, type,
+            name, description, descBreakdown, goals, infoLink, category, type,
             startTime,
             endTime,
             thumbnail,
+
+            eventDateRange, eventDateRangeStart, eventDateRangeEnd, eventDateStatus,
+            location,
+
             attachment, attachmentType, attachmentFilename,
             candidateLimit,
             candidateSltLimit,
@@ -256,11 +264,9 @@ export default class extends Base {
      */
     public async update(param): Promise<boolean> {
 
+        // not really assigning fields,
         const {
-            taskId, name, description, thumbnail, infoLink, community, communityParent, category, type, startTime, endTime,
-            candidateLimit, candidateSltLimit, rewardUpfront, reward,
-
-            attachment, attachmentType, attachmentFilename
+            taskId, rewardUpfront, reward
         } = param;
 
         // we need to set this for the end of the fn so we have the updated task
@@ -287,7 +293,6 @@ export default class extends Base {
             }
 
         }
-
 
         // start logic
         const db_task = this.getDBModel('Task');

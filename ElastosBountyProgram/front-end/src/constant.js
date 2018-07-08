@@ -34,6 +34,12 @@ export const TASK_TYPE = {
     EVENT: 'EVENT'
 }
 
+export const TASK_EVENT_DATE_TYPE = {
+    NOT_APPLICABLE: 'NOT_APPLICABLE',
+    TENTATIVE: 'TENTATIVE',
+    CONFIRMED: 'CONFIRMED'
+}
+
 export const TASK_STATUS = {
     // PROPOSAL: 'PROPOSAL',
 

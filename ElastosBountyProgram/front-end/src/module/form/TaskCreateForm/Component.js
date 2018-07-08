@@ -9,7 +9,7 @@ import {
     Button,
     Checkbox,
     Select,
-    message,
+    Popover,
     Row,
     Col,
     Upload,
@@ -23,10 +23,11 @@ import {upload_file} from "@/util";
 import './style.scss'
 import moment from 'moment'
 
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS} from '@/constant'
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_EVENT_DATE_TYPE} from '@/constant'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
+const Option = Select.Option
 
 /**
  * This is generic task create form for both Developer and Social Bounties / Events
@@ -47,10 +48,6 @@ const TextArea = Input.TextArea
  * - a local event can have sub tasks, these are shown as tasks in the Social page
  */
 class C extends BaseComponent {
-
-    state = {
-        communityTrees: []
-    }
 
     componentDidMount() {
         const taskId = this.props.match.params.taskId
@@ -92,6 +89,12 @@ class C extends BaseComponent {
         super(props)
 
         this.state = {
+            communityTrees: [],
+            taskType: TASK_TYPE.EVENT,
+            assignSelf: (props.existingTask && props.existingTask.assignSelf) || false,
+
+            eventDateRange: (props.existingTask && props.existingTask.eventDateRange) || false,
+
             upload_url : null,
             upload_loading : false,
 
@@ -121,7 +124,11 @@ class C extends BaseComponent {
 
         const assignSelf_fn = getFieldDecorator('assignSelf')
         const assignSelf_el = (
-            <Checkbox/>
+            <Checkbox
+                checked={this.state.assignSelf}
+                disabled={!!existingTask}
+                onClick={() => this.setState({assignSelf: !this.state.assignSelf})}
+            />
         )
 
         const taskName_fn = getFieldDecorator('taskName', {
@@ -154,7 +161,7 @@ class C extends BaseComponent {
             initialValue: this.state.editing ? existingTask.type : (this.props.taskType || TASK_TYPE.EVENT)
         })
         const taskType_el = (
-            <Select disabled={hasLeaderEditRestrictions}>
+            <Select disabled={hasLeaderEditRestrictions} onChange={(val) => this.setState({taskType: val})}>
                 <Option value={TASK_TYPE.EVENT}>Event</Option>
                 <Option value={TASK_TYPE.TASK}>Task</Option>
             </Select>
@@ -179,8 +186,8 @@ class C extends BaseComponent {
 
         const completionDeadline_fn = getFieldDecorator('taskCompletionDeadline', {
             initialValue: this.state.editing &&
-                existingTask.completionDeadline &&
-                moment(existingTask.completionDeadline).isValid() ? moment(existingTask.completionDeadline) : null
+            existingTask.completionDeadline &&
+            moment(existingTask.completionDeadline).isValid() ? moment(existingTask.completionDeadline) : null
         })
         const completionDeadline_el = (
             <DatePicker/>
@@ -206,6 +213,15 @@ class C extends BaseComponent {
         const taskDescBreakdown_el = (
             <TextArea rows={4}></TextArea>
         )
+        const taskGoals_fn = getFieldDecorator('taskGoals', {
+            rules: [
+                {max: 4096, message: 'Task breakdown too long'}
+            ],
+            initialValue: this.state.editing ? existingTask.goals : ''
+        })
+        const taskGoals_el = (
+            <TextArea rows={4}></TextArea>
+        )
 
         const taskLink_fn = getFieldDecorator('taskLink', {
             rules: [{required: false, message: 'Please input an info link'}],
@@ -214,6 +230,62 @@ class C extends BaseComponent {
         const taskLink_el = (
             <Input size="large"/>
         )
+
+        /*
+        ********************************************************************************************************
+        * Event Info
+        ********************************************************************************************************
+        */
+        const eventDateRange_fn = getFieldDecorator('eventDateRange')
+        const eventDateRange_el = (
+            <Checkbox
+                checked={this.state.eventDateRange}
+                onClick={() => this.setState({eventDateRange: !this.state.eventDateRange})}
+            />
+        )
+
+        const eventDateStatus_fn = getFieldDecorator('eventDateStatus', {
+            initialValue: this.state.editing && existingTask.eventDateStatus ? existingTask.eventDateStatus : TASK_EVENT_DATE_TYPE.TENTATIVE
+        })
+        const eventDateStatus_el = (
+            <Select>
+                <Option value={TASK_EVENT_DATE_TYPE.NOT_APPLICABLE}>N/A</Option>
+                <Option value={TASK_EVENT_DATE_TYPE.TENTATIVE}>Tentative</Option>
+                <Option value={TASK_EVENT_DATE_TYPE.CONFIRMED}>Confirmed</Option>
+            </Select>
+        )
+
+        const eventDateRangeStart_fn = getFieldDecorator('eventDateRangeStart', {
+            initialValue: this.state.editing &&
+                existingTask.eventDateRangeStart &&
+                moment(existingTask.eventDateRangeStart).isValid() ? moment(existingTask.eventDateRangeStart) : null
+        })
+        const eventDateRangeStart_el = (
+            <DatePicker/>
+        )
+
+        const eventDateRangeEnd_fn = getFieldDecorator('eventDateRangeEnd', {
+            initialValue: this.state.editing &&
+            existingTask.eventDateRangeEnd &&
+            moment(existingTask.eventDateRangeEnd).isValid() ? moment(existingTask.eventDateRangeEnd) : null
+        })
+        const eventDateRangeEnd_el = (
+            <DatePicker/>
+        )
+
+        const taskLocation_fn = getFieldDecorator('taskLocation', {
+            rules: [{required: false, message: 'Please input a location'}],
+            initialValue: this.state.editing ? existingTask.location : ''
+        })
+        const taskLocation_el = (
+            <Input size="large"/>
+        )
+
+        /*
+        ********************************************************************************************************
+        * Budget / Reward
+        ********************************************************************************************************
+        */
 
         const taskCandLimit_fn = getFieldDecorator('taskCandLimit', {
             rules: [{required: true, type: 'integer', message: 'You must set a limit'}],
@@ -362,8 +434,16 @@ class C extends BaseComponent {
 
             taskCommunity: taskCommunity_fn(taskCommunity_el),
 
+            eventDateStatus: eventDateStatus_fn(eventDateStatus_el),
+            eventDateRange: eventDateRange_fn(eventDateRange_el),
+            eventDateRangeStart: eventDateRangeStart_fn(eventDateRangeStart_el),
+            eventDateRangeEnd: eventDateRangeEnd_fn(eventDateRangeEnd_el),
+
+            taskLocation: taskLocation_fn(taskLocation_el),
+
             taskDesc: taskDesc_fn(taskDesc_el),
             taskDescBreakdown: taskDescBreakdown_fn(taskDescBreakdown_el),
+            taskGoals: taskGoals_fn(taskGoals_el),
             taskLink: taskLink_fn(taskLink_el),
             taskCandLimit: taskCandLimit_fn(taskCandLimit_el),
             taskCandSltLimit: taskCandSltLimit_fn(taskCandSltLimit_el),
@@ -421,11 +501,11 @@ class C extends BaseComponent {
         const formItemLayoutAdjRight = {
             labelCol: {
                 xs: {span: 24},
-                sm: {span: 10},
+                sm: {span: 8},
             },
             wrapperCol: {
                 xs: {span: 24},
-                sm: {span: 14},
+                sm: {span: 16},
             },
         }
 
@@ -443,17 +523,16 @@ class C extends BaseComponent {
         // TODO: react-motion animate slide left
 
         // TODO: description CKE Editor
-
         return (
             <div className="c_taskCreateFormContainer">
 
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
                     <div>
-                        {!this.props.existingTask &&
-                            <FormItem label="Assign to Self" {...formItemLayout}>
-                                {p.assignSelf} - assigns you as the applicant and automatically submits to an admin for approval
-                            </FormItem>
-                        }
+                        <Divider>General Info</Divider>
+                        {(!existingTask || existingTask.assignSelf) &&
+                        <FormItem label="Assign to Self" {...formItemLayout}>
+                            {p.assignSelf} - assigns you to the task and submits to an admin for approval
+                        </FormItem>}
                         <FormItem label="Task Name" {...formItemLayout}>
                             {p.taskName}
                         </FormItem>
@@ -471,12 +550,18 @@ class C extends BaseComponent {
                         <FormItem label="Type"  {...formItemLayout}>
                             {p.taskType}
                         </FormItem>
-                        <FormItem label="Application Deadline" {...formItemLayout}>
-                            {p.taskApplicationDeadline}
-                        </FormItem>
-                        <FormItem label="Completion Deadline" {...formItemLayout}>
-                            {p.taskCompletionDeadline}
-                        </FormItem>
+                        <Row>
+                            <Col span={12}>
+                                <FormItem label="Application Deadline" {...formItemLayoutAdjLeft}>
+                                    {p.taskApplicationDeadline}
+                                </FormItem>
+                            </Col>
+                            <Col span={12}>
+                                <FormItem label="Complete By" {...formItemLayoutAdjRight}>
+                                    {p.taskCompletionDeadline}
+                                </FormItem>
+                            </Col>
+                        </Row>
                         <FormItem label="Description" {...formItemLayout}>
                             {p.taskDesc}
                         </FormItem>
@@ -489,9 +574,61 @@ class C extends BaseComponent {
                         <FormItem {...formItemNoLabelLayout}>
                             {p.taskDescBreakdown}
                         </FormItem>
+                        <FormItem label="Goals" {...formItemLayout}>
+                            {p.taskGoals}
+                        </FormItem>
                         <FormItem label="Info Link" {...formItemLayout}>
                             {p.taskLink}
                         </FormItem>
+
+
+                        {/*
+                        ********************************************************************************
+                        * Event Info
+                        ********************************************************************************
+                        */}
+                        {this.state.taskType === TASK_TYPE.EVENT &&
+                        <div>
+                            <Divider>Event Info</Divider>
+                            <FormItem label="Date Range" {...formItemLayout}>
+                                {p.eventDateRange}
+                            </FormItem>
+                            <Row>
+                                <Col span={12}>
+                                    <FormItem label={'Event Date' + (this.state.eventDateRange ? ' Start' : '')} {...formItemLayoutAdjLeft}>
+                                        {p.eventDateRangeStart}
+                                    </FormItem>
+                                </Col>
+                                {this.state.eventDateRange &&
+                                <Col span={12}>
+                                    <FormItem label="End" {...formItemLayoutAdjRight}>
+                                        {p.eventDateRangeEnd}
+                                    </FormItem>
+                                </Col>}
+                            </Row>
+                            <FormItem label="Date Confirmation" {...formItemLayout}>
+                                {p.eventDateStatus}
+                            </FormItem>
+                            <FormItem label="Location" {...formItemLayout}>
+                                {p.taskLocation}
+                            </FormItem>
+                        </div>
+                        }
+
+
+                        {/*
+                        ********************************************************************************
+                        * Budget / Reward
+                        ********************************************************************************
+                        */}
+                        <Divider>
+                            Budget / Reward&nbsp;
+                            <Popover content="Budget is for expenses/costs, reward is for labor and time">
+                                <Icon className="help-icon" type="question-circle-o"/>
+                            </Popover>
+                        </Divider>
+
+                        {!this.state.assignSelf &&
                         <Row>
                             <Col span={12}>
                                 <FormItem label="Max Applicants" {...formItemLayoutAdjLeft}>
@@ -503,8 +640,7 @@ class C extends BaseComponent {
                                     {p.taskCandSltLimit}
                                 </FormItem>
                             </Col>
-                        </Row>
-                        <Divider>Budget / Reward <Icon className="help-icon" type="question-circle-o" onClick={() => {this.props.history.push('/faq')}}/></Divider>
+                        </Row>}
 
                         <FormItem label="Fiat ($USD)" {...formItemLayout}>
                             <Checkbox name="isUsd" checked={this.state.isUsd} onChange={() => {this.setState({isUsd: !this.state.isUsd})}}/>
@@ -513,6 +649,7 @@ class C extends BaseComponent {
 
                         {this.state.isUsd ?
                             <div>
+                                {/*TODO: lock Budget/Reward after approval*/}
                                 <Row>
                                     <Col span={12}>
                                         <FormItem label="USD Budget" {...formItemLayoutAdjLeft}>
@@ -552,13 +689,13 @@ class C extends BaseComponent {
 
                         }
 
-                        <Divider>Attachment</Divider>
 
                         {/*
                         ********************************************************************************
                         * Attachment
                         ********************************************************************************
                         */}
+                        <Divider>Attachment</Divider>
                         {!this.state.attachment_url ?
                             <FormItem {...formItemNoLabelLayout}>
                                 {p.attachment}

@@ -5,10 +5,11 @@ import moment from 'moment'
 import ModalApplyTask from '../ModalApplyTask/Component'
 import ModalAcceptApplicant from '../ModalAcceptApplicant/Component'
 
-import { Col, Row, Button, Divider, message, List, Icon, Tooltip, Popconfirm, Spin } from 'antd'
+import { Col, Row, Button, Divider, message, List, Icon, Tooltip, Popconfirm, Spin, Popover } from 'antd'
 
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_TYPE, TASK_CANDIDATE_STATUS} from '@/constant'
 import Comments from '@/module/common/comments/Container'
+import { TASK_EVENT_DATE_TYPE } from '../../../constant'
 
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
@@ -59,6 +60,9 @@ export default class extends BaseComponent {
                             <Col>
                                 <h4 className="center">
                                     {this.props.task.name}
+                                    {this.props.task.assignSelf &&
+                                    <span class="no-info"> - assigned to owner</span>
+                                    }
                                 </h4>
                             </Col>
                         </Row>
@@ -147,8 +151,18 @@ export default class extends BaseComponent {
                                             {this.props.task.descBreakdown}
                                         </p>
                                     </Col>
-                                </Row>
-                                }
+                                </Row>}
+                                {this.props.task.goals &&
+                                <Row>
+                                    <Col span={4} className="label-col">
+                                        Goals
+                                    </Col>
+                                    <Col span={20}>
+                                        <p>
+                                            {this.props.task.goals}
+                                        </p>
+                                    </Col>
+                                </Row>}
                                 {this.props.task.infoLink &&
                                 <Row>
                                     <Col span={4} className="label-col">
@@ -159,37 +173,65 @@ export default class extends BaseComponent {
                                             {this.props.task.infoLink}
                                         </a>
                                     </Col>
-                                </Row>
-                                }
-                                {this.props.task.location &&
-                                <Row>
-                                    <Col span={4} className="label-col">
-                                        Location
-                                    </Col>
-                                    <Col span={20}>
-                                        {this.props.task.location}
-                                    </Col>
-                                </Row>
-                                }
-                                {this.props.task.startTime &&
-                                <Row>
-                                    <Col span={4} className="label-col">
-                                        Date/Time
-                                    </Col>
-                                    <Col span={20}>
-                                        {moment(this.props.task.startTime).format(dateTimeFormat)}
-                                        {this.props.task.endTime &&
-                                        <span>
-                                            &nbsp; -
-                                            &nbsp; {moment(this.props.task.endTime).format(dateTimeFormat)}
-                                        </span>
-                                        }
-                                    </Col>
-                                </Row>
-                                }
-                                <Divider>Budget/Reward</Divider>
+                                </Row>}
+
+                                {/*
+                                ********************************************************************************
+                                * Event Info
+                                ********************************************************************************
+                                */}
+                                {this.props.task.type === TASK_TYPE.EVENT &&
+                                <div>
+                                    <Row>
+                                        <Col span={4} className="label-col">
+                                            Date Start
+                                        </Col>
+                                        <Col span={8}>
+                                            {moment(this.props.task.eventDateRangeStart).format('MMM D, YYYY')}
+                                        </Col>
+                                        {this.props.task.eventDateRangeEnd &&
+                                        <Col span={4} className="label-col">
+                                            End
+                                        </Col>}
+                                        {this.props.task.eventDateRangeEnd &&
+                                        <Col span={8}>
+                                            {moment(this.props.task.eventDateRangeEnd).format('MMM D, YYYY')}
+                                        </Col>}
+                                    </Row>
+                                    <Row>
+                                        <Col span={4} className="label-col">
+                                            Confirmed
+                                        </Col>
+                                        <Col span={20}>
+                                            {(() => {
+                                                switch (this.props.task.eventDateStatus) {
+                                                    case TASK_EVENT_DATE_TYPE.NOT_APPLICABLE:
+                                                        return 'N/A'
+                                                    case TASK_EVENT_DATE_TYPE.TENTATIVE:
+                                                        return 'Tentative'
+                                                    case TASK_EVENT_DATE_TYPE.CONFIRMED:
+                                                        return 'Confirmed'
+                                                }
+                                            })()}
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col span={4} className="label-col">
+                                            Location
+                                        </Col>
+                                        <Col span={20}>
+                                            {this.props.task.location}
+                                        </Col>
+                                    </Row>
+                                </div>}
                                 {this.props.task.reward && this.props.task.reward.isUsd ?
                                     <div>
+                                        <Divider>
+                                            Budget / Reward&nbsp;
+                                            <Popover content="Budget is for expenses/costs, reward is for labor and time">
+                                                <Icon className="help-icon" type="question-circle-o"/>
+                                            </Popover>
+                                        </Divider>
                                         <Row>
                                             <Col span={4} className="label-col">
                                                 USD Budget
@@ -261,26 +303,28 @@ export default class extends BaseComponent {
                             </Col>
                             }
                         </Row>
-                        <div className="vert-gap"/>
-                        <Divider>{this.state.isDeveloperEvent ? 'Registration Info' : 'Application Info'}</Divider>
-                        <Row>
-                            {!this.state.isDeveloperEvent && this.props.task.candidateLimit &&
-                            <Col span={4} className="label-col">
-                                Max Applicants
-                            </Col>
-                            }
-                            {!this.state.isDeveloperEvent && this.props.task.candidateLimit &&
-                            <Col span={8}>
-                                {this.props.task.candidateLimit}
-                            </Col>
-                            }
-                            <Col span={4} className="label-col">
-                                Max Accepted
-                            </Col>
-                            <Col span={8}>
-                                {this.props.task.candidateSltLimit}
-                            </Col>
-                        </Row>
+                        {!this.props.task.assignSelf &&
+                        <div>
+                            <Divider>{this.state.isDeveloperEvent ? 'Registration Info' : 'Application Info'}</Divider>
+                            <Row>
+                                {!this.state.isDeveloperEvent && this.props.task.candidateLimit &&
+                                <Col span={4} className="label-col">
+                                    Max Applicants
+                                </Col>
+                                }
+                                {!this.state.isDeveloperEvent && this.props.task.candidateLimit &&
+                                <Col span={8}>
+                                    {this.props.task.candidateLimit}
+                                </Col>
+                                }
+                                <Col span={4} className="label-col">
+                                    Max Accepted
+                                </Col>
+                                <Col span={8}>
+                                    {this.props.task.candidateSltLimit}
+                                </Col>
+                            </Row>
+                        </div>}
 
                         {/*
                         ********************************************************************************

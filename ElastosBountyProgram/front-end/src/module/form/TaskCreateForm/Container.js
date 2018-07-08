@@ -31,9 +31,16 @@ export default createContainer(Component, (state)=>{
 
                     applicationDeadline: formData.taskApplicationDeadline,
                     completionDeadline: formData.taskCompletionDeadline,
+                    goals: formData.taskGoals,
 
                     description: formData.taskDesc,
                     descBreakdown: formData.taskDescBreakdown,
+
+                    eventDateRange: formData.eventDateRange,
+                    eventDateRangeStart: formData.eventDateRangeStart,
+                    eventDateRangeEnd: formData.eventDateRangeEnd,
+                    eventDateStatus: formData.eventDateStatus,
+                    location: formData.taskLocation,
 
                     infoLink: formData.taskLink,
                     thumbnail: st.upload_url,
@@ -94,6 +101,13 @@ export default createContainer(Component, (state)=>{
 
                     description: formData.taskDesc,
                     descBreakdown: formData.taskDescBreakdown,
+                    goals: formData.taskGoals,
+
+                    eventDateRange: formData.eventDateRange,
+                    eventDateRangeStart: formData.eventDateRangeStart,
+                    eventDateRangeEnd: formData.eventDateRangeEnd,
+                    eventDateStatus: formData.eventDateStatus,
+                    location: formData.taskLocation,
 
                     infoLink: formData.taskLink,
                     thumbnail: st.upload_url,

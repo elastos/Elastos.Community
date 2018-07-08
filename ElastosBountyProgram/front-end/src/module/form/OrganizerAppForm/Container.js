@@ -24,8 +24,6 @@ export default createContainer(Component, (state)=>{
     return {
         async submitForm(formData, st){
 
-            debugger
-
             try {
                 const rs = await submissionService.create({
 

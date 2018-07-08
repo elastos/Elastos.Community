@@ -142,7 +142,7 @@ class C extends BaseComponent {
         }
 
         const comments = curDetail.comments || []
-        const dateFormatter = (createdAt) => createdAt ? moment(createdAt).format('MMM D HH:mm') : ''
+        const dateFormatter = (createdAt) => createdAt ? moment(createdAt).format('MMM D - h:mma') : ''
 
         const footer = this.getFooter()
 

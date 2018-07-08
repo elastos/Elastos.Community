@@ -101,6 +101,7 @@ export const Task = {
         required : true
     },
     descBreakdown: String,
+    goals: String,
 
     thumbnail : {
         type : String
@@ -144,23 +145,17 @@ export const Task = {
 
     infoLink: String,
 
-    // only used if this is an event - not used in logic
-    startTime : {
-        type : Date,
-        required : false,
-        min : Date.now
-    },
-    endTime : {
-        type : Date,
-        required : false
-    },
-
     // TODO: after this date task automatically moves to ASSIGNED,
     // or CANCELED if there are no candidates
     applicationDeadline: Date,
 
     // TODO: after this date, if the task is not marked SUBMITTED it becomes CANCELED
     completionDeadline: Date,
+
+    eventDateStatus: String,
+    eventDateRange: Boolean,
+    eventDateRangeStart: Date,
+    eventDateRangeEnd: Date,
 
     /*
     * constants.TASK_STATUS
@@ -187,15 +182,13 @@ export const Task = {
      */
     candidateLimit : {
         type : Number,
-        min : 1,
-        required : true
+        min : 1
     },
 
     candidateSltLimit : {
         type : Number,
         min : 1,
-        default: 1,
-        required : true
+        default: 1
     },
 
     rewardUpfront: TaskUpfront,
