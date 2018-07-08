@@ -367,7 +367,7 @@ export default class extends BaseComponent {
                                     ? candidate.lastSeenByOwner
                                     : candidate.lastSeenByCandidate
                                 const unread = _.filter(candidate.comments, (comment) => {
-                                    return !lastSeen || comment.createdAt > lastSeen
+                                    return !lastSeen || _.first(comment).createdAt > lastSeen
                                 })
                                 const listItemActions = []
 
