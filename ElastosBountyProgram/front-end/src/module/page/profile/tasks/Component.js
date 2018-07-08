@@ -6,7 +6,7 @@ import Navigator from '@/module/page/shared/Navigator/Container'
 import './style.scss'
 import '../../admin/admin.scss'
 
-import { Col, Row, Icon, Form, Breadcrumb, Button, Table, Divider } from 'antd'
+import { Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button, Table, Divider } from 'antd'
 import moment from 'moment/moment'
 const FormItem = Form.Item;
 
@@ -33,14 +33,20 @@ export default class extends StandardPage {
         const unread = _.filter(data.comments, (comment) => {
             return !lastDate || new Date(_.first(comment).createdAt) > new Date(lastDate)
         })
-
-        console.log(' ## unread ', unread)
+        const tooltipSuffix = unread.length > 1 ? 's' : ''
+        const tooltip = `${unread.length} new message${tooltipSuffix}`
 
         return unread.length
-        ? (
-            <Icon type="message"/>
-        )
-        : null
+            ? (
+                <Tooltip title={tooltip}>
+                    <Badge dot count={unread.length}>
+                        <a onClick={this.linkTaskDetail.bind(this, data._id)} className="tableLink">
+                            <Icon type="message"/>
+                        </a>
+                    </Badge>
+                </Tooltip>
+            )
+            : null
     }
 
     ord_renderContent () {
