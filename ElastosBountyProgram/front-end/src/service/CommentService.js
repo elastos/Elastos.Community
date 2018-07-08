@@ -35,8 +35,11 @@ export default class extends BaseService {
 
         subDetail.subscribers = subDetail.subscribers || [];
         subDetail.subscribers.push({
-            ...this.store.getState().user,
-            _id: this.store.getState().user.current_user_id
+            user: {
+                ...this.store.getState().user,
+                _id: this.store.getState().user.current_user_id
+            },
+            lastSeen: new Date()
         })
 
         this.dispatch(redux.actions.detail_update(curDetail))

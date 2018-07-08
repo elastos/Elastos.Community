@@ -6,7 +6,6 @@ export const CommentSchema = {
         ref: 'users',
         required: true
     },
-    createdAt: Date,
     comment: {
         type: String,
         required: true

@@ -36,10 +36,13 @@ export default class extends Base {
             if (commentable.createdBy) {
                 this.sendNotificationEmail(type, param, createdBy, commentable.createdBy, null)
 
-                if (!_.map(commentable.subscribers, (sub) => sub._id.toString()).includes(this.currentUser._id.toString())) {
+                if (!_.map(commentable.subscribers, (sub) => sub.user._id.toString()).includes(this.currentUser._id.toString())) {
 
                     if (commentable.createdBy._id.toString() !== this.currentUser._id.toString()) {
-                        updateObj.subscribers.push(this.currentUser)
+                        updateObj.subscribers.push({
+                            user: this.currentUser,
+                            lastSeen: new Date()
+                        })
                     }
                 }
             } else {
@@ -161,12 +164,12 @@ export default class extends Base {
         const seenEmails = {}
 
         for (let subscriber of subscribers) {
-            if (curUser.current_user_id === subscriber._id) {
+            if (curUser.current_user_id === subscriber.user._id) {
                 return; // Dont notify about own comments
             }
 
-            let ownerTo = subscriber.email
-            let ownerToName = `${subscriber.profile.firstName} ${subscriber.profile.lastName}`
+            let ownerTo = subscriber.user.email
+            let ownerToName = `${subscriber.user.profile.firstName} ${subscriber.user.profile.lastName}`
 
             if (seenEmails[ownerTo]) {
                 continue
