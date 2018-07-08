@@ -21,15 +21,39 @@ export default class extends StandardPage {
         this.props.resetTasks()
     }
 
-    getCandidateCommentActions(id, data) {
+    getOwnerCommentActions(id, data) {
+        const candidateActions = this.getCandidateCommentActions('lastSeenByOwner', id, data)
+        const commentActions = this.getCommentActions(id, data)
+
+        return (
+            <div>
+                {candidateActions}
+                {commentActions}
+            </div>
+        )
+    }
+
+    getCandidateCommentActions(seenProperty, id, data) {
         const candidate = _.find(data.candidates, (candidate) => {
             return candidate.user && candidate.user._id === this.props.currentUserId
         })
+        let unread = []
 
-        const lastDate = candidate.lastSeenByCandidate
-        const unread = _.filter(candidate.comments, (comment) => {
-            return !lastDate || new Date(_.first(comment).createdAt) > new Date(lastDate)
-        })
+        if (candidate) {
+            const lastDate = candidate[seenProperty]
+            unread = _.filter(candidate.comments, (comment) => {
+                return !lastDate || new Date(_.first(comment).createdAt) > new Date(lastDate)
+            })
+        } else {
+            unread = _.flatten(_.map(data.candidates, (candidate) => {
+                const lastDate = candidate[seenProperty]
+                const subUnread = _.filter(candidate.comments, (comment) => {
+                    return !lastDate || new Date(_.first(comment).createdAt) > new Date(lastDate)
+                })
+                return subUnread
+            }))
+        }
+
         const tooltipSuffix = unread.length > 1 ? 's' : ''
         const tooltip = `${unread.length} new message${tooltipSuffix}`
 
@@ -37,7 +61,9 @@ export default class extends StandardPage {
             ? (
                 <Tooltip title={tooltip}>
                     <Badge dot count={unread.length}>
-                        <a onClick={this.linkTaskCandidateDetail.bind(this, data._id, candidate.user._id)} className="tableLink">
+                        <a onClick={candidate
+                            ? this.linkTaskCandidateDetail.bind(this, data._id, candidate.user._id)
+                            : this.linkTaskDetail.bind(this, data._id)} className="tableLink">
                             <Icon type="message"/>
                         </a>
                     </Badge>
@@ -177,7 +203,7 @@ export default class extends StandardPage {
             title: '',
             dataIndex: '_id',
             key: 'actions',
-            render: this.getCandidateCommentActions.bind(this)
+            render: this.getCandidateCommentActions.bind(this, 'lastSeenByCandidate')
         }]
 
         // TODO: this should be moved to a more restrictive admin
@@ -228,7 +254,7 @@ export default class extends StandardPage {
             title: '',
             dataIndex: '_id',
             key: 'actions',
-            render: this.getCommentActions.bind(this)
+            render: this.getOwnerCommentActions.bind(this)
         }]
 
         return (
