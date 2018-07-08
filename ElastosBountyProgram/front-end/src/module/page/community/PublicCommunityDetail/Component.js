@@ -502,9 +502,9 @@ export default class extends StandardPage {
                                         <Icon type="home"/>
                                     </Breadcrumb.Item>
                                     <Breadcrumb.Item>Community</Breadcrumb.Item>
-                                    <Breadcrumb.Item>
+                                    {/*<Breadcrumb.Item>
                                         <Link to="/community">Global</Link>
-                                    </Breadcrumb.Item>
+                                    </Breadcrumb.Item>*/}
                                     <Breadcrumb.Item>
                                         {menuCountriesEl}
                                     </Breadcrumb.Item>

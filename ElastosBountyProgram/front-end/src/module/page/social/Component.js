@@ -148,6 +148,30 @@ export default class extends StandardPage {
             render: (startTime) => moment(startTime).format('MMM D')
         }]
 
+        let leftColLayout = {
+            md: {
+                span: 24
+            },
+            lg: {
+                span: 18
+            }
+        }
+
+        let rightColLayout = {
+            md: {
+                span: 24
+            },
+            lg: {
+                span: 6
+            }
+        }
+
+        if (!this.props.is_login) {
+            leftColLayout = {
+                span: 24
+            }
+        }
+
         return (
             <div className="p_Social">
                 <div className="ebp-header-divider">
@@ -166,7 +190,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row d_rowTop">
-                        <Col md={{span:24}} lg={{span: 18}} xxl={{span: 18}} className="d_leftContainer d_box">
+                        <Col {...leftColLayout} className="d_leftContainer d_box">
                             <div className="pull-left btnContainer">
                                 <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.EVENT)}>
                                     Events
@@ -207,7 +231,8 @@ export default class extends StandardPage {
                             />
                             }
                         </Col>
-                        <Col md={{span:24}} lg={{span: 6}} xxl={{span: 6}}className="d_rightContainer d_box d_communities">
+                        {this.props.is_login &&
+                        <Col {...rightColLayout} className="d_rightContainer d_box d_communities">
                             <h4>
                                 My Communities
                             </h4>
@@ -239,7 +264,8 @@ export default class extends StandardPage {
                                     return <List.Item>
                                         <Row style={{'width': '100%'}}>
                                             <Col span={18}>
-                                                <Popconfirm title="Go to community?" placement="left" okText="Yes" onConfirm={() => {this.props.history.push(`/community/${community._id}/country/${community.geolocation}`)}}>
+                                                <Popconfirm title="Go to community?" placement="left" okText="Yes"
+                                                            onConfirm={() => {this.props.history.push(`/community/${community._id}/country/${community.geolocation}`)}}>
                                                     <span className="community-link">{community.name}</span>
                                                 </Popconfirm>
                                             </Col>
@@ -251,63 +277,12 @@ export default class extends StandardPage {
                                 }}
                             />
                         </Col>
+                        }
                     </Row>
                     <div className="horizGap">
 
                     </div>
                 </div>
-                {/*
-                <div className="ebp-page">
-                    <Row className="d_row">
-                        <Col md={{span:24}} lg={{span: 16}} className="d_leftContainer d_box">
-                            <div>
-                                <h3 className="pull-left">
-                                    Available Tasks
-                                </h3>
-                                <div className="pull-right btnContainer">
-                                    <Button onClick={this.createTaskLink.bind(this, TASK_TYPE.TASK)}>
-                                        Create Task
-                                    </Button>
-                                </div>
-                            </div>
-
-                            <Table
-                                className="clearfix"
-                                columns={columns}
-                                rowKey={(item) => item._id}
-                                dataSource={availTasksData}
-                                loading={this.props.task_loading}
-                            />
-                        </Col>
-                        <Col md={{span:24}} lg={{span: 8}} className="d_rightContainer d_box">
-                            <h3>
-                                My Tasks
-                            </h3>
-
-                            <List
-                                size="small"
-                                dataSource={myTasksData}
-                                renderItem={(task) => {
-
-                                    const listItemActions = [task.curCandidate.type === 'USER' ?
-                                        <Tooltip title="Solo User">
-                                            <Icon type="user"/>
-                                        </Tooltip> :
-                                        <Tooltip title={`Signed up as Team: ${task.curCandidate.team.name}`}>
-                                            <Icon type="team"/>
-                                        </Tooltip>]
-
-                                    return <List.Item actions={listItemActions}>
-                                        <a onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}>
-                                            {task.name}
-                                        </a>
-                                    </List.Item>
-                                }}
-                            />
-                        </Col>
-                    </Row>
-                </div>
-                */}
                 <Footer/>
             </div>
         )

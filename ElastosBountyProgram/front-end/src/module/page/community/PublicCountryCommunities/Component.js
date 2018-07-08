@@ -10,39 +10,86 @@ import config from '@/config'
 import Footer from '@/module/layout/Footer/Container'
 import '../style.scss'
 
+import ipinfo from 'ipinfo'
+
 export default class extends StandardPage {
     state = {
         communities: [],
+
+        countryGeolocation: '',
+        countryExists: true
     }
 
     componentWillUnmount () {
         this.props.resetTasks()
     }
 
-    componentDidMount() {
-        this.props.getSocialEvents()
-        this.loadCommunities();
+    async componentDidMount() {
+        await this.props.getSocialEvents()
+        await this.loadCommunities();
+        await this.redirectToCountry()
     }
 
-    loadCommunities() {
-        const currentCountry = this.props.match.params['country'];
+    async loadCommunities() {
+        let communities
+        const currentCountry = this.props.match.params['country']
+
         if (currentCountry) {
-            this.props.getSpecificCountryCommunities(currentCountry).then((communities) => {
-                this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
-                    this.setState({
-                        communities
-                    })
-                })
-            })
+            communities = await this.props.getSpecificCountryCommunities(currentCountry)
         } else {
-            this.props.getAllCountryCommunity().then((communities) => {
-                this.convertCommunitiesLeaderIdsToLeaderObjects(communities).then((communities) => {
-                    this.setState({
-                        communities
-                    })
+            communities = await this.props.getAllCountryCommunity()
+        }
+
+        this.setState({
+            communities
+        })
+    }
+
+    async redirectToCountry() {
+
+        let countryCommunities, countryCommunity
+
+        if (this.props.currentUser.is_login) {
+            // just get the country from the user profile
+            countryCommunities = await this.props.getSpecificCountryCommunities(this.props.currentUser.profile.country)
+            countryCommunity = _.find(countryCommunities, {parentCommunityId: null})
+
+            this.setState({
+                countryGeolocation: countryCommunity.geolocation
+            })
+
+        } else {
+            // fetch the country from the backend
+            const cLoc = await new Promise((resolve, reject) => {
+                ipinfo((err, cLoc) => {
+                    if (err) {
+                        reject(err)
+                        return
+                    }
+
+                    resolve(cLoc)
                 })
             })
+
+            this.setState({
+                countryGeolocation: cLoc.country.toLowerCase()
+            })
+
+            countryCommunities = await this.props.getSpecificCountryCommunities(this.state.countryGeolocation)
+            countryCommunity = _.find(countryCommunities, {parentCommunityId: null})
+
         }
+
+        if (countryCommunity) {
+            // we go to that community if it exists
+            this.props.history.push(`/community/${countryCommunity._id}/country/${this.state.countryGeolocation}`)
+            return
+        }
+
+        this.setState({
+            countryExists: false
+        })
+
     }
 
     getAvatarUrl(users) {
@@ -60,6 +107,7 @@ export default class extends StandardPage {
     }
 
     // API only return list leader ids [leaderIds], so we need convert it to array object leader [leaders]
+    /*
     convertCommunitiesLeaderIdsToLeaderObjects(communities) {
         return new Promise((resolve, reject) => {
             let userIds = []
@@ -88,6 +136,7 @@ export default class extends StandardPage {
             })
         })
     }
+    */
 
     getCommunityIdByGeolocation(geolocation) {
         const community = _.find(this.state.communities, {
@@ -127,7 +176,6 @@ export default class extends StandardPage {
 
         return (
             <Select
-                allowClear
                 value={this.props.match.params['country'] || undefined}
                 showSearch
                 style={{width: 160}}
@@ -155,10 +203,12 @@ export default class extends StandardPage {
                                         <h5>
                                             {community.name}
                                         </h5>
+                                        {/* // TODO: we want a better way to show multiple organizers
                                         <p className="user-info">
                                             {leader.profile.firstName + ' ' + leader.profile.lastName}<br/>
                                             <span class="no-info">{leader.username}</span>
                                         </p>
+                                        */}
                                     </Card>
                                 </Link>
                             </Col>
@@ -185,7 +235,7 @@ export default class extends StandardPage {
     }
 
     ord_renderContent () {
-        const listCommunitiesEl = this.renderListCommunities()
+        // const listCommunitiesEl = this.renderListCommunities()
         const menuCountriesEl = this.renderBreadcrumbCountries()
 
         return (
@@ -201,9 +251,6 @@ export default class extends StandardPage {
                                     </Breadcrumb.Item>
                                     <Breadcrumb.Item>Community</Breadcrumb.Item>
                                     <Breadcrumb.Item>
-                                        <Link to="/community">Global</Link>
-                                    </Breadcrumb.Item>
-                                    <Breadcrumb.Item>
                                         {menuCountriesEl}
                                     </Breadcrumb.Item>
                                 </Breadcrumb>
@@ -215,25 +262,31 @@ export default class extends StandardPage {
                             <Row>
                                 <Col span={24}
                                      className="community-left-column">
-                                    <div>
-                                        <Row>
-                                            <Col span={20}>
-                                                <h3 className="without-padding">Select a Country</h3>
-                                            </Col>
-                                            <Col span={4}>
-                                                {/*
-                                                <Search
-                                                    placeholder="find member"
-                                                    onSearch={value => console.log(value)}
-                                                    enterButton
-                                                />
-                                                */}
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            {listCommunitiesEl}
-                                        </Row>
+                                    {!this.state.countryExists &&
+                                    <div class="guide-container">
+                                        <h4>
+                                            Hello there! Looks like your we don't have an organizer for&nbsp;
+                                            {config.data.mappingCountryCodeToName[this.state.countryGeolocation]}
+                                        </h4>
+
+                                        <p>
+                                            We are always looking for new organizers especially in new communities.
+                                        </p>
+                                        <p>
+                                            if you'd like to be an organizer for your region please register,
+                                            we'll add your country and you can then apply to be an organizer on this page.
+                                        </p>
+
+                                        <br/>
+
+                                        <Button onClick={() => this.props.history.push('/register')}>Click to Register</Button>
+
+                                        <p>
+                                            <br/>
+                                            <span class="no-info">or you can select a country from above</span>
+                                        </p>
                                     </div>
+                                    }
                                 </Col>
                             </Row>
                         </div>

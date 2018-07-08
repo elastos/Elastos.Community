@@ -142,7 +142,7 @@ class C extends BaseComponent {
         }
 
         const comments = curDetail.comments || []
-        const dateFormatter = (createdAt) => moment(createdAt).format('MMM D HH:mm')
+        const dateFormatter = (createdAt) => createdAt ? moment(createdAt).format('MMM D HH:mm') : ''
 
         const footer = this.getFooter()
 
@@ -161,7 +161,7 @@ class C extends BaseComponent {
                             <a onClick={() => {createdById && this.props.history.push(`/member/${createdById}`)}}>
                                 {createdByUsername}
                             </a>
-                            <span>, {dateFormatted}</span>
+                            {dateFormatted && <span>, {dateFormatted}</span>}
                         </div>
                     ),
                     avatar,

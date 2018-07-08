@@ -9,5 +9,6 @@ export const CommentSchema = {
     comment: {
         type: String,
         required: true
-    }
+    },
+    createdAt: Date
 }

@@ -9,8 +9,10 @@ const sanitize = '-password -salt -email'
 export default class extends Base {
     public async create(type, param): Promise<boolean> {
         const {
-            comment, createdAt, createdBy, id
+            comment, createdBy, id
         } = param
+
+        const createdAt = param.createdAt || new Date()
 
         const db_commentable = this.getDBModel(type)
         let commentable = await db_commentable.getDBInstance().findOne({_id: id})
@@ -113,11 +115,18 @@ export default class extends Base {
         } = param
 
         let ownerSubject = `Someone has commented on your ${type}`
-        let ownerBody = `${curUser.profile.firstName} ${curUser.profile.lastName} says:<br/>${comment}`
+        let ownerBody = `
+            ${curUser.profile.firstName} ${curUser.profile.lastName} says:<br/>${comment}
+            <br/>
+            <br/>
+            <a href="${process.env.SERVER_URL}/profile/task-detail/${param.id}">Click here to view the ${type}</a>
+        `
 
         const recipient = notifier || owner
         let ownerTo = recipient.email
         let ownerToName = `${recipient.profile.firstName} ${recipient.profile.lastName}`
+
+        console.log('ownerTo', ownerTo)
 
         await mail.send({
             to: ownerTo,
@@ -133,7 +142,12 @@ export default class extends Base {
         } = param
 
         let ownerSubject = `Someone has commented on a ${type} you subscribed to`
-        let ownerBody = `${curUser.profile.firstName} ${curUser.profile.lastName} says:<br/>${comment}`
+        let ownerBody = `
+            ${curUser.profile.firstName} ${curUser.profile.lastName} says:<br/>${comment}
+            <br/>
+            <br/>
+            <a href="${process.env.SERVER_URL}/profile/task-detail/${param.id}">Click here to view the ${type}</a>    
+        `
 
         for (let subscriber of subscribers) {
             if (curUser.current_user_id === subscriber._id) {
@@ -142,6 +156,8 @@ export default class extends Base {
 
             let ownerTo = subscriber.email
             let ownerToName = `${subscriber.profile.firstName} ${subscriber.profile.lastName}`
+
+            console.log('ownerTo', ownerTo)
 
             await mail.send({
                 to: ownerTo,
