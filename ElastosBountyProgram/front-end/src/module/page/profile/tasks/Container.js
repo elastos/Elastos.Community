@@ -32,7 +32,9 @@ export default createContainer(Component, (state) => {
 
     if (taskState.all_tasks.length) {
         for (let task of taskState.all_tasks) {
-            if (_.find(task.subscribers, { _id: state.user.current_user_id })) {
+            if (_.find(task.subscribers, (subscriber) => {
+                return subscriber.user && subscriber.user._id === state.user.current_user_id
+            })) {
                 taskState.subscribed_tasks.push(task)
             }
 

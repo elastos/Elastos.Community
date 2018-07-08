@@ -24,7 +24,9 @@ export default createContainer(Component, (state) => {
     submissionState.owned_submissions = []
     if (submissionState.all_submissions.length) {
         for (let submission of submissionState.all_submissions) {
-            if (_.find(submission.subscribers, { _id: state.user.current_user_id })) {
+            if (_.find(submission.subscribers, (subscriber) => {
+                return subscriber.user && subscriber.user._id === state.user.current_user_id
+            })) {
                 submissionState.subscribed_submissions.push(submission)
             }
 
@@ -34,11 +36,8 @@ export default createContainer(Component, (state) => {
         }
     }
 
-
     return submissionState
-
 }, () => {
-
     const submissionService = new SubmissionService()
 
     return {
