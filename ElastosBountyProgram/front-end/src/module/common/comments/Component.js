@@ -86,7 +86,9 @@ class C extends BaseComponent {
     isUserSubscribed() {
         const curDetail = this.props[this.props.reduxType || this.props.type]
         const subscribers = curDetail.subscribers || []
-        return !!_.find(subscribers, { _id: this.props.currentUserId })
+        return !!_.find(subscribers, (subscriber) => {
+            return subscriber.user && subscriber.user._id === this.props.currentUserId
+        })
     }
 
     getSubscribeButton() {

@@ -63,8 +63,11 @@ export default class extends BaseService {
 
         curDetail.subscribers = curDetail.subscribers || []
         curDetail.subscribers.push({
-            ...this.store.getState().user,
-            _id: this.store.getState().user.current_user_id
+            user: {
+                ...this.store.getState().user,
+                _id: this.store.getState().user.current_user_id
+            },
+            lastSeen: new Date()
         })
 
         this.dispatch(redux.actions.detail_update(curDetail))
@@ -91,7 +94,8 @@ export default class extends BaseService {
 
         curDetail.subscribers = curDetail.subscribers || []
         curDetail.subscribers = _.filter(curDetail.subscribers, (subscriber) => {
-            return subscriber._id.toString() !== this.store.getState().user.current_user_id.toString()
+            return subscriber.user && subscriber.user._id.toString() !==
+                this.store.getState().user.current_user_id.toString()
         })
 
         this.dispatch(redux.actions.detail_update(curDetail))

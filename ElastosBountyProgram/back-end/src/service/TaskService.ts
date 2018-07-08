@@ -25,6 +25,7 @@ export default class extends Base {
     public async show(param): Promise<Document> {
         const db_task = this.getDBModel('Task');
         const db_task_candidate = this.getDBModel('Task_Candidate');
+        const db_user = this.getDBModel('User');
 
         const task = await db_task.getDBInstance().findOne({_id: param.taskId})
             .populate('candidates', sanitize)
@@ -35,6 +36,13 @@ export default class extends Base {
             .populate('communityParent')
 
         if (task) {
+            for (let subscriber of task.subscribers) {
+                await db_user.getDBInstance().populate(subscriber, {
+                    path: 'user',
+                    select: sanitize
+                })
+            }
+
             for (let comment of task.comments) {
                 for (let thread of comment) {
                     await db_task.getDBInstance().populate(thread, {
@@ -60,9 +68,33 @@ export default class extends Base {
                     }
                 }
             }
+
+            await this.markLastSeenComment(task, task.createdBy, db_task)
         }
 
         return task
+    }
+
+    private async markLastSeenComment(commentable, createdBy, db_commentable) {
+            console.log('  ##commentable ', commentable)
+        if (commentable.comments && commentable.comments.length) {
+            const subscriberInfo = _.find(commentable.subscribers, (subscriber) => {
+                return subscriber.user && subscriber.user._id.toString() === this.currentUser._id.toString()
+            })
+
+            if (subscriberInfo) {
+                subscriberInfo.lastSeen = new Date()
+            } else if (createdBy._id.toString() === this.currentUser._id.toString()) {
+                commentable.lastCommentSeenByOwner = new Date()
+            }
+
+            console.log('  commentable ', commentable)
+
+            await db_commentable.update({_id: commentable._id}, {
+                subscribers: commentable.subscribers,
+                lastCommentSeenByOwner: commentable.lastCommentSeenByOwner
+            })
+        }
     }
 
     public async markComplete(param): Promise<Document> {
@@ -97,6 +129,7 @@ export default class extends Base {
     public async list(query): Promise<Document> {
         const db_task = this.getDBModel('Task');
         const db_task_candidate = this.getDBModel('Task_Candidate');
+        const db_user = this.getDBModel('User');
         const tasks = await db_task.list(query, {
             updatedAt: -1
         });
@@ -123,10 +156,12 @@ export default class extends Base {
                     select: sanitize,
                 })
 
-                await db_task.getDBInstance().populate(task, {
-                    path: 'subscribers',
-                    select: sanitize,
-                })
+                for (let subscriber of task.subscribers) {
+                    await db_user.getDBInstance().populate(subscriber, {
+                        path: 'user',
+                        select: sanitize
+                    })
+                }
 
                 for (let comment of task.comments) {
                     for (let thread of comment) {

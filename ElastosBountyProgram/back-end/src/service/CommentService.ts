@@ -79,7 +79,10 @@ export default class extends Base {
                 subscribers: commentable.subscribers || []
             }
 
-            updateObj.subscribers.push(this.currentUser)
+            updateObj.subscribers.push({
+                user: this.currentUser,
+                lastSeen: new Date()
+            })
 
             return await db_commentable.update({_id: id}, updateObj)
         } else {
@@ -103,7 +106,7 @@ export default class extends Base {
             }
 
             updateObj.subscribers = _.filter(updateObj.subscribers, (subscriber) => {
-                return subscriber._id.toString() !== this.currentUser._id.toString()
+                return subscriber.user && subscriber.user._id.toString() !== this.currentUser._id.toString()
             })
 
             return await db_commentable.update({_id: id}, updateObj)
@@ -151,7 +154,7 @@ export default class extends Base {
             ${curUser.profile.firstName} ${curUser.profile.lastName} says:<br/>${comment}
             <br/>
             <br/>
-            <a href="${process.env.SERVER_URL}/profile/task-detail/${param.id}">Click here to view the ${type}</a>    
+            <a href="${process.env.SERVER_URL}/profile/task-detail/${param.id}">Click here to view the ${type}</a>
         `
 
         // hack for now, don't send more than 1 email to an individual subscriber

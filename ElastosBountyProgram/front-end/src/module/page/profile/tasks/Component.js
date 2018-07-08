@@ -21,6 +21,28 @@ export default class extends StandardPage {
         this.props.resetTasks()
     }
 
+    getCommentActions(id, data) {
+        const isOwner = data.createdBy._id === this.props.currentUserId
+        const subscription = _.find(data.subscribers, (subscriber) => {
+            return subscriber.user && subscriber.user._id === this.props.currentUserId
+        })
+        const lastDate = isOwner
+            ? data.lastCommentSeenByOwner
+            : subscription && subscription.lastSeen
+
+        const unread = _.filter(data.comments, (comment) => {
+            return !lastDate || new Date(_.first(comment).createdAt) > new Date(lastDate)
+        })
+
+        console.log(' ## unread ', unread)
+
+        return unread.length
+        ? (
+            <Icon type="message"/>
+        )
+        : null
+    }
+
     ord_renderContent () {
         const tasksActiveData = this.props.candidate_active_tasks
         const tasksPendingData = this.props.candidate_pending_tasks
@@ -74,9 +96,7 @@ export default class extends StandardPage {
             title: '',
             dataIndex: '_id',
             key: 'actions',
-            render: (id, record) => {
-
-            }
+            render: this.getCommentActions.bind(this)
         }]
 
         // TODO: this should be moved to a more restrictive admin
@@ -127,9 +147,7 @@ export default class extends StandardPage {
             title: '',
             dataIndex: '_id',
             key: 'actions',
-            render: (id, record) => {
-
-            }
+            render: this.getCommentActions.bind(this)
         }]
 
         return (

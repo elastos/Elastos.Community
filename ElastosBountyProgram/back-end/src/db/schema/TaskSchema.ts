@@ -2,6 +2,7 @@ import {Schema} from 'mongoose';
 import {ELA, VotePower} from "./UserSchema";
 import {constant} from '../../constant';
 import {CommentSchema} from './CommentSchema';
+import {SubscriberSchema} from './SubscriberSchema';
 
 
 // TODO: allow links?
@@ -206,7 +207,8 @@ export const Task = {
     createdBy: {type: Schema.Types.ObjectId, ref: 'users'},
 
     comments: [[CommentSchema]],
-    subscribers: [{type: Schema.Types.ObjectId, ref: 'users'}]
+    subscribers: [SubscriberSchema],
+    lastCommentSeenByOwner: Date
 };
 
 
