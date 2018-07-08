@@ -189,7 +189,6 @@ class C extends BaseComponent {
                                 title={item.title}
                                 description={item.description}
                             />
-                            {item.content}
                         </List.Item>
                     )}
                 />
