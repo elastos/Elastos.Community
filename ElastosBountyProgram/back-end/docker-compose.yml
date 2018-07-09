@@ -6,7 +6,7 @@ services:
     volumes:
       - ./.data/db:/data/db
     ports:
-      - 27017:27017
+      - 27090:27090
 
   ebp-backend:
     environment:
