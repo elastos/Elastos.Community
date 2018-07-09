@@ -1,4 +1,4 @@
-declare var global, describe, test, expect, require, process, beforeAll, afterAll, sinon
+declare var global, describe, test, expect, require, process, beforeAll, afterAll
 
 const sinon = require('sinon')
 
