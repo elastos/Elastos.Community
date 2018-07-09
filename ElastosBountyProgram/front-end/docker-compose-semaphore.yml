@@ -4,7 +4,7 @@ services:
     container_name: ebp-frontend
     image: nginx:alpine
     ports:
-      - 3001:3001
+      - 3001:80
 #    build: .
 
     volumes:
