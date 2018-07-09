@@ -1,4 +1,6 @@
 
+[![Build Status](https://semaphoreci.com/api/v1/clarenceelastos/elastos-community/branches/master/shields_badge.svg)](https://semaphoreci.com/clarenceelastos/elastos-community)
+
 # Elastos Bounty Program (EBP) - Will Undergo a Rebrand
 
 Previous documentation can be found here [EBP.md](./EBP.md)

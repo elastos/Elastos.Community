@@ -1,4 +1,4 @@
-declare var global, describe, test, expect, require, process, beforeAll, afterAll, sinon
+declare var global, describe, test, expect, require, process, beforeAll, afterAll
 
 const sinon = require('sinon')
 
@@ -259,7 +259,11 @@ describe('Tests for Task Update', () => {
     })
 
     test('Organizer cannot change budget/rewards after APPROVED status', async () => {
-
+        await new Promise((resolve) => {
+            setTimeout(() => {
+                resolve()
+            }, 6000)
+        })
     })
 
 })
@@ -269,4 +273,6 @@ afterAll(async () => {
     await DB.getModel('Task').remove({
         _id: testData.taskSocialEvent._id
     });
+
+    await DB.disconnect()
 })

@@ -27,13 +27,13 @@ export default class {
 
     public async start(): Promise<mongoose.ConnectionBase>{
         const url = process.env.DB_URL;
-        const db = mongoose.createConnection(url);
+        const db = await mongoose.createConnection(url);
         this.connection = db;
 
         // Setup callback
-        this.connection.on('error', this.handleDBError());
+        this.connection.on('error', this.handleDBError);
 
-        this.connection.on('disconnected', this.handleUnexpectedDisconnect());
+        this.connection.on('disconnected', this.handleUnexpectedDisconnect);
 
         this.connection.on('reconnected', function () {
             console.log('MongoDB reconnected!');
@@ -57,6 +57,8 @@ export default class {
 
     private handleUnexpectedDisconnect() {
 
+        console.log('handleUnexpectedDisconnect')
+
         return (error: any) => {
 
             console.error('mongodb is disconnect', error);
@@ -67,7 +69,7 @@ export default class {
     }
 
     public disconnect() {
-        this.db.disconnect();
+        mongoose.connection.close()
     }
 
     private async initTest(){
