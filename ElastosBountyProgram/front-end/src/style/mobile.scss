@@ -9,22 +9,25 @@
     .c_Header_Menu {
 
       .c_MenuItem {
-
+        
         &.link {
-          padding: 0 4px;
           display: inline-block;
-          height: auto;
-          margin-top: 8px;
+          padding: 0 3px;
+          top: 25px;
+          height: 15px;
+          font-size: 15px;
         }
 
         &.account {
-          display: none;
+          display: inline-block;
+          height: 20px;
         }
       }
     }
 
     .c_MenuTopRight {
-      display: none;
+      display: inline-block;
+      font-size: 12px;
     }
   }
 
