@@ -28,11 +28,15 @@ export default class extends StandardPage {
     }
     */
 
-    ord_renderContent () {
-        const candidate = (!_.isEmpty(this.props.task.candidates) &&
+    getCandidate() {
+        return (!_.isEmpty(this.props.task.candidates) &&
             this.props.task.candidates.find((candidate) => {
                 return candidate.user._id === this.props.match.params.applicantId
             }))
+    }
+
+    ord_renderContent () {
+        const candidate = this.getCandidate()
         const taskDetailLink = `/profile/task-detail/${this.props.task._id}`
 
         return (

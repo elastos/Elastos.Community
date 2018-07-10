@@ -8,6 +8,7 @@ import addCandidate from './add_candidate';
 import removeCandidate from './remove_candidate';
 import acceptCandidate from './accept_candidate';
 import markComplete from './mark_complete';
+import markVisited from './mark_visited';
 import comment from './comment';
 import subscribe from './subscribe';
 import unsubscribe from './unsubscribe';
@@ -52,6 +53,11 @@ export default Base.setRouter([
     {
         path: '/markTaskComplete',
         router: markComplete,
+        method: 'post'
+    },
+    {
+        path: '/markVisited',
+        router: markVisited,
         method: 'post'
     },
     {

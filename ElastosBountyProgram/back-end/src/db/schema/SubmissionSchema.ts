@@ -1,5 +1,6 @@
 import {Schema} from 'mongoose';
 import {CommentSchema} from './CommentSchema';
+import {SubscriberSchema} from './SubscriberSchema';
 
 const communityProps = {
     community : {
@@ -56,7 +57,8 @@ export const Submission = {
         ref: 'users'
     },
     comments: [[CommentSchema]],
-    subscribers: [{type: Schema.Types.ObjectId, ref: 'users'}],
+    subscribers: [SubscriberSchema],
+    lastCommentSeenByOwner: Date,
 
     ...communityProps
 };

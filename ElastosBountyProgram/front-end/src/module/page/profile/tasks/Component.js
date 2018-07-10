@@ -6,7 +6,7 @@ import Navigator from '@/module/page/shared/Navigator/Container'
 import './style.scss'
 import '../../admin/admin.scss'
 
-import { Col, Row, Icon, Form, Breadcrumb, Button, Table, Divider } from 'antd'
+import { Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button, Table, Divider } from 'antd'
 import moment from 'moment/moment'
 const FormItem = Form.Item;
 
@@ -19,6 +19,85 @@ export default class extends StandardPage {
 
     componentWillUnmount() {
         this.props.resetTasks()
+    }
+
+    getOwnerCommentActions(id, data) {
+        const candidateActions = this.getCandidateCommentActions('lastSeenByOwner', id, data)
+        const commentActions = this.getCommentActions(id, data)
+
+        return (
+            <div>
+                {candidateActions}
+                {commentActions}
+            </div>
+        )
+    }
+
+    getCandidateCommentActions(seenProperty, id, data) {
+        const candidate = _.find(data.candidates, (candidate) => {
+            return candidate.user && candidate.user._id === this.props.currentUserId
+        })
+        let unread = []
+
+        if (candidate) {
+            const lastDate = candidate[seenProperty]
+            unread = _.filter(candidate.comments, (comment) => {
+                return !lastDate || new Date(_.first(comment).createdAt) > new Date(lastDate)
+            })
+        } else {
+            unread = _.flatten(_.map(data.candidates, (candidate) => {
+                const lastDate = candidate[seenProperty]
+                const subUnread = _.filter(candidate.comments, (comment) => {
+                    return !lastDate || new Date(_.first(comment).createdAt) > new Date(lastDate)
+                })
+                return subUnread
+            }))
+        }
+
+        const tooltipSuffix = unread.length > 1 ? 's' : ''
+        const tooltip = `${unread.length} new message${tooltipSuffix}`
+
+        return unread.length
+            ? (
+                <Tooltip title={tooltip}>
+                    <Badge dot count={unread.length}>
+                        <a onClick={candidate
+                            ? this.linkTaskCandidateDetail.bind(this, data._id, candidate.user._id)
+                            : this.linkTaskDetail.bind(this, data._id)} className="tableLink">
+                            <Icon type="message"/>
+                        </a>
+                    </Badge>
+                </Tooltip>
+            )
+            : null
+    }
+
+    getCommentActions(id, data) {
+        const isOwner = data.createdBy._id === this.props.currentUserId
+        const subscription = _.find(data.subscribers, (subscriber) => {
+            return subscriber.user && subscriber.user._id === this.props.currentUserId
+        })
+        const lastDate = isOwner
+            ? data.lastCommentSeenByOwner
+            : subscription && subscription.lastSeen
+
+        const unread = _.filter(data.comments, (comment) => {
+            return !lastDate || new Date(_.first(comment).createdAt) > new Date(lastDate)
+        })
+        const tooltipSuffix = unread.length > 1 ? 's' : ''
+        const tooltip = `${unread.length} new message${tooltipSuffix}`
+
+        return unread.length
+            ? (
+                <Tooltip title={tooltip}>
+                    <Badge dot count={unread.length}>
+                        <a onClick={this.linkTaskDetail.bind(this, data._id)} className="tableLink">
+                            <Icon type="message"/>
+                        </a>
+                    </Badge>
+                </Tooltip>
+            )
+            : null
     }
 
     ord_renderContent () {
@@ -74,9 +153,57 @@ export default class extends StandardPage {
             title: '',
             dataIndex: '_id',
             key: 'actions',
-            render: (id, record) => {
+            render: this.getCommentActions.bind(this)
+        }]
+
+        const appliedColumns = [{
+            title: 'Name',
+            dataIndex: 'name',
+            width: '30%',
+            className: 'fontWeight500 allow-wrap',
+            render: (name, record) => {
+                return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
+            }
+        }, {
+            title: 'Owner',
+            dataIndex: 'createdBy.username'
+        }, {
+            title: 'Category',
+            dataIndex: 'category',
+            render: (category) => _.capitalize(category)
+        }, {
+            title: 'Type',
+            dataIndex: 'type',
+        }, {
+            title: 'Community',
+            dataIndex: 'community',
+            key: 'community',
+            render: (community, data) => {
+                if (!community) {
+                    return null;
+                }
+
+                if (data.communityParent) {
+                    let nameParent = data.communityParent.name;
+                    return (<p>{nameParent}/{community.name}</p>)
+                } else {
+                    return (<p>{community.name}</p>)
+                }
 
             }
+        }, {
+            title: 'Date',
+            dataIndex: 'startTime',
+            render: (startTime) => moment(startTime).format('MMM D')
+        }, {
+            title: 'Created',
+            dataIndex: 'createdAt',
+            render: (createdAt) => moment(createdAt).format('MMM D')
+        }, {
+            title: '',
+            dataIndex: '_id',
+            key: 'actions',
+            render: this.getCandidateCommentActions.bind(this, 'lastSeenByCandidate')
         }]
 
         // TODO: this should be moved to a more restrictive admin
@@ -127,9 +254,7 @@ export default class extends StandardPage {
             title: '',
             dataIndex: '_id',
             key: 'actions',
-            render: (id, record) => {
-
-            }
+            render: this.getOwnerCommentActions.bind(this)
         }]
 
         return (
@@ -172,7 +297,7 @@ export default class extends StandardPage {
                                     <Divider>Tasks Applied</Divider>
 
                                     <Table
-                                        columns={columns}
+                                        columns={appliedColumns}
                                         rowKey={(item) => item._id}
                                         dataSource={tasksPendingData}
                                         loading={this.props.loading}
@@ -221,5 +346,9 @@ export default class extends StandardPage {
 
     linkTaskDetail(taskId) {
         this.props.history.push(`/profile/task-detail/${taskId}`)
+    }
+
+    linkTaskCandidateDetail(taskId, taskCandidateId) {
+        this.props.history.push(`/profile/task-app/${taskId}/${taskCandidateId}`)
     }
 }

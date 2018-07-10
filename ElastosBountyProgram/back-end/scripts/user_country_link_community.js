@@ -35,6 +35,7 @@ const geo = require('../dist/src/utility/geo').geo
 
             await db_community.save({
                 leaderIds: [],
+                parentCommunityId: null,
                 geolocation: missingCountry,
                 name: geo.geolocationMap[missingCountry],
                 type: constant.COMMUNITY_TYPE.COUNTRY,

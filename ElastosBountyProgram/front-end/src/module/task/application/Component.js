@@ -30,7 +30,10 @@ export default class extends BaseComponent {
         })
 
         const taskId = this.props.match.params.taskId
-        taskId && this.props.getTaskDetail(taskId)
+        taskId && this.props.getTaskDetail(taskId).then(() => {
+            const candidate = this.getApplicant()
+            candidate && this.props.markVisited(candidate._id, this.isTaskOwner())
+        })
     }
 
     componentWillUnmount() {
@@ -44,8 +47,12 @@ export default class extends BaseComponent {
         )
     }
 
+    isTaskOwner() {
+        return this.props.task.createdBy._id === this.props.userId
+    }
+
     getBanner() {
-        const isTaskOwner = this.props.task.createdBy._id === this.props.userId
+        const isTaskOwner = this.isTaskOwner()
         const applicant = this.getApplicant()
 
         let bannerInsides = null
@@ -75,9 +82,10 @@ export default class extends BaseComponent {
     }
 
     getApplicant () {
-        return this.props.task.candidates.find((candidate) => {
-            return candidate.user._id === this.props.applicantId
-        })
+        return (!_.isEmpty(this.props.task.candidates) &&
+            this.props.task.candidates.find((candidate) => {
+                return candidate.user._id === this.props.applicantId
+            }))
     }
 
     markComplete () {

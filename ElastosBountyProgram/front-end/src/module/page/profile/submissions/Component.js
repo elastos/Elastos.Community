@@ -6,7 +6,7 @@ import Navigator from '@/module/page/shared/Navigator/Container'
 import './style.scss'
 import '../../admin/admin.scss'
 
-import { Col, Row, Icon, Form, Breadcrumb, Button, Table, Divider } from 'antd'
+import { Col, Row, Icon, Form, Tooltip, Badge, Breadcrumb, Button, Table, Divider } from 'antd'
 import moment from 'moment/moment'
 const FormItem = Form.Item;
 
@@ -20,41 +20,76 @@ export default class extends StandardPage {
         this.props.resetSubmissions()
     }
 
+    getCommentActions(id, data) {
+        const isOwner = data.createdBy._id === this.props.currentUserId
+        const subscription = _.find(data.subscribers, (subscriber) => {
+            return subscriber.user && subscriber.user._id === this.props.currentUserId
+        })
+        const lastDate = isOwner
+            ? data.lastCommentSeenByOwner
+            : subscription && subscription.lastSeen
+
+        const unread = _.filter(data.comments, (comment) => {
+            return !lastDate || new Date(_.first(comment).createdAt) > new Date(lastDate)
+        })
+        const tooltipSuffix = unread.length > 1 ? 's' : ''
+        const tooltip = `${unread.length} new message${tooltipSuffix}`
+
+        return unread.length
+            ? (
+                <Tooltip title={tooltip}>
+                    <Badge dot count={unread.length}>
+                        <a onClick={this.linkSubmissionDetail.bind(this, data._id)} className="tableLink">
+                            <Icon type="message"/>
+                        </a>
+                    </Badge>
+                </Tooltip>
+            )
+            : null
+    }
+
     ord_renderContent () {
         const submissionsOwnedData = this.props.owned_submissions
         const submissionsSubscribedData = this.props.subscribed_submissions
 
         const columns = [
-        {
-            title: 'Title',
-            dataIndex: 'title',
-            width: '75%',
-            className: 'fontWeight500 allow-wrap',
-            render: (name, record) => {
-                return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">{name}</a>
-            }
-        },
-        {
-            title: 'Type',
-            dataIndex: 'type',
-            render: (type) => {
-                if (type === 'FORM_EXT') {
-                    return 'FORM'
-                } else {
-                    return type
+            {
+                title: 'Title',
+                dataIndex: 'title',
+                width: '75%',
+                className: 'fontWeight500 allow-wrap',
+                render: (name, record) => {
+                    return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">{name}</a>
                 }
-            }
-
-        }, {
-            title: 'Created',
-            dataIndex: 'createdAt',
-            className: 'right-align',
-            render: (createdAt) => moment(createdAt).format('MMM D'),
-            sorter: (a, b) => {
-                return moment(a.createdAt).valueOf() - moment(b.createdAt).valueOf()
             },
-            defaultSortOrder: 'descend',
-        }]
+            {
+                title: 'Type',
+                dataIndex: 'type',
+                render: (type) => {
+                    if (type === 'FORM_EXT') {
+                        return 'FORM'
+                    } else {
+                        return type
+                    }
+                }
+            },
+            {
+                title: 'Created',
+                dataIndex: 'createdAt',
+                className: 'right-align',
+                render: (createdAt) => moment(createdAt).format('MMM D'),
+                sorter: (a, b) => {
+                    return moment(a.createdAt).valueOf() - moment(b.createdAt).valueOf()
+                },
+                defaultSortOrder: 'descend'
+            },
+            {
+                title: '',
+                dataIndex: '_id',
+                key: 'actions',
+                render: this.getCommentActions.bind(this)
+            }
+        ]
 
         return (
             <div>

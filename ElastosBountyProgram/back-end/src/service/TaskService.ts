@@ -21,10 +21,10 @@ const sanitize = '-password -salt -email'
 // TODO: we need some sort of status -> status permitted map
 
 export default class extends Base {
-
     public async show(param): Promise<Document> {
         const db_task = this.getDBModel('Task');
         const db_task_candidate = this.getDBModel('Task_Candidate');
+        const db_user = this.getDBModel('User');
 
         const task = await db_task.getDBInstance().findOne({_id: param.taskId})
             .populate('candidates', sanitize)
@@ -35,6 +35,13 @@ export default class extends Base {
             .populate('communityParent')
 
         if (task) {
+            for (let subscriber of task.subscribers) {
+                await db_user.getDBInstance().populate(subscriber, {
+                    path: 'user',
+                    select: sanitize
+                })
+            }
+
             for (let comment of task.comments) {
                 for (let thread of comment) {
                     await db_task.getDBInstance().populate(thread, {
@@ -60,43 +67,41 @@ export default class extends Base {
                     }
                 }
             }
+
+            await this.markLastSeenComment(task, task.createdBy, db_task)
         }
 
         return task
     }
 
-    public async markComplete(param): Promise<Document> {
-        const { taskCandidateId } = param;
+    public async markCandidateVisited(param): Promise<Document> {
+        const { taskCandidateId, owner } = param;
 
         const db_task_candidate = this.getDBModel('Task_Candidate');
-        const updateObj = { complete: true }
+        const updateObj = owner
+            ? { lastSeenByOwner: new Date() }
+            : { lastSeenByCandidate: new Date() }
         await db_task_candidate.update({ _id: taskCandidateId }, updateObj)
 
-        const updatedTask = db_task_candidate.findById(taskCandidateId);
+        const updatedTask = db_task_candidate.findById(taskCandidateId)
         return updatedTask
     }
 
-    public async showCandidate(param): Promise<Document> {
-        const db_task_candidate = this.getDBModel('Task_Candidate');
-        const taskCandidate = await db_task_candidate.getDBInstance().findOne({_id: param.id})
-            .populate('user', sanitize)
-            .populate('team')
+    public async markComplete(param): Promise<Document> {
+        const { taskCandidateId } = param;
 
-        for (let comment of taskCandidate.comments) {
-            for (let thread of comment) {
-                await db_task_candidate.getDBInstance().populate(thread, {
-                    path: 'createdBy',
-                    select: sanitize
-                })
-            }
-        }
+        const db_task_candidate = this.getDBModel('Task_Candidate')
+        const updateObj = { complete: true }
+        await db_task_candidate.update({ _id: taskCandidateId }, updateObj)
 
-        return taskCandidate
+        const updatedTask = db_task_candidate.findById(taskCandidateId)
+        return updatedTask
     }
 
     public async list(query): Promise<Document> {
         const db_task = this.getDBModel('Task');
         const db_task_candidate = this.getDBModel('Task_Candidate');
+        const db_user = this.getDBModel('User');
         const tasks = await db_task.list(query, {
             updatedAt: -1
         });
@@ -123,10 +128,12 @@ export default class extends Base {
                     select: sanitize,
                 })
 
-                await db_task.getDBInstance().populate(task, {
-                    path: 'subscribers',
-                    select: sanitize,
-                })
+                for (let subscriber of task.subscribers) {
+                    await db_user.getDBInstance().populate(subscriber, {
+                        path: 'user',
+                        select: sanitize
+                    })
+                }
 
                 for (let comment of task.comments) {
                     for (let thread of comment) {
