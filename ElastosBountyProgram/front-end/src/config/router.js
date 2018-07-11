@@ -47,9 +47,13 @@ import PublicCommunityDetailPage from '@/module/page/community/PublicCommunityDe
 
 import TaskCreatePage from '@/module/page/task_create/Container'
 
+// internal forms
+import FormAnniversaryApp from '@/module/page/form_ext/anni2018_app/Container'
+import FormOrganizerApp from '@/module/page/form_ext/organizer_app/Container'
+
 // external forms
 import FormTraining1Page from '@/module/page/form_ext/training_1/Container'
-import FormOrganizerApp from '@/module/page/form_ext/organizer_app/Container'
+
 
 // admin team page
 import TeamListPage from '../module/page/admin/teams/TeamListPage';
@@ -130,6 +134,11 @@ export default [
         path: '/slack',
         page: SlackPage
     },
+    /*
+    ********************************************************************************
+    * Profile page
+    ********************************************************************************
+      */
     {
         path: '/profile/info',
         page: ProfileInfoPage
@@ -170,20 +179,43 @@ export default [
         path: '/profile/submission-detail/:submissionId',
         page: ProfileSubmissionDetailPage
     },
-    // external forms
+    /*
+    ********************************************************************************
+    * External Forms
+    ********************************************************************************
+      */
     {
         path: '/form/training1',
         page: FormTraining1Page
     },
+    /*
+    ********************************************************************************
+    * Internal Forms
+    ********************************************************************************
+      */
     {
         path: '/form/organizer',
         page: FormOrganizerApp
     },
     {
+        path: '/form/anniversary2018',
+        page: FormAnniversaryApp
+    },
+    /*
+    ********************************************************************************
+    * Users
+    ********************************************************************************
+      */
+    {
         // public profile page
         path: '/member/:userId',
         page: MemberPage
     },
+    /*
+    ********************************************************************************
+    * Admin
+    ********************************************************************************
+      */
     {
         path: '/admin/users',
         page: AdminUsersPage
@@ -213,22 +245,6 @@ export default [
         page: AdminSubmissionDetailPage
     },
     {
-        path: '/community',
-        page: PublicCountryCommunitiesPage
-    },
-    {
-        path: '/community/country/:country',
-        page: PublicCountryCommunitiesPage
-    },
-    {
-        path: '/community/:community/country/:country',
-        page: PublicCommunityDetailPage
-    },
-    {
-        path: '/community/:community/country/:country/region/:region',
-        page: PublicCommunityDetailPage
-    },
-    {
         path: '/admin/community',
         page: CountryCommunitiesPage
     },
@@ -244,8 +260,32 @@ export default [
         path: '/admin/community/:community/country/:country/region/:region',
         page: CommunityDetailPage
     },
-
-    // admin team page
+    /*
+    ********************************************************************************
+    * Community
+    ********************************************************************************
+      */
+    {
+        path: '/community',
+        page: PublicCountryCommunitiesPage
+    },
+    {
+        path: '/community/country/:country',
+        page: PublicCountryCommunitiesPage
+    },
+    {
+        path: '/community/:community/country/:country',
+        page: PublicCommunityDetailPage
+    },
+    {
+        path: '/community/:community/country/:country/region/:region',
+        page: PublicCommunityDetailPage
+    },
+    /*
+    ********************************************************************************
+    * TODO
+    ********************************************************************************
+      */
     {
         path : '/admin/teams',
         page : TeamListPage

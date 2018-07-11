@@ -29,7 +29,7 @@ export default createContainer(Component, (state)=>{
 
                     title: `${st.community.name} Organizer App`,
                     type: SUBMISSION_TYPE.FORM_EXT,
-                    campaign: 'Organizer Application',
+                    campaign: SUBMISSION_TYPE.COMMUNITY_ORGANIZER,
 
                     email: this.user_email,
                     fullLegalName: formData.fullLegalName,

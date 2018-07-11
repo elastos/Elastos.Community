@@ -5,10 +5,12 @@ import Comments from '@/module/common/comments/Container'
 
 import { Col, Row, Divider, Icon } from 'antd'
 
-import {SUBMISSION_TYPE} from '@/constant'
+import {SUBMISSION_TYPE, SUBMISSION_CAMPAIGN} from '@/constant'
 
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 import '../style.scss'
+
+import detailAnni2008 from './anniversary_2018'
 
 export default class extends BaseComponent {
 
@@ -176,42 +178,6 @@ export default class extends BaseComponent {
                 </Row>
             )
 
-        const communityState = this.props.submission.type === SUBMISSION_TYPE.ADD_COMMUNITY &&
-            (
-                <Row>
-                    <Col span={24}>
-                        <Row>
-                            <Col span={4} className="label-col">
-                                State
-                            </Col>
-                            <Col span={20}>
-                                <p>
-                                    {this.props.submission.state}
-                                </p>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
-            )
-
-        const communityCity = this.props.submission.type === SUBMISSION_TYPE.ADD_COMMUNITY &&
-            (
-                <Row>
-                    <Col span={24}>
-                        <Row>
-                            <Col span={4} className="label-col">
-                                City
-                            </Col>
-                            <Col span={20}>
-                                <p>
-                                    {this.props.submission.city}
-                                </p>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
-            )
-
         return <Row>
             <Col span={18} className="gridCol main-area">
                 <Row>
@@ -269,8 +235,6 @@ export default class extends BaseComponent {
                     </Col>
                 </Row>
                 {communityName}
-                {communityState}
-                {communityCity}
                 <div className="vert-gap"/>
             </Col>
         </Row>
@@ -284,15 +248,22 @@ export default class extends BaseComponent {
 
     ord_render() {
 
-        return (
-            <div className="public">
-                {this.props.submission.type === SUBMISSION_TYPE.FORM_EXT ?
-                    this.renderFormExt() :
-                    this.renderDetail()
-                }
-                <Comments type="submission" canPost={true} model={this.props.submission}
-                    canSubscribe={this.canSubscribe()}/>
-            </div>
-        )
+        return <div className="public">
+            {this.renderDynamic()}
+            <Comments type="submission" canPost={true} model={this.props.submission}
+                      canSubscribe={this.canSubscribe()}/>
+        </div>
+    }
+
+    renderDynamic() {
+        if (this.props.submission.type === SUBMISSION_TYPE.FORM_EXT) {
+            switch (this.props.submission.campaign) {
+
+                case SUBMISSION_CAMPAIGN.ANNI_2008:
+                    return detailAnni2008.call(this)
+            }
+        }
+
+        return this.renderDetail()
     }
 }

@@ -47,6 +47,7 @@ export default class extends Base {
         });
 
         for (let submission of submissions) {
+
             for (let subscriber of submission.subscribers) {
                 await db_user.getDBInstance().populate(subscriber, {
                     path: 'user',
@@ -55,10 +56,6 @@ export default class extends Base {
             }
             await db_submission.getDBInstance().populate(submission, {
                 path: 'createdBy',
-                select: sanitize
-            })
-            await db_submission.getDBInstance().populate(submission, {
-                path: 'subscribers',
                 select: sanitize
             })
             await db_submission.getDBInstance().populate(submission, ['community'])
@@ -82,6 +79,7 @@ export default class extends Base {
 
             email,
             fullLegalName,
+            dob,
             occupation,
             education,
             audienceInfo,
@@ -114,6 +112,7 @@ export default class extends Base {
 
             occupation,
             education,
+            dob,
 
             // training1 form
             email,

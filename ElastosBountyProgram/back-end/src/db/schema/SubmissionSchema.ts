@@ -46,6 +46,8 @@ export const Submission = {
 
     devBackground: String,
 
+    dob: Date,
+
     reason: String,
 
     attachment: String,

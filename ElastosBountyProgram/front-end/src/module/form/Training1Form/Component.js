@@ -18,7 +18,6 @@ import {
 } from 'antd'
 
 import {upload_file} from "@/util";
-import './style.scss'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
@@ -262,7 +261,7 @@ class C extends BaseComponent {
         return (
             <div className="c_taskCreateFormContainer">
 
-                <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
+                <Form onSubmit={this.handleSubmit.bind(this)} className="d_training1Form">
                     <div>
                         <FormItem label="Email" {...formItemLayout}>
                             {p.email}

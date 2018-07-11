@@ -209,7 +209,9 @@ class C extends BaseComponent {
         )
 
         const walletAddress_fn = getFieldDecorator('walletAddress', {
-            rules: [],
+            rules: [
+                {len: 34, message: 'address length error'}
+            ],
             initialValue: user.profile.walletAddress
         })
         const walletAddress_el = (

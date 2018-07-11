@@ -111,7 +111,7 @@ export default class extends StandardPage {
                             <Row>
                                 <Col span={20} className="c_ProfileContainer admin-left-column wrap-box-user">
                                     <div>
-                                        <Divider>Owned Submissions</Divider>
+                                        <Divider>Owned Submissions / Forms</Divider>
 
                                         <Table
                                             columns={columns}
