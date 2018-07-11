@@ -10,7 +10,7 @@ services:
 
   ebp-backend:
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=staging
     container_name: ebp-backend
     image: ebp-backend
     build: .
