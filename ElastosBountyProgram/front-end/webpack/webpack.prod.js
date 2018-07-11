@@ -82,7 +82,7 @@ module.exports = merge(common, {
                         exclude: /node_modules/,
                         options: {
                             plugins: ['react-html-attrs'],
-                            compact: true,
+                            compact: process.env.NODE_ENV === 'production',
                         },
                     },
                     {
