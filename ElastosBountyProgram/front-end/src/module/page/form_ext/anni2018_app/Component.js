@@ -19,7 +19,7 @@ export default class extends StandardPage {
                     </h3>
 
                     <p>
-                        <span class="no-info">Location:</span> Chiang Mai, Thailand <br/>
+                        <span class="no-info">Location: </span>Shangri-La Hotel, Chiang Mai, Thailand <br/>
                         <span className="no-info">Event Dates:</span> Aug 24 - 27, 2018
                     </p>
                 </div>

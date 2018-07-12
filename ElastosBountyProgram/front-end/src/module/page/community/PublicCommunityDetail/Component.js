@@ -607,7 +607,7 @@ export default class extends StandardPage {
     }
 
     applyOrganizer() {
-        if (this.current_user_id) {
+        if (this.props.current_user_id) {
             this.props.history.push(`/form/organizer?communityId=${this.getMemberCommunityId()}`)
         } else {
             message.error('You must be logged in to apply')
