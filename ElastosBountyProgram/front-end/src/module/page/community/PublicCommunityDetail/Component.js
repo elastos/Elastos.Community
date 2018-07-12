@@ -493,6 +493,17 @@ export default class extends StandardPage {
         return (
             <div className="p_Community">
                 <div className="ebp-header-divider"></div>
+                <div className="ebp-page-title">
+                    <h3 className="page-header">
+                        View and Register Communities
+                    </h3>
+                </div>
+                <div className="ebp-page-desc d_rowGrey">
+                    <p>
+                        We are always looking for new organizers especially in new communities.
+                        If your community is not listed, you can register it.
+                    </p>
+                </div>
                 <div className="ebp-page">
                     <div className="ebp-page-breadcrumb">
                         <Row>
