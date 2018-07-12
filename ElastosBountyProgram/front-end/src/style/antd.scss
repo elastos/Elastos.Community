@@ -7,8 +7,8 @@
 
   &:hover,
   &:focus {
-    border-color: $primary_color;
-    color: $primary_color;
+    border-color: $cr_color;
+    color: $cr_color;
   }
 
   &.ant-btn-ebp{
@@ -17,8 +17,8 @@
     line-height: 40px;
     padding: 0 40px;
     color: #ffffff;
-    background: $primary_color;
-    border: 1px solid $primary_dark_color;
+    background: $cr_color;
+    border: 1px solid $cr_dark_color;
 
     &.ant-btn-sm {
       line-height: 0.9rem;
@@ -27,8 +27,8 @@
     }
 
     &:hover, &:focus, &:active{
-      background: $primary_light_color;
-      border-color: $primary_color;
+      background: $cr_light_color;
+      border-color: $cr_color;
     }
   }
 
@@ -58,31 +58,34 @@
 .ant-menu-item {
 
   &.ant-menu-item-active {
-    color: $primary_color;
+    color: $cr_light_color !important;
+    border-color: $cr_primary_color !important
   }
 
   &.ant-menu-item-selected {
 
-    color: $primary_dark_color;
+    color: $cr_dark_color;
     font-weight: 500;
 
     > a {
       font-weight: 500;
-      color: $primary_dark_color;
+      color: $cr_dark_color;
 
-      outline-color: $primary_color;
-      border-color: $primary_color;
+      outline-color: $cr_color;
+      border-color: $cr_color;
 
       &::before {
-        background-color: rgba(71, 170, 167, 0.1);
+        background-color: $cr_light_color;
       }
     }
 
     &::after {
-      border-color: $primary_color;
+      border-color: $cr_color;
     }
   }
 }
+
+
 
 .ant-input-search-button.ant-btn-primary {
   background-color: transparent;

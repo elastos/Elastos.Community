@@ -111,7 +111,7 @@ export default createContainer(Component, (state)=>{
 
                     infoLink: formData.taskLink,
                     thumbnail: st.upload_url,
-                    community: formData.community,
+                    community: !formData.community ? null : formData.community,
                     communityParent: formData.communityParent,
 
                     // TODO: attachment
@@ -122,20 +122,19 @@ export default createContainer(Component, (state)=>{
 
                 Object.assign(updateObj, {
                     rewardUpfront: {
-                        ela: formData.taskRewardUpfront ? formData.taskRewardUpfront * 1000 : this.existingTask.rewardUpfront.ela,
+                        ela: formData.taskRewardUpfront ? formData.taskRewardUpfront * 1000 : null,
                         elaDisbursed: 0,
 
-                        usd: formData.taskRewardUpfrontUsd ? formData.taskRewardUpfrontUsd * 100 : this.existingTask.rewardUpfront.usd,
-                        elaPerUsd: formData.taskRewardUpfrontElaPerUsd ? formData.taskRewardUpfrontElaPerUsd : this.existingTask.rewardUpfront.elaPerUsd,
+                        usd: formData.taskRewardUpfrontUsd ? formData.taskRewardUpfrontUsd * 100 : null,
+                        elaPerUsd: formData.taskRewardUpfrontElaPerUsd,
                         isUsd: st.isUsd
                     },
                     reward: {
-                        ela: formData.taskReward ? formData.taskReward * 1000 : this.existingTask.reward.ela,
+                        ela: formData.taskReward ? formData.taskReward * 1000 : null,
                         elaDisbursed: 0,
-                        votePower: parseFloat(formData.reward) * 100,
 
-                        usd: formData.taskRewardUsd ? formData.taskRewardUsd * 100 : this.existingTask.reward.usd,
-                        elaPerUsd: formData.taskRewardElaPerUsd ? formData.taskRewardElaPerUsd : this.existingTask.reward.elaPerUsd,
+                        usd: formData.taskRewardUsd ? formData.taskRewardUsd * 100 : null,
+                        elaPerUsd: formData.taskRewardElaPerUsd,
                         isUsd: st.isUsd
                     }
                 })

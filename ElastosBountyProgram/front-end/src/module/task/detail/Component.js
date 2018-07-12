@@ -182,6 +182,7 @@ export default class extends BaseComponent {
                                 */}
                                 {this.props.task.type === TASK_TYPE.EVENT &&
                                 <div>
+                                    {this.props.task.eventDateRangeStart &&
                                     <Row>
                                         <Col span={4} className="label-col">
                                             Date Start
@@ -197,7 +198,8 @@ export default class extends BaseComponent {
                                         <Col span={8}>
                                             {moment(this.props.task.eventDateRangeEnd).format('MMM D, YYYY')}
                                         </Col>}
-                                    </Row>
+                                    </Row>}
+                                    {this.props.task.eventDateRangeStart &&
                                     <Row>
                                         <Col span={4} className="label-col">
                                             Confirmed
@@ -214,7 +216,7 @@ export default class extends BaseComponent {
                                                 }
                                             })()}
                                         </Col>
-                                    </Row>
+                                    </Row>}
                                     <Row>
                                         <Col span={4} className="label-col">
                                             Location
@@ -241,11 +243,11 @@ export default class extends BaseComponent {
                                                     {this.props.task.rewardUpfront.usd / 100}
                                                 </p>
                                             </Col>
-                                            {this.props.task.rewardUpfront.usd > 0 &&
+                                            {this.props.task.rewardUpfront.elaPerUsd > 0 &&
                                             <Col span={4} className="label-col">
                                                 ELA/USD
                                             </Col>}
-                                            {this.props.task.rewardUpfront.usd > 0 &&
+                                            {this.props.task.rewardUpfront.elaPerUsd > 0 &&
                                             <Col span={8}>
                                                 <p>
                                                     {this.props.task.rewardUpfront.elaPerUsd}
@@ -261,11 +263,11 @@ export default class extends BaseComponent {
                                                     {this.props.task.reward.usd / 100}
                                                 </p>
                                             </Col>
-                                            {this.props.task.reward.usd > 0 &&
+                                            {this.props.task.reward.elaPerUsd > 0 &&
                                             <Col span={4} className="label-col">
                                                 ELA/USD
                                             </Col>}
-                                            {this.props.task.reward.usd > 0 &&
+                                            {this.props.task.reward.elaPerUsd > 0 &&
                                             <Col span={8}>
                                                 <p>
                                                     {this.props.task.reward.elaPerUsd}

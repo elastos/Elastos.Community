@@ -32,36 +32,41 @@
 
   .d_rowHome {
 
-      &.white {
-        .icon-home, p, h3, h4 {
-          color: white;
-        }
-      }
+    &.white {
 
-      .icon-home {
-        color: #1C2437;
-        font-size: 250px;
-        margin-top: 25px;
-      }
+      background-color: $cr_color;
 
-      p, h3, h4 {
-        color: #1C2437;
+      .icon-home, p, h3, h4 {
+        color: white;
       }
+    }
 
-      p {
-        font-weight: 200;
-      }
+    .icon-home {
+      color: #1C2437;
+      font-size: 250px;
+      margin-top: 25px;
+    }
 
-      .d_developer {
-        height: 320px;
-        @include homeContent;
+    p, h3, h4 {
+      color: #1C2437;
+    }
 
-      }
+    p {
+      font-weight: 200;
+    }
 
-      .d_organizer {
-        height: 320px;
-        @include homeContent;
-      }
+    .d_developer {
+      height: 320px;
+      @include homeContent;
+
+    }
+
+    .d_organizer {
+      height: 320px;
+      @include homeContent;
+    }
+
+
   }
 
   .entryContainer {
@@ -96,7 +101,7 @@
 
       width: 930px;
       height: 10px;
-      background-color: rgba(38, 214, 170, 0.8);
+      background-color: $cr_primary_color;
 
       &.bar1 {
         bottom: 29px;

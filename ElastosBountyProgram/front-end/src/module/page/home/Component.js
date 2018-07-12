@@ -66,7 +66,7 @@ export default class extends StandardPage {
 
                 <div className="horizGap"/>
 
-                <Row className="d_rowHome white" style={{backgroundColor: '#364d79'}}>
+                <Row className="d_rowHome white">
                     <div className="horizGap"/>
                     <Col span={10} style={{textAlign: 'right'}}>
                         <Icon type="share-alt" className="icon-home"/>
