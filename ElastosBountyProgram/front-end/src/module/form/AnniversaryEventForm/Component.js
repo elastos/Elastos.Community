@@ -235,7 +235,7 @@ class C extends BaseComponent {
                                 <br/>
                                 <span style={{fontWeight: 600}}>Rules:</span><br/>
                                 - Flight must be an economy class fare at a reasonable cost<br/>
-                                - ELA exchange rate is determined at time of reimbursement<br/>
+                                - ELA exchange rate is determined at time of 12pm local time in Thailand on the day of reimbursement the day of the event<br/>
                                 - You must arrive in Chiang Mai by August 24, the official event is on the 25th<br/>
                                 - You are responsible for your own Visa requirements based on your nationality<br/>
                                 - You must not represent yourself as an employee of Elastos, your purpose of travel to Thailand must be for tourism only<br/>
