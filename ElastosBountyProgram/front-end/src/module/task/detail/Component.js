@@ -378,22 +378,16 @@ export default class extends BaseComponent {
                                 })
                                 const listItemActions = []
 
-                                if (this.state.isDeveloperEvent) {
-                                    listItemActions.push(candidate.type === TASK_CANDIDATE_TYPE.USER ?
-                                        <Tooltip title="Solo User">
-                                            <Icon type="user"/>
-                                        </Tooltip> :
+                                if (this.state.isDeveloperEvent && candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
+                                    listItemActions.unshift(
                                         <Tooltip title="Team">
                                             <Icon type="team"/>
                                         </Tooltip>)
                                 }
 
-                                let candidateIsUserOrTeam = false
-                                if ((candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === this.props.userId) ||
-                                    (candidate.type === TASK_CANDIDATE_TYPE.TEAM && _.map(this.state.teamsOwned, '_id').includes(candidate.team._id))){
-
-                                    candidateIsUserOrTeam = true
-                                }
+                                const candidateIsUserOrTeam =
+                                    ((candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === this.props.userId) ||
+                                    (candidate.type === TASK_CANDIDATE_TYPE.TEAM && _.map(this.state.teamsOwned, '_id').includes(candidate.team._id)))
 
                                 const isLeader = this.props.page === 'LEADER' && isTaskOwner && !candidateIsUserOrTeam
                                 // we either show the remove icon or the approved icon,

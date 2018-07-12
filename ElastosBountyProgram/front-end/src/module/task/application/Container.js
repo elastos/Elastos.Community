@@ -44,6 +44,26 @@ export default createContainer(Component, (state) => {
 
         async markComplete(taskCandidateId) {
             return taskService.markComplete(taskCandidateId)
+        },
+
+        async pullCandidate(taskId, taskCandidateId) {
+            try {
+                const result = await taskService.pullCandidate(taskId, taskCandidateId)
+                return result
+            } catch (err) {
+                console.error(err)
+                message.error(err.message)
+            }
+        },
+
+        async acceptCandidate(taskCandidateId) {
+            try {
+                const result = await taskService.acceptCandidate(taskCandidateId)
+                return result
+            } catch (err) {
+                console.error(err)
+                message.error(err.message)
+            }
         }
     }
 })

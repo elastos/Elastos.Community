@@ -48,10 +48,6 @@ export default class extends BaseComponent {
         })
     }
 
-    componentWillUnmount() {
-        this.props.resetTaskDetail()
-    }
-
     ord_render () {
         return (_.isEmpty(this.props.task) || this.props.task.loading ?
             <div class="center"><Spin size="large" /></div> :
@@ -166,7 +162,7 @@ export default class extends BaseComponent {
                                 // after approval the user cannot rescind their application
 
                                 // if the candidate is the logged in user, show remove icon
-                                if (this.props.page === 'PUBLIC' && candidateIsUserOrTeam) {
+                                if (candidateIsUserOrTeam) {
                                     if (this.state.isDeveloperEvent) {
                                         listItemActions.unshift(
                                             <Tooltip title="Withdraw application">
@@ -206,7 +202,6 @@ export default class extends BaseComponent {
                                                 </Tooltip>)
                                         }
                                     }
-
                                 } else if (candidate.status === TASK_CANDIDATE_STATUS.APPROVED){
                                     // this should be the leader's view - they can approve applicants
                                     listItemActions.unshift(
@@ -271,7 +266,9 @@ export default class extends BaseComponent {
 
     async removeApplication(tcId) {
         const taskId = this.props.task._id
-        const res = await this.props.pullCandidate(taskId, tcId)
+        this.props.pullCandidate(taskId, tcId).then(() => {
+            this.props.history.push(`/profile/task-detail/${this.props.task._id}`)
+        })
     }
 
     showModalAcceptApplicant = (taskCandidate) => {
