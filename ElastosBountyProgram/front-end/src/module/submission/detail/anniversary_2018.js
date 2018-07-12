@@ -29,50 +29,18 @@ export default function() {
         </Row>
         <Row>
             <Col className="col-label" span={8}>
-                Community
+                Wallet Address
             </Col>
             <Col span={12}>
-                {this.props.submission.community.name}
+                {this.props.walletAddress}
             </Col>
         </Row>
         <Row>
             <Col className="col-label" span={8}>
-                Role in Community
+                Airfare Receipt
             </Col>
             <Col span={12}>
-                {this.props.submission.occupation}
-            </Col>
-        </Row>
-        <Row>
-            <Col className="col-label" span={8}>
-                Contributions
-            </Col>
-            <Col span={12}>
-                {this.props.submission.description}
-            </Col>
-        </Row>
-        <Row>
-            <Col className="col-label" span={8}>
-                Which Elastos full-time members do you know and can vouch for you?
-            </Col>
-            <Col span={12}>
-                {this.props.submission.audienceInfo}
-            </Col>
-        </Row>
-        <Row>
-            <Col className="col-label" span={8}>
-                Greeting Video
-            </Col>
-            <Col span={12}>
-                <a href={this.props.submission.reason}>{this.props.submission.reason}</a>
-            </Col>
-        </Row>
-        <Row>
-            <Col className="col-label" span={8}>
-                Which Elastos full-time members do you know and can vouch for you?
-            </Col>
-            <Col span={12}>
-                {this.props.submission.audienceInfo}
+                <a href={this.props.submission.attachment}>{this.props.submission.attachmentFilename}</a>
             </Col>
         </Row>
     </div>

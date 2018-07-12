@@ -98,7 +98,6 @@ export default class extends Base {
 
         } = param;
         this.validate_title(title)
-        this.validate_description(description)
         this.validate_type(type)
 
         const submission = {

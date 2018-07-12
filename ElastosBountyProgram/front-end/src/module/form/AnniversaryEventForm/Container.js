@@ -34,16 +34,11 @@ export default createContainer(Component, (state)=>{
                     fullLegalName: formData.fullLegalName,
                     email: this.user.email,
 
-                    occupation: formData.roleInElastos,
+                    description: '',
 
-                    community: formData.community,
-                    dob: formData.dob,
-
-                    // reusing these fields
-                    audienceInfo: formData.contactWith,
-                    description: formData.contributions,
-
-                    reason: formData.greetingVideoLink
+                    attachment: st.attachment_url,
+                    attachmentFilename: st.attachment_filename,
+                    attachmentType: st.attachment_type
                 });
 
                 if (rs) {

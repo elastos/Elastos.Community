@@ -44,7 +44,10 @@ class C extends BaseComponent {
                     return
                 }
 
-                // TODO: check file type
+                if (!this.state.attachment_url) {
+                    message.error('You must upload a flight receipt to confirm your attendance')
+                    return
+                }
 
                 this.props.submitForm(values, this.state);
             }
@@ -55,7 +58,14 @@ class C extends BaseComponent {
         super(props)
 
         this.state = {
-            community: null
+            community: null,
+
+            attachment_url: (props.existingTask && props.existingTask.attachment) || null,
+            attachment_loading: false,
+            attachment_filename: (props.existingTask && props.existingTask.attachmentFilename) || '',
+            attachment_type: '',
+
+            removeAttachment: false
         }
     }
 
@@ -95,78 +105,54 @@ class C extends BaseComponent {
             <Input size="large"/>
         )
 
-        // role in Elastos
-        const roleInElastos_fn = getFieldDecorator('roleInElastos', {
-            rules: [
-                {required: true, message: 'Please enter your role'},
-                {min: 4, message: 'text too short'}
-            ]
-        })
-        const roleInElastos_el = (
-            <Input size="large"/>
-        )
+        const attachment_fn = getFieldDecorator('attachment', {
+            rules: []
+        });
+        const p_attachment = {
+            showUploadList: false,
+            customRequest :(info)=>{
+                this.setState({
+                    attachment_loading: true
+                });
+                upload_file(info.file).then((d)=>{
+                    const url = d.url;
+                    this.setState({
+                        attachment_loading: false,
+                        attachment_url : url,
+                        attachment_type: d.type,
+                        attachment_filename: d.filename,
 
-        const community_fn = getFieldDecorator('community', {
-            initialValue: this.state.community,
-            rules: [
-                {required: true, message: 'Please enter your country'}
-            ]
-        })
-        const community_el = (
-            <Cascader options={this.state.communityTrees} placeholder="" changeOnSelect/>
-        )
-
-        const dob_fn = getFieldDecorator('dob', {
-            rules: [
-                {required: true, message: 'Please enter your date of birth'},
-            ]
-        })
-        const dob_el = (
-            <DatePicker/>
-        )
-
-        // full-time Elastos who have you been in contact (vouch)
-        const contactWith_fn = getFieldDecorator('contactWith', {
-            rules: [
-                {max: 1024, message: 'text too long'}
-            ]
-        })
-        const contactWith_el = (
-            <TextArea rows={2} name="contactWith"></TextArea>
-        )
-
-        // contributions to Elastos
-        const contributions_fn = getFieldDecorator('contributions', {
-            rules: [
-                {required: true, message: 'this is a required field'},
-                {max: 1024, message: 'text too long'}
-            ]
-        })
-        const contributions_el = (
-            <TextArea rows={4} name="contributions"></TextArea>
-        )
-
-        // greeting video
-        const greetingVideoLink_fn = getFieldDecorator('greetingVideoLink');
-        const greetingVideoLink_el = (
-            <Input size="large"/>
+                        removeAttachment: false
+                    });
+                })
+            }
+        };
+        const attachment_el = (
+            <Upload name="attachment" {...p_attachment}>
+                {
+                    this.state.attachment_url ? (
+                        <a target="_blank" href={this.state.attachment_url}>
+                            {this.state.attachment_type === 'application/pdf' ?
+                                <Icon type="file-pdf"/> :
+                                <Icon type="file"/>
+                            } &nbsp;
+                            {this.state.attachment_filename}
+                        </a>
+                    ) : (
+                        <Button loading={this.state.attachment_loading}>
+                            <Icon type="upload" /> Click to upload
+                        </Button>
+                    )
+                }
+            </Upload>
         );
-
 
         return {
             readRules: readRules_fn(readRules_el),
 
             fullLegalName: fullLegalName_fn(fullLegalName_el),
 
-            roleInElastos: roleInElastos_fn(roleInElastos_el),
-            community: community_fn(community_el),
-
-            dob: dob_fn(dob_el),
-
-            contactWith: contactWith_fn(contactWith_el),
-            contributions: contributions_fn(contributions_el),
-
-            greetingVideoLink: greetingVideoLink_fn(greetingVideoLink_el)
+            attachment: attachment_fn(attachment_el)
         }
     }
 
@@ -185,7 +171,7 @@ class C extends BaseComponent {
         const formItemLayout = {
             labelCol: {
                 xs: {span: 24},
-                sm: {span: 8},
+                sm: {span: 6},
             },
             wrapperCol: {
                 xs: {span: 24},
@@ -196,7 +182,7 @@ class C extends BaseComponent {
         const formItemNoLabelLayout = {
             wrapperCol: {
                 xs: {span: 24},
-                sm: {offset: 8, span: 12},
+                sm: {offset: 6, span: 12},
             },
         }
 
@@ -223,32 +209,81 @@ class C extends BaseComponent {
                     <div>
                         <Divider>Details and Rules</Divider>
                         <Row>
-                            <Col offset={8} span={12} className="left-align">
-                                Selected applicants will be contacted directly by email.
-                                <h5>This application does not guarantee an invitation.</h5>
+                            <Col offset={6} span={12} className="left-align">
+
+                                <h5 style={{color: '#47aaa7'}}>
+                                    If you did not receive an invitation to fill out this form directly via email,<br/>
+                                    you are not on the invitiation list and please do not apply.
+                                </h5>
+
+                                <Row>
+                                    <Col span={6}>
+                                        <h4>Location:</h4>
+                                    </Col>
+                                    <Col span={12}>
+                                        Shangri-La Hotel, Chiang Mai, Thailand
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col span={6}>
+                                        <h4>Event Dates:</h4>
+                                    </Col>
+                                    <Col>
+                                        Aug 24 - 27, 2018
+                                    </Col>
+                                </Row>
+
                                 <br/>
-                                <span style={{fontWeight: 600}}>If you are selected you are required to do the following:</span><br/>
-                                - Book your own flight, you will be compensated in ELA and a receipt will be required<br/>
+
+                                <h5>Dear Community Member,</h5>
+
+                                <p>
+                                    Elastos is hosting a One Year Anniversary Event in Thailand and you are invited as a selected
+                                    community member. While you are responsible for paying for your own airfare, <u>you will receive an
+                                    reimbursement in ELA equal to the cost of airfare for coming and will be provided hotel accommodations.</u>
+                                </p>
+
+                                <h4>Itinerary</h4>
+
+                                <ul style={{textAlign: 'left', marginLeft: '5%'}}>
+                                    <li>8/24: Arrival in Chiang Mai</li>
+                                    <li>8/25: Anniversary Conference</li>
+                                    <li>8/26: Tour of Chiang Mai</li>
+                                    <li>8/27: Return Home</li>
+                                </ul>
+
+                                <p>
+                                    We look forward to hosting our team and selected community members to celebrate our first year and to
+                                    look forward to many more to come. We value our community with a passion and would love to see you
+                                    attend and celebrate Elastos in style.
+                                </p>
+
+                                <br/>
+                                <span style={{fontWeight: 600}}>
+                                    You are required to do the following:
+                                </span><br/>
+                                - Book your own flight, you will be compensated in ELA and a receipt will be required.<br/>
                                 - Hotels will be provided by us and reserved under the name provided on this form<br/>
-                                - The name and date of birth provided must match your passport<br/>
-                                - Hotel name and address will be provided to selected applicants by email<br/>
                                 <br/>
                                 <span style={{fontWeight: 600}}>Rules:</span><br/>
-                                - Flight must be an economy class fare at a reasonable cost<br/>
-                                - ELA exchange rate is determined at time of 12pm local time in Thailand on the day of reimbursement the day of the event<br/>
+                                - Flight must be a round-trip economy class flight at a reasonable cost<br/>
+                                - ELA exchange rate is determined at time of 12pm local time in Thailand on the day of 25th August, 2018<br/>
                                 - You must arrive in Chiang Mai by August 24, the official event is on the 25th<br/>
                                 - You are responsible for your own Visa requirements based on your nationality<br/>
-                                - You must not represent yourself as an employee of Elastos, your purpose of travel to Thailand must be for tourism only<br/>
+                                <u>- You must not represent yourself as an employee of Elastos, your purpose of travel to Thailand must be for tourism only</u><br/>
                                 - If for whatever reason - except medical emergencies with proof - you will not receive reimbursement if you do not attend the event
                             </Col>
                         </Row>
+
+                        <br/>
+
                         <FormItem {...formItemNoLabelLayout}>
                             {p.readRules} <b>I have read and agree to the rules <span style={{color: 'red'}}>*</span> </b>
                         </FormItem>
 
                         <Divider>Application</Divider>
                         <Row>
-                            <Col span={8} className="right-align static-field">
+                            <Col span={6} className="right-align static-field">
                                 Email:
                             </Col>
                             <Col span={12} className="static-field content">
@@ -258,39 +293,8 @@ class C extends BaseComponent {
                         <FormItem label="Full Legal Name" {...formItemLayout}>
                             {p.fullLegalName}
                         </FormItem>
-                        <FormItem label="Date of Birth" {...formItemLayout}>
-                            {p.dob}
-                        </FormItem>
-                        <Row>
-                            <Col offset="8" span="12" className="content">
-                                Are you an organizer, writer, media contributor etc...
-                            </Col>
-                        </Row>
-                        <FormItem label="Role in Community" {...formItemLayout}>
-                            {p.roleInElastos}
-                        </FormItem>
-                        <FormItem label="Community"  {...formItemLayout}>
-                            {p.community}
-                        </FormItem>
 
                         <Divider></Divider>
-                        <Row>
-                            <Col offset="8" span="12">
-                                Please list your contributions and involvement with the Elastos community <span style={{color: 'red'}}>*</span>
-                            </Col>
-                        </Row>
-                        <FormItem {...formItemNoLabelLayout}>
-                            {p.contributions}
-                        </FormItem>
-
-                        <Row>
-                            <Col offset="8" span="12">
-                                Which Elastos full-time members do you know and can vouch for you?
-                            </Col>
-                        </Row>
-                        <FormItem {...formItemNoLabelLayout}>
-                            {p.contactWith}
-                        </FormItem>
 
                         {this.props.user.profile.walletAddress ?
                             <div>
@@ -300,7 +304,7 @@ class C extends BaseComponent {
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Col span={8} className="right-align static-field">
+                                    <Col span={6} className="right-align static-field">
                                         ELA Address:
                                     </Col>
                                     <Col span={12} className="static-field content">
@@ -309,7 +313,7 @@ class C extends BaseComponent {
                                 </Row>
                             </div> :
                             <Row>
-                                <Col offset={8} className="static-field content">
+                                <Col offset={6} className="static-field content">
                                     You have not entered a wallet address<br/>
                                     <Button id="btn_wallet_address" type="danger" onClick={() => this.props.history.push('/profile/info')}>Click here to edit this in your profile</Button>
                                 </Col>
@@ -317,12 +321,11 @@ class C extends BaseComponent {
                         }
 
                         <Divider>
-                            Bonus Points: Please submit a link to a greeting video introducing yourself,<br/>
-                            where you're from and wishing Elastos a happy anniversary
+                            Please upload your airfare receipt, this is<br/>required for confirmation and reimbursement
                         </Divider>
 
-                        <FormItem label="Greeting Video" {...formItemLayout}>
-                            {p.greetingVideoLink}
+                        <FormItem label="Airfare Receipt" {...formItemLayout}>
+                            {p.attachment} <span style={{color: 'red'}}>*</span> required
                         </FormItem>
 
 
@@ -335,7 +338,7 @@ class C extends BaseComponent {
                         </FormItem>
 
                         <Row>
-                            <Col offset={8} className="static-field content">
+                            <Col offset={6} className="static-field content">
                                 Please contact <a href="mailto:support@elastos.org">support@elastos.org</a> if you have any issues.
                             </Col>
                         </Row>

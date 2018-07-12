@@ -28,8 +28,7 @@ export const Submission = {
         required : true
     },
     description : {
-        type : String,
-        required : true
+        type : String
     },
 
     email: String,

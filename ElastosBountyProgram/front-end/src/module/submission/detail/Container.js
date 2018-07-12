@@ -6,6 +6,7 @@ import { message } from 'antd/lib/index'
 export default createContainer(Component, (state) => {
     return {
         userId: state.user.current_user_id,
+        walletAddress: state.user.profile.walletAddress,
         is_login: state.user.is_login
     }
 }, () => {
