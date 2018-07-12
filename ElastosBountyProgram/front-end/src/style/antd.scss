@@ -63,20 +63,16 @@
   }
 
   &.ant-menu-item-selected {
-
-    color: $cr_dark_color;
+    background-color: $cr_light_color;
+    color: white;
     font-weight: 500;
 
     > a {
       font-weight: 500;
-      color: $cr_dark_color;
+      color: white;
 
       outline-color: $cr_color;
       border-color: $cr_color;
-
-      &::before {
-        background-color: $cr_light_color;
-      }
     }
 
     &::after {
