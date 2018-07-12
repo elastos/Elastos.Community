@@ -403,7 +403,7 @@ export default class extends BaseComponent {
                                 if (this.props.page === 'PUBLIC' && candidateIsUserOrTeam) {
                                     if (this.state.isDeveloperEvent) {
                                         listItemActions.unshift(
-                                            <Tooltip title="remove self">
+                                            <Tooltip title="Withdraw application">
                                                 <a onClick={this.removeApplication.bind(this, candidate._id)}>x</a>
                                             </Tooltip>
                                         )
@@ -412,9 +412,9 @@ export default class extends BaseComponent {
                                         // non developer events should confirm
                                         if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
                                             listItemActions.unshift(
-                                                <Tooltip title="remove self">
+                                                <Tooltip title="Withdraw application">
                                                     <Popconfirm
-                                                        title="Are you sure you want to remove your application?"
+                                                        title="Are you sure you want to withdraw your application?"
                                                         onConfirm={this.removeApplication.bind(this, candidate._id)}
                                                         placement="left"
                                                         okText="Yes"
@@ -427,7 +427,7 @@ export default class extends BaseComponent {
                                             listItemActions.unshift(
                                                 <Tooltip title="remove team">
                                                     <Popconfirm
-                                                        title="Are you sure you want to remove your team's application?"
+                                                        title="Are you sure you want to withdraw your team's application?"
                                                         onConfirm={this.removeApplication.bind(this, candidate._id)}
                                                         placement="left"
                                                         okText="Yes"
@@ -443,19 +443,19 @@ export default class extends BaseComponent {
                                     // this should be the leader's view - they can approve applicants
                                     listItemActions.unshift(
                                         <Tooltip title={isTaskOwner ? (candidateIsUserOrTeam ? 'You are automatically accepted' : 'Candidate already accepted') : 'Accepted candidate'}>
-                                            <a>✓</a>
-                                        </Tooltip>)
-                                } else if (!isTaskOwner) {
-                                    // awaiting approval
-                                    listItemActions.unshift(
-                                        <Tooltip title="Awaiting organizer/owner approval">
-                                            <a>o</a>
+                                            <Icon type="check-circle"/>
                                         </Tooltip>)
                                 } else if (isLeader) {
                                     listItemActions.unshift(
                                         <Tooltip title="Accept application">
                                             <a onClick={this.showModalAcceptApplicant.bind(this, candidate)}>
                                                 <Icon type="check-circle-o" />
+                                            </a>
+                                        </Tooltip>)
+                                    listItemActions.unshift(
+                                        <Tooltip title="View application">
+                                            <a onClick={() => {this.props.history.push(`/profile/task-app/${this.props.task._id}/${candidate.user._id}`)}}>
+                                                <Icon type="info-circle-o"/>
                                             </a>
                                         </Tooltip>)
                                 }
@@ -476,22 +476,20 @@ export default class extends BaseComponent {
                                 let nonOwnerLink = ''
 
                                 let userOrTeamName = name
-                                if (candidateIsUserOrTeam) {
-                                    nonOwnerLink = `${userOrTeamName} (you)`
-                                } else {
-
-                                    nonOwnerLink = (candidate.type === TASK_CANDIDATE_TYPE.USER ?
-                                            <a onClick={() => {this.props.history.push(`/member/${candidate.user._id}`)}}>{userOrTeamName}</a> :
-                                            <a onClick={() => {this.props.history.push(`/team/${candidate.team._id}`)}}>{userOrTeamName}</a>
-                                    )
-                                }
+                                const selfIcon = candidateIsUserOrTeam
+                                    ?
+                                        (
+                                            <Icon type="user"/>
+                                        )
+                                    : null
 
                                 return <List.Item actions={listItemActions}>
-                                    {isLeader ?
-                                        <Tooltip title="View application">
-                                            <a href="#" onClick={() => {this.props.history.push(`/profile/task-app/${this.props.task._id}/${candidate.user._id}`)}}>{userOrTeamName}</a>
-                                        </Tooltip> : nonOwnerLink
-                                    }
+                                    <Tooltip title="View profile">
+                                        <a onClick={() => {this.props.history.push(`/member/${candidate.user._id}`)}}>
+                                            {selfIcon}
+                                            {userOrTeamName}
+                                        </a>
+                                    </Tooltip>
                                 </List.Item>
                             }}
                         /> : <span className="no-info">
