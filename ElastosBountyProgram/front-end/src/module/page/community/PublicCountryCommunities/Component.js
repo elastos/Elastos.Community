@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import StandardPage from '../../StandardPage';
 import { DEFAULT_IMAGE, USER_GENDER } from '@/constant'
 
-import { Table, Card, Select, Col, Row, Breadcrumb, Icon, Button, Input } from 'antd'
+import { Table, Card, Select, Spin, Col, Row, Breadcrumb, Icon, Button, Input } from 'antd'
 const Search = Input.Search;
 
 import config from '@/config'
@@ -54,11 +54,14 @@ export default class extends StandardPage {
             countryCommunities = await this.props.getSpecificCountryCommunities(this.props.currentUser.profile.country)
             countryCommunity = _.find(countryCommunities, {parentCommunityId: null})
 
-            this.setState({
-                countryGeolocation: countryCommunity.geolocation
-            })
+            if (countryCommunity) {
+                this.setState({
+                    countryGeolocation: countryCommunity.geolocation
+                })
+            }
+        }
 
-        } else {
+        if (!countryCommunity) {
             // fetch the country from the backend
             const cLoc = await new Promise((resolve, reject) => {
                 ipinfo((err, cLoc) => {
@@ -71,13 +74,14 @@ export default class extends StandardPage {
                 })
             })
 
-            this.setState({
-                countryGeolocation: cLoc.country.toLowerCase()
-            })
+            if (cLoc && cLoc.country) {
+                this.setState({
+                    countryGeolocation: cLoc.country.toLowerCase()
+                })
 
-            countryCommunities = await this.props.getSpecificCountryCommunities(this.state.countryGeolocation)
-            countryCommunity = _.find(countryCommunities, {parentCommunityId: null})
-
+                countryCommunities = await this.props.getSpecificCountryCommunities(this.state.countryGeolocation)
+                countryCommunity = _.find(countryCommunities, {parentCommunityId: null})
+            }
         }
 
         if (countryCommunity) {
@@ -235,6 +239,12 @@ export default class extends StandardPage {
     }
 
     ord_renderContent () {
+        if (_.isEmpty(this.state.countryGeolocation) && this.state.countryExists) {
+            return (
+                <Spin size="large" />
+            )
+        }
+
         // const listCommunitiesEl = this.renderListCommunities()
         const menuCountriesEl = this.renderBreadcrumbCountries()
 
@@ -265,7 +275,7 @@ export default class extends StandardPage {
                                     {!this.state.countryExists &&
                                     <div class="guide-container">
                                         <h4>
-                                            Hello there! Looks like your we don't have an organizer for&nbsp;
+                                            Hello there! Looks like your area we don't have an organizer for&nbsp;
                                             {config.data.mappingCountryCodeToName[this.state.countryGeolocation]}
                                         </h4>
 
