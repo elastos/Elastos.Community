@@ -1,6 +1,7 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
+import ModalAcceptApplicant from '../ModalAcceptApplicant/Component'
 
 import { Col, Row, Button, Spin, Divider, message, List, Icon, Tooltip, Popconfirm } from 'antd'
 
@@ -10,10 +11,21 @@ import Comments from '@/module/common/comments/Container'
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
 export default class extends BaseComponent {
-
     ord_states() {
+        let acceptedCnt = 0
+
+        if (this.props.task && _.isArray(this.props.task.candidates)) {
+            for (let candidate of this.props.task.candidates) {
+                if (candidate.status === TASK_CANDIDATE_STATUS.APPROVED) {
+                    acceptedCnt += 1
+                }
+            }
+        }
+
         return {
-            visibleModalMemberProfile: false,
+            visibleModalAcceptApplicant: false,
+            acceptedCnt,
+            selectedTaskCandidate: null,
             isDeveloperEvent: this.props.task.category === TASK_CATEGORY.DEVELOPER &&
                                 this.props.task.type === TASK_TYPE.EVENT,
             teamsOwned: []
@@ -157,8 +169,10 @@ export default class extends BaseComponent {
                                 if (this.props.page === 'PUBLIC' && candidateIsUserOrTeam) {
                                     if (this.state.isDeveloperEvent) {
                                         listItemActions.unshift(
-                                            <Tooltip title="remove self">
-                                                <a onClick={this.removeApplication.bind(this, candidate._id)}>x</a>
+                                            <Tooltip title="Withdraw application">
+                                                <a onClick={this.removeApplication.bind(this, candidate._id)}>
+                                                    <Icon type="close-circle-o"/>
+                                                </a>
                                             </Tooltip>
                                         )
                                     } else {
@@ -166,15 +180,15 @@ export default class extends BaseComponent {
                                         // non developer events should confirm
                                         if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
                                             listItemActions.unshift(
-                                                <Tooltip title="remove self">
+                                                <Tooltip title="Withdraw application">
                                                     <Popconfirm
-                                                        title="Are you sure you want to remove your application?"
+                                                        title="Are you sure you want to withdraw your application?"
                                                         onConfirm={this.removeApplication.bind(this, candidate._id)}
                                                         placement="left"
                                                         okText="Yes"
                                                         cancelText="No"
                                                     >
-                                                        <a href="#">x</a>
+                                                        <Icon type="close-circle-o"/>
                                                     </Popconfirm>
                                                 </Tooltip>)
                                         } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
@@ -187,7 +201,7 @@ export default class extends BaseComponent {
                                                         okText="Yes"
                                                         cancelText="No"
                                                     >
-                                                        <a href="#">x</a>
+                                                        <Icon type="close-circle-o"/>
                                                     </Popconfirm>
                                                 </Tooltip>)
                                         }
@@ -199,36 +213,40 @@ export default class extends BaseComponent {
                                         <Tooltip title={isTaskOwner ? (candidateIsUserOrTeam ? 'you are automatically accepted' : 'candidate already accepted') : 'accepted candidate'}>
                                             <a>✓</a>
                                         </Tooltip>)
-                                } else if (!isTaskOwner) {
-                                    // awaiting approval
+                                }
+
+                                if (isLeader) {
                                     listItemActions.unshift(
-                                        <Tooltip title="awaiting organizer/owner approval">
-                                            <a>o</a>
+                                        <Tooltip title="Accept application">
+                                            <a onClick={this.showModalAcceptApplicant.bind(this, candidate)}>
+                                                <Icon type="check-circle-o" />
+                                            </a>
+                                        </Tooltip>)
+                                    listItemActions.unshift(
+                                        <Tooltip title="View application">
+                                            <a onClick={() => {this.props.history.push(`/profile/task-app/${this.props.task._id}/${candidate.user._id}`)}}>
+                                                <Icon type="info-circle-o"/>
+                                            </a>
                                         </Tooltip>)
                                 }
 
-                                // TODO: link to dedicated profile/team page if it's yours
-                                let nonOwnerLink = ''
-
-                                let userOrTeamName = name
-                                if (candidateIsUserOrTeam) {
-                                    nonOwnerLink = `${userOrTeamName} (you)`
-                                } else {
-
-                                    nonOwnerLink = (candidate.type === TASK_CANDIDATE_TYPE.USER ?
-                                            <a onClick={() => {this.props.history.push(`/member/${candidate.user._id}`)}}>{userOrTeamName}</a> :
-                                            <a onClick={() => {this.props.history.push(`/team/${candidate.team._id}`)}}>{userOrTeamName}</a>
-                                    )
-                                }
+                                const userOrTeamName = name
+                                const selfIcon = candidateIsUserOrTeam
+                                    ?
+                                        (
+                                            <Icon type="user"/>
+                                        )
+                                    : null
 
                                 const isCurrent = candidate.id === applicant.id
                                 const currentClass = isCurrent ? 'active' : ''
                                 return <List.Item actions={listItemActions} className={currentClass}>
-                                    {isLeader ?
-                                        <Tooltip title="View application">
-                                            <a href="#" onClick={() => {!isCurrent && this.props.history.push(`/profile/task-app/${this.props.task._id}/${candidate.user._id}`)}}>{userOrTeamName}</a>
-                                        </Tooltip> : nonOwnerLink
-                                    }
+                                    <Tooltip title="View profile">
+                                        <a onClick={() => {this.props.history.push(`/member/${candidate.user._id}`)}}>
+                                            {selfIcon}
+                                            {userOrTeamName}
+                                        </a>
+                                    </Tooltip>
                                 </List.Item>
                             }}
                         /> : <span className="no-info">
@@ -238,6 +256,15 @@ export default class extends BaseComponent {
 
                     </Col>
                 </Row>
+                <ModalAcceptApplicant
+                    wrappedComponentRef={this.saveAcceptCandidateRef}
+                    acceptedCnt={this.state.acceptedCnt}
+                    acceptedMax={this.props.task.candidateSltLimit}
+                    taskCandidate={this.state.modalTaskCandidate}
+                    visible={this.state.visibleModalAcceptApplicant}
+                    onCancel={this.handleCancelModalAcceptApplicant}
+                    onCreate={this.handleModalAcceptApplicant}
+                />
             </div>
         )
     }
@@ -247,7 +274,37 @@ export default class extends BaseComponent {
         const res = await this.props.pullCandidate(taskId, tcId)
     }
 
+    showModalAcceptApplicant = (taskCandidate) => {
+        this.setState({
+            modalTaskCandidate: taskCandidate,
+            visibleModalAcceptApplicant: true
+        })
+    }
+
     saveAcceptCandidateRef = (ref) => {
         this.acceptCandidateRef = ref
+    }
+
+    handleCancelModalAcceptApplicant = () => {
+        this.setState({visibleModalAcceptApplicant: false})
+    }
+
+    handleModalAcceptApplicant = () => {
+        // this is the candidate we are accepting
+        const taskCandidateId = this.state.modalTaskCandidate._id
+        this.handleCancelModalAcceptApplicant()
+
+        this.props.acceptCandidate(taskCandidateId).then((result) => {
+            message.success('Applicant has been accepted and contacted')
+
+            let acceptedCnt = this.state.acceptedCnt
+
+            acceptedCnt += 1
+
+            this.setState({acceptedCnt})
+
+        }).catch((err) => {
+            message.error(err.message, 10)
+        })
     }
 }

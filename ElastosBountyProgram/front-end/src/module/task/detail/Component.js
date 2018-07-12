@@ -400,11 +400,13 @@ export default class extends BaseComponent {
                                 // after approval the user cannot rescind their application
 
                                 // if the candidate is the logged in user, show remove icon
-                                if (this.props.page === 'PUBLIC' && candidateIsUserOrTeam) {
+                                if (candidateIsUserOrTeam) {
                                     if (this.state.isDeveloperEvent) {
                                         listItemActions.unshift(
                                             <Tooltip title="Withdraw application">
-                                                <a onClick={this.removeApplication.bind(this, candidate._id)}>x</a>
+                                                <a onClick={this.removeApplication.bind(this, candidate._id)}>
+                                                    <Icon type="close-circle-o"/>
+                                                </a>
                                             </Tooltip>
                                         )
                                     } else {
@@ -420,7 +422,7 @@ export default class extends BaseComponent {
                                                         okText="Yes"
                                                         cancelText="No"
                                                     >
-                                                        <a href="#">x</a>
+                                                        <Icon type="close-circle-o"/>
                                                     </Popconfirm>
                                                 </Tooltip>)
                                         } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
@@ -433,7 +435,7 @@ export default class extends BaseComponent {
                                                         okText="Yes"
                                                         cancelText="No"
                                                     >
-                                                        <a href="#">x</a>
+                                                        <Icon type="close-circle-o"/>
                                                     </Popconfirm>
                                                 </Tooltip>)
                                         }
@@ -445,7 +447,9 @@ export default class extends BaseComponent {
                                         <Tooltip title={isTaskOwner ? (candidateIsUserOrTeam ? 'You are automatically accepted' : 'Candidate already accepted') : 'Accepted candidate'}>
                                             <Icon type="check-circle"/>
                                         </Tooltip>)
-                                } else if (isLeader) {
+                                }
+
+                                if (isLeader) {
                                     listItemActions.unshift(
                                         <Tooltip title="Accept application">
                                             <a onClick={this.showModalAcceptApplicant.bind(this, candidate)}>
@@ -472,10 +476,7 @@ export default class extends BaseComponent {
                                     )
                                 }
 
-                                // TODO: link to dedicated profile/team page if it's yours
-                                let nonOwnerLink = ''
-
-                                let userOrTeamName = name
+                                const userOrTeamName = name
                                 const selfIcon = candidateIsUserOrTeam
                                     ?
                                         (
