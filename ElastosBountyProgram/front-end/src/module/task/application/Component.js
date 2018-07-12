@@ -267,7 +267,9 @@ export default class extends BaseComponent {
     async removeApplication(tcId) {
         const taskId = this.props.task._id
         this.props.pullCandidate(taskId, tcId).then(() => {
-            this.props.history.push(`/profile/task-detail/${this.props.task._id}`)
+            const prefix = this.props.page === 'LEADER'
+                ? '/profile' : ''
+            this.props.history.push(`${prefix}/task-detail/${this.props.task._id}`)
         })
     }
 
