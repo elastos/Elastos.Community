@@ -4,254 +4,118 @@ import _ from 'lodash'
 
 import './style.scss'
 
-import { Col, Row, List, Button } from 'antd'
+import { Col, Row, Icon, Button, Carousel } from 'antd'
 import Footer from '@/module/layout/Footer/Container'
 import moment from 'moment/moment'
 
 export default class extends StandardPage {
 
     componentDidMount() {
-        this.props.getTasks()
+        // this.props.getTasks()
     }
 
     componentWillUnmount() {
-        this.props.resetTasks()
-    }
-
-    getCoreTenets() {
-        return [
-            'Organizers are decided by a transparent voting system',
-            'Voting power (EVP) is only earned through participation',
-            'Elastos can only veto tasks and define the ELA rewards'
-        ]
+        // this.props.resetTasks()
     }
 
     ord_renderContent(){
 
         const backdropStyle = {
-            backgroundPosition: '0 50%',
-            backgroundImage: `url('/assets/images/HomeHeader.jpg')`
-        }
-
-        const renderEventRow = (task, rowIndex) => {
-
-            switch (rowIndex) {
-                case 0:
-                    // Task Name
-                    return <Col key={task._id} md={{span:12}} lg={{span: 8}}>
-                        <div class="i_event">
-                            <h4 onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}>
-                                {task.name}
-                            </h4>
-                        </div>
-                    </Col>
-
-                case 1:
-                    // Date + Thumb
-                    return <Col key={task._id} md={{span:12}} lg={{span: 8}}>
-                        <div class="i_event">
-                            <p className="event-date">
-                                {moment(task.date).format('MMM D, YYYY')}
-                            </p>
-                            {task.thumbnail && <img src={task.thumbnail}/>}
-                        </div>
-                    </Col>
-
-                case 2:
-                    // Desc
-                    return <Col key={task._id} md={{span:12}} lg={{span: 8}}>
-                        <div class="i_event desc">
-                            <p>
-                                {_.truncate(task.description, {length: 100})}
-
-                                {task.description.length > 100 &&
-                                <a className="moreDetails" onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}> more details</a>
-                                }
-                            </p>
-                        </div>
-                    </Col>
-
-            }
-
+            backgroundPosition: '50% 50%',
+            backgroundImage: `url('/assets/images/cr_banner.png')`
         }
 
         return (
-            <div className="c_Home">
+            <Row className="c_Home">
                 <div className="d_topBackdrop" style={backdropStyle}>
                     <div className="d_topBackdrop_title">
                         Elastos - Cyber Republic
                     </div>
                 </div>
-                <div className="horizGap">
-
-                </div>
-                <Row className="d_rowPrograms">
-                    <Col span={12}>
-                        <a href="/developer">
-                            <img src="/assets/images/Home_Developers.png" />
-                            <h3>
-                                Developer
-                            </h3>
-                        </a>
-                    </Col>
-                    <Col span={12} className="d_colProgram_middle">
-                        <a href="/social">
-                            <img src="/assets/images/Home_Social.png" />
-                            <h3>
-                                Community
-                            </h3>
-                        </a>
-                    </Col>
-                </Row>
-                <Row className="d_rowPrograms subtitle">
-                    <Col span={12}>
+                <div className="horizGap"/>
+                <Row className="d_rowHome">
+                    <Col span={16} className="d_developer">
+                        <h3>
+                            Developers
+                        </h3>
                         <h4>
                             Write code, find bugs, earn ELA
                         </h4>
+
+                        <p>
+                            Earn ELA for contributing to the Elastos ecosystem through
+                            everything <br/>from example apps to enterprise dApp development.
+                            <br/>
+                            <br/>
+                            You can also earn ELA for finding bugs and submitting issues.
+                        </p>
+
+                        <div>
+                            <Button onClick={() => this.props.history.push('/developer')}>Yes I am interested in Developing for Elastos</Button>
+                            {/* <Button onClick={this.notDeveloper.bind(this)}>No I am not a developer</Button> */}
+                        </div>
+
+                        <br/>
+                        <br/>
+                        <br/>
                     </Col>
-                    <Col span={12} className="d_colProgram_middle">
+                    <Col span={6} style={{textAlign: 'left'}}>
+                        <Icon type="api" className="icon-home"/>
+                    </Col>
+                </Row>
+
+                <div className="horizGap"/>
+
+                <Row className="d_rowHome white" style={{backgroundColor: '#364d79'}}>
+                    <div className="horizGap"/>
+                    <Col span={10} style={{textAlign: 'right'}}>
+                        <Icon type="share-alt" className="icon-home"/>
+                    </Col>
+                    <Col span={12} className="d_organizer">
+                        <h3>
+                            Organizers & Contributors
+                        </h3>
                         <h4>
                             Help organize meetups and promote Elastos
                         </h4>
-                    </Col>
-                </Row>
-                <Row className="d_rowPrograms">
-                    <Col span={12}>
+
                         <p>
-                            Earn ELA for contributing to the Elastos ecosystem through
-                            everything from example apps to enterprise dApp development.
-                            You can also earn ELA for finding bugs and submitting issues.
-                        </p>
-                    </Col>
-                    <Col span={12} className="d_colProgram_middle">
-                        <p>
-                            Whether you're already part of the community or want to join,
+                            Whether you're already part of the community or want to join,<br/>
                             we reward you for various things you do to promote Elastos
                             either online, locally or worldwide.
-                        </p>
-                    </Col>
-                </Row>
-                <div className="horizGap"/>
-                {/*
-                <Row className="d_rowPrograms last">
-                    <Col span={12}>
-                        <Button onClick={() => {this.props.history.push('/developer')}}>
-                            View Available Tasks
-                        </Button>
-                        <Button onClick={() => {this.props.history.push('/profile/developer')}}>
-                            Register as a Developer
-                        </Button>
-                    </Col>
-                    <Col span={12} className="d_colProgram_middle">
-                        <Button onClick={() => {this.props.history.push('/community')}}>
-                            Find Your Community
-                        </Button>
-                        <Button onClick={() => {this.props.history.push('/profile/organizer')}}>
-                            Apply to be an Organizer
-                        </Button>
-                    </Col>
-                </Row>
-                */}
-                <div className="horizGap d_rowGrey"/>
-                <div className="d_rowNews d_rowGrey">
-                    <h1>
-                        Our Mandate
-                    </h1>
-
-                    <div className="d_mission">
-                        <p>
-                            We are a diverse democratic group of leaders, developers, organizers and designers formed
-                            to promote Elastos in our communities. Membership is open to everyone.
+                            <br/>
+                            <br/>
+                            You can also earn ELA for referring potential contributors.
                         </p>
 
-                        <h3>Core Tenets</h3>
+                        <Button onClick={() => this.props.history.push('/community')}>Apply to be an Organizer</Button>
+                        <Button  onClick={() => this.props.history.push('/social')}>View Events & Tasks I can contribute to</Button>
 
-                        <List
-                            itemLayout="horizontal"
-                            dataSource={this.getCoreTenets()}
-                            className="d_tenets"
-                            renderItem={item => (
-                                <List.Item>
-                                    {item}
-                                </List.Item>
-                            )}
-                        />
                         <br/>
-                    </div>
-                </div>
-                <div className="horizGap d_rowGrey"/>
-                <div className="d_rowEvents">
-                    <Row>
-                        <Col md={{span:24}} lg={{span: 12}} className="d_colTasks">
-                            <h3>
-                                Featured Developer Bounties
-                            </h3>
-
-                            <Row>
-                                {this.props.dev_tasks.map((task) => {
-                                    return <Col key={task._id} md={{span:24}} lg={{span: 8}}>
-                                        <div className="i_event">
-                                            <h4 onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}>
-                                                {task.name}
-                                            </h4>
-                                        </div>
-                                        <div className="i_event">
-                                            <p className="event-date">
-                                                {moment(task.createdAt).format('MMM D, YYYY')}
-                                            </p>
-                                            {false && task.thumbnail && <img src={task.thumbnail}/>}
-                                        </div>
-                                        <div className="i_event desc">
-                                            <p>
-                                                {_.truncate(task.description, {length: 100})}
-
-                                                {task.description.length > 100 &&
-                                                <a className="moreDetails" onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}> more details</a>
-                                                }
-                                            </p>
-                                        </div>
-                                    </Col>
-                                })}
-                            </Row>
-                        </Col>
-                        <Col md={{span:24}} lg={{span: 12}} className="d_colEvents">
-                            <h3>
-                                Featured Events
-                            </h3>
-
-                            <Row>
-                                {this.props.social_tasks.map((task) => {
-                                    return <Col key={task._id} md={{span:24}} lg={{span: 8}}>
-                                        <div className="i_event">
-                                            <h4 onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}>
-                                                {task.name}
-                                            </h4>
-                                        </div>
-                                        <div className="i_event">
-                                            <p className="event-date">
-                                                {moment(task.createdAt).format('MMM D, YYYY')}
-                                            </p>
-                                            {false && task.thumbnail && <img src={task.thumbnail}/>}
-                                        </div>
-                                        <div className="i_event desc">
-                                            <p>
-                                                {_.truncate(task.description, {length: 100})}
-
-                                                {task.description.length > 100 &&
-                                                <a className="moreDetails" onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}> more details</a>
-                                                }
-                                            </p>
-                                        </div>
-                                    </Col>
-                                })}
-                            </Row>
-                        </Col>
-                    </Row>
-                </div>
+                        <br/>
+                        <br/>
+                    </Col>
+                    <div className="horizGap"/>
+                </Row>
                 <div className="horizGap"/>
+
+                <div className="entryContainer">
+
+                    <div className="textContainer">
+                        We are a diverse democratic group of leaders, developers, organizers and designers<br/>
+                        formed to promote Elastos in our communities. Membership is open to everyone.
+                    </div>
+                    <div className="bar bar1"/>
+                    <div className="bar bar2"/>
+                </div>
 
                 <Footer />
-            </div>
+            </Row>
         );
+    }
+
+    notDeveloper() {
+        debugger
+        this.carousel.next()
     }
 }

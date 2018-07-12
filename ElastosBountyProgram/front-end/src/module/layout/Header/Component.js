@@ -76,7 +76,7 @@ export default class extends BaseComponent {
             <Header className="c_Header">
                 <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu" selectedKeys={['mail']} mode="horizontal">
                     <Menu.Item className="c_MenuItem logo" key="home">
-                        <img src='/assets/images/Elastos_Logo_Temp.png' />
+                        <img src='/assets/images/cr_seal_white.png' />
                     </Menu.Item>
                     {/*
                     <Menu.Item className="c_MenuItem overview">
@@ -123,11 +123,9 @@ export default class extends BaseComponent {
                     </Menu.Item>
                 </Menu>
                 <Menu onClick={this.clickItem.bind(this)} className="c_MenuTopRight" mode="horizontal">
-                    {/*
-                    <Menu.Item key="how-to-earn">
+                    <Menu.Item key="help">
                         {I18N.get('0007')}
                     </Menu.Item>
-                    */}
                     <Menu.Item key="about">
                         {I18N.get('0008')}
                     </Menu.Item>
@@ -167,6 +165,7 @@ export default class extends BaseComponent {
             'profile/info',
             'admin/tasks',
             'how-to-earn',
+            'help',
             'about',
             'faq',
             'contact',

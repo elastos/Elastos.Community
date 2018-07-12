@@ -2,67 +2,15 @@
 @import "../../../style/variable";
 @import "../../../style/color";
 
-@mixin homeContent {
-  max-width: $main_width;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.c_Home {
+.p_landingBg {
+  width: 100%;
+  height: 100vh;
 
   background-color: #ffffff;
 
-  .d_topBackdrop {
-    font-size: 44px;
-    font-weight: 500;
-    color: #fff;
+  background-image: url('/assets/images/cr_landing.png');
 
-    text-transform: uppercase;
-
-    padding-left: 24px;
-    padding-top: 36px;
-    text-align: center;
-
-    height: 130px;
-
-    > .d_topBackdrop_title {
-      @include homeContent;
-    }
-  }
-
-  .d_rowHome {
-
-      &.white {
-        .icon-home, p, h3, h4 {
-          color: white;
-        }
-      }
-
-      .icon-home {
-        color: #1C2437;
-        font-size: 250px;
-        margin-top: 25px;
-      }
-
-      p, h3, h4 {
-        color: #1C2437;
-      }
-
-      p {
-        font-weight: 200;
-      }
-
-      .d_developer {
-        height: 320px;
-        @include homeContent;
-
-      }
-
-      .d_organizer {
-        height: 320px;
-        @include homeContent;
-      }
-  }
+  background-position: 50% 50%;
 
   .entryContainer {
     margin-left: auto;
@@ -70,10 +18,9 @@
 
     display: block;
 
-    height: 100px;
-    margin-bottom: 100px;
+    padding-top: 65vh;
 
-    width: 1000px;
+    width: 600px;
 
     line-height: 200%;
 
@@ -87,14 +34,12 @@
       text-align: center;
 
       z-index: 1001;
-
-      font-size: 22px;
     }
 
     > .bar {
       position: absolute;
 
-      width: 930px;
+      width: 600px;
       height: 10px;
       background-color: rgba(38, 214, 170, 0.8);
 
@@ -107,7 +52,7 @@
         bottom: 1px;
         z-index: 2;
 
-        width: 910px;
+        width: 580px;
         margin-left: 10px;
       }
     }
@@ -147,6 +92,23 @@
       background-repeat: no-repeat;
 
       right: 175px;
+    }
+  }
+
+}
+
+@media only screen and (max-height: 900px) {
+  .p_landingBg {
+    > .entryContainer {
+      padding-top: 70vh;
+
+      > .continueContainer {
+        bottom: -18vh;
+      }
+
+      > .arrow {
+        bottom: -17.5vh;
+      }
     }
   }
 }

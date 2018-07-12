@@ -103,6 +103,8 @@
 
     padding: 8px 16px;
 
+    margin-right: 100px;
+
     > .ant-menu-item{
       padding: 0 16px;
       border-bottom: 0;
@@ -151,5 +153,11 @@
 
   .status {
     font-weight: 500;
+  }
+}
+
+@media only screen and (max-width: 1700px) {
+  .c_Header .c_MenuTopRight {
+    margin-right: 0;
   }
 }

@@ -1,3 +1,4 @@
+import LandingPage from '@/module/page/landing/Container'
 import HomePage from '@/module/page/home/Container'
 import SocialPage from '@/module/page/social/Container'
 import DeveloperPage from '@/module/page/developer/Container'
@@ -64,7 +65,7 @@ import NotFound from '@/module/page/error/NotFound'
 export default [
     {
         path: '/',
-        page: HomePage
+        page: LandingPage
     },
     {
         path: '/home',
