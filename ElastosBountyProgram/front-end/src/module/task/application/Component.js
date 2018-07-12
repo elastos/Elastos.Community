@@ -210,16 +210,19 @@ export default class extends BaseComponent {
                                         </Tooltip>)
                                 }
 
-                                if (isLeader) {
+                                if (isTaskOwner) {
                                     listItemActions.unshift(
                                         <Tooltip title="Accept application">
                                             <a onClick={this.showModalAcceptApplicant.bind(this, candidate)}>
                                                 <Icon type="check-circle-o" />
                                             </a>
                                         </Tooltip>)
+                                    const prefix = this.props.page === 'LEADER'
+                                        ? '/profile'
+                                        : ''
                                     listItemActions.unshift(
                                         <Tooltip title="View application">
-                                            <a onClick={() => {this.props.history.push(`/profile/task-app/${this.props.task._id}/${candidate.user._id}`)}}>
+                                            <a onClick={() => {this.props.history.push(`${prefix}/task-app/${this.props.task._id}/${candidate.user._id}`)}}>
                                                 <Icon type="info-circle-o"/>
                                             </a>
                                         </Tooltip>)
