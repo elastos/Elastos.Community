@@ -1,5 +1,6 @@
 
 @import "../../../../style/variable";
+@import "../../../../style/color";
 
 .p_help {
 
@@ -12,8 +13,8 @@
     margin-left: auto;
     margin-right: auto;
 
-    h4 {
-      margin-top: $gap_2;
+    h3 {
+      color: $cr_light_color;
     }
 
     p {

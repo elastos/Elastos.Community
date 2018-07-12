@@ -56,6 +56,7 @@
 }
 
 .ant-menu:not(.ant-menu-horizontal) {
+
   .ant-menu-item {
 
     &.ant-menu-item-active {
@@ -75,6 +76,11 @@
         outline-color: $cr_color;
         border-color: $cr_color;
       }
+      /*
+      &::before {
+        background-color: $bg_gray;
+      }
+      */
 
       &::after {
         border-color: $cr_color;
