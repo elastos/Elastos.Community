@@ -531,9 +531,7 @@ export default class extends StandardPage {
                                     </Row>
                                     {listOrganizers}
                                     <br/>
-                                    {this.props.current_user_id &&
-                                    <Button onClick={() => {this.props.history.push(`/form/organizer?communityId=${this.getMemberCommunityId()}`)}}>Apply to be an Organizer</Button>
-                                    }
+                                    <Button onClick={this.applyOrganizer.bind(this)}>Apply to be an Organizer</Button>
                                 </Col>
                                 <Col md={{span:24}} lg={{span: 6}}
                                      className="community-right-column">
@@ -606,5 +604,14 @@ export default class extends StandardPage {
                 <Footer />
             </div>
         )
+    }
+
+    applyOrganizer() {
+        if (this.current_user_id) {
+            this.props.history.push(`/form/organizer?communityId=${this.getMemberCommunityId()}`)
+        } else {
+            message.error('You must be logged in to apply')
+        }
+
     }
 }

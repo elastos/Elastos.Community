@@ -6,9 +6,12 @@ import './style.scss'
 import { Col, Row, Icon, Form, Input, Button, Modal, Select, Table, List, Tooltip, Breadcrumb, Card } from 'antd'
 import moment from 'moment/moment'
 
+import config from '@/config'
+
 export default class extends StandardPage {
 
     ord_renderContent () {
+
         return (
             <div className="p_FAQ">
                 <div className="ebp-header-divider">
@@ -35,12 +38,14 @@ export default class extends StandardPage {
                         </Col>
                         <Col>
                             <h4>
-                                How do I become an organizer?
+                                How do I create tasks/events or become an organizer?
                             </h4>
 
                             <p>
-                                In the future members of CyberRepublic will be able to vote for organizers, but for now the only way to become an organizer
-                                is to speak to an admin in our Slack channel and apply directly.
+                                Only organizers can create tasks/events, to become an organizer you must apply using the form found under each country in the <a href="/community">Community page</a>.
+                            </p>
+                            <p>
+                                We do accept more than one organizer per country/community, however your chances are lower if there is already one.
                             </p>
                         </Col>
                         <Col>
@@ -53,6 +58,19 @@ export default class extends StandardPage {
                             </p>
                             <p>
                                 Upon completion the reward is then paid, for larger tasks we will consider a partial payment of the reward upfront, please contact us directly.
+                            </p>
+                        </Col>
+                        <Col>
+                            <h4>
+                                What's the difference between a task's max applicants and max accepted
+                            </h4>
+
+                            <p>
+                                An organizer may set a maximum number of applicants, but not all applications need to be accepted.
+                            </p>
+                            <p>
+                                They also do not have to wait until the number of applications accepted reaches the "max accepted" number.<br/>
+                                At any time an organizer can <span style={{fontWeight: 600}}>force start</span> the task/event.
                             </p>
                         </Col>
                     </Row>

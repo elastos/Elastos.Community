@@ -15,6 +15,7 @@ import TaskApplicationPage from '@/module/page/task_application/Container'
 import LoginPage from '@/module/page/login/Container'
 import RegisterPage from '@/module/page/register/Container'
 
+import HelpPage from '@/module/page/static/help/Container'
 import FAQPage from '@/module/page/static/faq/Container'
 import AboutPage from '@/module/page/static/about/Container'
 import SlackPage from '@/module/page/static/slack/Container'
@@ -122,6 +123,10 @@ export default [
     {
         path: '/register',
         page: RegisterPage
+    },
+    {
+        path: '/help',
+        page: HelpPage
     },
     {
         path: '/faq',

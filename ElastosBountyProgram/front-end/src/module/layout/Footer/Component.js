@@ -33,19 +33,11 @@ export default class extends BaseComponent {
                             */}
                         </Col>
                         <Col md={{span:24}} lg={{span: 8}}>
-                            <div className="d_footerSection">
-                                <h2>Contact Us</h2>
 
-                                <b>Email</b>
-
-                                <p>
-                                    <a href="mailto:community@elastos.org">community@elastos.org</a>
-                                </p>
-                            </div>
                         </Col>
                         <Col md={{span:24}} lg={{span: 8}}>
                             <div className="d_footerSection">
-                                <h2>Support</h2>
+                                <h4>Support</h4>
 
                                 <p>
                                     If you're a developer and are running into issues
