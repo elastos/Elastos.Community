@@ -38,7 +38,7 @@ export default createContainer(Component, (state) => {
                 taskState.subscribed_tasks.push(task)
             }
 
-            if (task.createdBy._id === currentUserId) {
+            if (task.createdBy && task.createdBy._id === currentUserId) {
                 taskState.owned_tasks.push(task)
             } else {
                 // assumed to be candidate, a task can have multiple candidates

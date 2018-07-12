@@ -4,9 +4,9 @@
 
 .c_ProfileContainer {
   .applicants {
-    .ant-list-item:not(.active) {
+    .ant-list-item.active {
       a {
-        color: $text_light_gray;
+        color: $primary_dark_color;
       }
     }
   }
@@ -33,6 +33,10 @@
 
   p {
     white-space: pre-line;
+  }
+
+  .ant-badge {
+    color: $primary_color;
   }
 
   .public {

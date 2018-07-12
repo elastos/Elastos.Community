@@ -13,15 +13,13 @@ class C extends BaseComponent {
         const taskId = this.props.match.params.taskId
         const submissionId = this.props.match.params.submissionId
 
-        switch (this.props.type) {
+        switch (this.props.reduxType) {
             case 'task':
                 this.props.getTaskDetail(taskId)
                 break
             case 'sumbission':
                 this.props.getSubmissionDetail(submissionId)
                 break
-            case 'taskCandidate':
-                this.props.getTaskDetail(taskId)
             default:
                 // do nothing
                 break
@@ -29,15 +27,13 @@ class C extends BaseComponent {
     }
 
     componentWillUnmount() {
-        switch (this.props.type) {
+        switch (this.props.reduxType) {
             case 'task':
                 this.props.resetTaskDetail()
                 break
             case 'sumbission':
                 this.props.resetSubmissionDetail()
                 break
-            case 'taskCandidate':
-                this.props.resetTaskDetail()
             default:
                 // do nothing
                 break
@@ -140,7 +136,7 @@ class C extends BaseComponent {
         let curDetail = this.props[this.props.reduxType || this.props.type]
 
         if (this.props.detailReducer) {
-            curDetail = this.props.detailReducer(curDetail)
+            curDetail = this.props.detailReducer(curDetail) || {}
         }
 
         const comments = curDetail.comments || []

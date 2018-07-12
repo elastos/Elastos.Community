@@ -42,11 +42,16 @@ export default class extends BaseService {
     }
 
     async getAll(qry) {
+        const communityRedux = this.store.getRedux('community')
+        this.dispatch(communityRedux.actions.loading_update(true))
+
         const result = await api_request({
             path: '/api/community/all',
             method: 'get',
             data: qry
         })
+
+        this.dispatch(communityRedux.actions.loading_update(false))
 
         return result
     }
