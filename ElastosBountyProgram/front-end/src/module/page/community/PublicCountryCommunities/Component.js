@@ -252,8 +252,8 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page-desc d_rowGrey">
                     <p>
-                        We are always looking for new organizers especially in new communities.
-                        If your community is not listed, you can register it.
+                        We are always looking for new organizers, especially in new communities.
+                        If you'd like to be an organizer for your region please register.
                     </p>
                 </div>
                 {_.isEmpty(this.state.countryGeolocation) && this.state.countryExists
