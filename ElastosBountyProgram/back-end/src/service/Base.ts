@@ -24,6 +24,10 @@ export default class Base {
     }
 
     protected async markLastSeenComment(commentable, createdBy, db_commentable) {
+        if (!this.currentUser) {
+            return
+        }
+
         if (commentable.comments && commentable.comments.length) {
             const subscriberInfo = _.find(commentable.subscribers, (subscriber) => {
                 return subscriber.user && subscriber.user._id.toString() === this.currentUser._id.toString()
