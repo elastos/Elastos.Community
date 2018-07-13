@@ -554,7 +554,7 @@ export default class extends BaseComponent {
 
         let buttonText = ''
         const appliedAlready = _.find(this.props.task.candidates, (candidate) => {
-            return candidate.user._id === this.props.userId
+            return candidiate && candidaite.user && candidate.user._id === this.props.userId
         })
 
         if (!appliedAlready) {
