@@ -305,12 +305,12 @@ export default class extends StandardPage {
         const communityId = this.getMemberCommunityId()
 
         this.props.addMember(this.props.current_user_id, communityId).then(() => {
-            message.success('You were added to community')
+            message.success('You were added to the community')
 
             this.loadCommunityMembers()
         }).catch((err) => {
             console.error(err)
-            message.error('Error while adding you to community')
+            message.error('Error while adding you to the community')
         })
     }
 
