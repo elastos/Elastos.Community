@@ -15,7 +15,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page-title">
                     <h3>
-                        Elastos 2018 Anniversary Event Application
+                        Elastos 2018 Anniversary Event Registration
                     </h3>
                 </div>
                 <div className="ebp-page">

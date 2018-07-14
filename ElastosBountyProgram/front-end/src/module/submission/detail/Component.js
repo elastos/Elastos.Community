@@ -14,6 +14,19 @@ import detailAnni2008 from './anniversary_2018'
 
 export default class extends BaseComponent {
 
+    constructor (props) {
+        super(props)
+
+        this.state = {
+            attachment_url: this.props.submission.attachment,
+            attachment_loading: false,
+            attachment_filename: this.props.submission.attachmentFilename,
+            attachment_type: this.props.submission.attachmentType,
+
+            removeAttachment: false
+        }
+    }
+
     // special layout for external forms
     renderFormExt() {
         return <div>

@@ -44,11 +44,6 @@ class C extends BaseComponent {
                     return
                 }
 
-                if (!this.state.attachment_url) {
-                    message.error('You must upload a flight receipt to confirm your attendance')
-                    return
-                }
-
                 this.props.submitForm(values, this.state);
             }
         })
@@ -60,9 +55,9 @@ class C extends BaseComponent {
         this.state = {
             community: null,
 
-            attachment_url: (props.existingTask && props.existingTask.attachment) || null,
+            attachment_url: null,
             attachment_loading: false,
-            attachment_filename: (props.existingTask && props.existingTask.attachmentFilename) || '',
+            attachment_filename: '',
             attachment_type: '',
 
             removeAttachment: false
@@ -232,6 +227,14 @@ class C extends BaseComponent {
                                         Aug 24 - 27, 2018
                                     </Col>
                                 </Row>
+                                <Row>
+                                    <Col span={6}>
+                                        <h4>Registration Deadline:</h4>
+                                    </Col>
+                                    <Col>
+                                        <b>July 16, 2018</b>
+                                    </Col>
+                                </Row>
 
                                 <br/>
 
@@ -249,7 +252,7 @@ class C extends BaseComponent {
                                     <li>8/24: Arrival in Chiang Mai</li>
                                     <li>8/25: Anniversary Conference</li>
                                     <li>8/26: Tour of Chiang Mai</li>
-                                    <li>8/27: Return Home</li>
+                                    <li>8/27: Check Out</li>
                                 </ul>
 
                                 <p>
@@ -299,7 +302,7 @@ class C extends BaseComponent {
                         {this.props.user.profile.walletAddress ?
                             <div>
                                 <Row>
-                                    <Col offset="8" span="12">
+                                    <Col offset="6" span="12">
                                         Please ensure this is your wallet address, this is managed under your profile
                                     </Col>
                                 </Row>
@@ -321,17 +324,28 @@ class C extends BaseComponent {
                         }
 
                         <Divider>
-                            Please upload your airfare receipt, this is<br/>required for confirmation and reimbursement
+                            Upload Your Airfare Receipt
                         </Divider>
 
-                        <FormItem label="Airfare Receipt" {...formItemLayout}>
-                            {p.attachment} <span style={{color: 'red'}}>*</span> required
+
+                        <Row>
+                            <Col offset={6} span={12} className="left-align">
+                                If you do not upload it now you will need to visit your<br/>
+                                <b>Profile / Submissions Page</b><br/>
+                                <br/>
+                                There you can view your submission and upload the receipt at a later time.<br/>
+                                <br/>
+                            </Col>
+                        </Row>
+                        <FormItem {...formItemNoLabelLayout}>
+                            {p.attachment}
                         </FormItem>
 
 
                         <Divider/>
 
-                        <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
+
+                        <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 6}}}>
                             <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
                                 Submit
                             </Button>
@@ -339,7 +353,7 @@ class C extends BaseComponent {
 
                         <Row>
                             <Col offset={6} className="static-field content">
-                                Please contact <a href="mailto:support@elastos.org">support@elastos.org</a> if you have any issues.
+                                Please contact <a href="mailto:cyberrepublic@elastos.org">cyberrepublic@elastos.org</a> if you have any issues.
                             </Col>
                         </Row>
                     </div>
