@@ -228,7 +228,7 @@ class C extends BaseComponent {
                                 {this.props.user.email}
                             </Col>
                         </Row>
-                        <FormItem label="Full Legal Name" {...formItemLayout}>
+                        <FormItem label="Full Name" {...formItemLayout}>
                             {p.fullLegalName}
                         </FormItem>
                         <FormItem label="Location" {...formItemLayout}>
