@@ -11,6 +11,7 @@ const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 import '../style.scss'
 
 import detailAnni2008 from './anniversary_2018'
+import detailAnniVideo2008 from './anniversary_video_2018'
 
 export default class extends BaseComponent {
 
@@ -274,6 +275,9 @@ export default class extends BaseComponent {
 
                 case SUBMISSION_CAMPAIGN.ANNI_2008:
                     return detailAnni2008.call(this)
+
+                case SUBMISSION_CAMPAIGN.ANNI_VIDEO_2008:
+                    return detailAnniVideo2008.call(this)
             }
         }
 

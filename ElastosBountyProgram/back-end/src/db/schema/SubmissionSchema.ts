@@ -35,6 +35,7 @@ export const Submission = {
     fullLegalName: String,
     occupation: String,
     education: String,
+    location: String,
 
     audienceInfo: String,
     publicSpeakingExp: String,

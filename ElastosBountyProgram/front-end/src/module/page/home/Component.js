@@ -113,9 +113,4 @@ export default class extends StandardPage {
             </Row>
         );
     }
-
-    notDeveloper() {
-        debugger
-        this.carousel.next()
-    }
 }

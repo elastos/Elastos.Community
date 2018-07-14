@@ -82,6 +82,7 @@ export default class extends Base {
             dob,
             occupation,
             education,
+            location,
             audienceInfo,
             publicSpeakingExp,
             eventOrganizingExp,
@@ -111,6 +112,7 @@ export default class extends Base {
 
             occupation,
             education,
+            location,
             dob,
 
             // training1 form
