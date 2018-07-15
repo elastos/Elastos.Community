@@ -70,7 +70,6 @@ export default function() {
         }
     };
 
-
     return <div>
         <Row>
             <Col>
@@ -100,7 +99,7 @@ export default function() {
                 Wallet Address
             </Col>
             <Col span={12}>
-                {this.props.walletAddress}
+                {this.props.submission.createdBy.profile.walletAddress}
             </Col>
         </Row>
         <Row>
