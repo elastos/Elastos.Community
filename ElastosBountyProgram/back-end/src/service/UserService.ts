@@ -119,7 +119,7 @@ export default class extends Base {
             throw `userId: ${userId} not found`
         }
 
-        if (param.profile.country !== user.profile.country) {
+        if (param.profile.country && param.profile.country !== user.profile.country) {
             countryChanged = true
         }
 

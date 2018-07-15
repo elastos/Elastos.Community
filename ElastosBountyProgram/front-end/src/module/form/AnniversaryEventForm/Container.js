@@ -1,7 +1,7 @@
 import {createContainer, goPath} from "@/util";
 import Component from './Component';
 import SubmissionService from '@/service/SubmissionService'
-import CommunityService from '@/service/CommunityService'
+import UserService from '@/service/UserService'
 import {message} from 'antd'
 import _ from 'lodash'
 
@@ -19,7 +19,7 @@ export default createContainer(Component, (state)=>{
     };
 }, () => {
     const submissionService = new SubmissionService();
-    const communityService = new CommunityService()
+    const userService = new UserService()
 
     return {
         async submitForm(formData, st){
@@ -41,6 +41,14 @@ export default createContainer(Component, (state)=>{
                     attachmentType: st.attachment_type
                 });
 
+                if (formData.walletAddress) {
+                    const userRs = await userService.update(this.user.current_user_id, {
+                        profile: {
+                            walletAddress: formData.walletAddress
+                        }
+                    })
+                }
+
                 if (rs) {
                     message.success('Success - one of the admins will be in touch shortly');
                     submissionService.path.push('/profile/submissions');
@@ -49,46 +57,6 @@ export default createContainer(Component, (state)=>{
                 console.error(err)
                 message.error(err.message) // TODO: add rollbar?
             }
-        },
-
-        async getCommunityDetail(communityId) {
-            return communityService.get(communityId)
-        },
-
-        async getAllCommunities() {
-            return new Promise((resolve, reject) => {
-                communityService.getAll().then((data) => {
-                    const cascaderItems =  data.map((item) => {
-                        return {
-                            value: item._id,
-                            label: item.name,
-                            parentId: item.parentCommunityId,
-                        }
-                    })
-
-                    const rootCascaderItems = _.filter(cascaderItems, {
-                        parentId: null
-                    })
-
-                    rootCascaderItems.forEach((rootCascaderItem) => {
-                        const children = _.filter(cascaderItems, {
-                            parentId: rootCascaderItem.value
-                        })
-
-                        if (children && children.length) {
-                            rootCascaderItem.children = children
-                        }
-                    })
-
-                    resolve(rootCascaderItems)
-                }).catch((err) => {
-                    reject(err)
-                })
-            })
-        },
-
-        async getSpecificCountryCommunities (countryCode) {
-            return communityService.getSpecificCountryCommunities(countryCode)
-        },
+        }
     };
 });

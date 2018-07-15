@@ -38,12 +38,6 @@ class C extends BaseComponent {
         this.props.form.validateFields((err, values) => {
 
             if (!err) {
-                if (!this.props.user.profile.walletAddress) {
-                    message.error('You must have an ELA wallet address associated with your profile')
-                    document.getElementById('btn_wallet_address').focus()
-                    return
-                }
-
                 this.props.submitForm(values, this.state);
             }
         })
@@ -62,16 +56,6 @@ class C extends BaseComponent {
 
             removeAttachment: false
         }
-    }
-
-    async componentDidMount() {
-        await this.getCommunityTrees()
-        const countryCommunities = await this.props.getSpecificCountryCommunities(this.props.user.profile.country)
-        const countryCommunity = _.find(countryCommunities, {parentCommunityId: null})
-
-        this.setState({
-            community: [countryCommunity._id]
-        })
     }
 
     getInputProps () {
@@ -97,6 +81,18 @@ class C extends BaseComponent {
             ]
         })
         const fullLegalName_el = (
+            <Input size="large"/>
+        )
+
+        // walletAddress
+        const walletAddress_fn = getFieldDecorator('walletAddress', {
+            initialValue: this.props.user.profile.walletAddress || '',
+            rules: [
+                {required: true, message: 'Please input a wallet address'},
+                {len: 34, message: 'address length error'}
+            ]
+        })
+        const walletAddress_el = (
             <Input size="large"/>
         )
 
@@ -146,6 +142,7 @@ class C extends BaseComponent {
             readRules: readRules_fn(readRules_el),
 
             fullLegalName: fullLegalName_fn(fullLegalName_el),
+            walletAddress: walletAddress_fn(walletAddress_el),
 
             attachment: attachment_fn(attachment_el)
         }
@@ -315,12 +312,16 @@ class C extends BaseComponent {
                                     </Col>
                                 </Row>
                             </div> :
-                            <Row>
-                                <Col offset={6} className="static-field content">
-                                    You have not entered a wallet address<br/>
-                                    <Button id="btn_wallet_address" type="danger" onClick={() => this.props.history.push('/profile/info')}>Click here to edit this in your profile</Button>
-                                </Col>
-                            </Row>
+                            <div>
+                                <Row>
+                                    <Col offset="6" span="12">
+                                        Please note this wallet address will be added to your profile
+                                    </Col>
+                                </Row>
+                                <FormItem label="ELA Wallet Address" {...formItemLayout}>
+                                    {p.walletAddress}
+                                </FormItem>
+                            </div>
                         }
 
                         <Divider>
