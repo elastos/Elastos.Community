@@ -232,7 +232,7 @@ class C extends BaseComponent {
                                         <h4>Registration Deadline:</h4>
                                     </Col>
                                     <Col>
-                                        <b>July 16, 2018</b>
+                                        <b>July 18, 2018</b>
                                     </Col>
                                 </Row>
 
