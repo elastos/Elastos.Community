@@ -123,7 +123,7 @@ export default class extends AdminPage {
                             <Col span={20} className="c_SubmissionTableContainer admin-left-column wrap-box-user">
                                 <div className="pull-right">
                                     <Input.Search onSearch={this.handleSearch.bind(this)}
-                                                  prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                                  prefix={<Icon type="file-text" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                                   placeholder="search"/>
 
                                 </div>

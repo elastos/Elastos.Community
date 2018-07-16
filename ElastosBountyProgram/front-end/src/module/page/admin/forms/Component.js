@@ -136,7 +136,7 @@ export default class extends AdminPage {
                                         onChange={this.selectCampaign.bind(this)}
                                     >
                                         {_.map(config.dict.formCampaigns, (campaign, key) => {
-                                            return <Select.Option value={key}>
+                                            return <Select.Option key={key} value={key}>
                                                 {campaign}
                                             </Select.Option>
                                         })}
@@ -144,7 +144,7 @@ export default class extends AdminPage {
                                 </div>
                                 <div className="pull-right">
                                     <Input.Search onSearch={this.handleSearch.bind(this)}
-                                                  prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                                  prefix={<Icon type="file-text" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                                   placeholder="search"/>
                                 </div>
                                 <div className="showArchivedContainer pull-right">

@@ -187,95 +187,179 @@ class C extends BaseComponent {
 
         // TODO: description CKE Editor
 
-        return (!this.props.is_login ?
-            <div className="center">
-                <br/>
-                You must be logged in to apply to come to the 2018 Anniversary Event<br/>
-                <br/>
-                <Button onClick={() => this.props.history.push('/login')}>Login</Button>
-                <Button onClick={() => this.props.history.push('/register')}>Register</Button>
-            </div> :
-            <div className="c_anniversaryAppFormContainer">
+        return <div className="c_anniversaryAppFormContainer">
 
-                <Form onSubmit={this.handleSubmit.bind(this)}>
-                    <div>
-                        <Divider>Details and Rules</Divider>
-                        <Row>
-                            <Col offset={6} span={12} className="left-align">
+            <Form onSubmit={this.handleSubmit.bind(this)}>
+                <div>
+                    <Divider>Details and Rules</Divider>
+                    <Row>
+                        <Col offset={6} span={12} className="left-align">
 
-                                <h5 style={{color: '#47aaa7'}}>
-                                    If you did not receive an invitation to fill out this form directly via email,<br/>
-                                    you are not on the invitiation list and please do not apply.
-                                </h5>
+                            <h5 style={{color: '#47aaa7'}}>
+                                If you did not receive an invitation to fill out this form directly via email,<br/>
+                                you are not on the invitiation list and please do not apply.
+                            </h5>
 
-                                <Row>
-                                    <Col span={6}>
-                                        <h4>Location:</h4>
-                                    </Col>
-                                    <Col span={12}>
-                                        Shangri-La Hotel, Chiang Mai, Thailand
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col span={6}>
-                                        <h4>Event Dates:</h4>
-                                    </Col>
-                                    <Col>
-                                        Aug 24 - 27, 2018
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col span={6}>
-                                        <h4>Registration Deadline:</h4>
-                                    </Col>
-                                    <Col>
-                                        <b>July 18, 2018</b>
-                                    </Col>
-                                </Row>
+                            <Row>
+                                <Col span={6}>
+                                    <h4>Location:</h4>
+                                </Col>
+                                <Col span={12}>
+                                    Shangri-La Hotel, Chiang Mai, Thailand
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col span={6}>
+                                    <h4>Event Dates:</h4>
+                                </Col>
+                                <Col>
+                                    Aug 24 - 27, 2018
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col span={6}>
+                                    <h4>Registration Deadline:</h4>
+                                </Col>
+                                <Col>
+                                    <b>July 18, 2018</b>
+                                </Col>
+                            </Row>
 
-                                <br/>
+                            <br/>
 
-                                <h5>Dear Community Member,</h5>
+                            <h5>Dear Community Member,</h5>
 
-                                <p>
-                                    Elastos is hosting a One Year Anniversary Event in Thailand and you are invited as a selected
-                                    community member. While you are responsible for paying for your own airfare, <u>you will receive an
-                                    reimbursement in ELA equal to the cost of airfare for coming and will be provided hotel accommodations.</u>
-                                </p>
+                            <p>
+                                Elastos is hosting a One Year Anniversary Event in Thailand and you are invited as a selected
+                                community member. While you are responsible for paying for your own airfare, <u>you will receive an
+                                reimbursement in ELA equal to the cost of airfare for coming and will be provided hotel accommodations.</u>
+                            </p>
 
-                                <h4>Itinerary</h4>
+                            <h4>Itinerary</h4>
 
-                                <ul style={{textAlign: 'left', marginLeft: '5%'}}>
-                                    <li>8/24: Arrival in Chiang Mai</li>
-                                    <li>8/25: Anniversary Conference</li>
-                                    <li>8/26: Tour of Chiang Mai</li>
-                                    <li>8/27: Check Out</li>
-                                </ul>
+                            <ul className="itinerary">
+                                <li><h5 style={{paddingTop: 0}}>August 24: <span style={{color: 'rgba(0, 0, 0, 0.85)'}}>Arrival and Check-In</span></h5></li>
+                                <li>
+                                    <h5>August 25: <span style={{color: 'rgba(0, 0, 0, 0.85)'}}>Anniversary of Elastos - Main Event</span></h5>
 
-                                <p>
-                                    We look forward to hosting our team and selected community members to celebrate our first year and to
-                                    look forward to many more to come. We value our community with a passion and would love to see you
-                                    attend and celebrate Elastos in style.
-                                </p>
+                                    <div style={{marginLeft: '5%'}}>
+                                        <Row>
+                                            <Col span={6} className="strong-text">
+                                                - 08:30 - 08:55
+                                            </Col>
+                                            <Col span={18}>
+                                                Conference Sign In
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col span={6} className="strong-text">
+                                                - 09:00 - 11:30
+                                            </Col>
+                                            <Col span={18}>
+                                                Annual Meeting
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col span={6} className="strong-text">
+                                                - 11:30 - 13:30
+                                            </Col>
+                                            <Col span={18}>
+                                                Buffet Lunch
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col span={6} className="strong-text">
+                                                - 14:00 - 17:00
+                                            </Col>
+                                            <Col span={18}>
+                                                dApp Meetups & Presentations
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col span={6} className="strong-text">
+                                                - 18:00 - 20:00
+                                            </Col>
+                                            <Col span={18}>
+                                                Dinner
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col span={6} className="strong-text">
+                                                - 21:30 - 22:30
+                                            </Col>
+                                            <Col span={18}>
+                                                European Developer Community Webcast
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </li>
+                                <li>
+                                    <h5>August 26: <span style={{color: 'rgba(0, 0, 0, 0.85)'}}>Team Building & Chiang Mai Tour</span></h5>
 
-                                <br/>
-                                <span style={{fontWeight: 600}}>
-                                    You are required to do the following:
-                                </span><br/>
-                                - Book your own flight, you will be compensated in ELA and a receipt will be required.<br/>
-                                - Hotels will be provided by us and reserved under the name provided on this form<br/>
-                                <br/>
-                                <span style={{fontWeight: 600}}>Rules:</span><br/>
-                                - Flight must be a round-trip economy class flight at a reasonable cost<br/>
-                                - ELA exchange rate is determined at time of 12pm local time in Thailand on the day of 25th August, 2018<br/>
-                                - You must arrive in Chiang Mai by August 24, the official event is on the 25th<br/>
-                                - You are responsible for your own Visa requirements based on your nationality<br/>
-                                <u>- You must not represent yourself as an employee of Elastos, your purpose of travel to Thailand must be for tourism only</u><br/>
-                                - If for whatever reason - except medical emergencies with proof - you will not receive reimbursement if you do not attend the event
-                            </Col>
-                        </Row>
+                                    <div style={{marginLeft: '5%'}}>
+                                        <Row>
+                                            <Col span={6} className="strong-text">
+                                                - 09:30 - 10:30
+                                            </Col>
+                                            <Col span={18}>
+                                                America Developer Community Webcast
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col span={6} className="strong-text">
+                                                - 11:00 - 18:30
+                                            </Col>
+                                            <Col span={18}>
+                                                Chiang Mai Town Tour
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </li>
+                                <li>
+                                    <h5>August 26: <span style={{color: 'rgba(0, 0, 0, 0.85)'}}>Hotel Check-Out</span></h5>
+                                </li>
+                            </ul>
 
+                            <br/>
+
+                            <h4>Details</h4>
+
+                            <p>
+                                We look forward to hosting our team and selected community members to celebrate our first year and to
+                                look forward to many more to come. We value our community with a passion and would love to see you
+                                attend and celebrate Elastos in style.
+                            </p>
+
+                            <br/>
+                            <span style={{fontWeight: 600}}>
+                                You are required to do the following:
+                            </span><br/>
+                            - Book your own flight, you will be compensated in ELA and a receipt will be required.<br/>
+                            - Hotels will be provided by us and reserved under the name provided on this form<br/>
+                            <br/>
+                            <h4>Rules</h4>
+                            - Flight must be a round-trip economy class flight at a reasonable cost<br/>
+                            - ELA exchange rate is determined at time of 12pm local time in Thailand on the day of 25th August, 2018<br/>
+                            - You must arrive in Chiang Mai by August 24, the official event is on the 25th<br/>
+                            - You are responsible for your own Visa requirements based on your nationality<br/>
+                            <u>- You must not represent yourself as an employee of Elastos, your purpose of travel to Thailand must be for tourism only</u><br/>
+                            - If for whatever reason - except medical emergencies with proof - you will not receive reimbursement if you do not attend the event
+                        </Col>
+                    </Row>
+
+                    <br/>
+
+                    {!this.props.is_login ?
+                    <div className="center">
                         <br/>
+                        <span class="strong-text">You must be logged in to apply to come to the 2018 Anniversary Event</span><br/>
+                        <br/>
+                        <Button onClick={() => {
+                            sessionStorage.setItem('loginRedirect', '/form/anniversary2018')
+                            this.props.history.push('/login')
+                        }}>Login</Button>
+                        <Button onClick={() => this.props.history.push('/register')}>Register</Button>
+                    </div> : <div>
 
                         <FormItem {...formItemNoLabelLayout}>
                             {p.readRules} <b>I have read and agree to the rules <span style={{color: 'red'}}>*</span> </b>
@@ -357,10 +441,11 @@ class C extends BaseComponent {
                                 Please contact <a href="mailto:cyberrepublic@elastos.org">cyberrepublic@elastos.org</a> if you have any issues.
                             </Col>
                         </Row>
-                    </div>
-                </Form>
-            </div>
-        )
+                    </div>}
+                </div>
+            </Form>
+        </div>
+
     }
 
 }

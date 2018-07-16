@@ -147,7 +147,7 @@ export default class extends AdminPage {
                             <Col span={20} className="c_TaskTableContainer admin-left-column wrap-box-user">
                                 <div className="pull-right">
                                     <Input.Search onSearch={this.handleSearchTask.bind(this)}
-                                                  prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                                  prefix={<Icon type="solution" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                                   placeholder="search task"/>
                                 </div>
                                 <div className="clearfix vert-gap-sm"/>

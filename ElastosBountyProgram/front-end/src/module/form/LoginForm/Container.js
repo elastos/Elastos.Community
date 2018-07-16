@@ -23,12 +23,20 @@ export default createContainer(Component, (state) => {
                 if (rs) {
                     message.success('login success')
 
-                    if (rs.is_admin) {
-                        this.history.push('/admin/tasks')
+                    const loginRedirect = sessionStorage.getItem('loginRedirect')
+                    if (loginRedirect) {
+                        this.history.push(loginRedirect)
+                        sessionStorage.setItem('loginDirect', null)
+
                     } else {
-                        this.history.push('/home')
+                        if (rs.is_admin) {
+                            this.history.push('/admin/tasks')
+                        } else {
+                            this.history.push('/home')
+                        }
                     }
                 }
+
             } catch (err) {
                 console.error(err)
                 message.error(err.message)
