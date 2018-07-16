@@ -26,9 +26,10 @@ export default class extends BaseService {
             data: qry
         })
 
-        this.dispatch(submissionRedux.actions.loading_update(false))
         this.dispatch(submissionRedux.actions.all_submissions_reset())
         this.dispatch(submissionRedux.actions.all_submissions_update(result.list))
+
+        this.dispatch(submissionRedux.actions.loading_update(false))
 
         return result
     }
@@ -80,6 +81,15 @@ export default class extends BaseService {
             path: '/api/submission/create',
             method: 'post',
             data: doc
+        })
+
+        return res;
+    }
+
+    async archive(submissionId) {
+        const res = await api_request({
+            path: `/api/submission/${submissionId}`,
+            method: 'delete'
         })
 
         return res;

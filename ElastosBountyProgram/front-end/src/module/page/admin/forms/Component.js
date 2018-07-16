@@ -12,7 +12,8 @@ import { Link } from 'react-router-dom'
 
 export default class extends AdminPage {
 
-    componentDidMount() {
+    async componentDidMount() {
+        await super.componentDidMount()
         this.props.getSubmissions()
     }
 

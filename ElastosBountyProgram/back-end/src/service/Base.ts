@@ -35,7 +35,7 @@ export default class Base {
 
             if (subscriberInfo) {
                 subscriberInfo.lastSeen = new Date()
-            } else if (createdBy._id.toString() === this.currentUser._id.toString()) {
+            } else if (createdBy && createdBy._id.toString() === this.currentUser._id.toString()) {
                 commentable.lastCommentSeenByOwner = new Date()
             }
 

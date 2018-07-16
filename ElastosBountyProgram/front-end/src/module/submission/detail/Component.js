@@ -195,57 +195,58 @@ export default class extends BaseComponent {
         return <Row>
             <Col span={18} className="gridCol main-area">
                 <Row>
-                    <Col>
-                        <h4 className="center">
+                    <Col span={6} className="label-col">
+                        <h4>
+                            Title
+                        </h4>
+                    </Col>
+                    <Col span={18}>
+                        <h4>
                             {this.props.submission.title}
                         </h4>
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={24}>
-                        <Row>
-                            <Col span={6} className="label-col">
-                                {this.props.submission.campaign === 'Evangelist Training 1' ?
-                                    'Describe Elastos in your own words.' :
-                                    'Description'
-                                }
-                            </Col>
-                            <Col span={18}>
-                                <p>
-                                    {this.props.submission.description}
-                                </p>
-                            </Col>
-                        </Row>
+                    <Col span={6} className="label-col">
+                        {this.props.submission.campaign === 'Evangelist Training 1' ?
+                            'Describe Elastos in your own words.' :
+                            'Description'
+                        }
+                    </Col>
+                    <Col span={18}>
+                        <p>
+                            {this.props.submission.description}
+                        </p>
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={24}>
-                        <Row>
-                            <Col span={6} className="label-col">
-                                Type
-                            </Col>
-                            <Col span={18}>
-                                <p>
-                                    {this.props.submission.type}
-                                </p>
-                            </Col>
-                        </Row>
+                    <Col span={6} className="label-col">
+                        Type
+                    </Col>
+                    <Col span={18}>
+                        <p>
+                            {this.props.submission.type}
+                        </p>
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={24}>
-                        <Row>
-                            <Col span={6} className="label-col">
-                                Created by
-                            </Col>
-                            <Col span={18}>
-                                <p>
-                                    <a onClick={() => {this.props.submission.createdBy && this.props.history.push(`/member/${this.props.submission.createdBy._id}`)}}>
-                                        {this.props.submission.createdBy && this.props.submission.createdBy.username}
-                                    </a>
-                                </p>
-                            </Col>
-                        </Row>
+                    <Col span={6} className="label-col">
+                        Created by
+                    </Col>
+                    <Col span={18}>
+                        <p>
+                            <a onClick={() => {this.props.submission.createdBy && this.props.history.push(`/member/${this.props.submission.createdBy._id}`)}}>
+                                {this.props.submission.createdBy && this.props.submission.createdBy.username}
+                            </a>
+                        </p>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span={6} className="label-col">
+                        Created Date
+                    </Col>
+                    <Col span={18}>
+                        {moment(this.props.submission.createdAt).format('MMM D, YYYY')}
                     </Col>
                 </Row>
                 {communityName}

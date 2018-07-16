@@ -19,6 +19,11 @@ export default class extends Base{
             archived: {$ne: true}
         };
 
+        // allow overwrite if we want to show archived
+        if (param.archived) {
+            query.archived = !!param.archived
+        }
+
         if (param.type && _.values(constant.SUBMISSION_TYPE).includes(param.type)) {
             query.type = param.type;
         }

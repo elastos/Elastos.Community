@@ -15,10 +15,13 @@ import {TASK_STATUS} from '@/constant'
 
 export default class extends AdminPage {
 
-    state = {
-        filteredInfo: null,
+    constructor(props) {
+        super(props)
 
-        taskNameFilter: ''
+        this.state = {
+            filteredInfo: null,
+            taskNameFilter: ''
+        }
     }
 
     async componentDidMount() {
@@ -47,7 +50,7 @@ export default class extends AdminPage {
 
         if (this.state.taskNameFilter) {
             taskData = taskData.filter((task) => {
-                let regExp = new RegExp(this.state.taskNameFilter)
+                let regExp = new RegExp(this.state.taskNameFilter, 'i')
                 return regExp.test(task.name)
             })
         }
@@ -114,7 +117,7 @@ export default class extends AdminPage {
             sorter: (a, b) => {
                 return moment(a.createdAt).valueOf() - moment(b.createdAt).valueOf()
             },
-            defaultSortOrder: 'descend',
+            defaultSortOrder: 'descend'
         }, {
             title: '',
             dataIndex: '_id',

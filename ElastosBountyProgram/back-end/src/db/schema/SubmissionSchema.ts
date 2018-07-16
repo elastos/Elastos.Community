@@ -62,6 +62,8 @@ export const Submission = {
     subscribers: [SubscriberSchema],
     lastCommentSeenByOwner: Date,
 
-    ...communityProps
+    ...communityProps,
+
+    archived: Boolean
 };
 

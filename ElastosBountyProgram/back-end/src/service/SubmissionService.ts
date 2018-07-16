@@ -175,4 +175,24 @@ export default class extends Base {
 
         return db_submission.findById(submissionId)
     }
+
+    public async archive(param): Promise<boolean> {
+
+        const db_submission = this.getDBModel('Submission')
+        const submissionId = param.submissionId
+
+        const submission = await db_submission.findById(submissionId)
+
+        if (!submission) {
+            throw 'submission not found'
+        }
+
+        const updateObj = {
+            archived: true
+        }
+
+        await db_submission.update({_id: submissionId}, updateObj)
+
+        return db_submission.findById(submissionId)
+    }
 }
