@@ -1,14 +1,26 @@
 declare var global, describe, test, expect, assert, require, process, beforeAll, afterAll;
 
+const sinon = require('sinon')
+
 import db from '../../db';
 import '../../config';
 import UserService from '../UserService';
 import TaskService from '../TaskService';
+import {mail} from '../../utility'
 
 const user: any = {};
-let DB;
+let DB, mailMethod;
+
+
 beforeAll(async ()=>{
     DB = await db.create();
+
+    // stub mail
+    mailMethod = sinon.stub(mail, 'send', (options) => {
+        console.log('mail suppressed', options)
+        return Promise.resolve();
+    });
+
     await DB.getModel('User').remove({
         role : 'MEMBER'
     });
