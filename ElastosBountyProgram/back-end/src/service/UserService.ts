@@ -131,6 +131,12 @@ export default class extends Base {
             updateObj.email = param.email
         }
 
+        if (param.removeAttachment) {
+            updateObj.avatar = null
+            updateObj.avatarFileType = ''
+            updateObj.avatarFilename = ''
+        }
+
         await db_user.update({_id: userId}, updateObj)
 
         user = await db_user.findById(userId)

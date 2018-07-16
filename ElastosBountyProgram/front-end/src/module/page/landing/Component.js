@@ -14,7 +14,7 @@ export default class extends EmptyPage {
 
         return <div className="p_landingBg">
 
-            <div className="entryContainer">
+            <div className="entryContainer" onClick={() => this.props.history.push('/home')}>
 
                 <div className="textContainer">
                     We are a diverse democratic group of leaders, developers, organizers and designers<br/>

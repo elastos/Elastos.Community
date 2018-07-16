@@ -48,8 +48,20 @@ const RadioGroup = Radio.Group
  * - a local event can have sub tasks, these are shown as tasks in the Social page
  */
 class C extends BaseComponent {
-    state = {
-        communityTrees: []
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            communityTrees: [],
+
+            avatar_loading: false,
+            avatar_url: this.props.user.profile.avatar || '',
+            avatar_type: this.props.user.profile.avatarFileType || '',
+            avatar_filename: this.props.user.profile.avatarFilename || '',
+
+            removeAttachment: true
+        }
     }
 
     handleSubmit (e) {
@@ -126,28 +138,27 @@ class C extends BaseComponent {
             showUploadList: false,
             customRequest :(info)=>{
                 this.setState({
-                    upload_loading: true
+                    avatar_loading: true
                 });
                 upload_file(info.file).then((d)=>{
                     const url = d.url;
                     this.setState({
-                        upload_loading: false,
-                        upload_url : url
+                        avatar_loading: false,
+
+                        avatar_url: url,
+                        avatar_type: d.type,
+                        avatar_filename: d.filename,
+
+                        removeAttachment: false
                     });
                 })
             }
         };
         const avatar_el = (
             <Upload name="logo" listType="picture" {...p_avatar}>
-                {
-                    this.state.upload_url ? (
-                        <img style={{height:'100px'}} src={this.state.upload_url} />
-                        ) : (
-                        <Button loading={this.state.upload_loading}>
-                            <Icon type="upload" /> Click to upload
-                        </Button>
-                    )
-                }
+                <Button loading={this.state.avatar_loading}>
+                    <Icon type="upload" /> Click to upload
+                </Button>
             </Upload>
         );
 
@@ -236,8 +247,15 @@ class C extends BaseComponent {
         }
     }
 
-    componentDidMount() {
+    removeAttachment = async () => {
+        this.setState({
+            avatar_loading: false,
+            avatar_url : null,
+            avatar_type: '',
+            avatar_filename: '',
 
+            removeAttachment: true
+        })
     }
 
     ord_render () {
@@ -283,9 +301,23 @@ class C extends BaseComponent {
                         <FormItem label="Gender" {...formItemLayout}>
                             {p.gender}
                         </FormItem>
-                        <FormItem label="Avatar" {...formItemLayout}>
-                            {p.avatar}
-                        </FormItem>
+
+                        {this.state.avatar_url ?
+                            <Row>
+                                <Col className="labelContainer" xs={{span: 24}} sm={{span: 8}}>
+                                    Avatar:
+                                </Col>
+                                <Col className="avatarContainer" xs={{span: 24}} sm={{span: 12}}>
+                                    <img style={{height: '100px'}} src={this.state.avatar_url}/>
+                                    &nbsp;
+                                    <Icon type="delete" style={{cursor: 'pointer'}} onClick={this.removeAttachment.bind(this)}/>
+                                </Col>
+                            </Row> :
+                            <FormItem label="Avatar" {...formItemLayout}>
+                                {p.avatar}
+                            </FormItem>
+                        }
+
                         <FormItem label="Country" {...formItemLayout}>
                             {p.country}
                         </FormItem>

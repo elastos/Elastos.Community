@@ -64,7 +64,7 @@ export default function() {
                         attachment_filename: ''
                     })
 
-                    message.success('There was a problem upload this file, please try again')
+                    message.success('There was a problem uploading this file, please try again')
                 }
             })
         }

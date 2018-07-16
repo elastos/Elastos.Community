@@ -9,4 +9,15 @@
     text-align: right;
   }
 
+  .labelContainer {
+    padding-right: 8px;
+    margin-bottom: $gap_1;
+    text-align: right;
+    color: rgba(0, 0, 0, 0.85);
+  }
+
+  .avatarContainer {
+    margin-bottom: $gap_1;
+  }
+
 }

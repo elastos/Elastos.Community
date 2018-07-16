@@ -15,6 +15,9 @@ export const Profile = {
     lastName: String,
 
     avatar : String,
+    avatarFilename: String,
+    avatarFileType: String,
+
     gender : String,
     birth : Date,
     timezone: String,

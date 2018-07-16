@@ -1,11 +1,11 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import UserEditForm from '@/module/form/UserEditForm/Container'
-import { Col, Row, Icon, Divider, Button, Spin } from 'antd'
+import { Col, Row, Icon, Popover, Button, Spin } from 'antd'
 
 import UserPublicDetail from './detail/Container'
 
-import {TASK_STATUS, USER_GENDER} from '@/constant'
+import {USER_ROLE, USER_GENDER} from '@/constant'
 import config from '@/config'
 
 import './style.scss'
@@ -91,6 +91,18 @@ export default class extends BaseComponent {
                     </Col>
                 </Row>
                 <Row>
+                    <Col span={8} className="gridCol strong-text right-align">
+                        Role
+                    </Col>
+                    <Col span={16} className="gridCol strong-text">
+                        {this.props.user.role === USER_ROLE.LEADER ? 'ORGANIZER' : this.props.user.role}
+                        &nbsp;
+                        <Popover content={this.getRoleHelp.call(this)}>
+                            <Icon className="help-icon" type="question-circle-o"/>
+                        </Popover>
+                    </Col>
+                </Row>
+                <Row>
                     <Col span={8} className="gridCol right-align">
                         Email
                     </Col>
@@ -127,7 +139,7 @@ export default class extends BaseComponent {
                         Avatar
                     </Col>
                     <Col span={16} className="gridCol">
-                        <img src={this.getAvatarUrl(this.props.user.profile)} class="user-avatar"/>
+                        {this.getAvatarUrl(this.props.user.profile)}
                     </Col>
                 </Row>
                 <Row>
@@ -176,16 +188,24 @@ export default class extends BaseComponent {
 
     getAvatarUrl(profile) {
         if (profile.avatar) {
-            return profile.avatar;
+            return <img src={profile.avatar} className="user-avatar"/>
         }
 
-        const avatarDefault = {
-            [USER_GENDER.MALE]: '/assets/images/User_Avatar_Male.png',
-            [USER_GENDER.FEMALE]: '/assets/images/User_Avatar_Female.png',
-            [USER_GENDER.OTHER]: '/assets/images/User_Avatar_Other.png',
-        };
+        return <span className="no-info">not uploaded</span>
+    }
 
-        return avatarDefault[profile.gender];
+    getRoleHelp() {
+        switch (this.props.user.role) {
+
+            case USER_ROLE.MEMBER:
+                return 'you can only apply for tasks/events, if you want to be an organizer please apply on the community pages'
+
+            case USER_ROLE.LEADER:
+                return 'you can only create social tasks/events'
+
+            default:
+                return 'you are an admin user'
+        }
     }
 
     switchEditMode() {

@@ -45,8 +45,13 @@ export default createContainer(Component, (state)=>{
                         beOrganizer: formData.beOrganizer === 'yes',
                         isDeveloper: formData.isDeveloper === 'yes',
                         walletAddress: formData.walletAddress,
-                        avatar: state.upload_url,
-                    }
+
+                        avatar: state.avatar_url,
+                        avatarFilename: state.avatar_filename,
+                        avatarFileType: state.avatar_type
+                    },
+
+                    removeAttachment: state.removeAttachment
                 });
 
                 if (rs) {

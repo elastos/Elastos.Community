@@ -26,7 +26,11 @@
 
     position: relative;
 
+    cursor: pointer;
+
     > .textContainer {
+      cursor: auto;
+
       position: absolute;
       bottom: 0;
       left: 8px;
