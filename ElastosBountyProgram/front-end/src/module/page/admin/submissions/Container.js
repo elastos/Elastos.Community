@@ -40,6 +40,13 @@ export default createContainer(Component, (state) => {
             return submissionService.index({
                 admin: true
             })
+        },
+
+        async showArchived(showArchived) {
+            await submissionService.index({
+                admin: true,
+                showArchived: showArchived
+            })
         }
     }
 })

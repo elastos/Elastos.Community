@@ -24,6 +24,11 @@ export default class extends Base{
             query.archived = !!param.archived
         }
 
+        // include archived items
+        if (param.showArchived === 'true') {
+            delete query.archived
+        }
+
         if (param.type && _.values(constant.SUBMISSION_TYPE).includes(param.type)) {
             query.type = param.type;
         }

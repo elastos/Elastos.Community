@@ -51,7 +51,10 @@ export default class extends AdminPage {
         if (this.state.taskNameFilter) {
             taskData = taskData.filter((task) => {
                 let regExp = new RegExp(this.state.taskNameFilter, 'i')
-                return regExp.test(task.name)
+                return (
+                    regExp.test(task.name) ||
+                    (task.createdBy && regExp.test(task.createdBy.username))
+                )
             })
         }
 
@@ -145,7 +148,7 @@ export default class extends AdminPage {
                                 <div className="pull-right">
                                     <Input.Search onSearch={this.handleSearchTask.bind(this)}
                                                   prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                                                  placeholder="Task name"/>
+                                                  placeholder="search task"/>
                                 </div>
                                 <div className="clearfix vert-gap-sm"/>
                                 <Table

@@ -168,7 +168,6 @@ export default class extends Base {
         } = param
 
         const db_submission = this.getDBModel('Submission')
-        const submission = await db_submission.findById(submissionId)
         const updateObj:any = _.omit(param, restrictedFields.update)
 
         await db_submission.update({_id: submissionId}, updateObj)

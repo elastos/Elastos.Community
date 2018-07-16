@@ -7,7 +7,7 @@ import './style.scss'
 
 import Navigator from '../shared/Navigator/Component'
 
-import { Breadcrumb, Col, Icon, Row, Input, Table, Popover, Popconfirm, message } from 'antd'
+import { Checkbox, Breadcrumb, Col, Icon, Row, Input, Table, Popover, Popconfirm, message } from 'antd'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 
@@ -17,7 +17,8 @@ export default class extends AdminPage {
         super(props)
 
         this.state = {
-            textFilter: ''
+            textFilter: '',
+            showArchived: false
         }
     }
 
@@ -53,7 +54,12 @@ export default class extends AdminPage {
             width: '20%',
             className: 'fontWeight500 allow-wrap',
             render: (name, record) => {
-                return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">{name}</a>
+                return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">
+                    {name}
+                    {record.archived &&
+                    <span className="no-info"> (archived)</span>
+                    }
+                </a>
             },
             sorter: (a, b) => {
 
@@ -122,6 +128,11 @@ export default class extends AdminPage {
                                                   prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                                   placeholder="search"/>
                                 </div>
+                                <div className="showArchivedContainer pull-right">
+                                    Show Archived
+                                    &nbsp;
+                                    <Checkbox onClick={this.toggleShowArchived.bind(this)} checked={this.state.showArchived}/>
+                                </div>
                                 <div className="clearfix vert-gap-sm"/>
                                 <Table
                                     columns={columns}
@@ -150,6 +161,15 @@ export default class extends AdminPage {
             console.error(err)
             message.error('There was a problem archiving this item')
         }
+    }
+
+    async toggleShowArchived() {
+
+        await this.setState({
+            showArchived: !this.state.showArchived
+        })
+
+        await this.props.showArchived(this.state.showArchived)
     }
 
     linkSubmissionDetail(submissionId) {

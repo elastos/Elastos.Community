@@ -29,8 +29,13 @@ export default class extends AdminPage {
 
         if (this.state.usernameFilter) {
             users = users.filter((user) => {
-                let regExp = new RegExp(this.state.usernameFilter)
-                return regExp.test(user.username)
+                let regExp = new RegExp(this.state.usernameFilter, 'i')
+                return (
+                    regExp.test(user.username) ||
+                    regExp.test(user.profile.firstName) ||
+                    regExp.test(user.profile.lastName) ||
+                    regExp.test(user.email)
+                )
             })
         }
 
@@ -52,7 +57,7 @@ export default class extends AdminPage {
                                 <div class="pull-right">
                                     <Input.Search onSearch={this.handleSearchUser.bind(this)}
                                                   prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                                                  placeholder="Username"/>
+                                                  placeholder="search user"/>
                                 </div>
                                 <div class="vert-gap-sm clearfix"/>
                                 <ListUsers users={users} history={this.props.history} loading={this.props.loading}/>

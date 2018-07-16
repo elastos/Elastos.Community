@@ -33,7 +33,9 @@ export default {
     '1204': 'Role',
     '1205': 'Active',
     '1206': 'Ela',
-    '1207': 'Created date',
+    '1207': 'Created Date',
+    '1208': 'Full Name',
+    '1209': 'Country',
 
     // Admin navigator
     '1300': 'Tasks',
