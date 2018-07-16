@@ -26,20 +26,18 @@ const _generateMember = (uid) => {
 const member = _generateMember('1')
 const anotherMember = _generateMember('2')
 
-let result, resultAnother
+let resultMember, resultAnother
 
 describe('Tests for User', () => {
     beforeAll(async () => {
         DB = await db.create();
 
-        userService = new UserService(DB, {
-            user: 'test'
-        });
+        userService = new UserService(DB, {});
     })
 
     test('It should register new users as members', async () => {
-        result = await userService.registerNewUser(member);
-        expect(result.role).to.be.equal(constant.USER_ROLE.MEMBER)
+        resultMember = await userService.registerNewUser(member);
+        expect(resultMember.role).to.be.equal(constant.USER_ROLE.MEMBER)
         resultAnother = await userService.registerNewUser(anotherMember);
         expect(resultAnother.role).to.be.equal(constant.USER_ROLE.MEMBER)
     })
@@ -88,6 +86,18 @@ describe('Tests for User', () => {
         } catch (err) {
             expect(err).to.be.equal(expectedError)
         }
+    })
+
+    test('It should not be possible to selfpromote to admin', async () => {
+        const memberService = new UserService(DB, {
+            user: resultMember
+        })
+        const result = await memberService.update({
+            userId: resultMember._id,
+            role: constant.USER_ROLE.ADMIN
+        })
+
+        expect(result.role).to.be.equal(constant.USER_ROLE.MEMBER)
     })
 
     afterAll(async () => {
