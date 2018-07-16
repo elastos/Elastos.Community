@@ -115,11 +115,16 @@ export default class extends Base {
         let user = await db_user.findById(userId)
         let countryChanged = false
 
+        if (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
+            this.currentUser._id !== userId) {
+            throw 'Access Denied'
+        }
+
         if (!user) {
             throw `userId: ${userId} not found`
         }
 
-        if (param.profile.country && param.profile.country !== user.profile.country) {
+        if (param.profile && param.profile.country && param.profile.country !== user.profile.country) {
             countryChanged = true
         }
 
@@ -311,7 +316,6 @@ export default class extends Base {
     }
 
     private async linkCountryCommunity(user) {
-
         const db_community = this.getDBModel('Community');
         const communityService = this.getService(CommunityService);
 
