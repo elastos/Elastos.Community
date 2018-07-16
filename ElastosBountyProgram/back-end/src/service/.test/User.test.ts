@@ -44,13 +44,29 @@ describe('Tests for User', () => {
         expect(resultAnother.role).to.be.equal(constant.USER_ROLE.MEMBER)
     })
 
-    test('It should not be possible to change other users for member', async () => {
+    test('It should not be possible to change other users email', async () => {
         const expectedError = 'Access Denied'
 
         try {
             await userService.update({
                 userId: resultAnother._id,
                 email: 'foo@bar.com'
+            })
+
+            assert.fail(`Should fail with ${expectedError}`)
+        } catch (err) {
+            expect(err).to.be.equal(expectedError)
+        }
+    })
+
+    test('It should not be possible to change other users password', async () => {
+        const expectedError = 'Access Denied'
+
+        try {
+            await userService.changePassword({
+                username: anotherMember.username,
+                oldPassword: anotherMember.password,
+                password: 'elastos832'
             })
 
             assert.fail(`Should fail with ${expectedError}`)

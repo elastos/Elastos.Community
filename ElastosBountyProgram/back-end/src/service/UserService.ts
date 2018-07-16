@@ -189,6 +189,11 @@ export default class extends Base {
         this.validate_password(password);
         this.validate_username(username);
 
+        if (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
+            this.currentUser.username !== username) {
+            throw 'Access Denied'
+        }
+
         const user = await db_user.findOne({username}, {reject: false});
         if(!user){
             throw 'user is not exist';
