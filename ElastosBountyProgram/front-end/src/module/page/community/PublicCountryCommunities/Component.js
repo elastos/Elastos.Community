@@ -82,7 +82,7 @@ export default class extends StandardPage {
 
         if (countryCommunity) {
             // we go to that community if it exists
-            this.props.history.push(`/community/${countryCommunity._id}/country/${this.state.countryGeolocation}`)
+            this.props.history.replace(`/community/${countryCommunity._id}/country/${this.state.countryGeolocation}`)
             return
         }
 

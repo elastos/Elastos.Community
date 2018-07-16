@@ -256,7 +256,7 @@ class C extends BaseComponent {
                                                 - 09:00 - 11:30
                                             </Col>
                                             <Col span={18}>
-                                                Annual Meeting
+                                                Main Event / Ceremony
                                             </Col>
                                         </Row>
                                         <Row>
@@ -285,7 +285,7 @@ class C extends BaseComponent {
                                         </Row>
                                         <Row>
                                             <Col span={6} className="strong-text">
-                                                - 21:30 - 22:30
+                                                - 20:30 - 22:00
                                             </Col>
                                             <Col span={18}>
                                                 European Developer Community Webcast
@@ -294,7 +294,7 @@ class C extends BaseComponent {
                                     </div>
                                 </li>
                                 <li>
-                                    <h5>August 26: <span style={{color: 'rgba(0, 0, 0, 0.85)'}}>Team Building & Chiang Mai Tour</span></h5>
+                                    <h5>August 26: <span style={{color: 'rgba(0, 0, 0, 0.85)'}}>Community Building & Chiang Mai Tour</span></h5>
 
                                     <div style={{marginLeft: '5%'}}>
                                         <Row>
@@ -316,7 +316,7 @@ class C extends BaseComponent {
                                     </div>
                                 </li>
                                 <li>
-                                    <h5>August 26: <span style={{color: 'rgba(0, 0, 0, 0.85)'}}>Hotel Check-Out</span></h5>
+                                    <h5>August 27: <span style={{color: 'rgba(0, 0, 0, 0.85)'}}>Hotel Check-Out</span></h5>
                                 </li>
                             </ul>
 

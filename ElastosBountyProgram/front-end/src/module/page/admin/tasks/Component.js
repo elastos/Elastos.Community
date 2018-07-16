@@ -157,7 +157,7 @@ export default class extends AdminPage {
                                     dataSource={taskData}
                                     loading={this.props.loading}
                                     onChange={this.handleChange}
-                               />
+                                />
                             </Col>
                             <Col span={4} className="admin-right-column wrap-box-navigator">
                                 <Navigator selectedItem={'tasks'}/>
