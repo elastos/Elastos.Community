@@ -35,6 +35,23 @@ export default createContainer(Component, (state) => {
 
         async setFilter(options) {
 
+        },
+
+        async archiveSubmission(submissionId) {
+            await submissionService.archive(submissionId)
+
+            return submissionService.index({
+                admin: true,
+                type: SUBMISSION_TYPE.FORM_EXT
+            })
+        },
+
+        async showArchived(showArchived) {
+            await submissionService.index({
+                admin: true,
+                type: SUBMISSION_TYPE.FORM_EXT,
+                showArchived: showArchived
+            })
         }
     }
 })

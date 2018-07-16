@@ -62,11 +62,9 @@ export default class extends AdminPage {
                 </a>
             },
             sorter: (a, b) => {
-
                 if (!a.title || !b.title) {
                     return 0
                 }
-
                 return a.title.localeCompare(b.title)
             }
         },
@@ -127,6 +125,7 @@ export default class extends AdminPage {
                                     <Input.Search onSearch={this.handleSearch.bind(this)}
                                                   prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                                   placeholder="search"/>
+
                                 </div>
                                 <div className="showArchivedContainer pull-right">
                                     Show Archived

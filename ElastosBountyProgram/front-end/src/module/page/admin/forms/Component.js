@@ -7,10 +7,22 @@ import './style.scss'
 
 import Navigator from '../shared/Navigator/Component'
 
-import { Breadcrumb, Col, Icon, Row, Menu, Select, Table } from 'antd'
+import { Checkbox, Breadcrumb, Col, Icon, Row, Select, Input, Table, Popover, Popconfirm, message } from 'antd'
 import { Link } from 'react-router-dom'
 
+import config from '@/config'
+
 export default class extends AdminPage {
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            textFilter: '',
+            campaign: '',
+            showArchived: false
+        }
+    }
 
     async componentDidMount() {
         await super.componentDidMount()
@@ -21,9 +33,29 @@ export default class extends AdminPage {
         this.props.resetSubmissions()
     }
 
+    handleSearch(value) {
+        this.setState({textFilter: value})
+    }
+
     ord_renderContent () {
 
-        const submissionData = this.props.all_submissions
+        let submissionData = this.props.all_submissions
+
+        // filter results
+        if (this.state.textFilter) {
+            submissionData = submissionData.filter((submission) => {
+                let regExp = new RegExp(this.state.textFilter, 'i')
+                return (
+                    regExp.test(submission.title) ||
+                    regExp.test(submission.description) ||
+                    regExp.test(submission.fullLegalName)
+                )
+            })
+        }
+
+        if (this.state.campaign) {
+            submissionData = submissionData.filter((submission) => submission.campaign === this.state.campaign)
+        }
 
         const columns = [
         {
@@ -32,30 +64,51 @@ export default class extends AdminPage {
             width: '20%',
             className: 'fontWeight500 allow-wrap',
             render: (name, record) => {
-                return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">{name}</a>
+                return <a onClick={this.linkSubmissionDetail.bind(this, record._id)} className="tableLink">
+                    {name}
+                    {record.archived &&
+                    <span className="no-info"> (archived)</span>
+                    }
+                </a>
+            },
+            sorter: (a, b) => {
+                if (!a.title || !b.title) {
+                    return 0
+                }
+                return a.title.localeCompare(b.title)
             }
 
         }, {
             title: 'Name',
             dataIndex: 'fullLegalName'
         }, {
-            title: 'Email',
-            dataIndex: 'email'
-        }, {
             title: 'Campaign',
             dataIndex: 'campaign',
-            width: '30%',
-            className: 'fontWeight500 allow-wrap'
+            className: 'fontWeight500 allow-wrap',
+            render: (campaign, record) => {
+                return config.dict.formCampaigns[campaign]
+            }
         }, {
             title: 'Created',
             dataIndex: 'createdAt',
-            render: (createdAt) => moment(createdAt).format('MMM D')
+            render: (createdAt) => moment(createdAt).format('MMM D'),
+            sorter: (a, b) => {
+                return moment(a.createdAt).valueOf() - moment(b.createdAt).valueOf()
+            },
+            defaultSortOrder: 'descend'
         }, {
             title: '',
             dataIndex: '_id',
             key: 'actions',
+            width: '5%',
             render: (id, record) => {
-
+                return <div>
+                    <Popover content="archive">
+                        <Popconfirm title="Are you sure you want to archive this item?" placement="top" okText="Yes" onConfirm={this.archiveItem.bind(this, id)}>
+                            <Icon type="inbox"/>
+                        </Popconfirm>
+                    </Popover>
+                </div>
             }
         }]
 
@@ -74,6 +127,32 @@ export default class extends AdminPage {
                     <div className="p_admin_content">
                         <Row>
                             <Col span={20} className="c_SubmissionTableContainer admin-left-column wrap-box-user">
+                                <div className="pull-right">
+                                    <Select
+                                        showSearch
+                                        allowClear
+                                        style={{width: 200, marginLeft: 8}}
+                                        placeholder="Select a campaign"
+                                        onChange={this.selectCampaign.bind(this)}
+                                    >
+                                        {_.map(config.dict.formCampaigns, (campaign, key) => {
+                                            return <Select.Option value={key}>
+                                                {campaign}
+                                            </Select.Option>
+                                        })}
+                                    </Select>
+                                </div>
+                                <div className="pull-right">
+                                    <Input.Search onSearch={this.handleSearch.bind(this)}
+                                                  prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                                  placeholder="search"/>
+                                </div>
+                                <div className="showArchivedContainer pull-right">
+                                    Show Archived
+                                    &nbsp;
+                                    <Checkbox onClick={this.toggleShowArchived.bind(this)} checked={this.state.showArchived}/>
+                                </div>
+                                <div className="clearfix vert-gap-sm"/>
                                 <Table
                                     columns={columns}
                                     rowKey={(item) => item._id}
@@ -89,6 +168,33 @@ export default class extends AdminPage {
                 </div>
             </div>
         )
+    }
+
+    // TODO: all UI should be moved from container to component
+    async archiveItem(submissionId) {
+        try {
+            await this.props.archiveSubmission(submissionId)
+            message.success('Item archived successfully')
+
+        } catch (err) {
+            console.error(err)
+            message.error('There was a problem archiving this item')
+        }
+    }
+
+    async toggleShowArchived() {
+
+        await this.setState({
+            showArchived: !this.state.showArchived
+        })
+
+        await this.props.showArchived(this.state.showArchived)
+    }
+
+    async selectCampaign(value) {
+        await this.setState({
+            campaign: value
+        })
     }
 
     linkSubmissionDetail(submissionId) {
