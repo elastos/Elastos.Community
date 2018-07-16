@@ -436,7 +436,7 @@ export default class extends Base {
 
         const role = this.currentUser.role;
         if(!_.includes([constant.USER_ROLE.ADMIN, constant.USER_ROLE.COUNCIL], role)){
-            throw 'no permission to approve task';
+            throw 'Access Denied'
         }
 
         const db_task = this.getDBModel('Task');
