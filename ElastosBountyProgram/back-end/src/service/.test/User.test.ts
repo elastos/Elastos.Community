@@ -88,6 +88,17 @@ describe('Tests for User', () => {
         }
     })
 
+    test('It should not be possible to view other users sensitive information', async () => {
+        const sensitiveFields = ['salt', 'password']
+        const result = await userService.show({
+            userId: resultAnother._id
+        })
+
+        for (let field of sensitiveFields) {
+            expect(result[field]).to.be.undefined
+        }
+    })
+
     test('It should not be possible to selfpromote to admin', async () => {
         const memberService = new UserService(DB, {
             user: resultMember
