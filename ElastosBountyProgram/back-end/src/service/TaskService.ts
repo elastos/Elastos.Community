@@ -544,7 +544,7 @@ export default class extends Base {
 
         let task = await db_task.getDBInstance().findOne({_id: taskId})
             .populate('createdBy', sanitize)
-        const doc = await db_tc.getDBInstance().findOne({_id: taskCandidateId})
+        let doc = await db_tc.getDBInstance().findOne({_id: taskCandidateId})
             .populate('user', sanitize)
 
         if (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
