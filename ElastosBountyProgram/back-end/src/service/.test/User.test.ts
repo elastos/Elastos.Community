@@ -13,11 +13,11 @@ let DB, userService
 const _generateMember = (uid) => {
     let timeMs = new Date().valueOf()
     return {
-        username: `clarence+dev.test.${timeMs}.${uid}@elastosjs.com`,
+        username: `user+dev.test.${timeMs}.${uid}@elastosjs.com`,
         password: 'elastos821',
-        email: `clarence+dev.test.${timeMs}.${uid}@elastosjs.com`,
-        firstName: 'Clarence',
-        lastName: 'Liu',
+        email: `user+dev.test.${timeMs}.${uid}@elastosjs.com`,
+        firstName: 'John',
+        lastName: 'Doe',
         country: 'ca',
         city: 'Vancouver'
     }
