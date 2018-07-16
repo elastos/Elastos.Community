@@ -90,6 +90,11 @@ export default class extends Base {
         const db_user = this.getDBModel('User');
         let selectFields = '-salt -password -elaBudget -elaOwed -votePower'
 
+        if (param.admin && (!this.currentUser || (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
+            this.currentUser._id !== userId))) {
+            throw 'Access Denied'
+        }
+
         if (!param.admin) {
             selectFields += ' -email'
         }
@@ -115,8 +120,8 @@ export default class extends Base {
         let user = await db_user.findById(userId)
         let countryChanged = false
 
-        if (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
-            this.currentUser._id !== userId) {
+        if (!this.currentUser || (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
+            this.currentUser._id !== userId)) {
             throw 'Access Denied'
         }
 
@@ -189,8 +194,8 @@ export default class extends Base {
         this.validate_password(password);
         this.validate_username(username);
 
-        if (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
-            this.currentUser.username !== username) {
+        if (!this.currentUser || (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
+            this.currentUser.username !== username)) {
             throw 'Access Denied'
         }
 

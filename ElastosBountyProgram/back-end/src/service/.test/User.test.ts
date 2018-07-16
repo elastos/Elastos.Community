@@ -75,6 +75,21 @@ describe('Tests for User', () => {
         }
     })
 
+    test('It should not be possible to view other users in admin mode', async () => {
+        const expectedError = 'Access Denied'
+
+        try {
+            await userService.show({
+                userId: resultAnother._id,
+                admin: true
+            })
+
+            assert.fail(`Should fail with ${expectedError}`)
+        } catch (err) {
+            expect(err).to.be.equal(expectedError)
+        }
+    })
+
     afterAll(async () => {
         await DB.disconnect()
     })
