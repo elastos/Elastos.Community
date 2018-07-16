@@ -67,6 +67,9 @@ export default class extends StandardPage {
                                 <Menu.Item key="events">
                                     Creating Events/Tasks
                                 </Menu.Item>
+                                <Menu.Item key="meetupGuide">
+                                    Meetup Guide
+                                </Menu.Item>
                                 <Menu.Item key="community">
                                     Community
                                 </Menu.Item>
@@ -96,6 +99,9 @@ export default class extends StandardPage {
 
             case 'events':
                 return this.renderEvents()
+
+            case 'meetupGuide':
+                return this.renderMeetupGuide()
 
             case 'community':
                 return this.renderCommunity()
@@ -342,6 +348,31 @@ export default class extends StandardPage {
                     <h5>Please see the following video for steps and information</h5>
 
                     <iframe width="510" height="315" src="https://www.youtube.com/embed/AXtElROGXzA" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                </Col>
+            </Row>
+        </div>
+    }
+
+    renderMeetupGuide() {
+        return <div>
+            <h3>
+                Meetup Guide
+            </h3>
+
+            <Row>
+                <Col>
+                    <h4>
+                        Elastos - First Time Meetup Guide
+                    </h4>
+
+                    <p>
+                        The first meetup can be daunting if you're an organizer, thankfully a couple experienced
+                        organizers have created this helpful guide on how to get started.<br/>
+                        <br/>
+                        <a target="_blank" href="https://docs.google.com/document/d/1f4fBvyXvNrdjxRMHAJTPMdPrKiUeozXsUt4TGxxLBnM">
+                            https://docs.google.com/document/d/1f4fBvyXvNrdjxRMHAJTPMdPrKiUeozXsUt4TGxxLBnM
+                        </a>
+                    </p>
                 </Col>
             </Row>
         </div>
