@@ -444,12 +444,14 @@ export default class extends BaseComponent {
                                 }
 
                                 if (isTaskOwner) {
-                                    listItemActions.unshift(
-                                        <Tooltip title="Accept application">
-                                            <a onClick={this.showModalAcceptApplicant.bind(this, candidate)}>
-                                                <Icon type="check-circle-o" />
-                                            </a>
-                                        </Tooltip>)
+                                    if (candidate.status !== TASK_CANDIDATE_STATUS.APPROVED) {
+                                        listItemActions.unshift(
+                                            <Tooltip title="Accept application">
+                                                <a onClick={this.showModalAcceptApplicant.bind(this, candidate)}>
+                                                    <Icon type="check-circle-o" />
+                                                </a>
+                                            </Tooltip>)
+                                    }
 
                                     const prefix = this.props.page === 'LEADER'
                                         ? '/profile'
