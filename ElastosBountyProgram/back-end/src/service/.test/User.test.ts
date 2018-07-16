@@ -1,40 +1,65 @@
 declare var describe, test, expect, require, process;
 
-import {expect} from 'chai'
+import {expect, assert} from 'chai'
 
 import {constant} from '../../constant';
 import db from '../../db';
 import '../../config';
 import UserService from '../UserService';
 
+
+let DB, userService
+
+const _generateMember = (uid) => {
+    let timeMs = new Date().valueOf()
+    return {
+        username: `clarence+dev.test.${timeMs}.${uid}@elastosjs.com`,
+        password: 'elastos821',
+        email: `clarence+dev.test.${timeMs}.${uid}@elastosjs.com`,
+        firstName: 'Clarence',
+        lastName: 'Liu',
+        country: 'ca',
+        city: 'Vancouver'
+    }
+}
+
+const member = _generateMember('1')
+const anotherMember = _generateMember('2')
+
+let result, resultAnother
+
 describe('Tests for User', () => {
+    beforeAll(async () => {
+        DB = await db.create();
 
-    test('Should create user', async () => {
-
-        let DB = await db.create();
-
-        let userService = new UserService(DB, {
+        userService = new UserService(DB, {
             user: 'test'
         });
-
-        let timeMs = new Date().valueOf();
-
-        let result = await userService.registerNewUser({
-            username: `clarence+dev.test.${timeMs}@elastosjs.com`,
-            password: 'elastos821',
-            email: 'clarence+dev.test@elastosjs.com',
-            profile: {
-                firstName: 'Clarence',
-                lastName: 'Liu',
-                region: {
-                    country: 'Canada',
-                    city: 'Vancouver'
-                }
-            }
-        });
-
-        expect(result.role).to.be.equal(constant.USER_ROLE.MEMBER)
-
     })
 
+    test('It should register new users as members', async () => {
+        result = await userService.registerNewUser(member);
+        expect(result.role).to.be.equal(constant.USER_ROLE.MEMBER)
+        resultAnother = await userService.registerNewUser(anotherMember);
+        expect(resultAnother.role).to.be.equal(constant.USER_ROLE.MEMBER)
+    })
+
+    test('It should not be possible to change other users for member', async () => {
+        const expectedError = 'Access Denied'
+
+        try {
+            await userService.update({
+                userId: resultAnother._id,
+                email: 'foo@bar.com'
+            })
+
+            assert.fail(`Should fail with ${expectedError}`)
+        } catch (err) {
+            expect(err).to.be.equal(expectedError)
+        }
+    })
+
+    afterAll(async () => {
+        await DB.disconnect()
+    })
 });
