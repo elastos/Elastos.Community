@@ -225,7 +225,7 @@ export default class extends Base {
         // if member role, could not create
         const role = this.currentUser.role;
         if(role === constant.USER_ROLE.MEMBER){
-            throw 'member could not create task';
+            throw 'Access Denied';
         }
 
         /*
@@ -544,8 +544,7 @@ export default class extends Base {
 
         let task = await db_task.getDBInstance().findOne({_id: taskId})
             .populate('createdBy', sanitize)
-        let doc = await db_tc.getDBInstance().findOne({_id: taskCandidateId})
-            .populate('user', sanitize)
+        let doc = await db_tc.findOne({_id: taskCandidateId})
 
         if (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
             this.currentUser.role !== constant.USER_ROLE.COUNCIL &&
