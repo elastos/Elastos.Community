@@ -98,15 +98,23 @@ describe('Tests for User', () => {
     })
 
     test('It should not be possible to selfpromote to admin', async () => {
+
+        const expectedError = 'Access Denied'
+
         const memberService = new UserService(DB, {
             user: resultMember
         })
-        const result = await memberService.update({
-            userId: resultMember._id,
-            role: constant.USER_ROLE.ADMIN
-        })
+        try {
+            await memberService.update({
+                userId: resultMember._id,
+                role: constant.USER_ROLE.ADMIN
+            })
 
-        expect(result.role).to.be.equal(constant.USER_ROLE.MEMBER)
+            assert.fail(`Should fail with ${expectedError}`)
+        } catch (err) {
+            expect(err).to.be.equal(expectedError)
+        }
+
     })
 
     afterAll(async () => {

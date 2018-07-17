@@ -5,7 +5,7 @@ import CommunityService from '@/service/CommunityService'
 import {message} from 'antd'
 import _ from 'lodash'
 
-import {SUBMISSION_TYPE} from '@/constant'
+import {SUBMISSION_TYPE, SUBMISSION_CAMPAIGN} from '@/constant'
 
 message.config({
     top: 100
@@ -29,7 +29,7 @@ export default createContainer(Component, (state)=>{
 
                     title: `${st.community.name} Organizer App`,
                     type: SUBMISSION_TYPE.FORM_EXT,
-                    campaign: SUBMISSION_TYPE.COMMUNITY_ORGANIZER,
+                    campaign: SUBMISSION_CAMPAIGN.COMMUNITY_ORGANIZER,
 
                     email: this.user_email,
                     fullLegalName: formData.fullLegalName,
