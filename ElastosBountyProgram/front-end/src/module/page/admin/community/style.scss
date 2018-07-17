@@ -26,6 +26,10 @@
   }
 }
 
+.child-box-users .user-card .ant-card-cover img {
+  height: 75px;
+}
+
 .user-card {
   padding: 10px;
   text-align: center;
@@ -34,8 +38,11 @@
     padding: 10px;
 
     img {
+      margin-left: auto;
+      margin-right: auto;
       border-radius: 50%;
       height: 100px;
+      width: auto;
     }
   }
 
