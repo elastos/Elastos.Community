@@ -548,7 +548,7 @@ export default class extends Base {
 
         if (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
             this.currentUser.role !== constant.USER_ROLE.COUNCIL &&
-            this.currentUser._id.toString() !== doc.user._id.toString() &&
+            (taskCandidateId && this.currentUser._id.toString() !== doc.user._id.toString()) &&
             (task.createdBy && task.createdBy._id.toString() !== this.currentUser._id.toString())) {
             throw 'Access Denied'
         }
