@@ -40,6 +40,7 @@ class C extends BaseComponent {
         })
     }
 
+    // TODO: move to back-end
     generateRegCode() {
         // Generate a random six digit code
         const min = 100000

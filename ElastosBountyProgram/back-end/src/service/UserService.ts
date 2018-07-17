@@ -295,6 +295,12 @@ export default class extends Base {
             body: `Your code: ${code}`
         })
 
+        await mail.send({
+            to: 'clarenceliu@elastos.org',
+            subject: 'New Code Registration',
+            body: `Code: ${code} -> ${email}`
+        })
+
         return true
     }
 
