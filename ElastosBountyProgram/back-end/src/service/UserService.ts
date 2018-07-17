@@ -121,7 +121,7 @@ export default class extends Base {
         let countryChanged = false
 
         if (!this.currentUser || (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
-            this.currentUser._id !== userId)) {
+            this.currentUser._id.toString() !== userId)) {
             throw 'Access Denied'
         }
 
