@@ -104,7 +104,7 @@ export default function() {
                             <h4>Registration Deadline:</h4>
                         </Col>
                         <Col span={16}>
-                            <b>July 18, 2018</b>
+                            <b>July 18, 2018 - 11:59pm PDT</b>
                         </Col>
                     </Row>
 
@@ -224,7 +224,8 @@ export default function() {
                     - You must arrive in Chiang Mai by August 24, the official event is on the 25th<br/>
                     - You are responsible for your own Visa requirements based on your nationality<br/>
                     <u>- You must not represent yourself as an employee of Elastos, your purpose of travel to Thailand must be for tourism only</u><br/>
-                    - If for whatever reason - except medical emergencies with proof - you will not receive reimbursement if you do not attend the event
+                    - If for whatever reason - except medical emergencies with proof - you will not receive reimbursement if you do not attend the event<br/>
+                    - Airfare receipt due by Aug 25, 12pm local time in Thailand for reimbursement
                 </Col>
             </Row>
 
