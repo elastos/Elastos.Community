@@ -90,6 +90,11 @@ export default class extends Base {
         const db_user = this.getDBModel('User');
         let selectFields = '-salt -password -elaBudget -elaOwed -votePower'
 
+        if (param.admin && (!this.currentUser || (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
+            this.currentUser._id !== userId))) {
+            throw 'Access Denied'
+        }
+
         if (!param.admin) {
             selectFields += ' -email'
         }
@@ -115,11 +120,16 @@ export default class extends Base {
         let user = await db_user.findById(userId)
         let countryChanged = false
 
+        if (!this.currentUser || (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
+            this.currentUser._id !== userId)) {
+            throw 'Access Denied'
+        }
+
         if (!user) {
             throw `userId: ${userId} not found`
         }
 
-        if (param.profile.country && param.profile.country !== user.profile.country) {
+        if (param.profile && param.profile.country && param.profile.country !== user.profile.country) {
             countryChanged = true
         }
 
@@ -183,6 +193,11 @@ export default class extends Base {
         this.validate_password(oldPassword);
         this.validate_password(password);
         this.validate_username(username);
+
+        if (!this.currentUser || (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
+            this.currentUser.username !== username)) {
+            throw 'Access Denied'
+        }
 
         const user = await db_user.findOne({username}, {reject: false});
         if(!user){
@@ -317,7 +332,6 @@ export default class extends Base {
     }
 
     private async linkCountryCommunity(user) {
-
         const db_community = this.getDBModel('Community');
         const communityService = this.getService(CommunityService);
 

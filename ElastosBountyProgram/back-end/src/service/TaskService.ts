@@ -225,7 +225,7 @@ export default class extends Base {
         // if member role, could not create
         const role = this.currentUser.role;
         if(role === constant.USER_ROLE.MEMBER){
-            throw 'member could not create task';
+            throw 'Access Denied';
         }
 
         /*
@@ -436,7 +436,7 @@ export default class extends Base {
 
         const role = this.currentUser.role;
         if(!_.includes([constant.USER_ROLE.ADMIN, constant.USER_ROLE.COUNCIL], role)){
-            throw 'no permission to approve task';
+            throw 'Access Denied'
         }
 
         const db_task = this.getDBModel('Task');
@@ -537,26 +537,36 @@ export default class extends Base {
      * @returns {Promise<boolean>}
      */
     public async removeCandidate(param): Promise<boolean> {
-        const {taskId, taskCandidateId} = param;
+        const {taskId, taskCandidateId} = param
 
-        // TODO: permission checks
+        const db_task = this.getDBModel('Task')
+        const db_tc = this.getDBModel('Task_Candidate')
+
+        let task = await db_task.getDBInstance().findOne({_id: taskId})
+            .populate('createdBy', sanitize)
+        let doc = await db_tc.findOne({_id: taskCandidateId})
+
+        if (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
+            this.currentUser.role !== constant.USER_ROLE.COUNCIL &&
+            (taskCandidateId && this.currentUser._id.toString() !== doc.user._id.toString()) &&
+            (task.createdBy && task.createdBy._id.toString() !== this.currentUser._id.toString())) {
+            throw 'Access Denied'
+        }
 
         // TODO: check max applicants
 
-        const doc = {
+        doc = {
             _id: taskCandidateId
         }
 
-        const db_tc = this.getDBModel('Task_Candidate');
         await db_tc.remove(doc);
 
-        const db_task = this.getDBModel('Task');
-        const task = await db_task.findOne({_id: taskId});
+        task = await db_task.findOne({_id: taskId});
         if(!task){
             throw 'invalid task id';
         }
 
-        await db_task.db.update({
+        const result = await db_task.db.update({
             _id: task._id
         }, {
             $pull: {
@@ -566,7 +576,7 @@ export default class extends Base {
 
         console.log('remove task candidate =>', doc);
 
-        return true
+        return result
 
         /*
         // TODO: add this back in for permission checks
@@ -616,15 +626,24 @@ export default class extends Base {
     public async acceptCandidate(param): Promise<boolean> {
         const db_task = this.getDBModel('Task');
         const db_tc = this.getDBModel('Task_Candidate');
+
+        let doc = await db_tc.findById(param.taskCandidateId)
+        let task = await db_task.getDBInstance().findOne({_id: doc.task})
+            .populate('createdBy', sanitize)
+
+        if (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
+            (task.createdBy && task.createdBy._id.toString() !== this.currentUser._id.toString())) {
+            throw 'Access Denied'
+        }
+
         await db_tc.update({
             _id: param.taskCandidateId
         }, {
             status: constant.TASK_CANDIDATE_STATUS.APPROVED
         });
 
-        const doc = await db_tc.findById(param.taskCandidateId)
-
-        let task = await db_task.getDBInstance().findOne({_id: doc.task})
+        doc = await db_tc.findById(param.taskCandidateId)
+        task = await db_task.getDBInstance().findOne({_id: doc.task})
             .populate('candidates')
 
         let acceptedCnt = 0;

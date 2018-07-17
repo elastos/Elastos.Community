@@ -34,7 +34,7 @@ export default class extends Base{
             query.category = {$in: [constant.TASK_CATEGORY.DEVELOPER, constant.TASK_CATEGORY.SOCIAL]}
         }
 
-        if (param.admin) {
+        if (param.admin && this.session.user && this.session.user.role === constant.USER_ROLE.ADMIN) {
             delete param.admin;
             query.status = {$ne: constant.TASK_STATUS.CANCELED}
 
