@@ -13,11 +13,11 @@ const testData: any = {}
 let DB, communityService
 
 beforeAll(async ()=>{
-    DB = await db.create()
+    // DB = await db.create()
 
-    communityService = new CommunityService(DB, {
-        user: null
-    })
+    // communityService = new CommunityService(DB, {
+    //     user: null
+    // })
 })
 
 describe('Test for Community', () => {

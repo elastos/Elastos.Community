@@ -102,12 +102,12 @@ describe('Tests for Tasks', () => {
             name : 'task_111'
         });
 
-        const ts1 = new TaskService(DB, {user: user.member});
-        const candidate = await ts1.addCandidate({
+        const candidate = await ts_admin.addCandidate({
             taskId: task._id,
             userId: user.member._id
         });
 
+        const ts1 = new TaskService(DB, {user: user.member});
         const rs: any = await ts1.removeCandidate({
             taskId: task._id,
             taskCandidateId: candidate._id,
@@ -180,4 +180,9 @@ describe('Tests for Tasks', () => {
     test('Approval should send an email to owner + all admins too', async () => {
         // TODO
     })
-});
+})
+
+afterAll(async () => {
+    await DB.disconnect()
+})
+

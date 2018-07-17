@@ -259,11 +259,11 @@ describe('Tests for Task Update', () => {
     })
 
     test('Organizer cannot change budget/rewards after APPROVED status', async () => {
-        await new Promise((resolve) => {
-            setTimeout(() => {
-                resolve()
-            }, 6000)
-        })
+        // await new Promise((resolve) => {
+        //     setTimeout(() => {
+        //         resolve()
+        //     }, 6000)
+        // })
     })
 
 })

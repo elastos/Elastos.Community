@@ -33,9 +33,7 @@ describe('Tests for User', () => {
         DB = await db.create();
 
         userService = new UserService(DB, {});
-    })
 
-    test('It should register new users as members', async () => {
         resultMember = await userService.registerNewUser(member);
         expect(resultMember.role).to.be.equal(constant.USER_ROLE.MEMBER)
         resultAnother = await userService.registerNewUser(anotherMember);
