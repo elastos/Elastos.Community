@@ -58,15 +58,6 @@ describe('Tests for Tasks', () => {
             user : user.admin
         });
         task = await ts_admin.create(global.DB.TASK_1);
-
-        // add 1 more member
-        // const userService = new UserService(DB, {
-        //     user: user.admin
-        // });
-        // const m1: any = await userService.registerNewUser({
-        //     ...global.DB.MEMBER_USER,
-        //     username: 'aaa'
-        // });
     });
 
     test('should create task success as admin user', async ()=>{
