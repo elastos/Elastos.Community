@@ -566,7 +566,7 @@ export default class extends Base {
             throw 'invalid task id';
         }
 
-        await db_task.db.update({
+        const result = await db_task.db.update({
             _id: task._id
         }, {
             $pull: {
@@ -576,7 +576,7 @@ export default class extends Base {
 
         console.log('remove task candidate =>', doc);
 
-        return true
+        return result
 
         /*
         // TODO: add this back in for permission checks
