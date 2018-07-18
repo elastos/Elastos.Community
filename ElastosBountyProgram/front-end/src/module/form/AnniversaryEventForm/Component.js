@@ -211,26 +211,26 @@ class C extends BaseComponent {
                             </h5>
 
                             <Row>
-                                <Col span={6}>
+                                <Col xs={{span: 8}} lg={{span: 6}}>
                                     <h4>Location:</h4>
                                 </Col>
-                                <Col span={12}>
+                                <Col xs={{span: 16}} lg={{span: 18}}>
                                     Shangri-La Hotel, Chiang Mai, Thailand
                                 </Col>
                             </Row>
                             <Row>
-                                <Col span={6}>
+                                <Col xs={{span: 8}} lg={{span: 6}}>
                                     <h4>Event Dates:</h4>
                                 </Col>
-                                <Col>
+                                <Col xs={{span: 16}} lg={{span: 18}}>
                                     Aug 24 - 27, 2018
                                 </Col>
                             </Row>
                             <Row>
-                                <Col span={6}>
+                                <Col xs={{span: 8}} lg={{span: 6}}>
                                     <h4>Registration Deadline:</h4>
                                 </Col>
-                                <Col>
+                                <Col xs={{span: 16}} lg={{span: 18}}>
                                     <b>July 18, 2018 - 11:59pm PDT</b>
                                 </Col>
                             </Row>
