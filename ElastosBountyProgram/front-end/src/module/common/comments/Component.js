@@ -175,8 +175,8 @@ class C extends BaseComponent {
         // Show in reverse chronological order
         commentItems && commentItems.reverse();
 
-        return (commentItems && commentItems.length ?
-            <div>
+        return  <div>
+            {commentItems && commentItems.length ?
                 <List
                     size="large"
                     itemLayout="horizontal"
@@ -194,12 +194,15 @@ class C extends BaseComponent {
                             />
                         </List.Item>
                     )}
-                />
-            </div> :
-            <div class="center no-info">
-                no comments
-            </div>
-        )
+                /> :
+                <div>
+                    {footer}
+                    <div className="center no-info">
+                        no comments
+                    </div>
+                </div>
+            }
+        </div>
     }
 
     handleSubmit(e) {
