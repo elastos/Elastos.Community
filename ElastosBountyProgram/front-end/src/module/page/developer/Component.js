@@ -7,7 +7,7 @@ import SubmissionForm from './formSubmission/Container'
 import _ from 'lodash'
 import './style.scss'
 
-import { Col, Row, Icon, Form, Input, Button, Modal, Select, Table, List, Tooltip, Cascader } from 'antd'
+import { Col, Row, Icon, Form, Input, Button, Modal, Select, Table, List, Popover, Cascader } from 'antd'
 import moment from 'moment/moment'
 
 const Option = Select.Option
@@ -180,6 +180,13 @@ export default class extends StandardPage {
                                 </Button>
                             </div>
                             <div className="pull-right btnContainer">
+                                {this.props.currentUserId && this.props.is_admin &&
+                                <Popover content={'add ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'event' : (this.state.taskTypeSelected === TASK_TYPE.TASK ? 'task' : 'project'))}>
+                                    <Icon className="addTask" type="file-add" onClick={() => {
+                                        this.props.history.push(`/task-create?category=DEVELOPER&type=${this.state.taskTypeSelected}`)
+                                    }}/>
+                                </Popover>
+                                }
                                 {filterCommunityEl}
                                 {/*
                                 // TODO

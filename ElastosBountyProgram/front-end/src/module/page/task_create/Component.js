@@ -3,7 +3,7 @@ import StandardPage from '../StandardPage';
 import Footer from '@/module/layout/Footer/Container'
 import TaskCreateForm from '@/module/form/TaskCreateForm/Container'
 
-import {TASK_TYPE} from '@/constant'
+import {TASK_TYPE, TASK_CATEGORY} from '@/constant'
 
 export default class extends StandardPage {
 
@@ -11,11 +11,17 @@ export default class extends StandardPage {
 
         // default
         let taskType = TASK_TYPE.EVENT
+        let taskCategory = TASK_CATEGORY.SOCIAL
 
         if (this.props.location && this.props.location.search) {
-            const typeQry = this.props.location.search.match(/[\\?&]type=(\w+)/)
-            if (typeQry.length > 1) {
+            const typeQry = this.props.location.search.match(/[\\?&]type=([\w]+)/)
+            if (typeQry && typeQry.length > 1) {
                 taskType = typeQry[1]
+            }
+
+            const categoryQry = this.props.location.search.match(/[\\?&]category=([\w]+)/)
+            if (categoryQry && categoryQry.length > 1) {
+                taskCategory = categoryQry[1]
             }
         }
 
@@ -30,7 +36,7 @@ export default class extends StandardPage {
                     </h2>
                 </div>
                 <div className="ebp-page">
-                    <TaskCreateForm taskType={taskType}/>
+                    <TaskCreateForm taskType={taskType} taskCategory={taskCategory}/>
                 </div>
                 <Footer />
             </div>

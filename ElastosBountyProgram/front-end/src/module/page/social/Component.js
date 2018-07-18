@@ -6,7 +6,7 @@ import moment from 'moment'
 import ModalJoinCommunity from './ModalJoinCommunity/Component'
 import './style.scss'
 
-import { Col, Row, Icon, message, Button, Select, Table, List, Checkbox, Cascader, Popconfirm } from 'antd'
+import { Col, Row, Icon, message, Button, Select, Table, List, Popover, Cascader, Popconfirm } from 'antd'
 
 const Option = Select.Option
 
@@ -204,6 +204,14 @@ export default class extends StandardPage {
                                 Looking for Help&nbsp;
                                 <Checkbox checked={this.state.lookingForHelpOnly}/>
                                 */}
+                                {this.props.currentUserId &&
+                                    <Popover content={'add ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'event' : 'task')}>
+                                        <Icon className="addTask" type="file-add" onClick={() => {
+                                            this.props.history.push(`/task-create?category=SOCIAL&type=${this.state.taskTypeSelected}`)
+                                        }}/>
+                                    </Popover>
+                                }
+
                                 {filterCommunityEl}
                                 {/*
                                 <Button onClick={this.createTaskLink.bind(this, TASK_TYPE.EVENT)}>

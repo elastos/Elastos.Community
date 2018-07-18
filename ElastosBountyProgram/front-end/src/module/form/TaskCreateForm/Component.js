@@ -90,7 +90,8 @@ class C extends BaseComponent {
 
         this.state = {
             communityTrees: [],
-            taskType: TASK_TYPE.EVENT,
+            taskType: this.props.taskType || TASK_TYPE.EVENT,
+            taskCategory: this.props.taskCategory || TASK_TYPE.SOCIAL,
             assignSelf: (props.existingTask && props.existingTask.assignSelf) || false,
 
             eventDateRange: (props.existingTask && props.existingTask.eventDateRange) || false,
@@ -144,10 +145,15 @@ class C extends BaseComponent {
 
         const taskCategory_fn = getFieldDecorator('taskCategory', {
             rules: [{required: true, message: 'Please select a category'}],
-            initialValue: this.state.editing ? existingTask.category : TASK_CATEGORY.SOCIAL
+            initialValue: this.state.editing ? existingTask.category : (this.props.taskCategory || TASK_CATEGORY.SOCIAL)
         })
         const taskCategory_el = (
-            <Select disabled={hasLeaderEditRestrictions}>
+            <Select disabled={hasLeaderEditRestrictions} onChange={(val) => {
+                this.setState({taskCategory: val})
+                if (this.state.taskCategory === TASK_TYPE.PROJECT) {
+                    // TODO: change taskType to something other than project
+                }
+            }}>
                 <Option value={TASK_CATEGORY.SOCIAL}>Social</Option>
                 {this.props.is_admin &&
                 <Option value={TASK_CATEGORY.DEVELOPER}>Developer</Option>
@@ -164,6 +170,9 @@ class C extends BaseComponent {
             <Select disabled={hasLeaderEditRestrictions} onChange={(val) => this.setState({taskType: val})}>
                 <Option value={TASK_TYPE.EVENT}>Event</Option>
                 <Option value={TASK_TYPE.TASK}>Task</Option>
+                {this.state.taskCategory === TASK_CATEGORY.DEVELOPER &&
+                <Option value={TASK_TYPE.PROJECT}>Project</Option>
+                }
             </Select>
         )
 

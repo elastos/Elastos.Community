@@ -17,6 +17,18 @@
       .ant-cascader-picker-label {
         text-align: left;
       }
+
+      .addTask {
+        vertical-align: baseline;
+        margin-right: $gap_0;
+        font-size: 150%;
+        cursor: pointer;
+        color: $text_dark_gray;
+
+        &:hover {
+          color: $text_light_gray;
+        }
+      }
     }
   }
 
