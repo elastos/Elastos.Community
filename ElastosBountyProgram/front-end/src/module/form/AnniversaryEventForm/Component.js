@@ -130,7 +130,7 @@ class C extends BaseComponent {
                             {this.state.attachment_filename}
                         </a>
                     ) : (
-                        <Button loading={this.state.attachment_loading}>
+                        <Button className="mobileBtn" loading={this.state.attachment_loading}>
                             <Icon type="upload" /> Click to upload
                         </Button>
                     )
@@ -163,19 +163,29 @@ class C extends BaseComponent {
         const formItemLayout = {
             labelCol: {
                 xs: {span: 24},
-                sm: {span: 6},
+                lg: {span: 6},
             },
             wrapperCol: {
                 xs: {span: 24},
-                sm: {span: 12},
-            },
+                lg: {span: 12},
+            }
         }
 
         const formItemNoLabelLayout = {
             wrapperCol: {
                 xs: {span: 24},
-                sm: {offset: 6, span: 12},
+                lg: {offset: 6, span: 12},
             },
+        }
+
+        const textLayout = {
+            xs: {
+                span: 24
+            },
+            lg: {
+                offset: 6,
+                span: 12
+            }
         }
 
 
@@ -193,7 +203,7 @@ class C extends BaseComponent {
                 <div>
                     <Divider>Details and Rules</Divider>
                     <Row>
-                        <Col offset={6} span={12} className="left-align">
+                        <Col {...textLayout} className="left-align">
 
                             <h5 style={{color: '#47aaa7'}}>
                                 If you did not receive an invitation to fill out this form directly via email,<br/>
@@ -368,10 +378,10 @@ class C extends BaseComponent {
 
                         <Divider>Application</Divider>
                         <Row>
-                            <Col span={6} className="right-align static-field">
+                            <Col xs={{span: 24}} lg={{span: 6}} className="right-align static-field">
                                 Email:
                             </Col>
-                            <Col span={12} className="static-field content">
+                            <Col xs={{span: 24}} lg={{span: 12}} className="static-field content">
                                 {this.props.user.email}
                             </Col>
                         </Row>
@@ -384,15 +394,15 @@ class C extends BaseComponent {
                         {this.props.user.profile.walletAddress ?
                             <div>
                                 <Row>
-                                    <Col offset="6" span="12">
+                                    <Col {...textLayout} >
                                         Please ensure this is your wallet address, this is managed under your profile
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Col span={6} className="right-align static-field">
+                                    <Col xs={{span: 24}} lg={{span: 6}} className="right-align static-field">
                                         ELA Address:
                                     </Col>
-                                    <Col span={12} className="static-field content">
+                                    <Col xs={{span: 24}} lg={{span: 12}}  className="static-field content">
                                         <b>{this.props.user.profile.walletAddress}</b>
                                     </Col>
                                 </Row>
@@ -415,7 +425,7 @@ class C extends BaseComponent {
 
 
                         <Row>
-                            <Col offset={6} span={12} className="left-align">
+                            <Col {...textLayout} className="left-align">
                                 If you do not upload it now you will need to visit your<br/>
                                 <b>Profile / Submissions Page</b><br/>
                                 <br/>
@@ -431,14 +441,14 @@ class C extends BaseComponent {
                         <Divider/>
 
 
-                        <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 6}}}>
-                            <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
+                        <FormItem wrapperCol={{xs: {span: 24, offset: 0}, lg: {span: 12, offset: 6}}}>
+                            <Button loading={this.props.loading} type="ebp" htmlType="submit" className="mobileBtn d_btn">
                                 Submit
                             </Button>
                         </FormItem>
 
                         <Row>
-                            <Col offset={6} className="static-field content">
+                            <Col {...textLayout} className="static-field content">
                                 Please contact <a href="mailto:cyberrepublic@elastos.org">cyberrepublic@elastos.org</a> if you have any issues.
                             </Col>
                         </Row>
