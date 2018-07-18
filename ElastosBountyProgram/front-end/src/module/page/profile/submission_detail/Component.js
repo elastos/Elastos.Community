@@ -17,7 +17,14 @@ export default class extends StandardPage {
         editing: false
     }
 
+    ord_checkLogin(isLogin) {
+        if (!isLogin) {
+            this.props.history.replace('/home')
+        }
+    }
+
     componentDidMount() {
+        super.componentDidMount()
         const submissionId = this.props.match.params.submissionId
         this.props.getSubmissionDetail(submissionId)
     }

@@ -12,7 +12,13 @@ const FormItem = Form.Item
 
 export default class extends StandardPage {
 
-    ord_renderContent () {
+    ord_checkLogin(isLogin) {
+        if (!isLogin) {
+            this.props.history.replace('/home')
+        }
+    }
+
+    ord_renderContent() {
 
         return (
             <div>

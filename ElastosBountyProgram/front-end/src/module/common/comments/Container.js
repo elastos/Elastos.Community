@@ -6,6 +6,7 @@ import SubmissionService from '@/service/SubmissionService'
 import {message} from 'antd'
 
 export default createContainer(Component, (state) => {
+
     return {
         task: state.task.detail,
         submission: state.submission.detail,

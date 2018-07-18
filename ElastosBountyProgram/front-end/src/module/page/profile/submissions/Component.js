@@ -12,7 +12,14 @@ const FormItem = Form.Item;
 
 export default class extends StandardPage {
 
+    ord_checkLogin(isLogin) {
+        if (!isLogin) {
+            this.props.history.replace('/home')
+        }
+    }
+
     componentDidMount() {
+        super.componentDidMount()
         this.props.getSubmissions(this.props.currentUserId)
     }
 

@@ -1,10 +1,11 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import { Form, Col, Row, List, Avatar, Icon, Input, Divider, Button, Spin } from 'antd'
+import { Form, Col, Row, List, Avatar, Icon, Divider, Button, Input } from 'antd'
 import config from '@/config'
 import './style.scss'
 import moment from 'moment'
 
+const TextArea = Input.TextArea
 const FormItem = Form.Item
 
 class C extends BaseComponent {
@@ -71,7 +72,7 @@ class C extends BaseComponent {
             initialValue: ''
         })
         const comment_el = (
-            <Input placeholder="Comments or updates"/>
+            <TextArea rows={2} placeholder="Comments or updates"/>
         )
 
         return {
@@ -105,6 +106,10 @@ class C extends BaseComponent {
     }
 
     getFooter() {
+        if (!this.props.currentUserId) {
+            return <div/>
+        }
+
         const p = this.getInputProps()
         const subscribeButton = this.getSubscribeButton()
 
@@ -170,7 +175,7 @@ class C extends BaseComponent {
         // Show in reverse chronological order
         commentItems && commentItems.reverse();
 
-        return (
+        return (commentItems && commentItems.length ?
             <div>
                 <List
                     size="large"
@@ -183,13 +188,16 @@ class C extends BaseComponent {
                     renderItem={(item, ind) => (
                         <List.Item key={ind}>
                             <List.Item.Meta
-                                avatar={<Avatar src={item.avatar} />}
+                                avatar={<Avatar src={item.avatar}/>}
                                 title={item.title}
                                 description={item.description}
                             />
                         </List.Item>
                     )}
                 />
+            </div> :
+            <div class="center no-info">
+                no comments
             </div>
         )
     }

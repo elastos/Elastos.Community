@@ -83,6 +83,7 @@ export default class extends AdminPage {
     }
 
     componentDidMount() {
+        super.componentDidMount()
         this.loadCommunities();
         this.loadCommunityDetail();
         this.loadSubCommunities();

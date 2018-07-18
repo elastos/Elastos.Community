@@ -11,6 +11,7 @@ import Navigator from '../../shared/Navigator/Component'
 import '../style.scss'
 
 export default class extends AdminPage {
+
     state = {
         visibleModalAddCountry: false,
         communities: [],

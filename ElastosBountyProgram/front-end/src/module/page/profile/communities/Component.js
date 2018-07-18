@@ -10,7 +10,15 @@ import { Col, Row, Icon, Form, Breadcrumb, Button, Table, Divider } from 'antd'
 import moment from 'moment/moment'
 
 export default class extends StandardPage {
+
+    ord_checkLogin(isLogin) {
+        if (!isLogin) {
+            this.props.history.replace('/home')
+        }
+    }
+
     componentDidMount() {
+        super.componentDidMount()
         this.props.getMyCommunities(this.props.currentUserId)
     }
 
