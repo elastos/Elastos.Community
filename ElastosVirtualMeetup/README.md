@@ -3,11 +3,12 @@
 We will regularly schedule virtual meetups where the community members can directly interact with the developers on the status of the project and ask any questions they need clarification on. Each meetup will have a different agenda.
 
 ## Upcoming Meetups
-### Thursday July 12th 2018 at 13:00 Easter Daylight Time: World Tour Recap
-- Join from PC, Mac, Linux, iOS or Android: https://elastos.zoom.us/j/651783992
-- Meeting ID: 651783992
 
 ## Past Meetups
+### Thursday, July 12th 2018 at 13:00 Eastern Daylight Time: World Tour Recap
+- [Link to powerpoint slides](https://docs.google.com/presentation/d/1cNroFWlPXv0WDY-zVR_8yvcmIIulMOsLVA_llFRtZAg/edit?usp=sharing)
+- [Link to youtube recording](https://www.youtube.com/watch?v=RuyR_Pj3Nqs)
+
 ### Thursday, May 31st 2018 at 22:00 Eastern Daylight Time: Elastos Github Projects
 - [Link to powerpoint slides](https://docs.google.com/presentation/d/1VE8Kigj5iTvEH6Pkk2iB3mVv10-GoiJEZZk-gmWbNBQ/edit?usp=sharing)
 - [Link to youtube recording](https://www.youtube.com/watch?v=3WR93iuXZ18&feature=youtu.be&app=desktop)
