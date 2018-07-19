@@ -211,26 +211,26 @@ class C extends BaseComponent {
                             </h5>
 
                             <Row>
-                                <Col xs={{span: 8}} lg={{span: 6}}>
+                                <Col xs={{span: 8}} md={{span: 6}}>
                                     <h4>Location:</h4>
                                 </Col>
-                                <Col xs={{span: 16}} lg={{span: 18}}>
+                                <Col xs={{span: 16}} md={{span: 18}}>
                                     Shangri-La Hotel, Chiang Mai, Thailand
                                 </Col>
                             </Row>
                             <Row>
-                                <Col xs={{span: 8}} lg={{span: 6}}>
+                                <Col xs={{span: 8}} md={{span: 6}}>
                                     <h4>Event Dates:</h4>
                                 </Col>
-                                <Col xs={{span: 16}} lg={{span: 18}}>
+                                <Col xs={{span: 16}} md={{span: 18}}>
                                     Aug 24 - 27, 2018
                                 </Col>
                             </Row>
                             <Row>
-                                <Col xs={{span: 8}} lg={{span: 6}}>
+                                <Col xs={{span: 8}} md={{span: 6}}>
                                     <h4>Registration Deadline:</h4>
                                 </Col>
-                                <Col xs={{span: 16}} lg={{span: 18}}>
+                                <Col xs={{span: 16}} md={{span: 18}}>
                                     <b>July 18, 2018 - 11:59pm PDT</b>
                                 </Col>
                             </Row>
@@ -378,10 +378,10 @@ class C extends BaseComponent {
 
                         <Divider>Application</Divider>
                         <Row>
-                            <Col xs={{span: 24}} lg={{span: 6}} className="right-align static-field">
+                            <Col xs={{span: 24}} md={{span: 6}} className="right-align static-field">
                                 Email:
                             </Col>
-                            <Col xs={{span: 24}} lg={{span: 12}} className="static-field content">
+                            <Col xs={{span: 24}} md={{span: 12}} className="static-field content">
                                 {this.props.user.email}
                             </Col>
                         </Row>
@@ -399,10 +399,10 @@ class C extends BaseComponent {
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Col xs={{span: 24}} lg={{span: 6}} className="right-align static-field">
+                                    <Col xs={{span: 24}} md={{span: 6}} className="right-align static-field">
                                         ELA Address:
                                     </Col>
-                                    <Col xs={{span: 24}} lg={{span: 12}}  className="static-field content">
+                                    <Col xs={{span: 24}} md={{span: 12}}  className="static-field content">
                                         <b>{this.props.user.profile.walletAddress}</b>
                                     </Col>
                                 </Row>

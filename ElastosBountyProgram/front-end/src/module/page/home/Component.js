@@ -33,7 +33,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="horizGap"/>
                 <Row className="d_rowHome">
-                    <Col xs={{span: 24}} lg={{span: 16}} className="d_developer">
+                    <Col xs={{span: 24}} md={{span: 16}} className="d_developer">
                         <h3>
                             Developers
                         </h3>
@@ -58,7 +58,7 @@ export default class extends StandardPage {
                         <br/>
                         <br/>
                     </Col>
-                    <Col lg={{span: 6}} className="mobile-hide" style={{textAlign: 'left'}}>
+                    <Col md={{span: 6}} className="mobile-hide" style={{textAlign: 'left'}}>
                         <Icon type="api" className="icon-home"/>
                     </Col>
                 </Row>
@@ -70,7 +70,7 @@ export default class extends StandardPage {
                     <Col span={10} className="mobile-hide" style={{textAlign: 'right'}}>
                         <Icon type="share-alt" className="icon-home"/>
                     </Col>
-                    <Col xs={{span: 24}} lg={{span: 12}} className="d_organizer">
+                    <Col xs={{span: 24}} md={{span: 12}} className="d_organizer">
                         <h3>
                             Organizers & Contributors
                         </h3>

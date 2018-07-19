@@ -10,6 +10,8 @@ import { Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button, Table, Divide
 import moment from 'moment/moment'
 const FormItem = Form.Item;
 
+import MediaQuery from 'react-responsive'
+
 export default class extends StandardPage {
 
     ord_checkLogin(isLogin) {
@@ -281,8 +283,15 @@ export default class extends StandardPage {
                             </Breadcrumb>
                         </div>
                         <div className="p_ProfileTasks p_admin_content">
+                            <MediaQuery maxWidth={720}>
+                                <Row>
+                                    <Col className="admin-right-column wrap-box-navigator">
+                                        <Navigator selectedItem={'profileTasks'} />
+                                    </Col>
+                                </Row>
+                            </MediaQuery>
                             <Row>
-                                <Col span={20} className="c_ProfileContainer admin-left-column wrap-box-user">
+                                <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-left-column wrap-box-user">
                                     {(this.props.is_leader || this.props.is_admin) &&
                                     <div className="pull-right">
                                         <Button onClick={() => this.props.history.push('/task-create/')}>Create Task</Button>
@@ -340,8 +349,15 @@ export default class extends StandardPage {
                                         />
                                     </div>
                                 </Col>
-                                <Col span={4} className="admin-right-column wrap-box-navigator">
-                                    <Navigator selectedItem={'profileTasks'}/>
+                                <MediaQuery minWidth={720}>
+                                    <Col span={4} className="admin-right-column wrap-box-navigator">
+                                        <Navigator selectedItem={'profileTasks'}/>
+                                    </Col>
+                                </MediaQuery>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <br/>
                                 </Col>
                             </Row>
                         </div>

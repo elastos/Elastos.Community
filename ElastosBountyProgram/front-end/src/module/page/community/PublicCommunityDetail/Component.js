@@ -391,7 +391,7 @@ export default class extends StandardPage {
                             <Row>
                                 {this.state.listSubCommunitiesByType[key].map((community, index) => {
                                     return (
-                                        <Col md={{span:12}} lg={{span: 3}}
+                                        <Col md={{span:12}} md={{span: 3}}
                                              key={index}
                                              className="user-card">
                                             {community.leaders.map((leader, index) => {
@@ -446,7 +446,7 @@ export default class extends StandardPage {
                     <Row>
                         {this.state.community.leaders && this.state.community.leaders.length ? this.state.community.leaders.map((leader, index) => {
                             return (
-                                <Col md={{span:12}} lg={{span: 4}} key={index} className="user-card">
+                                <Col md={{span:12}} md={{span: 4}} key={index} className="user-card">
                                     <Card
                                         key={index}
                                         cover={<img src={leader.profile.avatar}/>}
@@ -520,7 +520,7 @@ export default class extends StandardPage {
                     <div className="ebp-page">
                         <div className="ebp-page-content">
                             <Row>
-                                <Col md={{span:24}} lg={{span: 18}}
+                                <Col md={{span:24}} md={{span: 18}}
                                      className="community-left-column">
                                     <Row>
                                         <Col span={24}>
@@ -533,7 +533,7 @@ export default class extends StandardPage {
                                     <br/>
                                     <Button onClick={this.applyOrganizer.bind(this)}>Apply to be an Organizer</Button>
                                 </Col>
-                                <Col md={{span:24}} lg={{span: 6}}
+                                <Col md={{span:24}} md={{span: 6}}
                                      className="community-right-column">
                                     <div>
                                         <h4 className="without-padding">Members</h4>

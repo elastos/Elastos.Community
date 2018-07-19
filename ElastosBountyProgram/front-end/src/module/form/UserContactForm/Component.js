@@ -76,7 +76,7 @@ class C extends BaseComponent {
                             {p.message}
                         </FormItem>
 
-                        <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
+                        <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 0}}}>
                             <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
                                 Send Message
                             </Button>

@@ -36,19 +36,26 @@ export default createContainer(Component, (state)=>{
                     email: formData.email,
                     username: formData.username,
                     profile: {
+                        // General
                         firstName: formData.firstName,
                         lastName: formData.lastName,
                         gender: formData.gender,
                         country: formData.country,
-                        state: formData.state,
-                        city: formData.city,
-                        beOrganizer: formData.beOrganizer === 'yes',
-                        isDeveloper: formData.isDeveloper === 'yes',
-                        walletAddress: formData.walletAddress,
-
                         avatar: state.avatar_url,
                         avatarFilename: state.avatar_filename,
-                        avatarFileType: state.avatar_type
+                        avatarFileType: state.avatar_type,
+                        walletAddress: formData.walletAddress,
+
+                        // Social Media
+                        telegram: formData.telegram,
+                        reddit: formData.reddit,
+                        wechat: formData.wechat,
+                        twitter: formData.twitter,
+                        facebook: formData.facebook,
+
+                        // Questions
+                        beOrganizer: formData.beOrganizer === 'yes',
+                        isDeveloper: formData.isDeveloper === 'yes',
                     },
 
                     removeAttachment: state.removeAttachment

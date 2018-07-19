@@ -27,6 +27,12 @@ export const Profile = {
     state : String,
     city : String,
 
+    telegram: String,
+    reddit: String,
+    wechat: String,
+    twitter: String,
+    facebook: String,
+
     beOrganizer : Boolean,
     isDeveloper : Boolean,
 

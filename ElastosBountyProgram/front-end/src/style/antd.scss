@@ -95,3 +95,20 @@
   color: $text_light_gray;
   margin-right: 0;
 }
+
+.ant-tabs-nav .ant-tabs-tab-active {
+  color: $cr_light_color;
+
+  &:hover {
+    color: $cr_color;
+  }
+}
+
+.ant-tabs-ink-bar {
+  background-color: $cr_light_color;;
+}
+
+.ant-menu-horizontal > .ant-menu-item.ant-menu-item-active {
+  color: $cr_light_color;
+  border-color: $cr_light_color;
+}

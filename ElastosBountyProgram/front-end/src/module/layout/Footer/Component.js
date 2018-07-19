@@ -13,7 +13,7 @@ export default class extends BaseComponent {
                 </div>
                 <div className="d_rowGrey">
                     <Row className="d_rowFooter">
-                        <Col md={{span:24}} lg={{offset: 16, span: 8}}>
+                        <Col md={{span:24}} md={{offset: 16, span: 8}}>
                             <div className="d_footerSection">
                                 <h4>Support</h4>
 

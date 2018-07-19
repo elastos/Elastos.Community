@@ -9,6 +9,8 @@ import '../../admin/admin.scss'
 import { Col, Row, Icon, Form, Breadcrumb, Button, Table, Divider } from 'antd'
 import moment from 'moment/moment'
 
+import MediaQuery from 'react-responsive'
+
 export default class extends StandardPage {
 
     ord_checkLogin(isLogin) {
@@ -79,8 +81,15 @@ export default class extends StandardPage {
                             </Breadcrumb>
                         </div>
                         <div className="p_ProfileCommunities p_admin_content">
+                            <MediaQuery maxWidth={720}>
+                                <Row>
+                                    <Col className="admin-right-column wrap-box-navigator">
+                                        <Navigator selectedItem={'profileCommunities'} />
+                                    </Col>
+                                </Row>
+                            </MediaQuery>
                             <Row>
-                                <Col span={20} className="c_ProfileContainer admin-left-column wrap-box-user">
+                                <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-left-column wrap-box-user">
                                     <Divider>Joined Communities</Divider>
 
                                     <Table
@@ -90,9 +99,11 @@ export default class extends StandardPage {
                                         loading={this.props.loading}
                                     />
                                 </Col>
-                                <Col span={4} className="admin-right-column wrap-box-navigator">
-                                    <Navigator selectedItem={'profileCommunities'}/>
-                                </Col>
+                                <MediaQuery minWidth={720}>
+                                    <Col span={4} className="admin-right-column wrap-box-navigator">
+                                        <Navigator selectedItem={'profileCommunities'}/>
+                                    </Col>
+                                </MediaQuery>
                             </Row>
                         </div>
                     </div>

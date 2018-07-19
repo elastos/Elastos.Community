@@ -10,6 +10,8 @@ import { Col, Row, Icon, Form, Tooltip, Badge, Breadcrumb, Button, Table, Divide
 import moment from 'moment/moment'
 const FormItem = Form.Item;
 
+import MediaQuery from 'react-responsive'
+
 export default class extends StandardPage {
 
     ord_checkLogin(isLogin) {
@@ -115,8 +117,15 @@ export default class extends StandardPage {
                             </Breadcrumb>
                         </div>
                         <div className="p_ProfileSubmissions p_admin_content">
+                            <MediaQuery maxWidth={720}>
+                                <Row>
+                                    <Col className="admin-right-column wrap-box-navigator">
+                                        <Navigator selectedItem={'profileSubmissions'} />
+                                    </Col>
+                                </Row>
+                            </MediaQuery>
                             <Row>
-                                <Col span={20} className="c_ProfileContainer admin-left-column wrap-box-user">
+                                <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-left-column wrap-box-user">
                                     <div>
                                         <Divider>Owned Submissions / Forms</Divider>
 
@@ -141,8 +150,15 @@ export default class extends StandardPage {
                                         />
                                     </div>
                                 </Col>
-                                <Col span={4} className="admin-right-column wrap-box-navigator">
-                                    <Navigator selectedItem={'profileSubmissions'}/>
+                                <MediaQuery minWidth={720}>
+                                    <Col span={4} className="admin-right-column wrap-box-navigator">
+                                        <Navigator selectedItem={'profileSubmissions'}/>
+                                    </Col>
+                                </MediaQuery>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <br/>
                                 </Col>
                             </Row>
                         </div>

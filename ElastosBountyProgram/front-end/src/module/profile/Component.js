@@ -1,7 +1,7 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import UserEditForm from '@/module/form/UserEditForm/Container'
-import { Col, Row, Icon, Popover, Button, Spin } from 'antd'
+import { Col, Row, Icon, Popover, Button, Spin, Tabs } from 'antd'
 
 import UserPublicDetail from './detail/Container'
 
@@ -9,6 +9,8 @@ import {USER_ROLE, USER_GENDER} from '@/constant'
 import config from '@/config'
 
 import './style.scss'
+
+const TabPane = Tabs.TabPane
 
 /**
  * This has 3 views
@@ -19,6 +21,15 @@ import './style.scss'
  *
  */
 export default class extends BaseComponent {
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            editing: false,
+            publicView: false
+        }
+    }
 
     // only wraps loading / renderMain
     ord_render () {
@@ -49,11 +60,10 @@ export default class extends BaseComponent {
     // for now public and your profile view looks the same
     renderDetail() {
 
-        if (this.props.page === 'ADMIN' || this.props.page === 'LEADER') {
+        if (!this.state.publicView && (this.props.page === 'ADMIN' || this.props.page === 'LEADER')) {
             return this.renderPersonalDetail()
         } else {
-            // Not used
-            return <UserPublicDetail task={this.props.user} page={this.props.page}/>
+            return <UserPublicDetail member={this.props.user} page={this.props.page}/>
         }
     }
 
@@ -65,9 +75,20 @@ export default class extends BaseComponent {
                 Your Profile
             </div>
             <div className="pull-right right-align">
-                <Button onClick={this.switchEditMode.bind(this)}>
-                    {this.state.editing ? 'Cancel' : 'Edit'}
-                </Button>
+                {this.state.editing && <Button onClick={this.switchEditMode.bind(this)}>
+                    Cancel
+                </Button>}
+                {this.state.publicView && <Button onClick={this.switchPublicView.bind(this)}>
+                    Cancel
+                </Button>}
+                {!this.state.editing && !this.state.publicView && <div>
+                    <Button onClick={this.switchPublicView.bind(this)}>
+                        Public Profile
+                    </Button>
+                    <Button onClick={this.switchEditMode.bind(this)}>
+                        Edit
+                    </Button>
+                </div>}
             </div>
             <div className="clearfix"/>
         </div>
@@ -77,104 +98,167 @@ export default class extends BaseComponent {
     renderPersonalDetail() {
 
         return (
-            <div>
-                <Row>
-                    <Col span={8} className="gridCol right-align">
-                        <h4>
-                            Username
-                        </h4>
-                    </Col>
-                    <Col span={16} className="gridCol">
-                        <h4>
-                            {this.props.user.username}
-                        </h4>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={8} className="gridCol strong-text right-align">
-                        Role
-                    </Col>
-                    <Col span={16} className="gridCol strong-text">
-                        {this.props.user.role === USER_ROLE.LEADER ? 'ORGANIZER' : this.props.user.role}
-                        &nbsp;
-                        <Popover content={this.getRoleHelp.call(this)}>
-                            <Icon className="help-icon" type="question-circle-o"/>
-                        </Popover>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={8} className="gridCol right-align">
-                        Email
-                    </Col>
-                    <Col span={16} className="gridCol">
-                        {this.props.user.email}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={8} className="gridCol right-align">
-                        First Name
-                    </Col>
-                    <Col span={16} className="gridCol">
-                        {this.props.user.profile.firstName}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={8} className="gridCol right-align">
-                        Last Name
-                    </Col>
-                    <Col span={16} className="gridCol">
-                        {this.props.user.profile.lastName}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={8} className="gridCol right-align">
-                        Gender
-                    </Col>
-                    <Col span={16} className="gridCol">
-                        {this.getGenderName(this.props.user.profile.gender)}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={8} className="gridCol right-align">
-                        Avatar
-                    </Col>
-                    <Col span={16} className="gridCol">
-                        {this.getAvatarUrl(this.props.user.profile)}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={8} className="gridCol right-align">
-                        Country
-                    </Col>
-                    <Col span={16} className="gridCol">
-                        {this.getCountryName(this.props.user.profile.country)}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={8} className="gridCol right-align">
-                        Do you want to be an organizer?
-                    </Col>
-                    <Col span={16} className="gridCol">
-                        {this.props.user.profile.beOrganizer ? 'Yes' : 'No'}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={8} className="gridCol right-align">
-                        Are you a software developer or engineer?
-                    </Col>
-                    <Col span={16} className="gridCol">
-                        {this.props.user.profile.isDeveloper ? 'Yes' : 'No'}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={8} className="gridCol right-align">
-                        Wallet Address
-                    </Col>
-                    <Col span={16} className="gridCol">
-                        {this.props.user.profile.walletAddress}
-                    </Col>
-                </Row>
-            </div>
+            <Tabs defaultActiveKey="general">
+                {/*
+                ***************************************************************************
+                * General
+                ***************************************************************************
+                */}
+                <TabPane tab="General" key="general">
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            <h4>
+                                Username
+                            </h4>
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            <h4>
+                                {this.props.user.username}
+                            </h4>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol strong-text right-align">
+                            Role
+                        </Col>
+                        <Col span={16} className="gridCol strong-text">
+                            {this.props.user.role === USER_ROLE.LEADER ? 'ORGANIZER' : this.props.user.role}
+                            &nbsp;
+                            <Popover content={this.getRoleHelp.call(this)}>
+                                <Icon className="help-icon" type="question-circle-o"/>
+                            </Popover>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            Email
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.email}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            First Name
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.profile.firstName}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            Last Name
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.profile.lastName}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            Gender
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.getGenderName(this.props.user.profile.gender)}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            Avatar
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.getAvatarUrl(this.props.user.profile)}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            Country
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.getCountryName(this.props.user.profile.country)}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            Wallet Address
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.profile.walletAddress}
+                        </Col>
+                    </Row>
+                </TabPane>
+
+                {/*
+                ***************************************************************************
+                * Social Media
+                ***************************************************************************
+                */}
+                <TabPane tab="Social Media" key="socialMedia">
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            Telegram
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.profile.telegram}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            Reddit
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.profile.reddit}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            WeChat
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.profile.wechat}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            Twitter
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.profile.twitter}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            Facebook
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.profile.facebook}
+                        </Col>
+                    </Row>
+                </TabPane>
+
+                {/*
+                ***************************************************************************
+                * Questions
+                ***************************************************************************
+                */}
+                <TabPane tab="Questions" key="questions">
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            Do you want to be an organizer?
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.profile.beOrganizer ? 'Yes' : 'No'}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            Are you a software developer or engineer?
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.profile.isDeveloper ? 'Yes' : 'No'}
+                        </Col>
+                    </Row>
+                </TabPane>
+            </Tabs>
         )
     }
 
@@ -210,6 +294,10 @@ export default class extends BaseComponent {
 
     switchEditMode() {
         this.setState({editing: !this.state.editing})
+    }
+
+    switchPublicView() {
+        this.setState({publicView: !this.state.publicView})
     }
 
 }

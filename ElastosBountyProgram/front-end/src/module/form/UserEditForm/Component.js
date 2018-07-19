@@ -81,6 +81,11 @@ class C extends BaseComponent {
         const {getFieldDecorator} = this.props.form
         const user = this.props.user
 
+        /*
+        ****************************************************************************************
+        * General
+        ****************************************************************************************
+         */
         const username_fn = getFieldDecorator('username', {
             rules: [{required: true, message: 'Username is required'}],
             initialValue: user.username
@@ -179,22 +184,78 @@ class C extends BaseComponent {
             </Select>
         )
 
-        const state_fn = getFieldDecorator('state', {
-            initialValue: user.profile.state
+        const walletAddress_fn = getFieldDecorator('walletAddress', {
+            rules: [
+                {len: 34, message: 'address length error'}
+            ],
+            initialValue: user.profile.walletAddress
         })
-        const state_el = (
-            <Input size="large"
-                   placeholder="State/Province"/>
+        const walletAddress_el = (
+            <Input size="large"/>
         )
 
-        const city_fn = getFieldDecorator('city', {
-            initialValue: user.profile.city
+        /*
+        ****************************************************************************************
+        * Social Media
+        ****************************************************************************************
+         */
+        const telegram_fn = getFieldDecorator('telegram', {
+            rules: [
+                {min: 4, message: 'please enter at least 4 characters'}
+            ],
+            initialValue: user.profile.telegram
         })
-        const city_el = (
-            <Input size="large"
-                   placeholder="City"/>
+        const telegram_el = (
+            <Input size="large"/>
         )
 
+        const reddit_fn = getFieldDecorator('reddit', {
+            rules: [
+                {min: 4, message: 'please enter at least 4 characters'}
+            ],
+            initialValue: user.profile.reddit
+        })
+        const reddit_el = (
+            <Input size="large"/>
+        )
+
+        const wechat_fn = getFieldDecorator('wechat', {
+            rules: [
+                {min: 4, message: 'please enter at least 4 characters'}
+            ],
+            initialValue: user.profile.wechat
+        })
+        const wechat_el = (
+            <Input size="large"/>
+        )
+
+        const twitter_fn = getFieldDecorator('twitter', {
+            rules: [
+                {min: 4, message: 'please enter at least 4 characters'}
+            ],
+            initialValue: user.profile.twitter
+        })
+        const twitter_el = (
+            <Input size="large"/>
+        )
+
+        const facebook_fn = getFieldDecorator('facebook', {
+            rules: [
+                {min: 4, message: 'please enter at least 4 characters'}
+            ],
+            initialValue: user.profile.facebook
+        })
+        const facebook_el = (
+            <Input size="large"/>
+        )
+
+
+
+        /*
+        ****************************************************************************************
+        * Questions
+        ****************************************************************************************
+         */
         const organizer_fn = getFieldDecorator('beOrganizer', {
             rules: [{message: 'Please select an option'}],
             initialValue: user.profile.beOrganizer ? 'yes' : 'no'
@@ -219,17 +280,8 @@ class C extends BaseComponent {
             </Select>
         )
 
-        const walletAddress_fn = getFieldDecorator('walletAddress', {
-            rules: [
-                {len: 34, message: 'address length error'}
-            ],
-            initialValue: user.profile.walletAddress
-        })
-        const walletAddress_el = (
-            <Input size="large"/>
-        )
-
         return {
+            // General
             username: username_fn(username_el),
             email: email_fn(email_el),
 
@@ -239,11 +291,18 @@ class C extends BaseComponent {
             avatar: avatar_fn(avatar_el),
             country: country_fn(country_el),
 
-            state: state_fn(state_el),
-            city: city_fn(city_el),
+            walletAddress: walletAddress_fn(walletAddress_el),
+
+            // Social Media
+            telegram: telegram_fn(telegram_el),
+            reddit: reddit_fn(reddit_el),
+            wechat: wechat_fn(wechat_el),
+            twitter: twitter_fn(twitter_el),
+            facebook: facebook_fn(facebook_el),
+
+            // Questions
             organizer: organizer_fn(organizer_el),
-            developer: developer_fn(developer_el),
-            walletAddress: walletAddress_fn(walletAddress_el)
+            developer: developer_fn(developer_el)
         }
     }
 
@@ -286,6 +345,7 @@ class C extends BaseComponent {
 
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
                     <div>
+                        <Divider>General</Divider>
                         <FormItem label="Username" {...formItemLayout}>
                             {p.username}
                         </FormItem>
@@ -301,7 +361,6 @@ class C extends BaseComponent {
                         <FormItem label="Gender" {...formItemLayout}>
                             {p.gender}
                         </FormItem>
-
                         {this.state.avatar_url ?
                             <Row>
                                 <Col className="labelContainer" xs={{span: 24}} sm={{span: 8}}>
@@ -317,18 +376,38 @@ class C extends BaseComponent {
                                 {p.avatar}
                             </FormItem>
                         }
-
                         <FormItem label="Country" {...formItemLayout}>
                             {p.country}
                         </FormItem>
+                        <FormItem label="Wallet Address" {...formItemLayout}>
+                            {p.walletAddress}
+                        </FormItem>
+
+                        <Divider>Social Media</Divider>
+
+                        <FormItem label="Telegram" {...formItemLayout}>
+                            {p.telegram}
+                        </FormItem>
+                        <FormItem label="Reddit" {...formItemLayout}>
+                            {p.reddit}
+                        </FormItem>
+                        <FormItem label="WeChat" {...formItemLayout}>
+                            {p.wechat}
+                        </FormItem>
+                        <FormItem label="Twitter" {...formItemLayout}>
+                            {p.twitter}
+                        </FormItem>
+                        <FormItem label="Facebook" {...formItemLayout}>
+                            {p.facebook}
+                        </FormItem>
+
+                        <Divider>Questions</Divider>
+
                         <FormItem label="Do you want to an organizer" {...formItemLayout}>
                             {p.organizer}
                         </FormItem>
                         <FormItem label="Are you a software developer or organizer?" {...formItemLayout}>
                             {p.developer}
-                        </FormItem>
-                        <FormItem label="Wallet Address" {...formItemLayout}>
-                            {p.walletAddress}
                         </FormItem>
 
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
