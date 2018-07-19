@@ -1,4 +1,18 @@
+// hiding certain elements at full size
+.c_Header .c_MenuItem.mobile {
+  display: none;
+}
+
+// mobile
 @media only screen and (max-width: 720px) {
+
+  .mobile-hide {
+    display: none;
+  }
+
+  .mobile-left-align {
+    text-align: left;
+  }
 
   h2 {
     font-size: 20px;
@@ -9,31 +23,37 @@
     .c_Header_Menu {
 
       .c_MenuItem {
-        
+
         &.link {
           display: inline-block;
           padding: 0 3px;
           top: 25px;
           height: 15px;
-          font-size: 15px;
+          font-size: 13px;
+
+          margin-right: 2vw;
         }
 
         &.account {
-          display: inline-block;
-          height: 20px;
+          display: none;
+        }
+
+        &.mobile {
+          padding-left: 0;
+          display: block;
+          float: right;
+          font-size: 150%;
+
+          i {
+            margin-right: 0;
+          }
         }
       }
     }
 
     .c_MenuTopRight {
-      display: inline-block;
+      display: none;
       font-size: 12px;
-    }
-  }
-
-  .c_Home {
-    .d_colEvents {
-      border-left: none;
     }
   }
 
@@ -47,4 +67,81 @@
     }
   }
 
+  /*
+  ****************************************************************************
+  Landing Page
+  ****************************************************************************
+   */
+  .p_landingBg {
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .entryContainer {
+      width: 100%;
+
+      > .continueContainer {
+        margin: 0 auto;
+        position: static;
+
+        text-align: center;
+        border-bottom: 0;
+
+        margin-top: 10vh;
+      }
+
+      > .arrow {
+        display: none;
+      }
+    }
+
+    .textContainer, .bar {
+      display: none;
+    }
+  }
+
+  /*
+  ****************************************************************************
+  Home
+  ****************************************************************************
+   */
+  .c_Home {
+
+    p.mobile-left-align {
+      padding: 0 $gap_1;
+      margin-bottom: $gap_1;
+    }
+
+    .d_rowHome {
+      position: static;
+
+      > .d_organizer {
+        float: none;
+        position: static;
+      }
+    }
+
+    .d_colEvents {
+      border-left: none;
+    }
+
+    .d_topBackdrop {
+      background-position: 75% 50%;
+    }
+
+    .entryContainer {
+      position: static;
+      width: 100%;
+      height: auto;
+      margin-bottom: $gap_2;
+
+      .textContainer {
+        position: static;
+        padding: 0 $gap_1;
+      }
+
+      .bar {
+        display: none;
+      }
+    }
+  }
 }

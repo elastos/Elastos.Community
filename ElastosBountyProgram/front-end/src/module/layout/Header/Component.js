@@ -99,6 +99,10 @@ export default class extends BaseComponent {
                     <Menu.Item className="c_MenuItem link" key="community">
                         {I18N.get('0102')}
                     </Menu.Item>
+
+                    <Menu.Item className="c_MenuItem mobile" key="mobileMenu">
+                        <Icon type="menu-fold"/>
+                    </Menu.Item>
                     {/*
                     <Menu.Item className="c_MenuItem" key="directory">
                         {I18N.get('0003')}

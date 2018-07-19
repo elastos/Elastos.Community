@@ -21,7 +21,6 @@ export default class extends StandardPage {
     ord_renderContent(){
 
         const backdropStyle = {
-            backgroundPosition: '50% 50%',
             backgroundImage: `url('/assets/images/cr_banner.png')`
         }
 
@@ -34,7 +33,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="horizGap"/>
                 <Row className="d_rowHome">
-                    <Col span={16} className="d_developer">
+                    <Col xs={{span: 24}} lg={{span: 16}} className="d_developer">
                         <h3>
                             Developers
                         </h3>
@@ -42,7 +41,7 @@ export default class extends StandardPage {
                             Write code, find bugs, earn ELA
                         </h4>
 
-                        <p>
+                        <p className="mobile-left-align">
                             Earn ELA for contributing to the Elastos ecosystem through
                             everything <br/>from example apps to enterprise dApp development.
                             <br/>
@@ -59,7 +58,7 @@ export default class extends StandardPage {
                         <br/>
                         <br/>
                     </Col>
-                    <Col span={6} style={{textAlign: 'left'}}>
+                    <Col lg={{span: 6}} className="mobile-hide" style={{textAlign: 'left'}}>
                         <Icon type="api" className="icon-home"/>
                     </Col>
                 </Row>
@@ -68,10 +67,10 @@ export default class extends StandardPage {
 
                 <Row className="d_rowHome white">
                     <div className="horizGap"/>
-                    <Col span={10} style={{textAlign: 'right'}}>
+                    <Col span={10} className="mobile-hide" style={{textAlign: 'right'}}>
                         <Icon type="share-alt" className="icon-home"/>
                     </Col>
-                    <Col span={12} className="d_organizer">
+                    <Col xs={{span: 24}} lg={{span: 12}} className="d_organizer">
                         <h3>
                             Organizers & Contributors
                         </h3>
@@ -79,7 +78,7 @@ export default class extends StandardPage {
                             Help organize meetups and promote Elastos
                         </h4>
 
-                        <p>
+                        <p className="mobile-left-align">
                             Whether you're already part of the community or want to join,<br/>
                             we reward you for various things you do to promote Elastos
                             either online, locally or worldwide.
@@ -88,8 +87,8 @@ export default class extends StandardPage {
                             You can also earn ELA for referring potential contributors.
                         </p>
 
-                        <Button onClick={() => this.props.history.push('/community')}>Apply to be an Organizer</Button>
-                        <Button  onClick={() => this.props.history.push('/social')}>View Events & Tasks I can contribute to</Button>
+                        <Button className="mobile-hide" onClick={() => this.props.history.push('/community')}>Apply to be an Organizer</Button>
+                        <Button className="mobile-hide" onClick={() => this.props.history.push('/social')}>View Events & Tasks I can contribute to</Button>
 
                         <br/>
                         <br/>
