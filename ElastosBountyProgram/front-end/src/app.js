@@ -11,6 +11,7 @@ import {api_request} from "./util";
 
 import './boot';
 import './style/index.scss';
+import './style/mobile.scss';
 
 const middleware = (render, props)=>{
 	return render;

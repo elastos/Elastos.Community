@@ -26,8 +26,11 @@ const stagingEnv = {
 
 const cssFilename_lib = 'static/css/lib.css?[hash:8]';
 const cssFilename_app = 'static/css/app.css?[hash:8]';
+const cssFilename_mobile = 'static/css/mobile.css?[hash:8]';
 const extractCSS_LIB = new ExtractTextPlugin(cssFilename_lib);
 const extractCSS_APP = new ExtractTextPlugin(cssFilename_app);
+const extractCSS_MOBILE = new ExtractTextPlugin(cssFilename_mobile);
+
 module.exports = merge(common, {
     cache: false,
     performance : {
@@ -93,9 +96,9 @@ module.exports = merge(common, {
                         }),
                     },
                     {
-                        test: /\.(scss)$/,
+                        test: /\.scss$/,
                         include: resolve('src'),
-                        exclude: /node_modules/,
+                        exclude: [/jest/, /node_modules/, /mobile\.scss$/],
                         loader: extractCSS_APP.extract(
                             Object.assign({
                                 fallback: require.resolve('style-loader'),
@@ -129,6 +132,34 @@ module.exports = merge(common, {
                                     },
                                     {
                                         loader: require.resolve('sass-loader'),
+                                    }
+                                ],
+                                publicPath: resolve('dist'),
+                            })
+                        ),
+                    },
+                    {
+                        test: /mobile\.scss$/,
+                        include: resolve('src'),
+                        exclude: [/jest/, /node_modules/],
+                        loader: extractCSS_MOBILE.extract(
+                            Object.assign({
+                                fallback: require.resolve('style-loader'),
+                                use: [
+                                    {
+                                        loader: require.resolve('css-loader'),
+                                        options: {
+                                            importLoaders: 1,
+                                            minimize: true,
+                                            sourceMap: true,
+                                            publicPath: resolve('dist'),
+                                        },
+                                    },
+                                    {
+                                        loader: require.resolve('postcss-loader')
+                                    },
+                                    {
+                                        loader: require.resolve('sass-loader')
                                     }
                                 ],
                                 publicPath: resolve('dist'),
@@ -172,6 +203,7 @@ module.exports = merge(common, {
         }),
         extractCSS_LIB,
         extractCSS_APP,
+        extractCSS_MOBILE,
         new webpack.DefinePlugin({
             'process.env': process.env.NODE_ENV === 'production' ? prodEnv : stagingEnv,
         }),
