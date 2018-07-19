@@ -1,6 +1,8 @@
 
 // MAKE SURE YOU RUN BUILD BEFORE THIS
 
+// this should be run from the parent back-end folder, not scripts
+
 // this is what sets the process.env
 require('../dist/src/config');
 
