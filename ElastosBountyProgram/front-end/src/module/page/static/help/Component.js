@@ -4,7 +4,8 @@ import Footer from '@/module/layout/Footer/Container'
 import './style.scss'
 
 import { Col, Row, Menu } from 'antd'
-import moment from 'moment/moment'
+
+import {isMobile} from 'react-device-detect'
 
 export default class extends StandardPage {
 
@@ -43,11 +44,9 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row">
-                        <Col xs={{span: 24}} lg={{span: 19}} style={{paddingRight: '40px'}}>
-                            {this.renderMain()}
-                        </Col>
-                        <Col xs={{span: 24}} lg={{span: 5}}>
-                        <Menu
+                        {isMobile &&
+                        <Col span={24}>
+                            <Menu
                                 selectedKeys={[this.state.selectedHelpTopic]}
                                 onClick={(item) => (this.setState({selectedHelpTopic: item.key}))}
                                 mode="inline"
@@ -75,6 +74,39 @@ export default class extends StandardPage {
                                 </Menu.Item>
                             </Menu>
                         </Col>
+                        }
+                        <Col xs={{span: 24}} lg={{span: 19}} style={{paddingRight: '40px'}}>
+                            {this.renderMain()}
+                        </Col>
+                        {!isMobile && <Col xs={{span: 24}} lg={{span: 5}}>
+                            <Menu
+                                selectedKeys={[this.state.selectedHelpTopic]}
+                                onClick={(item) => (this.setState({selectedHelpTopic: item.key}))}
+                                mode="inline"
+                            >
+                                <Menu.Item key="gettingStarted">
+                                    Getting Started
+                                </Menu.Item>
+                                <Menu.Item key="developers">
+                                    Developers
+                                </Menu.Item>
+                                <Menu.Item key="nonDevelopers">
+                                    Non-Developers
+                                </Menu.Item>
+                                <Menu.Item key="organizers">
+                                    Organizers
+                                </Menu.Item>
+                                <Menu.Item key="events">
+                                    Creating Events/Tasks
+                                </Menu.Item>
+                                <Menu.Item key="meetupGuide">
+                                    Meetup Guide
+                                </Menu.Item>
+                                <Menu.Item key="community">
+                                    Community
+                                </Menu.Item>
+                            </Menu>
+                        </Col>}
                     </Row>
                 </div>
                 <Footer/>
