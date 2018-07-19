@@ -43,11 +43,11 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row">
-                        <Col span={19} style={{paddingRight: '40px'}}>
+                        <Col xs={{span: 24}} lg={{span: 19}} style={{paddingRight: '40px'}}>
                             {this.renderMain()}
                         </Col>
-                        <Col span={5}>
-                            <Menu
+                        <Col xs={{span: 24}} lg={{span: 5}}>
+                        <Menu
                                 selectedKeys={[this.state.selectedHelpTopic]}
                                 onClick={(item) => (this.setState({selectedHelpTopic: item.key}))}
                                 mode="inline"
