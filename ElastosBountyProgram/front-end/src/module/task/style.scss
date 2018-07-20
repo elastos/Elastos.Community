@@ -53,6 +53,12 @@
     .ant-row {
       margin: $gap_0 0;
 
+      div[class^="ant-col-"]{
+        @media only screen and (max-width: $mobile-width) {
+          float: none;
+        }
+      }
+
       p {
         padding-bottom: $gap_0;
       }
@@ -64,6 +70,12 @@
 
     .main-area {
       border-right: 1px solid $border_gray;
+
+      @media only screen and (max-width: $mobile-width) {
+        border-right: 0;
+        border-bottom: 1px solid $border_gray;
+        padding-bottom: 40px;
+      }
     }
 
     .applicants {
