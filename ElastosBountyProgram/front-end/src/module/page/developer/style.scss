@@ -43,9 +43,20 @@
       white-space: nowrap;
     }
 
+    .ant-table-thead > tr > th {
+      box-sizing: border-box;
+      @media only screen and (max-width: 720px) {
+        padding: 0px;
+      }
+    }
+    .ant-table-tbody > tr > td {
+      @media only screen and (max-width: 720px) {
+        padding: 0px;
+      }
+    }
+
     td {
       word-break: normal;
-      white-space: nowrap;
 
       &.col-name {
         white-space: normal;
