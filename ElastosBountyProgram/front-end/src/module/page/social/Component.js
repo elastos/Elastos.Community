@@ -1,4 +1,5 @@
 import React from 'react'
+import MediaQuery from "react-responsive"
 import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import ContribForm from './formContribution/Container'
@@ -112,7 +113,7 @@ export default class extends StandardPage {
             render: (name, record) => {
                 return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
             }
-        }, {
+        }, /*{
             title: 'Description',
             dataIndex: 'description',
             className: 'allow-wrap',
@@ -120,7 +121,7 @@ export default class extends StandardPage {
             render: (desc) => {
                 return _.truncate(desc, {length: 100})
             }
-        }, {
+        },*/ {
             title: 'Community',
             dataIndex: 'community',
             render: (community, data) => {
@@ -221,14 +222,48 @@ export default class extends StandardPage {
                             </div>
                             <div class="vert-gap-sm clearfix"/>
 
+                            <MediaQuery minWidth={768}>
+                                {(matches) => {
+                                    if (matches) {
+                                        if(this.state.taskTypeSelected !== TASK_TYPE.EVENT)
+                                        {
+                                            return null;
+                                        }
+                                        columns.splice(1, 0, {
+                                            title: 'Description',
+                                            dataIndex: 'description',
+                                            className: 'allow-wrap',
+                                            width: '30%',
+                                            render: (desc) => {
+                                                return _.truncate(desc, {length: 100})
+                                            }
+                                        })
+
+                                        return <Table
+                                            columns={columns}
+                                            rowKey={(item) => item._id}
+                                            dataSource={eventData}
+                                            loading={this.props.task_loading}
+                                        />;
+                                    } else {
+
+                                        var index = columns.findIndex(item => item.dataIndex === 'description');
+                                        columns.splice(index, 1);
+                                        return null;
+                                    }
+                                }}
+                            </MediaQuery>
+                            <MediaQuery maxWidth={768}>
                             {this.state.taskTypeSelected === TASK_TYPE.EVENT &&
                             <Table
                                 columns={columns}
                                 rowKey={(item) => item._id}
+                                expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
                                 dataSource={eventData}
                                 loading={this.props.task_loading}
                             />
                             }
+                            </MediaQuery>
                             {this.state.taskTypeSelected === TASK_TYPE.TASK &&
                             <Table
                                 className="clearfix"
