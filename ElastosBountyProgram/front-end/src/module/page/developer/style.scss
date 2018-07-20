@@ -37,7 +37,6 @@
   }
 
   table {
-
     > thead.ant-table-thead > tr > th {
       word-break: normal;
       white-space: nowrap;
@@ -45,12 +44,12 @@
 
     .ant-table-thead > tr > th {
       box-sizing: border-box;
-      @media only screen and (max-width: 720px) {
+      @media only screen and (max-width: $mobile-width) {
         padding: 0px;
       }
     }
     .ant-table-tbody > tr > td {
-      @media only screen and (max-width: 720px) {
+      @media only screen and (max-width: $mobile-width) {
         padding: 0px;
       }
     }
