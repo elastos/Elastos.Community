@@ -104,5 +104,22 @@
       }
     }
   }
+
+  .wrap-mobile {
+    margin-left: -20px;
+    margin-right: -20px;
+
+    .ant-list-item .member-name {
+      padding: 10px;
+    }
+
+    .ant-btn {
+      width: 100%;
+    }
+
+    .list-item-without-padding-top-first-item .ant-list-split .ant-list-item:first-child {
+      padding-top: 0;
+    }
+  }
 }
 
