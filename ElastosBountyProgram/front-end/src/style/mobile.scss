@@ -177,4 +177,29 @@
   .ant-form {
     padding: 0 $gap_1;
   }
+
+
+  /*
+  ****************************************************************************
+  Other
+  ****************************************************************************
+    */
+  table {
+    > thead.ant-table-thead > tr > th {
+      word-break: normal;
+      white-space: nowrap;
+    }
+
+    .ant-table-thead > tr > th {
+      box-sizing: border-box;
+      @media only screen and (max-width: $mobile-width) {
+        padding: 3px;
+      }
+    }
+    .ant-table-tbody > tr > td {
+      @media only screen and (max-width: $mobile-width) {
+        padding: 3px;
+      }
+    }
+  }
 }
