@@ -179,15 +179,15 @@ export default class extends StandardPage {
                                     <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.TASK ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.TASK)}>
                                         Tasks
                                     </Button>
-                                </Col>
-                                <Col className="pull-right btnContainer">
                                     {this.props.currentUserId && this.props.is_admin &&
-                                    <Popover content={'add ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'event' : (this.state.taskTypeSelected === TASK_TYPE.TASK ? 'task' : 'project'))}>
+                                    <Popover content={'Add ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'event' : (this.state.taskTypeSelected === TASK_TYPE.TASK ? 'task' : 'project'))}>
                                         <Icon className="addTask" type="file-add" onClick={() => {
                                             this.props.history.push(`/task-create?category=DEVELOPER&type=${this.state.taskTypeSelected}`)
                                         }}/>
                                     </Popover>
                                     }
+                                </Col>
+                                <Col className="pull-right btnContainer">
                                     {filterCommunityEl}
                                     {/*
                                     // TODO
