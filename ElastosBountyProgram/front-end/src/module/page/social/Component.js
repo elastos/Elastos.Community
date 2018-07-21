@@ -200,19 +200,19 @@ export default class extends StandardPage {
                                 <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.TASK ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.TASK)}>
                                     Tasks
                                 </Button>
-                                {this.props.currentUserId &&
-                                <Popover content={'Add ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'event' : 'task')}>
-                                    <Icon className="addTask" type="file-add" onClick={() => {
-                                        this.props.history.push(`/task-create?category=SOCIAL&type=${this.state.taskTypeSelected}`)
-                                    }}/>
-                                </Popover>
-                                }
                             </div>
                             <div className="pull-right btnContainer">
                                 {/*
                                 Looking for Help&nbsp;
                                 <Checkbox checked={this.state.lookingForHelpOnly}/>
                                 */}
+                                {this.props.currentUserId &&
+                                    <Popover content={'add ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'event' : 'task')}>
+                                        <Icon className="addTask" type="file-add" onClick={() => {
+                                            this.props.history.push(`/task-create?category=SOCIAL&type=${this.state.taskTypeSelected}`)
+                                        }}/>
+                                    </Popover>
+                                }
 
                                 {filterCommunityEl}
                                 {/*

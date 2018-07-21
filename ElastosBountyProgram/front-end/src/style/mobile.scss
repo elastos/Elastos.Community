@@ -204,7 +204,15 @@
       padding: 0;
 
       .btnContainer {
-        float: left;
+        width: 100%;
+      }
+
+      .pull-left {
+        text-align: left;
+      }
+
+      .pull-right {
+        text-align: left;
       }
     }
 

@@ -10,9 +10,12 @@
   .d_box {
     padding: 0 $gap_3;
 
+    .pull-right {
+      text-align: right;
+    }
+
     .btnContainer {
       padding-top: $gap_1;
-      text-align: right;
 
       .ant-cascader-picker-label {
         text-align: left;
