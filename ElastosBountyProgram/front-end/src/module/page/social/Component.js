@@ -13,6 +13,7 @@ const Option = Select.Option
 
 import { SUBMISSION_TYPE, TASK_STATUS, TASK_TYPE } from '@/constant'
 import _ from 'lodash'
+import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from "../../../config/constant";
 
 export default class extends StandardPage {
     state = {
@@ -222,7 +223,7 @@ export default class extends StandardPage {
                             </div>
                             <div class="vert-gap-sm clearfix"/>
 
-                            <MediaQuery minWidth={768}>
+                            <MediaQuery minWidth={MIN_WIDTH_PC}>
                                 {(matches) => {
                                     if (matches) {
                                         if(this.state.taskTypeSelected !== TASK_TYPE.EVENT)
@@ -253,7 +254,7 @@ export default class extends StandardPage {
                                     }
                                 }}
                             </MediaQuery>
-                            <MediaQuery maxWidth={768}>
+                            <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
                             {this.state.taskTypeSelected === TASK_TYPE.EVENT &&
                             <Table
                                 columns={columns}

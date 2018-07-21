@@ -32,8 +32,17 @@
     }
   }
 
-  .d_leftContainer {
-    border-right: 1px solid #e0e0e0;
+  .ebp-page {
+    .d_leftContainer {
+      border-right: none;
+    }
+    .d_rightContainer {
+      border-left: 1px solid #e0e0e0;
+
+      @media only screen and (max-width: $lg-width) {
+        border-left: none;
+      }
+    }
   }
 
   .d_socialEventsContainer {
