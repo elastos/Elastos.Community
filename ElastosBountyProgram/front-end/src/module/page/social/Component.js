@@ -144,7 +144,7 @@ export default class extends StandardPage {
             className: 'right-align',
             render: (ela) => ela / 1000
         }, {
-            title: 'Register By',
+            title: 'Deadline',
             dataIndex: 'startTime',
             className: 'right-align',
             render: (startTime) => moment(startTime).format('MMM D')
@@ -260,6 +260,7 @@ export default class extends StandardPage {
                                 columns={columns}
                                 rowKey={(item) => item._id}
                                 expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
+                                expandRowByClick={true}
                                 dataSource={eventData}
                                 loading={this.props.task_loading}
                             />

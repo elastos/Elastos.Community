@@ -142,7 +142,7 @@ export default class extends StandardPage {
             className: 'right-align',
             render: (ela) => ela / 1000
         }, {
-            title: 'Register By',
+            title: 'Deadline',
             dataIndex: 'startTime',
             className: 'right-align',
             render: (startTime) => moment(startTime).format('MMM D')

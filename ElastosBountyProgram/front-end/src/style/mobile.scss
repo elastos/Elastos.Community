@@ -178,12 +178,11 @@
     padding: 0 $gap_1;
   }
 
-
   /*
   ****************************************************************************
   Other
   ****************************************************************************
-    */
+  */
   table {
     > thead.ant-table-thead > tr > th {
       word-break: normal;
@@ -191,15 +190,33 @@
     }
 
     .ant-table-thead > tr > th {
-      box-sizing: border-box;
-      @media only screen and (max-width: $mobile-width) {
-        padding: 3px;
-      }
+      padding: 3px 3px 20px;
     }
     .ant-table-tbody > tr > td {
-      @media only screen and (max-width: $mobile-width) {
-        padding: 3px;
+      padding: 3px;
+      font-size: 12px;
+    }
+  }
+
+  .p_Developer, .p_Social {
+
+    .d_box {
+      padding: 0;
+
+      .btnContainer {
+        float: left;
       }
     }
+
+    .ebp-page-desc > p {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    .ant-table-expand-icon-th, .ant-table-row-expand-icon-cell {
+      min-width: min-content;
+      width: fit-content;
+    }
+
   }
 }
