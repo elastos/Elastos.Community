@@ -1,4 +1,5 @@
 import React from 'react'
+import MediaQuery from "react-responsive"
 import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import ContribForm from './formContribution/Container'
@@ -12,6 +13,7 @@ const Option = Select.Option
 
 import { SUBMISSION_TYPE, TASK_STATUS, TASK_TYPE } from '@/constant'
 import _ from 'lodash'
+import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from "../../../config/constant";
 
 export default class extends StandardPage {
     state = {
@@ -112,7 +114,7 @@ export default class extends StandardPage {
             render: (name, record) => {
                 return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
             }
-        }, {
+        }, /*{
             title: 'Description',
             dataIndex: 'description',
             className: 'allow-wrap',
@@ -120,7 +122,7 @@ export default class extends StandardPage {
             render: (desc) => {
                 return _.truncate(desc, {length: 100})
             }
-        }, {
+        },*/ {
             title: 'Community',
             dataIndex: 'community',
             render: (community, data) => {
@@ -142,7 +144,7 @@ export default class extends StandardPage {
             className: 'right-align',
             render: (ela) => ela / 1000
         }, {
-            title: 'Register By',
+            title: 'Deadline',
             dataIndex: 'startTime',
             className: 'right-align',
             render: (startTime) => moment(startTime).format('MMM D')
@@ -198,19 +200,19 @@ export default class extends StandardPage {
                                 <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.TASK ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.TASK)}>
                                     Tasks
                                 </Button>
+                                {this.props.currentUserId &&
+                                <Popover content={'Add ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'event' : 'task')}>
+                                    <Icon className="addTask" type="file-add" onClick={() => {
+                                        this.props.history.push(`/task-create?category=SOCIAL&type=${this.state.taskTypeSelected}`)
+                                    }}/>
+                                </Popover>
+                                }
                             </div>
                             <div className="pull-right btnContainer">
                                 {/*
                                 Looking for Help&nbsp;
                                 <Checkbox checked={this.state.lookingForHelpOnly}/>
                                 */}
-                                {this.props.currentUserId &&
-                                    <Popover content={'add ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'event' : 'task')}>
-                                        <Icon className="addTask" type="file-add" onClick={() => {
-                                            this.props.history.push(`/task-create?category=SOCIAL&type=${this.state.taskTypeSelected}`)
-                                        }}/>
-                                    </Popover>
-                                }
 
                                 {filterCommunityEl}
                                 {/*
@@ -221,14 +223,49 @@ export default class extends StandardPage {
                             </div>
                             <div class="vert-gap-sm clearfix"/>
 
+                            <MediaQuery minWidth={MIN_WIDTH_PC}>
+                                {(matches) => {
+                                    if (matches) {
+                                        if(this.state.taskTypeSelected !== TASK_TYPE.EVENT)
+                                        {
+                                            return null;
+                                        }
+                                        columns.splice(1, 0, {
+                                            title: 'Description',
+                                            dataIndex: 'description',
+                                            className: 'allow-wrap',
+                                            width: '30%',
+                                            render: (desc) => {
+                                                return _.truncate(desc, {length: 100})
+                                            }
+                                        })
+
+                                        return <Table
+                                            columns={columns}
+                                            rowKey={(item) => item._id}
+                                            dataSource={eventData}
+                                            loading={this.props.task_loading}
+                                        />;
+                                    } else {
+
+                                        var index = columns.findIndex(item => item.dataIndex === 'description');
+                                        columns.splice(index, 1);
+                                        return null;
+                                    }
+                                }}
+                            </MediaQuery>
+                            <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
                             {this.state.taskTypeSelected === TASK_TYPE.EVENT &&
                             <Table
                                 columns={columns}
                                 rowKey={(item) => item._id}
+                                expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
+                                expandRowByClick={true}
                                 dataSource={eventData}
                                 loading={this.props.task_loading}
                             />
                             }
+                            </MediaQuery>
                             {this.state.taskTypeSelected === TASK_TYPE.TASK &&
                             <Table
                                 className="clearfix"

@@ -112,3 +112,9 @@
   color: $cr_light_color;
   border-color: $cr_light_color;
 }
+
+.ant-table-pagination.ant-pagination {
+  max-width: fit-content;
+  margin: 16px auto;
+  float: none;
+}
