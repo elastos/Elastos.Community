@@ -3,6 +3,7 @@ import BaseComponent from '@/model/BaseComponent'
 import {Form, Icon, Input, Button, Checkbox} from 'antd'
 import ReCAPTCHA from 'react-google-recaptcha';
 import {RECAPTCHA_KEY} from '@/config/constant';
+import I18N from '@/I18N'
 
 import './style.scss'
 
@@ -24,27 +25,27 @@ class C extends BaseComponent {
     getInputProps() {
         const {getFieldDecorator} = this.props.form
         const userName_fn = getFieldDecorator('username', {
-            rules: [{required: true, message: 'Please input your username!'}],
+            rules: [{required: true, message: I18N.get('3400')}],
             initialValue: ''
         })
         const userName_el = (
             <Input size="large"
                 prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                placeholder="Username"/>
+                placeholder={I18N.get('3401')}/>
         )
 
         const pwd_fn = getFieldDecorator('password', {
-            rules: [{required: true, message: 'Please input your Password!'}]
+            rules: [{required: true, message: I18N.get('3402')}]
         })
         const pwd_el = (
             <Input size="large"
                 prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                type="password" placeholder="Password"/>
+                type="password" placeholder={I18N.get('3403')}/>
         )
 
         const persist_fn = getFieldDecorator('persist')
         const persist_el = (
-            <Checkbox defaultChecked={true}>Keep me logged in</Checkbox>
+            <Checkbox defaultChecked={true}>{I18N.get('3404')}</Checkbox>
         )
 
         return {
@@ -69,11 +70,11 @@ class C extends BaseComponent {
                     {p.persist}
                 </FormItem>
                 <FormItem className="d_item">
-                    <a className="login-form-forgot" href="">Forgot password</a>
+                    <a className="login-form-forgot" href="">{I18N.get('3405')}</a>
                 </FormItem>
                 <FormItem>
                     <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
-                        Log in
+                        {I18N.get('3406')}
                     </Button>
                 </FormItem>
             </Form>

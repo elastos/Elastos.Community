@@ -68,6 +68,15 @@ export default {
     '3312': 'Apply to be an Organizer',
     '3313': 'View Events & Tasks I can contribute to',
     '3314': 'We are a diverse democratic group of leaders, developers, organizers and designers',
-    '3315': 'formed to promote Elastos in our communities. Membership is open to everyone.'
+    '3315': 'formed to promote Elastos in our communities. Membership is open to everyone.',
+
+    // LoginForm
+    '3400': 'Please input your username!',
+    '3401': 'Username',
+    '3402': 'Please input your Password!',
+    '3403': 'Password',
+    '3404': 'Keep me logged in',
+    '3405': 'Forgot password',
+    '3406': 'Log in'
 
 };
