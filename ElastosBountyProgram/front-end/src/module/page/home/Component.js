@@ -1,6 +1,7 @@
 import React from 'react';
 import StandardPage from '../StandardPage';
 import _ from 'lodash'
+import I18N from '@/I18N'
 
 import './style.scss'
 
@@ -28,32 +29,42 @@ export default class extends StandardPage {
             <Row className="c_Home">
                 <div className="d_topBackdrop" style={backdropStyle}>
                     <div className="d_topBackdrop_title">
-                        Elastos - Cyber Republic
+                        {I18N.get('3300')}
+                        {/* Elastos - Cyber Republic */}
                     </div>
                 </div>
                 <div className="horizGap"/>
                 <Row className="d_rowHome">
                     <Col xs={{span: 24}} md={{span: 16}} className="d_developer">
                         <h3>
-                            Developers
+                            {I18N.get('3301')}
+                            {/* Developers */}
                         </h3>
                         <h4>
-                            Write code, find bugs, earn ELA
+                            {I18N.get('3302')}
+                            {/* Write code, find bugs, earn ELA */}
                         </h4>
 
                         <p className="mobile-left-align">
-                            Earn ELA for contributing to the Elastos ecosystem through
-                            everything <br/>from example apps to enterprise dApp development.
+                            {I18N.get('3303')}
+                            {/* Earn ELA for contributing to the Elastos ecosystem through
+                            everything  */}
+                            <br/>
+                            {I18N.get('3304')}
+                            {/* from example apps to enterprise App development. */}
                             <br/>
                             <br/>
-                            You can also earn ELA for finding bugs and submitting issues.
+                            {I18N.get('3305')}
+                            {/* You can also earn ELA for finding bugs and submitting issues. */}
                         </p>
 
                         <div>
-                            <Button onClick={() => this.props.history.push('/developer')}>Yes I am interested in Developing for Elastos</Button>
+                            <Button onClick={() => this.props.history.push('/developer')}>
+                                {I18N.get('3306')}
+                                {/* Yes I am interested in Developing for Elastos */}
+                            </Button>
                             {/* <Button onClick={this.notDeveloper.bind(this)}>No I am not a developer</Button> */}
                         </div>
-
                         <br/>
                         <br/>
                         <br/>
@@ -72,23 +83,35 @@ export default class extends StandardPage {
                     </Col>
                     <Col xs={{span: 24}} md={{span: 12}} className="d_organizer">
                         <h3>
-                            Organizers & Contributors
+                            {I18N.get('3307')}
+                            {/* Organizers & Contributors */}
                         </h3>
                         <h4>
-                            Help organize meetups and promote Elastos
+                            {I18N.get('3308')}
+                            {/* Help organize meetups and promote Elastos */}
                         </h4>
 
                         <p className="mobile-left-align">
-                            Whether you're already part of the community or want to join,<br/>
-                            we reward you for various things you do to promote Elastos
-                            either online, locally or worldwide.
+                            {I18N.get('3309')}
+                            {/* Whether you're already part of the community or want to join, */}
+                            <br/>
+                            {I18N.get('3310')}
+                            {/* we reward you for various things you do to promote Elastos
+                            either online, locally or worldwide. */}
                             <br/>
                             <br/>
-                            You can also earn ELA for referring potential contributors.
+                            {I18N.get('3311')}
+                            {/* You can also earn ELA for referring potential contributors. */}
                         </p>
 
-                        <Button className="mobile-hide" onClick={() => this.props.history.push('/community')}>Apply to be an Organizer</Button>
-                        <Button className="mobile-hide" onClick={() => this.props.history.push('/social')}>View Events & Tasks I can contribute to</Button>
+                        <Button className="mobile-hide" onClick={() => this.props.history.push('/community')}>
+                            {I18N.get('3312')}
+                            {/* Apply to be an Organizer */}
+                        </Button>
+                        <Button className="mobile-hide" onClick={() => this.props.history.push('/social')}>
+                            {I18N.get('3313')}
+                            {/* View Events & Tasks I can contribute to */}
+                        </Button>
 
                         <br/>
                         <br/>
@@ -101,8 +124,11 @@ export default class extends StandardPage {
                 <div className="entryContainer">
 
                     <div className="textContainer">
-                        We are a diverse democratic group of leaders, developers, organizers and designers<br/>
-                        formed to promote Elastos in our communities. Membership is open to everyone.
+                        {I18N.get('3314')}
+                        {/* We are a diverse democratic group of leaders, developers, organizers and designers */}
+                        <br/>
+                        {I18N.get('3315')}
+                        {/* formed to promote Elastos in our communities. Membership is open to everyone. */}
                     </div>
                     <div className="bar bar1"/>
                     <div className="bar bar2"/>

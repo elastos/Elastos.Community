@@ -50,5 +50,24 @@ export default {
     '2301': 'Tasks',
     '2302': 'Teams',
     '2303': 'Submissions',
-    '2304': 'Communities'
+    '2304': 'Communities',
+
+    // Home
+    '3300': 'Elastos - Cyber Republic',
+    '3301': 'Developers',
+    '3302': 'Write code, find bugs, earn ELA',
+    '3303': 'Earn ELA for contributing to the Elastos ecosystem through everything',
+    '3304': 'from example apps to enterprise App development.',
+    '3305': 'You can also earn ELA for finding bugs and submitting issues.',
+    '3306': 'Yes I am interested in Developing for Elastos',
+    '3307': 'Organizers & Contributors',
+    '3308': 'Help organize meetups and promote Elastos',
+    '3309': 'Whether you\'re already part of the community or want to join,',
+    '3310': 'we reward you for various things you do to promote Elastos either online, locally or worldwide.',
+    '3311': 'You can also earn ELA for referring potential contributors.',
+    '3312': 'Apply to be an Organizer',
+    '3313': 'View Events & Tasks I can contribute to',
+    '3314': 'We are a diverse democratic group of leaders, developers, organizers and designers',
+    '3315': 'formed to promote Elastos in our communities. Membership is open to everyone.'
+
 };
