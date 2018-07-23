@@ -64,12 +64,28 @@ export default class extends BaseComponent {
         )
     }
 
+    buildLanguageDropdown() {
+        return (
+            <Menu onClick={this.clickItem.bind(this)}>
+                <Menu.Item key="en">
+                    {I18N.get('0301')}
+                    {/* english  */}
+                </Menu.Item>
+                <Menu.Item key="zh">
+                    {I18N.get('0302')}
+                    {/* chinese */}
+                </Menu.Item>
+            </Menu>
+        )
+    }
+
     ord_render() {
 
         const isLogin = this.props.isLogin
 
         // const overviewDropdown = this.buildOverviewDropdown()
         const acctDropdown = this.buildAcctDropdown()
+        const langDropdown = this.buildLanguageDropdown()
 
         return (
             <Header className="c_Header">
@@ -125,7 +141,7 @@ export default class extends BaseComponent {
                         </Dropdown>
                     </Menu.Item>
                 </Menu>
-                <Menu onClick={this.clickItem.bind(this)} className="c_MenuTopRight" mode="horizontal">
+                <Menu onClick={this.clickItem.bind(this)} className="c_MenuTopRight" mode="horizontal"> 
                     <Menu.Item key="help">
                         {I18N.get('0007')}
                     </Menu.Item>
@@ -139,6 +155,14 @@ export default class extends BaseComponent {
 
                     <Menu.Item key="slack">
                         {I18N.get('0011')}
+                    </Menu.Item>
+
+                    <Menu.Item key="language">
+                        <Dropdown overlay={langDropdown} style="margin-top: 24px;">
+                            <a className="ant-dropdown-link" href="#">
+                                {I18N.get('0300')} <Icon type="down" />
+                            </a>
+                        </Dropdown>
                     </Menu.Item>
                     {/*
                     <Menu.Item key="contact">
@@ -189,6 +213,12 @@ export default class extends BaseComponent {
                 onCancel() {
                 }
             })
+        }
+        else if (_.includes([
+            'en',
+            'zh'
+        ], key)) {
+            this.props.changeLanguage(e.key);
         }
     }
 }

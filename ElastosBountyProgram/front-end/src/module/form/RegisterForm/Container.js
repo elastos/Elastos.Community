@@ -14,7 +14,8 @@ message.config({
 export default createContainer(Component, (state) => {
 
     return {
-        ...state.user.register_form
+        ...state.user.register_form,
+        language: state.language
     }
 }, () => {
     const userService = new UserService()

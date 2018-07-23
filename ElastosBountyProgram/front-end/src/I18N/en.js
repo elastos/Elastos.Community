@@ -22,6 +22,10 @@ export default {
     '0203': 'Admin',
     '0204': 'Logout',
 
+    '0300': 'Language',
+    '0301': 'English',
+    '0302': 'Chinese',
+
     // Admin breadcrumb
     '1100': 'Admin',
 

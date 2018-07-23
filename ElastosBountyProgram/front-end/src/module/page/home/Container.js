@@ -28,7 +28,10 @@ export default createContainer(Component, (state, ownProps) => {
         })
     }
 
-    return taskState
+    return {
+        taskState,
+        language: state.language
+    }
 
 }, () => {
 
