@@ -10,16 +10,19 @@
   .d_box {
     padding: 0 $gap_3;
 
+    .pull-right {
+      text-align: right;
+    }
+
     .btnContainer {
       padding-top: $gap_1;
-      text-align: right;
 
       .ant-cascader-picker-label {
         text-align: left;
       }
 
       .addTask {
-        vertical-align: baseline;
+        vertical-align: middle;
         margin-right: $gap_0;
         font-size: 150%;
         cursor: pointer;
@@ -37,7 +40,6 @@
   }
 
   table {
-
     > thead.ant-table-thead > tr > th {
       word-break: normal;
       white-space: nowrap;
@@ -45,7 +47,6 @@
 
     td {
       word-break: normal;
-      white-space: nowrap;
 
       &.col-name {
         white-space: normal;

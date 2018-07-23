@@ -55,7 +55,7 @@ export default class extends BaseComponent {
         return (
             <div className="public">
                 <Row>
-                    <Col span={18} className="gridCol main-area">
+                    <Col sm={24} md={18} className="gridCol main-area">
                         <Row>
                             <Col>
                                 <h4 className="center">
@@ -360,7 +360,7 @@ export default class extends BaseComponent {
                     * Applicants (Right Col)
                     ********************************************************************************
                     */}
-                    <Col span={6} className="gridCol applicants">
+                    <Col sm={24} md={6} className="gridCol applicants">
                         <h4>{this.state.isDeveloperEvent ? 'Registrants' : 'Applicants'}</h4>
 
                         {(this.props.task.candidates && this.props.task.candidates.length) ?

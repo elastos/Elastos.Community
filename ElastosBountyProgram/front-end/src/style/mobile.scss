@@ -6,7 +6,7 @@
 }
 
 // mobile
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: $mobile-width) {
 
   .mobile-hide {
     display: none;
@@ -176,5 +176,55 @@
 
   .ant-form {
     padding: 0 $gap_1;
+  }
+
+  /*
+  ****************************************************************************
+  Other
+  ****************************************************************************
+  */
+  table {
+    > thead.ant-table-thead > tr > th {
+      word-break: normal;
+      white-space: nowrap;
+    }
+
+    .ant-table-thead > tr > th {
+      padding: 16px 3px;
+    }
+    .ant-table-tbody > tr > td {
+      padding: 16px 3px;
+      font-size: 12px;
+    }
+  }
+
+  .p_Developer, .p_Social {
+
+    .d_box {
+      padding: 0;
+
+      .btnContainer {
+        width: 100%;
+      }
+
+      .pull-left {
+        text-align: left;
+      }
+
+      .pull-right {
+        text-align: left;
+      }
+    }
+
+    .ebp-page-desc > p {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    .ant-table-expand-icon-th, .ant-table-row-expand-icon-cell {
+      min-width: min-content;
+      width: fit-content;
+    }
+
   }
 }

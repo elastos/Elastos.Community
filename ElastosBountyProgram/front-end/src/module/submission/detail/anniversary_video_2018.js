@@ -64,7 +64,7 @@ export default function() {
                         attachment_filename: ''
                     })
 
-                    message.success('There was a problem upload this file, please try again')
+                    message.success('There was a problem uploading this file, please try again')
                 }
             })
         }
@@ -72,6 +72,23 @@ export default function() {
 
 
     return <div>
+        <div className="c_anniversaryAppFormContainer">
+            <Row>
+                <Col offset={6} span={12} className="left-align">
+
+                    <h5>Notes:</h5>
+
+                    <p>
+                        Submissions in any language are welcome, if your submisson is not in English please
+                        also include a text translation in English so we can add the appropriate subtitles.
+                    </p>
+
+                </Col>
+
+            </Row>
+
+        </div>
+
         <Row>
             <Col>
                 <h4 className="center">

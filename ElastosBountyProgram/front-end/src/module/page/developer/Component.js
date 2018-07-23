@@ -142,7 +142,7 @@ export default class extends StandardPage {
             className: 'right-align',
             render: (ela) => ela / 1000
         }, {
-            title: 'Register By',
+            title: 'Deadline',
             dataIndex: 'startTime',
             className: 'right-align',
             render: (startTime) => moment(startTime).format('MMM D')
@@ -167,35 +167,36 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row d_rowTop">
-                        <Col md={{span:24}} md={{span: 18}} className="d_leftContainer d_box">
-                            <div className="pull-left btnContainer">
-                                <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.EVENT)}>
-                                    Training
-                                </Button>
-                                <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.PROJECT ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.PROJECT)}>
-                                    Projects
-                                </Button>
-                                <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.TASK ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.TASK)}>
-                                    Tasks
-                                </Button>
-                            </div>
-                            <div className="pull-right btnContainer">
-                                {this.props.currentUserId && this.props.is_admin &&
-                                <Popover content={'add ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'event' : (this.state.taskTypeSelected === TASK_TYPE.TASK ? 'task' : 'project'))}>
-                                    <Icon className="addTask" type="file-add" onClick={() => {
-                                        this.props.history.push(`/task-create?category=DEVELOPER&type=${this.state.taskTypeSelected}`)
-                                    }}/>
-                                </Popover>
-                                }
-                                {filterCommunityEl}
-                                {/*
-                                // TODO
-                                <Button onClick={this.createTaskLink.bind(this)}>
-                                    Suggest an Event
-                                </Button>
-                                */}
-                            </div>
-
+                        <Col sm={{span:24}} md={{span: 16}} className="d_leftContainer d_box">
+                            <Row type="flex" justify="space-between">
+                                <Col className="pull-left btnContainer">
+                                    <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.EVENT)}>
+                                        Training
+                                    </Button>
+                                    <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.PROJECT ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.PROJECT)}>
+                                        Projects
+                                    </Button>
+                                    <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.TASK ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.TASK)}>
+                                        Tasks
+                                    </Button>
+                                    {this.props.currentUserId && this.props.is_admin &&
+                                    <Popover content={'Add ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'event' : (this.state.taskTypeSelected === TASK_TYPE.TASK ? 'task' : 'project'))}>
+                                        <Icon className="addTask" type="file-add" onClick={() => {
+                                            this.props.history.push(`/task-create?category=DEVELOPER&type=${this.state.taskTypeSelected}`)
+                                        }}/>
+                                    </Popover>
+                                    }
+                                </Col>
+                                <Col className="pull-right btnContainer">
+                                    {filterCommunityEl}
+                                    {/*
+                                    // TODO
+                                    <Button onClick={this.createTaskLink.bind(this)}>
+                                        Suggest an Event
+                                    </Button>
+                                    */}
+                                </Col>
+                            </Row>
                             <div className="vert-gap-sm clearfix"/>
 
                             {this.state.taskTypeSelected === TASK_TYPE.EVENT &&
@@ -226,7 +227,7 @@ export default class extends StandardPage {
                             />
                             }
                         </Col>
-                        <Col md={{span:24}} md={{span: 6}} className="d_rightContainer d_box">
+                        <Col sm={{span:24}} md={{span: 8}} className="d_rightContainer d_box">
                             <h4>
                                 Submit an Issue
                             </h4>
