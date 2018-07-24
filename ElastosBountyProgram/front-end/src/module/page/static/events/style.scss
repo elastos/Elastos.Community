@@ -1,0 +1,97 @@
+
+@import "../../../../style/variable";
+
+.p_EVENTS {
+
+  background: #ffffff;
+  text-align: left;
+
+  > .ebp-page {
+    max-width: 90%;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    .ebp-events-time {
+      padding: 20px;
+      font-size: 2rem;
+      width: 80%;
+      margin: 0 auto;
+
+      .ebp-events-month:hover {
+        border-top: 2px solid green;
+        cursor: pointer;
+      }
+
+      .ebp-events-active-month {
+        border-top: 2px solid green;
+        font-size: 3rem;
+      }
+    }
+
+    .ebp-events-location {
+      padding-bottom: 20px;
+      font-size: 2rem;
+
+      .ebp-events-country-select {
+        width: 250px;
+      }
+    }
+
+    .d_row {
+      padding: 30px;
+
+      .ant-card {
+        width: 300px;
+        margin: 20px;
+        display: inline-block;
+
+        .ant-card-body {
+          padding: 10px;
+
+          .events-card-detail {
+            text-align: center;
+
+            .events-card-time {
+              font-size: 1rem;
+            }
+
+            .events-card-title {
+              font-weight: bold;
+              font-size: 16px;
+              color: black;
+              padding-top: 10px;
+            }
+            .events-card-location {
+              font-size: 12px;
+            }
+          }
+        }
+
+        .events-card-button-container {
+          padding: 10px;
+
+          .events-card-button {
+            color: black;
+            background-color: white;
+            border-color: green;
+            width: 200px;
+          }
+
+          .events-card-button:hover {
+            color: white;
+            background-color: green;
+          }
+        }
+
+        .events-card-hashtags {
+          border-top: 1px solid rgba(255, 192, 100, 0.3);
+          padding: 10px 10px 0px 10px;
+          text-align: center;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
+
