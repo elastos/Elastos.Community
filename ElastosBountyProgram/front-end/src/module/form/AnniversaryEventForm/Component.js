@@ -437,9 +437,7 @@ class C extends BaseComponent {
                             {p.attachment}
                         </FormItem>
 
-
                         <Divider/>
-
 
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, lg: {span: 12, offset: 6}}}>
                             <Button loading={this.props.loading} type="ebp" htmlType="submit" className="mobileBtn d_btn">

@@ -182,53 +182,58 @@ class C extends BaseComponent {
 
         // TODO: description CKE Editor
 
-        return (!this.props.is_login ?
-            <div className="center">
-                <br/>
-                You must be logged in to apply to come to the 2018 Anniversary Event<br/>
-                <br/>
-                <Button onClick={() => this.props.history.push('/login')}>Login</Button>
-                <Button onClick={() => this.props.history.push('/register')}>Register</Button>
-            </div> :
-            <div className="c_anniversaryAppFormContainer">
+        return <div className="c_anniversaryAppFormContainer">
 
-                <Form onSubmit={this.handleSubmit.bind(this)}>
-                    <div>
-                        <Row>
-                            <Col offset={6} span={12} className="left-align">
+            <Form onSubmit={this.handleSubmit.bind(this)}>
+                <div>
+                    <Row>
+                        <Col offset={6} span={12} className="left-align">
 
-                                <h5>Dear Community Member,</h5>
+                            <h5>Dear Community Member,</h5>
 
-                                <p>
-                                    Elastos is celebrating its One Year Anniversary this August and we would love it if you
-                                    could make a short 5-15 second video of yourself stating your name and wishing Elastos a
-                                    happy anniversary and stating where you're from.
-                                </p>
+                            <p>
+                                Elastos is celebrating its One Year Anniversary this August and we would love it if you
+                                could make a short 5-15 second video of yourself stating your name and wishing Elastos a
+                                happy anniversary and stating where you're from.
+                            </p>
 
-                                <h4>Example Script</h4>
+                            <h4>Example Script</h4>
 
-                                <p>
-                                    <i>Hi my name is [Name] and I'd like to wish Elastos a great 1 year anniversary from [City, Country]</i>
-                                </p>
+                            <p>
+                                <i>Hi my name is [Name] and I'd like to wish Elastos a great 1 year anniversary from [City, Country]</i>
+                            </p>
 
-                                <Divider></Divider>
+                            <Divider></Divider>
 
-                                <p>
-                                    Submissions will be put together into an Elastos highlight reel to be shown at the Anniversary event.
-                                </p>
+                            <p>
+                                Submissions will be put together into an Elastos highlight reel to be shown at the Anniversary event.
+                            </p>
 
 
-                                <h5>Notes:</h5>
+                            <h5>Notes:</h5>
 
-                                <p>
-                                    Submissions in any language are welcome, if your submisson is not in English please
-                                    also include a text translation in English so we can add the appropriate subtitles.
-                                </p>
+                            <p>
+                                Submissions in any language are welcome, if your submisson is not in English please
+                                also include a text translation in English so we can add the appropriate subtitles.
+                            </p>
 
-                            </Col>
-                        </Row>
+                        </Col>
+                    </Row>
+
+                    {!this.props.is_login ?
+                    <div className="center">
+                        <br/>
+                        You must be logged in to apply to come to the 2018 Anniversary Event<br/>
+                        <br/>
+                        <Button onClick={() => {
+                            sessionStorage.setItem('loginRedirect', '/form/anniversaryVideo2018')
+                            this.props.history.push('/login')
+                        }}>Login</Button>
+                        <Button onClick={() => this.props.history.push('/register')}>Register</Button>
+                    </div> : <div>
 
                         <Divider>Short Info</Divider>
+
                         <Row>
                             <Col span={6} className="right-align static-field">
                                 Email:
@@ -265,10 +270,11 @@ class C extends BaseComponent {
                                 Please contact <a href="mailto:cyberrepublic@elastos.org">cyberrepublic@elastos.org</a> if you have any issues.
                             </Col>
                         </Row>
-                    </div>
-                </Form>
-            </div>
-        )
+                    </div>}
+                </div>
+            </Form>
+        </div>
+
     }
 
 }

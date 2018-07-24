@@ -277,7 +277,7 @@ class C extends BaseComponent {
                         </FormItem>
                         <Divider></Divider>
                         <Row>
-                            <Col offset="8" span="12">
+                            <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
                                 What is your native language, who is your audience and where are they located? What are the language(s) you plan to use to present Elastos.
                             </Col>
                         </Row>
@@ -286,7 +286,7 @@ class C extends BaseComponent {
                         </FormItem>
 
                         <Row>
-                            <Col offset="8" span="12">
+                            <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
                                 Please describe your public speaking experience and provide any examples.
                             </Col>
                         </Row>
@@ -295,7 +295,7 @@ class C extends BaseComponent {
                         </FormItem>
 
                         <Row>
-                            <Col offset="8" span="12">
+                            <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
                                 Please list any current or past contributions promoting Elastos.
                             </Col>
                         </Row>
@@ -308,7 +308,7 @@ class C extends BaseComponent {
                         </FormItem>
 
                         <Row>
-                            <Col offset="8" span="12">
+                            <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
                                 If you are not a developer, please explain how you are familiar with Elastos technology and what problems we solve.
                             </Col>
                         </Row>
@@ -317,7 +317,7 @@ class C extends BaseComponent {
                         </FormItem>
 
                         <Row>
-                            <Col offset="8" span="12">
+                            <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
                                 Describe Elastos in your own words.
                             </Col>
                         </Row>
@@ -326,7 +326,7 @@ class C extends BaseComponent {
                         </FormItem>
 
                         <Row>
-                            <Col offset="8" span="12">
+                            <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
                                 Tell us in a few words what inspired you to join Cyber Republic.
                             </Col>
                         </Row>
