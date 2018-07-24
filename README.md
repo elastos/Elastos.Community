@@ -8,9 +8,6 @@ Everyone is welcome to raise issue for new ideas.
 # Headlines
 [We Want You! Elastos Community Recruitment](https://medium.com/elastos/we-want-you-elastos-community-recruitment-da0e97694f63)
 
-## What's New?
-Elastos Sidechain WP V0.3: https://www.elastos.org/wp-content/uploads/2018/White%20Papers/elastos_sidechain_whitepaper_v0.3.0.8_EN.pdf?_t=1526918471
-
 **Ask general questions to Kevin Zhang:**
 
 The best way to raise your question is using Github. Go to https://github.com/elastos/Elastos and raise any general questions. His github ID is kevingzhang. Or, if you have specific questions related to any specific components or projects, please go to that project repository and raise issues there. For example, if you want to know how the Elastos Carrier works on Nodejs, please go to https://github.com/elastos/Elastos.NET.Carrier.Nodejs.SDK and raise an issue there.
@@ -39,22 +36,32 @@ The best way to raise your question is using Github. Go to https://github.com/el
 * Youtube: https://www.youtube.com/channel/UCy5AjgpQIQq3bv8oy_L5WTQ
 * Instagram: https://www.instagram.com/elastosofficial/
 * Official News Channel: https://t.me/elastos_org
-* Chinese Telegram Community: https://t.me/elastoschina
-* Korean Telegram Community: https://t.me/elastoskorea
-* German Telegram Community: https://t.me/elastosgerman
-* Dutch Telegram Community: https://t.me/ElastosNL
-* Finnish Telegram Community: https://t.me/elastosfinland
-* Indian Telegram Community: https://t.me/ElastosIndia
-* Russian Telegram Community: https://t.me/Elastos_RUS
-* U.K. Telegram Community: https://t.me/ElastosUK
-* Czech Telegram Community: https://t.me/elastoscz
-* Spanish Telegram Community: https://t.me/ElastosSpa
-* Australia Telegram Community: https://t.me/ElastosAus
-* Thai Telegram Community: https://t.me/elastosthai
-* French Telegram Community: https://t.me/elastosfrance
-* Singapore Telegram Community: https://t.me/elastosSG
-* Vietnam Telegram Community: https://t.me/elastosvietnam
-* Malaysia Telegram Community: https://t.me/ElastosMalaysia
+
+**International Community:**
+* English: https://t.me/elastosgroup
+* Chinese: https://t.me/ElastosChina
+* Korean: https://t.me/ElastosKorea
+* German: https://t.me/ElastosGermany
+* Dutch: https://t.me/ElastosNetherlands
+* Finnish: https://t.me/ElastosFinland
+* Indian: https://t.me/ElastosIndia
+* Russian: https://t.me/Elastos_RUS
+* U.K.: https://t.me/ElastosUK 
+* Czech: ttps://t.me/elastoscz 
+* Spanish:https://t.me/ElastosSpain
+* Australian: https://t.me/ElastosAustralia
+* Thai: https://t.me/ElastosThailand
+* French: https://t.me/ElastosFrance 
+* Turkish: https://t.me/ElastosTurkey 
+* VietNam: https://t.me/ElastosVietNam
+* Greek: https://t.me/ElastosGreece 
+* Canadian: https://t.me/ElastosCanada 
+* Belgian: https://t.me/ElastosBelgium
+* Malaysian: https://t.me/ElastosMalaysia
+* Indonesian: https://t.me/ElastosIndonesia
+* Singaporean: https://t.me/elastosSG
+* Polish https://t.me/ElastosPoland
+* South African: https://t.me/ElastosSouthAfrica
 
 ## Help wanted
 - [Team recuiting notice Apr 2018](https://medium.com/elastos/we-want-you-elastos-community-recruitment-da0e97694f63)
