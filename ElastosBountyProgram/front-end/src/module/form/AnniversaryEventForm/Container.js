@@ -38,22 +38,48 @@ export default createContainer(Component, (state)=>{
          */
         async submitForm(formData, st){
 
+            let rs
+
             try {
-                const rs = await submissionService.create({
+                if (st._id) {
+                    rs = await submissionService.update(st._id, {
 
-                    title: 'Anniversary 2018 - Application',
-                    type: SUBMISSION_TYPE.FORM_EXT,
-                    campaign: SUBMISSION_CAMPAIGN.ANNI_2008,
+                        fullLegalName: formData.fullLegalName,
 
-                    fullLegalName: formData.fullLegalName,
-                    email: this.user.email,
+                        attachment: st.attachment_url,
+                        attachmentFilename: st.attachment_filename,
+                        attachmentType: st.attachment_type,
 
-                    description: '',
+                        removeAttachment: st.removeAttachment,
 
-                    attachment: st.attachment_url,
-                    attachmentFilename: st.attachment_filename,
-                    attachmentType: st.attachment_type
-                });
+                        passportUpload: st.passport_url,
+                        passportFilename: st.passport_filename,
+                        passportUploadType: st.passport_type,
+
+                        removePassport: st.removePassport
+                    })
+
+                } else {
+                    rs = await submissionService.create({
+
+                        title: 'Anniversary 2018 - Application',
+                        type: SUBMISSION_TYPE.FORM_EXT,
+                        campaign: SUBMISSION_CAMPAIGN.ANNI_2008,
+
+                        fullLegalName: formData.fullLegalName,
+                        email: this.user.email,
+
+                        description: '',
+
+                        attachment: st.attachment_url,
+                        attachmentFilename: st.attachment_filename,
+                        attachmentType: st.attachment_type,
+
+                        passportUpload: st.passport_url,
+                        passportFilename: st.passport_filename,
+                        passportUploadType: st.passport_type
+                    });
+                }
 
                 if (formData.walletAddress) {
                     const userRs = await userService.update(this.user.current_user_id, {
@@ -65,7 +91,7 @@ export default createContainer(Component, (state)=>{
 
                 if (rs) {
                     message.success('Success - one of the admins will be in touch shortly');
-                    submissionService.path.push('/profile/submissions');
+                    submissionService.path.push('/form/anniversary2018');
                 }
             } catch (err) {
                 console.error(err)

@@ -49,7 +49,7 @@ export default class extends Base {
 
         file.mv(path+file_name);
 
-        //TODO upload to s3
+        // TODO: add retry
         const uploader = s3_client.uploadFile({
             localFile : path+file_name,
             s3Params : {

@@ -104,7 +104,11 @@ export default class extends Base {
 
             attachment,
             attachmentType,
-            attachmentFilename
+            attachmentFilename,
+
+            passportUpload,
+            passportUploadType,
+            passportFilename
 
         } = param;
         this.validate_title(title)
@@ -141,6 +145,10 @@ export default class extends Base {
             attachment,
             attachmentType,
             attachmentFilename,
+
+            passportUpload,
+            passportUploadType,
+            passportFilename,
 
             createdBy: this.currentUser ? this.currentUser._id : null
         }

@@ -4,7 +4,7 @@ import {
     Form,
     Icon,
     Input,
-    PopConfirm,
+    Popconfirm,
     message,
     Button,
     Checkbox,
@@ -48,6 +48,8 @@ class C extends BaseComponent {
 
         this.state = {
 
+            rulesAgreed: false,
+
             // init as loading while we check for an existing submission
             loading: true,
 
@@ -58,7 +60,14 @@ class C extends BaseComponent {
             attachment_filename: '',
             attachment_type: '',
 
-            removeAttachment: false
+            removeAttachment: false,
+
+            passport_url: null,
+            passport_loading: false,
+            passport_filename: '',
+            passport_type: '',
+
+            removePassport: false
         }
     }
 
@@ -74,6 +83,8 @@ class C extends BaseComponent {
         }
 
         this.setState({
+
+            rulesAgreed: true,
             loading: false,
 
             _id: existingSubmission._id,
@@ -82,8 +93,44 @@ class C extends BaseComponent {
 
             attachment_url: existingSubmission.attachment,
             attachment_filename: existingSubmission.attachmentFilename,
-            attachment_type: existingSubmission.attachmentType
+            attachment_type: existingSubmission.attachmentType,
+
+            removeAttachment: false,
+
+            passport_url: existingSubmission.passportUpload,
+            passport_filename: existingSubmission.passportFilename,
+            passport_type: existingSubmission.passportUploadType,
+
+            removePassport: false
         })
+
+        this.props.form.setFieldsValue({readRules: true})
+    }
+
+    async removeAttachment() {
+        await this.setState({
+            attachment_loading: false,
+            attachment_url : null,
+            attachment_type: '',
+            attachment_filename: '',
+
+            removeAttachment: true
+        })
+
+        // message.success('File removed')
+    }
+
+    async removePassport() {
+        await this.setState({
+            passport_loading: false,
+            passport_url : null,
+            passport_type: '',
+            passport_filename: '',
+
+            removePassport: true
+        })
+
+        // message.success('Passport file removed')
     }
 
     getInputProps () {
@@ -159,7 +206,49 @@ class C extends BaseComponent {
                         </a>
                     ) : (
                         <Button className="mobileBtn" loading={this.state.attachment_loading}>
-                            <Icon type="upload" /> Click to upload
+                            <Icon type="upload" /> Upload Flight Receipt
+                        </Button>
+                    )
+                }
+            </Upload>
+        );
+
+        const passport_fn = getFieldDecorator('passport', {
+            rules: []
+        });
+        const p_passport= {
+            showUploadList: false,
+            customRequest :(info)=>{
+                this.setState({
+                    passport_loading: true
+                });
+                upload_file(info.file).then((d)=>{
+                    const url = d.url;
+                    this.setState({
+                        passport_loading: false,
+                        passport_url : url,
+                        passport_type: d.type,
+                        passport_filename: d.filename,
+
+                        removePassport: false
+                    });
+                })
+            }
+        };
+        const passport_el = (
+            <Upload name="passport" {...p_passport}>
+                {
+                    this.state.passport_url ? (
+                        <a target="_blank" href={this.state.passport_url}>
+                            {this.state.passport_type === 'application/pdf' ?
+                                <Icon type="file-pdf"/> :
+                                <Icon type="file"/>
+                            } &nbsp;
+                            {this.state.passport_filename}
+                        </a>
+                    ) : (
+                        <Button className="mobileBtn" loading={this.state.passport_loading}>
+                            <Icon type="upload" /> Upload Photo of Passport
                         </Button>
                     )
                 }
@@ -172,7 +261,8 @@ class C extends BaseComponent {
             fullLegalName: fullLegalName_fn(fullLegalName_el),
             walletAddress: walletAddress_fn(walletAddress_el),
 
-            attachment: attachment_fn(attachment_el)
+            attachment: attachment_fn(attachment_el),
+            passport: passport_fn(passport_el)
         }
     }
 
@@ -183,7 +273,7 @@ class C extends BaseComponent {
         const formItemLayout = {
             labelCol: {
                 xs: {span: 24},
-                md: {span: 6},
+                md: {span: 8},
             },
             wrapperCol: {
                 xs: {span: 24},
@@ -231,35 +321,35 @@ class C extends BaseComponent {
                             </h5>
 
                             <Row>
-                                <Col xs={{span: 8}} md={{span: 6}}>
+                                <Col span={8}>
                                     <h4>Location:</h4>
                                 </Col>
-                                <Col xs={{span: 16}} md={{span: 18}}>
+                                <Col span={16} style={{paddingLeft: 15}}>
                                     Shangri-La Hotel, Chiang Mai, Thailand
                                 </Col>
                             </Row>
                             <Row>
-                                <Col xs={{span: 8}} md={{span: 6}}>
+                                <Col span={8}>
                                     <h4>Event Dates:</h4>
                                 </Col>
-                                <Col xs={{span: 16}} md={{span: 18}}>
+                                <Col span={16} style={{paddingLeft: 15}}>
                                     Aug 24 - 27, 2018
                                 </Col>
                             </Row>
                             <Row>
-                                <Col xs={{span: 8}} md={{span: 6}}>
+                                <Col span={8}>
                                     <h4>Registration Deadline:</h4>
                                 </Col>
-                                <Col xs={{span: 16}} md={{span: 18}}>
+                                <Col span={16} style={{paddingLeft: 15}}>
                                     <b>July 18, 2018 - 11:59pm PDT</b>
                                 </Col>
                             </Row>
                             <Row>
-                                <Col xs={{span: 8}} md={{span: 6}}>
+                                <Col span={8}>
                                     <h4>Airfare/Passport Upload Deadline:</h4>
                                 </Col>
-                                <Col xs={{span: 16}} md={{span: 18}}>
-                                    <b>Aug 9, 2018 - 11:59pm PDT</b>
+                                <Col span={16} style={{paddingLeft: 15}}>
+                                    <b style={{color: '#E3170D'}}>Aug 9, 2018 - 11:59pm PDT</b>
                                 </Col>
                             </Row>
 
@@ -285,7 +375,7 @@ class C extends BaseComponent {
                                             <Col span={6} className="strong-text">
                                                 - 08:30 - 08:55
                                             </Col>
-                                            <Col span={18}>
+                                            <Col span={18} style={{paddingLeft: 15}}>
                                                 Conference Sign In
                                             </Col>
                                         </Row>
@@ -293,7 +383,7 @@ class C extends BaseComponent {
                                             <Col span={6} className="strong-text">
                                                 - 09:00 - 11:30
                                             </Col>
-                                            <Col span={18}>
+                                            <Col span={18} style={{paddingLeft: 15}}>
                                                 Main Event / Ceremony
                                             </Col>
                                         </Row>
@@ -301,7 +391,7 @@ class C extends BaseComponent {
                                             <Col span={6} className="strong-text">
                                                 - 11:30 - 13:30
                                             </Col>
-                                            <Col span={18}>
+                                            <Col span={18} style={{paddingLeft: 15}}>
                                                 Buffet Lunch
                                             </Col>
                                         </Row>
@@ -309,7 +399,7 @@ class C extends BaseComponent {
                                             <Col span={6} className="strong-text">
                                                 - 14:00 - 17:00
                                             </Col>
-                                            <Col span={18}>
+                                            <Col span={18} style={{paddingLeft: 15}}>
                                                 dApp Meetups & Presentations
                                             </Col>
                                         </Row>
@@ -317,7 +407,7 @@ class C extends BaseComponent {
                                             <Col span={6} className="strong-text">
                                                 - 18:00 - 20:00
                                             </Col>
-                                            <Col span={18}>
+                                            <Col span={18} style={{paddingLeft: 15}}>
                                                 Dinner
                                             </Col>
                                         </Row>
@@ -325,7 +415,7 @@ class C extends BaseComponent {
                                             <Col span={6} className="strong-text">
                                                 - 20:30 - 22:00
                                             </Col>
-                                            <Col span={18}>
+                                            <Col span={18} style={{paddingLeft: 15}}>
                                                 European Developer Community Webcast
                                             </Col>
                                         </Row>
@@ -339,7 +429,7 @@ class C extends BaseComponent {
                                             <Col span={6} className="strong-text">
                                                 - 09:30 - 10:30
                                             </Col>
-                                            <Col span={18}>
+                                            <Col span={18} style={{paddingLeft: 15}}>
                                                 America Developer Community Webcast
                                             </Col>
                                         </Row>
@@ -347,7 +437,7 @@ class C extends BaseComponent {
                                             <Col span={6} className="strong-text">
                                                 - 11:00 - 18:30
                                             </Col>
-                                            <Col span={18}>
+                                            <Col span={18} style={{paddingLeft: 15}}>
                                                 Chiang Mai Town Tour
                                             </Col>
                                         </Row>
@@ -402,9 +492,11 @@ class C extends BaseComponent {
                             <Button onClick={() => this.props.history.push('/register')}>Register</Button>
                         </div> : <div>
 
-                            <FormItem {...formItemNoLabelLayout}>
+                            {!this.state._id &&
+                            < FormItem {...formItemNoLabelLayout}>
                                 {p.readRules} <b>I have read and agree to the rules <span style={{color: 'red'}}>*</span> </b>
                             </FormItem>
+                            }
 
                             <Divider>Application</Divider>
                             <Row>
@@ -450,22 +542,62 @@ class C extends BaseComponent {
                             }
 
                             <Divider>
-                                Upload Your Airfare Receipt
+                                Upload Your Airfare Receipt & Photo of Passport Info Page
                             </Divider>
-
 
                             <Row>
                                 <Col {...textLayout} className="left-align">
-                                    If you do not upload it now you will need to visit your<br/>
-                                    <b>Profile / Submissions Page</b><br/>
+                                    If you do not upload it now you will need to upload it by Aug 9th
                                     <br/>
-                                    There you can view your submission and upload the receipt at a later time.<br/>
                                     <br/>
                                 </Col>
                             </Row>
-                            <FormItem {...formItemNoLabelLayout}>
-                                {p.attachment}
-                            </FormItem>
+
+                            {this.state.attachment_url ?
+                                <Row>
+                                    <Col offset={6} span={12}>
+                                        <a target="_blank" href={this.state.attachment_url}>
+                                            Airfare: {this.state.attachment_filename}
+                                        </a>
+
+                                        &nbsp;
+
+                                        <Popconfirm title="Are you sure you want to remove this?" placement="top" okText="Yes" onConfirm={this.removeAttachment.bind(this)}>
+                                            <Icon type="delete" style={{cursor: 'pointer'}}/>
+                                        </Popconfirm>
+                                    </Col>
+                                </Row> :
+
+                                <div>
+                                    <FormItem {...formItemNoLabelLayout}>
+                                        {p.attachment}
+                                    </FormItem>
+                                </div>
+                            }
+
+                            <br/>
+
+                            {this.state.passport_url ?
+                                <Row>
+                                    <Col offset={6} span={12}>
+                                        <a target="_blank" href={this.state.passport_url}>
+                                            Passport: {this.state.passport_filename}
+                                        </a>
+
+                                        &nbsp;
+
+                                        <Popconfirm title="Are you sure you want to remove this?" placement="top" okText="Yes" onConfirm={this.removePassport.bind(this)}>
+                                            <Icon type="delete" style={{cursor: 'pointer'}}/>
+                                        </Popconfirm>
+                                    </Col>
+                                </Row> :
+
+                                <div>
+                                    <FormItem {...formItemNoLabelLayout}>
+                                        {p.passport}
+                                    </FormItem>
+                                </div>
+                            }
 
                             <Divider/>
 
