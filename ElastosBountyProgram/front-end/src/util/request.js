@@ -111,7 +111,8 @@ export const upload_file = async (fileObject, opts={})=>{
             },
             data : {
                 file : fileObject
-            }
+            },
+            compress: true
         });
 
         return {

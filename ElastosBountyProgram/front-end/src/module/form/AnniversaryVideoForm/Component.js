@@ -143,12 +143,10 @@ class C extends BaseComponent {
         }
     }
 
-    getCommunityTrees() {
-        this.props.getAllCommunities().then((communityTrees) => {
-            this.setState({
-                communityTrees
-            })
-        })
+    async componentDidMount() {
+
+
+
     }
 
     ord_render () {
@@ -187,7 +185,7 @@ class C extends BaseComponent {
             <Form onSubmit={this.handleSubmit.bind(this)}>
                 <div>
                     <Row>
-                        <Col offset={6} span={12} className="left-align">
+                        <Col xs={{span: 24}} md={{offset: 6, span: 12}}>className="left-align">
 
                             <h5>Dear Community Member,</h5>
 
