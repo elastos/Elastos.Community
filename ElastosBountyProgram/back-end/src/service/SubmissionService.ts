@@ -17,11 +17,20 @@ const sanitize = '-password -salt -email'
 export default class extends Base {
     public async show(param): Promise<Document> {
         const db_submission = this.getDBModel('Submission')
+        let submission
 
-        const submission = await db_submission.getDBInstance().findOne({_id: param.submissionId})
-            .populate('createdBy', sanitize)
-            .populate('community')
-            .populate('subscribers', sanitize)
+        if (param.submissionId) {
+            submission = await db_submission.getDBInstance().findOne({_id: param.submissionId})
+                .populate('createdBy', sanitize)
+                .populate('community')
+                .populate('subscribers', sanitize)
+        } else if (param.campaign){
+            submission = await db_submission.getDBInstance().findOne({createdBy: this.currentUser._id, campaign: param.campaign})
+                .populate('createdBy', sanitize)
+                .populate('community')
+                .populate('subscribers', sanitize)
+        }
+
 
         if (submission) {
             for (let comment of submission.comments) {

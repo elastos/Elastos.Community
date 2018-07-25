@@ -30,9 +30,11 @@ export default abstract class {
 
                 // this block is the callback
                 // for the file upload - we remove any timeout
+                /*
                 if (item.router.name === 'UploadFile' && item.path === '/file') {
                     req.clearTimeout()
                 }
+                */
                 const c = new item.router(req, res);
                 return c.main();
             });

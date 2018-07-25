@@ -13,7 +13,7 @@ import {
     Row,
     Col,
     Upload,
-    Cascader,
+    Spin,
     Divider
 
 } from 'antd'
@@ -47,7 +47,11 @@ class C extends BaseComponent {
         super(props)
 
         this.state = {
-            community: null,
+
+            // init as loading while we check for an existing submission
+            loading: true,
+
+            _id: null,
 
             attachment_url: null,
             attachment_loading: false,
@@ -58,11 +62,35 @@ class C extends BaseComponent {
         }
     }
 
+    async componentDidMount() {
+
+        const existingSubmission = await this.props.getExistingSubmission()
+
+        if (!existingSubmission) {
+            await this.setState({
+                loading: false
+            })
+            return
+        }
+
+        this.setState({
+            loading: false,
+
+            _id: existingSubmission._id,
+
+            fullLegalName: existingSubmission.fullLegalName,
+
+            attachment_url: existingSubmission.attachment,
+            attachment_filename: existingSubmission.attachmentFilename,
+            attachment_type: existingSubmission.attachmentType
+        })
+    }
+
     getInputProps () {
 
         const {getFieldDecorator} = this.props.form
 
-        // I have read the rules
+        // I have read the rules - TODO: disable if
         const readRules_fn = getFieldDecorator('readRules', {
             rules: [
                 {required: true, message: 'You must agree to the rules and requirements'},
@@ -74,7 +102,7 @@ class C extends BaseComponent {
 
         // name
         const fullLegalName_fn = getFieldDecorator('fullLegalName', {
-            initialValue: this.props.user.profile.firstName + ' ' + this.props.user.profile.lastName,
+            initialValue: this.state.fullLegalName || this.props.user.profile.firstName + ' ' + this.props.user.profile.lastName,
             rules: [
                 {required: true, message: 'Please input an name'},
                 {min: 6, message: 'name too short'}
@@ -148,14 +176,6 @@ class C extends BaseComponent {
         }
     }
 
-    getCommunityTrees() {
-        this.props.getAllCommunities().then((communityTrees) => {
-            this.setState({
-                communityTrees
-            })
-        })
-    }
-
     ord_render () {
         const {getFieldDecorator} = this.props.form
         const p = this.getInputProps()
@@ -163,18 +183,18 @@ class C extends BaseComponent {
         const formItemLayout = {
             labelCol: {
                 xs: {span: 24},
-                lg: {span: 6},
+                md: {span: 6},
             },
             wrapperCol: {
                 xs: {span: 24},
-                lg: {span: 12},
+                md: {span: 12},
             }
         }
 
         const formItemNoLabelLayout = {
             wrapperCol: {
                 xs: {span: 24},
-                lg: {offset: 6, span: 12},
+                md: {offset: 6, span: 12},
             },
         }
 
@@ -182,7 +202,7 @@ class C extends BaseComponent {
             xs: {
                 span: 24
             },
-            lg: {
+            md: {
                 offset: 6,
                 span: 12
             }
@@ -232,6 +252,14 @@ class C extends BaseComponent {
                                 </Col>
                                 <Col xs={{span: 16}} md={{span: 18}}>
                                     <b>July 18, 2018 - 11:59pm PDT</b>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs={{span: 8}} md={{span: 6}}>
+                                    <h4>Airfare/Passport Upload Deadline:</h4>
+                                </Col>
+                                <Col xs={{span: 16}} md={{span: 18}}>
+                                    <b>Aug 9, 2018 - 11:59pm PDT</b>
                                 </Col>
                             </Row>
 
@@ -360,97 +388,101 @@ class C extends BaseComponent {
 
                     <br/>
 
-                    {!this.props.is_login ?
-                    <div className="center">
-                        <br/>
-                        <span class="strong-text">You must be logged in to apply to come to the 2018 Anniversary Event</span><br/>
-                        <br/>
-                        <Button onClick={() => {
-                            sessionStorage.setItem('loginRedirect', '/form/anniversary2018')
-                            this.props.history.push('/login')
-                        }}>Login</Button>
-                        <Button onClick={() => this.props.history.push('/register')}>Register</Button>
-                    </div> : <div>
+                    {this.state.loading ?
+                        <div className="center"><Spin size="large"/></div> :
+                        (!this.props.is_login ?
+                        <div className="center">
+                            <br/>
+                            <span class="strong-text">You must be logged in to apply to come to the 2018 Anniversary Event</span><br/>
+                            <br/>
+                            <Button onClick={() => {
+                                sessionStorage.setItem('loginRedirect', '/form/anniversary2018')
+                                this.props.history.push('/login')
+                            }}>Login</Button>
+                            <Button onClick={() => this.props.history.push('/register')}>Register</Button>
+                        </div> : <div>
 
-                        <FormItem {...formItemNoLabelLayout}>
-                            {p.readRules} <b>I have read and agree to the rules <span style={{color: 'red'}}>*</span> </b>
-                        </FormItem>
+                            <FormItem {...formItemNoLabelLayout}>
+                                {p.readRules} <b>I have read and agree to the rules <span style={{color: 'red'}}>*</span> </b>
+                            </FormItem>
 
-                        <Divider>Application</Divider>
-                        <Row>
-                            <Col xs={{span: 24}} md={{span: 6}} className="right-align static-field">
-                                Email:
-                            </Col>
-                            <Col xs={{span: 24}} md={{span: 12}} className="static-field content">
-                                {this.props.user.email}
-                            </Col>
-                        </Row>
-                        <FormItem label="Full Legal Name" {...formItemLayout}>
-                            {p.fullLegalName}
-                        </FormItem>
+                            <Divider>Application</Divider>
+                            <Row>
+                                <Col xs={{span: 24}} md={{span: 6}} className="right-align static-field">
+                                    Email:
+                                </Col>
+                                <Col xs={{span: 24}} md={{span: 12}} className="static-field content">
+                                    {this.props.user.email}
+                                </Col>
+                            </Row>
+                            <FormItem label="Full Legal Name" {...formItemLayout}>
+                                {p.fullLegalName}
+                            </FormItem>
 
-                        <Divider></Divider>
+                            <Divider></Divider>
 
-                        {this.props.user.profile.walletAddress ?
-                            <div>
-                                <Row>
-                                    <Col {...textLayout} >
-                                        Please ensure this is your wallet address, this is managed under your profile
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={{span: 24}} md={{span: 6}} className="right-align static-field">
-                                        ELA Address:
-                                    </Col>
-                                    <Col xs={{span: 24}} md={{span: 12}}  className="static-field content">
-                                        <b>{this.props.user.profile.walletAddress}</b>
-                                    </Col>
-                                </Row>
-                            </div> :
-                            <div>
-                                <Row>
-                                    <Col offset="6" span="12">
-                                        Please note this wallet address will be added to your profile
-                                    </Col>
-                                </Row>
-                                <FormItem label="ELA Wallet Address" {...formItemLayout}>
-                                    {p.walletAddress}
-                                </FormItem>
-                            </div>
-                        }
+                            {this.props.user.profile.walletAddress ?
+                                <div>
+                                    <Row>
+                                        <Col {...textLayout} >
+                                            Please ensure this is your wallet address, this is managed under your profile
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xs={{span: 24}} md={{span: 6}} className="right-align static-field">
+                                            ELA Address:
+                                        </Col>
+                                        <Col xs={{span: 24}} md={{span: 12}}  className="static-field content">
+                                            <b>{this.props.user.profile.walletAddress}</b>
+                                        </Col>
+                                    </Row>
+                                </div> :
+                                <div>
+                                    <Row>
+                                        <Col offset="6" span="12">
+                                            Please note this wallet address will be added to your profile
+                                        </Col>
+                                    </Row>
+                                    <FormItem label="ELA Wallet Address" {...formItemLayout}>
+                                        {p.walletAddress}
+                                    </FormItem>
+                                </div>
+                            }
 
-                        <Divider>
-                            Upload Your Airfare Receipt
-                        </Divider>
+                            <Divider>
+                                Upload Your Airfare Receipt
+                            </Divider>
 
 
-                        <Row>
-                            <Col {...textLayout} className="left-align">
-                                If you do not upload it now you will need to visit your<br/>
-                                <b>Profile / Submissions Page</b><br/>
-                                <br/>
-                                There you can view your submission and upload the receipt at a later time.<br/>
-                                <br/>
-                            </Col>
-                        </Row>
-                        <FormItem {...formItemNoLabelLayout}>
-                            {p.attachment}
-                        </FormItem>
+                            <Row>
+                                <Col {...textLayout} className="left-align">
+                                    If you do not upload it now you will need to visit your<br/>
+                                    <b>Profile / Submissions Page</b><br/>
+                                    <br/>
+                                    There you can view your submission and upload the receipt at a later time.<br/>
+                                    <br/>
+                                </Col>
+                            </Row>
+                            <FormItem {...formItemNoLabelLayout}>
+                                {p.attachment}
+                            </FormItem>
 
-                        <Divider/>
+                            <Divider/>
 
-                        <FormItem wrapperCol={{xs: {span: 24, offset: 0}, lg: {span: 12, offset: 6}}}>
-                            <Button loading={this.props.loading} type="ebp" htmlType="submit" className="mobileBtn d_btn">
-                                Submit
-                            </Button>
-                        </FormItem>
+                            <FormItem wrapperCol={{xs: {span: 24, offset: 0}, md: {span: 12, offset: 6}}}>
+                                <Button loading={this.props.loading} type="ebp" htmlType="submit" className="mobileBtn d_btn">
+                                    {this.state._id ? 'Save Updates' : 'Submit'}
+                                </Button>
+                            </FormItem>
 
-                        <Row>
-                            <Col {...textLayout} className="static-field content">
-                                Please contact <a href="mailto:cyberrepublic@elastos.org">cyberrepublic@elastos.org</a> if you have any issues.
-                            </Col>
-                        </Row>
-                    </div>}
+                            <Row>
+                                <Col {...textLayout} className="static-field content">
+                                    Please contact <a href="mailto:cyberrepublic@elastos.org">cyberrepublic@elastos.org</a> if you have any issues.
+                                </Col>
+                            </Row>
+                        </div>
+                        )
+                    }
                 </div>
             </Form>
         </div>

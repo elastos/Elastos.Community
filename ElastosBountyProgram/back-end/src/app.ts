@@ -22,6 +22,7 @@ import './config';
 
     app.options('*', cors());
 
+    // TODO: seems resetTimeout in Base isn't working, this is the temp workaround
     const TIMEOUT = '600s';
     app.use(timeout(TIMEOUT));
 

@@ -22,10 +22,20 @@ export default createContainer(Component, (state)=>{
     const userService = new UserService()
 
     return {
-        async getExistingSubmission() {
 
+        // we only allow one submission for the campaign ANNI_2008 (2018)
+        async getExistingSubmission() {
+            return submissionService.getExistingSubmission(SUBMISSION_CAMPAIGN.ANNI_2008)
         },
 
+        /**
+         * This should dynamically submit/update based on whether the state
+         * has an _id
+         *
+         * @param formData
+         * @param st
+         * @returns {Promise<void>}
+         */
         async submitForm(formData, st){
 
             try {
