@@ -42,9 +42,10 @@
       padding: 30px;
 
       .ant-card {
+        display: inline-block;
         width: 300px;
         margin: 20px;
-        display: inline-block;
+        box-shadow: rgba(128, 128, 128, 0.4) 0 5px 15px;
 
         .ant-card-body {
           padding: 10px;
@@ -60,7 +61,9 @@
               font-weight: bold;
               font-size: 16px;
               color: black;
-              padding-top: 10px;
+              margin-top: 10px;
+              text-decoration: underline;
+              cursor: pointer;
             }
             .events-card-location {
               font-size: 12px;
@@ -70,17 +73,20 @@
 
         .events-card-button-container {
           padding: 10px;
+          margin-bottom: 10px;
 
-          .events-card-button {
-            color: black;
-            background-color: white;
-            border-color: green;
-            width: 200px;
+          > button {
+            display: inline-block;
+            width: 40%;
           }
 
-          .events-card-button:hover {
-            color: white;
-            background-color: green;
+          .events-card-button-going {
+            font-style: italic;
+            font-weight: bold;
+          }
+
+          .events-card-button-register:hover {
+            color: black;
           }
         }
 
@@ -91,7 +97,9 @@
           vertical-align: middle;
         }
       }
+      .ant-card:hover {
+        box-shadow: rgba(128, 128, 128, 0.6) 0 5px 15px;
+      }
     }
   }
 }
-

@@ -20,6 +20,7 @@ import FAQPage from '@/module/page/static/faq/Container'
 import AboutPage from '@/module/page/static/about/Container'
 import SlackPage from '@/module/page/static/slack/Container'
 import EventsPage from '@/module/page/static/events/Container'
+import EventPage from '@/module/page/static/details/Container'
 
 import ProfileInfoPage from '@/module/page/profile/info/Container'
 import ProfileTasksPage from '@/module/page/profile/tasks/Container'
@@ -146,6 +147,10 @@ export default [
     {
         path: '/events',
         page: EventsPage
+    },
+    {
+        path: '/event',
+        page: EventPage
     },
     /*
     ********************************************************************************

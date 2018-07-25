@@ -1,0 +1,87 @@
+
+@import "../../../../style/variable";
+
+.p_EVENTS {
+
+  background: #ffffff;
+  text-align: left;
+
+  > .ebp-page {
+    max-width: 90%;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    .d_row_upper {
+      margin: 25px;
+      .d_col_right {
+        img, span, .actionButton {
+          display: block;
+          width: 50%;
+          margin: 5px auto;
+        }
+
+        .actionButton {
+          line-height: 0;
+        }
+
+        .actionDeregister {
+          background-color: indianred;
+          color: white;
+        }
+
+        .actionRegister {
+          background-color: mediumseagreen;
+          color: white;
+        }
+
+        span {
+          font-weight: bold;
+        }
+
+        .socialShareActions {
+          width: 50%;
+          margin: 0 auto;
+        }
+
+        i {
+          padding: 20px;
+        }
+      }
+    }
+
+    .d_row_mid {
+      margin: 25px;
+      .map {
+        display: block;
+        width: 100%;
+        height: 400px;
+        background-color: pink;
+      }
+    }
+
+    .d_row_lower {
+      margin: 25px;
+      text-align: center;
+
+      span {
+        display: block;
+        width: 100%;
+      }
+
+      .title {
+        font-size: 2rem;
+        font-weight: bold;
+      }
+
+      .title-2 {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      i {
+        padding: 20px;
+      }
+    }
+  }
+}
