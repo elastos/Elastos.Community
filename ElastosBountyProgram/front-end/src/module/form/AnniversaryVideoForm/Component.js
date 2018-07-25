@@ -211,7 +211,7 @@ class C extends BaseComponent {
                             <h5>Notes:</h5>
 
                             <p>
-                                Submissions in any language are welcome, if your submisson is not in English please
+                                Submissions in any language are welcome, if your submission is not in English please
                                 also include a text translation in English so we can add the appropriate subtitles.
                             </p>
 

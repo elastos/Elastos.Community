@@ -22,7 +22,7 @@ import './config';
 
     app.options('*', cors());
 
-    const TIMEOUT = '600s';
+    const TIMEOUT = '60s';
     app.use(timeout(TIMEOUT));
 
     morgan.format('ebp', '[Backend] :method :url :status :res[content-length] - :response-time ms');
