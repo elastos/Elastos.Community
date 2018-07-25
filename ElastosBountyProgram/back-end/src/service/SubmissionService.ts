@@ -24,11 +24,12 @@ export default class extends Base {
                 .populate('createdBy', sanitize)
                 .populate('community')
                 .populate('subscribers', sanitize)
-        } else if (param.campaign){
+        } else if (this.currentUser && param.campaign){
             submission = await db_submission.getDBInstance().findOne({createdBy: this.currentUser._id, campaign: param.campaign})
                 .populate('createdBy', sanitize)
                 .populate('community')
                 .populate('subscribers', sanitize)
+
         }
 
 
