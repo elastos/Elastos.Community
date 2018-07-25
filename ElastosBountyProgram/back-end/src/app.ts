@@ -19,9 +19,10 @@ import './config';
     const app = express();
 
     app.use(cors());
+
     app.options('*', cors());
 
-    const TIMEOUT = '120s';
+    const TIMEOUT = '600s';
     app.use(timeout(TIMEOUT));
 
     morgan.format('ebp', '[Backend] :method :url :status :res[content-length] - :response-time ms');

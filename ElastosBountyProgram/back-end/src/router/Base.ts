@@ -15,12 +15,15 @@ interface ROUTEING {
     path: string;
     router: any;
     method: string;
+    timeout?: number;
 }
 
 export default abstract class {
     static setRouter(list: ROUTEING[]): Router{
         const router = Router();
         _.each(list, (item)=>{
+
+            // this calls router.[method]
             router[item.method](item.path, (req, res)=>{
                 const c = new item.router(req, res);
                 return c.main();
