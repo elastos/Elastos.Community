@@ -1,52 +1,17 @@
 import {createContainer} from '@/util'
 import Component from './Component'
+import TaskService from '@/service/TaskService'
+import CommunityService from '@/service/CommunityService'
+
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS} from '@/constant'
+import _ from "lodash";
 
 export default createContainer(Component, (state, ownProps) => {
     return {}
 }, () => {
-
+    const taskService = new TaskService()
+    const communityService = new CommunityService()
     return {
-        async getSocialEvents() {
-            let socialEvents = [];
-            let socialEvent1 = {
-                id: 1,
-                name: "Melbourne Meetup",
-                date: new Date(2018, 8, 24, 10, 0, 0, 0),
-                location: ["Australia", "Melbourne"],
-                image: "https://www.whitecase.com/sites/whitecase/files/images/locations/melbourne_thumbnailmobileimage_720x500.jpg",
-                hostedBy: "Clarence",
-                hashTags: ["#melbourne", "#meetup"],
-                going: true
-            };
-            socialEvents.push(socialEvent1);
-
-            let socialEvent2 = {
-                id: 2,
-                name: "Melbourne Meetup",
-                date: new Date(2018, 8, 24, 10, 0, 0, 0),
-                location: ["Australia", "Melbourne"],
-                image: "https://www.whitecase.com/sites/whitecase/files/images/locations/melbourne_thumbnailmobileimage_720x500.jpg",
-                hostedBy: "Clarence",
-                hashTags: ["#melbourne", "#meetup"],
-                going: true
-            };
-            socialEvents.push(socialEvent2);
-
-            let socialEvent3 = {
-                id: 3,
-                name: "Melbourne Meetup",
-                date: new Date(2018, 8, 24, 10, 0, 0, 0),
-                location: ["Australia", "Melbourne"],
-                image: "https://www.whitecase.com/sites/whitecase/files/images/locations/melbourne_thumbnailmobileimage_720x500.jpg",
-                hostedBy: "Clarence",
-                hashTags: ["#melbourne", "#meetup"],
-                going: false
-            };
-            socialEvents.push(socialEvent3);
-
-            return socialEvents;
-        },
-
         async getCommunityTree() {
             let communityTree = {
                 europe: ["Germany", "Austria"],
@@ -54,6 +19,44 @@ export default createContainer(Component, (state, ownProps) => {
                 australia: ["Melbourne"]
             };
             return communityTree;
+        },
+
+        async getSocialEvents () {
+            return taskService.index({
+                category: TASK_CATEGORY.SOCIAL
+            })
+        },
+
+        async getAllCommunities() {
+            return new Promise((resolve, reject) => {
+                communityService.getAll().then((data) => {
+                    const cascaderItems =  data.map((item) => {
+                        return {
+                            value: item._id,
+                            label: item.name,
+                            parentId: item.parentCommunityId,
+                        }
+                    })
+
+                    const rootCascaderItems = _.filter(cascaderItems, {
+                        parentId: null
+                    })
+
+                    rootCascaderItems.forEach((rootCascaderItem) => {
+                        const children = _.filter(cascaderItems, {
+                            parentId: rootCascaderItem.value
+                        })
+
+                        if (children && children.length) {
+                            rootCascaderItem.children = children
+                        }
+                    })
+
+                    resolve(rootCascaderItems)
+                }).catch((err) => {
+                    reject(err)
+                })
+            })
         }
     }
 })

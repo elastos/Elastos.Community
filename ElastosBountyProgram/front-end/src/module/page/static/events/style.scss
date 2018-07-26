@@ -41,11 +41,26 @@
     .d_row {
       padding: 30px;
 
+      .events-spinner {
+        text-align: center;
+        display: block;
+      }
+
+      .no-events {
+        display: block;
+        text-align: center;
+        font-size: 1rem;
+      }
+
       .ant-card {
         display: inline-block;
         width: 300px;
         margin: 20px;
         box-shadow: rgba(128, 128, 128, 0.4) 0 5px 15px;
+
+        .event-card-image {
+          height: 250px;
+        }
 
         .ant-card-body {
           padding: 10px;

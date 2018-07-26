@@ -24,7 +24,7 @@ export default class extends EmptyPage {
         return (
             <Col sm={{span: 24}} md={{span: 12}}>
                 <span className="event-name">{socialEvent.name}</span>
-                <span className="event-hosted-by">{socialEvent.hostedBy}</span>
+                <span className="event-hosted-by">Hosted by {socialEvent.hostedBy}</span>
                 <div className="event-detail-container">
                     <Row>
                         <Icon type="link" />
