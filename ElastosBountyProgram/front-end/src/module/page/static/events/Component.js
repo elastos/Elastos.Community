@@ -31,6 +31,10 @@ export default class extends EmptyPage {
         })
     }
 
+    navigateToEvent(socialEventID) {
+        this.props.history.push(`/events/${socialEventID}`);
+    }
+
     handleMonthChange(month) {
         this.setState({
             activeMonth: month
@@ -96,7 +100,7 @@ export default class extends EmptyPage {
         const actionButtonLabel = candidate ? "Going" : "Register";
         const seeMoreLabel = "See more";
         const notGoingLabel = "Not going";
-        const menuItemSeeMore = <Menu.Item key="1" onClick={() => this.props.history.push(`/event/`)}>{seeMoreLabel}</Menu.Item>;
+        const menuItemSeeMore = <Menu.Item key="1" onClick={() => this.navigateToEvent(socialEventID)}>{seeMoreLabel}</Menu.Item>;
 
         const menuGoing = (
             <Menu>
@@ -142,7 +146,7 @@ export default class extends EmptyPage {
                 <div className="events-card-detail">
                     <div className="events-card-time">{date}</div>
                     <div className="events-card-title"
-                         onClick={(e) => this.props.history.push(`/event/`)}>{socialEvent.name}</div>
+                         onClick={(e) => this.navigateToEvent(socialEvent._id)}>{socialEvent.name}</div>
                     <div className="events-card-location">{community}</div>
                     <div className="events-card-button-container">
                         {this.renderDropDownMenu(candidate, socialEvent._id)}

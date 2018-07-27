@@ -1,6 +1,10 @@
 
 @import "../../../../style/variable";
 
+$xs-width: 576px;
+$sm-width: 768px;
+$md-width: 992px;
+
 .p_EVENTS {
 
   background: #ffffff;
@@ -12,13 +16,85 @@
     margin-left: auto;
     margin-right: auto;
 
+    .ebp-events-location {
+    }
+
     .d_row_upper {
       margin: 25px;
-      .d_col_right {
-        img, span, .actionButton {
+      .d_col_left {
+
+        .event-name {
           display: block;
-          width: 50%;
+          font-weight: bold;
+        }
+
+        .event-hosted-by {
+          display: block;
+        }
+
+        .event-detail-container {
+          i {
+            vertical-align: middle;
+            margin: 10px 15px 10px 0;
+            font-size: 24px;
+          }
+          .icon-location {
+            color: indianred;
+          }
+          .icon-time {
+            color: cornflowerblue;
+          }
+          .icon-type {
+            color: mediumseagreen;
+          }
+          .icon-info {
+            color: orange;
+          }
+        }
+
+        .hosted-by-avatar {
+          width: 100px;
+          height: auto;
+          border-radius: 50%;
+        }
+
+        .hosted-by-avatar-container {
+          text-align: center;
+        }
+
+        .event-details-divider {
+          width: 90%;
+          margin: 20px auto;
+          background-color: gainsboro;
+        }
+
+        .event-detail-description {
+          padding: 20px;
+
+          .event-detail-description-title {
+            font-weight: bold;
+          }
+        }
+      }
+      .d_col_right {
+
+        span, .actionButton {
+          display: block;
+          width: 70%;
           margin: 5px auto;
+        }
+
+        img {
+          display: block;
+          margin: 5px auto;
+          width: 70%;
+          max-height: 100%;
+        }
+
+        @media only screen and (max-width: $md-width) {
+          img, .actionButton {
+            width: 100%;
+          }
         }
 
         .actionButton {
@@ -35,17 +111,21 @@
           color: white;
         }
 
-        span {
+        .share-with-friends {
+          margin-top: 25px;
           font-weight: bold;
+          text-align: center;
         }
 
-        .socialShareActions {
+        .social-share-actions {
           width: 50%;
           margin: 0 auto;
-        }
+          text-align: center;
 
-        i {
-          padding: 20px;
+          .share-button {
+            display: inline-block;
+            padding: 0 5px;
+          }
         }
       }
     }
@@ -56,7 +136,6 @@
         display: block;
         width: 100%;
         height: 400px;
-        background-color: pink;
       }
     }
 

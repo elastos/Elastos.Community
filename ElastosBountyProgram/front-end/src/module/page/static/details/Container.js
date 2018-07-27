@@ -1,29 +1,27 @@
 import {createContainer} from '@/util'
 import Component from './Component'
+import TaskService from '@/service/TaskService'
 
 export default createContainer(Component, (state, ownProps) => {
-    return {}
+    return {
+        task: state.task.detail,
+        loading: state.task.loading
+    }
 }, () => {
 
-    const loadSocialEvent = () => {
-        let socialEvent = {
-            id: 1,
-            name: "Melbourne Meetup",
-            type: "Regular Meetup",
-            date: "Sun, 1 July 10:00am",
-            location: "Melbourne, Australia",
-            language: "English",
-            image: "https://www.whitecase.com/sites/whitecase/files/images/locations/melbourne_thumbnailmobileimage_720x500.jpg",
-            hostedBy: "Clarence",
-            hashTags: ["#melbourne", "#meetup"],
-            going: true
-        };
-        return socialEvent
-    };
-
+    const taskService = new TaskService();
     return {
-        async getSocialEvent() {
-            return loadSocialEvent()
+        async getTaskDetail(taskId) {
+            return taskService.get(taskId);
+        },
+
+        isTaskLoading() {
+          return this.loading || (Object.keys(this.task).length === 0 && this.task.constructor === Object
+              && !this.loading);
+        },
+
+        async resetTaskDetail() {
+            return taskService.resetTaskDetail()
         }
     }
 })

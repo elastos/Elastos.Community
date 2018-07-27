@@ -12,15 +12,6 @@ export default createContainer(Component, (state, ownProps) => {
     const taskService = new TaskService()
     const communityService = new CommunityService()
     return {
-        async getCommunityTree() {
-            let communityTree = {
-                europe: ["Germany", "Austria"],
-                usa: ["New York"],
-                australia: ["Melbourne"]
-            };
-            return communityTree;
-        },
-
         async getSocialEvents () {
             return taskService.index({
                 category: TASK_CATEGORY.SOCIAL

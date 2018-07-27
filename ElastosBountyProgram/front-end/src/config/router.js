@@ -149,7 +149,7 @@ export default [
         page: EventsPage
     },
     {
-        path: '/event',
+        path: '/events/:eventId',
         page: EventPage
     },
     /*
