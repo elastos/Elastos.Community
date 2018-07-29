@@ -48,6 +48,10 @@ export default createContainer(Component, (state, ownProps) => {
                     reject(err)
                 })
             })
+        },
+
+        // Subscribe the current user to the event with ID: socialEventId
+        async subscribe(socialEventId) {
         }
     }
 })

@@ -15,8 +15,12 @@
     .ebp-events-time {
       padding: 20px;
       font-size: 2rem;
-      width: 80%;
       margin: 0 auto;
+      text-align: center;
+
+      .ebp-events-month {
+        padding: 10px;
+      }
 
       .ebp-events-month:hover {
         border-top: 2px solid green;
@@ -36,6 +40,12 @@
       .ebp-events-country-select {
         width: 250px;
       }
+      .country-select {
+        width: 250px;
+      }
+    }
+
+    .ebp-events-favorites {
     }
 
     .d_row {
@@ -43,7 +53,7 @@
 
       .events-spinner {
         text-align: center;
-        display: block;
+        margin: 0 auto;
       }
 
       .no-events {
@@ -57,6 +67,43 @@
         width: 300px;
         margin: 20px;
         box-shadow: rgba(128, 128, 128, 0.4) 0 5px 15px;
+
+        .card-icon {
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 1000;
+          width: 100%;
+          height: 50%;
+
+          .star {
+            vertical-align: middle;
+            position: absolute;
+            display: none;
+            left: 25%;
+            top: 25%;
+
+            .star-poly {
+              fill-rule:nonzero;
+              stroke: #ffd055;
+              fill: transparent;
+            }
+
+            .star-poly-active {
+              fill-rule:nonzero;
+              stroke: #ffd055;
+              fill: #ffd055;
+            }
+          }
+        }
+
+        .card-icon:hover {
+          background-color: rgba(0,0,0,0.5);
+
+          .star {
+            display: block;
+          }
+        }
 
         .event-card-image {
           height: 250px;
@@ -95,19 +142,48 @@
             width: 40%;
           }
 
-          .events-card-button-going {
-            font-style: italic;
-            font-weight: bold;
+          .events-card-button-register, .events-card-button-unregister {
+            width: 100%;
+            font-size: 16px;
+          }
+
+          .events-card-button-register {
+            background-color: forestgreen;
+            color: white;
           }
 
           .events-card-button-register:hover {
-            color: black;
+            border-color: rgba(34, 139, 34, 0.9);
+            background-color: rgba(34, 139, 34, 0.9);
           }
+
+          .events-card-button-unregister {
+            border: 1px solid forestgreen;
+          }
+
+          .events-card-button-unregister:hover {
+            background-color: indianred;
+            border-color: indianred;
+            color: white;
+
+            span {
+              display: none;
+            }
+          }
+
+          .events-card-button-unregister:hover:after {
+            content: "Cancel?";
+            font-style: italic;
+          }
+        }
+
+        .events-card-details-button {
+          margin-bottom: 15px;
         }
 
         .events-card-hashtags {
           border-top: 1px solid lightgray;
-          padding: 10px 10px 0px 10px;
+          padding: 10px 10px 0 10px;
           text-align: center;
           vertical-align: middle;
         }

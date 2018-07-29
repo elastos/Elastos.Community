@@ -1,10 +1,7 @@
 import React from 'react'
 import EmptyPage from '../../EmptyPage'
 import './style.scss'
-
-import {Row, Icon, Button, Spin, Dropdown, Select, Menu, Card, Tag, Cascader} from "antd";
-const { Option, OptGroup } = Select;
-
+import {Row, Icon, Button, Spin, Checkbox, Card, Tag, Cascader} from "antd";
 import moment from 'moment/moment'
 
 export default class extends EmptyPage {
@@ -15,6 +12,8 @@ export default class extends EmptyPage {
         communityTrees: [],
         filterCommunity: [],
         user_id: "5b28f21925220612fc4ff911",
+        favorites: [],
+        showFavoritesOnly: false
     };
 
     async componentDidMount() {
@@ -47,13 +46,13 @@ export default class extends EmptyPage {
         for (let i = 0; i < months.length; i++) {
             let idx = (i === this.state.activeMonth && months[i].length === 4) ? 4 : 3;
             let monthClass = i === this.state.activeMonth ? "ebp-events-month ebp-events-active-month" : "ebp-events-month";
-            monthsElements.push(<span className={monthClass} key={i} onClick={(e) => this.handleMonthChange(i,e)}>{months[i].substr(0, idx)}</span>);
+            monthsElements.push(<span className={monthClass} key={i} onClick={this.handleMonthChange.bind(this, i)}>{months[i].substr(0, idx)}</span>);
         }
         return monthsElements;
     }
 
     renderCommunityDropDown() {
-        return (<Cascader
+        return (<Cascader className="community-filter"
             value={[...this.state.filterCommunity]}
             style={{width: '250px'}}
             options={this.state.communityTrees}
@@ -62,28 +61,31 @@ export default class extends EmptyPage {
             changeOnSelect />);
     }
 
-    handleOnChangeFilter(value, selectedOption) {
+    onFavoriteFilterChange(value) {
+        this.setState({
+            showFavoritesOnly: value
+        });
+    }
+
+    renderFavoritesFilter() {
+        return (
+            <Checkbox className="favorites-filter" onChange={() => this.onFavoriteFilterChange()}>Show only favorites</Checkbox>
+        );
+    }
+
+    handleOnChangeFilter(value) {
         this.setState({
             filterCommunity: value
         })
     }
 
-    handleRegisterUser(candidate, socialEventID) {
-        /*for(let i = 0; i < this.state.socialEvents.length; i++) {
-            if(this.state.socialEvents[i]._id === socialEventID) {
-                let socialEvents = this.state.socialEvents;
-                socialEvents[i].candidates.push(candidate);
-                this.setState({
-                    socialEvents: socialEvents
-                });
-                break;
-            }
-        }*/
+    handleRegisterUser(socialEventId) {
+        this.props.subscribe(socialEventId);
     }
 
-    handleUnregisterUser(candidate, socialEventID) {
+    handleUnregisterUser(candidate, socialEventId) {
         for(let i = 0; i < this.state.socialEvents.length; i++) {
-            if(this.state.socialEvents[i]._id === socialEventID) {
+            if(this.state.socialEvents[i]._id === socialEventId) {
                 let socialEvents = this.state.socialEvents;
                 let idx = socialEvents[i].candidates.indexOf(candidate);
                 socialEvents[i].candidates.splice(idx, 1);
@@ -93,34 +95,45 @@ export default class extends EmptyPage {
                 break;
             }
         }
-        console.log(this.state.socialEvents);
     }
 
-    renderDropDownMenu(candidate, socialEventID) {
-        const actionButtonLabel = candidate ? "Going" : "Register";
-        const seeMoreLabel = "See more";
-        const notGoingLabel = "Not going";
-        const menuItemSeeMore = <Menu.Item key="1" onClick={() => this.navigateToEvent(socialEventID)}>{seeMoreLabel}</Menu.Item>;
-
-        const menuGoing = (
-            <Menu>
-                {menuItemSeeMore}
-                <Menu.Item key="2" onClick={() => this.handleUnregisterUser(candidate, socialEventID)}>{notGoingLabel}</Menu.Item>
-            </Menu>
-        );
-        const menuRegister = (
-            <Menu>
-                {menuItemSeeMore}
-            </Menu>
+    animateStar(socialEventId) {
+        let favorites = this.state.favorites;
+        favorites.push({
+                key: socialEventId,
+                value: true
+            }
         );
 
-        let actionButtonClass = "events-card-button-" + (candidate ? "going" : "register");
-        const menu = candidate ? menuGoing : menuRegister;
-        return (<Dropdown overlay={menu} key={1}>
-                    <Button className={actionButtonClass} onClick={() => this.handleRegisterUser(candidate, socialEventID)}>
-                        {actionButtonLabel} <Icon type="down"/>
-                    </Button>
-                </Dropdown>);
+        this.setState({
+            favorites: favorites
+        });
+    }
+
+    getStarActiveClass() {
+        return "star-poly-active"
+    }
+
+    renderSubscriptionButton(candidate, socialEventId) {
+        const register = (
+            <Button className="events-card-button-register" onClick={() => this.handleRegisterUser(candidate, socialEventId)}><span>Register</span></Button>
+        );
+        const unregister = (
+            <Button className="events-card-button-unregister" onClick={() => this.handleUnregisterUser(candidate, socialEventId)}><span>Going</span></Button>
+        );
+
+        if(!candidate) {
+            return register;
+        }
+        return unregister;
+    }
+
+    renderDetails(socialEventId) {
+        return (
+            <div className="events-card-details-button">
+                <Button onClick={() => this.navigateToEvent(socialEventId)}>Find out more</Button>
+            </div>
+        );
     }
 
     renderHashTags(hashTags) {
@@ -132,27 +145,37 @@ export default class extends EmptyPage {
     }
 
     renderEventCard(socialEvent) {
-        console.log(socialEvent.candidates);
-        let candidate = socialEvent.candidates.find((user) => user.user._id === this.state.user_id);
+        let candidate = socialEvent.candidates ?
+            socialEvent.candidates.find((user) => user.user._id === this.state.user_id) : null;
         let hashTags = ["#4ever", "#elastos"];
         let image = socialEvent.attachment ? socialEvent.attachment :
             "https://www.whitecase.com/sites/whitecase/files/images/locations/melbourne_thumbnailmobileimage_720x500.jpg";
         let date = socialEvent.startTime ? moment(socialEvent.startTime).format("MMMM Do YYYY. h:mm a") : "To Be Determined";
         let community = socialEvent.community ? socialEvent.community.name : "-";
+        let svgStarClass = this.state.favorites.find((item) => item.key === socialEvent._id && item.value) ? this.getStarActiveClass() : "star-poly";
 
         return (
-            <Card key={socialEvent._id}
-                  cover={<img className="event-card-image" src={image} />}>
+            <Card
+                key={socialEvent._id}
+                cover={<img className="event-card-image" src={image} />}>
+                <div className="card-icon" onClick={() => this.animateStar(socialEvent._id)}>
+                    <svg width="50%" height="50%" viewBox="0 0 40 37" className="star">
+                        <polygon className={svgStarClass} points="272 30 260.244 36.18 262.489 23.09 252.979 13.82 266.122 11.91 272 0 277.878 11.91 291.021 13.82 281.511 23.09 283.756 36.18" transform="translate(-252)"/>
+                    </svg>
+                </div>
                 <div className="events-card-detail">
                     <div className="events-card-time">{date}</div>
                     <div className="events-card-title"
                          onClick={(e) => this.navigateToEvent(socialEvent._id)}>{socialEvent.name}</div>
                     <div className="events-card-location">{community}</div>
                     <div className="events-card-button-container">
-                        {this.renderDropDownMenu(candidate, socialEvent._id)}
+                        {this.renderSubscriptionButton(candidate, socialEvent._id)}
+                    </div>
+                    <div className="events-card-details">
+                        {this.renderDetails(socialEvent._id)}
                     </div>
                 </div>
-                <div class="events-card-hashtags">
+                <div className="events-card-hashtags">
                     {this.renderHashTags(hashTags)}
                 </div>
             </Card>
@@ -160,7 +183,6 @@ export default class extends EmptyPage {
     }
 
     renderEventCards(socialEvents) {
-
         if(socialEvents.length === 0) {
             const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
             return (<Spin className="events-spinner" indicator={antIcon} size="large"/>);
@@ -212,15 +234,17 @@ export default class extends EmptyPage {
             <div className="p_EVENTS">
                 <div className="ebp-page">
                     <div className="ebp-events-time">
-                        <Row type="flex" justify="space-between">
+                        <Row type="flex" justify="center">
                             {this.renderMonthsElements()}
                         </Row>
                     </div>
                     <div className="ebp-events-location">
                         {this.renderCommunityDropDown()}
                     </div>
-
-                    <Row className="d_row">
+                    <div className="ebp-events-favorites">
+                        {this.renderFavoritesFilter()}
+                    </div>
+                    <Row className="d_row" type="flex" justify="space-between">
                         {this.renderEventCards(this.state.socialEvents)}
                     </Row>
                 </div>
