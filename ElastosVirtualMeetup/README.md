@@ -3,10 +3,12 @@
 We will regularly schedule virtual meetups where the community members can directly interact with the developers on the status of the project and ask any questions they need clarification on. Each meetup will have a different agenda.
 
 ## Upcoming Meetups
-### Thursday, July 26th 2018 at 21:00 Eastern Daylight Time: Cyber Republic Tasks and Anniversary Annoucement
-- Meetup Invite: elastos.zoom.us/j/944329759 
 
 ## Past Meetups
+### Thursday, July 26th 2018 at 21:00 Eastern Daylight Time: Cyber Republic Tasks and Anniversary Annoucement
+- [Link to powerpoint slides](https://docs.google.com/presentation/d/1skeuqVpFEID0-bEEBuw-pQJ96iPCo4HBcAKXPK05eHI/edit?usp=sharing)
+- [Link to youtube recording]()
+
 ### Thursday, July 12th 2018 at 13:00 Eastern Daylight Time: World Tour Recap
 - [Link to powerpoint slides](https://docs.google.com/presentation/d/1cNroFWlPXv0WDY-zVR_8yvcmIIulMOsLVA_llFRtZAg/edit?usp=sharing)
 - [Link to youtube recording](https://www.youtube.com/watch?v=RuyR_Pj3Nqs)
