@@ -1,13 +1,17 @@
 import React from 'react'
+import MediaQuery from "react-responsive"
 import EmptyPage from '../../EmptyPage'
 import './style.scss'
-import {Row, Icon, Button, Spin, Checkbox, Card, Tag, Cascader} from "antd";
+import {Row, Icon, Button, Spin, Checkbox, Card, Tag, Cascader, Select, Divider} from "antd"
 import moment from 'moment/moment'
+import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from "../../../../config/constant"
+
+const Option = Select.Option;
 
 export default class extends EmptyPage {
 
     state = {
-        activeMonth: 5,
+        activeMonth: new Date().getMonth(),
         socialEvents: [],
         communityTrees: [],
         filterCommunity: [],
@@ -40,15 +44,43 @@ export default class extends EmptyPage {
         })
     }
 
-    renderMonthsElements() {
+    renderMonthsAsBar() {
         let months = moment.months();
         let monthsElements = [];
+
         for (let i = 0; i < months.length; i++) {
             let idx = (i === this.state.activeMonth && months[i].length === 4) ? 4 : 3;
             let monthClass = i === this.state.activeMonth ? "ebp-events-month ebp-events-active-month" : "ebp-events-month";
-            monthsElements.push(<span className={monthClass} key={i} onClick={this.handleMonthChange.bind(this, i)}>{months[i].substr(0, idx)}</span>);
+            monthsElements.push(
+                <span className={monthClass} key={i} onClick={this.handleMonthChange.bind(this, i)}>
+                    {months[i].substr(0, idx)}
+                </span>
+            );
         }
         return monthsElements;
+    }
+
+    renderMonthsAsDropDown() {
+        let months = moment.months();
+
+        let options = [];
+        for (let i = 0; i < months.length; i++) {
+            options.push(<Option value={i} key={i}>{months[i]}</Option>);
+        }
+
+        return (
+            <Select
+                showSearch
+                allowClear
+                className="select-months"
+                defaultValue={this.state.activeMonth}
+                placeholder="Filter by month"
+                optionFilterProp="children"
+                onChange={(e) => this.handleMonthChange(e)}
+                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+                {options}
+            </Select>
+        );
     }
 
     renderCommunityDropDown() {
@@ -63,13 +95,15 @@ export default class extends EmptyPage {
 
     onFavoriteFilterChange(value) {
         this.setState({
-            showFavoritesOnly: value
+            showFavoritesOnly: value.target.checked
         });
     }
 
     renderFavoritesFilter() {
         return (
-            <Checkbox className="favorites-filter" onChange={() => this.onFavoriteFilterChange()}>Show only favorites</Checkbox>
+            <Checkbox className="favorites-filter" onChange={(e) => this.onFavoriteFilterChange(e)}>
+                Show only favorites (<Icon className="star" type="star" />)
+            </Checkbox>
         );
     }
 
@@ -99,11 +133,20 @@ export default class extends EmptyPage {
 
     animateStar(socialEventId) {
         let favorites = this.state.favorites;
-        favorites.push({
-                key: socialEventId,
-                value: true
-            }
-        );
+        let found = favorites.find((item) => item.key === socialEventId);
+
+        if(found) {
+            let idx = favorites.indexOf(found);
+            favorites[idx].value = !favorites[idx].value;
+            console.log("setting val: ", favorites[idx].value);
+        } else {
+            favorites.push({
+                    key: socialEventId,
+                    value: true
+                }
+            );
+            console.log("Pushing val");
+        }
 
         this.setState({
             favorites: favorites
@@ -182,15 +225,16 @@ export default class extends EmptyPage {
         )
     }
 
-    renderEventCards(socialEvents) {
-        if(socialEvents.length === 0) {
-            const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
-            return (<Spin className="events-spinner" indicator={antIcon} size="large"/>);
-        }
+    getFilteredEvents(socialEvents) {
+        return socialEvents.filter((item) => {
 
-        let eventCards = [];
-        const filteredSocialEvents = socialEvents.filter((item) => {
+            if(this.state.showFavoritesOnly
+                && !this.state.favorites.find((favorite) => favorite.key === item._id && favorite.value)) {
+                return false;
+            }
+
             let dateValid = item.startTime ? new Date(item.startTime).getMonth() === this.state.activeMonth : true;
+
             if(this.state.filterCommunity.length === 0) {
                 return dateValid;
             }
@@ -220,23 +264,39 @@ export default class extends EmptyPage {
             }
             return dateValid && communityValid;
         });
+    }
+
+    renderEventCards(socialEvents) {
+        let eventCards = [];
+        const filteredSocialEvents = this.getFilteredEvents(socialEvents);
         for (let i = 0; i < filteredSocialEvents.length; i++) {
             eventCards.push(this.renderEventCard(filteredSocialEvents[i]));
         }
-        if(eventCards.length === 0) {
+        /*if(eventCards.length === 0) {
             eventCards.push(<div className="no-events" key={1}>No events found</div>);
-        }
+        }*/
+
         return eventCards;
     }
 
     ord_renderContent () {
         return (
             <div className="p_EVENTS">
+                <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                    <div className="mobile-header">
+                        <span className="mobile-header-title">Events</span>
+                    </div>
+                </MediaQuery>
                 <div className="ebp-page">
                     <div className="ebp-events-time">
-                        <Row type="flex" justify="center">
-                            {this.renderMonthsElements()}
-                        </Row>
+                        <MediaQuery minWidth={MIN_WIDTH_PC}>
+                            <Row type="flex" justify="center" className="ebp-months-bar">
+                                {this.renderMonthsAsBar()}
+                            </Row>
+                        </MediaQuery>
+                        <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                            {this.renderMonthsAsDropDown()}
+                        </MediaQuery>
                     </div>
                     <div className="ebp-events-location">
                         {this.renderCommunityDropDown()}
@@ -244,9 +304,23 @@ export default class extends EmptyPage {
                     <div className="ebp-events-favorites">
                         {this.renderFavoritesFilter()}
                     </div>
-                    <Row className="d_row" type="flex" justify="space-between">
-                        {this.renderEventCards(this.state.socialEvents)}
-                    </Row>
+                    <Divider />
+                    { this.state.socialEvents.length === 0 ? (
+                        <div className="events-spinner">
+                            <Spin indicator={
+                                <Icon type="loading" style={{ fontSize: 24 }} spin />
+                            } size="large"/>
+                        </div>
+                    ) : (
+                        <div>
+                            <div className="events-count">
+                                {this.getFilteredEvents(this.state.socialEvents).length} events total
+                            </div>
+                            <Row className="d_row" type="flex" justify="space-around">
+                                {this.renderEventCards(this.state.socialEvents)}
+                            </Row>
+                        </div>
+                    )}
                 </div>
             </div>
         )
