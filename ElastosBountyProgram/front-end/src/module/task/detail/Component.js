@@ -226,7 +226,13 @@ export default class extends BaseComponent {
                                         </Col>
                                     </Row>
                                 </div>}
-                                {this.props.task.reward && this.props.task.reward.isUsd ?
+                                {this.props.task.reward && (
+                                    this.props.task.reward.usd ||
+                                    this.props.task.rewardUpfront.usd ||
+                                    this.props.task.reward.ela ||
+                                    this.props.task.rewardUpfront.ela
+                                ) ?
+                                (this.props.task.reward && this.props.task.reward.isUsd ?
                                     <div>
                                         <Divider>
                                             Budget / Reward&nbsp;
@@ -296,7 +302,7 @@ export default class extends BaseComponent {
                                                 </p>
                                             </Col>
                                         </Row>
-                                    </div>
+                                    </div>) : <div/>
                                 }
                             </Col>
                             {this.props.task.thumbnail &&
@@ -369,7 +375,7 @@ export default class extends BaseComponent {
                             dataSource={this.props.task.candidates}
                             renderItem={(candidate) => {
 
-                                const name = candidate.type === TASK_CANDIDATE_TYPE.USER ? candidate.user.username : candidate.team.name
+                                const name = candidate.type === TASK_CANDIDATE_TYPE.USER ? (candidate.user && candidate.user.username) : (candidate.team && candidate.team.name)
                                 const lastSeen = isTaskOwner
                                     ? candidate.lastSeenByOwner
                                     : candidate.lastSeenByCandidate

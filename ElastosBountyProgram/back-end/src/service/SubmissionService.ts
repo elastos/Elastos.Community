@@ -24,6 +24,7 @@ export default class extends Base {
                 .populate('createdBy', sanitize)
                 .populate('community')
                 .populate('subscribers', sanitize)
+
         } else if (this.currentUser && param.campaign){
             submission = await db_submission.getDBInstance().findOne({createdBy: this.currentUser._id, campaign: param.campaign})
                 .populate('createdBy', sanitize)
@@ -31,7 +32,6 @@ export default class extends Base {
                 .populate('subscribers', sanitize)
 
         }
-
 
         if (submission) {
             for (let comment of submission.comments) {

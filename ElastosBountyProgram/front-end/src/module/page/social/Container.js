@@ -11,6 +11,7 @@ import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS} from '@/co
 export default createContainer(Component, (state) => {
 
     let taskState = state.task
+
     const currentUserId = state.user.current_user_id
 
     taskState.currentUserId = currentUserId
