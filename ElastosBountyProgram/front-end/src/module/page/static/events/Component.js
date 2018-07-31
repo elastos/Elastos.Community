@@ -138,14 +138,12 @@ export default class extends EmptyPage {
         if(found) {
             let idx = favorites.indexOf(found);
             favorites[idx].value = !favorites[idx].value;
-            console.log("setting val: ", favorites[idx].value);
         } else {
             favorites.push({
                     key: socialEventId,
                     value: true
                 }
             );
-            console.log("Pushing val");
         }
 
         this.setState({

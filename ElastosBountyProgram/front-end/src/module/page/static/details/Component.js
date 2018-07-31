@@ -1,8 +1,7 @@
 import React from 'react'
 import EmptyPage from '../../EmptyPage'
 import './style.scss'
-
-import { Col, Row, Icon, Button, Divider, Avatar } from 'antd'
+import { Col, Row, Icon, Button, Divider, Avatar, Card } from 'antd'
 import {
     FacebookShareCount,
     LinkedinShareCount,
@@ -31,6 +30,8 @@ import {
     GoogleMap,
     Marker
 } from "react-google-maps";
+
+const { Meta } = Card;
 
 export default class extends EmptyPage {
 
@@ -193,7 +194,8 @@ export default class extends EmptyPage {
                             round />
                     </EmailShareButton>
                 </Row>
-            </Col>);
+            </Col>
+        );
     }
 
     ord_renderContent () {
@@ -204,7 +206,7 @@ export default class extends EmptyPage {
         let communityName = this.props.task.community.name || "-";
         let backButton = "< Back";
         return (
-            <div className="p_EVENTS">
+            <div className="p_EVENT_DETAILS">
                 <div className="ebp-page">
                     <div className="ebp-events-location">
                         {communityName}

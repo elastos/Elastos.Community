@@ -5,23 +5,31 @@ $xs-width: 576px;
 $sm-width: 768px;
 $md-width: 992px;
 
-.p_EVENTS {
+.p_EVENT_DETAILS {
 
   background: #ffffff;
   text-align: left;
 
   > .ebp-page {
-    max-width: 90%;
-
+    max-width: 80%;
     margin-left: auto;
     margin-right: auto;
+    box-shadow: gainsboro 0px 0px 20px 0px;
 
     .ebp-events-location {
+      text-align: center;
+      border-bottom: 1px solid gainsboro;
+      margin-bottom: 25px;
+      font-size: 2rem;
+      padding: 30px;
     }
 
     .d_row_upper {
-      margin: 25px;
+      margin: 25px 0 25px 25px;
+      padding: 25px;
+
       .d_col_left {
+        padding: 10px;
 
         .event-name {
           display: block;
@@ -63,7 +71,7 @@ $md-width: 992px;
         }
 
         .event-details-divider {
-          width: 90%;
+          width: 60%;
           margin: 20px auto;
           background-color: gainsboro;
         }
@@ -73,11 +81,12 @@ $md-width: 992px;
 
           .event-detail-description-title {
             font-weight: bold;
+            padding-bottom: 20px;
+            font-size: 1.25rem;
           }
         }
       }
       .d_col_right {
-
         span, .actionButton {
           display: block;
           width: 70%;
@@ -89,6 +98,7 @@ $md-width: 992px;
           margin: 5px auto;
           width: 70%;
           max-height: 100%;
+          border: 1px solid gainsboro;
         }
 
         @media only screen and (max-width: $md-width) {
@@ -106,6 +116,11 @@ $md-width: 992px;
           color: white;
         }
 
+        .actionDeregister:hover {
+          border: 1px solid indianred;
+          font-weight: bold;
+        }
+
         .actionRegister {
           background-color: mediumseagreen;
           color: white;
@@ -113,6 +128,7 @@ $md-width: 992px;
 
         .share-with-friends {
           margin-top: 25px;
+          font-size: 1.25rem;
           font-weight: bold;
           text-align: center;
         }
@@ -125,13 +141,14 @@ $md-width: 992px;
           .share-button {
             display: inline-block;
             padding: 0 5px;
+            cursor: pointer;
           }
         }
       }
     }
 
     .d_row_mid {
-      margin: 25px;
+      margin: 50px;
       .map {
         display: block;
         width: 100%;
