@@ -288,6 +288,7 @@ export default class extends Base {
             throw 'Access Denied'
         }
 
+        // organizer cannot change task to these statuses
         if (this.currentUser.role === constant.USER_ROLE.LEADER) {
 
             if ([
