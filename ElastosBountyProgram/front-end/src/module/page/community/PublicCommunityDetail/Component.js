@@ -7,6 +7,8 @@ import { DEFAULT_IMAGE, USER_GENDER } from '@/constant'
 import Footer from '@/module/layout/Footer/Container'
 import _ from 'lodash'
 import Promise from 'bluebird'
+import MediaQuery from 'react-responsive'
+import { MAX_WIDTH_MOBILE, MIN_WIDTH_PC } from '@/config/constant'
 
 const TabPane = Tabs.TabPane
 import '../style.scss'
@@ -483,12 +485,120 @@ export default class extends StandardPage {
             communityMembers: communities
         })
     }
+    
+    renderListMembersAndJoinButton() {
+        return (
+            <div>
+                <Input.Search onSearch={this.handleSearchMember.bind(this)}
+                              prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                              placeholder="Username"/>
+    
+                <div className="list-members">
+                    {this.state.communityMembers.length ?
+                        <List
+                            dataSource={this.state.communityMembers}
+                            renderItem={item => (
+                                <List.Item>
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <Avatar size="large" icon="user" src={item.profile.avatar}/>
+                                            </td>
+                                            <td className="member-name">
+                                                <a onClick={() => {this.props.history.push('/member/' + item._id)}}>
+                                                    {item.username}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </List.Item>
+                            )}
+                        /> :
+                        <div class="no-info"><br/>no members</div>
+                    }
+                </div>
+    
+                {this.props.current_user_id && this.props.match.params['region'] && !this.state.keyValueCommunityMembers[this.props.current_user_id] && (
+                    <Button onClick={this.joinToCommunity.bind(this)} className="btn-member-action">Join</Button>
+                )}
+    
+                {this.props.current_user_id && !this.props.match.params['region'] && !this.state.keyValueMembersWithoutSubCommunity[this.props.current_user_id] && (
+                    <Button onClick={this.joinToCommunity.bind(this)} className="btn-member-action">Join</Button>
+                )}
+    
+                {this.props.current_user_id && this.props.match.params['region'] && this.state.keyValueCommunityMembers[this.props.current_user_id] && (
+                    <Button onClick={this.leaveFromCommunity.bind(this)} className="btn-member-action">Leave</Button>
+                )}
+    
+                {this.props.current_user_id && !this.props.match.params['region'] && this.state.keyValueMembersWithoutSubCommunity[this.props.current_user_id] && (
+                    <Button onClick={this.leaveFromCommunity.bind(this)} className="btn-member-action">Leave</Button>
+                )}
+            </div>
+        )
+    }
+    
+    renderListOrganizersForMobile() {
+        if (!this.state.community) {
+            return null
+        }
+
+        return (
+            <div className="list-item-without-padding-top-first-item">
+                {this.state.community.leaders && this.state.community.leaders.length ?
+                    <List
+                        dataSource={this.state.community.leaders}
+                        renderItem={leader => (
+                            <List.Item>
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <Avatar size="large" icon="user" src={leader.profile.avatar}/>
+                                        </td>
+                                        <td className="member-name">
+                                            <a onClick={() => {this.props.history.push(`/member/${leader._id}`)}}>
+                                                {leader.username}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </List.Item>
+                        )}
+                    /> :
+                    <div class="no-info"><br/>No organizers yet</div>
+                }
+            </div>
+        )
+    }
+    
+    checkShouldDisplayApplyOrganizer() {
+        let shouldDisplayApplyOrganizer = false;
+        
+        const currentUserId = '5b0ff56f41xx716853f41de884';
+        if (currentUserId) {
+            if (!this.state.community || !this.state.community.leaders) {
+                shouldDisplayApplyOrganizer = true;
+            } else {
+                const existedLeader = _.find(this.state.community.leaders, {
+                    _id: currentUserId,
+                });
+    
+                shouldDisplayApplyOrganizer = !existedLeader;
+            }
+        }
+
+        return shouldDisplayApplyOrganizer;
+    }
 
     ord_renderContent () {
         const menuCountriesEl = this.renderBreadcrumbCountries()
         // const menuListRegionsEl = this.renderBreadcrumbRegions()
         // const tabSubCommunities = this.renderTabSubCommunities()
-        const listOrganizers = this.renderListOrganizers()
+        
+        const shouldDisplayButtonApplyOrganizer = this.checkShouldDisplayApplyOrganizer();
 
         return (
             <div className="p_Community">
@@ -519,73 +629,43 @@ export default class extends StandardPage {
                     </div>
                     <div className="ebp-page">
                         <div className="ebp-page-content">
-                            <Row>
-                                <Col md={{span:24}} md={{span: 18}}
-                                     className="community-left-column">
-                                    <Row>
-                                        <Col span={24}>
-                                            <h3 className="without-padding overflow-ellipsis">
-                                                {config.data.mappingCountryCodeToName[this.props.match.params['country']] + ' Organizers'}
-                                            </h3>
-                                        </Col>
-                                    </Row>
-                                    {listOrganizers}
-                                    <br/>
-                                    <Button onClick={this.applyOrganizer.bind(this)}>Apply to be an Organizer</Button>
-                                </Col>
-                                <Col md={{span:24}} md={{span: 6}}
-                                     className="community-right-column">
-                                    <div>
-                                        <h4 className="without-padding">Members</h4>
-                                        <Input.Search onSearch={this.handleSearchMember.bind(this)}
-                                            prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                                            placeholder="Username"/>
-
-                                        <div className="list-members">
-                                            {this.state.communityMembers.length ?
-                                                <List
-                                                    dataSource={this.state.communityMembers}
-                                                    renderItem={item => (
-                                                        <List.Item>
-                                                            <table>
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td>
-                                                                        <Avatar size="large" icon="user" src={item.profile.avatar}/>
-                                                                    </td>
-                                                                    <td className="member-name">
-                                                                        <a onClick={() => {this.props.history.push('/member/' + item._id)}}>
-                                                                            {item.username}
-                                                                        </a>
-                                                                    </td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </List.Item>
-                                                    )}
-                                                /> :
-                                                <div class="no-info"><br/>no members</div>
-                                            }
+                            <MediaQuery minWidth={MIN_WIDTH_PC}>
+                                <Row>
+                                    <Col md={{span:24}} md={{span: 18}}
+                                         className="community-left-column">
+                                        <Row>
+                                            <Col span={24}>
+                                                <h3 className="without-padding overflow-ellipsis">
+                                                    {config.data.mappingCountryCodeToName[this.props.match.params['country']] + ' Organizers'}
+                                                </h3>
+                                            </Col>
+                                        </Row>
+                                        {this.renderListOrganizers()}
+                                        <br/>
+                                        {shouldDisplayButtonApplyOrganizer && <Button onClick={this.applyOrganizer.bind(this)}>Apply to be an Organizer</Button>}
+                                    </Col>
+                                    <Col md={{span:24}} md={{span: 6}}
+                                         className="community-right-column">
+                                        <div>
+                                            <h4 className="without-padding">Members</h4>
+                                            {this.renderListMembersAndJoinButton()}
                                         </div>
-
-                                        {this.props.current_user_id && this.props.match.params['region'] && !this.state.keyValueCommunityMembers[this.props.current_user_id] && (
-                                            <Button onClick={this.joinToCommunity.bind(this)} className="btn-member-action">Join</Button>
-                                        )}
-
-                                        {this.props.current_user_id && !this.props.match.params['region'] && !this.state.keyValueMembersWithoutSubCommunity[this.props.current_user_id] && (
-                                            <Button onClick={this.joinToCommunity.bind(this)} className="btn-member-action">Join</Button>
-                                        )}
-
-                                        {this.props.current_user_id && this.props.match.params['region'] && this.state.keyValueCommunityMembers[this.props.current_user_id] && (
-                                            <Button onClick={this.leaveFromCommunity.bind(this)} className="btn-member-action">Leave</Button>
-                                        )}
-
-                                        {this.props.current_user_id && !this.props.match.params['region'] && this.state.keyValueMembersWithoutSubCommunity[this.props.current_user_id] && (
-                                            <Button onClick={this.leaveFromCommunity.bind(this)} className="btn-member-action">Leave</Button>
-                                        )}
-                                    </div>
-                                </Col>
-                            </Row>
+                                    </Col>
+                                </Row>
+                            </MediaQuery>
+                            <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                                <div className="wrap-mobile">
+                                    <Tabs type="card">
+                                        <TabPane key="first" tab="Organizers">
+                                            {this.renderListOrganizersForMobile()}
+                                            {shouldDisplayButtonApplyOrganizer && <Button onClick={this.applyOrganizer.bind(this)}>Apply to be an Organizer</Button>}
+                                        </TabPane>
+                                        <TabPane key="second" tab="Members">
+                                            {this.renderListMembersAndJoinButton()}
+                                        </TabPane>
+                                    </Tabs>
+                                </div>
+                            </MediaQuery>
                             {/*
                             <Row>
                                 <Col span={24}>

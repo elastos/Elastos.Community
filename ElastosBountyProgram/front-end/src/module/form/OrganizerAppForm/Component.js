@@ -284,7 +284,7 @@ class C extends BaseComponent {
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
                     <div>
                         <Row>
-                            <Col offset="8" span="12">
+                            <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
                                 <h4>
                                     <span style={{'fontWeight': 200}}>Community Applying For:</span> &nbsp;
                                     {this.state.community && this.state.community.name}
@@ -303,7 +303,7 @@ class C extends BaseComponent {
                         </FormItem>
                         <Divider></Divider>
                         <Row>
-                            <Col offset="8" span="12">
+                            <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
                                 What is your native language, who is your audience and where are they located? What are the language(s) you plan to use to present Elastos.
                             </Col>
                         </Row>
@@ -312,7 +312,7 @@ class C extends BaseComponent {
                         </FormItem>
 
                         <Row>
-                            <Col offset="8" span="12">
+                            <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
                                 Please describe your public speaking experience and provide any examples.
                             </Col>
                         </Row>
@@ -321,7 +321,7 @@ class C extends BaseComponent {
                         </FormItem>
 
                         <Row>
-                            <Col offset="8" span="12">
+                            <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
                                 Do you have any experience organizing events and provide any examples.
                             </Col>
                         </Row>
@@ -330,7 +330,7 @@ class C extends BaseComponent {
                         </FormItem>
 
                         <Row>
-                            <Col offset="8" span="12">
+                            <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
                                 Please list any current or past contributions promoting Elastos.
                             </Col>
                         </Row>
@@ -343,7 +343,7 @@ class C extends BaseComponent {
                         </FormItem>
 
                         <Row>
-                            <Col offset="8" span="12">
+                            <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
                                 If you are not a developer, please explain how you are familiar with Elastos technology and what problems we solve.
                             </Col>
                         </Row>
@@ -352,7 +352,7 @@ class C extends BaseComponent {
                         </FormItem>
 
                         <Row>
-                            <Col offset="8" span="12">
+                            <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
                                 Describe Elastos in your own words.
                             </Col>
                         </Row>
@@ -361,7 +361,7 @@ class C extends BaseComponent {
                         </FormItem>
 
                         <Row>
-                            <Col offset="8" span="12">
+                            <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
                                 Tell us in a few words what inspired you to join Cyber Republic.
                             </Col>
                         </Row>
@@ -369,7 +369,7 @@ class C extends BaseComponent {
                             {p.reason}
                         </FormItem>
 
-                        <Divider>Please submit a video explaining what Elastos means to you.</Divider>
+                        <Divider>Please submit a video explaining<br/>what Elastos means to you.</Divider>
 
                         <FormItem label="Attachment" {...formItemLayout}>
                             {p.attachment}

@@ -3,7 +3,7 @@ import UploadService from '../../service/UploadService';
 
 
 
-export default class extends Base {
+export default class UploadFile extends Base {
     // protected needLogin = true;
     async action(){
         const uploadService = this.buildService(UploadService);

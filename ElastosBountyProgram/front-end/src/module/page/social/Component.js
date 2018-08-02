@@ -142,7 +142,12 @@ export default class extends StandardPage {
             title: 'Reward',
             dataIndex: 'reward.ela',
             className: 'right-align',
-            render: (ela) => ela / 1000
+            render: (ela) => {
+                if (ela) {
+                    return ela / 1000
+                }
+                return ''
+            }
         }, {
             title: 'Deadline',
             dataIndex: 'startTime',

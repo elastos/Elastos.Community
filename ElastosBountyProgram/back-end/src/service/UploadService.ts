@@ -22,7 +22,7 @@ export default class extends Base {
             s3RetryCount: 3,    // this is the default
             s3RetryDelay: 1000, // this is the default
             multipartUploadThreshold: 20971520, // this is the default (20 MB)
-            multipartUploadSize: 15728640, // this is the default (15 MB)
+            multipartUploadSize: 5242880, // 5 MB
             s3Options: {
                 accessKeyId: process.env.AWS_ACCESS_KEY,
                 secretAccessKey: process.env.AWS_ACCESS_SECRET,
@@ -49,7 +49,7 @@ export default class extends Base {
 
         file.mv(path+file_name);
 
-        //TODO upload to s3
+        // TODO: add retry
         const uploader = s3_client.uploadFile({
             localFile : path+file_name,
             s3Params : {

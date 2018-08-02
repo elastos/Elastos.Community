@@ -27,6 +27,11 @@ export default Base.setRouter([
         method : 'get'
     },
     {
+        path : '/campaign/:campaign',
+        router : get,
+        method : 'get'
+    },
+    {
         path : '/:submissionId',
         router : archive,
         method : 'delete'

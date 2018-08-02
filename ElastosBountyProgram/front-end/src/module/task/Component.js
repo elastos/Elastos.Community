@@ -73,6 +73,12 @@ export default class extends BaseComponent {
                     <Button type="primary">Approve</Button>
                 </Popconfirm>
                 }
+                {/* Admin & Task Owner CAN Mark as Complete */}
+                {this.props.task.status === TASK_STATUS.ASSIGNED &&
+                <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsSubmitted.bind(this)}>
+                    <Button>Mark as Complete</Button>
+                </Popconfirm>
+                }
                 {!this.state.editing && this.props.task.status === TASK_STATUS.SUBMITTED &&
                 <Popconfirm title="Are you sure you want to accept this task as completed?" placement="left" okText="Yes" onConfirm={this.markAsSuccessful.bind(this)}>
                     <Button>Accept as Complete</Button>
@@ -122,6 +128,7 @@ export default class extends BaseComponent {
                 }
             </div>
             <div className="pull-right right-align">
+                {/* Admin & Task Owner CAN Mark as Complete */}
                 {this.props.task.status === TASK_STATUS.ASSIGNED && isTaskOwner &&
                 <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsSubmitted.bind(this)}>
                     <Button>Mark as Complete</Button>

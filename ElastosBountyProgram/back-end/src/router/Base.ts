@@ -15,13 +15,26 @@ interface ROUTEING {
     path: string;
     router: any;
     method: string;
+    timeout?: number;
 }
 
 export default abstract class {
     static setRouter(list: ROUTEING[]): Router{
         const router = Router();
         _.each(list, (item)=>{
+
+            // this runs on init
+
+            // this sets the callback for router.[method]
             router[item.method](item.path, (req, res)=>{
+
+                // this block is the callback
+                // for the file upload - we remove any timeout
+                /*
+                if (item.router.name === 'UploadFile' && item.path === '/file') {
+                    req.clearTimeout()
+                }
+                */
                 const c = new item.router(req, res);
                 return c.main();
             });

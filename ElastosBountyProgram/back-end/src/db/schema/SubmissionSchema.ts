@@ -33,6 +33,12 @@ export const Submission = {
 
     email: String,
     fullLegalName: String,
+
+    passportNumber: String,
+    passportUpload: String, // Anniversary form - Passport Number
+    passportUploadType: String,
+    passportFilename: String,
+
     occupation: String,
     education: String,
     location: String,

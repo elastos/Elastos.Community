@@ -19,9 +19,11 @@ import './config';
     const app = express();
 
     app.use(cors());
+
     app.options('*', cors());
 
-    const TIMEOUT = '120s';
+    // TODO: seems resetTimeout in Base isn't working, this is the temp workaround
+    const TIMEOUT = '600s';
     app.use(timeout(TIMEOUT));
 
     morgan.format('ebp', '[Backend] :method :url :status :res[content-length] - :response-time ms');

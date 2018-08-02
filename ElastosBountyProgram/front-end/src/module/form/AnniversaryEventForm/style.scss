@@ -29,9 +29,9 @@
 
 }
 
-@media (max-width: 992px) {
+@media (max-width: 768px) {
   .c_anniversaryAppFormContainer {
-    .ant-form-item-label, .static-field.right-align {
+    .ant-form-item-label, .static-field {
       text-align: left !important;
       margin-bottom: 4px !important;
       margin-top: 15px !important;

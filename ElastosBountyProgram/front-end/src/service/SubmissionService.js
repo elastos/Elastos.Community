@@ -51,6 +51,14 @@ export default class extends BaseService {
         return result
     }
 
+    async getExistingSubmission(campaign) {
+
+        return await api_request({
+            path: `/api/submission/campaign/${campaign}`,
+            method: 'get'
+        })
+    }
+
     /**
      * @param taskId
      * @param doc

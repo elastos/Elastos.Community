@@ -8,8 +8,8 @@
     "build:ts": "tsc",
     "tsc": "tsc || echo TSC compilation has errors.",
     "tslint": "tslint -c tslint.json -p tsconfig.json -t codeFrame",
-    "start:staging": "npm run build && NODE_ENV=staging node dist/index.js",
-    "start:production": "npm run build && NODE_ENV=production node dist/index.js",
+    "start:staging": "mkdir -p .upload && npm run build && NODE_ENV=staging node --max-old-space-size=1768 dist/index.js > output.log",
+    "start:production": "mkdir -p .upload && npm run build && NODE_ENV=production node --max-old-space-size=1768 dist/index.js > output.log",
     "unit": "NODE_ENV=jest jest --config test/unit/jest.conf.js --coverage",
     "test": "npm run unit"
   },
