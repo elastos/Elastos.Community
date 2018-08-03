@@ -1,6 +1,7 @@
 import React from 'react';
 import EmptyPage from '../EmptyPage';
 import _ from 'lodash'
+import I18N from '@/I18N'
 
 import './style.scss'
 

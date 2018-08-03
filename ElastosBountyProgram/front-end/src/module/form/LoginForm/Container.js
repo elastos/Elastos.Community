@@ -10,7 +10,8 @@ message.config({
 
 export default createContainer(Component, (state) => {
     return {
-        ...state.user.login_form
+        ...state.user.login_form,
+        language: state.language
     }
 }, () => {
     const userService = new UserService()
