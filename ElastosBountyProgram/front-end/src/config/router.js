@@ -19,6 +19,8 @@ import HelpPage from '@/module/page/static/help/Container'
 import FAQPage from '@/module/page/static/faq/Container'
 import AboutPage from '@/module/page/static/about/Container'
 import SlackPage from '@/module/page/static/slack/Container'
+import EventsPage from '@/module/page/static/events/Container'
+import EventPage from '@/module/page/static/details/Container'
 
 import ProfileInfoPage from '@/module/page/profile/info/Container'
 import ProfileTasksPage from '@/module/page/profile/tasks/Container'
@@ -141,6 +143,14 @@ export default [
     {
         path: '/slack',
         page: SlackPage
+    },
+    {
+        path: '/events',
+        page: EventsPage
+    },
+    {
+        path: '/events/:eventId',
+        page: EventPage
     },
     /*
     ********************************************************************************

@@ -34,7 +34,18 @@ export default class extends Base{
             query.category = {$in: [constant.TASK_CATEGORY.DEVELOPER, constant.TASK_CATEGORY.SOCIAL]}
         }
 
-        if (param.admin && this.session.user && this.session.user.role === constant.USER_ROLE.ADMIN) {
+        // public page overrides all else
+        if (param.public === 'true') {
+            query.status = {
+                $in: [
+                    constant.TASK_STATUS.CREATED,
+                    constant.TASK_STATUS.APPROVED,
+                    constant.TASK_STATUS.ASSIGNED,
+                    constant.TASK_STATUS.SUBMITTED
+                ]
+            }
+
+        } else if (param.admin && this.session.user && this.session.user.role === constant.USER_ROLE.ADMIN) {
             delete param.admin;
             query.status = {$ne: constant.TASK_STATUS.CANCELED}
 
@@ -75,11 +86,15 @@ export default class extends Base{
             ]}
 
         } else if (!param.status) {
+
             // by default we only show tasks with these statuses
-            query.status = {$in: [
+            query.status = {
+                $in: [
                     constant.TASK_STATUS.CREATED,
                     constant.TASK_STATUS.APPROVED
-                ]}
+                ]
+            }
+
         }
 
 
