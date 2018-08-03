@@ -77,7 +77,7 @@ export default class extends EmptyPage {
             this.props.task.createdBy.profile.lastName : "-";
         let hostedByID = this.props.task.createdBy ? this.props.task.createdBy._id : "not-found";
         let hostedByAvatar = this.props.task.createdBy ? this.props.task.createdBy.profile.avatar : null;
-        let eventLocation = this.props.task.community.name;
+        let eventLocation = (this.props.task.community && this.props.task.community.name) || '';
         let eventDate = this.props.task.startTime || "To Be Determined";
         let eventType = this.props.task.type || "-";
         let eventInfo = this.props.task.info || "Offered in English";
@@ -203,7 +203,7 @@ export default class extends EmptyPage {
             return false;
         }
         console.log(this.props.task);
-        let communityName = this.props.task.community.name || "-";
+        let communityName = (this.props.task.community && this.props.task.community.name) || "-";
         let backButton = "< Back";
         return (
             <div className="p_EVENT_DETAILS">

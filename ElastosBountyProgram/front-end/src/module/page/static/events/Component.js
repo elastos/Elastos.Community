@@ -187,7 +187,7 @@ export default class extends EmptyPage {
 
     renderEventCard(socialEvent) {
         let candidate = socialEvent.candidates ?
-            socialEvent.candidates.find((user) => user.user._id === this.state.user_id) : null;
+            socialEvent.candidates.find((user) => user.user && user.user._id === this.state.user_id) : null;
         let hashTags = ["#4ever", "#elastos"];
         let image = socialEvent.attachment ? socialEvent.attachment :
             "https://www.whitecase.com/sites/whitecase/files/images/locations/melbourne_thumbnailmobileimage_720x500.jpg";
