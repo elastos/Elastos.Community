@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import StandardPage from '../../StandardPage';
 import { DEFAULT_IMAGE, USER_GENDER } from '@/constant'
 
-import { Table, Card, Select, Col, Row, Breadcrumb, Icon, Button, Input } from 'antd'
+import { Table, Card, Select, Spin, Col, Row, Breadcrumb, Icon, Button, Input } from 'antd'
 const Search = Input.Search;
 
 import config from '@/config'
@@ -54,11 +54,14 @@ export default class extends StandardPage {
             countryCommunities = await this.props.getSpecificCountryCommunities(this.props.currentUser.profile.country)
             countryCommunity = _.find(countryCommunities, {parentCommunityId: null})
 
-            this.setState({
-                countryGeolocation: countryCommunity.geolocation
-            })
+            if (countryCommunity) {
+                this.setState({
+                    countryGeolocation: countryCommunity.geolocation
+                })
+            }
+        }
 
-        } else {
+        if (!countryCommunity) {
             // fetch the country from the backend
             const cLoc = await new Promise((resolve, reject) => {
                 ipinfo((err, cLoc) => {
@@ -71,13 +74,14 @@ export default class extends StandardPage {
                 })
             })
 
-            this.setState({
-                countryGeolocation: cLoc.country.toLowerCase()
-            })
+            if (cLoc && cLoc.country) {
+                this.setState({
+                    countryGeolocation: cLoc.country.toLowerCase()
+                })
 
-            countryCommunities = await this.props.getSpecificCountryCommunities(this.state.countryGeolocation)
-            countryCommunity = _.find(countryCommunities, {parentCommunityId: null})
-
+                countryCommunities = await this.props.getSpecificCountryCommunities(this.state.countryGeolocation)
+                countryCommunity = _.find(countryCommunities, {parentCommunityId: null})
+            }
         }
 
         if (countryCommunity) {
@@ -241,57 +245,73 @@ export default class extends StandardPage {
         return (
             <div className="p_Community">
                 <div className="ebp-header-divider"></div>
-                <div className="ebp-page">
-                    <div className="ebp-page-breadcrumb">
-                        <Row>
-                            <Col span={24}>
-                                <Breadcrumb>
-                                    <Breadcrumb.Item href="/">
-                                        <Icon type="home"/>
-                                    </Breadcrumb.Item>
-                                    <Breadcrumb.Item>Community</Breadcrumb.Item>
-                                    <Breadcrumb.Item>
-                                        {menuCountriesEl}
-                                    </Breadcrumb.Item>
-                                </Breadcrumb>
-                            </Col>
-                        </Row>
-                    </div>
-                    <div className="ebp-page">
-                        <div className="ebp-page-content">
-                            <Row>
-                                <Col span={24}
-                                     className="community-left-column">
-                                    {!this.state.countryExists &&
-                                    <div class="guide-container">
-                                        <h4>
-                                            Hello there! Looks like your we don't have an organizer for&nbsp;
-                                            {config.data.mappingCountryCodeToName[this.state.countryGeolocation]}
-                                        </h4>
-
-                                        <p>
-                                            We are always looking for new organizers especially in new communities.
-                                        </p>
-                                        <p>
-                                            if you'd like to be an organizer for your region please register,
-                                            we'll add your country and you can then apply to be an organizer on this page.
-                                        </p>
-
-                                        <br/>
-
-                                        <Button onClick={() => this.props.history.push('/register')}>Click to Register</Button>
-
-                                        <p>
-                                            <br/>
-                                            <span class="no-info">or you can select a country from above</span>
-                                        </p>
-                                    </div>
-                                    }
-                                </Col>
-                            </Row>
-                        </div>
-                    </div>
+                <div className="ebp-page-title">
+                    <h3 className="page-header">
+                        View and Register Communities
+                    </h3>
                 </div>
+                <div className="ebp-page-desc d_rowGrey">
+                    <p>
+                        We are always looking for new organizers, especially in new communities.
+                        If you'd like to be an organizer for your region please register.
+                    </p>
+                </div>
+                {_.isEmpty(this.state.countryGeolocation) && this.state.countryExists
+                    ? (
+                        <div className="flex-center">
+                            <Spin size="large" />
+                        </div>
+                    )
+                    : (
+                        <div className="ebp-page">
+                            <div className="ebp-page-breadcrumb">
+                                <Row>
+                                    <Col span={24}>
+                                        <Breadcrumb>
+                                            <Breadcrumb.Item href="/">
+                                                <Icon type="home"/>
+                                            </Breadcrumb.Item>
+                                            <Breadcrumb.Item>Community</Breadcrumb.Item>
+                                            <Breadcrumb.Item>
+                                                {menuCountriesEl}
+                                            </Breadcrumb.Item>
+                                        </Breadcrumb>
+                                    </Col>
+                                </Row>
+                            </div>
+                            <div className="ebp-page">
+                                <div className="ebp-page-content">
+                                    <Row>
+                                        <Col span={24}
+                                             className="community-left-column">
+                                            {!this.state.countryExists &&
+                                            <div class="guide-container">
+                                                <h4>
+                                                    Hello there! Looks like your area we don't have an organizer for.&nbsp;
+                                                    {config.data.mappingCountryCodeToName[this.state.countryGeolocation]}
+                                                </h4>
+
+                                                <p>
+                                                    If you'd like to be an organizer for your region please register,
+                                                    we'll add your country and you can then apply to be an organizer on this page.
+                                                </p>
+
+                                                <br/>
+
+                                                <Button onClick={() => this.props.history.push('/register')}>Click to Register</Button>
+
+                                                <p>
+                                                    <br/>
+                                                    <span class="no-info">or you can select a country from above</span>
+                                                </p>
+                                            </div>
+                                            }
+                                        </Col>
+                                    </Row>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 <Footer />
             </div>
         )

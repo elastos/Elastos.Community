@@ -307,12 +307,12 @@ export default class extends StandardPage {
         const communityId = this.getMemberCommunityId()
 
         this.props.addMember(this.props.current_user_id, communityId).then(() => {
-            message.success('You were added to community')
+            message.success('You were added to the community')
 
             this.loadCommunityMembers()
         }).catch((err) => {
             console.error(err)
-            message.error('Error while adding you to community')
+            message.error('Error while adding you to the community')
         })
     }
 
@@ -603,6 +603,17 @@ export default class extends StandardPage {
         return (
             <div className="p_Community">
                 <div className="ebp-header-divider"></div>
+                <div className="ebp-page-title">
+                    <h3 className="page-header">
+                        View and Register Communities
+                    </h3>
+                </div>
+                <div className="ebp-page-desc d_rowGrey">
+                    <p>
+                        We are always looking for new organizers, especially in new communities.
+                        If you'd like to be an organizer for your region please register.
+                    </p>
+                </div>
                 <div className="ebp-page">
                     <div className="ebp-page-breadcrumb">
                         <Row>
