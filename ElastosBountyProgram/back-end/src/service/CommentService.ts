@@ -2,10 +2,10 @@ import Base from './Base';
 import {Document} from 'mongoose';
 import * as _ from 'lodash';
 import {constant} from '../constant';
-import {validate, crypto, uuid, mail} from '../utility';
+import {mail} from '../utility';
 
-const sanitize = '-password -salt -email'
-const sanitizeWithEmail = '-password -salt'
+const sanitize = '-password -salt -email -resetToken'
+const sanitizeWithEmail = '-password -salt -resetToken'
 
 export default class extends Base {
     public async create(type, param): Promise<boolean> {

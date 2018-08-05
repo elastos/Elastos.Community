@@ -1,6 +1,5 @@
 import Base from '../Base';
 import TaskService from '../../service/TaskService';
-import {uuid} from '../../utility';
 
 /**
  * Both the '/' and '/:taskId' routes map to this class

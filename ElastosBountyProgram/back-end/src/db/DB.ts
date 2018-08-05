@@ -11,7 +11,8 @@ import Submission from './Submission';
 
 import Log from './Log';
 
-import {uuid, crypto} from '../utility';
+import {utilCrypto} from '../utility';
+import * as uuid from 'uuid'
 
 export default class {
     protected db: any;
@@ -106,8 +107,8 @@ export default class {
 
     private async prepareRecord(){
         // create admin user
-        const salt = uuid();
-        const password = crypto.sha512(process.env.ADMIN_PASSWORD+salt);
+        const salt = uuid.v4();
+        const password = utilCrypto.sha512(process.env.ADMIN_PASSWORD+salt);
         const doc = {
             username: process.env.ADMIN_USERNAME,
             password,

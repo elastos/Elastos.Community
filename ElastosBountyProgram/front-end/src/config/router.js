@@ -14,6 +14,8 @@ import TaskApplicationPage from '@/module/page/task_application/Container'
 
 import LoginPage from '@/module/page/login/Container'
 import RegisterPage from '@/module/page/register/Container'
+import ForgotPasswordPage from '@/module/page/forgot_password/Container'
+import ResetPasswordPage from '@/module/page/reset_password/Container'
 
 import HelpPage from '@/module/page/static/help/Container'
 import FAQPage from '@/module/page/static/faq/Container'
@@ -120,6 +122,11 @@ export default [
         path: '/task-create',
         page: TaskCreatePage
     },
+    /*
+    ********************************************************************************
+    * Login/Register
+    ********************************************************************************
+      */
     {
         path: '/login',
         page: LoginPage
@@ -128,6 +135,19 @@ export default [
         path: '/register',
         page: RegisterPage
     },
+    {
+        path: '/forgot-password',
+        page: ForgotPasswordPage
+    },
+    {
+        path: '/reset-password',
+        page: ResetPasswordPage
+    },
+    /*
+    ********************************************************************************
+    * Minor Pages
+    ********************************************************************************
+      */
     {
         path: '/help',
         page: HelpPage

@@ -1,6 +1,6 @@
 import Base from './Base';
 import * as s3 from 's3';
-import {uuid} from '../utility';
+import * as uuid from 'uuid'
 import * as fs from 'fs';
 
 let s3_client: any = null;
@@ -40,7 +40,7 @@ export default class extends Base {
     * @param - file, req.files.file.
     * */
     public async saveFile(file){
-        const file_name = uuid()+'_'+file.name;
+        const file_name = uuid.v4()+'_'+file.name;
         const path = process.cwd()+'/.upload/';
 
         if(!fs.existsSync(path)){

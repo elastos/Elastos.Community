@@ -89,6 +89,9 @@ export const User = {
     defaultLanguage: String,
     workAbout : WorkAbout,
 
+    // resetToken, ensure this is never returned
+    resetToken: String,
+
     // constants.USER_ROLE
     role : String,
     elaOwed : [ELA],

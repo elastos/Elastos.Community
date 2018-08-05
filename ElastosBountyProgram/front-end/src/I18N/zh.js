@@ -117,5 +117,11 @@ export default {
     '3531': '我们已向您的电子邮箱发送了确认码。',
     '3532': '注册',
     '3533': '可选项',
-    '3534': '国家'
+    '3534': '国家',
+
+    // ForgotPasswordForm
+    '3600': 'Forgot your password? Enter your email to be sent a reset password link.',
+    '3601': 'Success, if the email matches your user you should receive an email',
+    '3602': 'Please enter a new password',
+    '3603': 'Password changed successfully'
 };

@@ -75,13 +75,14 @@ export default {
     '3315': 'formed to promote Elastos in our communities. Membership is open to everyone.',
 
     // LoginForm
-    '3400': 'Please input your username!',
+    '3400': 'Please input your username',
     '3401': 'Username',
-    '3402': 'Please input your Password!',
+    '3402': 'Please input your password',
     '3403': 'Password',
     '3404': 'Keep me logged in',
     '3405': 'Forgot password',
     '3406': 'Log in',
+    '3407': 'Reset password',
 
     // RegisterFrom
     '3500': 'Become a Contributor',
@@ -118,6 +119,11 @@ export default {
     '3531': 'We have sent a confirmation code to your email.',
     '3532': 'Register',
     '3533': 'Optional Info',
-    '3534': 'Country'
+    '3534': 'Country',
 
+    // Forgot / Reset Password Form
+    '3600': 'Forgot your password? Enter your email to be sent a reset password link.',
+    '3601': 'Success, if the email matches your user you should receive an email',
+    '3602': 'Please enter a new password',
+    '3603': 'Password changed successfully'
 };
