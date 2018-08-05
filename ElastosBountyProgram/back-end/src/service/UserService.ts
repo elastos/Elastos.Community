@@ -3,7 +3,8 @@ import {Document} from 'mongoose';
 import * as _ from 'lodash';
 import {constant} from '../constant';
 import {geo} from '../utility/geo'
-import {validate, crypto, uuid, mail} from '../utility';
+import * as uuid from 'uuid'
+import {validate, utilCrypto, mail} from '../utility';
 import CommunityService from "./CommunityService";
 import CommentService from "./CommentService";
 
@@ -43,7 +44,7 @@ export default class extends Base {
             throw 'email already exists';
         }
 
-        const salt = uuid();
+        const salt = uuid.v4();
 
         const doc = {
             username,
@@ -83,12 +84,17 @@ export default class extends Base {
         return user.salt;
     }
 
+    /**
+     * TODO: ensure we have a test to ensure param.admin is checked properly (currently true)
+     * @param param
+     * @returns {Promise<"mongoose".DocumentQuery<T extends "mongoose".Document, T extends "mongoose".Document>>}
+     */
     public async show(param) {
 
         const {userId} = param
 
         const db_user = this.getDBModel('User');
-        let selectFields = '-salt -password -elaBudget -elaOwed -votePower'
+        let selectFields = '-salt -password -elaBudget -elaOwed -votePower -resetToken'
 
         if (param.admin && (!this.currentUser || (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
             this.currentUser._id !== userId))) {
@@ -201,7 +207,7 @@ export default class extends Base {
 
         const user = await db_user.findOne({username}, {reject: false});
         if(!user){
-            throw 'user is not exist';
+            throw 'user does not exist';
         }
 
         if(user.password !== this.getPassword(oldPassword, user.salt)){
@@ -213,6 +219,86 @@ export default class extends Base {
                 password : this.getPassword(password, user.salt)
             }
         });
+    }
+
+    /*
+    ******************************************************************************************
+    * Forgot/Reset Password
+    *
+    * The idea here is to ensure that the user gets no hint the email exists
+    ******************************************************************************************
+     */
+    public async forgotPassword(param) {
+
+        const {email} = param
+
+        console.log(`forgotPassword called on email: ${email}`)
+
+        const db_user = this.getDBModel('User');
+
+        const userEmailMatch = await db_user.findOne({
+            email: email,
+            active: true
+        })
+
+        if (!userEmailMatch){
+            console.error('no user matched')
+            return
+        }
+
+        // add resetToken
+        const resetToken = await utilCrypto.randomHexStr(8)
+
+        await userEmailMatch.update({
+            resetToken
+        })
+
+        // send email
+        await mail.send({
+            to: userEmailMatch.email,
+            toName: `${userEmailMatch.profile.firstName} ${userEmailMatch.profile.lastName}`,
+            subject: 'Cyber Republic - Password Reset',
+            body: `For your convenience your username is ${userEmailMatch.username}
+                <br/>
+                <br/>
+                Please click this link to reset your password: 
+                <a href="${process.env.SERVER_URL}/reset-password?token=${resetToken}">${process.env.SERVER_URL}/reset-password?token=${resetToken}</a>`
+        })
+
+    }
+
+    public async resetPassword(param) {
+
+        const db_user = this.getDBModel('User');
+        const {resetToken, password} = param
+
+        this.validate_password(password);
+
+        const userMatchedByToken = await db_user.db.findOne({
+            resetToken: resetToken,
+            active: true
+        })
+
+        if (!userMatchedByToken) {
+            console.error(`resetToken ${resetToken} did not match user`)
+            throw 'token invalid'
+        }
+
+        const result = await db_user.update({_id: userMatchedByToken._id}, {
+            $set: {
+                password: this.getPassword(password, userMatchedByToken.salt)
+            },
+            $unset: {
+                resetToken: 1
+            }
+        });
+
+        if (!result.nModified) {
+            console.error(`resetToken ${resetToken} password update failed`)
+            throw 'password update failed'
+        }
+
+        return 1
     }
 
     /*
@@ -235,7 +321,7 @@ export default class extends Base {
     *
     * */
     public getPassword(password, salt){
-        return crypto.sha512(password+salt);
+        return utilCrypto.sha512(password+salt);
     }
 
     public validate_username(username){

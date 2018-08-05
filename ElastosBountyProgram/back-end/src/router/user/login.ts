@@ -1,6 +1,6 @@
 import Base from '../Base';
 import UserService from '../../service/UserService';
-import {crypto} from '../../utility';
+import {utilCrypto} from '../../utility';
 import * as moment from 'moment';
 
 export default class extends Base {
@@ -32,7 +32,7 @@ export default class extends Base {
 
         // always return api-token on login, this is needed for future requests
         this.session.userId = user.id;
-        resultData['api-token'] = crypto.encrypt(JSON.stringify({
+        resultData['api-token'] = utilCrypto.encrypt(JSON.stringify({
             userId : user.id,
             expired : moment().add(30, 'd').unix()
         }));

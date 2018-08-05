@@ -62,6 +62,29 @@ export default class extends BaseService {
         return true
     }
 
+    async forgotPassword(email) {
+
+        return api_request({
+            path : '/api/user/forgot-password',
+            method : 'post',
+            data : {
+                email
+            }
+        })
+    }
+
+    async resetPassword(resetToken, password) {
+
+        return api_request({
+            path : '/api/user/reset-password',
+            method : 'post',
+            data : {
+                resetToken,
+                password
+            }
+        })
+    }
+
     async getCurrentUser() {
 
         const userRedux = this.store.getRedux('user')

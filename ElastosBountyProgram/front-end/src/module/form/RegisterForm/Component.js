@@ -75,7 +75,7 @@ class C extends BaseComponent {
             form.validateFields(['confirmPassword'], { force: true })
         }
         if (value && value.length < MIN_LENGTH_PASSWORD) {
-            callback(`${I18N.get('3506')}${MIN_LENGTH_PASSWORD}${I18N.get('3507')}`)
+            callback(`${I18N.get('3506')} ${MIN_LENGTH_PASSWORD} ${I18N.get('3507')}`)
         }
         callback()
     }

@@ -11,12 +11,19 @@ const FormItem = Form.Item
 
 class C extends BaseComponent {
 
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            persist: true
+        }
+    }
+
     handleSubmit(e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values)
-                this.props.login(values.username, values.password, values.persist)
+                this.props.login(values.username, values.password, this.state.persist)
 
             }
         })
@@ -45,7 +52,7 @@ class C extends BaseComponent {
 
         const persist_fn = getFieldDecorator('persist')
         const persist_el = (
-            <Checkbox defaultChecked={true}>{I18N.get('3404')}</Checkbox>
+            <Checkbox onClick={this.togglePersist.bind(this)} checked={this.state.persist}>{I18N.get('3404')}</Checkbox>
         )
 
         return {
@@ -53,6 +60,10 @@ class C extends BaseComponent {
             pwd: pwd_fn(pwd_el),
             persist: persist_fn(persist_el)
         }
+    }
+
+    togglePersist() {
+        this.setState({persist: !this.state.persist})
     }
 
     ord_render() {
@@ -70,7 +81,7 @@ class C extends BaseComponent {
                     {p.persist}
                 </FormItem>
                 <FormItem className="d_item">
-                    <a className="login-form-forgot" href="">{I18N.get('3405')}</a>
+                    <a className="login-form-forgot" onClick={() => this.props.history.push('/forgot-password')}>{I18N.get('3405')}</a>
                 </FormItem>
                 <FormItem>
                     <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">

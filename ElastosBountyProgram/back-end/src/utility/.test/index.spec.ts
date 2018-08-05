@@ -1,6 +1,6 @@
 declare var describe, test, expect, require, process;
 
-import {getEnv, crypto, uuid} from '../index';
+import {getEnv, utilCrypto} from '../index';
 
 describe('test utility/index', ()=>{
     test('NODE_ENV should be jest', ()=>{

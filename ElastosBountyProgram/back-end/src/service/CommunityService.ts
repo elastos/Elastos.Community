@@ -2,7 +2,7 @@ import Base from './Base';
 import {Document} from 'mongoose';
 import * as _ from 'lodash';
 import {constant} from '../constant';
-import {validate, crypto} from '../utility';
+import {validate} from '../utility';
 
 export default class extends Base {
 
