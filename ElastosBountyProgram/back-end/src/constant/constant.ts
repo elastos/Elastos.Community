@@ -106,4 +106,16 @@ export const SUBMISSION_CAMPAIGN = {
     ANNI_VIDEO_2008: 'ANNI_VIDEO_2008'
 };
 
+export const SKILLSET_TYPE = {
+    CPP: 'CPP',
+    JAVASCRIPT: 'JAVASCRIPT',
+    GO: 'GO',
+    PYTHON: 'PYTHON'
+};
 
+export const TASK_DOMAIN = {
+    SOCIAL: 'SOCIAL',
+    IOT: 'IOT',
+    MEDIA: 'MEDIA',
+    FINANCE: 'FINANCE'
+}
