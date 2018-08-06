@@ -3,6 +3,6 @@ node_modules/
 coverage/
 
 # disable dist due to the aws server performance is too low to build dist.
-#dist/
+dist/
 
 dev_dist/
