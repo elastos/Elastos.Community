@@ -1,7 +1,7 @@
 import {Request, Response, NextFunction, Router} from 'express';
 import {getEnv} from '../utility';
 import db from '../db';
-import {crypto} from '../utility';
+import {utilCrypto} from '../utility';
 import * as moment from 'moment';
 
 import test from './test';
@@ -22,7 +22,7 @@ export const middleware = (req: Request, res: Response, next: NextFunction)=>{
 
     if(token){
         try{
-            const json = JSON.parse(crypto.decrypt(token.toString()));
+            const json = JSON.parse(utilCrypto.decrypt(token.toString()));
             if(json.userId && json.expired && (json.expired - moment().unix() > 0)){
                 db.create().then((DB)=>{
                     DB.getModel('User').findOne({_id: json.userId}).then((user) => {

@@ -9,6 +9,8 @@ import send_email from './send_email';
 import send_reg_email from './send_reg_email';
 import send_confirm_email from './send_confirm_email';
 import change_password from './change_password';
+import forgot_password from './forgot_password';
+import reset_password from './reset_password';
 import list_users from './list_users';
 
 export default Base.setRouter([
@@ -56,6 +58,16 @@ export default Base.setRouter([
         path : '/change_password',
         router : change_password,
         method : 'get'
+    },
+    {
+        path : '/forgot-password',
+        router : forgot_password,
+        method : 'post'
+    },
+    {
+        path : '/reset-password',
+        router : reset_password,
+        method : 'post'
     },
     {
         path : '/:userIds/users',

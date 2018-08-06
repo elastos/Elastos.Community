@@ -41,7 +41,7 @@ export default createContainer(Component, (state)=>{
                 });
 
                 if (rs) {
-                    message.success('Success - one of the admins will be in touch shortly');
+                    message.success('Success');
                     submissionService.path.push('/profile/submissions');
                 }
             } catch (err) {
