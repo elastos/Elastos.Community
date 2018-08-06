@@ -1,12 +1,12 @@
 import React from 'react';
 import StandardPage from '../../StandardPage';
-import Navigator from '@/module/page/shared/Navigator/Container'
+import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import config from '@/config';
 
 import './style.scss'
 import '../../admin/admin.scss'
 
-import { Col, Row, Icon, Form, Input, Button, Divider, Table } from 'antd'
+import { Col, Row, Icon, Form, Input, Breadcrumb, Button, Divider, Table } from 'antd'
 import moment from "moment/moment";
 const FormItem = Form.Item;
 
@@ -28,7 +28,12 @@ export default class extends StandardPage {
                 <div className="p_admin_index ebp-wrap">
                     <div className="d_box">
                         <div className="p_admin_breadcrumb">
-                            <br/>
+                            <Breadcrumb>
+                                <Breadcrumb.Item href="/">
+                                    <Icon type="home" />
+                                </Breadcrumb.Item>
+                                <Breadcrumb.Item>Teams</Breadcrumb.Item>
+                            </Breadcrumb>
                         </div>
                         <div className="p_ProfileTeams p_admin_content">
                             <Row>

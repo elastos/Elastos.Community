@@ -11,11 +11,14 @@ export default class extends BaseComponent {
     handleMenuClick(item, key, keyPath) {
 
         switch (item.key) {
-            case 'profileInfo':
-                this.props.history.push('/profile/info')
+            case 'profileTasks':
+                this.props.history.push('/profile/tasks')
                 break
-            case 'profileCommunities':
-                this.props.history.push('/profile/communities')
+            case 'profileTeams':
+                this.props.history.push('/profile/teams')
+                break
+            case 'profileSubmissions':
+                this.props.history.push('/profile/submissions')
                 break
         }
     }
@@ -28,11 +31,14 @@ export default class extends BaseComponent {
                 onClick={this.handleMenuClick.bind(this)}
                 mode="inline"
             >
-                <Menu.Item key="profileInfo">
-                    {I18N.get('2300')}
+                <Menu.Item key="profileTasks">
+                    {I18N.get('2301')}
                 </Menu.Item>
-                <Menu.Item key="profileCommunities">
-                    {I18N.get('2304')}
+                <Menu.Item key="profileTeams">
+                    {I18N.get('2302')}
+                </Menu.Item>
+                <Menu.Item key="profileSubmissions">
+                    {I18N.get('2303')}
                 </Menu.Item>
             </Menu>
         )

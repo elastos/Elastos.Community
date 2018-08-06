@@ -9,7 +9,8 @@ export default createContainer(Component, (state) => {
         isLogin: state.user.is_login,
         role: state.user.role,
         profile: state.user.profile,
-        language: state.language
+        language: state.language,
+        pathname: state.router.location.pathname
     };
 }, () => {
     const userService = new UserService();

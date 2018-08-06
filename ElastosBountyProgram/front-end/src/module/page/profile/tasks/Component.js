@@ -1,7 +1,7 @@
 import React from 'react';
 import StandardPage from '../../StandardPage';
 import Footer from '@/module/layout/Footer/Container'
-import Navigator from '@/module/page/shared/Navigator/Container'
+import Navigator from '@/module/page/shared/HomeNavigator/Container'
 
 import './style.scss'
 import '../../admin/admin.scss'
@@ -278,7 +278,6 @@ export default class extends StandardPage {
                                 <Breadcrumb.Item href="/">
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
-                                <Breadcrumb.Item>Profile</Breadcrumb.Item>
                                 <Breadcrumb.Item>Tasks</Breadcrumb.Item>
                             </Breadcrumb>
                         </div>

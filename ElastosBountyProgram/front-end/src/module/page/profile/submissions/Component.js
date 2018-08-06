@@ -1,7 +1,7 @@
 import React from 'react';
 import StandardPage from '../../StandardPage';
 import Footer from '@/module/layout/Footer/Container'
-import Navigator from '@/module/page/shared/Navigator/Container'
+import Navigator from '@/module/page/shared/HomeNavigator/Container'
 
 import './style.scss'
 import '../../admin/admin.scss'
@@ -112,8 +112,7 @@ export default class extends StandardPage {
                                 <Breadcrumb.Item href="/">
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
-                                <Breadcrumb.Item>Profile</Breadcrumb.Item>
-                                <Breadcrumb.Item>Submissions</Breadcrumb.Item>
+                                <Breadcrumb.Item>Issues</Breadcrumb.Item>
                             </Breadcrumb>
                         </div>
                         <div className="p_ProfileSubmissions p_admin_content">
@@ -127,7 +126,7 @@ export default class extends StandardPage {
                             <Row>
                                 <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-left-column wrap-box-user">
                                     <div>
-                                        <Divider>Owned Submissions / Forms</Divider>
+                                        <Divider>Owned Issues / Forms</Divider>
 
                                         <Table
                                             columns={columns}
@@ -140,7 +139,7 @@ export default class extends StandardPage {
                                         <div className="vert-gap"/>
                                     }
                                     <div>
-                                        <Divider>Subscribed Submissions</Divider>
+                                        <Divider>Subscribed Issues</Divider>
 
                                         <Table
                                             columns={columns}
