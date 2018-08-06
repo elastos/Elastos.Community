@@ -79,8 +79,15 @@ export default class extends BaseComponent {
         )
     }
 
-    ord_render() {
+    getSelectedKeys() {
+        const keys = _.map(['profile', 'developer', 'social', 'community'], (key) => {
+            return ((this.props.pathname || '').indexOf(`/${key}`) === 0) ? key : ''
+        })
 
+        return keys
+    }
+
+    ord_render() {
         const isLogin = this.props.isLogin
 
         // const overviewDropdown = this.buildOverviewDropdown()
@@ -89,7 +96,8 @@ export default class extends BaseComponent {
 
         return (
             <Header className="c_Header">
-                <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu" selectedKeys={['mail']} mode="horizontal">
+                <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu"
+                    selectedKeys={this.getSelectedKeys()} mode="horizontal">
                     <Menu.Item className="c_MenuItem logo" key="home">
                         <img src='/assets/images/cr_seal_white.png' />
                     </Menu.Item>
@@ -102,6 +110,10 @@ export default class extends BaseComponent {
                         </Dropdown>
                     </Menu.Item>
                     */}
+
+                    <Menu.Item className="c_MenuItem link" key="profile">
+                        {I18N.get('0104')}
+                    </Menu.Item>
 
                     <Menu.Item className="c_MenuItem link" key="developer">
                         {I18N.get('0100')}
@@ -141,7 +153,7 @@ export default class extends BaseComponent {
                         </Dropdown>
                     </Menu.Item>
                 </Menu>
-                <Menu onClick={this.clickItem.bind(this)} className="c_MenuTopRight" mode="horizontal"> 
+                <Menu onClick={this.clickItem.bind(this)} className="c_MenuTopRight" mode="horizontal">
                     <Menu.Item key="help">
                         {I18N.get('0007')}
                     </Menu.Item>
@@ -213,6 +225,8 @@ export default class extends BaseComponent {
                 onCancel() {
                 }
             })
+        } else if (key === 'profile') {
+            this.props.history.push('/profile/tasks')
         }
         else if (_.includes([
             'en',

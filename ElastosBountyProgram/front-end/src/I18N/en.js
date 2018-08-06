@@ -15,6 +15,7 @@ export default {
     '0100': 'Developers',
     '0101': 'Events',
     '0102': 'Community',
+    '0104': 'My Republic',
 
     '0200': 'Profile',
     '0201': 'Login',
@@ -46,14 +47,14 @@ export default {
     '1301': 'Community',
     '1302': 'Users',
     '1303': 'Teams',
-    '1304': 'Submissions',
+    '1304': 'Issues',
     '1305': 'Forms',
 
     // Profile navigator
     '2300': 'Info',
     '2301': 'Tasks',
     '2302': 'Teams',
-    '2303': 'Submissions',
+    '2303': 'Issues',
     '2304': 'Communities',
 
     // Home
