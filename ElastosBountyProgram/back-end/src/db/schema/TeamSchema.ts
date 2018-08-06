@@ -26,26 +26,25 @@ export const Team = {
         type : Boolean,
         default : false
     },
-    owner : Schema.Types.ObjectId
+    owner : {type: Schema.Types.ObjectId, ref: 'users'}
 };
 
-
-
 export const User_Team = {
-    userId : {
-        required : true,
-        type : Schema.Types.ObjectId
+    user : {
+        required: true,
+        type: Schema.Types.ObjectId,
+        ref: 'users'
     },
-    teamId : {
-        required : true,
-        type : Schema.Types.ObjectId
+    teamId: {
+        required: true,
+        type: Schema.Types.ObjectId,
+        ref: 'teams'
     },
-    status : {
-        type : String
+    status: {
+        type: String
     },
-    level : String,
-    role : String,
-    title : String,
-
+    level: String,
+    role: String,
+    title: String,
     apply_reason : String
 };

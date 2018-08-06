@@ -6,6 +6,18 @@ import {constant} from '../constant';
 import LogService from './LogService';
 import {DataList} from './interface';
 
+const sanitize = '-password -salt -email'
+
+const restrictedFields = {
+    update: [
+        '_id',
+        'taskId',
+        'status',
+        'password'
+    ]
+}
+
+
 export default class extends Base {
     private model;
     private ut_model;
@@ -16,28 +28,28 @@ export default class extends Base {
 
     public async create(param): Promise<Document>{
         const db_team = this.getDBModel('Team');
-        const db_user_team = this.getDBModel("User_Team");
+        const db_user_team = this.getDBModel('User_Team');
 
         // validate
         this.validate_name(param.name);
         this.validate_type(param.type);
 
         const doc = {
-            name : param.name,
-            type : param.type,
-            metadata : this.param_metadata(param.metadata),
-            tags : this.param_tags(param.tags),
-            profile : {
-                logo : param.logo,
-                description : param.description
+            name: param.name,
+            type: param.type,
+            metadata: this.param_metadata(param.metadata),
+            tags: this.param_tags(param.tags),
+            profile: {
+                logo: param.logo,
+                description: param.description
             },
-            recruiting : param.recruiting || false,
-            owner : this.currentUser._id
+            recruiting: param.recruiting || false,
+            owner: this.currentUser
         };
 
         console.log('create team => ', doc);
         const res = await db_team.save(doc);
-        console.log(res);
+
         // save to user team
         const doc_user_team = {
             userId : this.currentUser._id,
@@ -53,43 +65,29 @@ export default class extends Base {
     }
 
     public async update(param): Promise<Document>{
-        if(!param.id){
-            throw 'invalid team id'
-        }
-        const db_team = this.model;
-        const team_doc = await db_team.getDBInstance().findOne({_id : param.id}, {
-            updatedAt: false
-        });
-        if(!team_doc){
-            throw 'invalid team id';
-        }
-        if(!(this.currentUser._id.equals(team_doc.owner) || this.currentUser.role === constant.USER_ROLE.ADMIN)){
-            throw 'no permission to operate';
-        }
+        const {
+            teamId
+        } = param
 
-        const doc = _.merge(team_doc, {
-            name : param.name,
-            type : param.type,
-            metadata : this.param_metadata(param.metadata),
-            tags : this.param_tags(param.tags),
-            profile : {
-                logo : param.logo,
-                description : param.description
-            },
-            recruiting : param.recruiting
-        });
+        const db_team = this.getDBModel('Team')
+        const team = await db_team.findById(teamId)
+        await db_team.getDBInstance().populate(team, {
+            path: 'owner',
+            select: sanitize
+        })
 
-        // validate
-        this.validate_name(doc.name);
-        this.validate_type(doc.type);
-
-        console.log('update team =>', doc);
-        const res = await db_team.update({_id: param.id}, doc);
-        if(res.ok){
-            return doc;
+        if (this.currentUser._id.toString() !== team.owner._id.toString() &&
+            this.currentUser.role !== constant.USER_ROLE.ADMIN) {
+            throw 'Access Denied'
         }
 
-        return res;
+        const updateObj:any = _.omit(param, restrictedFields.update)
+        this.validate_name(updateObj.name);
+        this.validate_type(updateObj.type);
+
+        await db_team.update({_id: teamId}, updateObj)
+
+        return db_team.findById(teamId)
     }
 
     /*
@@ -246,42 +244,31 @@ export default class extends Base {
     *
     * */
     public async list(param): Promise<DataList>{
-
-        // this should be documented
-        const limit = param.limit || 10;
-
-        // TODO add filter
-        const query:any = {};
-
-        if (param.owner && param.owner.length === 24) {
-            query.owner = param.owner
+        const db_team = this.getDBModel('Team')
+        const query:any = {
+            archived: param.archived
         }
 
-        if (param.archived) {
-            query.archived = param.archived
-        }
-
-        // get all teams that include the userId val of teamHasUser
-        if (param.teamHasUser && param.teamHasUser.length === 24) {
-            const userTeams = await this.ut_model.find({
+        if (param.teamHasUser) {
+            const db_user_team = this.getDBModel('User_Team')
+            const userTeams = db_user_team.list({
                 userId: param.teamHasUser
             })
-
             query._id = {$in: _.map(userTeams, 'teamId')}
         }
 
-        const count = await this.model.count(query);
-        const list = await this.model.list(query, {
-            updateAt: -1
-        }, limit);
+        const teams = await db_team.list(query, {
+            updatedAt: -1
+        });
 
-        // TODO add page and pageSize
-
-        return {
-            total : count,
-            list,
-            pageSize : limit
+        for (let team of teams) {
+            await db_team.getDBInstance().populate(team, {
+                path: 'owner',
+                select: sanitize,
+            })
         }
+
+        return teams
     }
 
     public async listMember(param): Promise<Document[]>{
