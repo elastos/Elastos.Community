@@ -3,5 +3,35 @@
 @import "../../../../style/color";
 
 .p_DeveloperSearch {
+  .ebp-wrap {
+    .d_row {
+      .admin-left-column.wrap-box-user {
+        .group {
+          margin: 20px 0;
+          .title {
+            font-weight: bold;
+            margin: 5px;
+          }
+          .content {
+            padding-left: 15px;
 
+            .radio {
+              display: block;
+            }
+
+            .checkbox {
+              display: block;
+            }
+
+            .showMore {
+              padding-left: 25px;
+              font-style: italic;
+              cursor: pointer;
+              color: black;
+            }
+          }
+        }
+      }
+    }
+  }
 }
