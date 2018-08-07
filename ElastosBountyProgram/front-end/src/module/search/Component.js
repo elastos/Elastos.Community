@@ -4,6 +4,7 @@ import { Col, Row, Icon, Input, Button, Breadcrumb, List, Checkbox, Radio, Carou
 import _ from 'lodash'
 import './style.scss'
 import moment from 'moment/moment'
+import {SKILLSET_TYPE, TEAM_TASK_DOMAIN} from '@/constant'
 
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
@@ -22,7 +23,7 @@ export default class extends BaseComponent {
             lookingFor: 0,
             skillset: [0],
             category: [0],
-            entryCount: 4,
+            entryCount: 3,
             skillsetShowAllEntries: false,
             categoryShowAllEntries: false
         }
@@ -56,39 +57,40 @@ export default class extends BaseComponent {
         );
     }
 
-    renderSkillset(skillsetOptions) {
-        let elements = [];
-        for(let i = 0; i < skillsetOptions.length
-            && ( i < this.state.entryCount || this.state.skillsetShowAllEntries); i++) {
-            elements.push(
-                <div className="checkbox" key={i}>
-                    <Checkbox value={i} key={i}>
-                        {skillsetOptions[i]}
+    renderSkillset(skillsetOptions, showAll) {
+        const limit = this.state.entryCount
+        const filtered = _.take(skillsetOptions, showAll ? skillsetOptions.length : limit)
+        const elements = _.map(filtered, (option) => {
+            return (
+                <div className="checkbox" key={option.value}>
+                    <Checkbox value={option.value}>
+                        {option.label}
                     </Checkbox>
                 </div>
             );
-        }
+        })
 
-        return(
+        return (
             <CheckboxGroup onChange={this.onChangeSkillset.bind(this)}>
                 {elements}
             </CheckboxGroup>
         );
     }
 
-    renderCategory(categoryOptions) {
-        let elements = [];
-        for(let i = 0; i < categoryOptions.length; i++) {
-            elements.push(
-                <div className="checkbox" key={i}>
-                    <Checkbox value={i} key={i}>
-                        {categoryOptions[i]}
+    renderCategory(categoryOptions, showAll) {
+        const limit = this.state.entryCount
+        const filtered = _.take(categoryOptions, showAll ? categoryOptions.length : limit)
+        const elements = _.map(filtered, (option) => {
+            return (
+                <div className="checkbox" key={option.value}>
+                    <Checkbox value={option.value}>
+                        {option.label}
                     </Checkbox>
                 </div>
-            );
-        }
+            )
+        })
 
-        return(
+        return (
             <CheckboxGroup onChange={this.onChangeCategory.bind(this)}>
                 {elements}
             </CheckboxGroup>
@@ -108,13 +110,46 @@ export default class extends BaseComponent {
     }
 
     renderMain() {
-        const lookingForOptions = ['Project', 'Team'];
-        const skillsetOptions = ['C++', 'Javascript', 'Go', 'Python', 'Java'];
-        const categoryOptions = ['Social', 'IoT', 'Media', 'Finance'];
-
+        const lookingForOptions = ['Team', 'Project'];
+        const skillsetOptions = [
+            {
+                label: 'C++',
+                value: SKILLSET_TYPE.CPP
+            },
+            {
+                label: 'JavaScript',
+                value: SKILLSET_TYPE.JAVASCRIPT
+            },
+            {
+                label: 'Go',
+                value: SKILLSET_TYPE.GO
+            },
+            {
+                label: 'Python',
+                value: SKILLSET_TYPE.PYTHON
+            }
+        ]
+        const categoryOptions = [
+            {
+                label: 'Social',
+                value: TEAM_TASK_DOMAIN.SOCIAL
+            },
+            {
+                label: 'IoT',
+                value: TEAM_TASK_DOMAIN.IOT
+            },
+            {
+                label: 'Media',
+                value: TEAM_TASK_DOMAIN.MEDIA
+            },
+            {
+                label: 'Finance',
+                value: TEAM_TASK_DOMAIN.FINANCE
+            }
+        ]
         const lookingForElement = this.renderLookingFor(lookingForOptions);
-        const skillsetElement = this.renderSkillset(skillsetOptions);
-        const categoryElement = this.renderCategory(categoryOptions);
+        const skillsetElement = this.renderSkillset(skillsetOptions, this.state.skillsetShowAllEntries);
+        const categoryElement = this.renderCategory(categoryOptions, this.state.categoryShowAllEntries);
 
         return (
             <div className="c_Search">
