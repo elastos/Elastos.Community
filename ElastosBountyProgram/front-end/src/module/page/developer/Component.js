@@ -2,304 +2,121 @@ import React from 'react'
 import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import { Link } from 'react-router-dom'
-import config from '@/config'
-import SubmissionForm from './formSubmission/Container'
-import _ from 'lodash'
 import './style.scss'
 
-import { Col, Row, Icon, Form, Input, Button, Modal, Select, Table, List, Popover, Cascader } from 'antd'
-import moment from 'moment/moment'
+import { Col, Row, Card, Button, Breadcrumb } from 'antd'
 
-const Option = Select.Option
-const FormItem = Form.Item
-
-import { TASK_STATUS, TASK_TYPE } from '@/constant'
 
 export default class extends StandardPage {
     state = {
-        communityTrees: [],
-        filterCommunity: [],
-
-        taskTypeSelected: this.props.match.type || TASK_TYPE.EVENT
     }
 
     componentDidMount () {
-        this.props.getDeveloperEvents()
-        this.props.getUserTeams(this.props.currentUserId)
-        this.getCommunityTrees()
-    }
-
-    getCommunityTrees() {
-        this.props.getAllCommunities().then((communityTrees) => {
-            this.setState({
-                communityTrees
-            })
-        })
     }
 
     componentWillUnmount () {
-        this.props.resetTasks()
-    }
-
-    handleOnChangeFilter(value, selectedOption) {
-        this.setState({
-            filterCommunity: value
-        })
-    }
-
-    filterByMyCommunity(community) {
-        let filterCommunity = []
-
-        if (community.parentCommunityId) {
-            filterCommunity.push(community.parentCommunityId)
-        }
-
-        filterCommunity.push(community._id)
-
-        this.setState({
-            filterCommunity: filterCommunity
-        })
-    }
-
-    changeTaskType(taskType) {
-        this.setState({
-            taskTypeSelected: taskType
-        })
     }
 
     ord_renderContent () {
-        let eventData = this.props.events
-        let availTasksData = this.props.availTasks
-        let projectTaskData = this.props.projectTasks
-        // const myTasksData = this.props.myTasks
-
-        const filterTreeLevel = this.state.filterCommunity.length
-        if (filterTreeLevel) {
-            if (filterTreeLevel === 1) {
-                eventData = eventData.filter((event) => {
-                    return event && event.community && event.community._id === this.state.filterCommunity[0]
-                })
-
-                availTasksData = availTasksData.filter((event) => {
-                    return event && event.community && event.community._id === this.state.filterCommunity[0]
-                })
-
-                projectTaskData = projectTaskData.filter((event) => {
-                    return event && event.community && event.community._id === this.state.filterCommunity[0]
-                })
-            } else if (filterTreeLevel === 2) {
-                eventData = eventData.filter((event) => {
-                    return event && event.community && event.communityParent && event.communityParent._id === this.state.filterCommunity[0] && event.community._id === this.state.filterCommunity[1]
-                })
-
-                availTasksData = availTasksData.filter((event) => {
-                    return event && event.community && event.communityParent && event.communityParent._id === this.state.filterCommunity[0] && event.community._id === this.state.filterCommunity[1]
-                })
-
-                projectTaskData = projectTaskData.filter((event) => {
-                    return event && event.community && event.communityParent && event.communityParent._id === this.state.filterCommunity[0] && event.community._id === this.state.filterCommunity[1]
-                })
-            }
-        }
-
-        const filterCommunityEl = <Cascader
-            value={[...this.state.filterCommunity]}
-            style={{width: '250px'}}
-            options={this.state.communityTrees}
-            placeholder="Filter by community"
-            onChange={this.handleOnChangeFilter.bind(this)}
-            changeOnSelect />
-
-        const columns = [{
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            width: '30%',
-            className: 'fontWeight500 col-name',
-            render: (name, record) => {
-                return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
-            }
-        }, {
-            title: 'Community',
-            dataIndex: 'community',
-            key: 'community',
-            render: (community, data) => {
-                if (!community) {
-                    return null;
-                }
-
-                if (data.communityParent) {
-                    let nameParent = data.communityParent.name;
-                    return (<p>{nameParent}/{community.name}</p>)
-                } else {
-                    return (<p>{community.name}</p>)
-                }
-
-            }
-        }, {
-            title: 'Reward',
-            dataIndex: 'reward.ela',
-            className: 'right-align',
-            render: (ela) => {
-                if (ela) {
-                    return ela / 1000
-                }
-                return ''
-            }
-        }, {
-            title: 'Deadline',
-            dataIndex: 'startTime',
-            className: 'right-align',
-            render: (startTime) => moment(startTime).format('MMM D')
-        }]
-
         return (
             <div className="p_Developer">
                 <div className="ebp-header-divider">
-
                 </div>
 
-                <div className="ebp-page-title">
-                    <h3 className="page-header">
-                        Contribute to Open Source Projects and dApps
-                    </h3>
-                </div>
-                <div className="ebp-page-desc d_rowGrey">
-                    <p>
-                        Most of Elastos projects are open source, this program is for all developers
-                        who want to earn ELA and recognition for their efforts developing the platform
-                    </p>
-                </div>
                 <div className="ebp-page">
-                    <Row className="d_row d_rowTop">
-                        <Col sm={{span:24}} md={{span: 16}} className="d_leftContainer d_box">
-                            <Row type="flex" justify="space-between">
-                                <Col className="pull-left btnContainer">
-                                    <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.EVENT)}>
-                                        Training
-                                    </Button>
-                                    <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.PROJECT ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.PROJECT)}>
-                                        Projects
-                                    </Button>
-                                    <Button className={'pill ' + (this.state.taskTypeSelected === TASK_TYPE.TASK ? 'ant-btn-ebp' : '')} onClick={this.changeTaskType.bind(this, TASK_TYPE.TASK)}>
-                                        Tasks
-                                    </Button>
-                                    {this.props.currentUserId && this.props.is_admin &&
-                                    <Popover content={'Add ' + (this.state.taskTypeSelected === TASK_TYPE.EVENT ? 'event' : (this.state.taskTypeSelected === TASK_TYPE.TASK ? 'task' : 'project'))}>
-                                        <Icon className="addTask" type="file-add" onClick={() => {
-                                            this.props.history.push(`/task-create?category=DEVELOPER&type=${this.state.taskTypeSelected}`)
-                                        }}/>
-                                    </Popover>
-                                    }
-                                </Col>
-                                <Col className="pull-right btnContainer">
-                                    {filterCommunityEl}
-                                    {/*
-                                    // TODO
-                                    <Button onClick={this.createTaskLink.bind(this)}>
-                                        Suggest an Event
-                                    </Button>
-                                    */}
-                                </Col>
-                            </Row>
-                            <div className="vert-gap-sm clearfix"/>
-
-                            {this.state.taskTypeSelected === TASK_TYPE.EVENT &&
-                            <Table
-                                className="clearfix"
-                                columns={columns}
-                                rowKey={(item) => item._id}
-                                dataSource={eventData}
-                                loading={this.props.loading}
-                            />
-                            }
-                            {this.state.taskTypeSelected === TASK_TYPE.TASK &&
-                            <Table
-                                className="clearfix"
-                                columns={columns}
-                                rowKey={(item) => item._id}
-                                dataSource={availTasksData}
-                                loading={this.props.loading}
-                            />
-                            }
-                            {this.state.taskTypeSelected === TASK_TYPE.PROJECT &&
-                            <Table
-                                className="clearfix"
-                                columns={columns}
-                                rowKey={(item) => item._id}
-                                dataSource={projectTaskData}
-                                loading={this.props.loading}
-                            />
-                            }
+                    <Breadcrumb className="ebp-page-breadcrumb">
+                        <Breadcrumb.Item>Home</Breadcrumb.Item>
+                        <Breadcrumb.Item><a href="">Developers</a></Breadcrumb.Item>
+                    </Breadcrumb>
+                    <Row className="d_row d_rowTop" type="flex" justify="center">
+                        <Col sm={{span:24}} md={{span: 8}} className="d_box">
+                            <Card hoverable className="feature-box">
+                                <div className="title">
+                                    <span>Learn</span>
+                                    <img src="https://3kllhk1ibq34qk6sp3bhtox1-wpengine.netdna-ssl.com/wp-content/uploads/knowledge-300x300.png"/>
+                                </div>
+                                <hr className="feature-box-divider"/>
+                                <div className="content">
+                                    <div>- Elastos Basics</div>
+                                    <div>- Key Concepts</div>
+                                    <div>- Getting Started</div>
+                                    <div>- Tutorials</div>
+                                    <div>- Training, webinars, bootcamps</div>
+                                </div>
+                            </Card>
                         </Col>
-                        <Col sm={{span:24}} md={{span: 8}} className="d_rightContainer d_box">
-                            <h4>
-                                Submit an Issue
-                            </h4>
-                            <SubmissionForm/>
+                        <Col sm={{span:24}} md={{span: 8}} className="d_box">
+                            <Card hoverable className="feature-box">
+                                <div className="title">
+                                    <span>Team Search</span>
+                                    <img src="https://3kllhk1ibq34qk6sp3bhtox1-wpengine.netdna-ssl.com/wp-content/uploads/knowledge-300x300.png"/>
+                                </div>
+                                <hr className="feature-box-divider"/>
+                                <div className="content">
+                                    <div>- Join a team looking for your skills</div>
+                                    <div>- Create a profile</div>
+                                    <div>- Create a project</div>
+                                </div>
+                            </Card>
+                        </Col>
+                        <Col sm={{span:24}} md={{span: 8}} className="d_box">
+                            <Card hoverable className="feature-box">
+                                <div className="title">
+                                    <span>Project Search</span>
+                                    <img src="https://3kllhk1ibq34qk6sp3bhtox1-wpengine.netdna-ssl.com/wp-content/uploads/knowledge-300x300.png"/>
+                                </div>
+                                <hr className="feature-box-divider"/>
+                                <div className="content">
+                                    <div>- Top 100 projects</div>
+                                    <div>- Join a project that is in active development</div>
+                                    <div>- Submit an issue</div>
+                                </div>
+                            </Card>
                         </Col>
                     </Row>
-                    <div className="horizGap">
-
+                    <div className="d_midRow">
+                        <Button className="info-button">
+                            Is Elastos suited to my project?
+                        </Button>
+                    </div>
+                    <div className="d_bottomRow">
+                        <span className="title"> Elastos Core Components</span>
+                        <Row className="component-box">
+                            <Col sm={{span:24}} md={{span: 18}} className="d_leftCol">
+                                <div className="component-name">
+                                    Elastos RunTime (RT) - <span className="languages">C++</span>
+                                </div>
+                                <hr className="component-divider"/>
+                                <div className="component-description">
+                                    lots of information about Elastos Run Time
+                                </div>
+                            </Col>
+                            <Col sm={{span:24}} md={{span: 6}}>
+                                <div className="button-container"><Button className="top-button">Issues</Button></div>
+                                <div className="button-container"><Button>Docs</Button></div>
+                                <div className="button-container"><Button>More Info</Button></div>
+                            </Col>
+                        </Row>
+                        <Row className="component-box">
+                            <Col sm={{span:24}} md={{span: 18}} className="d_leftCol">
+                                <div className="component-name">
+                                    Elastos SPV (SPV) - <span className="languages">C++, Javascript, Go</span>
+                                </div>
+                                <hr className="component-divider"/>
+                                <div className="component-description">
+                                    Payment module with full feature SDK
+                                </div>
+                            </Col>
+                            <Col sm={{span:24}} md={{span: 6}}>
+                                <div className="button-container"><Button className="top-button">Issues</Button></div>
+                                <div className="button-container"><Button>Docs</Button></div>
+                                <div className="button-container"><Button>More Info</Button></div>
+                            </Col>
+                        </Row>
                     </div>
                 </div>
-                {/*
-                <div className="ebp-page">
-                    <Row className="d_row">
-                        <Col md={{span:24}} md={{span: 16}} className="d_leftContainer d_box">
-                            <div>
-                                <h3 className="pull-left">
-                                    Available Developer Tasks and Open Issues
-                                </h3>
-                                <div className="pull-right btnContainer">
-                                    {this.props.is_admin &&
-                                    <Button type="dashed" onClick={this.createTaskLink.bind(this)}>
-                                        Create Task
-                                    </Button>
-                                    }
-                                </div>
-                            </div>
-
-                        </Col>
-                        <Col md={{span:24}} md={{span: 8}} className="d_rightContainer d_box">
-                            <h3>
-                                My Tasks
-                            </h3>
-
-                            <List
-                                size="small"
-                                dataSource={myTasksData}
-                                renderItem={(task) => {
-
-                                    const listItemActions = [task.curCandidate.type === 'USER' ?
-                                        <Tooltip title="Solo User">
-                                            <Icon type="user"/>
-                                        </Tooltip> :
-                                        <Tooltip title={`Signed up as Team: ${task.curCandidate.team.name}`}>
-                                            <Icon type="team"/>
-                                        </Tooltip>]
-
-                                    return <List.Item actions={listItemActions}>
-                                        <a onClick={() => {this.props.history.push(`/task-detail/${task._id}`)}}>
-                                            {task.name}
-                                        </a>
-                                    </List.Item>
-                                }}
-                            />
-                        </Col>
-                    </Row>
-                </div>
-                */}
                 <Footer/>
             </div>
         )
-    }
-
-    linkTaskDetail(taskId) {
-        this.props.history.push(`/task-detail/${taskId}`)
-    }
-
-    createTaskLink () {
-        this.props.history.push('/task-create')
     }
 }

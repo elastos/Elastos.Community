@@ -7,56 +7,128 @@
   background: #ffffff;
   text-align: left;
 
-  .d_box {
-    padding: 0 $gap_3;
+  .ebp-page-breadcrumb {
+    margin: 50px 25px;
+  }
 
-    .pull-right {
-      text-align: right;
-    }
-
-    .btnContainer {
-      padding-top: $gap_1;
-
-      .ant-cascader-picker-label {
-        text-align: left;
-      }
-
-      .addTask {
-        vertical-align: middle;
-        margin-right: $gap_0;
-        font-size: 150%;
+  .ebp-page {
+    margin: 0 10%;
+    .d_box {
+      .feature-box {
+        margin: 5px;
+        border: 1px solid gainsboro;
+        height: 100%;
         cursor: pointer;
-        color: $text_dark_gray;
 
-        &:hover {
-          color: $text_light_gray;
+        .title {
+          display: flex;
+          align-items: flex-end;
+          height: 50%;
+          min-height: 150px;
+
+          span {
+            z-index: 1;
+            font-weight: bold;
+            font-size: 2rem;
+            color: $primary_color;
+          }
+
+          img {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            max-width: 40%;
+            max-height: 150px;
+          }
+        }
+
+        .feature-box-divider {
+          display: block;
+          padding: 0 25px;
+          background-color: $primary_color;
+          border: 1px solid $primary_color;
+          margin: 5px 0;
+        }
+
+        .content {
+          height: 50%;
+          padding: 5px 10px;
+          font-size: 16px;
         }
       }
     }
-  }
+    .d_midRow {
+      margin: 100px 0;
+      text-align: center;
 
-  .d_leftContainer {
-    border-right: 1px solid #e0e0e0;
-  }
-
-  table {
-    > thead.ant-table-thead > tr > th {
-      word-break: normal;
-      white-space: nowrap;
-    }
-
-    td {
-      word-break: normal;
-
-      &.col-name {
-        white-space: normal;
+      .info-button {
+        width: 50%;
+        border-color: $primary_color;
+        color: $primary_color;
+        vertical-align: middle;
+      }
+      .info-button:hover {
+        background-color: $primary_light_color;
+        color: white;
       }
     }
-  }
+    .d_bottomRow {
+      text-align: left;
 
-  .c_issueForm {
-    .ant-row.ant-form-item {
-      margin-bottom: 15px;
+      .title {
+        font-size: 2rem;
+      }
+
+      .component-box {
+        margin: 20px 10px;
+        padding: 10px;
+        border: 1px solid $border_gray;
+        background-color: $bg_gray;
+        border-radius: 5px;
+
+        .d_leftCol {
+          padding: 10px;
+          .component-name {
+            font-size: 24px;
+            .languages {
+              color: $primary_color;
+            }
+          }
+          .component-divider {
+            margin: 5px 15px;
+            border: 1px solid gray;
+          }
+          .component-description {
+            padding: 10px;
+          }
+        }
+
+        .button-container {
+          text-align: right;
+
+          button {
+            width: 50%;
+            min-width: 100px;
+            margin: 5px;
+            border: 1px solid gray;
+            background-color: $border_gray;
+          }
+
+          button:hover {
+            background-color: $bg_gray;
+          }
+
+          .top-button {
+            background-color: $primary_color;
+            color: white;
+          }
+
+          .top-button:hover {
+            background-color: $primary_light_color;
+            color: white;
+          }
+        }
+      }
     }
   }
 }
