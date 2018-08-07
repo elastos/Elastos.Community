@@ -54,6 +54,10 @@ class C extends BaseComponent {
                     pictures: this.state.fileList || []
                 }
 
+                _.each(createParams.pictures, (pictureFile) => {
+                    pictureFile.url = this.pictureUrlLookups[pictureFile.uid]
+                })
+
                 await this.props.create(createParams);
 
                 this.setState({loading: false});
@@ -164,10 +168,9 @@ class C extends BaseComponent {
             onPreview: this.handlePreview.bind(this),
             customRequest: (info) => {
                 upload_file(info.file).then((d) => {
-                    info.onSuccess(null, {
-                        ...info.file,
-                        remote_link: d.url
-                    })
+                    this.pictureUrlLookups = this.pictureUrlLookups || []
+                    this.pictureUrlLookups[info.file.uid] = d.url
+                    info.onSuccess(null, info.file)
                 }, info.onError)
             }
         }

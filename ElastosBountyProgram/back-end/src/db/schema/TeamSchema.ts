@@ -8,7 +8,7 @@ export const TeamProfile = {
 const PictureSchema = {
     thumbUrl: String,
     name: String,
-    remote_link: String
+    url: String
 };
 
 export const Team = {
