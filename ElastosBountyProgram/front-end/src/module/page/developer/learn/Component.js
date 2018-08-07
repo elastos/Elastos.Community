@@ -1,5 +1,5 @@
 import React from 'react'
-import StandardPage from '../StandardPage'
+import StandardPage from '../../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import { Link } from 'react-router-dom'
 import config from '@/config'
