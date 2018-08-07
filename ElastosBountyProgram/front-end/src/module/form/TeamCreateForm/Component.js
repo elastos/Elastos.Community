@@ -16,7 +16,8 @@ import {
     Upload,
     Cascader,
     Divider,
-    TreeSelect
+    TreeSelect,
+    Modal
 } from 'antd'
 import I18N from '@/I18N'
 import InputTags from '@/module/shared/InputTags/Component'
@@ -31,7 +32,9 @@ class C extends BaseComponent {
     ord_states() {
         return {
             loading: false,
-            fileList: []
+            fileList: [],
+            previewVisible: false,
+            previewImage: ''
         }
     }
 
@@ -172,6 +175,7 @@ class C extends BaseComponent {
             listType: 'picture-card',
             fileList: this.state.fileList,
             onChange: this.handleFileListChange.bind(this),
+            onPreview: this.handlePreview.bind(this),
             customRequest: (info) => {
                 upload_file(info.file).then(() => {
                     info.onSuccess(null, info.file)
@@ -201,6 +205,17 @@ class C extends BaseComponent {
             skillset: skillset_fn(skillset_el),
             pictures: pictures_fn(pictures_el)
         }
+    }
+
+    handleCancel() {
+        this.setState({ previewVisible: false })
+    }
+
+    handlePreview(file) {
+        this.setState({
+            previewImage: file.url || file.thumbUrl,
+            previewVisible: true
+        })
     }
 
     handleFileListChange = ({ fileList }) => this.setState({ fileList })
@@ -239,6 +254,9 @@ class C extends BaseComponent {
                         <FormItem label="Pictures" {...formItemLayout}>
                             {p.pictures}
                         </FormItem>
+                        <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
+                            <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
+                        </Modal>
                         <FormItem label="Tags" {...formItemLayout}>
                             {p.tags}
                         </FormItem>
