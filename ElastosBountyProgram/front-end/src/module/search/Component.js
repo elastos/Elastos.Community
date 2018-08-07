@@ -189,7 +189,7 @@ export default class extends BaseComponent {
                 pagination={{ pageSize: 5 }} dataSource={data} renderItem={item => (
                     <List.Item
                         key={item.title}
-                        extra={<img width={200} height={200} alt="logo" src={item.url} />}
+                        extra={<img width={160} height={160} alt="logo" src={item.url} />}
                     >
                         <List.Item.Meta
                             title={<a href={item.href}>{item.title}</a>}
