@@ -10,15 +10,15 @@ import { Col, Row, Card, Button, Breadcrumb } from 'antd'
 
 export default class extends StandardPage {
     navigateToLearn() {
-        this.props.history.push("/learn");
+        this.props.history.push("/developer/learn");
     }
 
     navigateToTeamSearch() {
-        this.props.history.push("/team-search");
+        this.props.history.push("/developer/search");
     }
 
     navigateToProjectSearch() {
-        this.props.history.push("/project-search");
+        this.props.history.push("/developer/project-search");
     }
 
     ord_renderContent () {
