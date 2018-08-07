@@ -107,7 +107,7 @@ export default class extends AdminPage {
                 {text: 'Submitted', value: TASK_STATUS.SUBMITTED},
                 {text: 'Success', value: TASK_STATUS.SUCCESS},
                 {text: 'Distributed', value: TASK_STATUS.DISTRIBUTED},
-                {text: 'Cancled', value: TASK_STATUS.CANCELED},
+                {text: 'Canceled', value: TASK_STATUS.CANCELED},
                 {text: 'Expired', value: TASK_STATUS.EXPIRED}
             ],
             filteredValue: filteredInfo.status || null,
