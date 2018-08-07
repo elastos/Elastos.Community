@@ -52,8 +52,8 @@ export default class extends Base {
 
         // save to user team
         const doc_user_team = {
-            userId: new ObjectId(this.currentUser._id),
-            teamId: new ObjectId(res._id),
+            userId: this.currentUser._id,
+            teamId: res._id,
             status: constant.TEAM_USER_STATUS.NORMAL,
             role: constant.TEAM_ROLE.LEADER
         };
@@ -244,16 +244,20 @@ export default class extends Base {
     * */
     public async list(param): Promise<DataList>{
         const db_team = this.getDBModel('Team')
-        const query:any = {
-            archived: param.archived
+        const query:any = {}
+
+        if (param.archived) {
+            query.archived = param.archived
         }
 
         if (param.teamHasUser) {
             const db_user_team = this.getDBModel('User_Team')
-            const userTeams = db_user_team.list({
+            const userTeams = await db_user_team.list({
                 userId: param.teamHasUser
             })
-            query._id = {$in: _.map(userTeams, 'teamId')}
+            query.$or = [
+                { _id: {$in: _.map(userTeams, 'teamId')} }
+            ]
         }
 
         const teams = await db_team.list(query, {

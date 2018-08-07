@@ -191,7 +191,7 @@ class C extends BaseComponent {
             description: description_fn(textarea_el),
             tags: tags_fn(tags_el),
             skillset: skillset_fn(skillset_el),
-            pictures: pictures_el //pictures_fn(pictures_el)
+            pictures: pictures_el
         }
     }
 
