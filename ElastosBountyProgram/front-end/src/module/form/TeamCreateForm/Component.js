@@ -44,18 +44,24 @@ class C extends BaseComponent {
         const tags = this.props.form.getFieldInstance('tags').getValue();
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
-                this.setState({ loading: true });
-                const res = await this.props.create({
+//                this.setState({ loading: true });
+
+                let createParams = {
                     ...values,
                     tags: tags.join(','),
                     logo: '',
-                    metadata: ''
-                });
+                    metadata: '',
+                    pictures: this.state.fileList || []
+                }
 
-                console.log(res);
+                debugger
 
-                this.setState({loading: false});
-                this.props.history.push('/profile/teams');
+                // debugger
+
+                await this.props.create(createParams);
+
+//                this.setState({loading: false});
+                // this.props.history.push('/profile/teams');
             }
         })
     }
@@ -123,36 +129,20 @@ class C extends BaseComponent {
             }
         ]
 
-        const type_fn = getFieldDecorator('type', {
-            rules: [{required: true, message: 'type is required'}],
+        const type_fn = getFieldDecorator('domain', {
+            rules: [{required: true, message: 'domain is required'}],
             initialValue: []
         })
         const type_el = (
             <TreeSelect treeData={specs} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
         )
 
-        const skillset_fn = getFieldDecorator('skillset', {
+        const skillset_fn = getFieldDecorator('recruitedSkillsets', {
             rules: [{required: true, message: 'skillset is required'}],
             initialValue: []
         })
         const skillset_el = (
             <TreeSelect treeData={skillsets} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
-        )
-
-        const recruiting_fn = getFieldDecorator('recruiting', {
-            rules: [{required: true}],
-            initialValue: true
-        })
-        const recruiting_el = (
-            <RadioGroup>
-                <Radio value={true}>
-                    Yes
-                </Radio>
-                <Radio value={false}>
-                    No
-                </Radio>
-
-            </RadioGroup>
         )
 
         const description_fn = getFieldDecorator('description', {
@@ -177,8 +167,11 @@ class C extends BaseComponent {
             onChange: this.handleFileListChange.bind(this),
             onPreview: this.handlePreview.bind(this),
             customRequest: (info) => {
-                upload_file(info.file).then(() => {
-                    info.onSuccess(null, info.file)
+                upload_file(info.file).then((d) => {
+                    info.onSuccess(null, {
+                        ...info.file,
+                        remote_link: d.url
+                    })
                 }, info.onError)
             }
         }
@@ -199,11 +192,10 @@ class C extends BaseComponent {
         return {
             name: name_fn(input_el),
             type: type_fn(type_el),
-            recruiting: recruiting_fn(recruiting_el),
             description: description_fn(textarea_el),
             tags: tags_fn(tags_el),
             skillset: skillset_fn(skillset_el),
-            pictures: pictures_fn(pictures_el)
+            pictures: pictures_el //pictures_fn(pictures_el)
         }
     }
 

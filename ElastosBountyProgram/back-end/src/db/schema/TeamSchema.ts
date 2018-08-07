@@ -5,13 +5,17 @@ export const TeamProfile = {
     logo : String
 };
 
+const PictureSchema = {
+    thumbUrl: String,
+    name: String,
+    remote_link: String
+};
 
 export const Team = {
     name : {
         type : String,
         required : true
     },
-    type : String,
     metadata : {
         type : Map,
         of : String
@@ -22,17 +26,14 @@ export const Team = {
         type : Number,
         default : 10
     },
-    recruiting : {
-        type : Boolean,
-        default : false
-    },
     domain: String,
     recruitedSkillsets: [String],
-    owner : {type: Schema.Types.ObjectId, ref: 'users'}
+    owner : {type: Schema.Types.ObjectId, ref: 'users'},
+    pictures: [PictureSchema]
 };
 
 export const User_Team = {
-    user : {
+    user: {
         required: true,
         type: Schema.Types.ObjectId,
         ref: 'users'
