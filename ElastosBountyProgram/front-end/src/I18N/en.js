@@ -52,9 +52,9 @@ export default {
 
     // Profile navigator
     '2300': 'Info',
-    '2301': 'Tasks',
-    '2302': 'Teams',
-    '2303': 'Issues',
+    '2301': 'My Tasks',
+    '2302': 'My Teams',
+    '2303': 'My Issues',
     '2304': 'Communities',
 
     // Home
@@ -126,5 +126,20 @@ export default {
     '3600': 'Forgot your password? Enter your email to be sent a reset password link.',
     '3601': 'Success, if the email matches your user you should receive an email',
     '3602': 'Please enter a new password',
-    '3603': 'Password changed successfully'
+    '3603': 'Password changed successfully',
+
+    // Team specializations
+    'team.spec.social': 'Social',
+    'team.spec.iot': 'IoT',
+    'team.spec.media': 'Media',
+    'team.spec.finance': 'Finance',
+
+    // Skillsets
+    'team.skillset.cpp': 'C++',
+    'team.skillset.javascript': 'JavaScript',
+    'team.skillset.go': 'Go',
+    'team.skillset.python': 'Python',
+
+    // General
+    'select.placeholder': 'Please select'
 };
