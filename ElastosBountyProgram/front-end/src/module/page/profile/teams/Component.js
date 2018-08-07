@@ -41,7 +41,7 @@ export default class extends StandardPage {
                                     <div className="pull-right">
                                         <Button onClick={this.goCreatepage.bind(this)}>Create Team</Button>
                                     </div>
-                                    <Divider className="">My teams</Divider>
+                                    <Divider className="">My Teams</Divider>
                                     {this.renderList()}
                                 </Col>
                                 <Col span={4} className="admin-right-column wrap-box-navigator">
