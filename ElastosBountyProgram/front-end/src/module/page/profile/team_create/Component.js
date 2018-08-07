@@ -1,6 +1,6 @@
 import React from 'react';
 import StandardPage from '../../StandardPage';
-import Navigator from '@/module/page/shared/Navigator/Container'
+import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import config from '@/config';
 import TeamCreateForm from '@/module/form/TeamCreateForm/Container'
 

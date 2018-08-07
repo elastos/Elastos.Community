@@ -11,7 +11,6 @@ const sanitize = '-password -salt -email'
 const restrictedFields = {
     update: [
         '_id',
-        'taskId',
         'status',
         'password'
     ]
@@ -32,33 +31,39 @@ export default class extends Base {
 
         // validate
         this.validate_name(param.name);
-        this.validate_type(param.type);
 
         const doc = {
             name: param.name,
-            type: param.type,
+            domain: param.domain,
             metadata: this.param_metadata(param.metadata),
             tags: this.param_tags(param.tags),
             profile: {
                 logo: param.logo,
                 description: param.description
             },
-            recruiting: param.recruiting || false,
-            owner: this.currentUser
+            recruitedSkillsets: param.recruitedSkillsets,
+            owner: this.currentUser,
+            pictures: []
         };
+
+        _.each(param.pictures, (picture) => {
+            doc.pictures.push(picture)
+        })
 
         console.log('create team => ', doc);
         const res = await db_team.save(doc);
 
+        console.log('      res ', res)
+
         // save to user team
         const doc_user_team = {
-            userId : this.currentUser._id,
-            teamId : res._id,
-            status : constant.TEAM_USER_STATUS.NORMAL,
-            role : constant.TEAM_ROLE.LEADER
+            user: this.currentUser,
+            teamId: res._id,
+            status: constant.TEAM_USER_STATUS.NORMAL,
+            role: constant.TEAM_ROLE.LEADER
         };
 
-        console.log('create user_team => ', doc_user_team);
+//        console.log('create user_team => ', doc_user_team);
         const res1 = await db_user_team.save(doc_user_team);
 
         return res;
@@ -83,7 +88,6 @@ export default class extends Base {
 
         const updateObj:any = _.omit(param, restrictedFields.update)
         this.validate_name(updateObj.name);
-        this.validate_type(updateObj.type);
 
         await db_team.update({_id: teamId}, updateObj)
 
@@ -321,10 +325,5 @@ export default class extends Base {
             rs = tags.split(',');
         }
         return rs;
-    }
-    public validate_type(type){
-        if(!type || !_.includes(constant.TEAM_TYPE, type)){
-            throw 'invalid team type';
-        }
     }
 }
