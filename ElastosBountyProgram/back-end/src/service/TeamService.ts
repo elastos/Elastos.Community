@@ -7,6 +7,7 @@ import LogService from './LogService';
 import {DataList} from './interface';
 
 const sanitize = '-password -salt -email'
+const ObjectId = Types.ObjectId;
 
 const restrictedFields = {
     update: [
@@ -43,27 +44,21 @@ export default class extends Base {
             },
             recruitedSkillsets: param.recruitedSkillsets,
             owner: this.currentUser,
-            pictures: []
+            pictures: param.pictures
         };
-
-        _.each(param.pictures, (picture) => {
-            doc.pictures.push(picture)
-        })
 
         console.log('create team => ', doc);
         const res = await db_team.save(doc);
 
-        console.log('      res ', res)
-
         // save to user team
         const doc_user_team = {
-            user: this.currentUser,
-            teamId: res._id,
+            userId: new ObjectId(this.currentUser._id),
+            teamId: new ObjectId(res._id),
             status: constant.TEAM_USER_STATUS.NORMAL,
             role: constant.TEAM_ROLE.LEADER
         };
 
-//        console.log('create user_team => ', doc_user_team);
+        console.log('create user_team => ', doc_user_team);
         const res1 = await db_user_team.save(doc_user_team);
 
         return res;

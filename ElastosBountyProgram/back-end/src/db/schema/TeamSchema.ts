@@ -1,7 +1,7 @@
 import {Schema} from 'mongoose';
 
 export const TeamProfile = {
-    description : String,
+    description: String,
     logo : String
 };
 
@@ -12,36 +12,30 @@ const PictureSchema = {
 };
 
 export const Team = {
-    name : {
+    name: {
         type : String,
         required : true
     },
-    metadata : {
-        type : Map,
-        of : String
+    metadata: {
+        type: Map,
+        of: String
     },
-    tags : [String],
-    profile : TeamProfile,
-    memberLimit : {
-        type : Number,
-        default : 10
-    },
+    tags: [String],
+    profile: TeamProfile,
     domain: String,
     recruitedSkillsets: [String],
-    owner : {type: Schema.Types.ObjectId, ref: 'users'},
+    owner: {type: Schema.Types.ObjectId, ref: 'users'},
     pictures: [PictureSchema]
 };
 
 export const User_Team = {
-    user: {
+    userId: {
         required: true,
-        type: Schema.Types.ObjectId,
-        ref: 'users'
+        type: Schema.Types.ObjectId
     },
     teamId: {
         required: true,
-        type: Schema.Types.ObjectId,
-        ref: 'teams'
+        type: Schema.Types.ObjectId
     },
     status: {
         type: String
