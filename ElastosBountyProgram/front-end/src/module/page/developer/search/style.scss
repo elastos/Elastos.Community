@@ -25,6 +25,15 @@
     height: 204px;
   }
 
+  .ant-list-item-extra-wrap {
+    flex-flow: row-reverse;
+  }
+
+  .ant-list-item-extra {
+    margin-left: 0;
+    margin-right: 58px;
+  }
+
   .ebp-wrap {
     .d_row {
       .admin-left-column.wrap-box-user {
