@@ -21,6 +21,7 @@ import {
 import I18N from '@/I18N'
 import InputTags from '@/module/shared/InputTags/Component'
 import {TEAM_TASK_DOMAIN, SKILLSET_TYPE} from '@/constant'
+import {upload_file} from "@/util";
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
@@ -29,7 +30,8 @@ const RadioGroup = Radio.Group
 class C extends BaseComponent {
     ord_states() {
         return {
-            loading: false
+            loading: false,
+            fileList: []
         }
     }
 
@@ -161,15 +163,47 @@ class C extends BaseComponent {
         })
         const tags_el = <InputTags />
 
+        const pictures_fn = getFieldDecorator('pictures', {
+            rules: [],
+            initialValue: ''
+        })
+
+        const p_pictures = {
+            listType: 'picture-card',
+            fileList: this.state.fileList,
+            onChange: this.handleFileListChange.bind(this),
+            customRequest: (info) => {
+                upload_file(info.file).then(() => {
+                    info.onSuccess(null, info.file)
+                }, info.onError)
+            }
+        }
+
+        const uploadButton = (
+            <div>
+                <Icon type="plus" />
+                <div className="ant-upload-text">Upload</div>
+            </div>
+        )
+
+        const pictures_el = (
+            <Upload name='pictures' {...p_pictures}>
+                {this.state.fileList.length >= 3 ? null : uploadButton}
+            </Upload>
+        )
+
         return {
             name: name_fn(input_el),
             type: type_fn(type_el),
             recruiting: recruiting_fn(recruiting_el),
             description: description_fn(textarea_el),
             tags: tags_fn(tags_el),
-            skillset: skillset_fn(skillset_el)
+            skillset: skillset_fn(skillset_el),
+            pictures: pictures_fn(pictures_el)
         }
     }
+
+    handleFileListChange = ({ fileList }) => this.setState({ fileList })
 
     ord_render () {
         const p = this.getInputProps()
@@ -201,6 +235,9 @@ class C extends BaseComponent {
                         </FormItem>
                         <FormItem label="Description" {...formItemLayout}>
                             {p.description}
+                        </FormItem>
+                        <FormItem label="Pictures" {...formItemLayout}>
+                            {p.pictures}
                         </FormItem>
                         <FormItem label="Tags" {...formItemLayout}>
                             {p.tags}
