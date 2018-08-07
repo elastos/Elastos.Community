@@ -155,6 +155,7 @@ export default class extends BaseComponent {
             <div className="c_Search">
                 <Row className="d_row">
                     <Col span={4} className="admin-left-column wrap-box-user">
+                        <Input.Search placeholder="Search"/>
                         <div className="group">
                             <div className="title">Looking For:</div>
                             <div className="content">
