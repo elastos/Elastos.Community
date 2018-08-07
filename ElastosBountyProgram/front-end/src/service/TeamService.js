@@ -27,7 +27,7 @@ export default class extends BaseService {
 
         this.dispatch(teamRedux.actions.loading_update(false))
         this.dispatch(teamRedux.actions.all_teams_reset())
-        this.dispatch(teamRedux.actions.all_teams_update(result.list))
+        this.dispatch(teamRedux.actions.all_teams_update(result.data))
 
         return result
     }
