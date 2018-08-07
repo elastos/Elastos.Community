@@ -128,6 +128,37 @@ export default {
     '3602': 'Please enter a new password',
     '3603': 'Password changed successfully',
 
+    // Developer breadcrumb
+    '3000': 'Home',
+    '3001': 'Developers',
+
+    // Developer
+    '3010': 'Learn',
+    '3011': 'Elastos Basics',
+    '3012': 'Key Concepts',
+    '3013': 'Getting Started',
+    '3014': 'Tutorials',
+    '3015': 'Training, webinars, bootcamps',
+    '3020': 'Team Search',
+    '3021': 'Join a team looking for your skills',
+    '3022': 'Create a profile',
+    '3023': 'Create a project',
+    '3030': 'Project Search',
+    '3031': 'Top 100 projects',
+    '3032': 'Join a project that is in active development',
+    '3033': 'Submit an issue',
+    '3040': 'Is Elastos suited to my project?',
+    '3050': 'Elastos Core Components',
+    '3051': 'Elastos RunTime (RT)',
+    '3052': 'lots of information about Elastos Run Time',
+    '3053': 'C++',
+    '3060': 'Elastos SPV (SPV)',
+    '3061': 'Payment module with full feature SDK',
+    '3062': 'C++, Javascript, Go',
+    '3070': 'Issues',
+    '3071': 'Docs',
+    '3072': 'More Info',
+
     // Team specializations
     'team.spec.social': 'Social',
     'team.spec.iot': 'IoT',

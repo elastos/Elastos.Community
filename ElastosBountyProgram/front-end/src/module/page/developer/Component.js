@@ -1,6 +1,7 @@
 import React from 'react'
 import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
+import I18N from '@/I18N'
 import { Link } from 'react-router-dom'
 import './style.scss'
 
@@ -8,13 +9,16 @@ import { Col, Row, Card, Button, Breadcrumb } from 'antd'
 
 
 export default class extends StandardPage {
-    state = {
+    navigateToLearn() {
+        this.props.history.push("/learn");
     }
 
-    componentDidMount () {
+    navigateToTeamSearch() {
+        this.props.history.push("/team-search");
     }
 
-    componentWillUnmount () {
+    navigateToProjectSearch() {
+        this.props.history.push("/project-search");
     }
 
     ord_renderContent () {
@@ -25,92 +29,92 @@ export default class extends StandardPage {
 
                 <div className="ebp-page">
                     <Breadcrumb className="ebp-page-breadcrumb">
-                        <Breadcrumb.Item>Home</Breadcrumb.Item>
-                        <Breadcrumb.Item><a href="">Developers</a></Breadcrumb.Item>
+                        <Breadcrumb.Item><Link to="/">{I18N.get('3000')}</Link></Breadcrumb.Item>
+                        <Breadcrumb.Item><Link to="/developer">{I18N.get('3001')}</Link></Breadcrumb.Item>
                     </Breadcrumb>
                     <Row className="d_row d_rowTop" type="flex" justify="center">
-                        <Col sm={{span:24}} md={{span: 8}} className="d_box">
+                        <Col sm={{span:24}} md={{span: 8}} className="d_box" onClick={() => this.navigateToLearn()}>
                             <Card hoverable className="feature-box">
                                 <div className="title">
-                                    <span>Learn</span>
+                                    <span>{I18N.get('3010')}</span>
                                     <img src="https://3kllhk1ibq34qk6sp3bhtox1-wpengine.netdna-ssl.com/wp-content/uploads/knowledge-300x300.png"/>
                                 </div>
                                 <hr className="feature-box-divider"/>
                                 <div className="content">
-                                    <div>- Elastos Basics</div>
-                                    <div>- Key Concepts</div>
-                                    <div>- Getting Started</div>
-                                    <div>- Tutorials</div>
-                                    <div>- Training, webinars, bootcamps</div>
+                                    <div>- {I18N.get('3011')}</div>
+                                    <div>- {I18N.get('3012')}</div>
+                                    <div>- {I18N.get('3013')}</div>
+                                    <div>- {I18N.get('3014')}</div>
+                                    <div>- {I18N.get('3015')}</div>
                                 </div>
                             </Card>
                         </Col>
-                        <Col sm={{span:24}} md={{span: 8}} className="d_box">
+                        <Col sm={{span:24}} md={{span: 8}} className="d_box" onClick={() => this.navigateToTeamSearch()}>
                             <Card hoverable className="feature-box">
                                 <div className="title">
-                                    <span>Team Search</span>
+                                    <span>{I18N.get('3020')}</span>
                                     <img src="https://3kllhk1ibq34qk6sp3bhtox1-wpengine.netdna-ssl.com/wp-content/uploads/knowledge-300x300.png"/>
                                 </div>
                                 <hr className="feature-box-divider"/>
                                 <div className="content">
-                                    <div>- Join a team looking for your skills</div>
-                                    <div>- Create a profile</div>
-                                    <div>- Create a project</div>
+                                    <div>- {I18N.get('3021')}</div>
+                                    <div>- {I18N.get('3022')}</div>
+                                    <div>- {I18N.get('3023')}</div>
                                 </div>
                             </Card>
                         </Col>
-                        <Col sm={{span:24}} md={{span: 8}} className="d_box">
+                        <Col sm={{span:24}} md={{span: 8}} className="d_box" onClick={() => this.navigateToProjectSearch()}>
                             <Card hoverable className="feature-box">
                                 <div className="title">
-                                    <span>Project Search</span>
+                                    <span>{I18N.get('3030')}</span>
                                     <img src="https://3kllhk1ibq34qk6sp3bhtox1-wpengine.netdna-ssl.com/wp-content/uploads/knowledge-300x300.png"/>
                                 </div>
                                 <hr className="feature-box-divider"/>
                                 <div className="content">
-                                    <div>- Top 100 projects</div>
-                                    <div>- Join a project that is in active development</div>
-                                    <div>- Submit an issue</div>
+                                    <div>- {I18N.get('3031')}</div>
+                                    <div>- {I18N.get('3032')}</div>
+                                    <div>- {I18N.get('3033')}</div>
                                 </div>
                             </Card>
                         </Col>
                     </Row>
                     <div className="d_midRow">
                         <Button className="info-button">
-                            Is Elastos suited to my project?
+                            {I18N.get('3040')}
                         </Button>
                     </div>
                     <div className="d_bottomRow">
-                        <span className="title"> Elastos Core Components</span>
+                        <span className="title">{I18N.get('3050')}</span>
                         <Row className="component-box">
                             <Col sm={{span:24}} md={{span: 18}} className="d_leftCol">
                                 <div className="component-name">
-                                    Elastos RunTime (RT) - <span className="languages">C++</span>
+                                    {I18N.get('3051')} - <span className="languages">{I18N.get('3053')}</span>
                                 </div>
                                 <hr className="component-divider"/>
                                 <div className="component-description">
-                                    lots of information about Elastos Run Time
+                                    {I18N.get('3052')}
                                 </div>
                             </Col>
                             <Col sm={{span:24}} md={{span: 6}}>
-                                <div className="button-container"><Button className="top-button">Issues</Button></div>
-                                <div className="button-container"><Button>Docs</Button></div>
-                                <div className="button-container"><Button>More Info</Button></div>
+                                <div className="button-container"><Button className="top-button">{I18N.get('3070')}</Button></div>
+                                <div className="button-container"><Button>{I18N.get('3071')}</Button></div>
+                                <div className="button-container"><Button>{I18N.get('3072')}</Button></div>
                             </Col>
                         </Row>
                         <Row className="component-box">
                             <Col sm={{span:24}} md={{span: 18}} className="d_leftCol">
                                 <div className="component-name">
-                                    Elastos SPV (SPV) - <span className="languages">C++, Javascript, Go</span>
+                                    {I18N.get('3060')} - <span className="languages">{I18N.get('3062')}</span>
                                 </div>
                                 <hr className="component-divider"/>
                                 <div className="component-description">
-                                    Payment module with full feature SDK
+                                    {I18N.get('3061')}
                                 </div>
                             </Col>
                             <Col sm={{span:24}} md={{span: 6}}>
-                                <div className="button-container"><Button className="top-button">Issues</Button></div>
-                                <div className="button-container"><Button>Docs</Button></div>
-                                <div className="button-container"><Button>More Info</Button></div>
+                                <div className="button-container"><Button className="top-button">{I18N.get('3070')}</Button></div>
+                                <div className="button-container"><Button>{I18N.get('3071')}</Button></div>
+                                <div className="button-container"><Button>{I18N.get('3072')}</Button></div>
                             </Col>
                         </Row>
                     </div>
