@@ -12,12 +12,6 @@ export default createContainer(Component, (state) => {
     const ts = new TeamService();
     return {
         async create(param) {
-            param.pictures = [
-                {
-                    thumbUrl: '',//param.pictures[0].thumbUrl,
-                    name: param.pictures[0].name
-                }
-            ]
             return ts.create(param);
         }
     };

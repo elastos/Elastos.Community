@@ -44,7 +44,7 @@ class C extends BaseComponent {
         const tags = this.props.form.getFieldInstance('tags').getValue();
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
-//                this.setState({ loading: true });
+                this.setState({ loading: true });
 
                 let createParams = {
                     ...values,
@@ -54,14 +54,10 @@ class C extends BaseComponent {
                     pictures: this.state.fileList || []
                 }
 
-                debugger
-
-                // debugger
-
                 await this.props.create(createParams);
 
-//                this.setState({loading: false});
-                // this.props.history.push('/profile/teams');
+                this.setState({loading: false});
+                this.props.history.push('/profile/teams');
             }
         })
     }
