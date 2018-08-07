@@ -26,6 +26,8 @@ export const Team = {
         type : Boolean,
         default : false
     },
+    domain: String,
+    recruitedSkillsets: [String],
     owner : {type: Schema.Types.ObjectId, ref: 'users'}
 };
 

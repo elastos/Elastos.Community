@@ -1,3 +1,9 @@
+import * as _ from 'lodash'
+
+const create = (list) => {
+    return _.zipObject(list, list)
+};
+
 export const USER_ROLE = {
     MEMBER : 'MEMBER',
     LEADER : 'LEADER',
@@ -118,3 +124,6 @@ export const SUBMISSION_CAMPAIGN = {
     ANNI_2008: 'ANNI_2008',
     ANNI_VIDEO_2008: 'ANNI_VIDEO_2008'
 };
+
+export const SKILLSET_TYPE = create(['CPP', 'JAVASCRIPT', 'GO', 'PYTHON']);
+export const TEAM_TASK_DOMAIN = create(['SOCIAL', 'IOT', 'MEDIA', 'FINANCE']);

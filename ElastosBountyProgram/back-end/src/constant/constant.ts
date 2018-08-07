@@ -81,11 +81,6 @@ export const TRANS_STATUS = {
     SUCCESSFUL: 'SUCCESSFUL'
 }
 
-// team constant
-export const TEAM_ROLE = create(['MEMBER', 'LEADER']);
-export const TEAM_USER_STATUS = create(['NORMAL', 'PENDING', 'REJECT']);
-export const TEAM_TYPE = create(['DEVELOP', 'MARKET', 'DESIGN', 'PROJECT', 'OTHER']);
-
 // log
 export const LOG_TYPE = {
     'APPLY_TEAM' : 'apply_team'
@@ -106,16 +101,9 @@ export const SUBMISSION_CAMPAIGN = {
     ANNI_VIDEO_2008: 'ANNI_VIDEO_2008'
 };
 
-export const SKILLSET_TYPE = {
-    CPP: 'CPP',
-    JAVASCRIPT: 'JAVASCRIPT',
-    GO: 'GO',
-    PYTHON: 'PYTHON'
-};
+export const SKILLSET_TYPE = create(['CPP', 'JAVASCRIPT', 'GO', 'PYTHON']);
+export const TEAM_TASK_DOMAIN = create(['SOCIAL', 'IOT', 'MEDIA', 'FINANCE']);
 
-export const TASK_DOMAIN = {
-    SOCIAL: 'SOCIAL',
-    IOT: 'IOT',
-    MEDIA: 'MEDIA',
-    FINANCE: 'FINANCE'
-}
+export const TEAM_ROLE = create(['MEMBER', 'LEADER']);
+export const TEAM_USER_STATUS = create(['NORMAL', 'PENDING', 'REJECT']);
+export const TEAM_TYPE = create(['DEVELOP', 'MARKET', 'DESIGN', 'PROJECT', 'OTHER']);
