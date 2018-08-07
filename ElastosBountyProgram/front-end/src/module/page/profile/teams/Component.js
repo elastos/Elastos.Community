@@ -11,11 +11,11 @@ import moment from "moment/moment";
 const FormItem = Form.Item;
 
 export default class extends StandardPage {
-    ord_states(){
+    ord_states() {
         return {
-            loading : true,
-            total : 0,
-            list : []
+            loading: true,
+            total: 0,
+            list: []
         };
     }
     ord_renderContent () {
@@ -63,20 +63,26 @@ export default class extends StandardPage {
                 key: 'name',
                 width: '20%',
                 className: 'fontWeight500',
-                render : (name, record)=>{
+                render: (name, record) => {
                     return <a onClick={this.goDetail.bind(this, record._id)} className="tableLink">{name}</a>
                 }
             },
             {
                 title: 'Description',
                 dataIndex: 'profile.description',
-                // key: 'profile.description'
+                key: 'profile.description'
             },
             {
-                title: 'Type',
-                dataIndex: 'type',
-                key: 'type',
-                // render: (category) => _.capitalize(category)
+                title: 'Domain',
+                dataIndex: 'domain',
+                key: 'domain',
+                render: (domains) => domains.join(', ')
+            },
+            {
+                title: 'Recruiting',
+                dataIndex: 'recruitedSkillsets',
+                key: 'recruitedSkillsets',
+                render: (skillsets) => skillsets.join(', ')
             },
             {
                 title: 'Created',
@@ -85,7 +91,6 @@ export default class extends StandardPage {
                 render: (createdAt) => moment(createdAt).format(config.FORMAT.DATE)
             }
         ];
-
 
         return (
             <Table
@@ -97,23 +102,22 @@ export default class extends StandardPage {
         );
     }
 
-    goDetail(teamId){
+    goDetail(teamId) {
         this.props.history.push(`/profile/teams/${teamId}`);
     }
-    goCreatepage(){
+    goCreatepage() {
         this.props.history.push('/profile/teams/create');
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         await super.componentDidMount();
 
         const d = await this.props.list({
-            teamHasUser : this.props.current.id
+            teamHasUser: this.props.current.id
         });
         this.setState({
-            total : d.total,
-            list : d.list,
-            loading : false
+            list: d,
+            loading: false
         });
     }
 }

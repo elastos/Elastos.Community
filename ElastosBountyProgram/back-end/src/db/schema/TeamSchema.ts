@@ -22,7 +22,7 @@ export const Team = {
     },
     tags: [String],
     profile: TeamProfile,
-    domain: String,
+    domain: [String],
     recruitedSkillsets: [String],
     owner: {type: Schema.Types.ObjectId, ref: 'users'},
     pictures: [PictureSchema]
