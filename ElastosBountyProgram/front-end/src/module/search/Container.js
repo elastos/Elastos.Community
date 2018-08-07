@@ -5,8 +5,6 @@ import TeamService from '@/service/TeamService';
 import _ from 'lodash'
 
 export default createContainer(Component, (state) => {
-    console.log('## ', state.team)
-
     return {
         ...state.task,
         ...state.team,

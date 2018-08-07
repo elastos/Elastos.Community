@@ -9,12 +9,25 @@
     border: 1px solid $border_gray;
     padding: 16px;
     border-radius: 8px;
+
+    &:not(:first-child) {
+      margin-top: 16px;
+    }
+  }
+
+  .ant-list-item-content {
+    max-height: 188px;
+    overflow: hidden;
+  }
+
+  .carousel-wrapper {
+    width: 204px;
+    height: 204px;
   }
 
   .ebp-wrap {
     .d_row {
       .admin-left-column.wrap-box-user {
-        border-right: 1px solid $border_gray;
         .group {
           margin: 20px 0;
           .title {

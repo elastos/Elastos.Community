@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import { Col, Row, Icon, Input, Button, Breadcrumb, List, Checkbox, Radio } from 'antd'
+import { Col, Row, Icon, Input, Button, Breadcrumb, List, Checkbox, Radio, Carousel } from 'antd'
 import _ from 'lodash'
 import './style.scss'
 import moment from 'moment/moment'
@@ -169,18 +169,37 @@ export default class extends BaseComponent {
         return this.renderMain()
     }
 
+    getCarousel(item) {
+        const pictures = _.map(item.pictures, (picture, ind) => {
+            return (
+                <div key={ind}>
+                    <img width={204} height={204} alt="logo" src={picture.url} />
+                </div>
+            )
+        })
+
+        return (
+            <div className="carousel-wrapper">
+                <Carousel autoplay>
+                    {pictures}
+                </Carousel>
+            </div>
+        )
+    }
+
     renderList() {
         const teams = this.props.all_teams
 
         console.log('   # teams ', teams)
 
-        const data = _.map(teams, (team) => {
+        const data = _.map(teams, (team, id) => {
             return {
                 href: '',
                 title: team.name,
-                url: team.pictures && team.pictures[0] && team.pictures[0].url,
+                pictures: team.pictures || [],
                 description: 'Lorem ipsum',
-                content: team.description
+                content: team.profile.description,
+                id: team._id
             }
         })
 
@@ -188,8 +207,8 @@ export default class extends BaseComponent {
             <List loading={this.props.loading} itemLayout='vertical' size='large'
                 pagination={{ pageSize: 5 }} dataSource={data} renderItem={item => (
                     <List.Item
-                        key={item.title}
-                        extra={<img width={160} height={160} alt="logo" src={item.url} />}
+                        key={item.id}
+                        extra={this.getCarousel(item)}
                     >
                         <List.Item.Meta
                             title={<a href={item.href}>{item.title}</a>}
