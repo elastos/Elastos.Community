@@ -5,6 +5,7 @@ import _ from 'lodash'
 import './style.scss'
 import moment from 'moment/moment'
 import {SKILLSET_TYPE, TEAM_TASK_DOMAIN} from '@/constant'
+import Footer from '@/module/layout/Footer/Container'
 
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
@@ -230,6 +231,7 @@ export default class extends BaseComponent {
                         {this.renderList()}
                     </Col>
                 </Row>
+                <Footer/>
             </div>
         )
     }
