@@ -120,8 +120,8 @@ export default class extends StandardPage {
                             </div>
                         </div>
                     </div>
-                    <Footer/>
                 </div>
+                <Footer/>
             </div>
         )
     }
