@@ -251,13 +251,11 @@ export default class extends Base {
         }
 
         if (param.domain) {
-            query.$and = query.$and || []
-            query.$and.push({ domain: { $in: param.category }})
+            query.domain = { $in: param.domain.split(',') }
         }
 
         if (param.skillset) {
-            query.$and = query.$and || []
-            query.$and.push({ recruitedSkillsets: { $in: param.skillset }})
+            query.recruitedSkillsets = { $in: param.skillset.split(',') }
         }
 
         if (param.teamHasUser) {

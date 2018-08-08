@@ -35,11 +35,11 @@ export default class extends Base{
         }
 
         if (param.domain) {
-            query.domain = { $in: param.domain }
+            query.domain = { $in: param.domain.split(',') }
         }
 
         if (param.skillset) {
-            query.recruitedSkillsets = { $in: param.skillset }
+            query.recruitedSkillsets = { $in: param.skillset.split(',') }
         }
 
         // public page overrides all else
@@ -102,7 +102,6 @@ export default class extends Base{
             }
 
         }
-
 
         const list = await taskService.list(query);
         const count = await taskService.getDBModel('Task').count(query);
