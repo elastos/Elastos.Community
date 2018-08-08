@@ -47,6 +47,9 @@ export default createContainer(Component, (state)=>{
                     attachment: st.attachment_url,
                     attachmentFilename: st.attachment_filename,
                     attachmentType: st.attachment_type,
+                    pictures: formData.pictures,
+                    domain: formData.domain,
+                    recruitedSkillsets: formData.recruitedSkillsets,
                     community: formData.community,
                     communityParent: formData.communityParent,
 

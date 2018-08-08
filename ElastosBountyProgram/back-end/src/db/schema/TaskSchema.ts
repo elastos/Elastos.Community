@@ -89,6 +89,12 @@ export const TaskActivity = {
     notes : String
 }
 
+const PictureSchema = {
+    thumbUrl: String,
+    name: String,
+    url: String
+}
+
 /**
  * A task is a base class for any event
  *
@@ -210,7 +216,10 @@ export const Task = {
 
     comments: [[CommentSchema]],
     subscribers: [SubscriberSchema],
-    lastCommentSeenByOwner: Date
+    lastCommentSeenByOwner: Date,
+    domain: [String],
+    recruitedSkillsets: [String],
+    pictures: [PictureSchema]
 };
 
 

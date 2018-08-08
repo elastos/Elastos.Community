@@ -15,15 +15,19 @@ import {
     Upload,
     Cascader,
     Divider,
-    Popconfirm
-
+    Popconfirm,
+    TreeSelect,
+    Modal
 } from 'antd'
 
+import I18N from '@/I18N'
 import {upload_file} from "@/util";
 import './style.scss'
 import moment from 'moment'
+import _ from 'lodash'
 
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_EVENT_DATE_TYPE} from '@/constant'
+import {TEAM_TASK_DOMAIN, SKILLSET_TYPE, TASK_CATEGORY, TASK_TYPE,
+    TASK_STATUS, TASK_EVENT_DATE_TYPE} from '@/constant'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
@@ -73,6 +77,13 @@ class C extends BaseComponent {
                     }
                 }
 
+                values.pictures = this.state.fileList || []
+                _.each(values.pictures, (pictureFile) => {
+                    if (this.pictureUrlLookups[pictureFile.uid]) {
+                        pictureFile.url = this.pictureUrlLookups[pictureFile.uid]
+                    }
+                })
+
                 if (this.state.editing) {
                     this.props.updateTask(values, this.state).then(() => {
                         this.props.getTaskDetail(this.props.existingTask._id)
@@ -108,7 +119,11 @@ class C extends BaseComponent {
 
             editing: !!props.existingTask,
 
-            isUsd: (props.existingTask && props.existingTask.reward.isUsd) || false
+            isUsd: (props.existingTask && props.existingTask.reward.isUsd) || false,
+
+            fileList: [],
+            previewVisible: false,
+            previewImage: ''
         };
     }
 
@@ -430,8 +445,105 @@ class C extends BaseComponent {
             </Upload>
         );
 
+        const specs = [
+            {
+                title: I18N.get('team.spec.social'),
+                value: TEAM_TASK_DOMAIN.SOCIAL,
+                key: TEAM_TASK_DOMAIN.SOCIAL
+            },
+            {
+                title: I18N.get('team.spec.iot'),
+                value: TEAM_TASK_DOMAIN.IOT,
+                key: TEAM_TASK_DOMAIN.IOT
+            },
+            {
+                title: I18N.get('team.spec.media'),
+                value: TEAM_TASK_DOMAIN.MEDIA,
+                key: TEAM_TASK_DOMAIN.MEDIA
+            },
+            {
+                title: I18N.get('team.spec.finance'),
+                value: TEAM_TASK_DOMAIN.FINANCE,
+                key: TEAM_TASK_DOMAIN.FINANCE
+            }
+        ]
+
+        const skillsets = [
+            {
+                title: I18N.get('team.skillset.cpp'),
+                value: SKILLSET_TYPE.CPP,
+                key: SKILLSET_TYPE.CPP
+            },
+            {
+                title: I18N.get('team.skillset.javascript'),
+                value: SKILLSET_TYPE.JAVASCRIPT,
+                key: SKILLSET_TYPE.JAVASCRIPT
+            },
+            {
+                title: I18N.get('team.skillset.go'),
+                value: SKILLSET_TYPE.GO,
+                key: SKILLSET_TYPE.GO
+            },
+            {
+                title: I18N.get('team.skillset.python'),
+                value: SKILLSET_TYPE.PYTHON,
+                key: SKILLSET_TYPE.PYTHON
+            }
+        ]
+
+        const domain_fn = getFieldDecorator('domain', {
+            rules: [{required: true, message: 'domain is required'}],
+            initialValue: []
+        })
+        const domain_el = (
+            <TreeSelect treeData={specs} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
+        )
+
+        const skillset_fn = getFieldDecorator('recruitedSkillsets', {
+            rules: [{required: true, message: 'skillset is required'}],
+            initialValue: []
+        })
+        const skillset_el = (
+            <TreeSelect treeData={skillsets} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
+        )
+
+        const pictures_fn = getFieldDecorator('pictures', {
+            rules: [],
+            initialValue: ''
+        })
+
+        const p_pictures = {
+            listType: 'picture-card',
+            fileList: this.state.fileList,
+            onChange: this.handleFileListChange.bind(this),
+            onPreview: this.handlePreview.bind(this),
+            customRequest: (info) => {
+                upload_file(info.file).then((d) => {
+                    this.pictureUrlLookups = this.pictureUrlLookups || []
+                    this.pictureUrlLookups[info.file.uid] = d.url
+                    info.onSuccess(null, info.file)
+                }, info.onError)
+            }
+        }
+
+        const uploadButton = (
+            <div>
+                <Icon type="plus" />
+                <div className="ant-upload-text">Upload</div>
+            </div>
+        )
+
+        const pictures_el = (
+            <Upload name='pictures' {...p_pictures}>
+                {this.state.fileList.length >= 3 ? null : uploadButton}
+            </Upload>
+        )
 
         return {
+            recruitedSkillsets: skillset_fn(skillset_el),
+            pictures: pictures_el,
+            domain: domain_fn(domain_el),
+
             assignSelf: assignSelf_fn(assignSelf_el),
 
             taskName: taskName_fn(taskName_el),
@@ -479,6 +591,19 @@ class C extends BaseComponent {
             })
         })
     }
+
+    handleCancel() {
+        this.setState({ previewVisible: false })
+    }
+
+    handlePreview(file) {
+        this.setState({
+            previewImage: file.url || file.thumbUrl,
+            previewVisible: true
+        })
+    }
+
+    handleFileListChange = ({ fileList }) => this.setState({ fileList })
 
     ord_render () {
         const {getFieldDecorator} = this.props.form
@@ -590,6 +715,21 @@ class C extends BaseComponent {
                             {p.taskLink}
                         </FormItem>
 
+                        <div>
+                            <Divider>Recruitment</Divider>
+                            <FormItem label="Domain" {...formItemLayout}>
+                                {p.domain}
+                            </FormItem>
+                            <FormItem label="Recruiting Skillsets" {...formItemLayout}>
+                                {p.recruitedSkillsets}
+                            </FormItem>
+                            <FormItem label="Pictures" {...formItemLayout}>
+                                {p.pictures}
+                            </FormItem>
+                            <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
+                                <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
+                            </Modal>
+                        </div>
 
                         {/*
                         ********************************************************************************

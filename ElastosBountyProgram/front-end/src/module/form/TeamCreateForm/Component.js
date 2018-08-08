@@ -55,7 +55,9 @@ class C extends BaseComponent {
                 }
 
                 _.each(createParams.pictures, (pictureFile) => {
-                    pictureFile.url = this.pictureUrlLookups[pictureFile.uid]
+                    if (this.pictureUrlLookups[pictureFile.uid]) {
+                        pictureFile.url = this.pictureUrlLookups[pictureFile.uid]
+                    }
                 })
 
                 await this.props.create(createParams);
