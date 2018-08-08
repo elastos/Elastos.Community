@@ -1,5 +1,6 @@
 
 @import "../../../../style/variable";
+@import "../../../../style/color";
 
 .p_ProfileTasks {
   background: white;
@@ -8,5 +9,33 @@
   .filter-group {
     margin-bottom: $gap_2;
   }
-}
 
+  .ant-list-item {
+    border: 1px solid $border_gray;
+    padding: 16px;
+    border-radius: 8px;
+
+    &:not(:first-child) {
+      margin-top: 16px;
+    }
+  }
+
+  .ant-list-item-content {
+    max-height: 188px;
+    overflow: hidden;
+  }
+
+  .carousel-wrapper {
+    width: 204px;
+    height: 204px;
+  }
+
+  .ant-list-item-extra-wrap {
+    flex-flow: row-reverse;
+  }
+
+  .ant-list-item-extra {
+    margin-left: 0;
+    margin-right: 58px;
+  }
+}
