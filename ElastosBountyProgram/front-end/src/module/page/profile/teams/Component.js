@@ -7,7 +7,10 @@ import './style.scss'
 import '../../admin/admin.scss'
 
 import { Col, Row, Icon, Form, Input, Breadcrumb, Button, Divider, Table } from 'antd'
+import MediaQuery from 'react-responsive'
 import moment from "moment/moment";
+import Footer from '@/module/layout/Footer/Container'
+
 const FormItem = Form.Item;
 
 export default class extends StandardPage {
@@ -21,7 +24,7 @@ export default class extends StandardPage {
     ord_renderContent () {
 
         return (
-            <div>
+            <div class="p_ProfileTeams">
                 <div className="ebp-header-divider">
 
                 </div>
@@ -35,19 +38,21 @@ export default class extends StandardPage {
                                 <Breadcrumb.Item>Teams</Breadcrumb.Item>
                             </Breadcrumb>
                         </div>
-                        <div className="p_ProfileTeams p_admin_content">
+                        <div className="p_admin_content">
                             <Row>
-                                <Col span={20} className="c_ProfileContainer admin-left-column wrap-box-user">
+                                <MediaQuery minWidth={720}>
+                                    <Col span={4} className="admin-left-column wrap-box-navigator">
+                                        <Navigator selectedItem={'profileTeams'}/>
+                                    </Col>
+                                </MediaQuery>
+                                <Col span={20} className="c_ProfileContainer admin-right-column wrap-box-user">
                                     <div className="pull-right">
                                         <Button onClick={this.goCreatepage.bind(this)}>Create Team</Button>
                                     </div>
-                                    <Divider className="">My Teams</Divider>
                                     {this.renderList()}
                                 </Col>
-                                <Col span={4} className="admin-right-column wrap-box-navigator">
-                                    <Navigator selectedItem={'profileTeams'}/>
-                                </Col>
                             </Row>
+                            <Footer/>
                         </div>
                     </div>
                 </div>
