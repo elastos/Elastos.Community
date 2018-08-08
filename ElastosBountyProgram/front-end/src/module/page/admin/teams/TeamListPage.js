@@ -97,9 +97,8 @@ const Component = class extends BaseAdmin {
 
         const d = await this.props.list();
         this.setState({
-            total : d.total,
-            list : d.list,
-            loading : false
+            list: d,
+            loading: false
         });
     }
 };

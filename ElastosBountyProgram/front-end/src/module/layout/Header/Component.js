@@ -111,9 +111,11 @@ export default class extends BaseComponent {
                     </Menu.Item>
                     */}
 
-                    <Menu.Item className="c_MenuItem link" key="profile">
-                        {I18N.get('0104')}
-                    </Menu.Item>
+                    {this.props.isLogin &&
+                        <Menu.Item className="c_MenuItem link" key="profile">
+                            {I18N.get('0104')}
+                        </Menu.Item>
+                    }
 
                     <Menu.Item className="c_MenuItem link" key="developer">
                         {I18N.get('0100')}
