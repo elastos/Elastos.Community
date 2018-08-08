@@ -34,8 +34,6 @@ export default class extends StandardPage {
                     <Row className="d_row">
                         <Search preselect={this.props.preselect}/>
                     </Row>
-                    <div className="horizGap">
-                    </div>
                 </div>
             </div>
         )
