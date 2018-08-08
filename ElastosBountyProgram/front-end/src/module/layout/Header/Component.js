@@ -226,7 +226,7 @@ export default class extends BaseComponent {
                 }
             })
         } else if (key === 'profile') {
-            this.props.history.push('/profile/tasks')
+            this.props.history.push('/profile/teams')
         }
         else if (_.includes([
             'en',
