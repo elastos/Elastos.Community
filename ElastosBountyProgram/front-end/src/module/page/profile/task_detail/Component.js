@@ -3,7 +3,7 @@ import StandardPage from '../../StandardPage'
 
 // TODO: proper naming scheme
 import TaskDetail from '@/module/task/Container'
-import Navigator from '@/module/page/shared/Navigator/Container'
+import Navigator from '@/module/page/shared/HomeNavigator/Container'
 
 import config from '@/config'
 
