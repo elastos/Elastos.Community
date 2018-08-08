@@ -35,13 +35,11 @@ export default class extends Base{
         }
 
         if (param.domain) {
-            query.$and = query.$and || []
-            query.$and.push({ domain: { $in: param.domain }})
+            query.domain = { $in: param.domain }
         }
 
         if (param.skillset) {
-            query.$and = query.$and || []
-            query.$and.push({ recruitedSkillsets: { $in: param.skillset }})
+            query.recruitedSkillsets = { $in: param.skillset }
         }
 
         // public page overrides all else
