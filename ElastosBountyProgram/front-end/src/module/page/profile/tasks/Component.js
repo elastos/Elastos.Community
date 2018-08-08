@@ -8,11 +8,28 @@ import '../../admin/admin.scss'
 
 import { Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button, Table, Divider } from 'antd'
 import moment from 'moment/moment'
-const FormItem = Form.Item;
-
 import MediaQuery from 'react-responsive'
 
+
+const FormItem = Form.Item;
+
+const FILTERS = {
+    ALL: 'all',
+    ACTIVE: 'active',
+    APPLIED: 'applied',
+    OWNED: 'owned',
+    SUBSCRIBED: 'subscribed'
+}
+
 export default class extends StandardPage {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            showMobile: false,
+            filter: FILTERS.ALL
+        }
+    }
 
     ord_checkLogin(isLogin) {
         if (!isLogin) {
@@ -114,6 +131,7 @@ export default class extends StandardPage {
         const tasksPendingData = this.props.candidate_pending_tasks
         const tasksOwnedData = this.props.owned_tasks
         const tasksSubscribedData = this.props.subscribed_tasks
+        const allTasks = this.props.all_tasks
 
         const columns = [{
             title: 'Name',
@@ -296,57 +314,78 @@ export default class extends StandardPage {
                                         <Button onClick={() => this.props.history.push('/task-create/')}>Create Task</Button>
                                     </div>
                                     }
+                                    <Button.Group className="filter-group">
+                                        <Button
+                                            className={this.state.filter === FILTERS.ALL && 'selected'}
+                                            onClick={this.clearFilters.bind(this)}>All</Button>
+                                        <Button
+                                            className={this.state.filter === FILTERS.ACTIVE && 'selected'}
+                                            onClick={this.setActiveFilter.bind(this)}>Active</Button>
+                                        <Button
+                                            className={this.state.filter === FILTERS.APPLIED && 'selected'}
+                                            onClick={this.setAppliedFilter.bind(this)}>Applied</Button>
+                                        <Button
+                                            className={this.state.filter === FILTERS.OWNED && 'selected'}
+                                            onClick={this.setOwnedFilter.bind(this)}>Owned</Button>
+                                        <Button
+                                            className={this.state.filter === FILTERS.SUBSCRIBED && 'selected'}
+                                            onClick={this.setSubscribedFilter.bind(this)}>Subscribed</Button>
+                                    </Button.Group>
 
-                                    <Divider>Active Tasks</Divider>
-
-                                    <Table
-                                        columns={columns}
-                                        rowKey={(item) => item._id}
-                                        dataSource={tasksActiveData}
-                                        loading={this.props.loading}
-                                    />
-                                    {tasksActiveData.length === 0 &&
-                                    <div className="vert-gap"/>
+                                    {this.state.filter === FILTERS.ALL &&
+                                        <div>
+                                            <Table
+                                                columns={columns}
+                                                rowKey={(item) => item._id}
+                                                dataSource={allTasks}
+                                                loading={this.props.loading}
+                                            />
+                                        </div>
                                     }
 
-                                    <Divider>Tasks Applied</Divider>
-
-                                    <Table
-                                        columns={appliedColumns}
-                                        rowKey={(item) => item._id}
-                                        dataSource={tasksPendingData}
-                                        loading={this.props.loading}
-                                    />
-                                    {tasksPendingData.length === 0 &&
-                                    <div className="vert-gap"/>
+                                    {this.state.filter === FILTERS.ACTIVE &&
+                                        <div>
+                                            <Table
+                                                columns={columns}
+                                                rowKey={(item) => item._id}
+                                                dataSource={tasksActiveData}
+                                                loading={this.props.loading}
+                                            />
+                                        </div>
                                     }
 
-                                    {(this.props.is_leader || this.props.is_admin) &&
-                                    <div>
-                                        <Divider>Owned Tasks</Divider>
-
-                                        <Table
-                                            columns={ownedColumns}
-                                            rowKey={(item) => item._id}
-                                            dataSource={tasksOwnedData}
-                                            loading={this.props.loading}
-                                        />
-                                    </div>
-                                    }
-                                    {tasksOwnedData.length === 0 &&
-                                    <div className="vert-gap"/>
+                                    {this.state.filter === FILTERS.APPLIED &&
+                                        <div>
+                                            <Table
+                                                columns={appliedColumns}
+                                                rowKey={(item) => item._id}
+                                                dataSource={tasksPendingData}
+                                                loading={this.props.loading}
+                                            />
+                                        </div>
                                     }
 
-                                    <div>
-                                        <Divider>Subscribed Tasks</Divider>
+                                    {this.state.filter === FILTERS.OWNED &&
+                                        <div>
+                                            <Table
+                                                columns={ownedColumns}
+                                                rowKey={(item) => item._id}
+                                                dataSource={tasksOwnedData}
+                                                loading={this.props.loading}
+                                            />
+                                        </div>
+                                    }
 
-                                        <Table
-                                            columns={ownedColumns}
-                                            rowKey={(item) => item._id}
-                                            dataSource={tasksSubscribedData}
-                                            loading={this.props.loading}
-                                        />
-                                    </div>
+                                    {this.state.filter === FILTERS.SUBSCRIBED &&
+                                        <div>
+                                            <Table
+                                                columns={ownedColumns}
+                                                rowKey={(item) => item._id}
+                                                dataSource={tasksSubscribedData}
+                                                loading={this.props.loading}
+                                            />
+                                        </div>
+                                    }
                                 </Col>
                                 <MediaQuery minWidth={720}>
                                     <Col span={4} className="admin-right-column wrap-box-navigator">
@@ -364,6 +403,26 @@ export default class extends StandardPage {
                 </div>
             </div>
         )
+    }
+
+    clearFilters() {
+        this.setState({ filter: FILTERS.ALL })
+    }
+
+    setActiveFilter() {
+        this.setState({ filter: FILTERS.ACTIVE })
+    }
+
+    setAppliedFilter() {
+        this.setState({ filter: FILTERS.APPLIED })
+    }
+
+    setOwnedFilter() {
+        this.setState({ filter: FILTERS.OWNED })
+    }
+
+    setSubscribedFilter() {
+        this.setState({ filter: FILTERS.SUBSCRIBED })
     }
 
     linkTaskDetail(taskId) {
