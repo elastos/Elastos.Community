@@ -11,6 +11,9 @@ export default class extends BaseComponent {
     handleMenuClick(item, key, keyPath) {
 
         switch (item.key) {
+            case 'profileProjects':
+                this.props.history.push('/profile/projects')
+                break
             case 'profileTasks':
                 this.props.history.push('/profile/tasks')
                 break
@@ -31,11 +34,14 @@ export default class extends BaseComponent {
                 onClick={this.handleMenuClick.bind(this)}
                 mode="inline"
             >
-                <Menu.Item key="profileTasks">
-                    {I18N.get('2301')}
-                </Menu.Item>
                 <Menu.Item key="profileTeams">
                     {I18N.get('2302')}
+                </Menu.Item>
+                <Menu.Item key="profileProjects">
+                    {I18N.get('2305')}
+                </Menu.Item>
+                <Menu.Item key="profileTasks">
+                    {I18N.get('2301')}
                 </Menu.Item>
                 <Menu.Item key="profileSubmissions">
                     {I18N.get('2303')}

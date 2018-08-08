@@ -56,6 +56,7 @@ export default {
     '2302': 'My Teams',
     '2303': 'My Issues',
     '2304': 'Communities',
+    '2305': 'My Projects',
 
     // Home
     '3300': 'Elastos - Cyber Republic',

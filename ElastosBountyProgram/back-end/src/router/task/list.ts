@@ -34,9 +34,9 @@ export default class extends Base{
             query.category = {$in: [constant.TASK_CATEGORY.DEVELOPER, constant.TASK_CATEGORY.SOCIAL]}
         }
 
-        if (param.category) {
+        if (param.domain) {
             query.$and = query.$and || []
-            query.$and.push({ domain: { $in: param.category }})
+            query.$and.push({ domain: { $in: param.domain }})
         }
 
         if (param.skillset) {

@@ -2,11 +2,10 @@ import React from 'react';
 import StandardPage from '../../StandardPage';
 import Footer from '@/module/layout/Footer/Container'
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
-
+import _ from 'lodash'
 import './style.scss'
 import '../../admin/admin.scss'
-
-import { Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button, Table, Divider } from 'antd'
+import { Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button, Table, Divider, List, Carousel } from 'antd'
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
 
@@ -123,6 +122,54 @@ export default class extends StandardPage {
                 </Tooltip>
             )
             : null
+    }
+
+    getCarousel(item) {
+        const pictures = _.map(item.pictures, (picture, ind) => {
+            return (
+                <div key={ind}>
+                    <img width={204} height={204} alt="logo" src={picture.url} />
+                </div>
+            )
+        })
+
+        return (
+            <div className="carousel-wrapper">
+                <Carousel autoplay>
+                    {pictures}
+                </Carousel>
+            </div>
+        )
+    }
+
+    getListComponent(tasks) {
+        const data = _.map(tasks, (task, id) => {
+            return {
+                href: '',
+                title: task.name,
+                pictures: task.pictures || [],
+                description: 'Lorem ipsum',
+                content: task.description,
+                id: task._id
+            }
+        })
+
+        return (
+            <List itemLayout='vertical' size='large' loading={this.props.loading}
+                pagination={{ pageSize: 5 }} dataSource={data} renderItem={item => (
+                    <List.Item
+                        key={item.id}
+                        extra={this.getCarousel(item)}
+                    >
+                        <List.Item.Meta
+                            title={<a href={item.href}>{item.title}</a>}
+                            description={item.description}
+                        />
+                        {item.content}
+                    </List.Item>
+                )}
+            />
+        )
     }
 
     ord_renderContent () {
@@ -284,7 +331,7 @@ export default class extends StandardPage {
         }]
 
         return (
-            <div className="p_ProfileTasks">
+            <div className="p_ProfileProjects">
                 <div className="ebp-header-divider">
 
                 </div>
@@ -302,7 +349,7 @@ export default class extends StandardPage {
                             <Row>
                                 <MediaQuery minWidth={720}>
                                     <Col span={4} className="admin-left-column wrap-box-navigator">
-                                        <Navigator selectedItem={'profileTasks'}/>
+                                        <Navigator selectedItem={'profileProjects'}/>
                                     </Col>
                                 </MediaQuery>
                                 <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-right-column wrap-box-user">
@@ -329,60 +376,11 @@ export default class extends StandardPage {
                                             onClick={this.setSubscribedFilter.bind(this)}>Subscribed</Button>
                                     </Button.Group>
 
-                                    {this.state.filter === FILTERS.ALL &&
-                                        <div>
-                                            <Table
-                                                columns={columns}
-                                                rowKey={(item) => item._id}
-                                                dataSource={allTasks}
-                                                loading={this.props.loading}
-                                            />
-                                        </div>
-                                    }
-
-                                    {this.state.filter === FILTERS.ACTIVE &&
-                                        <div>
-                                            <Table
-                                                columns={columns}
-                                                rowKey={(item) => item._id}
-                                                dataSource={tasksActiveData}
-                                                loading={this.props.loading}
-                                            />
-                                        </div>
-                                    }
-
-                                    {this.state.filter === FILTERS.APPLIED &&
-                                        <div>
-                                            <Table
-                                                columns={appliedColumns}
-                                                rowKey={(item) => item._id}
-                                                dataSource={tasksPendingData}
-                                                loading={this.props.loading}
-                                            />
-                                        </div>
-                                    }
-
-                                    {this.state.filter === FILTERS.OWNED &&
-                                        <div>
-                                            <Table
-                                                columns={ownedColumns}
-                                                rowKey={(item) => item._id}
-                                                dataSource={tasksOwnedData}
-                                                loading={this.props.loading}
-                                            />
-                                        </div>
-                                    }
-
-                                    {this.state.filter === FILTERS.SUBSCRIBED &&
-                                        <div>
-                                            <Table
-                                                columns={ownedColumns}
-                                                rowKey={(item) => item._id}
-                                                dataSource={tasksSubscribedData}
-                                                loading={this.props.loading}
-                                            />
-                                        </div>
-                                    }
+                                    {this.state.filter === FILTERS.ALL && this.getListComponent(allTasks)}
+                                    {this.state.filter === FILTERS.ACTIVE && this.getListComponent(tasksActiveData)}
+                                    {this.state.filter === FILTERS.APPLIED && this.getListComponent(tasksPendingData)}
+                                    {this.state.filter === FILTERS.OWNED && this.getListComponent(tasksOwnedData)}
+                                    {this.state.filter === FILTERS.SUBSCRIBED && this.getListComponent(tasksSubscribedData)}
                                 </Col>
                             </Row>
                             <Row>
