@@ -176,7 +176,9 @@ export default class extends Base {
             eventDateRange, eventDateRangeStart, eventDateRangeEnd, eventDateStatus,
             location,
 
-            attachment, attachmentType, attachmentFilename, isUsd
+            attachment, attachmentType, attachmentFilename, isUsd,
+
+            domain, recruitedSkillsets, pictures
         } = param;
         this.validate_name(name);
         this.validate_description(description);
@@ -201,6 +203,9 @@ export default class extends Base {
             startTime,
             endTime,
             thumbnail,
+            domain,
+            recruitedSkillsets,
+            pictures,
 
             eventDateRange, eventDateRangeStart, eventDateRangeEnd, eventDateStatus,
             location,
