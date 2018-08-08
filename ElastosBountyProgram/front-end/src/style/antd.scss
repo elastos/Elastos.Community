@@ -66,38 +66,6 @@
   }
 }
 
-.ant-menu:not(.ant-menu-horizontal) {
-
-  .ant-menu-item {
-
-    &.ant-menu-item-active {
-      border-color: $cr_primary_color !important
-    }
-
-    &.ant-menu-item-selected {
-      background-color: $cr_light_color;
-      color: white;
-      font-weight: 500;
-
-      > a {
-        font-weight: 500;
-        color: white;
-
-        outline-color: $cr_color;
-        border-color: $cr_color;
-      }
-      /*
-      &::before {
-        background-color: $bg_gray;
-      }
-      */
-
-      &::after {
-        border-color: $cr_color;
-      }
-    }
-  }
-}
 
 
 .ant-input-search-button.ant-btn-primary {
@@ -124,8 +92,17 @@
   border-color: $cr_light_color;
 }
 
+.ant-menu-inline {
+  border-right: 0;
+}
+
 .ant-table-pagination.ant-pagination {
   max-width: fit-content;
   margin: 16px auto;
   float: none;
+}
+
+// Global declarations
+.c_Footer {
+  margin-top: 72px;
 }

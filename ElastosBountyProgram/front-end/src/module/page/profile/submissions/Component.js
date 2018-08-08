@@ -101,7 +101,7 @@ export default class extends StandardPage {
         ]
 
         return (
-            <div>
+            <div className="p_ProfileSubmissions">
                 <div className="ebp-header-divider">
 
                 </div>
@@ -115,16 +115,14 @@ export default class extends StandardPage {
                                 <Breadcrumb.Item>Issues</Breadcrumb.Item>
                             </Breadcrumb>
                         </div>
-                        <div className="p_ProfileSubmissions p_admin_content">
-                            <MediaQuery maxWidth={720}>
-                                <Row>
-                                    <Col className="admin-right-column wrap-box-navigator">
-                                        <Navigator selectedItem={'profileSubmissions'} />
-                                    </Col>
-                                </Row>
-                            </MediaQuery>
+                        <div className="p_admin_content">
                             <Row>
-                                <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-left-column wrap-box-user">
+                                <MediaQuery minWidth={720}>
+                                    <Col span={4} className="admin-left-column wrap-box-navigator">
+                                        <Navigator selectedItem={'profileSubmissions'}/>
+                                    </Col>
+                                </MediaQuery>
+                                <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-right-column wrap-box-user">
                                     <div>
                                         <Divider>Owned Issues / Forms</Divider>
 
@@ -149,17 +147,13 @@ export default class extends StandardPage {
                                         />
                                     </div>
                                 </Col>
-                                <MediaQuery minWidth={720}>
-                                    <Col span={4} className="admin-right-column wrap-box-navigator">
-                                        <Navigator selectedItem={'profileSubmissions'}/>
-                                    </Col>
-                                </MediaQuery>
                             </Row>
                             <Row>
                                 <Col>
                                     <br/>
                                 </Col>
                             </Row>
+                            <Footer/>
                         </div>
                     </div>
                 </div>
