@@ -34,6 +34,16 @@ export default class extends Base{
             query.category = {$in: [constant.TASK_CATEGORY.DEVELOPER, constant.TASK_CATEGORY.SOCIAL]}
         }
 
+        if (param.category) {
+            query.$and = query.$and || []
+            query.$and.push({ domain: { $in: param.category }})
+        }
+
+        if (param.skillset) {
+            query.$and = query.$and || []
+            query.$and.push({ recruitedSkillsets: { $in: param.skillset }})
+        }
+
         // public page overrides all else
         if (param.public === 'true') {
             query.status = {
@@ -44,11 +54,9 @@ export default class extends Base{
                     constant.TASK_STATUS.SUBMITTED
                 ]
             }
-
         } else if (param.admin && this.session.user && this.session.user.role === constant.USER_ROLE.ADMIN) {
             delete param.admin;
             query.status = {$ne: constant.TASK_STATUS.CANCELED}
-
         } else if (param.profileListFor) {
 
             const currentUserId = new ObjectId(param.profileListFor)
