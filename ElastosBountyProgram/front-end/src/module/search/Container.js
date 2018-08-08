@@ -3,6 +3,7 @@ import Component from './Component'
 import TaskService from '@/service/TaskService'
 import TeamService from '@/service/TeamService';
 import _ from 'lodash'
+import {TASK_CATEGORY, TASK_TYPE} from '@/constant'
 
 export default createContainer(Component, (state) => {
     return {
@@ -16,7 +17,11 @@ export default createContainer(Component, (state) => {
 
     return {
         async getTasks(filters) {
-            return taskService.index(filters)
+            return taskService.index({
+                ...filters,
+                type: TASK_TYPE.PROJECT,
+                category: TASK_CATEGORY.DEVELOPER
+            })
         },
 
         async resetTasks () {

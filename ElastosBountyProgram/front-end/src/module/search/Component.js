@@ -24,7 +24,7 @@ export default class extends BaseComponent {
         return {
             lookingFor: 'TEAM',
             skillset: [],
-            category: [],
+            domain: [],
             entryCount: 3,
             skillsetShowAllEntries: false,
             categoryShowAllEntries: false,
@@ -33,9 +33,14 @@ export default class extends BaseComponent {
     }
 
     refetch() {
-        const query = {
-            skillset: this.state.skillset,
-            domain: this.state.category
+        let query = {}
+
+        if (!_.isEmpty(this.state.skillset)) {
+            query.skillset = this.state.skillset
+        }
+
+        if (!_.isEmpty(this.state.domain)) {
+            query.domain = this.state.domain
         }
 
         const getter = this.isLookingForTeam()
@@ -61,9 +66,9 @@ export default class extends BaseComponent {
         }, this.refetch.bind(this))
     }
 
-    onChangeCategory(value) {
+    onChangeDomain(value) {
         this.setState({
-            category: value
+            domain: value
         }, this.refetch.bind(this))
     }
 
@@ -135,7 +140,7 @@ export default class extends BaseComponent {
         })
 
         return (
-            <CheckboxGroup onChange={this.onChangeCategory.bind(this)}>
+            <CheckboxGroup onChange={this.onChangeDomain.bind(this)}>
                 {elements}
             </CheckboxGroup>
         );

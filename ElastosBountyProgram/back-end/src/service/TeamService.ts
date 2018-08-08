@@ -250,7 +250,7 @@ export default class extends Base {
             query.archived = param.archived
         }
 
-        if (param.category) {
+        if (param.domain) {
             query.$and = query.$and || []
             query.$and.push({ domain: { $in: param.category }})
         }
