@@ -250,6 +250,16 @@ export default class extends Base {
             query.archived = param.archived
         }
 
+        if (param.category) {
+            query.$and = query.$and || []
+            query.$and.push({ domain: { $in: param.category }})
+        }
+
+        if (param.skillset) {
+            query.$and = query.$and || []
+            query.$and.push({ recruitedSkillsets: { $in: param.skillset }})
+        }
+
         if (param.teamHasUser) {
             const db_user_team = this.getDBModel('User_Team')
             const userTeams = await db_user_team.list({
