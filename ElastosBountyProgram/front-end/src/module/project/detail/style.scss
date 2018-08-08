@@ -1,0 +1,105 @@
+
+@import '../../../style/variable';
+@import '../../../style/color';
+
+
+.c_Project {
+  .top-section {
+    border: 1px solid $text_light_gray;
+    border-radius: 5px 50px 5px 5px;
+
+    .col-left {
+      border-right: 1px solid $text_light_gray;
+      padding: 20px;
+      align-items: flex-end;
+
+      img {
+        margin: 0 auto;
+        width: auto;
+        max-height: 200px;
+      }
+
+      .divider {
+        border: 1px solid gainsboro;
+        margin: 10px 0;
+      }
+    }
+    .col-right {
+      padding: 20px 20px 20px 20px;
+
+      .title {
+        span {
+          color: $primary_color;
+          font-size: 24px;
+        }
+        .badge {
+          padding-left: 20px;
+        }
+      }
+      .leader {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        display: inline-block;
+        text-align: right;
+      }
+      .content {
+        display: block;
+        padding: 5px 0 5px 10px;
+
+        .reward {
+          text-align: right;
+          font-weight: bold;
+          font-size: 24px;
+        }
+        .entry {
+          margin: 10px 0;
+        }
+      }
+      .divider {
+        border: 1px solid gainsboro;
+      }
+      .description-title {
+        font-weight: bold;
+        margin: 5px 0;
+      }
+      .description-content {
+        margin: 5px 0;
+      }
+    }
+  }
+  .actions {
+    margin: 20px 0;
+    text-align: center;
+
+    .callToActionText {
+      margin-right: 25px;
+      font-size: 18px;
+    }
+    .colored-bottom {
+      background-color: $primary_light_color;
+      border-color: $primary_color;
+      color: white;
+    }
+    .colored-bottom:hover {
+      background-color: $primary_color;
+      border-color: $primary_light_color;
+      color: white;
+    }
+    .normal-bottom {
+      border-color: $primary_color;
+      color: $text_dark_gray;
+    }
+    .normal-bottom:hover {
+      background-color: $primary_color;
+      border-color: $primary_light_color;
+      color: white;
+    }
+  }
+  .contributors {
+
+  }
+  .applications {
+
+  }
+}
