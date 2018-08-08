@@ -13,7 +13,7 @@ const RadioGroup = Radio.Group;
 
 export default class extends BaseComponent {
     componentDidMount() {
-        this.props.getTeams()
+        this.refetch()
     }
 
     componentWillUnmount() {
@@ -23,17 +23,17 @@ export default class extends BaseComponent {
 
     ord_states() {
         return {
-            lookingFor: 'TEAM',
+            lookingFor: this.props.preselect || 'TEAM',
             skillset: [],
             domain: [],
             entryCount: 3,
             skillsetShowAllEntries: false,
             categoryShowAllEntries: false,
-            showModal: false,
+            showModal: false
         }
     }
 
-    refetch() {
+    getQuery() {
         let query = {}
 
         if (!_.isEmpty(this.state.skillset)) {
@@ -44,6 +44,11 @@ export default class extends BaseComponent {
             query.domain = this.state.domain
         }
 
+        return query
+    }
+
+    refetch() {
+        const query = this.getQuery()
         const getter = this.isLookingForTeam()
             ? this.props.getTeams
             : this.props.getTasks
