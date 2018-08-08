@@ -37,7 +37,7 @@ export default class extends StandardPage {
                             <Card hoverable className="feature-box">
                                 <div className="title">
                                     <span>{I18N.get('3010')}</span>
-                                    <img src="https://3kllhk1ibq34qk6sp3bhtox1-wpengine.netdna-ssl.com/wp-content/uploads/knowledge-300x300.png"/>
+                                    <img src="/assets/images/mortarboard.svg"/>
                                 </div>
                                 <hr className="feature-box-divider"/>
                                 <div className="content">
@@ -53,7 +53,7 @@ export default class extends StandardPage {
                             <Card hoverable className="feature-box">
                                 <div className="title">
                                     <span>{I18N.get('3020')}</span>
-                                    <img src="https://3kllhk1ibq34qk6sp3bhtox1-wpengine.netdna-ssl.com/wp-content/uploads/knowledge-300x300.png"/>
+                                    <img src="/assets/images/connection.svg"/>
                                 </div>
                                 <hr className="feature-box-divider"/>
                                 <div className="content">
@@ -67,7 +67,7 @@ export default class extends StandardPage {
                             <Card hoverable className="feature-box">
                                 <div className="title">
                                     <span>{I18N.get('3030')}</span>
-                                    <img src="https://3kllhk1ibq34qk6sp3bhtox1-wpengine.netdna-ssl.com/wp-content/uploads/knowledge-300x300.png"/>
+                                    <img src="/assets/images/start.svg"/>
                                 </div>
                                 <hr className="feature-box-divider"/>
                                 <div className="content">
