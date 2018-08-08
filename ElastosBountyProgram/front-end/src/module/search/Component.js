@@ -16,41 +16,65 @@ export default class extends BaseComponent {
 
     componentWillUnmount() {
         this.props.resetTeams()
+        this.props.resetTasks()
     }
 
     ord_states() {
         return {
-            lookingFor: 0,
-            skillset: [0],
-            category: [0],
+            lookingFor: 'TEAM',
+            skillset: [],
+            category: [],
             entryCount: 3,
             skillsetShowAllEntries: false,
             categoryShowAllEntries: false
         }
     }
 
+    refetch() {
+        const query = {
+            skillset: this.state.skillset,
+            category: this.state.category
+        }
+
+        const getter = this.isLookingForTeam()
+            ? this.props.getTeams
+            : this.props.getTasks
+
+        getter.call(this, query)
+    }
+
+    isLookingForTeam() {
+        return this.state.lookingFor === 'TEAM'
+    }
+
     onChangeLookingFor(e) {
         this.setState({
             lookingFor: e.target.value
-        });
+        }, this.refetch.bind(this));
     }
 
     onChangeSkillset(value) {
-        // [0,1 ... n]
+        this.setState({
+            skillset: value
+        }, this.refetch.bind(this))
     }
 
-    onChangeCategory() {
-        // [0,1 ... n]
+    onChangeCategory(value) {
+        this.setState({
+            category: value
+        }, this.refetch.bind(this))
     }
 
-    renderLookingFor(lookingForOptions) {
-        let elements = [];
-        for (let i = 0; i < lookingForOptions.length
-            && (i < this.state.entryCount || this.state.skillsetShowAllEntries); i++) {
-            elements.push(<Radio className="radio" value={i} key={i}>{lookingForOptions[i]}</Radio>);
-        }
+    renderLookingFor(lookingForOptions, showAll) {
+        const limit = this.state.entryCount
+        const filtered = _.take(lookingForOptions, showAll ? lookingForOptions.length : limit)
+        const elements = _.map(filtered, (option) => {
+            return (
+                <Radio className="radio" value={option.value} key={option.value}>{option.label}</Radio>
+            )
+        })
 
-        return(
+        return (
             <RadioGroup onChange={this.onChangeLookingFor.bind(this)} value={this.state.lookingFor}>
                 {elements}
             </RadioGroup>
@@ -110,7 +134,16 @@ export default class extends BaseComponent {
     }
 
     renderMain() {
-        const lookingForOptions = ['Team', 'Project'];
+        const lookingForOptions = [
+            {
+                label: 'Team',
+                value: 'TEAM'
+            },
+            {
+                label: 'Project',
+                value: 'PROJECT'
+            }
+        ]
         const skillsetOptions = [
             {
                 label: 'C++',
@@ -147,7 +180,7 @@ export default class extends BaseComponent {
                 value: TEAM_TASK_DOMAIN.FINANCE
             }
         ]
-        const lookingForElement = this.renderLookingFor(lookingForOptions);
+        const lookingForElement = this.renderLookingFor(lookingForOptions, true);
         const skillsetElement = this.renderSkillset(skillsetOptions, this.state.skillsetShowAllEntries);
         const categoryElement = this.renderCategory(categoryOptions, this.state.categoryShowAllEntries);
 
@@ -224,20 +257,31 @@ export default class extends BaseComponent {
     }
 
     renderList() {
-        const teams = this.props.all_teams
+        const entities = this.isLookingForTeam()
+            ? this.props.all_teams
+            : this.props.all_tasks
 
-        console.log('   # teams ', teams)
-
-        const data = _.map(teams, (team, id) => {
-            return {
-                href: '',
-                title: team.name,
-                pictures: team.pictures || [],
-                description: 'Lorem ipsum',
-                content: team.profile.description,
-                id: team._id
-            }
-        })
+        const data = this.isLookingForTeam()
+            ? _.map(entities, (team, id) => {
+                return {
+                    href: '',
+                    title: team.name,
+                    pictures: team.pictures || [],
+                    description: 'Lorem ipsum',
+                    content: team.profile.description,
+                    id: team._id
+                }
+            })
+            : _.map(entities, (task, id) => {
+                return {
+                    href: '',
+                    title: task.name,
+                    pictures: task.pictures || [],
+                    description: 'Lorem ipsum',
+                    content: task.description,
+                    id: task._id
+                }
+            })
 
         return (
             <List loading={this.props.loading} itemLayout='vertical' size='large'

@@ -16,9 +16,7 @@ export default createContainer(Component, (state) => {
 
     return {
         async getTasks(filters) {
-            return taskService.index({
-                qry: filters
-            })
+            return taskService.index(filters)
         },
 
         async resetTasks () {
