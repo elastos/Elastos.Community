@@ -102,6 +102,16 @@
   float: none;
 }
 
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: white;
+}
+
+.ant-menu-item {
+  &:after {
+    display: none;
+  }
+}
+
 // Global declarations
 .c_Footer {
   margin-top: 72px;
