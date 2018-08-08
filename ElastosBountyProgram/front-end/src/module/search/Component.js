@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import { Col, Row, Icon, Input, Button, Breadcrumb, List, Checkbox, Radio, Carousel } from 'antd'
+import {Col, Row, Icon, Input, Button, Breadcrumb, List, Checkbox, Radio, Carousel, Modal} from 'antd'
 import _ from 'lodash'
 import './style.scss'
 import moment from 'moment/moment'
@@ -27,7 +27,8 @@ export default class extends BaseComponent {
             category: [],
             entryCount: 3,
             skillsetShowAllEntries: false,
-            categoryShowAllEntries: false
+            categoryShowAllEntries: false,
+            showModal: false,
         }
     }
 
@@ -64,6 +65,24 @@ export default class extends BaseComponent {
         this.setState({
             category: value
         }, this.refetch.bind(this))
+    }
+
+    showModal = () => {
+        this.setState({
+            showModal: true,
+        })
+    }
+
+    handleModalOk = (e) => {
+        this.setState({
+            showModal: false,
+        })
+    }
+
+    handleModalCancel = (e) => {
+        this.setState({
+            showModal: false,
+        })
     }
 
     renderLookingFor(lookingForOptions, showAll) {
@@ -231,6 +250,17 @@ export default class extends BaseComponent {
                         {this.renderList()}
                     </Col>
                 </Row>
+                <Modal
+                    title="Basic Modal"
+                    visible={this.state.showModal}
+                    onOk={this.handleModalOk}
+                    onCancel={this.handleModalCancel}
+                    footer={null}
+                >
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                </Modal>
                 <Footer/>
             </div>
         )
@@ -256,6 +286,12 @@ export default class extends BaseComponent {
                 </Carousel>
             </div>
         )
+    }
+
+    showActivityOverview() {
+        this.setState({
+            showActivityOverview: true
+        })
     }
 
     renderList() {
@@ -293,7 +329,7 @@ export default class extends BaseComponent {
                         extra={this.getCarousel(item)}
                     >
                         <List.Item.Meta
-                            title={<a href={item.href}>{item.title}</a>}
+                            title={<a onClick={this.showModal.bind(this)}>{item.title}</a>}
                             description={item.description}
                         />
                         {item.content}
