@@ -18,7 +18,7 @@ export default class extends StandardPage {
     }
 
     navigateToProjectSearch() {
-        this.props.history.push("/developer/search?type=task");
+        this.props.history.push("/developer/search?type=PROJECT");
     }
 
     ord_renderContent () {
