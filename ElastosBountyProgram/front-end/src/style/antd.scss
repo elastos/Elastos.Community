@@ -6,7 +6,8 @@
   margin-right: $gap_0;
 
   &:hover,
-  &:focus {
+  &:focus,
+  &.selected {
     border-color: $cr_color;
     color: $cr_color;
   }
@@ -34,6 +35,16 @@
 
   &.ant-btn-sm.ant-btn-loading:not(.ant-btn-circle):not(.ant-btn-circle-outline):not(.ant-btn-icon-only) {
     padding-left: 40px;
+  }
+}
+
+.ant-btn-group {
+  .ant-btn {
+    margin-right: 0;
+
+    &.selected {
+      z-index: 1; // keep the border on top
+    }
   }
 }
 
