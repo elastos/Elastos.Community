@@ -34,7 +34,7 @@ export default class extends BaseComponent {
     refetch() {
         const query = {
             skillset: this.state.skillset,
-            category: this.state.category
+            domain: this.state.category
         }
 
         const getter = this.isLookingForTeam()
