@@ -98,11 +98,12 @@ export default class extends Base {
         return updatedTask
     }
 
-    public async list(query): Promise<Document> {
+    public async list(param): Promise<Document> {
         const db_task = this.getDBModel('Task');
         const db_task_candidate = this.getDBModel('Task_Candidate');
         const db_user = this.getDBModel('User');
-        const tasks = await db_task.list(query, {
+
+        const tasks = await db_task.list(param, {
             updatedAt: -1
         });
 
