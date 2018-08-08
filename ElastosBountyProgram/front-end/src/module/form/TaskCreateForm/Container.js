@@ -9,17 +9,16 @@ message.config({
     top: 100
 })
 
-
-export default createContainer(Component, (state)=>{
+export default createContainer(Component, (state) => {
     return {
         is_admin: state.user.is_admin
     };
-}, ()=>{
+}, () => {
     const taskService = new TaskService();
     const communityService = new CommunityService();
 
     return {
-        async createTask(formData, st){
+        async createTask(formData, st) {
             try {
                 let createObj = {
 

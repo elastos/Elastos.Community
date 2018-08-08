@@ -84,6 +84,11 @@ class C extends BaseComponent {
                     }
                 })
 
+                if (this.props.is_project) {
+                    values.type = TASK_TYPE.PROJECT
+                    values.category = TASK_CATEGORY.DEVELOPER
+                }
+
                 if (this.state.editing) {
                     this.props.updateTask(values, this.state).then(() => {
                         this.props.getTaskDetail(this.props.existingTask._id)
@@ -160,13 +165,14 @@ class C extends BaseComponent {
 
         const taskCategory_fn = getFieldDecorator('taskCategory', {
             rules: [{required: true, message: 'Please select a category'}],
-            initialValue: this.state.editing ? existingTask.category : (this.props.taskCategory || TASK_CATEGORY.SOCIAL)
+            initialValue: this.state.editing ? existingTask.category : (this.state.taskCategory || TASK_CATEGORY.SOCIAL)
         })
         const taskCategory_el = (
-            <Select disabled={hasLeaderEditRestrictions} onChange={(val) => {
+            <Select
+                disabled={hasLeaderEditRestrictions} onChange={(val) => {
                 this.setState({taskCategory: val})
                 if (this.state.taskCategory === TASK_TYPE.PROJECT) {
-                    // TODO: change taskType to something other than project
+                    // this.setState({taskType: TASK_TYPE.TASK})
                 }
             }}>
                 <Option value={TASK_CATEGORY.SOCIAL}>Social</Option>
@@ -179,10 +185,11 @@ class C extends BaseComponent {
         // sub-tasks are not here because those can only be created from an existing Task Detail Page
         const taskType_fn = getFieldDecorator('taskType', {
             rules: [{required: true, message: 'Please select a task type'}],
-            initialValue: this.state.editing ? existingTask.type : (this.props.taskType || TASK_TYPE.EVENT)
+            initialValue: this.state.editing ? existingTask.type : (this.state.taskType || TASK_TYPE.EVENT)
         })
         const taskType_el = (
-            <Select disabled={hasLeaderEditRestrictions} onChange={(val) => this.setState({taskType: val})}>
+            <Select
+                disabled={hasLeaderEditRestrictions} onChange={(val) => this.setState({taskType: val})}>
                 <Option value={TASK_TYPE.EVENT}>Event</Option>
                 <Option value={TASK_TYPE.TASK}>Task</Option>
                 {this.state.taskCategory === TASK_CATEGORY.DEVELOPER &&
@@ -492,7 +499,7 @@ class C extends BaseComponent {
         ]
 
         const domain_fn = getFieldDecorator('domain', {
-            rules: [{required: true, message: 'domain is required'}],
+            rules: [],
             initialValue: []
         })
         const domain_el = (
@@ -500,7 +507,7 @@ class C extends BaseComponent {
         )
 
         const skillset_fn = getFieldDecorator('recruitedSkillsets', {
-            rules: [{required: true, message: 'skillset is required'}],
+            rules: [],
             initialValue: []
         })
         const skillset_el = (
@@ -667,7 +674,7 @@ class C extends BaseComponent {
                         <FormItem label="Assign to Self" {...formItemLayout}>
                             {p.assignSelf} - assigns you to the task and submits to an admin for approval
                         </FormItem>}
-                        <FormItem label="Task Name" {...formItemLayout}>
+                        <FormItem label="Name" {...formItemLayout}>
                             {p.taskName}
                         </FormItem>
                         <FormItem label="Community"  {...formItemLayout}>
@@ -678,12 +685,16 @@ class C extends BaseComponent {
                             {p.thumbnail}
                         </FormItem>
                         */}
-                        <FormItem label="Category" {...formItemLayout}>
-                            {p.taskCategory}
-                        </FormItem>
-                        <FormItem label="Type"  {...formItemLayout}>
-                            {p.taskType}
-                        </FormItem>
+                        {this.props.taskType !== 'PROJECT' &&
+                            <FormItem label="Category" {...formItemLayout}>
+                                {p.taskCategory}
+                            </FormItem>
+                        }
+                        {this.props.taskType !== 'PROJECT' &&
+                            <FormItem label="Type" {...formItemLayout}>
+                                {p.taskType}
+                            </FormItem>
+                        }
                         <Row>
                             <Col span={12}>
                                 <FormItem label="Application Deadline" {...formItemLayoutAdjLeft}>
@@ -702,7 +713,7 @@ class C extends BaseComponent {
 
                         <Row>
                             <Col offset="8" span="12">
-                                For larger events/tasks please breakdown the budget/rewards
+                                For larger events/tasks/projects please breakdown the budget/rewards
                             </Col>
                         </Row>
                         <FormItem {...formItemNoLabelLayout}>
@@ -715,21 +726,23 @@ class C extends BaseComponent {
                             {p.taskLink}
                         </FormItem>
 
-                        <div>
-                            <Divider>Recruitment</Divider>
-                            <FormItem label="Domain" {...formItemLayout}>
-                                {p.domain}
-                            </FormItem>
-                            <FormItem label="Recruiting Skillsets" {...formItemLayout}>
-                                {p.recruitedSkillsets}
-                            </FormItem>
-                            <FormItem label="Pictures" {...formItemLayout}>
-                                {p.pictures}
-                            </FormItem>
-                            <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
-                                <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
-                            </Modal>
-                        </div>
+                        {this.state.taskType === TASK_TYPE.PROJECT &&
+                            <div>
+                                <Divider>Recruitment</Divider>
+                                <FormItem label="Domain" {...formItemLayout}>
+                                    {p.domain}
+                                </FormItem>
+                                <FormItem label="Recruiting Skillsets" {...formItemLayout}>
+                                    {p.recruitedSkillsets}
+                                </FormItem>
+                                <FormItem label="Pictures" {...formItemLayout}>
+                                    {p.pictures}
+                                </FormItem>
+                                <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
+                                    <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
+                                </Modal>
+                            </div>
+                        }
 
                         {/*
                         ********************************************************************************
@@ -793,7 +806,7 @@ class C extends BaseComponent {
 
                         <FormItem label="Fiat ($USD)" {...formItemLayout}>
                             <Checkbox name="isUsd" checked={this.state.isUsd} onChange={() => {this.setState({isUsd: !this.state.isUsd})}}/>
-                            &nbsp; - for larger tasks/events only - payment is always in ELA equivalent
+                            &nbsp; - for larger events/tasks/projects only - payment is always in ELA equivalent
                         </FormItem>
 
                         {this.state.isUsd ?
