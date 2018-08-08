@@ -355,7 +355,7 @@ export default class extends StandardPage {
                                 <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-right-column wrap-box-user">
                                     {(this.props.is_leader || this.props.is_admin) &&
                                     <div className="pull-right">
-                                        <Button onClick={() => this.props.history.push('/task-create/')}>Create Task</Button>
+                                        <Button onClick={() => this.props.history.push('/task-create?type=PROJECT&category=DEVELOPER')}>Create Project</Button>
                                     </div>
                                     }
                                     <Button.Group className="filter-group">

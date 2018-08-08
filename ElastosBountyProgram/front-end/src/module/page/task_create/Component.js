@@ -32,7 +32,11 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page-title">
                     <h2>
-                        Create Task / Event
+                        {
+                            taskType === TASK_TYPE.PROJECT
+                                ? 'Create Project'
+                                : 'Create Task / Event'
+                        }
                     </h2>
                 </div>
                 <div className="ebp-page">
