@@ -5,6 +5,7 @@ import _ from 'lodash'
 import './style.scss'
 import moment from 'moment/moment'
 import {SKILLSET_TYPE, TEAM_TASK_DOMAIN} from '@/constant'
+import ProjectDetail from '@/module/project/detail/Container'
 import Footer from '@/module/layout/Footer/Container'
 
 const CheckboxGroup = Checkbox.Group;
@@ -261,10 +262,9 @@ export default class extends BaseComponent {
                     onOk={this.handleModalOk}
                     onCancel={this.handleModalCancel}
                     footer={null}
+                    width="80%"
                 >
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
+                    <ProjectDetail task={this.props.task}/>
                 </Modal>
                 <Footer/>
             </div>
