@@ -4,8 +4,7 @@ import Footer from '@/module/layout/Footer/Container'
 import I18N from '@/I18N'
 import { Link } from 'react-router-dom'
 import './style.scss'
-
-import {Col, Row, Card, Button, Breadcrumb, Icon} from 'antd'
+import { Col, Row, Card, Button, Breadcrumb, Icon } from 'antd'
 
 
 export default class extends StandardPage {
@@ -27,7 +26,7 @@ export default class extends StandardPage {
                 <div className="ebp-header-divider">
                 </div>
                 <Breadcrumb className="p_admin_breadcrumb">
-                    <Breadcrumb.Item><Link to="/">{I18N.get('3000')}</Link></Breadcrumb.Item>
+                    <Breadcrumb.Item><Icon type="home"/></Breadcrumb.Item>
                     <Breadcrumb.Item>{I18N.get('3001')}</Breadcrumb.Item>
                 </Breadcrumb>
                 <div className="p_admin_index ebp-wrap">
