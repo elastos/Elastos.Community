@@ -2,11 +2,11 @@ import React from 'react';
 import StandardPage from '../../StandardPage';
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import config from '@/config';
-
+import _ from 'lodash'
 import './style.scss'
 import '../../admin/admin.scss'
 
-import { Col, Row, Icon, Form, Input, Breadcrumb, Button, Divider, Table } from 'antd'
+import { Col, Row, Icon, Form, Input, Breadcrumb, Button, Divider, Table, List, Carousel } from 'antd'
 import MediaQuery from 'react-responsive'
 import moment from "moment/moment";
 import Footer from '@/module/layout/Footer/Container'
@@ -14,6 +14,15 @@ import Footer from '@/module/layout/Footer/Container'
 const FormItem = Form.Item;
 
 export default class extends StandardPage {
+    componentDidMount() {
+        super.componentDidMount()
+        this.props.getTeams(this.props.currentUserId)
+    }
+
+    componentWillUnmount() {
+        this.props.resetTeams()
+    }
+
     ord_states() {
         return {
             loading: true,
@@ -22,7 +31,6 @@ export default class extends StandardPage {
         };
     }
     ord_renderContent () {
-
         return (
             <div class="p_ProfileTeams">
                 <div className="ebp-header-divider">
@@ -46,10 +54,11 @@ export default class extends StandardPage {
                                     </Col>
                                 </MediaQuery>
                                 <Col span={20} className="c_ProfileContainer admin-right-column wrap-box-user">
-                                    <div className="pull-right">
+                                    <div className="pull-right filter-group">
                                         <Button onClick={this.goCreatepage.bind(this)}>Create Team</Button>
                                     </div>
-                                    {this.renderList()}
+                                    <div className="clearfix"/>
+                                    {this.getListComponent()}
                                 </Col>
                             </Row>
                             <Footer/>
@@ -60,69 +69,59 @@ export default class extends StandardPage {
         )
     }
 
-    renderList() {
-        const columns = [
-            {
-                title: 'Name',
-                dataIndex: 'name',
-                key: 'name',
-                width: '20%',
-                className: 'fontWeight500',
-                render: (name, record) => {
-                    return <a onClick={this.goDetail.bind(this, record._id)} className="tableLink">{name}</a>
-                }
-            },
-            {
-                title: 'Description',
-                dataIndex: 'profile.description',
-                key: 'profile.description'
-            },
-            {
-                title: 'Domain',
-                dataIndex: 'domain',
-                key: 'domain',
-                render: (domains) => domains.join(', ')
-            },
-            {
-                title: 'Recruiting',
-                dataIndex: 'recruitedSkillsets',
-                key: 'recruitedSkillsets',
-                render: (skillsets) => skillsets.join(', ')
-            },
-            {
-                title: 'Created',
-                dataIndex: 'createdAt',
-                key: 'createdAt',
-                render: (createdAt) => moment(createdAt).format(config.FORMAT.DATE)
-            }
-        ];
+    getCarousel(item) {
+        const pictures = _.map(item.pictures, (picture, ind) => {
+            return (
+                <div key={ind}>
+                    <img width={204} height={204} alt="logo" src={picture.url} />
+                </div>
+            )
+        })
 
         return (
-            <Table
-                columns={columns}
-                rowKey={(item) => item._id}
-                dataSource={this.state.list}
-                loading={this.state.loading}
+            <div className="carousel-wrapper">
+                <Carousel autoplay>
+                    {pictures}
+                </Carousel>
+            </div>
+        )
+    }
+
+    getListComponent() {
+        const data = _.map(this.props.all_teams, (team, id) => {
+            return {
+                href: '',
+                title: team.name,
+                pictures: team.pictures || [],
+                description: 'Lorem ipsum',
+                content: team.profile.description,
+                id: team._id
+            }
+        })
+
+        return (
+            <List itemLayout='vertical' size='large' loading={this.props.loading}
+                pagination={{ pageSize: 5 }} dataSource={data} renderItem={item => (
+                    <List.Item
+                        key={item.id}
+                        extra={this.getCarousel(item)}
+                    >
+                        <List.Item.Meta
+                            title={<a href={item.href}>{item.title}</a>}
+                            description={item.description}
+                        />
+                        {item.content}
+                    </List.Item>
+                )}
             />
-        );
+        )
     }
 
     goDetail(teamId) {
         this.props.history.push(`/profile/teams/${teamId}`);
     }
+
     goCreatepage() {
         this.props.history.push('/profile/teams/create');
-    }
-
-    async componentDidMount() {
-        await super.componentDidMount();
-
-        const d = await this.props.list({
-            teamHasUser: this.props.current.id
-        });
-        this.setState({
-            list: d,
-            loading: false
-        });
     }
 }
