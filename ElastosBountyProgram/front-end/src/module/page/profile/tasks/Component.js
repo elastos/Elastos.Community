@@ -155,7 +155,7 @@ export default class extends StandardPage {
         })
 
         return (
-            <List itemLayout='vertical' size='large'
+            <List itemLayout='vertical' size='large' loading={this.props.loading}
                 pagination={{ pageSize: 5 }} dataSource={data} renderItem={item => (
                     <List.Item
                         key={item.id}
