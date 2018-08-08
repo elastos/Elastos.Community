@@ -22,7 +22,7 @@ export default class extends StandardPage {
                                 <Breadcrumb.Item href="/">
                                     <Icon type="home"/>
                                 </Breadcrumb.Item>
-                                <Breadcrumb.Item href="/developers">
+                                <Breadcrumb.Item href="/developer">
                                     Developers
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
