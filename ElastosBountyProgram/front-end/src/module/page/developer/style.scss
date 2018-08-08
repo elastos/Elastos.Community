@@ -3,135 +3,130 @@
 @import "../../../style/color";
 
 .p_Developer {
-
   background: #ffffff;
   text-align: left;
-
-  .ebp-page-breadcrumb {
-    margin: 50px 0;
-  }
+  padding: 0 48px;
 
   .ebp-wrap {
-    .d_rowTop {
-      margin: 0 auto;
+    max-width: 1200px;
+  }
+
+  .feature-box {
+    margin: 5px;
+    border: 1px solid gainsboro;
+    height: 100%;
+    cursor: pointer;
+
+    .title {
+      display: flex;
+      align-items: flex-end;
+      height: 50%;
+      min-height: 175px;
+
+      span {
+        z-index: 1;
+        font-weight: bold;
+        font-size: 2rem;
+        color: $primary_color;
+      }
+
+      img {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        opacity: 0.25;
+        min-width: 100px;
+        max-width: 35%;
+        max-height: 150px;
+        filter: alpha(opacity=25); // IE8 and earlier
+      }
     }
-    .d_box {
-      .feature-box {
-        margin: 5px;
-        border: 1px solid gainsboro;
-        height: 100%;
-        cursor: pointer;
 
-        .title {
-          display: flex;
-          align-items: flex-end;
-          height: 50%;
-          min-height: 175px;
+    .feature-box-divider {
+      display: block;
+      padding: 0 25px;
+      background-color: $primary_color;
+      border: 1px solid $primary_color;
+      margin: 5px 0;
+    }
 
-          span {
-            z-index: 1;
-            font-weight: bold;
-            font-size: 1.75rem;
+    .content {
+      height: 50%;
+      padding: 5px 10px;
+      font-size: 16px;
+    }
+  }
+
+  .d_midRow {
+    margin: 100px 0;
+    text-align: center;
+
+    .info-button {
+      width: 50%;
+      border-color: $primary_color;
+      color: $primary_color;
+      vertical-align: middle;
+    }
+    .info-button:hover {
+      background-color: $primary_light_color;
+      color: white;
+    }
+  }
+
+  .d_bottomRow {
+    text-align: left;
+
+    .title {
+      font-size: 2rem;
+    }
+
+    .component-box {
+      margin: 20px 10px;
+      padding: 10px;
+      border: 1px solid $border_gray;
+      background-color: $bg_gray;
+      border-radius: 5px;
+
+      .d_leftCol {
+        padding: 10px;
+        .component-name {
+          font-size: 24px;
+          .languages {
             color: $primary_color;
           }
-
-          img {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            opacity: 0.25;
-            min-width: 100px;
-            max-width: 35%;
-            max-height: 150px;
-            filter: alpha(opacity=25); // IE8 and earlier
-          }
         }
-
-        .feature-box-divider {
-          display: block;
-          padding: 0 25px;
-          background-color: $primary_color;
-          border: 1px solid $primary_color;
-          margin: 5px 0;
+        .component-divider {
+          margin: 5px 15px;
+          border: 1px solid gray;
         }
-
-        .content {
-          height: 50%;
-          padding: 5px 10px;
-          font-size: 16px;
-        }
-      }
-    }
-    .d_midRow {
-      margin: 100px 0;
-      text-align: center;
-
-      .info-button {
-        width: 50%;
-        border-color: $primary_color;
-        color: $primary_color;
-        vertical-align: middle;
-      }
-      .info-button:hover {
-        background-color: $primary_light_color;
-        color: white;
-      }
-    }
-    .d_bottomRow {
-      text-align: left;
-
-      .title {
-        font-size: 2rem;
-      }
-
-      .component-box {
-        margin: 20px 10px;
-        padding: 10px;
-        border: 1px solid $border_gray;
-        background-color: $bg_gray;
-        border-radius: 5px;
-
-        .d_leftCol {
+        .component-description {
           padding: 10px;
-          .component-name {
-            font-size: 24px;
-            .languages {
-              color: $primary_color;
-            }
-          }
-          .component-divider {
-            margin: 5px 15px;
-            border: 1px solid gray;
-          }
-          .component-description {
-            padding: 10px;
-          }
+        }
+      }
+
+      .button-container {
+        text-align: right;
+
+        button {
+          width: 50%;
+          min-width: 100px;
+          margin: 5px;
+          border: 1px solid gray;
+          background-color: $border_gray;
         }
 
-        .button-container {
-          text-align: right;
+        button:hover {
+          background-color: $bg_gray;
+        }
 
-          button {
-            width: 50%;
-            min-width: 100px;
-            margin: 5px;
-            border: 1px solid gray;
-            background-color: $border_gray;
-          }
+        .top-button {
+          background-color: $primary_color;
+          color: white;
+        }
 
-          button:hover {
-            background-color: $bg_gray;
-          }
-
-          .top-button {
-            background-color: $primary_color;
-            color: white;
-          }
-
-          .top-button:hover {
-            background-color: $primary_light_color;
-            color: white;
-          }
+        .top-button:hover {
+          background-color: $primary_light_color;
+          color: white;
         }
       }
     }
