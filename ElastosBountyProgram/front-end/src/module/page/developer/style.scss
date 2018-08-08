@@ -8,13 +8,11 @@
   text-align: left;
 
   .ebp-page-breadcrumb {
-    margin: 50px 25px;
+    margin: 50px 0;
   }
 
-  .ebp-page {
-    margin: 0 10%;
+  .ebp-wrap {
     .d_rowTop {
-      width: 80%;
       margin: 0 auto;
     }
     .d_box {
@@ -33,7 +31,7 @@
           span {
             z-index: 1;
             font-weight: bold;
-            font-size: 2rem;
+            font-size: 1.75rem;
             color: $primary_color;
           }
 

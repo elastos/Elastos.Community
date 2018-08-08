@@ -5,7 +5,7 @@ import I18N from '@/I18N'
 import { Link } from 'react-router-dom'
 import './style.scss'
 
-import { Col, Row, Card, Button, Breadcrumb } from 'antd'
+import {Col, Row, Card, Button, Breadcrumb, Icon} from 'antd'
 
 
 export default class extends StandardPage {
@@ -27,11 +27,13 @@ export default class extends StandardPage {
                 <div className="ebp-header-divider">
                 </div>
 
-                <div className="ebp-page">
-                    <Breadcrumb className="ebp-page-breadcrumb">
-                        <Breadcrumb.Item><Link to="/">{I18N.get('3000')}</Link></Breadcrumb.Item>
-                        <Breadcrumb.Item><Link to="/developer">{I18N.get('3001')}</Link></Breadcrumb.Item>
-                    </Breadcrumb>
+                <div className="ebp-wrap">
+                    <div className="p_admin_breadcrumb">
+                        <Breadcrumb>
+                            <Breadcrumb.Item><Link to="/"><Icon type="home"/></Link></Breadcrumb.Item>
+                            <Breadcrumb.Item><Link to="/developer">{I18N.get('3001')}</Link></Breadcrumb.Item>
+                        </Breadcrumb>
+                    </div>
                     <Row className="d_row d_rowTop" type="flex" justify="center">
                         <Col sm={{span:24}} md={{span: 8}} className="d_box" onClick={() => this.navigateToLearn()}>
                             <Card hoverable className="feature-box">
