@@ -26,6 +26,10 @@ export default class extends StandardPage {
             }
         }
 
+        const navSelectedItem = taskType === TASK_TYPE.PROJECT
+            ? 'profileProjects'
+            : 'profileTasks'
+
         return (
             <div className="c_ProfileContainer">
                 <div className="ebp-header-divider">
@@ -39,7 +43,7 @@ export default class extends StandardPage {
                         <div className="p_ProfileTeams p_admin_content">
                             <Row>
                                 <Col span={4} className="admin-left-column wrap-box-navigator">
-                                    <Navigator selectedItem={'profileTasks'}/>
+                                    <Navigator selectedItem={navSelectedItem}/>
                                 </Col>
                                 <Col span={20} className="admin-right-column wrap-box-user">
                                     <h4 className="p_profile_action_title">
