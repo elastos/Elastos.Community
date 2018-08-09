@@ -30,5 +30,6 @@ module.exports = {
         "ts-jest": {
             "skipBabel": true
         }
-    }
+    },
+    testURL: 'http://localhost'
 };
