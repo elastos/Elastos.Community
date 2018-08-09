@@ -9,22 +9,12 @@
 
   &.ant-btn-ebp{
     font-size: 1.1rem;
-    height: 40px;
-    line-height: 40px;
     padding: 0 40px;
-    color: #ffffff;
-    background: $cr_color;
-    border: 1px solid $cr_dark_color;
 
     &.ant-btn-sm {
       line-height: 0.9rem;
       font-size: 0.9rem;
       height: 34px;
-    }
-
-    &:hover, &:focus, &:active{
-      background: $cr_light_color;
-      border-color: $cr_color;
     }
   }
 
