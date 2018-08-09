@@ -258,6 +258,10 @@ export default class extends Base {
             query.recruitedSkillsets = { $in: param.skillset.split(',') }
         }
 
+        if (param.owner) {
+            query.owner = param.owner
+        }
+
         if (param.teamHasUser) {
             const db_user_team = this.getDBModel('User_Team')
             let listObj:any = {

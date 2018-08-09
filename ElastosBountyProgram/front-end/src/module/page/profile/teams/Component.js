@@ -15,9 +15,10 @@ const FormItem = Form.Item;
 
 const FILTERS = {
     ALL: 'all',
+    OWNED: 'owned',
     ACTIVE: 'active',
     APPLIED: 'applied',
-    REJECTED: 'rejected'
+    REJECTED: 'rejected',
 }
 
 export default class extends StandardPage {
@@ -54,6 +55,12 @@ export default class extends StandardPage {
 
         if (this.state.filter === FILTERS.REJECTED) {
             query.teamHasUserStatus = TEAM_USER_STATUS.REJECT
+        }
+
+        if (this.state.filter === FILTERS.OWNED) {
+            query = {
+                owner: this.props.currentUserId
+            }
         }
 
         this.props.getTeams(query)
@@ -100,6 +107,9 @@ export default class extends StandardPage {
                                         <Button
                                             className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
                                             onClick={this.clearFilters.bind(this)}>All</Button>
+                                        <Button
+                                            className={(this.state.filter === FILTERS.OWNED && 'selected') || ''}
+                                            onClick={this.setOwnedFilter.bind(this)}>Owned</Button>
                                         <Button
                                             className={(this.state.filter === FILTERS.ACTIVE && 'selected') || ''}
                                             onClick={this.setActiveFilter.bind(this)}>Active</Button>
@@ -196,6 +206,10 @@ export default class extends StandardPage {
 
     setRejectedFilter() {
         this.setState({ filter: FILTERS.REJECTED }, this.refetch.bind(this))
+    }
+
+    setOwnedFilter() {
+        this.setState({ filter: FILTERS.OWNED }, this.refetch.bind(this))
     }
 
     goDetail(teamId) {
