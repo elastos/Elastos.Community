@@ -5,7 +5,7 @@ import config from '@/config';
 import _ from 'lodash'
 import './style.scss'
 import '../../admin/admin.scss'
-import { Col, Row, Icon, Form, Input, Breadcrumb, Button, Divider, Table, List, Carousel } from 'antd'
+import { Col, Row, Icon, Form, Input, Breadcrumb, Button, Divider, Table, List, Carousel, Avatar } from 'antd'
 import { TEAM_USER_STATUS } from '@/constant'
 import MediaQuery from 'react-responsive'
 import moment from 'moment/moment'
@@ -150,13 +150,15 @@ export default class extends StandardPage {
                 pictures: team.pictures || [],
                 description: 'Lorem ipsum',
                 content: team.profile.description,
+                owner: team.owner,
                 id: team._id
             }
         })
 
         return (
             <List itemLayout='vertical' size='large' loading={this.props.loading}
-                pagination={{ pageSize: 5 }} dataSource={data} renderItem={item => (
+                className="with-right-box" pagination={{ pageSize: 5 }} dataSource={data}
+                renderItem={item => (
                     <List.Item
                         key={item.id}
                         extra={this.getCarousel(item)}
@@ -166,6 +168,14 @@ export default class extends StandardPage {
                             description={item.description}
                         />
                         {item.content}
+                        <div className="ant-list-item-right-box">
+                            <div className="pull-up">
+                                <Avatar size="large" icon="user" className="pull-right" src={item.owner.profile.avatar}/>
+                                <div class="clearfix"/>
+                                <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
+                            </div>
+                            <Button type="primary" className="pull-down">View</Button>
+                        </div>
                     </List.Item>
                 )}
             />

@@ -5,7 +5,7 @@ import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import _ from 'lodash'
 import './style.scss'
 import '../../admin/admin.scss'
-import { Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button, Table, Divider, List, Carousel } from 'antd'
+import { Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button, Table, Divider, List, Carousel, Avatar } from 'antd'
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
 
@@ -150,13 +150,15 @@ export default class extends StandardPage {
                 pictures: task.pictures || [],
                 description: 'Lorem ipsum',
                 content: task.description,
+                owner: task.createdBy,
                 id: task._id
             }
         })
 
         return (
             <List itemLayout='vertical' size='large' loading={this.props.loading}
-                pagination={{ pageSize: 5 }} dataSource={data} renderItem={item => (
+                className="with-right-box"  pagination={{ pageSize: 5 }} dataSource={data}
+                renderItem={item => (
                     <List.Item
                         key={item.id}
                         extra={this.getCarousel(item)}
@@ -166,6 +168,14 @@ export default class extends StandardPage {
                             description={item.description}
                         />
                         {item.content}
+                        <div className="ant-list-item-right-box">
+                            <div className="pull-up">
+                                <Avatar size="large" icon="user" className="pull-right" src={item.owner.profile.avatar}/>
+                                <div class="clearfix"/>
+                                <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
+                            </div>
+                            <Button type="primary" className="pull-down">View</Button>
+                        </div>
                     </List.Item>
                 )}
             />

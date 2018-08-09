@@ -36,7 +36,6 @@ export default class extends StandardPage {
                                     <Navigator selectedItem={'profileTeams'}/>
                                 </Col>
                                 <Col span={20} className="admin-right-column wrap-box-user">
-
                                     <Divider className="">Create Team</Divider>
                                     <TeamCreateForm />
                                 </Col>

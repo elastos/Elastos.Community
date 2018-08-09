@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import {Col, Row, Icon, Input, Button, Breadcrumb, List, Checkbox, Radio, Carousel, Modal} from 'antd'
+import {Col, Row, Icon, Input, Button, Breadcrumb, List, Checkbox, Radio, Carousel, Modal, Avatar} from 'antd'
 import _ from 'lodash'
 import './style.scss'
 import moment from 'moment/moment'
@@ -63,7 +63,7 @@ export default class extends BaseComponent {
     onChangeLookingFor(e) {
         this.setState({
             lookingFor: e.target.value
-        }, this.refetch.bind(this));
+        }, this.refetch.bind(this))
     }
 
     onChangeSkillset(value) {
@@ -284,7 +284,7 @@ export default class extends BaseComponent {
         const pictures = _.map(item.pictures, (picture, ind) => {
             return (
                 <div key={ind}>
-                    <img width={204} height={204} alt="logo" src={picture.url} />
+                    <img width={188} height={188} alt="logo" src={picture.url} />
                 </div>
             )
         })
@@ -317,6 +317,7 @@ export default class extends BaseComponent {
                     pictures: team.pictures || [],
                     description: 'Lorem ipsum',
                     content: team.profile.description,
+                    owner: team.owner,
                     id: team._id
                 }
             })
@@ -327,13 +328,15 @@ export default class extends BaseComponent {
                     pictures: task.pictures || [],
                     description: 'Lorem ipsum',
                     content: task.description,
+                    owner: task.createdBy,
                     id: task._id
                 }
             })
 
         return (
             <List loading={this.props.loading} itemLayout='vertical' size='large'
-                pagination={{ pageSize: 5 }} dataSource={data} renderItem={item => (
+                className="with-right-box" pagination={{ pageSize: 5 }} dataSource={data}
+                renderItem={item => (
                     <List.Item
                         key={item.id}
                         extra={this.getCarousel(item)}
@@ -343,6 +346,14 @@ export default class extends BaseComponent {
                             description={item.description}
                         />
                         {item.content}
+                        <div className="ant-list-item-right-box">
+                            <div className="pull-up">
+                                <Avatar size="large" icon="user" className="pull-right" src={item.owner.profile.avatar}/>
+                                <div class="clearfix"/>
+                                <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
+                            </div>
+                            <Button type="primary" className="pull-down">Apply</Button>
+                        </div>
                     </List.Item>
                 )}
             />

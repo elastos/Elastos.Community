@@ -115,3 +115,50 @@
 .c_Footer {
   margin-top: 72px;
 }
+
+.ant-list.ant-list-vertical.with-right-box {
+  $rightBoxWidth: 160px;
+  .ant-list-item-content {
+    position: relative;
+    margin-bottom: 0;
+    height: 100%;
+    margin-right: $rightBoxWidth + 2*$gap_2;
+  }
+
+  .ant-list-item-right-box {
+    position: absolute;
+    height: 100%;
+    width: $rightBoxWidth;
+    right: -($rightBoxWidth + 2*$gap_2);
+    top: 0;
+
+    .pull-up {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .pull-down {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+
+    .ant-avatar {
+      margin-bottom: $gap_0;
+    }
+
+    button {
+      width: 100%;
+      margin: 0;
+    }
+  }
+
+  .ant-list-item-extra-wrap {
+    height: 188px;
+  }
+
+  .ant-list-item-main {
+    overflow: hidden;
+  }
+}
