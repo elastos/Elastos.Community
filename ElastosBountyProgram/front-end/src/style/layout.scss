@@ -139,7 +139,7 @@
 }
 
 .l_banner {
-  background: linear-gradient(90deg, rgba(43, 60, 90, 1) 0%, rgba(43, 60, 90, 0.75) 60%, rgba(224, 224, 224, 0.55) 100%);
+  background: $primary_color;
   border-radius: 4px;
   padding: 8px $gap_1;
   font-weight: 200;
