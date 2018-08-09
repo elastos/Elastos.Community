@@ -373,14 +373,14 @@ export default class extends StandardPage {
                                             className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
                                             onClick={this.clearFilters.bind(this)}>All</Button>
                                         <Button
+                                            className={(this.state.filter === FILTERS.OWNED && 'selected') || ''}
+                                            onClick={this.setOwnedFilter.bind(this)}>Owned</Button>
+                                        <Button
                                             className={(this.state.filter === FILTERS.ACTIVE && 'selected') || ''}
                                             onClick={this.setActiveFilter.bind(this)}>Active</Button>
                                         <Button
                                             className={(this.state.filter === FILTERS.APPLIED && 'selected') || ''}
                                             onClick={this.setAppliedFilter.bind(this)}>Applied</Button>
-                                        <Button
-                                            className={(this.state.filter === FILTERS.OWNED && 'selected') || ''}
-                                            onClick={this.setOwnedFilter.bind(this)}>Owned</Button>
                                         <Button
                                             className={(this.state.filter === FILTERS.SUBSCRIBED && 'selected') || ''}
                                             onClick={this.setSubscribedFilter.bind(this)}>Subscribed</Button>

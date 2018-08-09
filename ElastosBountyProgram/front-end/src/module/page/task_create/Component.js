@@ -42,14 +42,13 @@ export default class extends StandardPage {
                                     <Navigator selectedItem={'profileTasks'}/>
                                 </Col>
                                 <Col span={20} className="admin-right-column wrap-box-user">
-
-                                    <Divider className="">
+                                    <h4 className="p_profile_action_title">
                                         {
                                             taskType === TASK_TYPE.PROJECT
                                             ? 'Create Project'
                                             : 'Create Task / Event'
                                         }
-                                    </Divider>
+                                    </h4>
                                     <TaskCreateForm taskType={taskType} taskCategory={taskCategory}/>
                                 </Col>
                             </Row>

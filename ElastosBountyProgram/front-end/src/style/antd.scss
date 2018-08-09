@@ -116,6 +116,14 @@
   margin-top: 72px;
 }
 
+.p_profile_action_title {
+  margin-bottom: $gap_2;
+  padding: 0;
+  margin-top: 4px; // to match the MenuItem position
+  height: 40px; // to match the MenuItem position
+  line-height: 40px; // to match the MenuItem position
+}
+
 .ant-list.ant-list-vertical.with-right-box {
   $rightBoxWidth: 160px;
   .ant-list-item-content {
