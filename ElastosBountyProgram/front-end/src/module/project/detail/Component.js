@@ -46,7 +46,6 @@ class C extends BaseComponent {
                         {carouselImages}
                     </Carousel>
                 </div>
-                <hr className="divider"/>
                 <div className="domains-container">
                     {domains}
                 </div>
@@ -73,7 +72,7 @@ class C extends BaseComponent {
                 </div>
                 <div className="leader">
                     <Avatar size="large" src={leaderImage} />
-                    <div>Leader: {leaderName}</div>
+                    <div>{leaderName}</div>
                 </div>
                 <div className="content">
                     <div className="entry">Deadline: {deadline}</div>
