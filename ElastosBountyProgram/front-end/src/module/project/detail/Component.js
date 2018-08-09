@@ -10,7 +10,7 @@ export default class extends BaseComponent {
 
     componentDidMount() {
         const taskId = this.props.match.params.taskId
-        this.props.getTaskDetail(taskId)
+        console.log(this.props.getTaskDetail(taskId));
     }
 
     componentWillUnmount() {
@@ -18,7 +18,7 @@ export default class extends BaseComponent {
     }
 
     ord_render () {
-
+        console.log(this.props);
         return (
             <div className="c_Project">
                 <Row className="top-section">

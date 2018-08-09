@@ -29,7 +29,8 @@ export default class extends BaseComponent {
             entryCount: 3,
             skillsetShowAllEntries: false,
             categoryShowAllEntries: false,
-            showModal: false
+            showModal: false,
+            taskIndexClicked: 0
         }
     }
 
@@ -78,10 +79,12 @@ export default class extends BaseComponent {
         }, this.refetch.bind(this))
     }
 
-    showModal = () => {
+    showModal = (e) => {
         this.setState({
             showModal: true,
         })
+
+        console.log(e.target);
     }
 
     handleModalOk = (e) => {
@@ -215,6 +218,9 @@ export default class extends BaseComponent {
         const skillsetElement = this.renderSkillset(skillsetOptions, this.state.skillsetShowAllEntries);
         const categoryElement = this.renderCategory(categoryOptions, this.state.categoryShowAllEntries);
 
+        const task = this.isLookingForTeam()
+            ? this.props.all_teams.all_tasks
+            : this.props.all_tasks.all_tasks;
         return (
             <div className="c_Search">
                 <Row className="d_row">
@@ -267,9 +273,9 @@ export default class extends BaseComponent {
                     onOk={this.handleModalOk}
                     onCancel={this.handleModalCancel}
                     footer={null}
-                    width="80%"
+                    width="70%"
                 >
-                    <ProjectDetail task={this.props.task}/>
+                    <ProjectDetail task={this.props.all_tasks[this.state.taskIndexClicked]}/>
                 </Modal>
                 <Footer/>
             </div>
@@ -296,12 +302,6 @@ export default class extends BaseComponent {
                 </Carousel>
             </div>
         )
-    }
-
-    showActivityOverview() {
-        this.setState({
-            showActivityOverview: true
-        })
     }
 
     renderList() {
@@ -342,7 +342,7 @@ export default class extends BaseComponent {
                         extra={this.getCarousel(item)}
                     >
                         <List.Item.Meta
-                            title={<a onClick={this.showModal.bind(this)}>{item.title}</a>}
+                            title={<a onClick={this.showModal.bind(this, item.id)}>{item.title}</a>}
                             description={item.description}
                         />
                         {item.content}
