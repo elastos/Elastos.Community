@@ -9,9 +9,15 @@
     border-radius: 5px 50px 5px 5px;
 
     .col-left {
+      .col-left-div {
+        width: 100%;
+      }
+
       border-right: 1px solid $text_light_gray;
       padding: 20px;
-      align-items: flex-end;
+      display: flex;
+      align-items: stretch;
+      height: 350px;
 
       img {
         margin: 0 auto;

@@ -2,7 +2,7 @@ import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
 
-import {Col, Row, Tag, Icon, Carousel, Avatar, Button} from 'antd'
+import {Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin } from 'antd'
 
 import './style.scss'
 
@@ -22,25 +22,43 @@ export default class extends BaseComponent {
         this.props.resetTaskDetail()
     }
 
+    renderUpperLeftBox() {
+        const details = this.props.detail;
+
+        let carouselImages = []
+        for (let i of details.pictures) {
+            carouselImages.push(<img src={i.url} key={i}/>)
+        }
+
+        return (
+            <div className="col-left-div">
+                <div>
+                    <Carousel>
+                        {carouselImages}
+                    </Carousel>
+                </div>
+                <hr className="divider"/>
+                <div>
+                    <Tag>Javascript</Tag>
+                    <Tag>IoT</Tag>
+                    <Tag>C++</Tag>
+                    <Tag>Finance</Tag>
+                </div>
+            </div>
+        )
+    }
+
     ord_render () {
+        const details = this.props.detail;
+        if(_.isEmpty(this.props.detail)) {
+            return <Spin />
+        }
+        console.log(details);
         return (
             <div className="c_Project">
                 <Row className="top-section">
                     <Col xs={24} sm={24} md={8} className="col-left">
-                        <div>
-                            <Carousel>
-                                <img src="/assets/images/User_Avatar_Male.png"/>
-                                <img src="/assets/images/User_Avatar_Female.png"/>
-                                <img src="/assets/images/User_Avatar_Other.png"/>
-                            </Carousel>
-                        </div>
-                        <hr className="divider"/>
-                        <div>
-                            <Tag>Javascript</Tag>
-                            <Tag>IoT</Tag>
-                            <Tag>C++</Tag>
-                            <Tag>Finance</Tag>
-                        </div>
+                        {this.renderUpperLeftBox()}
                     </Col>
 
                     <Col xs={24} sm={24} md={16} className="col-right">
