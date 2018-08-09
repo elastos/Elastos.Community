@@ -6,13 +6,27 @@ import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import './style.scss'
 import '../../admin/admin.scss'
 
-import { Col, Row, Icon, Form, Tooltip, Badge, Breadcrumb, Button, Table, Divider } from 'antd'
+import { Col, Row, Icon, Form, Tooltip, Badge, Breadcrumb, Button, Table } from 'antd'
 import moment from 'moment/moment'
 const FormItem = Form.Item;
 
 import MediaQuery from 'react-responsive'
 
+const FILTERS = {
+    ALL: 'all',
+    CREATED: 'created',
+    SUBSCRIBED: 'subscribed'
+};
+
 export default class extends StandardPage {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            showMobile: false,
+            filter: FILTERS.ALL
+        }
+    }
 
     ord_checkLogin(isLogin) {
         if (!isLogin) {
@@ -58,6 +72,7 @@ export default class extends StandardPage {
     }
 
     ord_renderContent () {
+        const submissionsAllData = this.props.all_submissions;
         const submissionsOwnedData = this.props.owned_submissions
         const submissionsSubscribedData = this.props.subscribed_submissions
 
@@ -123,29 +138,50 @@ export default class extends StandardPage {
                                     </Col>
                                 </MediaQuery>
                                 <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-right-column wrap-box-user">
-                                    <div>
-                                        <Divider>Owned Issues / Forms</Divider>
+                                    <Button.Group className="filter-group">
+                                        <Button
+                                            className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
+                                            onClick={this.clearFilters.bind(this)}>All</Button>
+                                        <Button
+                                            className={(this.state.filter === FILTERS.CREATED && 'selected') || ''}
+                                            onClick={this.setCreatedFilter.bind(this)}>Created</Button>
+                                        <Button
+                                            className={(this.state.filter === FILTERS.SUBSCRIBED && 'selected') || ''}
+                                            onClick={this.setSubscribedFilter.bind(this)}>Subscribed</Button>
+                                    </Button.Group>
 
-                                        <Table
-                                            columns={columns}
-                                            rowKey={(item) => item._id}
-                                            dataSource={submissionsOwnedData}
-                                            loading={this.props.loading}
-                                        />
-                                    </div>
-                                    {submissionsOwnedData.length === 0 &&
-                                        <div className="vert-gap"/>
+                                    {this.state.filter === FILTERS.ALL &&
+                                        <div>
+                                            <Table
+                                                columns={columns}
+                                                rowKey={(item) => item._id}
+                                                dataSource={submissionsAllData}
+                                                loading={this.props.loading}
+                                            />
+                                        </div>
                                     }
-                                    <div>
-                                        <Divider>Subscribed Issues</Divider>
 
-                                        <Table
-                                            columns={columns}
-                                            rowKey={(item) => item._id}
-                                            dataSource={submissionsSubscribedData}
-                                            loading={this.props.loading}
-                                        />
-                                    </div>
+                                    {this.state.filter === FILTERS.CREATED &&
+                                        <div>
+                                            <Table
+                                                columns={columns}
+                                                rowKey={(item) => item._id}
+                                                dataSource={submissionsOwnedData}
+                                                loading={this.props.loading}
+                                            />
+                                        </div>
+                                    }
+
+                                    {this.state.filter === FILTERS.SUBSCRIBED &&
+                                        <div>
+                                            <Table
+                                                columns={columns}
+                                                rowKey={(item) => item._id}
+                                                dataSource={submissionsSubscribedData}
+                                                loading={this.props.loading}
+                                            />
+                                        </div>
+                                    }
                                 </Col>
                             </Row>
                             <Row>
@@ -159,6 +195,18 @@ export default class extends StandardPage {
                 </div>
             </div>
         )
+    }
+
+    clearFilters() {
+        this.setState({ filter: FILTERS.ALL })
+    }
+
+    setCreatedFilter() {
+        this.setState({ filter: FILTERS.CREATED })
+    }
+
+    setSubscribedFilter() {
+        this.setState({ filter: FILTERS.SUBSCRIBED })
     }
 
     linkSubmissionDetail(submissionId) {
