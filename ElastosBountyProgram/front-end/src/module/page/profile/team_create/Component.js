@@ -21,7 +21,7 @@ export default class extends StandardPage {
     ord_renderContent () {
 
         return (
-            <div>
+            <div className="c_ProfileContainer">
                 <div className="ebp-header-divider">
 
                 </div>
@@ -32,13 +32,13 @@ export default class extends StandardPage {
                         </div>
                         <div className="p_ProfileTeams p_admin_content">
                             <Row>
-                                <Col span={20} className="c_ProfileContainer admin-left-column wrap-box-user">
+                                <Col span={4} className="admin-left-column wrap-box-navigator">
+                                    <Navigator selectedItem={'profileTeams'}/>
+                                </Col>
+                                <Col span={20} className="admin-right-column wrap-box-user">
 
                                     <Divider className="">Create Team</Divider>
                                     <TeamCreateForm />
-                                </Col>
-                                <Col span={4} className="admin-right-column wrap-box-navigator">
-                                    <Navigator selectedItem={'profileTeams'}/>
                                 </Col>
                             </Row>
                         </div>
