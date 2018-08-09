@@ -8,6 +8,7 @@ export default createContainer(Component, (state) => {
         ...state.task,
         ownedTeams: state.team.all_teams,
         currentUserId: state.user.current_user_id,
+        currentUserAvatar: state.user.profile.avatar,
         loading: state.task.loading || state.team.loading
     }
 }, () => {

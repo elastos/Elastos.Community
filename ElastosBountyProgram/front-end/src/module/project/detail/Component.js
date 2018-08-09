@@ -1,7 +1,7 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
-import {Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Input, Form} from 'antd'
+import {Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Dropdown, Input, Form} from 'antd'
 import _ from 'lodash'
 import './style.scss'
 
@@ -140,7 +140,7 @@ export default class extends BaseComponent {
                                     <Select defaultValue="$me" className="team-selector pull-right">
                                         <Select.Option value="$me">
                                             Apply as myself
-                                            <Avatar size="small" type="user" className="pull-right"/>
+                                            <Avatar size="small" src={this.props.currentUserAvatar} className="pull-right"/>
                                         </Select.Option>
                                         {_.map(this.props.ownedTeams, (team) =>
                                             <Select.Option key={team._id} value={team._id}>
