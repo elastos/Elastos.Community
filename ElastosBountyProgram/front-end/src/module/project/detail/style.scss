@@ -4,7 +4,13 @@
 
 
 .c_Project {
-  .loading-spinner {
+  .team-selector {
+    width: 256px;
+    margin-right: $gap_0;
+  }
+
+  .team-application {
+    margin-bottom: $gap_0;
   }
 
   .top-section {

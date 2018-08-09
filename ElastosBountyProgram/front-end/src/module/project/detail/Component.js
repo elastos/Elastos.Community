@@ -2,7 +2,7 @@ import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
 
-import {Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin } from 'antd'
+import {Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Input } from 'antd'
 
 import './style.scss'
 
@@ -119,6 +119,18 @@ export default class extends BaseComponent {
                             <Row className="applications">
                                 <div>Pending Applications</div>
                             </Row>
+                        }
+                        {this.state.applying &&
+                            <div>
+                                <Input.TextArea rows={8} className="team-application" placeholder="Your application"/>
+                                <Button className="pull-right">
+                                    Apply
+                                </Button>
+                                <Select defaultValue="$me" className="team-selector pull-right">
+                                    <Select.Option value="$me">Apply as myself</Select.Option>
+                                </Select>
+                                <div class="clearfix"/>
+                            </div>
                         }
                     </div>
                 }
