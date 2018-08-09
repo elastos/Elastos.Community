@@ -50,29 +50,33 @@
             max-width: 200px;
           }
         }
+
         .domains-container {
           text-align: center;
         }
+
         .divider {
           border: 1px solid gainsboro;
           margin: $gap_3 0;
         }
       }
     }
+
     .col-right {
       border-left: 1px solid $border_gray;
-      padding: $gap_2 $gap_0 $gap_2 $gap_3;
+      padding: $gap_2 $gap_0 $gap_2 $gap_2;
 
       .title {
         span {
           color: $primary_color;
           font-size: 24px;
-          font-weight: bold;
         }
+
         .badge {
           padding-left: $gap_2;
         }
       }
+
       .leader {
         position: absolute;
         top: $gap_2;
@@ -80,32 +84,41 @@
         display: inline-block;
         text-align: right;
       }
+
       .content {
         display: block;
-        padding: $gap_0 $gap_1 $gap_0 $gap_1;
+        padding: $gap_0 $gap_2 $gap_0 $gap_2;
 
         .reward {
           text-align: right;
-          font-weight: bold;
           font-size: 24px;
         }
+
         .entry {
           margin: $gap_1 0;
         }
       }
+
       .divider {
         border: 1px solid gainsboro;
-        margin-right: $gap_1;
+        margin-right: $gap_2;
       }
+
       .description-title {
         font-weight: bold;
-        margin: $gap_0 $gap_1 $gap_0 0;
+        margin: $gap_0 $gap_2 $gap_0 0;
       }
+
       .description-content {
-        margin: $gap_0 $gap_1 $gap_0 0;
+        margin: $gap_0 $gap_2 $gap_0 0;
       }
     }
   }
+
+  .description-box {
+    padding-left: $gap_2;
+  }
+
   .actions {
     margin: $gap_2 0;
     text-align: center;
@@ -114,25 +127,20 @@
       margin-right: $gap_2;
       font-size: 18px;
     }
-    .colored-button {
-      margin: 0 5px;
-    }
-    .normal-button {
-      margin: 0 5px;
-    }
   }
+
   .contributors {
     .title {
-      font-weight: bold;
       font-size: 24px;
     }
+
     .no-borders {
       margin: 0 auto;
     }
   }
+
   .applications {
     .title {
-      font-weight: bold;
       font-size: 24px;
     }
   }

@@ -347,7 +347,7 @@ export default class extends BaseComponent {
                         {item.content}
                         <div className="ant-list-item-right-box">
                             <div className="pull-up">
-                                <Avatar size="large" icon="user" className="pull-right" src={item.owner.profile.avatar}/>
+                                <Avatar size="large" className="pull-right" src={item.owner.profile.avatar}/>
                                 <div class="clearfix"/>
                                 <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
                             </div>
