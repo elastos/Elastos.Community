@@ -13,7 +13,22 @@ import Footer from '@/module/layout/Footer/Container'
 
 const FormItem = Form.Item;
 
+const FILTERS = {
+    ALL: 'all',
+    ACTIVE: 'active',
+    APPLIED: 'applied'
+}
+
 export default class extends StandardPage {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            showMobile: false,
+            filter: FILTERS.ALL
+        }
+    }
+
     componentDidMount() {
         super.componentDidMount()
         this.props.getTeams(this.props.currentUserId)
@@ -30,7 +45,9 @@ export default class extends StandardPage {
             list: []
         };
     }
+    // TODO need to imeplement filtering functionality.
     ord_renderContent () {
+        const allTeams = this.props.all_teams;
         return (
             <div class="p_ProfileTeams">
                 <div className="ebp-header-divider">
@@ -57,7 +74,22 @@ export default class extends StandardPage {
                                     <div className="pull-right filter-group">
                                         <Button onClick={this.goCreatepage.bind(this)}>Create Team</Button>
                                     </div>
+                                    <Button.Group className="filter-group">
+                                        <Button
+                                            className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
+                                            onClick={this.clearFilters.bind(this)}>All</Button>
+                                        <Button
+                                            className={(this.state.filter === FILTERS.ACTIVE && 'selected') || ''}
+                                            onClick={this.setActiveFilter.bind(this)}>Active</Button>
+                                        <Button
+                                            className={(this.state.filter === FILTERS.APPLIED && 'selected') || ''}
+                                            onClick={this.setAppliedFilter.bind(this)}>Applied</Button>
+                                    </Button.Group>
+
                                     <div className="clearfix"/>
+                                    {this.state.filter === FILTERS.ALL && this.getListComponent(allTeams)}
+                                    {this.state.filter === FILTERS.ACTIVE && this.getListComponent(allTeams)}
+                                    {this.state.filter === FILTERS.APPLIED && this.getListComponent(allTeams)}
                                     {this.getListComponent()}
                                 </Col>
                             </Row>
@@ -87,8 +119,8 @@ export default class extends StandardPage {
         )
     }
 
-    getListComponent() {
-        const data = _.map(this.props.all_teams, (team, id) => {
+    getListComponent(teams) {
+        const data = _.map(teams, (team, id) => {
             return {
                 href: '',
                 title: team.name,
@@ -115,6 +147,18 @@ export default class extends StandardPage {
                 )}
             />
         )
+    }
+
+    clearFilters() {
+        this.setState({ filter: FILTERS.ALL })
+    }
+
+    setActiveFilter() {
+        this.setState({ filter: FILTERS.ACTIVE })
+    }
+
+    setAppliedFilter() {
+        this.setState({ filter: FILTERS.APPLIED })
     }
 
     goDetail(teamId) {
