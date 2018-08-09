@@ -8,9 +8,15 @@ import './style.scss'
 
 export default class extends BaseComponent {
 
+    ord_states() {
+        return {
+        }
+    }
+
     componentDidMount() {
-        const taskId = this.props.match.params.taskId
-        console.log(this.props.getTaskDetail(taskId));
+        const taskId = this.props.taskId
+        taskId && this.props.getTaskDetail(taskId)
+        console.log(taskId);
     }
 
     componentWillUnmount() {
@@ -19,6 +25,7 @@ export default class extends BaseComponent {
 
     ord_render () {
         console.log(this.props);
+        console.log(this.props.task);
         return (
             <div className="c_Project">
                 <Row className="top-section">

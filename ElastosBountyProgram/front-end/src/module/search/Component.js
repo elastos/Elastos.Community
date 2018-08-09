@@ -79,12 +79,11 @@ export default class extends BaseComponent {
         }, this.refetch.bind(this))
     }
 
-    showModal = (e) => {
+    showModal = (id) => {
         this.setState({
             showModal: true,
+            taskIndexClicked: id
         })
-
-        console.log(e.target);
     }
 
     handleModalOk = (e) => {
@@ -275,7 +274,7 @@ export default class extends BaseComponent {
                     footer={null}
                     width="70%"
                 >
-                    <ProjectDetail task={this.props.all_tasks[this.state.taskIndexClicked]}/>
+                    <ProjectDetail taskId={this.state.taskIndexClicked}/>
                 </Modal>
                 <Footer/>
             </div>

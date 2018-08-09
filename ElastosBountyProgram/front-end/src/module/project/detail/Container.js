@@ -1,16 +1,17 @@
 import {createContainer} from '@/util'
 import Component from './Component'
 import TaskService from '@/service/TaskService'
+import TeamService from '@/service/TeamService'
 
 export default createContainer(Component, (state) => {
-    console.log(state.task);
     return {
-        task: state.task.detail,
+        ...state.task,
         loading: state.task.loading
     }
 }, () => {
-
     const taskService = new TaskService()
+    const teamService = new TeamService()
+
     return {
         async getTaskDetail (taskId) {
             return taskService.get(taskId)
