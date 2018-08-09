@@ -267,7 +267,6 @@ export default class extends BaseComponent {
                     </Col>
                 </Row>
                 <Modal
-                    title="Basic Modal"
                     visible={this.state.showModal}
                     onOk={this.handleModalOk}
                     onCancel={this.handleModalCancel}

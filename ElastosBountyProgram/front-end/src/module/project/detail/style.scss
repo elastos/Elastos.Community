@@ -12,25 +12,31 @@
     border-radius: 5px 50px 5px 5px;
 
     .col-left {
-      .col-left-div {
-        width: 100%;
-      }
-
       border-right: 1px solid $text_light_gray;
       padding: 20px;
       display: flex;
       align-items: stretch;
       height: 350px;
 
-      img {
-        margin: 0 auto;
-        width: auto;
-        max-height: 200px;
-      }
+      .left-container {
+        width: 100%;
 
-      .divider {
-        border: 1px solid gainsboro;
-        margin: 10px 0;
+        .pictures-container {
+          width: 100%;
+
+          img {
+            margin: 0 auto;
+            width: auto;
+            max-height: 200px;
+          }
+        }
+        .domains-container {
+          text-align: center;
+        }
+        .divider {
+          border: 1px solid gainsboro;
+          margin: 10px 0;
+        }
       }
     }
     .col-right {
