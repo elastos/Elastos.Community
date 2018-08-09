@@ -16,7 +16,7 @@ export default class extends BaseComponent {
     componentDidMount() {
         const taskId = this.props.taskId
         taskId && this.props.getTaskDetail(taskId)
-        console.log(taskId);
+        console.log('  detail Component received: ', taskId);
     }
 
     componentWillUnmount() {
@@ -24,8 +24,7 @@ export default class extends BaseComponent {
     }
 
     ord_render () {
-        console.log(this.props);
-        console.log(this.props.task);
+        console.log('  detail Component rendering with ', this.props)
         return (
             <div className="c_Project">
                 <Row className="top-section">

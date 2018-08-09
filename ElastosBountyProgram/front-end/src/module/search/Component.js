@@ -30,7 +30,7 @@ export default class extends BaseComponent {
             skillsetShowAllEntries: false,
             categoryShowAllEntries: false,
             showModal: false,
-            taskIndexClicked: 0
+            taskDetailId: 0
         }
     }
 
@@ -82,7 +82,7 @@ export default class extends BaseComponent {
     showModal = (id) => {
         this.setState({
             showModal: true,
-            taskIndexClicked: id
+            taskDetailId: id
         })
     }
 
@@ -274,7 +274,7 @@ export default class extends BaseComponent {
                     footer={null}
                     width="70%"
                 >
-                    <ProjectDetail taskId={this.state.taskIndexClicked}/>
+                    <ProjectDetail taskId={this.state.taskDetailId}/>
                 </Modal>
                 <Footer/>
             </div>
