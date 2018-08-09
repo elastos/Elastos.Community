@@ -172,6 +172,41 @@ export default class extends BaseComponent {
         )
     }
 
+    getApplicationForm() {
+        return (
+            <Form className="application-form">
+                <Form.Item className="no-margin">
+                    <Input.TextArea rows={8} className="team-application"
+                        placeholder="Tell us why you want to join."/>
+                </Form.Item>
+                <Button className="pull-left" onClick={() => this.setState({ applying: false })}>
+                    Cancel
+                </Button>
+                <Button className="pull-right" type="primary">
+                    Apply
+                </Button>
+                <Form.Item className="pull-right">
+                    <Select defaultValue="$me" className="team-selector pull-right">
+                        <Select.Option value="$me">
+                            Apply as myself
+                            <Avatar size="small" src={this.props.currentUserAvatar} className="pull-right"/>
+                        </Select.Option>
+                        {_.map(this.props.ownedTeams, (team) =>
+                            <Select.Option key={team._id} value={team._id}>
+                                Apply with {team.name}
+                                {!_.isEmpty(team.pictures)
+                                    ? <Avatar size="small" src={team.pictures[0].thumbUrl} className="pull-right"/>
+                                    : <Avatar size="small" type="user" className="pull-right"/>
+                                }
+                            </Select.Option>
+                        )}
+                    </Select>
+                </Form.Item>
+                <div class="clearfix"/>
+            </Form>
+        )
+    }
+
     ord_render () {
         const loading = _.isEmpty(this.props.detail)
         console.log(this.props.detail);
@@ -191,56 +226,24 @@ export default class extends BaseComponent {
                         </Row>
                         <Row className="actions">
                             <span className="callToActionText">Currently Hiring!</span>
-                            <Button className="colored-bottom" onClick={() => this.setState({ applying: true })}>
-                                Join Project</Button>
-                            <Button className="normal-bottom">Message</Button>
-                            <Button className="normal-bottom">Submit Bug</Button>
+                            <Button type="primary" onClick={() => this.setState({ applying: true })}>
+                                Join Project
+                            </Button>
+                            <Button>
+                                Message
+                            </Button>
                         </Row>
 
-                        {!this.state.applying &&
-                            <Row className="contributors">
-                                <div className="title">Current Contributors</div>
-                                {this.renderCurrentContributors()}
-                            </Row>
-                        }
-                        {!this.state.applying &&
-                            <Row className="applications">
-                                <div className="title">Pending Applications</div>
-                                {this.renderCurrentApplicants()}
-                            </Row>
-                        }
-                        {this.state.applying &&
-                            <Form className="application-form">
-                                <Form.Item className="no-margin">
-                                    <Input.TextArea rows={8} className="team-application"
-                                        placeholder="Tell us why you want to join."/>
-                                </Form.Item>
-                                <Button className="pull-left" onClick={() => this.setState({ applying: false })}>
-                                    Cancel
-                                </Button>
-                                <Button className="pull-right" type="primary">
-                                    Apply
-                                </Button>
-                                <Form.Item className="pull-right">
-                                    <Select defaultValue="$me" className="team-selector pull-right">
-                                        <Select.Option value="$me">
-                                            Apply as myself
-                                            <Avatar size="small" src={this.props.currentUserAvatar} className="pull-right"/>
-                                        </Select.Option>
-                                        {_.map(this.props.ownedTeams, (team) =>
-                                            <Select.Option key={team._id} value={team._id}>
-                                                Apply with {team.name}
-                                                {!_.isEmpty(team.pictures)
-                                                    ? <Avatar size="small" src={team.pictures[0].thumbUrl} className="pull-right"/>
-                                                    : <Avatar size="small" type="user" className="pull-right"/>
-                                                }
-                                            </Select.Option>
-                                        )}
-                                    </Select>
-                                </Form.Item>
-                                <div class="clearfix"/>
-                            </Form>
-                        }
+                        {this.state.applying && this.getApplicationForm()}
+
+                        <Row className="contributors">
+                            <div className="title">Current Contributors</div>
+                            {this.renderCurrentContributors()}
+                        </Row>
+                        <Row className="applications">
+                            <div className="title">Pending Applications</div>
+                            {this.renderCurrentApplicants()}
+                        </Row>
                     </div>
                 }
             </div>

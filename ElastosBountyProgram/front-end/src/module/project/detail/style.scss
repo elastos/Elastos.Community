@@ -9,6 +9,12 @@
     margin-right: $gap_0;
   }
 
+  .actions {
+    .ant-btn:not(:last-child) {
+      margin-right: $gap_0;
+    }
+  }
+
   .team-application {
     margin-bottom: $gap_0;
   }
@@ -102,29 +108,8 @@
     text-align: center;
 
     .callToActionText {
-      margin-right: 25px;
+      margin-right: $gap_2;
       font-size: 18px;
-    }
-    .colored-button {
-      background-color: $primary_light_color;
-      border-color: $primary_color;
-      color: white;
-      margin: 0 5px;
-    }
-    .colored-button:hover {
-      background-color: $primary_color;
-      border-color: $primary_light_color;
-      color: white;
-    }
-    .normal-button {
-      border-color: $primary_color;
-      color: $text_dark_gray;
-      margin: 0 5px;
-    }
-    .normal-button:hover {
-      background-color: $primary_color;
-      border-color: $primary_light_color;
-      color: white;
     }
   }
   .contributors {
