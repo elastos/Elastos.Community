@@ -351,7 +351,8 @@ export default class extends BaseComponent {
                                 <div class="clearfix"/>
                                 <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
                             </div>
-                            <Button type="primary" className="pull-down">Apply</Button>
+                            <Button onClick={!this.isLookingForTeam() && this.showModal.bind(this, item.id) || _.noop}
+                                type="primary" className="pull-down">Apply</Button>
                         </div>
                     </List.Item>
                 )}
