@@ -8,6 +8,7 @@ import Comments from '@/module/common/comments/Container'
 
 // TODO: admin detail should also be in a new component too to be consistent
 import TaskPublicDetail from './detail/Container'
+import ProjectPublicDetail from '@/module/project/detail/Container'
 
 import './style.scss'
 import moment from 'moment/moment'
@@ -43,7 +44,9 @@ export default class extends BaseComponent {
     }
 
     renderDetail() {
-        return <TaskPublicDetail task={this.props.task} page={this.props.page}/>
+        return this.props.task.type === TASK_TYPE.PROJECT
+            ? <ProjectPublicDetail taskId={this.props.task._id}/>
+            : <TaskPublicDetail task={this.props.task} page={this.props.page}/>
     }
 
     renderAdminHeader() {

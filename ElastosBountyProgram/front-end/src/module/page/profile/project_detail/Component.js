@@ -30,7 +30,7 @@ export default class extends StandardPage {
 
     ord_renderContent () {
         return (
-            <div className="p_ProfileTaskDetail">
+            <div className="p_ProfileProjectDetail">
                 <div className="ebp-header-divider">
 
                 </div>
@@ -51,7 +51,7 @@ export default class extends StandardPage {
                         <div className="p_admin_content">
                             <Row>
                                 <Col span={4} className="admin-left-column wrap-box-navigator">
-                                    <Navigator selectedItem="profileTasks" />
+                                    <Navigator selectedItem="profileProjects" />
                                 </Col>
                                 <Col span={20} className="c_ProfileContainer admin-right-column wrap-box-user">
                                     <TaskDetail task={this.props.task} />

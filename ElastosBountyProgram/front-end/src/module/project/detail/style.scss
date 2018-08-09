@@ -36,6 +36,7 @@
 
     .col-left {
       display: flex;
+      width: 250px;
 
       .left-container {
         width: 100%;
@@ -95,6 +96,7 @@
 
       .content {
         display: block;
+        position: relative;
         padding: $gap_0 $gap_2 0 $gap_2;
         height: 190px;
 

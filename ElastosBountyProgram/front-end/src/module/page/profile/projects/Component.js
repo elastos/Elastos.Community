@@ -427,7 +427,7 @@ export default class extends StandardPage {
     }
 
     linkTaskDetail(taskId) {
-        this.props.history.push(`/profile/task-detail/${taskId}`)
+        this.props.history.push(`/profile/project-detail/${taskId}`)
     }
 
     linkTaskCandidateDetail(taskId, taskCandidateId) {

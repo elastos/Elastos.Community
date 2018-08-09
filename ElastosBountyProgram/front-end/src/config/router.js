@@ -34,6 +34,7 @@ import ProfileTeamsPage from '@/module/page/profile/teams/Container'
 import ProfileTeamDetailPage from '@/module/page/profile/team_detail/Container'
 import ProfileTeamCreatePage from '@/module/page/profile/team_create/Container'
 import ProfileProjectsPage from '@/module/page/profile/projects/Container'
+import ProfileProjectDetailPage from '@/module/page/profile/project_detail/Container'
 import ProfileSubmissionsPage from '@/module/page/profile/submissions/Container'
 import ProfileCommunitiesPage from '@/module/page/profile/communities/Container'
 import ProfileSubmissionDetailPage from '@/module/page/profile/submission_detail/Container'
@@ -207,6 +208,10 @@ export default [
     {
         path: '/profile/projects',
         page: ProfileProjectsPage
+    },
+    {
+        path: '/profile/project-detail/:taskId',
+        page: ProfileProjectDetailPage
     },
     {
         path: '/profile/teams',
