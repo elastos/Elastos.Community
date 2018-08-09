@@ -267,6 +267,7 @@ export default class extends BaseComponent {
                     </Col>
                 </Row>
                 <Modal
+                    className="project-detail-nobar"
                     visible={this.state.showModal}
                     onOk={this.handleModalOk}
                     onCancel={this.handleModalCancel}

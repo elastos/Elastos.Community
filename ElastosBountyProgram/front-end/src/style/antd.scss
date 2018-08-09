@@ -175,6 +175,15 @@
   }
 }
 
+.ant-modal.project-detail-nobar {
+  .ant-modal-close-x {
+    font-size: 40px;
+    position: relative;
+    top: $gap_1;
+    right: $gap_1;
+  }
+}
+
 // Helpers
 .no-margin {
   margin: 0 !important;
