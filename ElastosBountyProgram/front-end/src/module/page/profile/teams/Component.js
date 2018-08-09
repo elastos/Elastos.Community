@@ -5,10 +5,10 @@ import config from '@/config';
 import _ from 'lodash'
 import './style.scss'
 import '../../admin/admin.scss'
-
 import { Col, Row, Icon, Form, Input, Breadcrumb, Button, Divider, Table, List, Carousel } from 'antd'
+import { TEAM_USER_STATUS } from '@/constant'
 import MediaQuery from 'react-responsive'
-import moment from "moment/moment";
+import moment from 'moment/moment'
 import Footer from '@/module/layout/Footer/Container'
 
 const FormItem = Form.Item;
@@ -16,7 +16,8 @@ const FormItem = Form.Item;
 const FILTERS = {
     ALL: 'all',
     ACTIVE: 'active',
-    APPLIED: 'applied'
+    APPLIED: 'applied',
+    REJECTED: 'rejected'
 }
 
 export default class extends StandardPage {
@@ -31,13 +32,31 @@ export default class extends StandardPage {
 
     componentDidMount() {
         super.componentDidMount()
-        this.props.getTeams({
-            profileListFor: this.props.currentUserId
-        })
+        this.refetch()
     }
 
     componentWillUnmount() {
         this.props.resetTeams()
+    }
+
+    refetch() {
+        let query = {
+            teamHasUser: this.props.currentUserId
+        }
+
+        if (this.state.filter === FILTERS.ACTIVE) {
+            query.teamHasUserStatus = TEAM_USER_STATUS.NORMAL
+        }
+
+        if (this.state.filter === FILTERS.APPLIED) {
+            query.teamHasUserStatus = TEAM_USER_STATUS.PENDING
+        }
+
+        if (this.state.filter === FILTERS.REJECTED) {
+            query.teamHasUserStatus = TEAM_USER_STATUS.REJECT
+        }
+
+        this.props.getTeams(query)
     }
 
     ord_states() {
@@ -49,8 +68,7 @@ export default class extends StandardPage {
     }
 
     ord_renderContent () {
-        const allTeams = this.props.all_teams
-        const { activeTeams, appliedTeams } = this.props
+        const teams = this.props.all_teams
 
         return (
             <div class="p_ProfileTeams">
@@ -88,12 +106,13 @@ export default class extends StandardPage {
                                         <Button
                                             className={(this.state.filter === FILTERS.APPLIED && 'selected') || ''}
                                             onClick={this.setAppliedFilter.bind(this)}>Applied</Button>
+                                        <Button
+                                            className={(this.state.filter === FILTERS.REJECTED && 'selected') || ''}
+                                            onClick={this.setRejectedFilter.bind(this)}>Rejected</Button>
                                     </Button.Group>
 
                                     <div className="clearfix"/>
-                                    {this.state.filter === FILTERS.ALL && this.getListComponent(allTeams)}
-                                    {this.state.filter === FILTERS.ACTIVE && this.getListComponent(activeTeams)}
-                                    {this.state.filter === FILTERS.APPLIED && this.getListComponent(appliedTeams)}
+                                    {this.getListComponent()}
                                 </Col>
                             </Row>
                             <Footer/>
@@ -122,7 +141,8 @@ export default class extends StandardPage {
         )
     }
 
-    getListComponent(teams) {
+    getListComponent() {
+        const teams = this.props.all_teams
         const data = _.map(teams, (team, id) => {
             return {
                 href: '',
@@ -153,15 +173,19 @@ export default class extends StandardPage {
     }
 
     clearFilters() {
-        this.setState({ filter: FILTERS.ALL })
+        this.setState({ filter: FILTERS.ALL }, this.refetch.bind(this))
     }
 
     setActiveFilter() {
-        this.setState({ filter: FILTERS.ACTIVE })
+        this.setState({ filter: FILTERS.ACTIVE }, this.refetch.bind(this))
     }
 
     setAppliedFilter() {
-        this.setState({ filter: FILTERS.APPLIED })
+        this.setState({ filter: FILTERS.APPLIED }, this.refetch.bind(this))
+    }
+
+    setRejectedFilter() {
+        this.setState({ filter: FILTERS.REJECTED }, this.refetch.bind(this))
     }
 
     goDetail(teamId) {

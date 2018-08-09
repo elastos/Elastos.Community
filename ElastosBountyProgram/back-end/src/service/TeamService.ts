@@ -260,9 +260,15 @@ export default class extends Base {
 
         if (param.teamHasUser) {
             const db_user_team = this.getDBModel('User_Team')
-            const userTeams = await db_user_team.list({
+            let listObj:any = {
                 userId: param.teamHasUser
-            })
+            }
+
+            if (param.teamHasUserStatus) {
+                listObj.status = { $in: param.teamHasUserStatus.split(',') }
+            }
+
+            const userTeams = await db_user_team.list(listObj)
             query.$or = [
                 { _id: {$in: _.map(userTeams, 'teamId')} }
             ]
