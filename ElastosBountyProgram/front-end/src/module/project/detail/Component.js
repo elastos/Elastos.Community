@@ -186,7 +186,15 @@ export default class extends BaseComponent {
                     Apply
                 </Button>
                 <Form.Item className="pull-right">
-                    <Select defaultValue="$me" className="team-selector pull-right">
+                    <Select defaultValue="$me" className="team-selector pull-right"
+                        // https://github.com/vazco/uniforms/issues/228
+                        getPopupContainer={x => {
+                            while (x && x.tagName.toLowerCase() !== 'form') {
+                                x = x.parentElement;
+                            }
+
+                            return x;
+                        }}>
                         <Select.Option value="$me">
                             Apply as myself
                             <Avatar size="small" src={this.props.currentUserAvatar} className="pull-right"/>
