@@ -1,9 +1,8 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
-
-import {Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Input, Form } from 'antd'
-
+import {Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Input, Form} from 'antd'
+import _ from 'lodash'
 import './style.scss'
 
 export default class extends BaseComponent {
@@ -15,11 +14,15 @@ export default class extends BaseComponent {
 
     componentDidMount() {
         const taskId = this.props.taskId
-        taskId && this.props.getTaskDetail(taskId)
+        this.props.getTaskDetail(taskId)
+        this.props.getTeams({
+            owner: this.props.currentUserId
+        })
     }
 
     componentWillUnmount() {
         this.props.resetTaskDetail()
+        this.props.resetAllTeams()
     }
 
     renderUpperLeftBox() {
@@ -52,15 +55,15 @@ export default class extends BaseComponent {
 
     renderUpperRightBox() {
         const detail = this.props.detail
-        const name = detail.name || "-"
-        const leaderImage = detail.createdBy.profile.avatar || ""
-        const leaderName = detail.createdBy.profile ?
-            (detail.createdBy.profile.firstName + ' ' + detail.createdBy.profile.lastName) : "-"
-        const deadline = detail.date || "-"
-        const progress = detail.progress || "-"
-        const teamSize = detail.candidateCompleted.length || "-"
-        const reward = detail.reward.isUsd ? detail.reward.usd + " USD" : detail.reward.ela + " ELA"
-        const description = detail.descBreakdown || detail.description || "-"
+        const name = detail.name || ''
+        const leaderName = detail.createdBy.profile
+            ? (detail.createdBy.profile.firstName + ' ' + detail.createdBy.profile.lastName)
+            : ''
+        const deadline = detail.date || ''
+        const progress = detail.progress || ''
+        const teamSize = detail.candidateCompleted.length || ''
+        const reward = detail.reward.isUsd ? detail.reward.usd + ' USD' : detail.reward.ela + ' ELA'
+        const description = detail.descBreakdown || detail.description || ''
 
         return (
             <div>
@@ -74,7 +77,7 @@ export default class extends BaseComponent {
                 </div>
                 <div className="content">
                     <div className="entry">Deadline: {deadline}</div>
-                    <div className="entry">Progress. {progress}</div>
+                    <div className="entry">Progress: {progress}</div>
                     <div className="entry">Team Size: {teamSize}</div>
                     <div className="reward">{reward}</div>
                 </div>
@@ -122,9 +125,10 @@ export default class extends BaseComponent {
                             </Row>
                         }
                         {this.state.applying &&
-                            <Form>
+                            <Form className="application-form">
                                 <Form.Item className="no-margin">
-                                    <Input.TextArea rows={8} className="team-application" placeholder="Your application"/>
+                                    <Input.TextArea rows={8} className="team-application"
+                                        placeholder="Tell us why you want to join."/>
                                 </Form.Item>
                                 <Button className="pull-left" onClick={() => this.setState({ applying: false })}>
                                     Cancel
@@ -134,7 +138,19 @@ export default class extends BaseComponent {
                                 </Button>
                                 <Form.Item className="pull-right">
                                     <Select defaultValue="$me" className="team-selector pull-right">
-                                        <Select.Option value="$me">Apply as myself</Select.Option>
+                                        <Select.Option value="$me">
+                                            Apply as myself
+                                            <Avatar size="small" type="user" className="pull-right"/>
+                                        </Select.Option>
+                                        {_.map(this.props.ownedTeams, (team) =>
+                                            <Select.Option key={team._id} value={team._id}>
+                                                Apply with {team.name}
+                                                {!_.isEmpty(team.pictures)
+                                                    ? <Avatar size="small" src={team.pictures[0].thumbUrl} className="pull-right"/>
+                                                    : <Avatar size="small" type="user" className="pull-right"/>
+                                                }
+                                            </Select.Option>
+                                        )}
                                     </Select>
                                 </Form.Item>
                                 <div class="clearfix"/>

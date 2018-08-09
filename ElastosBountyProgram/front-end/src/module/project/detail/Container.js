@@ -6,19 +6,29 @@ import TeamService from '@/service/TeamService'
 export default createContainer(Component, (state) => {
     return {
         ...state.task,
-        loading: state.task.loading
+        ownedTeams: state.team.all_teams,
+        currentUserId: state.user.current_user_id,
+        loading: state.task.loading || state.team.loading
     }
 }, () => {
     const taskService = new TaskService()
     const teamService = new TeamService()
 
     return {
-        async getTaskDetail (taskId) {
+        async getTaskDetail(taskId) {
             return taskService.get(taskId)
         },
 
         async resetTaskDetail() {
             return taskService.resetTaskDetail()
         },
+
+        async getTeams(query) {
+            return teamService.index(query)
+        },
+
+        async resetAllTeams() {
+            return teamService.resetAllTeams()
+        }
     }
 })
