@@ -1,14 +1,13 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
-import {Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Table, Input, Form} from 'antd'
+import {message, Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Table, Input, Form} from 'antd'
 import _ from 'lodash'
 import './style.scss'
 
 const { Column } = Table;
 
-export default class extends BaseComponent {
-
+class C extends BaseComponent {
     ord_states() {
         return {
         }
@@ -174,43 +173,79 @@ export default class extends BaseComponent {
         )
     }
 
+    handleSubmit(e) {
+        e.preventDefault()
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                const isSelf = (values.applicant === '$me')
+                const userId = isSelf && this.props.currentUserId
+                const teamId = !isSelf && values.applicant
+
+                this.props.applyToTask(this.props.taskId, userId, teamId, values.applyMsg)
+                    .then(() => {
+                        this.setState({ applying: false })
+                        message.success('Application sent. Thank you!')
+                    })
+            }
+        })
+    }
+
     getApplicationForm() {
+        const {getFieldDecorator} = this.props.form
+        const applyMsg_fn = getFieldDecorator('applyMsg', {
+            rules: [{required: true, message: 'Application is required'}],
+            initialValue: ''
+        })
+        const applyMsg_el = (
+            <Input.TextArea rows={8} className="team-application"
+                placeholder="Tell us why you want to join."/>
+        )
+        const applyMsgPanel = applyMsg_fn(applyMsg_el)
+
+        const applicant_fn = getFieldDecorator('applicant', {
+            rules: [],
+            initialValue: '$me'
+        })
+        const applicant_el = (
+            <Select className="team-selector pull-right"
+                // https://github.com/vazco/uniforms/issues/228
+                getPopupContainer={x => {
+                    while (x && x.tagName.toLowerCase() !== 'form') {
+                        x = x.parentElement;
+                    }
+
+                    return x;
+                }}>
+                <Select.Option value="$me">
+                    Apply as myself
+                    <Avatar size="small" src={this.props.currentUserAvatar} className="pull-right"/>
+                </Select.Option>
+                {_.map(this.props.ownedTeams, (team) =>
+                    <Select.Option key={team._id} value={team._id}>
+                        Apply with {team.name}
+                        {!_.isEmpty(team.pictures)
+                            ? <Avatar size="small" src={team.pictures[0].thumbUrl} className="pull-right"/>
+                            : <Avatar size="small" type="user" className="pull-right"/>
+                        }
+                    </Select.Option>
+                )}
+            </Select>
+        )
+        const applicantPanel = applicant_fn(applicant_el)
+
         return (
-            <Form className="application-form">
+            <Form onSubmit={this.handleSubmit.bind(this)} className="application-form">
                 <Form.Item className="no-margin">
-                    <Input.TextArea rows={8} className="team-application"
-                        placeholder="Tell us why you want to join."/>
+                    {applyMsgPanel}
                 </Form.Item>
-                <Button className="pull-left" onClick={() => this.setState({ applying: false })}>
+                <Button className="d_btn pull-left" onClick={() => this.setState({ applying: false })}>
                     Cancel
                 </Button>
-                <Button className="pull-right" type="primary">
+                <Button className="d_btn pull-right" type="primary" htmlType="submit">
                     Apply
                 </Button>
                 <Form.Item className="pull-right">
-                    <Select defaultValue="$me" className="team-selector pull-right"
-                        // https://github.com/vazco/uniforms/issues/228
-                        getPopupContainer={x => {
-                            while (x && x.tagName.toLowerCase() !== 'form') {
-                                x = x.parentElement;
-                            }
-
-                            return x;
-                        }}>
-                        <Select.Option value="$me">
-                            Apply as myself
-                            <Avatar size="small" src={this.props.currentUserAvatar} className="pull-right"/>
-                        </Select.Option>
-                        {_.map(this.props.ownedTeams, (team) =>
-                            <Select.Option key={team._id} value={team._id}>
-                                Apply with {team.name}
-                                {!_.isEmpty(team.pictures)
-                                    ? <Avatar size="small" src={team.pictures[0].thumbUrl} className="pull-right"/>
-                                    : <Avatar size="small" type="user" className="pull-right"/>
-                                }
-                            </Select.Option>
-                        )}
-                    </Select>
+                    {applicantPanel}
                 </Form.Item>
                 <div class="clearfix"/>
             </Form>
@@ -219,7 +254,6 @@ export default class extends BaseComponent {
 
     ord_render () {
         const loading = _.isEmpty(this.props.detail)
-        console.log(this.props.detail);
         return (
             <div className="c_Project">
                 { loading && <Spin className="loading-spinner" />}
@@ -246,17 +280,24 @@ export default class extends BaseComponent {
 
                         {this.state.applying && this.getApplicationForm()}
 
-                        <Row className="contributors">
-                            <div className="title">Current Contributors</div>
-                            {this.renderCurrentContributors()}
-                        </Row>
-                        <Row className="applications">
-                            <div className="title">Pending Applications</div>
-                            {this.renderCurrentApplicants()}
-                        </Row>
+                        {!this.state.applying &&
+                            <Row className="contributors">
+                                <div className="title">Current Contributors</div>
+                                {this.renderCurrentContributors()}
+                            </Row>
+                        }
+
+                        {!this.state.applying &&
+                            <Row className="applications">
+                                <div className="title">Pending Applications</div>
+                                {this.renderCurrentApplicants()}
+                            </Row>
+                        }
                     </div>
                 }
             </div>
         )
     }
 }
+
+export default Form.create()(C)

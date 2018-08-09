@@ -132,6 +132,7 @@ export default class extends BaseService {
     async pushCandidate(taskId, userId, teamId, applyMsg) {
 
         const taskRedux = this.store.getRedux('task')
+        this.dispatch(taskRedux.actions.loading_update(true))
 
         const result = await api_request({
             path: '/api/task/addCandidate',
@@ -144,10 +145,10 @@ export default class extends BaseService {
             }
         })
 
+        this.dispatch(taskRedux.actions.loading_update(false))
+
         const curTaskDetail = this.store.getState().task.detail
-
         curTaskDetail.candidates.push(result)
-
         this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
 
         return result
