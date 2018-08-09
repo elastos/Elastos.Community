@@ -341,7 +341,7 @@ export default class extends BaseComponent {
                         extra={this.getCarousel(item)}
                     >
                         <List.Item.Meta
-                            title={<a onClick={!this.isLookingForTeam() && this.showModal.bind(this, item.id)}>{item.title}</a>}
+                            title={<a onClick={!this.isLookingForTeam() && this.showModal.bind(this, item.id) || _.noop}>{item.title}</a>}
                             description={item.description}
                         />
                         {item.content}
