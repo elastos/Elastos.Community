@@ -53,6 +53,7 @@ export default class extends BaseComponent {
     renderUpperRightBox() {
         const detail = this.props.detail
         const name = detail.name || "-"
+        const leaderImage = detail.createdBy.profile.avatar || ""
         const leaderName = detail.createdBy.profile ?
             (detail.createdBy.profile.firstName + ' ' + detail.createdBy.profile.lastName) : "-"
         const deadline = detail.date || "-"
@@ -68,7 +69,7 @@ export default class extends BaseComponent {
                     <Icon className="badge" type="home"/>
                 </div>
                 <div className="leader">
-                    <Avatar size="64" style={{ backgroundColor: '#87d068' }} icon="user" />
+                    <Avatar size="large" src={leaderImage} />
                     <div>Leader: {leaderName}</div>
                 </div>
                 <div className="content">
@@ -104,9 +105,9 @@ export default class extends BaseComponent {
                         </Row>
                         <Row className="actions">
                             <span className="callToActionText">Currently Hiring!</span>
-                            <Button className="colored-bottom">Join Project</Button>
-                            <Button className="normal-bottom">Message</Button>
-                            <Button className="normal-bottom">Submit Bug</Button>
+                            <Button className="colored-button">Join Project</Button>
+                            <Button className="normal-button">Message</Button>
+                            <Button className="normal-button">Submit Bug</Button>
                         </Row>
                         <Row className="contributors">
                             <div>Current Contributors</div>

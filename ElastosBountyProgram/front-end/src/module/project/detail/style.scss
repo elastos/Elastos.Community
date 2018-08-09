@@ -12,11 +12,9 @@
     border-radius: 5px 50px 5px 5px;
 
     .col-left {
-      border-right: 1px solid $text_light_gray;
       padding: 20px;
       display: flex;
       align-items: stretch;
-      height: 350px;
 
       .left-container {
         width: 100%;
@@ -40,6 +38,7 @@
       }
     }
     .col-right {
+      border-left: 1px solid $text_light_gray;
       padding: 20px 20px 20px 20px;
 
       .title {
@@ -91,21 +90,23 @@
       margin-right: 25px;
       font-size: 18px;
     }
-    .colored-bottom {
+    .colored-button {
       background-color: $primary_light_color;
       border-color: $primary_color;
       color: white;
+      margin: 0 5px;
     }
-    .colored-bottom:hover {
+    .colored-button:hover {
       background-color: $primary_color;
       border-color: $primary_light_color;
       color: white;
     }
-    .normal-bottom {
+    .normal-button {
       border-color: $primary_color;
       color: $text_dark_gray;
+      margin: 0 5px;
     }
-    .normal-bottom:hover {
+    .normal-button:hover {
       background-color: $primary_color;
       border-color: $primary_light_color;
       color: white;
