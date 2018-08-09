@@ -4,8 +4,17 @@ import TaskService from '@/service/TaskService'
 import TeamService from '@/service/TeamService'
 
 export default createContainer(Component, (state) => {
+    let page = 'PUBLIC' // default
+
+    if (/^\/admin/.test(state.router.location.pathname)) {
+        page = 'ADMIN'
+    } else if (/^\/profile/.test(state.router.location.pathname)) {
+        page = 'LEADER'
+    }
+
     return {
         ...state.task,
+        page,
         ownedTeams: state.team.all_teams,
         currentUserId: state.user.current_user_id,
         currentUserAvatar: state.user.profile.avatar,

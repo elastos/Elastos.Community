@@ -4,6 +4,7 @@ import { Form, Col, Row, List, Avatar, Icon, Divider, Button, Input } from 'antd
 import config from '@/config'
 import './style.scss'
 import moment from 'moment'
+import _ from 'lodash'
 
 const TextArea = Input.TextArea
 const FormItem = Form.Item
@@ -59,10 +60,9 @@ class C extends BaseComponent {
     }
 
     renderHeader() {
-        return <div>
-            <Divider>Comments</Divider>
-            <div className="clearfix"/>
-        </div>
+        return (
+            <h3 className="no-margin">Comments</h3>
+        )
     }
 
     getInputProps() {
@@ -129,12 +129,18 @@ class C extends BaseComponent {
             </Form>) : null;
     }
 
+    getModelId() {
+        return _.isString(this.props.model) // Bit naive IMPROVEME
+            ? this.props.model
+            : this.props.model._id
+    }
+
     subscribe() {
-        this.props.subscribe(this.props.type, this.props.model._id)
+        this.props.subscribe(this.props.type, this.getModelId())
     }
 
     unsubscribe() {
-        this.props.unsubscribe(this.props.type, this.props.model._id)
+        this.props.unsubscribe(this.props.type, this.getModelId())
     }
 
     renderComments() {
@@ -212,7 +218,7 @@ class C extends BaseComponent {
                 this.props.postComment(this.props.type,
                     this.props.reduxType,
                     this.props.detailReducer,
-                    this.props.model._id,
+                    this.getModelId(),
                     values.comment).then(() => {
                         this.props.form.resetFields()
                     })

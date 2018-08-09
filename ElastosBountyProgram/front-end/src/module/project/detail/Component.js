@@ -4,6 +4,7 @@ import moment from 'moment'
 import {message, Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Table, Input, Form} from 'antd'
 import _ from 'lodash'
 import './style.scss'
+import Comments from '@/module/common/comments/Container'
 
 const { Column } = Table;
 
@@ -254,6 +255,9 @@ class C extends BaseComponent {
 
     ord_render () {
         const loading = _.isEmpty(this.props.detail)
+        const isTaskOwner = (this.props.task &&
+            this.props.task.createdBy && this.props.task.createdBy._id) === this.props.currentUserId
+
         return (
             <div className="c_Project">
                 { loading && <Spin className="loading-spinner" />}
@@ -268,29 +272,38 @@ class C extends BaseComponent {
                                 {this.renderUpperRightBox()}
                             </Col>
                         </Row>
-                        <Row className="actions">
-                            <span className="callToActionText">Currently Hiring!</span>
-                            <Button type="primary" onClick={() => this.setState({ applying: true })}>
-                                Join Project
-                            </Button>
-                            <Button>
-                                Message
-                            </Button>
-                        </Row>
+
+                        {this.props.page !== 'LEADER' &&
+                            <Row className="actions">
+                                <span className="callToActionText">Currently Hiring!</span>
+                                <Button type="primary" onClick={() => this.setState({ applying: true })}>
+                                    Join Project
+                                </Button>
+                                <Button>
+                                    Message
+                                </Button>
+                            </Row>
+                        }
 
                         {this.state.applying && this.getApplicationForm()}
 
                         {!this.state.applying &&
                             <Row className="contributors">
-                                <div className="title">Current Contributors</div>
+                                <h3 className="no-margin">Current Contributors</h3>
                                 {this.renderCurrentContributors()}
                             </Row>
                         }
 
                         {!this.state.applying &&
                             <Row className="applications">
-                                <div className="title">Pending Applications</div>
+                                <h3 className="no-margin">Pending Applications</h3>
                                 {this.renderCurrentApplicants()}
+                            </Row>
+                        }
+
+                        {this.props.page === 'LEADER' &&
+                            <Row>
+                                <Comments type="task" canPost={true} canSubscribe={!isTaskOwner} model={this.props.taskId}/>
                             </Row>
                         }
                     </div>
