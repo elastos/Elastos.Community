@@ -275,7 +275,6 @@ class C extends BaseComponent {
 
                         {this.props.page !== 'LEADER' &&
                             <Row className="actions">
-                                <span className="callToActionText">Currently Hiring!</span>
                                 <Button type="primary" onClick={() => this.setState({ applying: true })}>
                                     Join Project
                                 </Button>
