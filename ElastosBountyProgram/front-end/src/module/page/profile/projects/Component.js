@@ -157,7 +157,7 @@ export default class extends StandardPage {
 
         return (
             <List itemLayout='vertical' size='large' loading={this.props.loading}
-                className="with-right-box"  pagination={{ pageSize: 5 }} dataSource={data}
+                className="with-right-box" pagination={{ pageSize: 5 }} dataSource={data}
                 renderItem={item => (
                     <List.Item
                         key={item.id}
@@ -174,7 +174,7 @@ export default class extends StandardPage {
                                 <div class="clearfix"/>
                                 <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
                             </div>
-                            <Button type="primary" className="pull-down">View</Button>
+                            <Button type="primary" className="pull-down" onClick={this.linkTaskDetail.bind(this, item.id)}>View</Button>
                         </div>
                     </List.Item>
                 )}
