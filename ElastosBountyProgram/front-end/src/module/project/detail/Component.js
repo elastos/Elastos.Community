@@ -5,6 +5,8 @@ import {Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Table, Inpu
 import _ from 'lodash'
 import './style.scss'
 
+const { Column } = Table;
+
 export default class extends BaseComponent {
 
     ord_states() {
@@ -105,22 +107,22 @@ export default class extends BaseComponent {
         }
 
         const columns = [{
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
+            title: "Name",
+            dataIndex: "name",
+            key: "name"
         }, {
-            title: 'Role',
-            dataIndex: 'role',
-            key: 'role',
+            title: "Role",
+            dataIndex: "role",
+            key: "role"
         }, {
-            title: 'Progress',
-            dataIndex: 'progress',
-            key: 'progress',
+            title: "Progress",
+            dataIndex: "progress",
+            key: "progress"
         }, {
-            title: 'Notes',
-            dataIndex: 'notes',
-            key: 'notes',
-        }];
+            title: "Notes",
+            dataIndex: "notes",
+            key: "notes"
+        }]
 
         return(
             <Table
@@ -147,28 +149,28 @@ export default class extends BaseComponent {
             cnt = cnt + 1;
         }
 
-        const columns = [{
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-        }, {
-            title: 'Role',
-            dataIndex: 'role',
-            key: 'role',
-        }, {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-        }];
-
         return(
             <Table
                 className="no-borders"
                 dataSource={applicants}
-                columns={columns}
                 bordered={false}
-                pagination={false}
-            />
+                pagination={false}>
+                <Column
+                    title="Name"
+                    dataIndex="name"
+                    key="name"
+                />
+                <Column
+                    title="Role"
+                    dataIndex="role"
+                    key="role"
+                />
+                <Column
+                    title="Status"
+                    dataIndex="status"
+                    key="status"
+                />
+            </Table>
         )
     }
 

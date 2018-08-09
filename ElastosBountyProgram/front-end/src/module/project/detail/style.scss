@@ -4,6 +4,8 @@
 
 
 .c_Project {
+  padding: $gap_3;
+
   .team-selector {
     width: 332px;
     margin-right: $gap_0;
@@ -29,24 +31,23 @@
   }
 
   .top-section {
-    border: 1px solid $text_light_gray;
+    border: 1px solid $border_gray;
     border-radius: 5px 50px 5px 5px;
 
     .col-left {
-      padding: 20px;
+      padding: $gap_2;
       display: flex;
-      align-items: stretch;
 
       .left-container {
         width: 100%;
 
         .pictures-container {
           width: 100%;
+          text-align: center;
 
           img {
-            margin: 0 auto;
-            //width: auto;
-            //max-height: 200px;
+            max-height: 200px;
+            max-width: 200px;
           }
         }
         .domains-container {
@@ -54,33 +55,34 @@
         }
         .divider {
           border: 1px solid gainsboro;
-          margin: 10px 0;
+          margin: $gap_3 0;
         }
       }
     }
     .col-right {
-      border-left: 1px solid $text_light_gray;
-      padding: 20px 20px 20px 20px;
+      border-left: 1px solid $border_gray;
+      padding: $gap_2 $gap_0 $gap_2 $gap_3;
 
       .title {
         span {
           color: $primary_color;
           font-size: 24px;
+          font-weight: bold;
         }
         .badge {
-          padding-left: 20px;
+          padding-left: $gap_2;
         }
       }
       .leader {
         position: absolute;
-        top: 20px;
-        right: 20px;
+        top: $gap_2;
+        right: $gap_2;
         display: inline-block;
         text-align: right;
       }
       .content {
         display: block;
-        padding: 5px 0 5px 10px;
+        padding: $gap_0 $gap_1 $gap_0 $gap_1;
 
         .reward {
           text-align: right;
@@ -88,28 +90,35 @@
           font-size: 24px;
         }
         .entry {
-          margin: 10px 0;
+          margin: $gap_1 0;
         }
       }
       .divider {
         border: 1px solid gainsboro;
+        margin-right: $gap_1;
       }
       .description-title {
         font-weight: bold;
-        margin: 5px 0;
+        margin: $gap_0 $gap_1 $gap_0 0;
       }
       .description-content {
-        margin: 5px 0;
+        margin: $gap_0 $gap_1 $gap_0 0;
       }
     }
   }
   .actions {
-    margin: 20px 0;
+    margin: $gap_2 0;
     text-align: center;
 
     .callToActionText {
       margin-right: $gap_2;
       font-size: 18px;
+    }
+    .colored-button {
+      margin: 0 5px;
+    }
+    .normal-button {
+      margin: 0 5px;
     }
   }
   .contributors {
