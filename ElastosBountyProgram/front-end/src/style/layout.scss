@@ -141,19 +141,23 @@
 .l_banner {
   background: $primary_color;
   border-radius: 4px;
-  padding: 8px $gap_1;
+  padding: $gap_1;
   font-weight: 200;
 
   > :first-child {
     color: #ffffff;
     padding: 0;
-    padding-top: 8px;
-
     font-size: 120%;
   }
 
   .status {
     font-weight: 500;
+  }
+
+  .pull-right {
+    button:not(:last-child) {
+      margin-right: $gap_1;
+    }
   }
 }
 
