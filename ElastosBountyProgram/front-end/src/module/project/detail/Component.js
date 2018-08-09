@@ -260,52 +260,58 @@ class C extends BaseComponent {
 
         return (
             <div className="c_Project">
-                { loading && <Spin className="loading-spinner" />}
-                { !loading &&
-                    <div>
-                        <Row className="top-section">
-                            <Col xs={24} sm={24} md={8} className="col-left">
-                                {this.renderUpperLeftBox()}
-                            </Col>
+                { loading
+                    ? (
+                        <div className="full-width full-height valign-wrapper halign-wrapper">
+                            <Spin className="loading-spinner" />
+                        </div>
+                    )
+                    : (
+                        <div>
+                            <Row className="top-section">
+                                <Col xs={24} sm={24} md={8} className="col-left">
+                                    {this.renderUpperLeftBox()}
+                                </Col>
 
-                            <Col xs={24} sm={24} md={16} className="col-right">
-                                {this.renderUpperRightBox()}
-                            </Col>
-                        </Row>
-
-                        {this.props.page !== 'LEADER' &&
-                            <Row className="actions">
-                                <Button type="primary" onClick={() => this.setState({ applying: true })}>
-                                    Join Project
-                                </Button>
-                                <Button>
-                                    Message
-                                </Button>
+                                <Col xs={24} sm={24} md={16} className="col-right">
+                                    {this.renderUpperRightBox()}
+                                </Col>
                             </Row>
-                        }
 
-                        {this.state.applying && this.getApplicationForm()}
+                            {this.props.page !== 'LEADER' &&
+                                <Row className="actions">
+                                    <Button type="primary" onClick={() => this.setState({ applying: true })}>
+                                        Join Project
+                                    </Button>
+                                    <Button>
+                                        Message
+                                    </Button>
+                                </Row>
+                            }
 
-                        {!this.state.applying &&
-                            <Row className="contributors">
-                                <h3 className="no-margin">Current Contributors</h3>
-                                {this.renderCurrentContributors()}
-                            </Row>
-                        }
+                            {this.state.applying && this.getApplicationForm()}
 
-                        {!this.state.applying &&
-                            <Row className="applications">
-                                <h3 className="no-margin">Pending Applications</h3>
-                                {this.renderCurrentApplicants()}
-                            </Row>
-                        }
+                            {!this.state.applying &&
+                                <Row className="contributors">
+                                    <h3 className="no-margin">Current Contributors</h3>
+                                    {this.renderCurrentContributors()}
+                                </Row>
+                            }
 
-                        {this.props.page === 'LEADER' &&
-                            <Row>
-                                <Comments type="task" canPost={true} canSubscribe={!isTaskOwner} model={this.props.taskId}/>
-                            </Row>
-                        }
-                    </div>
+                            {!this.state.applying &&
+                                <Row className="applications">
+                                    <h3 className="no-margin">Pending Applications</h3>
+                                    {this.renderCurrentApplicants()}
+                                </Row>
+                            }
+
+                            {this.props.page === 'LEADER' &&
+                                <Row>
+                                    <Comments type="task" canPost={true} canSubscribe={!isTaskOwner} model={this.props.taskId}/>
+                                </Row>
+                            }
+                        </div>
+                    )
                 }
             </div>
         )

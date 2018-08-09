@@ -184,7 +184,29 @@
   }
 }
 
-// Helpers
+// Helpers IMPROVEME make separate helper scss
 .no-margin {
   margin: 0 !important;
+}
+
+.full-width {
+  width: 100% !important;
+}
+
+.full-height {
+  height: 100% !important;
+}
+
+.valign-wrapper {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.halign-wrapper {
+  justify-content: center;
+  text-align: center;
 }
