@@ -31,5 +31,5 @@ module.exports = {
             "skipBabel": true
         }
     },
-    testUrl: 'http://localhost'
+    testURL: 'facebook/jest#6792'
 };
