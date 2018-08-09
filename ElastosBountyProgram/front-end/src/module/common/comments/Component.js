@@ -72,7 +72,7 @@ class C extends BaseComponent {
             initialValue: ''
         })
         const comment_el = (
-            <TextArea rows={2} placeholder="Comments or updates"/>
+            <TextArea rows={4} placeholder="Comments or updates"/>
         )
 
         return {
