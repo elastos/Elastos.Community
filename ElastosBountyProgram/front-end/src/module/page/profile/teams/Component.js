@@ -31,7 +31,9 @@ export default class extends StandardPage {
 
     componentDidMount() {
         super.componentDidMount()
-        this.props.getTeams(this.props.currentUserId)
+        this.props.getTeams({
+            profileListFor: this.props.currentUserId
+        })
     }
 
     componentWillUnmount() {
@@ -45,9 +47,11 @@ export default class extends StandardPage {
             list: []
         };
     }
-    // TODO need to imeplement filtering functionality.
+
     ord_renderContent () {
-        const allTeams = this.props.all_teams;
+        const allTeams = this.props.all_teams
+        const { activeTeams, appliedTeams } = this.props
+
         return (
             <div class="p_ProfileTeams">
                 <div className="ebp-header-divider">
@@ -88,9 +92,8 @@ export default class extends StandardPage {
 
                                     <div className="clearfix"/>
                                     {this.state.filter === FILTERS.ALL && this.getListComponent(allTeams)}
-                                    {this.state.filter === FILTERS.ACTIVE && this.getListComponent(allTeams)}
-                                    {this.state.filter === FILTERS.APPLIED && this.getListComponent(allTeams)}
-                                    {this.getListComponent()}
+                                    {this.state.filter === FILTERS.ACTIVE && this.getListComponent(activeTeams)}
+                                    {this.state.filter === FILTERS.APPLIED && this.getListComponent(appliedTeams)}
                                 </Col>
                             </Row>
                             <Footer/>
