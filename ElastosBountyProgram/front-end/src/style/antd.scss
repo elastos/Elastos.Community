@@ -61,8 +61,6 @@
   }
 }
 
-
-
 .ant-input-search-button.ant-btn-primary {
   background-color: transparent;
   border-color: transparent;
@@ -89,6 +87,16 @@
 
 .ant-menu-inline {
   border-right: 0;
+}
+
+.ant-table-wrapper.no-borders {
+  th, td {
+    border-bottom: 0;
+    background: initial;
+  }
+  .ant-table-placeholder {
+    border-bottom: 0;
+  }
 }
 
 .ant-table-pagination.ant-pagination {

@@ -39,8 +39,8 @@
 
           img {
             margin: 0 auto;
-            width: auto;
-            max-height: 200px;
+            //width: auto;
+            //max-height: 200px;
           }
         }
         .domains-container {
@@ -128,9 +128,18 @@
     }
   }
   .contributors {
-
+    .title {
+      font-weight: bold;
+      font-size: 24px;
+    }
+    .no-borders {
+      margin: 0 auto;
+    }
   }
   .applications {
-
+    .title {
+      font-weight: bold;
+      font-size: 24px;
+    }
   }
 }

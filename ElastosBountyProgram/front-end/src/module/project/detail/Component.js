@@ -1,7 +1,7 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
-import {Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Dropdown, Input, Form} from 'antd'
+import {Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Table, Input, Form} from 'antd'
 import _ from 'lodash'
 import './style.scss'
 
@@ -89,6 +89,89 @@ export default class extends BaseComponent {
         )
     }
 
+    renderCurrentContributors() {
+        const detail = this.props.detail
+        let contributors = [];
+        let cnt = 1;
+        for (let i of detail.candidateCompleted) {
+            contributors.push({
+                key: cnt.toString(),
+                name: i.name || "",
+                role: i.role || "",
+                progress: i.progress || "",
+                notes: i.notes || ""
+            })
+            cnt = cnt + 1;
+        }
+
+        const columns = [{
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+        }, {
+            title: 'Role',
+            dataIndex: 'role',
+            key: 'role',
+        }, {
+            title: 'Progress',
+            dataIndex: 'progress',
+            key: 'progress',
+        }, {
+            title: 'Notes',
+            dataIndex: 'notes',
+            key: 'notes',
+        }];
+
+        return(
+            <Table
+                className="no-borders"
+                dataSource={contributors}
+                columns={columns}
+                bordered={false}
+                pagination={false}
+            />
+        )
+    }
+
+    renderCurrentApplicants() {
+        const detail = this.props.detail
+        let applicants = [];
+        let cnt = 1;
+        for (let i of detail.candidates) {
+            applicants.push({
+                key: cnt.toString(),
+                name: i.name || "",
+                role: i.role || "",
+                status: i.status || "",
+            })
+            cnt = cnt + 1;
+        }
+
+        const columns = [{
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+        }, {
+            title: 'Role',
+            dataIndex: 'role',
+            key: 'role',
+        }, {
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status',
+        }];
+
+        return(
+            <Table
+                className="no-borders"
+                dataSource={applicants}
+                columns={columns}
+                bordered={false}
+                pagination={false}
+            />
+        )
+    }
+
     ord_render () {
         const loading = _.isEmpty(this.props.detail)
         console.log(this.props.detail);
@@ -116,12 +199,14 @@ export default class extends BaseComponent {
 
                         {!this.state.applying &&
                             <Row className="contributors">
-                                <div>Current Contributors</div>
+                                <div className="title">Current Contributors</div>
+                                {this.renderCurrentContributors()}
                             </Row>
                         }
                         {!this.state.applying &&
                             <Row className="applications">
-                                <div>Pending Applications</div>
+                                <div className="title">Pending Applications</div>
+                                {this.renderCurrentApplicants()}
                             </Row>
                         }
                         {this.state.applying &&
