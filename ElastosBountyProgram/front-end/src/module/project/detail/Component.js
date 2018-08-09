@@ -43,7 +43,7 @@ class C extends BaseComponent {
         return (
             <div className="left-container">
                 <div className="pictures-container">
-                    <Carousel>
+                    <Carousel autoplay>
                         {carouselImages}
                     </Carousel>
                 </div>
