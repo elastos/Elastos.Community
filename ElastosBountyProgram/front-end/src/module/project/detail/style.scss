@@ -75,6 +75,9 @@
       height: 500px;
 
       .title {
+        height: 108px;
+        width: 300px;
+        overflow: hidden;
         span {
           color: $primary_color;
           font-size: 24px;
@@ -87,6 +90,7 @@
 
       .leader {
         position: absolute;
+        width: 150px;
         top: $gap_2;
         right: $gap_2;
         display: inline-block;
@@ -101,7 +105,7 @@
         display: block;
         position: relative;
         padding: $gap_0 $gap_2 0 $gap_2;
-        height: 190px;
+        height: 120px;
 
         .reward {
           position: absolute;

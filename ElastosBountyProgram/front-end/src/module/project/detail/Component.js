@@ -74,7 +74,7 @@ class C extends BaseComponent {
                 </div>
                 <div className="leader">
                     <Avatar size="large" src={leaderImage} />
-                    <div>{leaderName}</div>
+                    <div className="ellipsis">{leaderName}</div>
                 </div>
                 <div className="content">
                     <div className="entry">Deadline: {deadline}</div>
