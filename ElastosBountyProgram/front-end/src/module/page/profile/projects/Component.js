@@ -128,7 +128,7 @@ export default class extends StandardPage {
         const pictures = _.map(item.pictures, (picture, ind) => {
             return (
                 <div key={ind}>
-                    <img width={204} height={204} alt="logo" src={picture.url} />
+                    <img width={188} height={188} alt="logo" src={picture.url} />
                 </div>
             )
         })

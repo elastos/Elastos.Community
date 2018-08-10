@@ -65,6 +65,7 @@ class C extends BaseComponent {
         const teamSize = detail.candidateCompleted.length || ''
         const reward = detail.reward.isUsd ? detail.reward.usd + ' USD' : detail.reward.ela + ' ELA'
         const description = detail.descBreakdown || detail.description || ''
+        const leaderImage = detail.createdBy.profile.avatar || ''
 
         return (
             <div>
