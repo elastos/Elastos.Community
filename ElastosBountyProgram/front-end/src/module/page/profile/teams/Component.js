@@ -173,7 +173,7 @@ export default class extends StandardPage {
                         key={item.id}
                         extra={this.getCarousel(item)}
                     >
-                        <h3 class="no-margin no-padding">
+                        <h3 class="no-margin no-padding one-line brand-color">
                             <a href={item.href}>{item.title}</a>
                         </h3>
                         <h5 class="no-margin">

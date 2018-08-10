@@ -339,7 +339,7 @@ export default class extends BaseComponent {
                         key={item.id}
                         extra={this.getCarousel(item)}
                     >
-                        <h3 class="no-margin no-padding">
+                        <h3 class="no-margin no-padding one-line brand-color">
                             <a onClick={!this.isLookingForTeam() && this.showModal.bind(this, item.id) || _.noop}>{item.title}</a>
                         </h3>
                         <h5 class="no-margin">

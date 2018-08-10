@@ -1,3 +1,5 @@
+@import "./color";
+
 // Helpers IMPROVEME make separate helper scss
 .no-margin {
   margin: 0 !important;
@@ -29,6 +31,19 @@
   text-align: center;
 }
 
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+h3.one-line {
+  @extend .ellipsis;
+}
+
+.brand-color {
+  color: $primary_color;
+}
 
 .ant-btn {
   &:hover,
