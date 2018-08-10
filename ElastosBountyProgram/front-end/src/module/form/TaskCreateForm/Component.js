@@ -109,24 +109,17 @@ class C extends BaseComponent {
             taskType: this.props.taskType || TASK_TYPE.EVENT,
             taskCategory: this.props.taskCategory || TASK_TYPE.SOCIAL,
             assignSelf: (props.existingTask && props.existingTask.assignSelf) || false,
-
             eventDateRange: (props.existingTask && props.existingTask.eventDateRange) || false,
-
             upload_url : null,
             upload_loading : false,
-
             attachment_url: (props.existingTask && props.existingTask.attachment) || null,
             attachment_loading: false,
             attachment_filename: (props.existingTask && props.existingTask.attachmentFilename) || '',
             attachment_type: '',
-
             removeAttachment: false,
-
             editing: !!props.existingTask,
-
             isUsd: (props.existingTask && props.existingTask.reward.isUsd) || false,
-
-            fileList: [],
+            fileList: (props.existingTask && props.existingTask.pictures) || [],
             previewVisible: false,
             previewImage: ''
         };
@@ -516,7 +509,7 @@ class C extends BaseComponent {
 
         const pictures_fn = getFieldDecorator('pictures', {
             rules: [],
-            initialValue: ''
+            initialValue: (this.props.existingTask && this.props.existingTask.pictures) || []
         })
 
         const p_pictures = {
