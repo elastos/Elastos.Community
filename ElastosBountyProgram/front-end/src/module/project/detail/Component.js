@@ -289,7 +289,7 @@ class C extends BaseComponent {
             initialValue: ''
         })
         const applyMsg_el = (
-            <Input.TextArea rows={8} className="team-application"
+            <Input.TextArea rows={8} className="team-application" disabled={this.props.loading}
                 placeholder="Tell us why you want to join."/>
         )
         const applyMsgPanel = applyMsg_fn(applyMsg_el)
@@ -299,7 +299,7 @@ class C extends BaseComponent {
             initialValue: '$me'
         })
         const applicant_el = (
-            <Select className="team-selector pull-right"
+            <Select className="team-selector pull-right" disabled={this.props.loading}
                 // https://github.com/vazco/uniforms/issues/228
                 getPopupContainer={x => {
                     while (x && x.tagName.toLowerCase() !== 'form') {
@@ -330,10 +330,10 @@ class C extends BaseComponent {
                 <Form.Item className="no-margin">
                     {applyMsgPanel}
                 </Form.Item>
-                <Button className="d_btn pull-left" onClick={() => this.setState({ applying: false })}>
+                <Button disabled={this.props.loading} className="d_btn pull-left" onClick={() => this.setState({ applying: false })}>
                     Cancel
                 </Button>
-                <Button className="d_btn pull-right" type="primary" htmlType="submit">
+                <Button disabled={this.props.loading} className="d_btn pull-right" type="primary" htmlType="submit">
                     Apply
                 </Button>
                 <Form.Item className="pull-right">
