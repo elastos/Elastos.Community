@@ -1,8 +1,8 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
-import {message, Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Table, Input, Form} from 'antd'
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_TYPE, TASK_CANDIDATE_STATUS} from '@/constant'
+import {message, Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Table, Input, Form, Divider} from 'antd'
+import { TASK_CANDIDATE_TYPE } from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import _ from 'lodash'
 import './style.scss'
@@ -30,6 +30,10 @@ class C extends BaseComponent {
 
     linkProfileInfo(userId) {
         this.props.history.push(`/admin/profile/${userId}`)
+    }
+
+    approveUser(status, id) {
+        // status = true or false
     }
 
     getUpperLeftBox() {
@@ -111,51 +115,51 @@ class C extends BaseComponent {
 
             if (i.type === TASK_CANDIDATE_TYPE.USER) {
                 user.id = i.user._id
-                user.fullName = i.user.profile ? (i.user.profile.firstName + " " + i.user.profile.lastName) : ""
+                user.fullName = i.user.profile ? (i.user.profile.firstName + ' ' + i.user.profile.lastName) : ''
                 user.avatar = i.user.profile.avatar
 
             } else if (i.type === TASK_CANDIDATE_TYPE.TEAM) {
                 user.id = i.team._id
-                user.fullName = i.team.name || ""
-                user.avatar = i.team.profile.logo || ""
+                user.fullName = i.team.name || ''
+                user.avatar = i.team.profile.logo || ''
             }
 
             contributors.push({
                 key: cnt.toString(),
                 name: user,
-                role: i.role || "",
-                progress: i.progress || "",
-                notes: i.notes || ""
+                role: i.role || '',
+                progress: i.progress || '',
+                notes: i.notes || ''
             })
             cnt = cnt + 1;
         }
 
         const columns = [{
-            title: "Name",
-            dataIndex: "user",
-            key: "user",
+            title: 'Name',
+            dataIndex: 'user',
+            key: 'user',
             render: user => {
-                return(
+                return (
                     <div key={user.id}>
                         <Avatar src={user.avatar} />
                         <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, user.id)}>{user.fullName}</a>
                     </div>)
             }
         }, {
-            title: "Role",
-            dataIndex: "role",
-            key: "role"
+            title: 'Role',
+            dataIndex: 'role',
+            key: 'role'
         }, {
-            title: "Progress",
-            dataIndex: "progress",
-            key: "progress"
+            title: 'Progress',
+            dataIndex: 'progress',
+            key: 'progress'
         }, {
-            title: "Notes",
-            dataIndex: "notes",
-            key: "notes"
+            title: 'Notes',
+            dataIndex: 'notes',
+            key: 'notes'
         }]
 
-        return(
+        return (
             <Table
                 className="no-borders"
                 dataSource={contributors}
@@ -180,41 +184,51 @@ class C extends BaseComponent {
 
             if (i.type === TASK_CANDIDATE_TYPE.USER) {
                 user.id = i.user._id
-                user.fullName = i.user.profile ? (i.user.profile.firstName + " " + i.user.profile.lastName) : ""
+                user.fullName = i.user.profile ? (i.user.profile.firstName + ' ' + i.user.profile.lastName) : ''
                 user.avatar = i.user.profile.avatar
 
             } else if (i.type === TASK_CANDIDATE_TYPE.TEAM) {
                 user.id = i.team._id
-                user.fullName = i.team.name || ""
-                user.avatar = i.team.profile.logo || ""
+                user.fullName = i.team.name || ''
+                user.avatar = i.team.profile.logo || ''
             }
 
             applicants.push({
                 key: cnt.toString(),
                 user: user,
-                status: i.status || "",
+                status: i.status || ''
             })
             cnt = cnt + 1;
         }
 
         const columns = [{
-            title: "Name",
-            dataIndex: "user",
-            key: "user",
+            title: 'Name',
+            dataIndex: 'user',
+            key: 'user',
             render: user => {
-                return(
+                return (
                     <div key={user.id}>
                         <Avatar src={user.avatar} />
                         <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, user.id)}>{user.fullName}</a>
                     </div>)
             }
         }, {
-            title: "Status",
-            dataIndex: "status",
-            key: "status"
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status'
+        }, {
+            title: 'Action',
+            key: 'action',
+            render: user => (
+                <span>
+                    <a onClick={this.approveUser.bind(this, true, user.id)}>Approve</a>
+                    <Divider type="vertical"/>
+                    <a onClick={this.approveUser.bind(this, false, user.id)}>Disapprove</a>
+                </span>
+            )
         }]
 
-        return(
+        return (
             <Table
                 className="no-borders"
                 dataSource={applicants}
