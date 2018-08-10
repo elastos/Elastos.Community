@@ -22,9 +22,10 @@ const sanitize = '-password -salt -email -resetToken'
 
 export default class extends Base {
     public async show(param): Promise<Document> {
-        const db_task = this.getDBModel('Task');
-        const db_task_candidate = this.getDBModel('Task_Candidate');
-        const db_user = this.getDBModel('User');
+        const db_task = this.getDBModel('Task')
+        const db_task_candidate = this.getDBModel('Task_Candidate')
+        const db_user = this.getDBModel('User')
+        const db_team = this.getDBModel('Team')
 
         const task = await db_task.getDBInstance().findOne({_id: param.taskId})
             .populate('candidates', sanitize)
@@ -52,11 +53,11 @@ export default class extends Base {
             }
 
             for (let candidate of task.candidates) {
-                await db_task_candidate.getDBInstance().populate(candidate, {
+                await db_user.getDBInstance().populate(candidate, {
                     path: 'user',
                     select: sanitize
                 })
-                await db_task_candidate.getDBInstance().populate(candidate, ['team'])
+                await db_team.getDBInstance().populate(candidate, ['team'])
 
                 for (let comment of candidate.comments) {
                     for (let thread of comment) {
