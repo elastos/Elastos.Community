@@ -500,7 +500,7 @@ class C extends BaseComponent {
 
         const domain_fn = getFieldDecorator('domain', {
             rules: [],
-            initialValue: []
+            initialValue: (this.props.existingTask && this.props.existingTask.domain) || []
         })
         const domain_el = (
             <TreeSelect treeData={specs} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
@@ -508,7 +508,7 @@ class C extends BaseComponent {
 
         const skillset_fn = getFieldDecorator('recruitedSkillsets', {
             rules: [],
-            initialValue: []
+            initialValue: (this.props.existingTask && this.props.existingTask.recruitedSkillsets) || []
         })
         const skillset_el = (
             <TreeSelect treeData={skillsets} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
