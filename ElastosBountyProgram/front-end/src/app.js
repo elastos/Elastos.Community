@@ -1,5 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom'
+import {Helmet} from "react-helmet"
 import _ from 'lodash';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {Provider} from 'react-redux';
@@ -19,17 +20,24 @@ const middleware = (render, props)=>{
 
 const App = () => {
     return (
-        <Switch id="ebp-main">
-            {
-                _.map(config.router, (item, i) => {
-                    const props = _.omit(item, ['page', 'path', 'type']);
-                    const R = item.type || Route;
-                    return (
-                        <R path={item.path} key={i} exact component={item.page} {...props} />
-                    );
-                })
-            }
-        </Switch>
+        <div>
+            <Helmet>
+                <meta name="description" content="Elastos Cyber Republic" />
+                <meta name="cr-env" content={process.env.NODE_ENV} />
+                <meta name="cr-version" content={process.env.VERSION} />
+            </Helmet>
+            <Switch id="ebp-main">
+                {
+                    _.map(config.router, (item, i) => {
+                        const props = _.omit(item, ['page', 'path', 'type']);
+                        const R = item.type || Route;
+                        return (
+                            <R path={item.path} key={i} exact component={item.page} {...props} />
+                        );
+                    })
+                }
+            </Switch>
+        </div>
     );
 };
 

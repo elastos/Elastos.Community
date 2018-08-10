@@ -21,7 +21,7 @@ const prodEnv = {
 const stagingEnv = {
     NODE_ENV: JSON.stringify('staging'),
     PLATFORM_ENV: JSON.stringify('web'),
-    SERVER_URL: JSON.stringify('http://18.136.60.61:3000'),
+    SERVER_URL: JSON.stringify('http://staging.cyberrepublic.org:3000'),
 };
 
 const cssFilename_lib = 'static/css/lib.css?[hash:8]';
