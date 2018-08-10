@@ -97,53 +97,44 @@ class C extends BaseComponent {
 
     renderCurrentContributors() {
         const detail = this.props.detail
-        let contributors = [];
-        let cnt = 1;
-        for (let i of detail.candidateCompleted) {
-            contributors.push({
-                key: cnt.toString(),
-                name: i.name || "",
-                role: i.role || "",
-                progress: i.progress || "",
-                notes: i.notes || ""
-            })
-            cnt = cnt + 1;
-        }
-
+        const pendingMembers = _.filter(detail.members, { status: TEAM_USER_STATUS.NORMAL })
         const columns = [{
-            title: "Name",
-            dataIndex: "name",
-            key: "name"
+            title: 'Name',
+            key: 'name',
+            render: candidate => {
+                return (
+                    <div key={candidate._id}>
+                        <Avatar src={candidate.user.profile.avatar} />
+                        <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                            {`${candidate.user.profile.firstName} ${candidate.user.profile.lastName}`}</a>
+                    </div>)
+            }
         }, {
-            title: "Role",
-            dataIndex: "role",
-            key: "role"
-        }, {
-            title: "Progress",
-            dataIndex: "progress",
-            key: "progress"
-        }, {
-            title: "Notes",
-            dataIndex: "notes",
-            key: "notes"
+            title: 'Role',
+            dataIndex: 'role',
+            key: 'role'
         }]
 
-        return(
+        return (
             <Table
-                className="no-borders"
-                dataSource={contributors}
+                className="no-borders headerless"
+                dataSource={pendingMembers}
                 columns={columns}
                 bordered={false}
-                pagination={false}
-            />
+                rowKey="_id"
+                pagination={false}>
+            </Table>
         )
     }
 
     renderCurrentApplicants() {
         const detail = this.props.detail
         const pendingMembers = _.filter(detail.members, { status: TEAM_USER_STATUS.PENDING })
+        const isTeamOwner = this.isTeamOwner()
+
         const columns = [{
             title: 'Name',
+            key: 'name',
             render: candidate => {
                 return (
                     <div key={candidate._id}>
@@ -154,8 +145,9 @@ class C extends BaseComponent {
             }
         }, {
             title: 'Action',
-            render: candidate => (
-                <div class="text-right">
+            key: 'action',
+            render: candidate => isTeamOwner && (
+                <div className="text-right">
                     <a onClick={this.approveUser.bind(this, true, candidate._id)}>Approve</a>
                     <Divider type="vertical"/>
                     <a onClick={this.approveUser.bind(this, false, candidate._id)}>Disapprove</a>
@@ -169,6 +161,7 @@ class C extends BaseComponent {
                 dataSource={pendingMembers}
                 columns={columns}
                 bordered={false}
+                rowKey="_id"
                 pagination={false}>
             </Table>
         )
@@ -215,10 +208,13 @@ class C extends BaseComponent {
         )
     }
 
+    isTeamOwner() {
+        return this.props.detail.owner && (this.props.detail.owner._id === this.props.currentUserId)
+    }
+
     ord_render () {
         const loading = _.isEmpty(this.props.detail)
-        const isTeamOwner = (this.props.team &&
-            this.props.team.owner && this.props.team.owner._id) === this.props.currentUserId
+        const isTeamOwner = this.isTeamOwner()
 
         return (
             <div className="c_Project">
@@ -256,7 +252,7 @@ class C extends BaseComponent {
                             {!this.state.applying &&
                                 <Row className="contributors">
                                     <h3 className="no-margin">Current Members</h3>
-                                    {false && this.renderCurrentContributors()}
+                                    {this.renderCurrentContributors()}
                                 </Row>
                             }
 
