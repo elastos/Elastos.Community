@@ -49,6 +49,7 @@ export default class extends Base {
 
         console.log('create team => ', doc);
         const res = await db_team.save(doc);
+        const team = await db_team.findOne({_id: res._id})
 
         // save to user team
         const doc_user_team = {
@@ -61,7 +62,10 @@ export default class extends Base {
         console.log('create user_team => ', doc_user_team);
         const res1 = await db_user_team.save(doc_user_team);
 
-        return res;
+        team.members = [ res1._id ]
+        await team.save()
+
+        return team;
     }
 
     public async update(param): Promise<Document>{

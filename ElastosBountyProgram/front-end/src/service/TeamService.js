@@ -95,11 +95,16 @@ export default class extends BaseService {
     }
 
     async create(param) {
+        const teamRedux = this.store.getRedux('team')
+        this.dispatch(teamRedux.actions.loading_update(true))
+
         const result = await api_request({
             path: '/api/team/create',
             method: 'post',
             data: param
         });
+
+        this.dispatch(teamRedux.actions.loading_update(false))
 
         return result;
     }

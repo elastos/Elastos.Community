@@ -112,7 +112,14 @@ class C extends BaseComponent {
         }, {
             title: 'Role',
             dataIndex: 'role',
-            key: 'role'
+            key: 'role',
+            render: role => {
+                return (
+                    <div class="text-right">
+                        {role}
+                    </div>
+                )
+            }
         }]
 
         return (
