@@ -42,7 +42,7 @@ export default createContainer(Component, (state, ownProps) => {
             return taskService.index()
         },
 
-        async resetTasks () {
+        resetTasks () {
             return taskService.resetAllTasks()
         }
     }

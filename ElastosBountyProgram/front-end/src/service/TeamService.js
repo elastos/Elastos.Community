@@ -98,7 +98,7 @@ export default class extends BaseService {
         return result;
     }
 
-    async resetAllTeams() {
+    resetAllTeams() {
         const teamRedux = this.store.getRedux('team')
         this.dispatch(teamRedux.actions.all_teams_reset())
     }

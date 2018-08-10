@@ -90,7 +90,7 @@ export default createContainer(Component, (state) => {
             })
         },
 
-        async resetTasks () {
+        resetTasks () {
             return taskService.resetAllTasks()
         },
 

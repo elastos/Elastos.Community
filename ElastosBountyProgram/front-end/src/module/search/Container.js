@@ -24,7 +24,7 @@ export default createContainer(Component, (state) => {
             })
         },
 
-        async resetTasks () {
+        resetTasks () {
             return taskService.resetAllTasks()
         },
 
@@ -32,7 +32,7 @@ export default createContainer(Component, (state) => {
             return teamService.index(filters)
         },
 
-        async resetTeams () {
+        resetTeams () {
             return teamService.resetAllTeams()
         }
     }

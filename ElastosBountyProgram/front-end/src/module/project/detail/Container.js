@@ -29,7 +29,7 @@ export default createContainer(Component, (state) => {
             return taskService.get(taskId)
         },
 
-        async resetTaskDetail() {
+        resetTaskDetail() {
             return taskService.resetTaskDetail()
         },
 
@@ -41,7 +41,7 @@ export default createContainer(Component, (state) => {
             return teamService.index(query)
         },
 
-        async resetAllTeams() {
+        resetAllTeams() {
             return teamService.resetAllTeams()
         }
     }
