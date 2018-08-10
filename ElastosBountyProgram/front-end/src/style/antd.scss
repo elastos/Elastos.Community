@@ -45,6 +45,14 @@ h3.one-line {
   color: $primary_color;
 }
 
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
 .ant-btn {
   &:hover,
   &:focus,

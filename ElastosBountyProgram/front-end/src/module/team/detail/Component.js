@@ -155,11 +155,11 @@ class C extends BaseComponent {
         }, {
             title: 'Action',
             render: candidate => (
-                <span>
+                <div class="text-right">
                     <a onClick={this.approveUser.bind(this, true, candidate._id)}>Approve</a>
                     <Divider type="vertical"/>
                     <a onClick={this.approveUser.bind(this, false, candidate._id)}>Disapprove</a>
-                </span>
+                </div>
             )
         }]
 
