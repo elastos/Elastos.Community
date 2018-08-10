@@ -246,7 +246,7 @@ class C extends BaseComponent {
 
                             {!this.state.applying &&
                                 <Row className="contributors">
-                                    <h3 className="no-margin">Current Contributors</h3>
+                                    <h3 className="no-margin">Current Members</h3>
                                     {false && this.renderCurrentContributors()}
                                 </Row>
                             }
