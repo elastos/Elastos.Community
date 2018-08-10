@@ -123,6 +123,11 @@ class C extends BaseComponent {
             previewVisible: false,
             previewImage: ''
         };
+
+        this.pictureUrlLookups = []
+        _.each(this.state.fileList, (file) => {
+            this.pictureUrlLookups[file.uid] = file.url
+        })
     }
 
     getInputProps () {

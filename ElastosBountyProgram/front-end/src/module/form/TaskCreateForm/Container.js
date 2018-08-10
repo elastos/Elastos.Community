@@ -113,6 +113,9 @@ export default createContainer(Component, (state) => {
 
                     infoLink: formData.taskLink,
                     thumbnail: st.upload_url,
+                    pictures: formData.pictures,
+                    domain: formData.domain,
+                    recruitedSkillsets: formData.recruitedSkillsets,
                     community: !formData.community ? null : formData.community,
                     communityParent: formData.communityParent,
 

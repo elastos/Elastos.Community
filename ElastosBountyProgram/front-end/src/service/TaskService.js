@@ -77,7 +77,6 @@ export default class extends BaseService {
      * @returns {Promise<*>}
      */
     async update(taskId, doc) {
-
         const taskRedux = this.store.getRedux('task')
 
         this.dispatch(taskRedux.actions.loading_update(true))
@@ -88,32 +87,13 @@ export default class extends BaseService {
             data: doc
         })
 
-        const curTaskDetail = this.store.getState().task.detail
-
-        let updateStatus = false
-
-        // if we are approving
-        if (curTaskDetail.status !== TASK_STATUS.APPROVED && result.status === TASK_STATUS.APPROVED) {
-            updateStatus = true
-        } else if (curTaskDetail.status !== TASK_STATUS.SUCCESS && result.status === TASK_STATUS.SUCCESS) {
-            // if we are marking accept it as complete
-            updateStatus = true
-        } else if (curTaskDetail.status !== TASK_STATUS.SUBMITTED && result.status === TASK_STATUS.SUBMITTED) {
-            // if we are marking submitted
-            updateStatus = true
-        } else if (curTaskDetail.status !== TASK_STATUS.ASSIGNED && result.status === TASK_STATUS.ASSIGNED) {
-            // if we are doing a force start
-            updateStatus = true
-        } else if (curTaskDetail.status !== TASK_STATUS.DISTRIBUTED && result.status === TASK_STATUS.DISTRIBUTED) {
-            // mark as distributed
-            updateStatus = true
+        const detail = {
+            ...this.store.getState().task.detail,
+            ...doc
         }
 
-        if (updateStatus) {
-            curTaskDetail.status = result.status
-            this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
-        }
-
+        this.dispatch(taskRedux.actions.detail_reset())
+        this.dispatch(taskRedux.actions.detail_update(detail))
         this.dispatch(taskRedux.actions.loading_update(false))
 
         return result
