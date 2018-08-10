@@ -103,36 +103,33 @@ class C extends BaseComponent {
 
     getCurrentContributors() {
         const detail = this.props.detail
-        let contributors = [];
-        let cnt = 1;
-        for (let i of detail.candidateCompleted) {
-
+        const contributors = _.map(detail.candidateCompleted, (candidate, ind) => {
             let user = {
                 id: String,
                 fullName: Number,
                 avatar: String
             }
 
-            if (i.type === TASK_CANDIDATE_TYPE.USER) {
-                user.id = i.user._id
-                user.fullName = i.user.profile ? (i.user.profile.firstName + ' ' + i.user.profile.lastName) : ''
-                user.avatar = i.user.profile.avatar
-
-            } else if (i.type === TASK_CANDIDATE_TYPE.TEAM) {
-                user.id = i.team._id
-                user.fullName = i.team.name || ''
-                user.avatar = i.team.profile.logo || ''
+            if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
+                user.id = candidate.user._id
+                user.fullName = candidate.user.profile
+                    ? `${candidate.user.profile.firstName} ${i.user.profile.lastName})`
+                    : ''
+                user.avatar = candidate.user.profile.avatar
+            } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
+                user.id = candidate.team._id
+                user.fullName = candidate.team.name || ''
+                user.avatar = candidate.team.profile.logo || ''
             }
 
-            contributors.push({
-                key: cnt.toString(),
+            return {
+                key: ind,
                 name: user,
-                role: i.role || '',
-                progress: i.progress || '',
-                notes: i.notes || ''
-            })
-            cnt = cnt + 1;
-        }
+                role: candidate.role || '',
+                progress: candidate.progress || '',
+                notes: candidate.notes || ''
+            }
+        })
 
         const columns = [{
             title: 'Name',
