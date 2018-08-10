@@ -167,7 +167,7 @@ export default class extends StandardPage {
 
         return (
             <List itemLayout='vertical' size='large' loading={this.props.loading}
-                className="with-right-box" pagination={{ pageSize: 5 }} dataSource={data}
+                className="with-right-box" dataSource={data}
                 renderItem={item => (
                     <List.Item
                         key={item.id}
