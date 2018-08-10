@@ -24,7 +24,7 @@ const App = () => {
             <Helmet>
                 <meta name="description" content="Elastos Cyber Republic" />
                 <meta name="cr-env" content={process.env.NODE_ENV} />
-                <meta name="cr-version" content={process.env.VERSION ? '' + process.env.VERSION : 'unknown'} />
+                <meta name="cr-version-number" content={process.env.VERSION ? '' + process.env.VERSION : 'unknown'} />
             </Helmet>
             <Switch id="ebp-main">
                 {
