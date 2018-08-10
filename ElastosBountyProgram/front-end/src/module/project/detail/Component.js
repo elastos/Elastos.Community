@@ -2,9 +2,10 @@ import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
 import {message, Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Table, Input, Form} from 'antd'
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_TYPE, TASK_CANDIDATE_STATUS} from '@/constant'
+import Comments from '@/module/common/comments/Container'
 import _ from 'lodash'
 import './style.scss'
-import Comments from '@/module/common/comments/Container'
 
 const { Column } = Table;
 
@@ -27,7 +28,7 @@ class C extends BaseComponent {
         this.props.resetAllTeams()
     }
 
-    renderUpperLeftBox() {
+    getUpperLeftBox() {
         const details = this.props.detail;
 
         let carouselImages = []
@@ -54,7 +55,7 @@ class C extends BaseComponent {
         )
     }
 
-    renderUpperRightBox() {
+    getUpperRightBox() {
         const detail = this.props.detail
         const name = detail.name || ''
         const leaderName = detail.createdBy.profile
@@ -92,7 +93,7 @@ class C extends BaseComponent {
         )
     }
 
-    renderCurrentContributors() {
+    getCurrentContributors() {
         const detail = this.props.detail
         let contributors = [];
         let cnt = 1;
@@ -136,15 +137,27 @@ class C extends BaseComponent {
         )
     }
 
-    renderCurrentApplicants() {
+    getCurrentApplicants() {
         const detail = this.props.detail
-        let applicants = [];
-        let cnt = 1;
+        let applicants = []
+        let cnt = 1
+        console.log(detail)
         for (let i of detail.candidates) {
+
+            let fullName
+            let role
+            if (i.type === TASK_CANDIDATE_TYPE.USER) {
+                fullName = i.user.profile ? (i.user.profile.firstName + " " + i.user.profile.lastName) : ""
+                role = i.user.profile ? i.user.profile.role : ""
+            } else if (i.type === TASK_CANDIDATE_TYPE.TEAM) {
+                fullName = i.team.name || ""
+                role = ""
+            }
+
             applicants.push({
                 key: cnt.toString(),
-                name: i.name || "",
-                role: i.role || "",
+                name: fullName,
+                role: role,
                 status: i.status || "",
             })
             cnt = cnt + 1;
@@ -271,11 +284,11 @@ class C extends BaseComponent {
                         <div>
                             <Row className="top-section">
                                 <Col xs={24} sm={24} md={8} className="col-left">
-                                    {this.renderUpperLeftBox()}
+                                    {this.getUpperLeftBox()}
                                 </Col>
 
                                 <Col xs={24} sm={24} md={16} className="col-right">
-                                    {this.renderUpperRightBox()}
+                                    {this.getUpperRightBox()}
                                 </Col>
                             </Row>
 
@@ -295,14 +308,14 @@ class C extends BaseComponent {
                             {!this.state.applying &&
                                 <Row className="contributors">
                                     <h3 className="no-margin">Current Contributors</h3>
-                                    {this.renderCurrentContributors()}
+                                    {this.getCurrentContributors()}
                                 </Row>
                             }
 
                             {!this.state.applying &&
                                 <Row className="applications">
                                     <h3 className="no-margin">Pending Applications</h3>
-                                    {this.renderCurrentApplicants()}
+                                    {this.getCurrentApplicants()}
                                 </Row>
                             }
 
