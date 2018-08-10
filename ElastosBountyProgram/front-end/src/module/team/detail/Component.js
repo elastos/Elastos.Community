@@ -242,9 +242,25 @@ class C extends BaseComponent {
         return this.props.detail.owner && (this.props.detail.owner._id === this.props.currentUserId)
     }
 
+    isTeamMember() {
+        return _.find(this.props.detail.members, (member) => {
+            return member.user._id === this.props.currentUserId &&
+                member.status === TEAM_USER_STATUS.NORMAL
+        })
+    }
+
+    hasApplied() {
+        return _.find(this.props.detail.members, (member) => {
+            return member.user._id === this.props.currentUserId &&
+                member.status === TEAM_USER_STATUS.PENDING
+        })
+    }
+
     ord_render () {
         const loading = _.isEmpty(this.props.detail)
         const isTeamOwner = this.isTeamOwner()
+        const isTeamMember = this.isTeamMember()
+        const hasApplied = this.hasApplied()
 
         return (
             <div className="c_Project">
@@ -266,10 +282,13 @@ class C extends BaseComponent {
                                 </Col>
                             </Row>
 
-                            {this.props.page !== 'LEADER' && !isTeamOwner &&
+                            {this.props.page !== 'LEADER' && !isTeamOwner && !isTeamMember &&
                                 <Row className="actions">
-                                    <Button type="primary" onClick={() => this.setState({ applying: true })}>
-                                        Join Team
+                                    <Button disabled={hasApplied} type="primary" onClick={() => this.setState({ applying: true })}>
+                                        {hasApplied
+                                            ? 'Applied!'
+                                            : 'Join Team'
+                                        }
                                     </Button>
                                     <Button>
                                         Message
