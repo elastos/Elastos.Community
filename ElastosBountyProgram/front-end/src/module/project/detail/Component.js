@@ -195,6 +195,7 @@ class C extends BaseComponent {
                 current = this.props.currentUserId === candidate.user._id
 
             } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
+                console.log(candidate);
                 user.id = candidate.team._id
                 user.fullName = candidate.team.name || ''
                 user.avatar = candidate.team.profile.logo || ''
