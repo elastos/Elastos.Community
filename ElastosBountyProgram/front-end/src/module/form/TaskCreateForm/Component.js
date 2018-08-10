@@ -777,12 +777,12 @@ class C extends BaseComponent {
                         * Budget / Reward
                         ********************************************************************************
                         */}
-                        <Divider>
+                        <h3 class="no-margin">
                             Budget / Reward&nbsp;
                             <Popover content="Budget is for expenses/costs, reward is for labor and time">
                                 <Icon className="help-icon" type="question-circle-o"/>
                             </Popover>
-                        </Divider>
+                        </h3>
 
                         {!this.state.assignSelf &&
                         <Row>
