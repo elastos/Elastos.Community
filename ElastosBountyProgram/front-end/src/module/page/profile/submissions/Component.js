@@ -138,6 +138,9 @@ export default class extends StandardPage {
                                     </Col>
                                 </MediaQuery>
                                 <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-right-column wrap-box-user">
+                                    <div className="pull-right filter-group">
+                                        <Button onClick={this.goCreatepage.bind(this)}>Create Issue</Button>
+                                    </div>
                                     <Button.Group className="filter-group">
                                         <Button
                                             className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
@@ -211,5 +214,9 @@ export default class extends StandardPage {
 
     linkSubmissionDetail(submissionId) {
         this.props.history.push(`/profile/submission-detail/${submissionId}`)
+    }
+
+    goCreatepage() {
+        this.props.history.push('/profile/submissions/create');
     }
 }
