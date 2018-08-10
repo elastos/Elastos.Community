@@ -181,9 +181,9 @@ class C extends BaseComponent {
                 avatar: String
             }
 
-            if (i.type === TASK_CANDIDATE_TYPE.USER) {
+            if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
                 user.id = candidate.user._id
-                user.fullName = candidate.user.profile ? `${candidate.user.profile.firstName} ${i.user.profile.lastName}` : ''
+                user.fullName = candidate.user.profile ? `${candidate.user.profile.firstName} ${candidate.user.profile.lastName}` : ''
                 user.avatar = candidate.user.profile.avatar
             } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
                 user.id = candidate.team._id
