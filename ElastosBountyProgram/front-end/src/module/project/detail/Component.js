@@ -226,16 +226,12 @@ class C extends BaseComponent {
                     </div>)
             }
         }, {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status'
-        }, {
             title: 'Action',
             key: 'action',
             render: action => (
                 <div>
                     {action.action.owner ? (
-                        <div>
+                        <div className="text-right">
                             <a onClick={this.approveUser.bind(this, action.user.id)}>Approve</a>
                             <Divider type="vertical"/>
                             <a onClick={this.disapproveUser.bind(this, action.user.id)}>Disapprove</a>
@@ -246,7 +242,7 @@ class C extends BaseComponent {
                                 </span>
                             }
                         </div>) : action.action.current &&
-                            <div>
+                            <div className="text-right">
                                 <a onClick={this.withdrawApplication.bind(this, action.user.id)}>Withdraw Application</a>
                             </div>
                     }
@@ -256,7 +252,7 @@ class C extends BaseComponent {
 
         return (
             <Table
-                className="no-borders"
+                className="no-borders headerless"
                 dataSource={applicants}
                 columns={columns}
                 bordered={false}
