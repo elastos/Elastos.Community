@@ -3,7 +3,7 @@ import BaseComponent from '@/model/BaseComponent'
 import { Menu, SubMenu } from 'antd'
 import I18N from '@/I18N'
 import { Link } from 'react-router-dom';
-
+import { Affix } from 'antd';
 import './style.scss'
 
 export default class extends BaseComponent {
@@ -29,24 +29,26 @@ export default class extends BaseComponent {
     ord_render () {
         // TODO check why we can not use redirect use this.props.history
         return (
-            <Menu
-                defaultSelectedKeys={[this.props.selectedItem]}
-                onClick={this.handleMenuClick.bind(this)}
-                mode="inline"
-            >
-                <Menu.Item key="profileTeams">
-                    {I18N.get('2302')}
-                </Menu.Item>
-                <Menu.Item key="profileProjects">
-                    {I18N.get('2305')}
-                </Menu.Item>
-                <Menu.Item key="profileTasks">
-                    {I18N.get('2301')}
-                </Menu.Item>
-                <Menu.Item key="profileSubmissions">
-                    {I18N.get('2303')}
-                </Menu.Item>
-            </Menu>
+            <Affix offsetTop={15}>
+                <Menu
+                    defaultSelectedKeys={[this.props.selectedItem]}
+                    onClick={this.handleMenuClick.bind(this)}
+                    mode="inline"
+                >
+                    <Menu.Item key="profileTeams">
+                        {I18N.get('2302')}
+                    </Menu.Item>
+                    <Menu.Item key="profileProjects">
+                        {I18N.get('2305')}
+                    </Menu.Item>
+                    <Menu.Item key="profileTasks">
+                        {I18N.get('2301')}
+                    </Menu.Item>
+                    <Menu.Item key="profileSubmissions">
+                        {I18N.get('2303')}
+                    </Menu.Item>
+                </Menu>
+            </Affix>
         )
     }
 }
