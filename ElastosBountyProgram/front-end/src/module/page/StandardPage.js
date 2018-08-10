@@ -2,7 +2,7 @@ import React from 'react';
 import BasePage from '@/model/BasePage';
 import {Layout} from 'antd';
 import Header from '../layout/Header/Container';
-
+import {BackTop} from 'antd'
 import MobileMenu from './mobile/side_menu/Container';
 import {spring, presets, Motion} from 'react-motion'
 
@@ -49,6 +49,7 @@ export default class extends BasePage {
                 <Layout.Content>
                     {this.ord_renderContent()}
                 </Layout.Content>
+                <BackTop/>
             </Layout>
         );
     }
