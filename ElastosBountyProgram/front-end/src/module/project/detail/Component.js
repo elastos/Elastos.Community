@@ -173,10 +173,8 @@ class C extends BaseComponent {
 
     getCurrentApplicants() {
         const detail = this.props.detail
-        let applicants = []
-        let cnt = 1
-        for (let i of detail.candidates) {
 
+        const applicants = _.map(detail.candidates, (candidate, ind) => {
             let user = {
                 id: String,
                 fullName: Number,
@@ -184,23 +182,21 @@ class C extends BaseComponent {
             }
 
             if (i.type === TASK_CANDIDATE_TYPE.USER) {
-                user.id = i.user._id
-                user.fullName = i.user.profile ? (i.user.profile.firstName + ' ' + i.user.profile.lastName) : ''
-                user.avatar = i.user.profile.avatar
-
-            } else if (i.type === TASK_CANDIDATE_TYPE.TEAM) {
-                user.id = i.team._id
-                user.fullName = i.team.name || ''
-                user.avatar = i.team.profile.logo || ''
+                user.id = candidate.user._id
+                user.fullName = candidate.user.profile ? `${candidate.user.profile.firstName} ${i.user.profile.lastName}` : ''
+                user.avatar = candidate.user.profile.avatar
+            } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
+                user.id = candidate.team._id
+                user.fullName = candidate.team.name || ''
+                user.avatar = candidate.team.profile.logo || ''
             }
 
-            applicants.push({
-                key: cnt.toString(),
+            return {
+                key: ind,
                 user: user,
-                status: i.status || ''
-            })
-            cnt = cnt + 1;
-        }
+                status: candidate.status || ''
+            }
+        })
 
         const columns = [{
             title: 'Name',
