@@ -191,14 +191,14 @@ class C extends BaseComponent {
                 user.id = candidate.user._id
                 user.fullName = candidate.user.profile ? (candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName) : ''
                 user.avatar = candidate.user.profile.avatar
-                owner = detail.createdBy._id === candidate.user._id
+                owner = detail.createdBy._id === this.props.currentUserId
                 current = this.props.currentUserId === candidate.user._id
 
             } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
                 user.id = candidate.team._id
                 user.fullName = candidate.team.name || ''
                 user.avatar = candidate.team.profile.logo || ''
-                owner = detail.createdBy._id === candidate.team._id
+                owner = detail.createdBy._id === candidate.team.owner
                 current = _.map(this.state.teamsOwned, '_id').includes(candidate.team._id)
             }
             applicants.push({
