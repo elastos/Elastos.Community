@@ -30,6 +30,14 @@ export default createContainer(Component, (state) => {
 
         async applyToTeam(teamId, userId, applyMsg) {
             return teamService.pushCandidate(teamId, userId, applyMsg)
+        },
+
+        async acceptCandidate(teamCandidateId) {
+            return teamService.acceptCandidate(teamCandidateId)
+        },
+
+        async rejectCandidate(teamCandidateId) {
+            return teamService.rejectCandidate(teamCandidateId)
         }
     }
 })

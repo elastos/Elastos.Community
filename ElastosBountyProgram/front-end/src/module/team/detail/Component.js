@@ -28,12 +28,12 @@ class C extends BaseComponent {
         this.props.history.push(`/admin/profile/${userId}`)
     }
 
-    approveUser(id) {
-        // if (status) {
-        //     this.props.acceptCandidate(id);
-        // } else {
-        //     //this.props.rejectCandidate(id);
-        // }
+    approveUser(teamCandidateId) {
+        this.props.acceptCandidate(teamCandidateId)
+    }
+
+    rejectUser(teamCandidateId) {
+        this.props.rejectCandidate(teamCandidateId)
     }
 
     renderUpperLeftBox() {
@@ -155,15 +155,16 @@ class C extends BaseComponent {
             key: 'action',
             render: candidate => isTeamOwner && (
                 <div className="text-right">
-                    <a onClick={this.approveUser.bind(this, true, candidate._id)}>Approve</a>
+                    <a onClick={this.approveUser.bind(this, candidate._id)}>Approve</a>
                     <Divider type="vertical"/>
-                    <a onClick={this.approveUser.bind(this, false, candidate._id)}>Disapprove</a>
+                    <a onClick={this.rejectUser.bind(this, candidate._id)}>Disapprove</a>
                 </div>
             )
         }]
 
         return (
             <Table
+                loading={this.props.loading}
                 className="no-borders headerless"
                 dataSource={pendingMembers}
                 columns={columns}

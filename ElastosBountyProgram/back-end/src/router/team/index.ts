@@ -27,7 +27,7 @@ export default Base.setRouter([
     {
         path : '/action/:action',
         router : action,
-        method : 'get'
+        method : 'post'
     },
     {
         path : '/list',

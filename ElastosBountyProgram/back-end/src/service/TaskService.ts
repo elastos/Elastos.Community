@@ -57,7 +57,9 @@ export default class extends Base {
                     path: 'user',
                     select: sanitize
                 })
-                await db_team.getDBInstance().populate(candidate, ['team'])
+                await db_team.getDBInstance().populate(candidate, {
+                    path: 'team'
+                })
 
                 for (let comment of candidate.comments) {
                     for (let thread of comment) {
