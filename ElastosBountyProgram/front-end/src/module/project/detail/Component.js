@@ -195,12 +195,11 @@ class C extends BaseComponent {
                 current = this.props.currentUserId === candidate.user._id
 
             } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
-                console.log(candidate);
                 user.id = candidate.team._id
                 user.fullName = candidate.team.name || ''
                 user.avatar = candidate.team.profile.logo || ''
                 owner = detail.createdBy._id === candidate.team.owner
-                current = _.map(this.state.teamsOwned, '_id').includes(candidate.team._id)
+                current = this.props.currentUserId === candidate.team.owner
             }
             applicants.push({
                 key: cnt.toString(),
