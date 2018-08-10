@@ -339,11 +339,15 @@ export default class extends BaseComponent {
                         key={item.id}
                         extra={this.getCarousel(item)}
                     >
-                        <List.Item.Meta
-                            title={<a onClick={!this.isLookingForTeam() && this.showModal.bind(this, item.id) || _.noop}>{item.title}</a>}
-                            description={item.description}
-                        />
-                        {item.content}
+                        <h3 class="no-margin no-padding">
+                            <a onClick={!this.isLookingForTeam() && this.showModal.bind(this, item.id) || _.noop}>{item.title}</a>
+                        </h3>
+                        <h5 class="no-margin">
+                            {item.description}
+                        </h5>
+                        <div>
+                            {item.content}
+                        </div>
                         <div className="ant-list-item-right-box">
                             <div className="pull-up">
                                 <Avatar size="large" className="pull-right" src={item.owner.profile.avatar}/>

@@ -157,17 +157,21 @@ export default class extends StandardPage {
 
         return (
             <List itemLayout='vertical' size='large' loading={this.props.loading}
-                className="with-right-box" pagination={{ pageSize: 5 }} dataSource={data}
+                className="with-right-box" dataSource={data}
                 renderItem={item => (
                     <List.Item
                         key={item.id}
                         extra={this.getCarousel(item)}
                     >
-                        <List.Item.Meta
-                            title={<a href={item.href}>{item.title}</a>}
-                            description={item.description}
-                        />
-                        {item.content}
+                        <h3 class="no-margin no-padding">
+                            <a href={item.href}>{item.title}</a>
+                        </h3>
+                        <h5 class="no-margin">
+                            {item.description}
+                        </h5>
+                        <div>
+                            {item.content}
+                        </div>
                         <div className="ant-list-item-right-box">
                             <div className="pull-up">
                                 <Avatar size="large" icon="user" className="pull-right" src={item.owner.profile.avatar}/>
