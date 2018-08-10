@@ -42,7 +42,7 @@ export default class extends StandardPage {
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>Profile</Breadcrumb.Item>
-                                <Breadcrumb.Item href="/profile/tasks">Tasks</Breadcrumb.Item>
+                                <Breadcrumb.Item href="/profile/projects">Projects</Breadcrumb.Item>
                                 <Breadcrumb.Item>
                                     {this.props.task.name}
                                 </Breadcrumb.Item>
