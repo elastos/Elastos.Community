@@ -217,9 +217,6 @@ export default class extends BaseComponent {
         const skillsetElement = this.renderSkillset(skillsetOptions, this.state.skillsetShowAllEntries);
         const categoryElement = this.renderCategory(categoryOptions, this.state.categoryShowAllEntries);
 
-        const task = this.isLookingForTeam()
-            ? this.props.all_teams.all_tasks
-            : this.props.all_tasks.all_tasks;
         return (
             <div className="c_Search">
                 <Row className="d_row">
