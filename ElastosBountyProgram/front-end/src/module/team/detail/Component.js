@@ -142,15 +142,6 @@ class C extends BaseComponent {
     renderCurrentApplicants() {
         const detail = this.props.detail
         const pendingMembers = _.filter(detail.members, { status: TEAM_USER_STATUS.PENDING })
-        // const applicants = _.map(pendingMembers, (member, ind) => {
-        //     return {
-
-        //         key: member._id,
-        //         name: (member.user && member.user.name) || '',
-        //         avatar: member.user && member.user.avatar
-        //     }
-        // })
-
         const columns = [{
             title: 'Name',
             render: candidate => {
@@ -179,11 +170,6 @@ class C extends BaseComponent {
                 columns={columns}
                 bordered={false}
                 pagination={false}>
-                <Column
-                    title="Name"
-                    dataIndex="name"
-                    key="name"
-                />
             </Table>
         )
     }
