@@ -163,10 +163,27 @@ export default class extends BaseService {
         this.dispatch(teamRedux.actions.detail_update(curTeamDetail))
 
         return result
-
     }
 
-    async rejectCandidate(teamId, userId) {
+    async rejectCandidate(teamCandidateId) {
+        const teamRedux = this.store.getRedux('team')
+        this.dispatch(teamRedux.actions.loading_update(true))
 
+        const result = await api_request({
+            path: '/api/team/action/reject',
+            method: 'post',
+            data: {
+                teamCandidateId
+            }
+        })
+
+        this.dispatch(teamRedux.actions.loading_update(false))
+
+        const curTeamDetail = this.store.getState().team.detail
+        const member = _.find(curTeamDetail.members, { _id: teamCandidateId })
+        member.status = result.status
+        this.dispatch(teamRedux.actions.detail_update(curTeamDetail))
+
+        return result
     }
 }

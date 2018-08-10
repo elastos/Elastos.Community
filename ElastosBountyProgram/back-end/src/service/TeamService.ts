@@ -223,26 +223,34 @@ export default class extends Base {
     *
     * */
     public async rejectApply(param): Promise<Document>{
-        const {teamId, userId} = param;
+        const {teamCandidateId} = param
 
-        const team_doc = await this.model.findOne({_id : teamId});
-        if(!team_doc){
-            throw 'invalid team id';
+        const db_team = this.getDBModel('Team')
+        const db_ut = this.getDBModel('User_Team')
+
+        let doc = await db_ut.findById(teamCandidateId)
+
+        if (!doc || doc.status !== constant.TEAM_USER_STATUS.PENDING) {
+            throw 'Invalid status'
         }
 
-        // check current user is admin or team owner
-        if(!(this.currentUser._id.equals(team_doc.owner) || this.currentUser.role === constant.USER_ROLE.ADMIN)){
-            throw 'no permission to operate';
+        let team = await db_team.getDBInstance().findOne({_id: doc.team})
+            .populate('owner', sanitize)
+
+        if (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
+            (team.owner && team.owner._id.toString() !== this.currentUser._id.toString())) {
+            throw 'Access Denied'
         }
 
-        const ut_doc = await this.ut_model.findOne({team: teamId, user: userId});
-        if(!ut_doc || ut_doc.status !== constant.TEAM_USER_STATUS.PENDING){
-            throw 'invalid params';
-        }
+        await db_ut.update({
+            _id: teamCandidateId
+        }, {
+            status: constant.TEAM_USER_STATUS.REJECT
+        })
 
-        return await this.ut_model.update({team: teamId, user: userId}, {
-            status : constant.TEAM_USER_STATUS.REJECT
-        });
+        return db_ut.getDBInstance().findOne({_id: teamCandidateId})
+            .populate('team')
+            .populate('user', sanitize)
     }
 
     /*
