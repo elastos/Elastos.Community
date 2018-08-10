@@ -33,7 +33,11 @@ class C extends BaseComponent {
     }
 
     approveUser(status, id) {
-        // status = true or false
+        if (status) {
+            this.props.acceptCandidate(id);
+        } else {
+            //this.props.rejectCandidate(id);
+        }
     }
 
     getUpperLeftBox() {
