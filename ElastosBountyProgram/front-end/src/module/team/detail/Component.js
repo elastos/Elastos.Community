@@ -1,7 +1,7 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
-import {message, Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Table, Input, Form} from 'antd'
+import {message, Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Table, Input, Form, Divider} from 'antd'
 import _ from 'lodash'
 import './style.scss'
 import Comments from '@/module/common/comments/Container'
@@ -22,6 +22,18 @@ class C extends BaseComponent {
 
     componentWillUnmount() {
         this.props.resetTeamDetail()
+    }
+
+    linkProfileInfo(userId) {
+        this.props.history.push(`/admin/profile/${userId}`)
+    }
+
+    approveUser(id) {
+        // if (status) {
+        //     this.props.acceptCandidate(id);
+        // } else {
+        //     //this.props.rejectCandidate(id);
+        // }
     }
 
     renderUpperLeftBox() {
@@ -129,19 +141,42 @@ class C extends BaseComponent {
 
     renderCurrentApplicants() {
         const detail = this.props.detail
-        const pendingMembers = _.find(detail.members, { status: TEAM_USER_STATUS.PENDING })
-        const applicants = _.map(pendingMembers, (member, ind) => {
-            return {
-                key: ind,
-                name: member.user && member.user.name || '',
-                avatar: member.user && member.user.avatar
-            }
-        })
+        const pendingMembers = _.filter(detail.members, { status: TEAM_USER_STATUS.PENDING })
+        // const applicants = _.map(pendingMembers, (member, ind) => {
+        //     return {
 
-        return(
+        //         key: member._id,
+        //         name: (member.user && member.user.name) || '',
+        //         avatar: member.user && member.user.avatar
+        //     }
+        // })
+
+        const columns = [{
+            title: 'Name',
+            render: candidate => {
+                return (
+                    <div key={candidate._id}>
+                        <Avatar src={candidate.user.profile.avatar} />
+                        <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                            {`${candidate.user.profile.firstName} ${candidate.user.profile.lastName}`}</a>
+                    </div>)
+            }
+        }, {
+            title: 'Action',
+            render: candidate => (
+                <span>
+                    <a onClick={this.approveUser.bind(this, true, candidate._id)}>Approve</a>
+                    <Divider type="vertical"/>
+                    <a onClick={this.approveUser.bind(this, false, candidate._id)}>Disapprove</a>
+                </span>
+            )
+        }]
+
+        return (
             <Table
                 className="no-borders headerless"
-                dataSource={applicants}
+                dataSource={pendingMembers}
+                columns={columns}
                 bordered={false}
                 pagination={false}>
                 <Column
