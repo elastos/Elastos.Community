@@ -1,9 +1,9 @@
-import {Schema} from 'mongoose';
-import {ELA, VotePower} from "./UserSchema";
-import {constant} from '../../constant';
-import {CommentSchema} from './CommentSchema';
-import {SubscriberSchema} from './SubscriberSchema';
-
+import {Schema} from 'mongoose'
+import {ELA, VotePower} from "./UserSchema"
+import {constant} from '../../constant'
+import {CommentSchema} from './CommentSchema'
+import {SubscriberSchema} from './SubscriberSchema'
+import {PictureSchema} from './PictureSchema'
 
 // TODO: allow links?
 export const TaskOutput = {
@@ -87,12 +87,6 @@ export const TaskActivity = {
     },
     userId : Schema.Types.ObjectId,
     notes : String
-}
-
-const PictureSchema = {
-    thumbUrl: String,
-    name: String,
-    url: String
 }
 
 /**

@@ -1,14 +1,9 @@
 import {Schema} from 'mongoose';
+import {PictureSchema} from './PictureSchema'
 
 export const TeamProfile = {
     description: String,
     logo : String
-};
-
-const PictureSchema = {
-    thumbUrl: String,
-    name: String,
-    url: String
 };
 
 export const Team = {
