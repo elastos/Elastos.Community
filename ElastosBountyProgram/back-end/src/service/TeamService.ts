@@ -52,8 +52,8 @@ export default class extends Base {
 
         // save to user team
         const doc_user_team = {
-            userId: this.currentUser._id,
-            teamId: res._id,
+            user: this.currentUser,
+            team: res,
             status: constant.TEAM_USER_STATUS.NORMAL,
             role: constant.TEAM_ROLE.LEADER
         };
@@ -231,12 +231,12 @@ export default class extends Base {
             throw 'no permission to operate';
         }
 
-        const ut_doc = await this.ut_model.findOne({teamId, userId});
+        const ut_doc = await this.ut_model.findOne({team: teamId, user: userId});
         if(!ut_doc || ut_doc.status !== constant.TEAM_USER_STATUS.PENDING){
             throw 'invalid params';
         }
 
-        return await this.ut_model.update({teamId, userId}, {
+        return await this.ut_model.update({team: teamId, user: userId}, {
             status : constant.TEAM_USER_STATUS.REJECT
         });
     }
@@ -299,7 +299,7 @@ export default class extends Base {
         if (param.teamHasUser) {
             const db_user_team = this.getDBModel('User_Team')
             let listObj:any = {
-                userId: param.teamHasUser
+                user: param.teamHasUser
             }
 
             if (param.teamHasUserStatus) {
@@ -308,7 +308,7 @@ export default class extends Base {
 
             const userTeams = await db_user_team.list(listObj)
             query.$or = [
-                { _id: {$in: _.map(userTeams, 'teamId')} }
+                { _id: {$in: _.map(userTeams, 'team')} }
             ]
         }
 
