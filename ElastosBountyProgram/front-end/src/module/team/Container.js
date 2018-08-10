@@ -3,11 +3,22 @@ import Component from './Component'
 import TeamService from '@/service/TeamService'
 
 export default createContainer(Component, (state) => {
+    let page = 'PUBLIC' // default
+
+    if (/^\/admin/.test(state.router.location.pathname)) {
+        page = 'ADMIN'
+    } else if (/^\/profile/.test(state.router.location.pathname)) {
+        page = 'LEADER'
+    }
+
     return {
-        team: state.team.detail,
-        loading: state.team.loading
+        is_admin: state.user.is_admin,
+        is_login: state.user.is_login,
+        current_user_id: state.user.current_user_id,
+        page: page
     }
 }, () => {
+
     const teamService = new TeamService()
 
     return {

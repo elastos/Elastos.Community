@@ -1,15 +1,12 @@
 import React from 'react'
 import StandardPage from '../../StandardPage'
-
 // TODO: proper naming scheme
 import TaskDetail from '@/module/task/Container'
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import Footer from '@/module/layout/Footer/Container';
 import config from '@/config'
-
 import './style.scss'
 import '../../admin/admin.scss'
-
 import { Col, Row, Breadcrumb, Icon } from 'antd'
 import { TASK_TYPE } from '@/constant'
 

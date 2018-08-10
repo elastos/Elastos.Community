@@ -188,7 +188,7 @@ export default class extends StandardPage {
                                 <div class="clearfix"/>
                                 <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
                             </div>
-                            <Button type="primary" className="pull-down">View</Button>
+                            <Button type="primary" className="pull-down" onClick={this.linkTeamDetail.bind(this, item.id)}>View</Button>
                         </div>
                     </List.Item>
                 )}
@@ -216,11 +216,11 @@ export default class extends StandardPage {
         this.setState({ filter: FILTERS.OWNED }, this.refetch.bind(this))
     }
 
-    goDetail(teamId) {
-        this.props.history.push(`/profile/teams/${teamId}`);
-    }
-
     goCreatepage() {
         this.props.history.push('/profile/teams/create');
+    }
+
+    linkTeamDetail(teamId) {
+        this.props.history.push(`/profile/team-detail/${teamId}`)
     }
 }

@@ -87,8 +87,8 @@ export default class extends BaseService {
             ...param
         }
 
-        this.dispatch(taskRedux.actions.detail_reset())
-        this.dispatch(taskRedux.actions.detail_update(detail))
+        this.dispatch(teamRedux.actions.detail_reset())
+        this.dispatch(teamRedux.actions.detail_update(detail))
         this.dispatch(teamRedux.actions.loading_update(false))
 
         return result
@@ -107,5 +107,10 @@ export default class extends BaseService {
     resetAllTeams() {
         const teamRedux = this.store.getRedux('team')
         this.dispatch(teamRedux.actions.all_teams_reset())
+    }
+
+    resetTeamDetail() {
+        const taskRedux = this.store.getRedux('team')
+        this.dispatch(taskRedux.actions.detail_reset())
     }
 }

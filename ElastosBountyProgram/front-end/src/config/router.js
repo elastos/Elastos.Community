@@ -203,6 +203,10 @@ export default [
         page: ProfileTaskDetailPage
     },
     {
+        path: '/profile/team-detail/:teamId',
+        page: ProfileTeamDetailPage
+    },
+    {
         path: '/profile/task-app/:taskId/:applicantId',
         page: ProfileTaskApplicationDetailPage
     },
@@ -221,10 +225,6 @@ export default [
     {
         path : '/profile/teams/create',
         page : ProfileTeamCreatePage
-    },
-    {
-        path : '/profile/teams/:teamId',
-        page : ProfileTeamDetailPage
     },
     {
         path: '/profile/submissions',
