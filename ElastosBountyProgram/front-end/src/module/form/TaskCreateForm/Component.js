@@ -669,7 +669,7 @@ class C extends BaseComponent {
 
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
                     <div>
-                        <Divider>General Info</Divider>
+                        <h3 class="no-margin">General Info</h3>
                         {(!existingTask || existingTask.assignSelf) &&
                         <FormItem label="Assign to Self" {...formItemLayout}>
                             {p.assignSelf} - assigns you to the task and submits to an admin for approval
@@ -726,9 +726,10 @@ class C extends BaseComponent {
                             {p.taskLink}
                         </FormItem>
 
-                        {this.state.taskType === TASK_TYPE.PROJECT &&
+                        {((existingTask && existingTask.type === TASK_TYPE.PROJECT) ||
+                            this.state.taskType === TASK_TYPE.PROJECT) &&
                             <div>
-                                <Divider>Recruitment</Divider>
+                                <h3 class="no-margin">Recruitment</h3>
                                 <FormItem label="Domain" {...formItemLayout}>
                                     {p.domain}
                                 </FormItem>
@@ -751,7 +752,7 @@ class C extends BaseComponent {
                         */}
                         {this.state.taskType === TASK_TYPE.EVENT &&
                         <div>
-                            <Divider>Event Info</Divider>
+                            <h3 className="no-margin">Event Info</h3>
                             <FormItem label="Date Range" {...formItemLayout}>
                                 {p.eventDateRange}
                             </FormItem>
@@ -857,7 +858,7 @@ class C extends BaseComponent {
                         * Attachment
                         ********************************************************************************
                         */}
-                        <Divider>Attachment</Divider>
+                        <h3 className="no-margin">Attachment</h3>
                         {!this.state.attachment_url ?
                             <FormItem {...formItemNoLabelLayout}>
                                 {p.attachment}
