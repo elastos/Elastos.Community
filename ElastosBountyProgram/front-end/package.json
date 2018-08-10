@@ -11,7 +11,7 @@
   },
   "author": "liyangwood@gmail.com",
   "dependencies": {
-    "antd": "^3.5.0",
+    "antd": "^3.8.0",
     "babel-preset-stage-0": "^6.24.1",
     "bluebird": "^3.5.1",
     "cross-env": "^5.1.1",
