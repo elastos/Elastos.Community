@@ -16,14 +16,14 @@ const prodEnv = {
     NODE_ENV: JSON.stringify('production'),
     PLATFORM_ENV: JSON.stringify('web'),
     SERVER_URL: JSON.stringify('https://ebp-api-beta.elastos.org'),
-    VERSION: process.env.VERSION
+    CR_VERSION: process.env.CR_VERSION
 };
 
 const stagingEnv = {
     NODE_ENV: JSON.stringify('staging'),
     PLATFORM_ENV: JSON.stringify('web'),
     SERVER_URL: JSON.stringify('http://staging.cyberrepublic.org:3000'),
-    VERSION: process.env.VERSION
+    CR_VERSION: process.env.CR_VERSION
 };
 
 const cssFilename_lib = 'static/css/lib.css?[hash:8]';
