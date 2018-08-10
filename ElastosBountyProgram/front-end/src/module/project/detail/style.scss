@@ -155,15 +155,17 @@
     .title {
       font-size: 24px;
     }
-
-    .no-borders {
-      margin: 0 auto;
+    .row-name-link {
+      margin-left: $gap_1;
     }
   }
 
   .applications {
     .title {
       font-size: 24px;
+    }
+    .row-name-link {
+      margin-left: $gap_1;
     }
   }
 }

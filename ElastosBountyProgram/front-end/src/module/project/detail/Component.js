@@ -28,6 +28,10 @@ class C extends BaseComponent {
         this.props.resetAllTeams()
     }
 
+    linkProfileInfo(userId) {
+        this.props.history.push(`/admin/profile/${userId}`)
+    }
+
     getUpperLeftBox() {
         const details = this.props.detail;
 
@@ -98,9 +102,27 @@ class C extends BaseComponent {
         let contributors = [];
         let cnt = 1;
         for (let i of detail.candidateCompleted) {
+
+            let user = {
+                id: String,
+                fullName: Number,
+                avatar: String
+            }
+
+            if (i.type === TASK_CANDIDATE_TYPE.USER) {
+                user.id = i.user._id
+                user.fullName = i.user.profile ? (i.user.profile.firstName + " " + i.user.profile.lastName) : ""
+                user.avatar = i.user.profile.avatar
+
+            } else if (i.type === TASK_CANDIDATE_TYPE.TEAM) {
+                user.id = i.team._id
+                user.fullName = i.team.name || ""
+                user.avatar = i.team.profile.logo || ""
+            }
+
             contributors.push({
                 key: cnt.toString(),
-                name: i.name || "",
+                name: user,
                 role: i.role || "",
                 progress: i.progress || "",
                 notes: i.notes || ""
@@ -110,8 +132,15 @@ class C extends BaseComponent {
 
         const columns = [{
             title: "Name",
-            dataIndex: "name",
-            key: "name"
+            dataIndex: "user",
+            key: "user",
+            render: user => {
+                return(
+                    <div key={user.id}>
+                        <Avatar src={user.avatar} />
+                        <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, user.id)}>{user.fullName}</a>
+                    </div>)
+            }
         }, {
             title: "Role",
             dataIndex: "role",
@@ -141,43 +170,57 @@ class C extends BaseComponent {
         const detail = this.props.detail
         let applicants = []
         let cnt = 1
-        console.log(detail)
         for (let i of detail.candidates) {
 
-            let fullName
-            let role
+            let user = {
+                id: String,
+                fullName: Number,
+                avatar: String
+            }
+
             if (i.type === TASK_CANDIDATE_TYPE.USER) {
-                fullName = i.user.profile ? (i.user.profile.firstName + " " + i.user.profile.lastName) : ""
-                role = i.user.profile ? i.user.profile.role : ""
+                user.id = i.user._id
+                user.fullName = i.user.profile ? (i.user.profile.firstName + " " + i.user.profile.lastName) : ""
+                user.avatar = i.user.profile.avatar
+
             } else if (i.type === TASK_CANDIDATE_TYPE.TEAM) {
-                fullName = i.team.name || ""
-                role = ""
+                user.id = i.team._id
+                user.fullName = i.team.name || ""
+                user.avatar = i.team.profile.logo || ""
             }
 
             applicants.push({
                 key: cnt.toString(),
-                name: fullName,
+                user: user,
                 status: i.status || "",
             })
             cnt = cnt + 1;
         }
 
+        const columns = [{
+            title: "Name",
+            dataIndex: "user",
+            key: "user",
+            render: user => {
+                return(
+                    <div key={user.id}>
+                        <Avatar src={user.avatar} />
+                        <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, user.id)}>{user.fullName}</a>
+                    </div>)
+            }
+        }, {
+            title: "Status",
+            dataIndex: "status",
+            key: "status"
+        }]
+
         return(
             <Table
                 className="no-borders"
                 dataSource={applicants}
+                columns={columns}
                 bordered={false}
                 pagination={false}>
-                <Column
-                    title="Name"
-                    dataIndex="name"
-                    key="name"
-                />
-                <Column
-                    title="Status"
-                    dataIndex="status"
-                    key="status"
-                />
             </Table>
         )
     }
