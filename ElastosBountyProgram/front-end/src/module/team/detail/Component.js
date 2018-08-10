@@ -5,6 +5,7 @@ import {message, Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Ta
 import _ from 'lodash'
 import './style.scss'
 import Comments from '@/module/common/comments/Container'
+import { TEAM_USER_STATUS } from '@/constant'
 
 const { Column } = Table;
 
@@ -128,21 +129,18 @@ class C extends BaseComponent {
 
     renderCurrentApplicants() {
         const detail = this.props.detail
-        let applicants = [];
-        let cnt = 1;
-        for (let i of detail.candidates) {
-            applicants.push({
-                key: cnt.toString(),
-                name: i.name || "",
-                role: i.role || "",
-                status: i.status || "",
-            })
-            cnt = cnt + 1;
-        }
+        const pendingMembers = _.find(detail.members, { status: TEAM_USER_STATUS.PENDING })
+        const applicants = _.map(pendingMembers, (member, ind) => {
+            return {
+                key: ind,
+                name: member.user && member.user.name || '',
+                avatar: member.user && member.user.avatar
+            }
+        })
 
         return(
             <Table
-                className="no-borders"
+                className="no-borders headerless"
                 dataSource={applicants}
                 bordered={false}
                 pagination={false}>
@@ -150,16 +148,6 @@ class C extends BaseComponent {
                     title="Name"
                     dataIndex="name"
                     key="name"
-                />
-                <Column
-                    title="Role"
-                    dataIndex="role"
-                    key="role"
-                />
-                <Column
-                    title="Status"
-                    dataIndex="status"
-                    key="status"
                 />
             </Table>
         )
@@ -254,7 +242,7 @@ class C extends BaseComponent {
                             {!this.state.applying &&
                                 <Row className="applications">
                                     <h3 className="no-margin">Pending Applications</h3>
-                                    {false && this.renderCurrentApplicants()}
+                                    {this.renderCurrentApplicants()}
                                 </Row>
                             }
 

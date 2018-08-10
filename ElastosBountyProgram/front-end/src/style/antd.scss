@@ -224,3 +224,9 @@ h3.one-line {
 .ant-affix {
   background: white;
 }
+
+.ant-table.headerless {
+  .ant-table-thead {
+    display: none;
+  }
+}

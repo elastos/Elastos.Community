@@ -1,7 +1,7 @@
 import Base from './Base';
 import {Document, Types} from 'mongoose';
 import * as _ from 'lodash';
-import {validate} from '../utility';
+import {validate, mail} from '../utility';
 import {constant} from '../constant';
 import LogService from './LogService';
 import {DataList} from './interface';
@@ -89,57 +89,95 @@ export default class extends Base {
         return db_team.findById(teamId)
     }
 
-    /*
-    * member apply to add a team
-    *
-    * */
-    public async applyToAddTeam(param): Promise<boolean>{
-        const {teamId, reason} = param;
-
-        const team_doc = await this.model.findOne({_id : teamId});
-        if(!team_doc){
-            throw 'invalid team id';
-        }
-
-        const tmp = await this.ut_model.findOne({
-            userId : this.currentUser._id,
-            teamId
-        });
-        if(tmp){
-            if(tmp.status === constant.TEAM_USER_STATUS.PENDING){
-                throw 'user applied team before';
-            }
-            if(tmp.status === constant.TEAM_USER_STATUS.NORMAL){
-                throw 'user already in team';
-            }
-            else{
-                // reject
-                throw 'team reject this member';
-
-                // remove record first
-                // await db_user_team.remove({
-                //     userId : this.currentUser._id,
-                //     teamId
-                // });
-            }
-        }
-
-        const doc = {
-            userId : this.currentUser._id,
+    public async addCandidate(param): Promise<boolean>{
+        const {teamId, userId, applyMsg} = param
+        const doc: any = {
             teamId,
-            level : '',
-            role : constant.TEAM_ROLE.MEMBER,
-            apply_reason: reason,
-            status : constant.TEAM_USER_STATUS.PENDING
-        };
+            team: teamId,
+            userId,
+            user: userId,
+            apply_reason: applyMsg,
+            role: constant.TEAM_ROLE.MEMBER,
+            status: constant.TEAM_USER_STATUS.PENDING,
+            level: ''
+        }
+        const db_user = this.getDBModel('User')
+        const db_team = this.getDBModel('Team')
 
-        await this.ut_model.save(doc);
+        if (!teamId) {
+            throw 'no team id'
+        }
 
-        // add log
-        const logService = this.getService(LogService);
-        await logService.applyToAddTeam(teamId, this.currentUser._id, reason);
+        doc.team = teamId
+        const team = await db_team.findOne({_id: teamId})
+        if (!team) {
+            throw 'invalid team id'
+        }
 
-        return true;
+        if (!userId) {
+            throw 'no user id'
+        }
+
+        doc.user = userId
+        const user = await db_user.findOne({_id: userId})
+        if (!user) {
+            throw 'invalid user id'
+        }
+
+        const db_ut = this.getDBModel('User_Team')
+        if (await db_ut.findOne(doc)) {
+            throw 'candidate already exists'
+        }
+
+        console.log('add team candidate =>', doc);
+        const teamCandidate = await db_ut.save(doc);
+
+        // add the candidate to the team too
+        team.members = team.members || []
+        team.members.push(teamCandidate._id)
+
+        await team.save()
+
+        // populate the taskCandidate
+        await db_ut.db.populate(teamCandidate, ['team', 'user'])
+
+        const teamOwner = await db_user.findById(team.owner)
+        await this.sendAddCandidateEmail(this.currentUser, teamOwner, team)
+
+        return teamCandidate
+    }
+
+    public async sendAddCandidateEmail(curUser, teamOwner, team) {
+        let ownerSubject = `A candidate has applied for your team - ${team.name}`
+        let ownerBody = `
+            ${curUser.profile.firstName} ${curUser.profile.lastName} has applied for your team ${team.name}
+            <br/>
+            Please review their application
+            <br/>
+            <br/>
+            <a href="${process.env.SERVER_URL}/profile/team-detail/${team._id}">Click here to view the team</a>
+            `
+        let ownerTo = teamOwner.email
+        let ownerToName = `${teamOwner.profile.firstName} ${teamOwner.profile.lastName}`
+
+        await mail.send({
+            to: ownerTo,
+            toName: ownerToName,
+            subject: ownerSubject,
+            body: ownerBody
+        })
+
+        let candidateSubject = `Your application for team ${team.name} has been received`
+        let candidateBody = `Thank you, the team owner ${teamOwner.profile.firstName} ${teamOwner.profile.lastName} will review your application and be in contact`
+        let candidateTo = curUser.email
+        let candidateToName = `${curUser.profile.firstName} ${curUser.profile.lastName}`
+
+        await mail.send({
+            to: candidateTo,
+            toName: candidateToName,
+            subject: candidateSubject,
+            body: candidateBody
+        })
     }
 
     /*
@@ -211,10 +249,25 @@ export default class extends Base {
     public async show(param): Promise<Document>{
         const {teamId, status} = param;
         const db_team = this.getDBModel('Team');
+        const db_user = this.getDBModel('User');
 
         const team = await db_team.getDBInstance().findOne({_id : teamId})
             .populate('members', sanitize)
             .populate('owner', sanitize)
+
+        if (team) {
+            for (let member of team.members) {
+                await db_team.getDBInstance().populate(member, {
+                    path: 'team',
+                    select: sanitize
+                })
+
+                await db_user.getDBInstance().populate(member, {
+                    path: 'user',
+                    select: sanitize
+                })
+            }
+        }
 
         return team
     }

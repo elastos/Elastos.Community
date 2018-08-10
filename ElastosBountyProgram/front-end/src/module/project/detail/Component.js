@@ -158,7 +158,7 @@ class C extends BaseComponent {
 
         return (
             <Table
-                className="no-borders"
+                className="no-borders headerless"
                 dataSource={contributors}
                 columns={columns}
                 bordered={false}

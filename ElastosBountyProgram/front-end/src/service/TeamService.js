@@ -110,7 +110,33 @@ export default class extends BaseService {
     }
 
     resetTeamDetail() {
-        const taskRedux = this.store.getRedux('team')
-        this.dispatch(taskRedux.actions.detail_reset())
+        const teamRedux = this.store.getRedux('team')
+        this.dispatch(teamRedux.actions.detail_reset())
+    }
+
+    async pushCandidate(teamId, userId, applyMsg) {
+        const teamRedux = this.store.getRedux('team')
+        this.dispatch(teamRedux.actions.loading_update(true))
+
+        const result = await api_request({
+            path: '/api/team/addCandidate',
+            method: 'post',
+            data: {
+                userId,
+                teamId,
+                applyMsg
+            }
+        })
+
+        this.dispatch(teamRedux.actions.loading_update(false))
+
+        const curTeamDetail = this.store.getState().team.detail
+        curTeamDetail.members.push(result)
+
+        debugger
+
+        this.dispatch(teamRedux.actions.detail_update(curTeamDetail))
+
+        return result
     }
 }

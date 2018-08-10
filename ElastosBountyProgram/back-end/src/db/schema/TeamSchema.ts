@@ -25,14 +25,6 @@ export const Team = {
 };
 
 export const User_Team = {
-    userId: {
-        required: true,
-        type: Schema.Types.ObjectId
-    },
-    teamId: {
-        required: true,
-        type: Schema.Types.ObjectId
-    },
     status: {
         type: String
     },
@@ -40,5 +32,6 @@ export const User_Team = {
     role: String,
     title: String,
     apply_reason : String,
-    team : {type: Schema.Types.ObjectId, ref: 'team'}
+    team: {type: Schema.Types.ObjectId, ref: 'team'},
+    user: {type: Schema.Types.ObjectId, ref: 'users'}
 };

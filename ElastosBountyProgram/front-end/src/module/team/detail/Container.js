@@ -29,7 +29,7 @@ export default createContainer(Component, (state) => {
         },
 
         async applyToTeam(teamId, userId, applyMsg) {
-            return //teamService.pushCandidate(teamId, userId, applyMsg)
+            return teamService.pushCandidate(teamId, userId, applyMsg)
         }
     }
 })

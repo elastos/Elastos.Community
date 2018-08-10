@@ -2,7 +2,7 @@ import Base from '../Base';
 
 import create from './create';
 import update from './update';
-import apply_add_team from './apply_add_team';
+import add_candidate from './add_candidate';
 import action from './action';
 import get from './get';
 import list from './list'
@@ -20,9 +20,9 @@ export default Base.setRouter([
         method : 'post'
     },
     {
-        path : '/apply_add_team',
-        router : apply_add_team,
-        method : 'get'
+        path : '/addCandidate',
+        router : add_candidate,
+        method : 'post'
     },
     {
         path : '/action/:action',

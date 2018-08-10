@@ -7,7 +7,7 @@ export default class extends Base {
         const param = this.getParam();
         const teamService = this.buildService(TeamService);
 
-        const rs = await teamService.applyToAddTeam(param);
+        const rs = await teamService.addCandidate(param);
         return this.result(1, rs);
     }
 }
