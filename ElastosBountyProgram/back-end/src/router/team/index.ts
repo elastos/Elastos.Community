@@ -30,13 +30,13 @@ export default Base.setRouter([
         method : 'get'
     },
     {
-        path : '/get',
-        router : get,
+        path : '/list',
+        router : list,
         method : 'get'
     },
     {
-        path : '/list',
-        router : list,
+        path : '/:teamId',
+        router : get,
         method : 'get'
     }
 ]);

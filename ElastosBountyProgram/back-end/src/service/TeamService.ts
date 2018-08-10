@@ -208,34 +208,15 @@ export default class extends Base {
     * include all of members
     *
     * */
-    public async getWholeData(param): Promise<Document>{
+    public async show(param): Promise<Document>{
         const {teamId, status} = param;
+        const db_team = this.getDBModel('Team');
 
-        const team_doc = await this.model.findOne({_id : teamId});
+        const team = await db_team.getDBInstance().findOne({_id : teamId})
+            .populate('members', sanitize)
+            .populate('owner', sanitize)
 
-        const aggregate = this.ut_model.getAggregate();
-        const query: any = {
-            teamId : Types.ObjectId(teamId)
-        };
-        if(_.includes(constant.TEAM_USER_STATUS, status)){
-            query.status = status;
-        }
-        const rs = await aggregate.match(query)
-            .lookup({
-                from : 'users',
-                localField : 'userId',
-                foreignField : '_id',
-                as : 'user'
-            })
-            .unwind('$user')
-            .project({
-                'user.password' : 0,
-                'user.salt' : 0
-            });
-
-        const data = team_doc.toJSON();
-        data.members = rs;
-        return data;
+        return team
     }
 
     /*

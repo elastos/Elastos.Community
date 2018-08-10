@@ -6,6 +6,7 @@ import './style.scss'
 import moment from 'moment/moment'
 import {SKILLSET_TYPE, TEAM_TASK_DOMAIN} from '@/constant'
 import ProjectDetail from '@/module/project/detail/Container'
+import TeamDetail from '@/module/team/detail/Container'
 import Footer from '@/module/layout/Footer/Container'
 
 const CheckboxGroup = Checkbox.Group;
@@ -29,8 +30,10 @@ export default class extends BaseComponent {
             entryCount: 3,
             skillsetShowAllEntries: false,
             categoryShowAllEntries: false,
-            showModal: false,
-            taskDetailId: 0
+            showProjectModal: false,
+            showTeamModal: false,
+            taskDetailId: 0,
+            teamDetailId: 0
         }
     }
 
@@ -79,22 +82,41 @@ export default class extends BaseComponent {
         }, this.refetch.bind(this))
     }
 
-    showModal = (id) => {
+    showProjectModal = (id) => {
         this.setState({
-            showModal: true,
+            showProjectModal: true,
             taskDetailId: id
         })
     }
 
-    handleModalOk = (e) => {
+    showTeamModal = (id) => {
         this.setState({
-            showModal: false,
+            showTeamModal: true,
+            teamDetailId: id
         })
     }
 
-    handleModalCancel = (e) => {
+    handleProjectModalOk = (e) => {
         this.setState({
-            showModal: false,
+            showProjectModal: false
+        })
+    }
+
+    handleTeamModalOk = (e) => {
+        this.setState({
+            showTeamModal: false
+        })
+    }
+
+    handleProjectModalCancel = (e) => {
+        this.setState({
+            showProjectModal: false
+        })
+    }
+
+    handleTeamModalCancel = (e) => {
+        this.setState({
+            showTeamModal: false
         })
     }
 
@@ -267,13 +289,23 @@ export default class extends BaseComponent {
                 </Row>
                 <Modal
                     className="project-detail-nobar"
-                    visible={this.state.showModal}
-                    onOk={this.handleModalOk}
-                    onCancel={this.handleModalCancel}
+                    visible={this.state.showProjectModal}
+                    onOk={this.handleProjectModalOk}
+                    onCancel={this.handleProjectModalCancel}
                     footer={null}
                     width="70%"
                 >
                     <ProjectDetail taskId={this.state.taskDetailId}/>
+                </Modal>
+                <Modal
+                    className="project-detail-nobar"
+                    visible={this.state.showTeamModal}
+                    onOk={this.handleTeamModalOk}
+                    onCancel={this.handleTeamModalCancel}
+                    footer={null}
+                    width="70%"
+                >
+                    <TeamDetail teamId={this.state.teamDetailId}/>
                 </Modal>
                 <Footer/>
             </div>
@@ -331,6 +363,10 @@ export default class extends BaseComponent {
                 }
             })
 
+        const clickHandler = this.isLookingForTeam()
+            ? this.showTeamModal
+            : this.showProjectModal
+
         return (
             <List loading={this.props.loading} itemLayout='vertical' size='large'
                 className="with-right-box" dataSource={data}
@@ -340,7 +376,7 @@ export default class extends BaseComponent {
                         extra={this.getCarousel(item)}
                     >
                         <h3 class="no-margin no-padding one-line brand-color">
-                            <a onClick={!this.isLookingForTeam() && this.showModal.bind(this, item.id) || _.noop}>{item.title}</a>
+                            <a onClick={clickHandler}>{item.title}</a>
                         </h3>
                         <h5 class="no-margin">
                             {item.description}
@@ -354,7 +390,7 @@ export default class extends BaseComponent {
                                 <div class="clearfix"/>
                                 <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
                             </div>
-                            <Button onClick={!this.isLookingForTeam() && this.showModal.bind(this, item.id) || _.noop}
+                            <Button onClick={clickHandler.bind(this, item.id)}
                                 type="primary" className="pull-down">Apply</Button>
                         </div>
                     </List.Item>

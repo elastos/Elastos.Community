@@ -20,6 +20,7 @@ export const Team = {
     domain: [String],
     recruitedSkillsets: [String],
     owner: {type: Schema.Types.ObjectId, ref: 'users'},
+    members: [{type: Schema.Types.ObjectId, ref: 'user_team'}],
     pictures: [PictureSchema]
 };
 
@@ -38,5 +39,6 @@ export const User_Team = {
     level: String,
     role: String,
     title: String,
-    apply_reason : String
+    apply_reason : String,
+    team : {type: Schema.Types.ObjectId, ref: 'team'}
 };

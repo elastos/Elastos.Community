@@ -7,7 +7,7 @@ export default class extends Base {
         const param = this.getParam();
         const teamService = this.buildService(TeamService);
 
-        const rs = await teamService.getWholeData(param);
+        const rs = await teamService.show(param);
         return this.result(1, rs);
     }
 }
