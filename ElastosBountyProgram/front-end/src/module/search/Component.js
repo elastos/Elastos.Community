@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import {Col, Row, Icon, Input, Button, Breadcrumb, List, Checkbox, Radio, Carousel, Modal, Avatar} from 'antd'
+import {Col, Row, Icon, Input, Button, Breadcrumb, List, Checkbox, Radio, Carousel, Modal, Avatar, Affix} from 'antd'
 import _ from 'lodash'
 import './style.scss'
 import moment from 'moment/moment'
@@ -224,43 +224,45 @@ export default class extends BaseComponent {
             <div className="c_Search">
                 <Row className="d_row">
                     <Col span={4} className="admin-left-column wrap-box-user">
-                        <Input.Search placeholder="Search"/>
-                        <div className="group">
-                            <div className="title">Looking For:</div>
-                            <div className="content">
-                                {lookingForElement}
+                        <Affix offsetTop={15}>
+                            <Input.Search placeholder="Search"/>
+                            <div className="group">
+                                <div className="title">Looking For:</div>
+                                <div className="content">
+                                    {lookingForElement}
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="group">
-                            <div className="title">Skillset:</div>
-                            <div className="content">
-                                {skillsetElement}
-                                {skillsetOptions.length > this.state.entryCount &&
-                                    <div className="showMore" onClick={this.enableSkillsetEntries.bind(this)}>
-                                        {
-                                            !this.state.skillsetShowAllEntries ? (<span>Show More..</span>)
-                                                : (<span>Hide</span>)
-                                        }
-                                    </div>
-                                }
+                            <div className="group">
+                                <div className="title">Skillset:</div>
+                                <div className="content">
+                                    {skillsetElement}
+                                    {skillsetOptions.length > this.state.entryCount &&
+                                        <div className="showMore" onClick={this.enableSkillsetEntries.bind(this)}>
+                                            {
+                                                !this.state.skillsetShowAllEntries ? (<span>Show More..</span>)
+                                                    : (<span>Hide</span>)
+                                            }
+                                        </div>
+                                    }
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="group">
-                            <div className="title">Category:</div>
-                            <div className="content">
-                                {categoryElement}
-                                { categoryOptions.length > this.state.entryCount &&
-                                    <div className="showMore" onClick={this.enableCategoryEntries.bind(this)}>
-                                        {
-                                            !this.state.categoryShowAllEntries ? (<span>Show More..</span>)
-                                                : (<span>Hide</span>)
-                                        }
-                                    </div>
-                                }
+                            <div className="group">
+                                <div className="title">Category:</div>
+                                <div className="content">
+                                    {categoryElement}
+                                    { categoryOptions.length > this.state.entryCount &&
+                                        <div className="showMore" onClick={this.enableCategoryEntries.bind(this)}>
+                                            {
+                                                !this.state.categoryShowAllEntries ? (<span>Show More..</span>)
+                                                    : (<span>Hide</span>)
+                                            }
+                                        </div>
+                                    }
+                                </div>
                             </div>
-                        </div>
+                        </Affix>
                     </Col>
                     <Col span={20} className="admin-right-column wrap-box-user">
                         {this.renderList()}
@@ -334,7 +336,7 @@ export default class extends BaseComponent {
 
         return (
             <List loading={this.props.loading} itemLayout='vertical' size='large'
-                className="with-right-box" pagination={{ pageSize: 5 }} dataSource={data}
+                className="with-right-box" dataSource={data}
                 renderItem={item => (
                     <List.Item
                         key={item.id}
