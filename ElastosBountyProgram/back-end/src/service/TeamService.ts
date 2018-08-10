@@ -253,6 +253,38 @@ export default class extends Base {
             .populate('user', sanitize)
     }
 
+    public async withdrawApply(param): Promise<Document>{
+        const {teamCandidateId} = param
+
+        const db_ut = this.getDBModel('User_Team')
+        const db_team = this.getDBModel('Team')
+
+        let doc = await db_ut.findById(teamCandidateId)
+
+        if (!doc || doc.status !== constant.TEAM_USER_STATUS.PENDING) {
+            throw 'Invalid status'
+        }
+
+        if (doc.user.toString() !== this.currentUser._id.toString()) {
+            throw 'Access Denied'
+        }
+
+        await db_ut.remove({
+            _id: teamCandidateId
+        })
+
+        const team = await db_team.getDBInstance().findOne({_id: doc.team})
+        const result = await db_team.db.update({
+            _id: team._id
+        }, {
+            $pull: {
+                members: new ObjectId(teamCandidateId)
+            }
+        })
+
+        return result
+    }
+
     /*
     * get whole team data
     * include all of members

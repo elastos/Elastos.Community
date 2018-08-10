@@ -36,6 +36,10 @@ class C extends BaseComponent {
         this.props.rejectCandidate(teamCandidateId)
     }
 
+    withdrawUser(teamCandidateId) {
+        this.props.withdrawCandidate(teamCandidateId)
+    }
+
     renderUpperLeftBox() {
         const details = this.props.detail;
 
@@ -138,6 +142,30 @@ class C extends BaseComponent {
         const detail = this.props.detail
         const pendingMembers = _.filter(detail.members, { status: TEAM_USER_STATUS.PENDING })
         const isTeamOwner = this.isTeamOwner()
+        const canWithdraw = (teamCandidateId) => {
+            const candidate = _.find(pendingMembers, { _id: teamCandidateId })
+            return candidate.user._id === this.props.currentUserId
+        }
+
+        const actionRenderer = (candidate) => {
+            if (isTeamOwner) {
+                return (
+                    <div className="text-right">
+                        <a onClick={this.approveUser.bind(this, candidate._id)}>Approve</a>
+                        <Divider type="vertical"/>
+                        <a onClick={this.rejectUser.bind(this, candidate._id)}>Disapprove</a>
+                    </div>
+                )
+            } else if (canWithdraw(candidate._id)) {
+                return (
+                    <div className="text-right">
+                        <a onClick={this.withdrawUser.bind(this, candidate._id)}>Withdraw</a>
+                    </div>
+                )
+            } else {
+                return null
+            }
+        }
 
         const columns = [{
             title: 'Name',
@@ -153,13 +181,7 @@ class C extends BaseComponent {
         }, {
             title: 'Action',
             key: 'action',
-            render: candidate => isTeamOwner && (
-                <div className="text-right">
-                    <a onClick={this.approveUser.bind(this, candidate._id)}>Approve</a>
-                    <Divider type="vertical"/>
-                    <a onClick={this.rejectUser.bind(this, candidate._id)}>Disapprove</a>
-                </div>
-            )
+            render: actionRenderer
         }]
 
         return (

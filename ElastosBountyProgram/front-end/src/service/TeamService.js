@@ -186,4 +186,26 @@ export default class extends BaseService {
 
         return result
     }
+
+    async withdrawCandidate(teamCandidateId) {
+        const teamRedux = this.store.getRedux('team')
+        this.dispatch(teamRedux.actions.loading_update(true))
+
+        const result = await api_request({
+            path: '/api/team/action/withdraw',
+            method: 'post',
+            data: {
+                teamCandidateId
+            }
+        })
+
+        this.dispatch(teamRedux.actions.loading_update(false))
+
+        const curTeamDetail = this.store.getState().team.detail
+        const member = _.find(curTeamDetail.members, { _id: teamCandidateId })
+        curTeamDetail.members = _.without(curTeamDetail.members, member)
+        this.dispatch(teamRedux.actions.detail_update(curTeamDetail))
+
+        return result
+    }
 }

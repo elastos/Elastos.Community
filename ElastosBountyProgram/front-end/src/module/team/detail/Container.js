@@ -38,6 +38,10 @@ export default createContainer(Component, (state) => {
 
         async rejectCandidate(teamCandidateId) {
             return teamService.rejectCandidate(teamCandidateId)
+        },
+
+        async withdrawCandidate(teamCandidateId) {
+            return teamService.withdrawCandidate(teamCandidateId)
         }
     }
 })
