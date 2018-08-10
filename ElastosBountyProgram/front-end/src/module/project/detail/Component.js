@@ -33,11 +33,15 @@ class C extends BaseComponent {
     }
 
     approveUser(status, id) {
-        if (status) {
-            this.props.acceptCandidate(id);
-        } else {
-            //this.props.rejectCandidate(id);
-        }
+        this.props.acceptCandidate(id);
+    }
+
+    disapproveUser(id) {
+        // this.props.rejectCandidate(id);
+    }
+
+    withdrawApplication(id) {
+        // this.props.rejectCandidate(id);
     }
 
     getUpperLeftBox() {
@@ -117,7 +121,7 @@ class C extends BaseComponent {
             if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
                 user.id = candidate.user._id
                 user.fullName = candidate.user.profile
-                    ? `${candidate.user.profile.firstName} ${i.user.profile.lastName})`
+                    ? candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName
                     : ''
                 user.avatar = candidate.user.profile.avatar
             } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
@@ -181,21 +185,33 @@ class C extends BaseComponent {
                 avatar: String
             }
 
-            if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
-                user.id = candidate.user._id
-                user.fullName = candidate.user.profile ? `${candidate.user.profile.firstName} ${candidate.user.profile.lastName}` : ''
-                user.avatar = candidate.user.profile.avatar
-            } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
-                user.id = candidate.team._id
-                user.fullName = candidate.team.name || ''
-                user.avatar = candidate.team.profile.logo || ''
-            }
+            let owner
+            let current
+            if (i.type === TASK_CANDIDATE_TYPE.USER) {
+                user.id = i.user._id
+                user.fullName = i.user.profile ? (i.user.profile.firstName + ' ' + i.user.profile.lastName) : ''
+                user.avatar = i.user.profile.avatar
+                owner = detail.createdBy._id === i.user._id
+                current = this.props.currentUserId === i.user._id
 
-            return {
-                key: ind,
-                user: user,
-                status: candidate.status || ''
+            } else if (i.type === TASK_CANDIDATE_TYPE.TEAM) {
+                user.id = i.team._id
+                user.fullName = i.team.name || ''
+                user.avatar = i.team.profile.logo || ''
+                owner = detail.createdBy._id === i.team._id
+                current = _.map(this.state.teamsOwned, '_id').includes(i.team._id)
             }
+            applicants.push({
+                key: cnt.toString(),
+                user: user,
+                status: i.status || '',
+                action: {
+                    user: user,
+                    owner: owner,
+                    current: current
+                }
+            })
+            cnt = cnt + 1;
         })
 
         const columns = [{
@@ -216,12 +232,25 @@ class C extends BaseComponent {
         }, {
             title: 'Action',
             key: 'action',
-            render: user => (
-                <span>
-                    <a onClick={this.approveUser.bind(this, true, user.id)}>Approve</a>
-                    <Divider type="vertical"/>
-                    <a onClick={this.approveUser.bind(this, false, user.id)}>Disapprove</a>
-                </span>
+            render: action => (
+                <div>
+                    {action.action.owner ? (
+                        <div>
+                            <a onClick={this.approveUser.bind(this, action.user.id)}>Approve</a>
+                            <Divider type="vertical"/>
+                            <a onClick={this.disapproveUser.bind(this, action.user.id)}>Disapprove</a>
+                            {action.action.owner && action.action.current &&
+                                <span>
+                                    <Divider type="vertical"/>
+                                    <a onClick={this.withdrawApplication.bind(this, action.user.id)}>Withdraw Application</a>
+                                </span>
+                            }
+                        </div>) : action.action.current &&
+                            <div>
+                                <a onClick={this.withdrawApplication.bind(this, action.user.id)}>Withdraw Application</a>
+                            </div>
+                    }
+                </div>
             )
         }]
 
