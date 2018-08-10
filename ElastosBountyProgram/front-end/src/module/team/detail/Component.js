@@ -1,7 +1,8 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
-import {message, Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Table, Input, Form, Divider} from 'antd'
+import {message, Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select,
+    Table, Input, Form, Divider, Popconfirm} from 'antd'
 import _ from 'lodash'
 import './style.scss'
 import Comments from '@/module/common/comments/Container'
@@ -256,11 +257,52 @@ class C extends BaseComponent {
         })
     }
 
+    async leaveTeam() {
+        const member = _.find(this.props.detail.members, (member) => {
+            return member.user._id === this.props.currentUserId &&
+                member.status === TEAM_USER_STATUS.NORMAL
+        })
+
+        if (member) {
+            await this.props.withdrawCandidate(member._id)
+            this.props.history.push('/profile/teams')
+        }
+    }
+
+    getMainActions() {
+        const isTeamMember = this.isTeamMember()
+        const hasApplied = this.hasApplied()
+        const mainActionButton = isTeamMember
+            ? (
+                <Popconfirm title="Are you sure you want to leave?" okText="Yes" cancelText="No"
+                    onConfirm={this.leaveTeam.bind(this)}>
+                    <Button type="primary" loading={this.props.loading}>
+                        Leave Team
+                    </Button>
+                </Popconfirm>
+            )
+            : (
+                <Button disabled={hasApplied} type="primary" onClick={() => this.setState({ applying: true })}>
+                    {hasApplied
+                        ? 'Applied!'
+                        : 'Join Team'
+                    }
+                </Button>
+            )
+
+        return (
+            <Row className="actions">
+                {mainActionButton}
+                <Button>
+                    Message
+                </Button>
+            </Row>
+        )
+    }
+
     ord_render () {
         const loading = _.isEmpty(this.props.detail)
         const isTeamOwner = this.isTeamOwner()
-        const isTeamMember = this.isTeamMember()
-        const hasApplied = this.hasApplied()
 
         return (
             <div className="c_Project">
@@ -282,20 +324,7 @@ class C extends BaseComponent {
                                 </Col>
                             </Row>
 
-                            {this.props.page !== 'LEADER' && !isTeamOwner && !isTeamMember &&
-                                <Row className="actions">
-                                    <Button disabled={hasApplied} type="primary" onClick={() => this.setState({ applying: true })}>
-                                        {hasApplied
-                                            ? 'Applied!'
-                                            : 'Join Team'
-                                        }
-                                    </Button>
-                                    <Button>
-                                        Message
-                                    </Button>
-                                </Row>
-                            }
-
+                            {!isTeamOwner && this.getMainActions()}
                             {this.state.applying && this.getApplicationForm()}
 
                             {!this.state.applying &&
