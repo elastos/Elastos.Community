@@ -157,7 +157,6 @@ class C extends BaseComponent {
             applicants.push({
                 key: cnt.toString(),
                 name: fullName,
-                role: role,
                 status: i.status || "",
             })
             cnt = cnt + 1;
@@ -173,11 +172,6 @@ class C extends BaseComponent {
                     title="Name"
                     dataIndex="name"
                     key="name"
-                />
-                <Column
-                    title="Role"
-                    dataIndex="role"
-                    key="role"
                 />
                 <Column
                     title="Status"
