@@ -48,7 +48,7 @@ export default class extends BaseComponent {
                                         </div>
                                     }
                                     <h5>
-                                        {applicant.apply_reason}
+                                        {applicant.applyMsg}
                                     </h5>
                                 </Card>
                             </Col>
