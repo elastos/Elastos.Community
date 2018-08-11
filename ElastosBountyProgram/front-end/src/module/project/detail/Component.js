@@ -2,7 +2,7 @@ import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
 import {message, Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Table, Input, Form, Divider} from 'antd'
-import { TASK_CANDIDATE_TYPE } from '@/constant'
+import { TASK_CANDIDATE_TYPE, TASK_CANDIDATE_STATUS } from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import _ from 'lodash'
 import './style.scss'
@@ -340,6 +340,17 @@ class C extends BaseComponent {
         )
     }
 
+    canComment() {
+        const isTeamMember = _.find(this.props.detail.candidates, (candidate) => {
+            return candidate.user._id === this.props.currentUserId &&
+                candidate.status === TASK_CANDIDATE_STATUS.APPROVED
+        })
+
+        const belongsToMemberTeam = false
+
+        return isTeamMember || belongsToMemberTeam
+    }
+
     ord_render () {
         const loading = _.isEmpty(this.props.detail)
         const isTaskOwner = (this.props.task &&
@@ -391,7 +402,7 @@ class C extends BaseComponent {
                                 </Row>
                             }
 
-                            {this.props.page === 'LEADER' &&
+                            {this.props.page === 'LEADER' && this.canComment() &&
                                 <Row>
                                     <Comments type="task" canPost={true} canSubscribe={!isTaskOwner} model={this.props.taskId}/>
                                 </Row>

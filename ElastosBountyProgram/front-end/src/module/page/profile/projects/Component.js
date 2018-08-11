@@ -113,7 +113,32 @@ export default class extends StandardPage {
         )
     }
 
-    getCommentStatus(task) {
+    getCandidateUnreadMessageCount(task) {
+        const isOwner = task.createdBy._id === this.props.currentUserId
+        const candidate = _.find(task.candidates, (candidate) => {
+            return candidate.user && candidate.user._id === this.props.currentUserId
+        })
+        let unread = []
+
+        if (candidate) {
+            const lastDate = candidate.lastSeenByCandidate
+            unread = _.filter(candidate.comments, (comment) => {
+                return !lastDate || new Date(_.first(comment).createdAt) > new Date(lastDate)
+            })
+        } else {
+            unread = _.flatten(_.map(task.candidates, (candidate) => {
+                const lastDate = candidate.lastSeenByOwner
+                const subUnread = _.filter(candidate.comments, (comment) => {
+                    return !lastDate || new Date(_.first(comment).createdAt) > new Date(lastDate)
+                })
+                return subUnread
+            }))
+        }
+
+        return _.size(unread)
+    }
+
+    getUnreadMessageCount(task) {
         const isOwner = task.createdBy._id === this.props.currentUserId
         const subscription = _.find(task.subscribers, (subscriber) => {
             return subscriber.user && subscriber.user._id === this.props.currentUserId
@@ -125,13 +150,19 @@ export default class extends StandardPage {
         const unread = _.filter(task.comments, (comment) => {
             return !lastDate || new Date(_.first(comment).createdAt) > new Date(lastDate)
         })
-        const tooltipSuffix = unread.length > 1 ? 's' : ''
-        const tooltip = `${unread.length} new message${tooltipSuffix}`
+
+        return _.size(unread)
+    }
+
+    getCommentStatus(task) {
+        const unread = this.getUnreadMessageCount(task) + this.getCandidateUnreadMessageCount(task)
+        const tooltipSuffix = unread > 1 ? 's' : ''
+        const tooltip = `${unread} new message${tooltipSuffix}`
 
         return unread.length
             ? (
                 <Tooltip title={tooltip}>
-                    <Badge dot count={unread.length}>
+                    <Badge dot count={unread}>
                         <a onClick={this.linkTaskDetail.bind(this, task._id)} className="tableLink">
                             <Icon type="message" className="white"/>
                         </a>
