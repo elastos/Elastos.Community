@@ -152,29 +152,29 @@ class C extends BaseComponent {
         }
 
         const actionRenderer = (candidate) => {
-            if (isTeamOwner) {
-                return (
-                    <div className="text-right">
-                        {this.props.page === 'LEADER' && (isTeamOwner || canWithdraw(candidate._id)) && (
-                            <span>
-                                <a onClick={this.showAppModal.bind(this, candidate._id)}>View</a>
-                                <Divider type="vertical"/>
-                            </span>
-                        )}
-                        <a onClick={this.approveUser.bind(this, candidate._id)}>Approve</a>
-                        <Divider type="vertical"/>
-                        <a onClick={this.rejectUser.bind(this, candidate._id)}>Disapprove</a>
-                    </div>
-                )
-            } else if (canWithdraw(candidate._id)) {
-                return (
-                    <div className="text-right">
-                        <a onClick={this.withdrawUser.bind(this, candidate._id)}>Withdraw</a>
-                    </div>
-                )
-            } else {
-                return null
-            }
+            return (
+                <div className="text-right">
+                    {this.props.page === 'LEADER' && (isTeamOwner || canWithdraw(candidate._id)) && (
+                        <span>
+                            <a onClick={this.showAppModal.bind(this, candidate._id)}>View</a>
+                            <Divider type="vertical"/>
+                        </span>
+                    )}
+                    {canWithdraw(candidate._id) && (
+                        <span>
+                            <a onClick={this.withdrawUser.bind(this, candidate._id)}>Withdraw</a>
+                            {isTeamOwner && <Divider type="vertical"/>}
+                        </span>
+                    )}
+                    {isTeamOwner && (
+                        <span>
+                            <a onClick={this.approveUser.bind(this, candidate._id)}>Approve</a>
+                            <Divider type="vertical"/>
+                            <a onClick={this.rejectUser.bind(this, candidate._id)}>Disapprove</a>
+                        </span>
+                    )}
+                </div>
+            )
         }
 
         const columns = [{
@@ -312,6 +312,7 @@ class C extends BaseComponent {
     ord_render () {
         const loading = _.isEmpty(this.props.detail)
         const isTeamOwner = this.isTeamOwner()
+        const isTeamMember = this.isTeamMember()
 
         return (
             <div className="c_Project">
@@ -350,7 +351,7 @@ class C extends BaseComponent {
                                 </Row>
                             }
 
-                            {!this.state.applying && this.props.page === 'LEADER' &&
+                            {!this.state.applying && this.props.page === 'LEADER' && (isTeamMember || isTeamOwner) &&
                                 <Row>
                                     <Comments type="team" canPost={true} model={this.props.teamId}/>
                                 </Row>
