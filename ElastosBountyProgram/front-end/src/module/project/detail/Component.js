@@ -225,6 +225,7 @@ class C extends BaseComponent {
                             <a onClick={this.approveUser.bind(this, candidate._id)}>Approve</a>
                             <Divider type="vertical"/>
                             <a onClick={this.disapproveUser.bind(this, candidate._id)}>Disapprove</a>
+                            {canWithdraw(candidate._id) && <Divider type="vertical"/>}
                         </span>
                         }
                         {canWithdraw(candidate._id) && (
