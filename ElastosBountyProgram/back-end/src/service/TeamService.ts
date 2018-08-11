@@ -310,6 +310,15 @@ export default class extends Base {
                     path: 'user',
                     select: sanitize
                 })
+
+                for (let comment of member.comments) {
+                    for (let thread of comment) {
+                        await db_user.getDBInstance().populate(thread, {
+                            path: 'createdBy',
+                            select: sanitize
+                        })
+                    }
+                }
             }
 
             for (let comment of team.comments) {

@@ -35,5 +35,6 @@ export const User_Team = {
     title: String,
     apply_reason : String,
     team: {type: Schema.Types.ObjectId, ref: 'team'},
-    user: {type: Schema.Types.ObjectId, ref: 'users'}
+    user: {type: Schema.Types.ObjectId, ref: 'users'},
+    comments: [[CommentSchema]]
 };
