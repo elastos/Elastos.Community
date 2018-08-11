@@ -345,7 +345,7 @@ class C extends BaseComponent {
                 candidate.status === TASK_CANDIDATE_STATUS.APPROVED
         })
 
-        const allCandidateTeamIds = _.compact(_.map(this.prop.detail.candidates, (candidate) => {
+        const allCandidateTeamIds = _.compact(_.map(this.props.detail.candidates, (candidate) => {
             return candidate.team && candidate.team._id
         }))
 
