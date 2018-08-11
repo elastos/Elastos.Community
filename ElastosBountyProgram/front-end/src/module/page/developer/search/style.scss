@@ -37,13 +37,13 @@
     .d_row {
       .admin-left-column.wrap-box-user {
         .group {
-          margin: 20px 0;
+          margin: $gap_2 0;
           .title {
             font-weight: bold;
-            margin: 5px;
+            margin: $gap_0;
           }
           .content {
-            padding-left: 15px;
+            padding-left: $gap_1;
 
             .radio {
               display: block;
@@ -54,8 +54,9 @@
             }
 
             .showMore {
-              padding-left: 25px;
-              font-style: italic;
+              padding-left: $gap_2;
+              margin-top: $gap_0;
+              font-size: 11px;
               cursor: pointer;
               color: black;
             }

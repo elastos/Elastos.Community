@@ -259,7 +259,7 @@ export default class extends BaseComponent {
                                     {skillsetOptions.length > this.state.entryCount &&
                                         <div className="showMore" onClick={this.enableSkillsetEntries.bind(this)}>
                                             {
-                                                !this.state.skillsetShowAllEntries ? (<span>Show More..</span>)
+                                                !this.state.skillsetShowAllEntries ? (<span>Show More…</span>)
                                                     : (<span>Hide</span>)
                                             }
                                         </div>
@@ -274,7 +274,7 @@ export default class extends BaseComponent {
                                     { categoryOptions.length > this.state.entryCount &&
                                         <div className="showMore" onClick={this.enableCategoryEntries.bind(this)}>
                                             {
-                                                !this.state.categoryShowAllEntries ? (<span>Show More..</span>)
+                                                !this.state.categoryShowAllEntries ? (<span>Show More…</span>)
                                                     : (<span>Hide</span>)
                                             }
                                         </div>
