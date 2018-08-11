@@ -100,8 +100,12 @@ export default class extends StandardPage {
                                 <div class="clearfix"/>
                                 <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
                             </div>
-                            {this.getCommentStatus(item.task)}
-                            <Button type="primary" className="pull-down" onClick={this.linkTaskDetail.bind(this, item.id)}>View</Button>
+                            <Button type="primary" className="pull-down" onClick={this.linkTaskDetail.bind(this, item.id)}>
+                                View
+                                <div class="pull-right">
+                                    {this.props.page === 'LEADER' && this.getCommentStatus(item.task)}
+                                </div>
+                            </Button>
                         </div>
                     </List.Item>
                 )}
@@ -129,7 +133,7 @@ export default class extends StandardPage {
                 <Tooltip title={tooltip}>
                     <Badge dot count={unread.length}>
                         <a onClick={this.linkTaskDetail.bind(this, task._id)} className="tableLink">
-                            <Icon type="message"/>
+                            <Icon type="message" className="white"/>
                         </a>
                     </Badge>
                 </Tooltip>

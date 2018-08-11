@@ -8,8 +8,18 @@ import {USER_ROLE, TASK_STATUS, TASK_CANDIDATE_STATUS, TASK_TYPE, TASK_CATEGORY}
 
 export default createContainer(Component, (state) => {
     const currentUserId = state.user.current_user_id
+
+    let page = 'PUBLIC' // default
+
+    if (/^\/admin/.test(state.router.location.pathname)) {
+        page = 'ADMIN'
+    } else if (/^\/profile/.test(state.router.location.pathname)){
+        page = 'LEADER'
+    }
+
     const taskState = {
         ...state.task,
+        page,
         currentUserId,
         is_leader: state.user.role === USER_ROLE.LEADER,
         is_admin: state.user.role === USER_ROLE.ADMIN
