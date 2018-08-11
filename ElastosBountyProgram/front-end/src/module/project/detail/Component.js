@@ -27,7 +27,7 @@ class C extends BaseComponent {
     }
 
     isTeamOwner() {
-        return this.props.detail.createdBy._id === this.props.userId
+        return this.props.detail.createdBy._id === this.props.currentUserId
     }
 
     linkProfileInfo(userId) {
