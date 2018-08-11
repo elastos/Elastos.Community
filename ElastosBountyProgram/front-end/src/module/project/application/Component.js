@@ -55,7 +55,7 @@ export default class extends BaseComponent {
                         </Row>
                         <Row>
                             <Comments type="teamCandidate" reduxType="team" canPost={true} model={applicant}
-                                detailReducer={(detail) => _.find(detail.members, { _id: this.props.applicantId })}/>
+                                detailReducer={(detail) => _.find(detail.candidates, { _id: this.props.applicantId })}/>
                         </Row>
                     </Col>
                 </Row>
