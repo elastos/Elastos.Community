@@ -5,6 +5,7 @@ import {message, Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select,
     Table, Input, Form, Divider, Popconfirm, Modal} from 'antd'
 import _ from 'lodash'
 import './style.scss'
+import I18N from '@/I18N'
 import Comments from '@/module/common/comments/Container'
 import TeamApplication from '@/module/team/application/Container'
 import { TEAM_USER_STATUS } from '@/constant'
@@ -91,11 +92,11 @@ class C extends BaseComponent {
                     <div className="ellipsis">{leaderName}</div>
                 </div>
                 <div className="content">
-                    <div className="entry">Team Size: {teamSize}</div>
+                    <div className="entry">{I18N.get('project.detail.team_size')}: {teamSize}</div>
                 </div>
                 <div class="description-box">
                     <hr className="divider"/>
-                    <div className="description-title">Description</div>
+                    <div className="description-title">{I18N.get('project.detail.description')}</div>
                     <hr className="divider"/>
                     <div className="description-content">{description}</div>
                 </div>
@@ -118,9 +119,7 @@ class C extends BaseComponent {
                             {`${candidate.user.profile.firstName} ${candidate.user.profile.lastName}`}</a>
                     </div>)
             }
-        }
-        ]
-
+        }]
         return (
             <Table
                 className="no-borders headerless"
@@ -147,21 +146,21 @@ class C extends BaseComponent {
                 <div className="text-right">
                     {this.props.page === 'LEADER' && (isTeamOwner || canWithdraw(candidate._id)) && (
                         <span>
-                            <a onClick={this.showAppModal.bind(this, candidate._id)}>View</a>
+                            <a onClick={this.showAppModal.bind(this, candidate._id)}>{I18N.get('project.detail.view')}</a>
                             <Divider type="vertical"/>
                         </span>
                     )}
                     {canWithdraw(candidate._id) && (
                         <span>
-                            <a onClick={this.withdrawUser.bind(this, candidate._id)}>Withdraw</a>
+                            <a onClick={this.withdrawUser.bind(this, candidate._id)}>{I18N.get('project.detail.withdraw')}</a>
                             {isTeamOwner && <Divider type="vertical"/>}
                         </span>
                     )}
                     {isTeamOwner && (
                         <span>
-                            <a onClick={this.approveUser.bind(this, candidate._id)}>Approve</a>
+                            <a onClick={this.approveUser.bind(this, candidate._id)}>{I18N.get('project.detail.approve')}</a>
                             <Divider type="vertical"/>
-                            <a onClick={this.rejectUser.bind(this, candidate._id)}>Disapprove</a>
+                            <a onClick={this.rejectUser.bind(this, candidate._id)}>{I18N.get('project.detail.disapprove')}</a>
                         </span>
                     )}
                 </div>
@@ -274,18 +273,18 @@ class C extends BaseComponent {
         const hasApplied = this.hasApplied()
         const mainActionButton = isTeamMember
             ? (
-                <Popconfirm title="Are you sure you want to leave?" okText="Yes" cancelText="No"
+                <Popconfirm title={I18N.get('project.detail.popup.leave_question')} okText="Yes" cancelText="No"
                     onConfirm={this.leaveTeam.bind(this)}>
                     <Button type="primary" loading={this.props.loading}>
-                        Leave Team
+                        {I18N.get('project.detail.popup.leave_team')}
                     </Button>
                 </Popconfirm>
             )
             : (
                 <Button disabled={hasApplied} type="primary" onClick={() => this.setState({ applying: true })}>
                     {hasApplied
-                        ? 'Applied!'
-                        : 'Join Team'
+                        ? I18N.get('project.detail.popup.applied')
+                        : I18N.get('project.detail.popup.join-team')
                     }
                 </Button>
             )
@@ -330,14 +329,14 @@ class C extends BaseComponent {
 
                             {!this.state.applying &&
                                 <Row className="contributors">
-                                    <h3 className="no-margin">Current Members</h3>
+                                    <h3 className="no-margin align-left">{I18N.get('project.detail.current_members')}</h3>
                                     {this.renderCurrentContributors()}
                                 </Row>
                             }
 
                             {!this.state.applying &&
                                 <Row className="applications">
-                                    <h3 className="no-margin">Pending Applications</h3>
+                                    <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
                                     {this.renderCurrentApplicants()}
                                 </Row>
                             }

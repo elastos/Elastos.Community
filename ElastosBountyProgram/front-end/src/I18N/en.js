@@ -1,3 +1,5 @@
+import React from "react"
+
 export default {
     // Header
     '0001': 'Bounty Programs',
@@ -159,6 +161,25 @@ export default {
     '3070': 'Issues',
     '3071': 'Docs',
     '3072': 'More Info',
+
+    // Project/Team detail
+    'project.detail.deadline': 'Deadline',
+    'project.detail.progress': 'Progress',
+    'project.detail.team_size': 'Team Size',
+    'project.detail.description': 'Description',
+    'project.detail.current_contributors': 'Current Contributors',
+    'project.detail.pending_applications': 'Pending Applications',
+    'project.detail.current_members': 'Current Members',
+    'project.detail.leave': 'Leave',
+    'project.detail.remove': 'Remove',
+    'project.detail.view': 'View',
+    'project.detail.approve': 'Approve',
+    'project.detail.disapprove': 'Disapprove',
+    'project.detail.withdraw_application': 'Withdraw Application',
+    'project.detail.popup.leave_question': 'Are you sure you want to leave?',
+    'project.detail.popup.leave_team': 'Leave Team',
+    'project.detail.popup.applied': 'Applied',
+    'project.detail.popup.join_team': 'Join Team',
 
     // Team specializations
     'team.spec.social': 'Social',

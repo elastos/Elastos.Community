@@ -18,6 +18,7 @@ import {
     Divider,
     Modal
 } from 'antd'
+import I18N from '@/I18N'
 import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS } from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import ProjectApplication from '@/module/project/application/Container'
@@ -151,14 +152,14 @@ class C extends BaseComponent {
                     <div className="ellipsis">{leaderName}</div>
                 </div>
                 <div className="content">
-                    <div className="entry">Deadline: {deadline}</div>
-                    <div className="entry">Progress: {progress}</div>
-                    <div className="entry">Team Size: {teamSize}</div>
+                    <div className="entry">{I18N.get('project.detail.deadline')}: {deadline}</div>
+                    <div className="entry">{I18N.get('project.detail.progress')}: {progress}</div>
+                    <div className="entry">{I18N.get('project.detail.team_size')}: {teamSize}</div>
                     <div className="reward">{reward}</div>
                 </div>
                 <div class="description-box">
                     <hr className="divider"/>
-                    <div className="description-title">Description</div>
+                    <div className="description-title">{I18N.get('project.detail.description')}</div>
                     <hr className="divider"/>
                     <div className="description-content">{description}</div>
                 </div>
@@ -207,7 +208,7 @@ class C extends BaseComponent {
                     <div>
                         {this.isTeamOwner() && candidate._id !== 'such_fake_id' &&
                         <div className="text-right">
-                            <a onClick={this.removeUser.bind(this, candidate._id)}>Remove</a>
+                            <a onClick={this.removeUser.bind(this, candidate._id)}>{I18N.get('project.detail.remove')}</a>
                         </div>
                         }
                     </div>
@@ -262,21 +263,21 @@ class C extends BaseComponent {
                     <div className="text-right">
                         {this.props.page === 'LEADER' && (this.isTeamOwner() || this.isMember(candidate._id)) && (
                             <span>
-                                <a onClick={this.showAppModal.bind(this, candidate._id)}>View</a>
+                                <a onClick={this.showAppModal.bind(this, candidate._id)}>{I18N.get('project.detail.view')}</a>
                                 <Divider type="vertical"/>
                             </span>
                         )}
                         {this.isTeamOwner() &&
                         <span>
-                            <a onClick={this.approveUser.bind(this, candidate._id)}>Approve</a>
+                            <a onClick={this.approveUser.bind(this, candidate._id)}>{I18N.get('project.detail.approve')}</a>
                             <Divider type="vertical"/>
-                            <a onClick={this.disapproveUser.bind(this, candidate._id)}>Disapprove</a>
+                            <a onClick={this.disapproveUser.bind(this, candidate._id)}>{I18N.get('project.detail.disapprove')}</a>
                             {this.isMember(candidate._id) && <Divider type="vertical"/>}
                         </span>
                         }
                         {this.isMember(candidate._id) && (
                             <span>
-                                <a onClick={this.withdrawApplication.bind(this, candidate._id)}>Withdraw Application</a>
+                                <a onClick={this.withdrawApplication.bind(this, candidate._id)}>{I18N.get('project.detail.withdraw_application')}</a>
                             </span>)
                         }
                     </div>
@@ -432,16 +433,16 @@ class C extends BaseComponent {
                             {!this.state.applying &&
                                 <Row className="contributors">
                                     { isMember &&
-                                        <Button onClick={this.removeUserByUserId.bind(this, this.props.currentUserId)} className="leave-button">Leave</Button>
+                                        <Button onClick={this.removeUserByUserId.bind(this, this.props.currentUserId)} className="leave-button">{I18N.get('project.detail.leave')}</Button>
                                     }
-                                    <h3 className="no-margin align-left">Current Contributors</h3>
+                                    <h3 className="no-margin align-left">{I18N.get('project.detail.current_contributors')}</h3>
                                     {this.getCurrentContributors()}
                                 </Row>
                             }
 
                             {!this.state.applying &&
                                 <Row className="applications">
-                                    <h3 className="no-margin">Pending Applications</h3>
+                                    <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
                                     {this.getCurrentApplicants()}
                                 </Row>
                             }
