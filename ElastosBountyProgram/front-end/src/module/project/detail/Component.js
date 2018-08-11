@@ -133,6 +133,11 @@ class C extends BaseComponent {
     getCurrentContributors() {
         const detail = this.props.detail
         const applicants = _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.APPROVED });
+        applicants.unshift({
+            _id: 'such_fake_id',
+            user: this.props.detail.createdBy,
+            type: TASK_CANDIDATE_TYPE.USER
+        })
         const columns = [{
             title: 'Name',
             key: 'name',
@@ -141,7 +146,8 @@ class C extends BaseComponent {
                     <div>
                         {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
                         <div>
-                            <Avatar src={candidate.user.profile.avatar} />
+                            <Avatar className={(candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
+                                src={candidate.user.profile.avatar}/>
                             <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
                                 {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
                             </a>
