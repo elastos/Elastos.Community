@@ -230,7 +230,6 @@ class C extends BaseComponent {
                         }
                         {canWithdraw(candidate._id) && (
                             <span>
-                                <Divider type="vertical"/>
                                 <a onClick={this.withdrawApplication.bind(this, candidate._id)}>Withdraw Application</a>
                             </span>)
                         }
