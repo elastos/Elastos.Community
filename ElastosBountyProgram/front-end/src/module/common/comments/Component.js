@@ -68,7 +68,7 @@ class C extends BaseComponent {
     }
 
     getSubscribeButton() {
-        if (this.isUserSubscribed()) {
+        if (this.isUserSubscribed() && this.props.canSubscribe) {
             return (
                 <Button className="ant-btn-ebp pull-left" size="small"
                     onClick={this.unsubscribe.bind(this)} loading={this.isLoading()}>
