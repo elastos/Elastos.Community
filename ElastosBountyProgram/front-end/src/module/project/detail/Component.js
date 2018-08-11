@@ -398,7 +398,7 @@ class C extends BaseComponent {
             this.props.task.createdBy && this.props.task.createdBy._id) === this.props.currentUserId
         const isMember = this.isMemberByUserId(this.props.currentUserId)
         return (
-            <div className="c_Project">
+            <div className="c_Project c_Detail">
                 { loading
                     ? (
                         <div className="full-width full-height valign-wrapper halign-wrapper">
