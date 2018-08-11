@@ -164,25 +164,6 @@ class C extends BaseComponent {
                     </div>)
             }
         }, {
-            title: 'Role',
-            key: 'role',
-            render: candidate => {
-                return (
-                    <div>
-                        {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
-                        <div>
-                            {candidate.user.role}
-                        </div>
-                        }
-                        {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
-                        <div>
-                            {candidate.team.role}
-                        </div>
-                        }
-                    </div>
-                )
-            }
-        }, {
             title: 'Progress',
             key: 'progress',
             render: candidate => {
