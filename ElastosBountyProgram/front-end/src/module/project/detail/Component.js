@@ -163,8 +163,8 @@ class C extends BaseComponent {
 
         const columns = [{
             title: 'Name',
-            dataIndex: 'user',
-            key: 'user',
+            dataIndex: 'name',
+            key: 'name',
             render: user => {
                 return (
                     <div key={user.id}>
