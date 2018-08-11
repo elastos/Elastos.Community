@@ -311,6 +311,15 @@ export default class extends Base {
                     select: sanitize
                 })
             }
+
+            for (let comment of team.comments) {
+                for (let thread of comment) {
+                    await db_user.getDBInstance().populate(thread, {
+                        path: 'createdBy',
+                        select: sanitize
+                    })
+                }
+            }
         }
 
         return team
@@ -322,6 +331,7 @@ export default class extends Base {
     * */
     public async list(param): Promise<DataList>{
         const db_team = this.getDBModel('Team')
+        const db_user = this.getDBModel('User')
         const query:any = {}
 
         if (param.archived) {
@@ -365,6 +375,15 @@ export default class extends Base {
                 path: 'owner',
                 select: sanitize,
             })
+
+            for (let comment of team.comments) {
+                for (let thread of comment) {
+                    await db_user.getDBInstance().populate(thread, {
+                        path: 'createdBy',
+                        select: sanitize
+                    })
+                }
+            }
         }
 
         return teams
