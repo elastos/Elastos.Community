@@ -21,16 +21,13 @@ export default class extends AdminPage {
     }
 
     ord_renderContent () {
-
         if (this.props.loading || !this.props.member) {
             return this.renderLoading()
         }
 
         return (
             <div>
-                <div className="ebp-header-divider">
-
-                </div>
+                <div className="ebp-header-divider" />
                 <div className="p_admin_index ebp-wrap">
                     <div className="d_box">
                         <div className="p_admin_breadcrumb">
@@ -45,11 +42,11 @@ export default class extends AdminPage {
                         </div>
                         <div className="p_admin_content">
                             <Row className="clearfix">
+                                <Col span={4} className="admin-left-column wrap-box-navigator">
+                                    <Navigator selectedItem={'tasks'}/>
+                                </Col>
                                 <Col span={20} className="admin-left-column wrap-box-user">
                                     <Profile user={this.props.member}/>
-                                </Col>
-                                <Col span={4} className="admin-right-column wrap-box-navigator">
-                                    <Navigator selectedItem={'tasks'}/>
                                 </Col>
                             </Row>
                         </div>

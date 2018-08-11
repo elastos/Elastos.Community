@@ -230,6 +230,7 @@ export default class extends AdminPage {
 
         return (
             <div className="p_admin_index ebp-wrap c_adminCommunity">
+                <div className="ebp-header-divider" />
                 <div className="d_box">
                     <div className="p_admin_breadcrumb">
                         <Breadcrumb>
@@ -247,8 +248,10 @@ export default class extends AdminPage {
                     </div>
                     <div className="p_admin_content">
                         <Row>
-                            <Col span={20}
-                                 className="admin-left-column wrap-box-user">
+                            <Col span={4} className="admin-left-column wrap-box-navigator">
+                                <Navigator selectedItem={'community'}/>
+                            </Col>
+                            <Col span={20} className="admin-right-column wrap-box-user">
                                 <div>
                                     <Button className="ant-btn-ebp pull-right" onClick={this.showModalAddCountry} type="primary">Add country</Button>
                                     <Row className="clearfix">
@@ -263,10 +266,6 @@ export default class extends AdminPage {
                                         onCreate={this.handleCreateCountry}
                                     />
                                 </div>
-                            </Col>
-                            <Col span={4}
-                                 className="admin-right-column wrap-box-navigator">
-                                <Navigator selectedItem={'community'}/>
                             </Col>
                         </Row>
                     </div>

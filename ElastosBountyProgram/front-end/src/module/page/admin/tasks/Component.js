@@ -132,6 +132,7 @@ export default class extends AdminPage {
 
         return (
             <div className="p_admin_index ebp-wrap">
+                <div className="ebp-header-divider" />
                 <div className="d_box">
                     <div className="p_admin_breadcrumb">
                         <Breadcrumb>
