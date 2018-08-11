@@ -341,11 +341,16 @@ class C extends BaseComponent {
 
     canComment() {
         const isTeamMember = _.find(this.props.detail.candidates, (candidate) => {
-            return candidate.user._id === this.props.currentUserId &&
+            return candidate.user && candidate.user._id === this.props.currentUserId &&
                 candidate.status === TASK_CANDIDATE_STATUS.APPROVED
         })
 
-        const belongsToMemberTeam = false
+        const allCandidateTeamIds = _.compact(_.map(this.prop.detail.candidates, (candidate) => {
+            return candidate.team && candidate.team._id
+        }))
+
+        const currentUserTeamIds = _.map(this.props.ownedTeams, '_id')
+        const belongsToMemberTeam = !_.isEmpty(_.intersection(allCandidateTeamIds, currentUserTeamIds))
 
         return isTeamMember || belongsToMemberTeam
     }
