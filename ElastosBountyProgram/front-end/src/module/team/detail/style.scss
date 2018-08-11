@@ -155,9 +155,11 @@
     .title {
       font-size: 24px;
     }
-
     .no-borders {
       margin: 0 auto;
+    }
+    .avatar-leader {
+      border: 2px solid $primary_color;
     }
   }
 
