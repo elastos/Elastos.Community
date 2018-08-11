@@ -2,12 +2,10 @@ import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
 import {message, Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Table, Input, Form, Divider} from 'antd'
-import { TASK_CANDIDATE_TYPE, TASK_CANDIDATE_STATUS } from '@/constant'
+import { TASK_CANDIDATE_TYPE, TASK_CANDIDATE_STATUS, TEAM_USER_STATUS } from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import _ from 'lodash'
 import './style.scss'
-
-const { Column } = Table;
 
 class C extends BaseComponent {
     ord_states() {
@@ -28,12 +26,17 @@ class C extends BaseComponent {
         this.props.resetAllTeams()
     }
 
+    isTeamOwner() {
+        return this.props.detail.createdBy._id === this.props.userId
+    }
+
     linkProfileInfo(userId) {
         this.props.history.push(`/admin/profile/${userId}`)
     }
 
     approveUser(status, id) {
-        this.props.acceptCandidate(id);
+        console.log(id);
+        // this.props.acceptCandidate(id);
     }
 
     disapproveUser(id) {
@@ -177,77 +180,72 @@ class C extends BaseComponent {
 
     getCurrentApplicants() {
         const detail = this.props.detail
-
-        const applicants = _.map(detail.candidates, (candidate, ind) => {
-            let user = {
-                id: String,
-                fullName: Number,
-                avatar: String
-            }
-
-            let owner
-            let current
+        const canWithdraw = (teamCandidateId) => {
+            const candidate = _.find(detail.candidates, { _id: teamCandidateId })
             if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
-                user.id = candidate.user._id
-                user.fullName = candidate.user.profile ? (candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName) : ''
-                user.avatar = candidate.user.profile.avatar
-                owner = detail.createdBy._id === this.props.currentUserId
-                current = this.props.currentUserId === candidate.user._id
-
-            } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
-                user.id = candidate.team._id
-                user.fullName = candidate.team.name || ''
-                user.avatar = candidate.team.profile.logo || ''
-                owner = detail.createdBy._id === candidate.team.owner
-                current = this.props.currentUserId === candidate.team.owner
+                return candidate.user._id === this.props.currentUserId
+            } else {
+                return _.find(this.props.ownedTeams, (item) => item._id === candidate.team._id)
             }
-            applicants.push({
-                key: cnt.toString(),
-                user: user,
-                status: i.status || '',
-                action: {
-                    user: user,
-                    owner: owner,
-                    current: current
-                }
-            })
-            cnt = cnt + 1;
-        })
 
+        }
+        const applicants = detail.candidates;
         const columns = [{
             title: 'Name',
-            dataIndex: 'user',
             key: 'user',
-            render: user => {
+            render: candidate => {
                 return (
-                    <div key={user.id}>
-                        <Avatar src={user.avatar} />
-                        <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, user.id)}>{user.fullName}</a>
+                    <div>
+                        {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
+                        <div key={candidate._id}>
+                            <Avatar src={candidate.user.profile.avatar} />
+                            <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                                {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
+                            </a>
+                        </div>
+                        }
+                        {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
+                        <div key={candidate._id}>
+                            <Avatar src={candidate.team.profile.logo} />
+                            <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
+                                {candidate.team.name}
+                            </a>
+                        </div>
+                        }
                     </div>)
             }
         }, {
+            title: 'Status',
+            key: 'status',
+            render: candidate => {
+                return (
+                    <div key={candidate._id}>
+                        {candidate.status}
+                    </div>
+                )
+            }
+        },
+        {
             title: 'Action',
             key: 'action',
-            render: action => (
-                <div>
-                    {action.action.owner ? (
-                        <div className="text-right">
-                            <a onClick={this.approveUser.bind(this, action.user.id)}>Approve</a>
+            render: candidate => {
+                return (
+                    <div>
+                        {this.isTeamOwner() &&
+                        <span className="text-right">
+                            <a onClick={this.approveUser.bind(this, candidate._id)}>Approve</a>
                             <Divider type="vertical"/>
-                            <a onClick={this.disapproveUser.bind(this, action.user.id)}>Disapprove</a>
-                            {action.action.owner && action.action.current &&
-                                <span>
-                                    <Divider type="vertical"/>
-                                    <a onClick={this.withdrawApplication.bind(this, action.user.id)}>Withdraw Application</a>
-                                </span>
-                            }
-                        </div>) : action.action.current &&
-                            <div className="text-right">
-                                <a onClick={this.withdrawApplication.bind(this, action.user.id)}>Withdraw Application</a>
-                            </div>
-                    }
-                </div>
-            )
+                            <a onClick={this.disapproveUser.bind(this, candidate._id)}>Disapprove</a>
+                        </span>
+                        }
+                        {canWithdraw(candidate._id) && (
+                            <span className="text-right">
+                                <a onClick={this.withdrawApplication.bind(this, candidate._id)}>Withdraw Application</a>
+                            </span>)
+                        }
+                    </div>
+                )
+            }
         }]
 
         return (
@@ -256,7 +254,8 @@ class C extends BaseComponent {
                 dataSource={applicants}
                 columns={columns}
                 bordered={false}
-                pagination={false}>
+                pagination={false}
+                rowKey="_id">
             </Table>
         )
     }
