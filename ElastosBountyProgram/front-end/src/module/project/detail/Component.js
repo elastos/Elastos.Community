@@ -219,7 +219,7 @@ class C extends BaseComponent {
             key: 'action',
             render: candidate => {
                 return (
-                    <div>
+                    <div className="text-right">
                         {this.isTeamOwner() &&
                         <span className="text-right">
                             <a onClick={this.approveUser.bind(this, candidate._id)}>Approve</a>
@@ -228,7 +228,7 @@ class C extends BaseComponent {
                         </span>
                         }
                         {canWithdraw(candidate._id) && (
-                            <span className="text-right">
+                            <span>
                                 <a onClick={this.withdrawApplication.bind(this, candidate._id)}>Withdraw Application</a>
                             </span>)
                         }
