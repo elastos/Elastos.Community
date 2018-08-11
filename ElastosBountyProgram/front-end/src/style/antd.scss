@@ -191,6 +191,10 @@ h3.one-line {
     margin-right: $rightBoxWidth + 2*$gap_2;
   }
 
+  .ant-list-item-extra {
+    margin-left: 0;
+  }
+
   .ant-list-item-right-box {
     position: absolute;
     height: 100%;
