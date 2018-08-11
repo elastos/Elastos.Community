@@ -133,66 +133,97 @@ class C extends BaseComponent {
     getCurrentContributors() {
         const detail = this.props.detail
         const applicants = _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.APPROVED });
-        const contributors = _.map(applicants, (candidate, ind) => {
-            let user = {
-                id: String,
-                fullName: Number,
-                avatar: String
-            }
-
-            if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
-                user.id = candidate.user._id
-                user.fullName = candidate.user.profile
-                    ? candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName
-                    : ''
-                user.avatar = candidate.user.profile.avatar
-            } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
-                user.id = candidate.team._id
-                user.fullName = candidate.team.name || ''
-                user.avatar = !_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url
-            }
-
-            return {
-                key: ind,
-                name: user,
-                role: candidate.role || '',
-                progress: candidate.progress || '',
-                notes: candidate.notes || ''
-            }
-        })
-
         const columns = [{
             title: 'Name',
-            dataIndex: 'name',
             key: 'name',
-            render: user => {
+            render: candidate => {
                 return (
-                    <div key={user.id}>
-                        <Avatar src={user.avatar} />
-                        <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, user.id)}>{user.fullName}</a>
+                    <div>
+                        {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
+                        <div>
+                            <Avatar src={candidate.user.profile.avatar} />
+                            <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                                {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
+                            </a>
+                        </div>
+                        }
+                        {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
+                        <div>
+                            <Avatar src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
+                            <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
+                                {candidate.team.name}
+                            </a>
+                        </div>
+                        }
                     </div>)
             }
         }, {
             title: 'Role',
-            dataIndex: 'role',
-            key: 'role'
+            key: 'role',
+            render: candidate => {
+                return (
+                    <div>
+                        {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
+                        <div>
+                            {candidate.user.role}
+                        </div>
+                        }
+                        {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
+                        <div>
+                            {candidate.team.role}
+                        </div>
+                        }
+                    </div>
+                )
+            }
         }, {
             title: 'Progress',
-            dataIndex: 'progress',
-            key: 'progress'
+            key: 'progress',
+            render: candidate => {
+                return (
+                    <div>
+                        {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
+                        <div>
+                            {candidate.user.progress}
+                        </div>
+                        }
+                        {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
+                        <div>
+                            {candidate.team.progress}
+                        </div>
+                        }
+                    </div>
+                )
+            }
         }, {
             title: 'Notes',
-            dataIndex: 'notes',
-            key: 'notes'
+            key: 'notes',
+            render: candidate => {
+                return (
+                    <div>
+                        {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
+                        <div>
+                            {candidate.user.notes}
+                        </div>
+                        }
+                        {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
+                        <div>
+                            {candidate.team.notes}
+                        </div>
+                        }
+                    </div>
+                )
+            }
         }]
 
         return (
             <Table
                 className="no-borders headerless"
-                dataSource={contributors}
+                dataSource={applicants}
                 columns={columns}
                 bordered={false}
                 pagination={false}
+                rowKey="_id"
             />
         )
     }
@@ -216,7 +247,7 @@ class C extends BaseComponent {
                 return (
                     <div>
                         {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
-                        <div key={candidate._id}>
+                        <div>
                             <Avatar src={candidate.user.profile.avatar} />
                             <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
                                 {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
@@ -224,7 +255,7 @@ class C extends BaseComponent {
                         </div>
                         }
                         {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
-                        <div key={candidate._id}>
+                        <div>
                             <Avatar src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
                             <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
                                 {candidate.team.name}
