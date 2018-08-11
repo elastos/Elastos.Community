@@ -192,7 +192,6 @@ class C extends BaseComponent {
 
     handleSubmit(e) {
         e.preventDefault()
-        debugger
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 this.props.postComment(this.props.type,
