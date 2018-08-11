@@ -158,6 +158,9 @@ export default class extends BaseService {
 
     async acceptCandidate(taskCandidateId) {
         const taskRedux = this.store.getRedux('task')
+
+        this.dispatch(taskRedux.actions.loading_update(true))
+
         const task = await api_request({
             path: '/api/task/acceptCandidate',
             method: 'post',
@@ -178,6 +181,59 @@ export default class extends BaseService {
             curTaskDetail.status = TASK_STATUS.ASSIGNED
         }
 
+        debugger
+
+        this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
+        this.dispatch(taskRedux.actions.loading_update(false))
+
+        return task
+    }
+
+    async rejectCandidate(taskCandidateId) {
+        const taskRedux = this.store.getRedux('task')
+
+        this.dispatch(taskRedux.actions.loading_update(true))
+
+        const task = await api_request({
+            path: '/api/task/rejectCandidate',
+            method: 'post',
+            data: {
+                taskCandidateId
+            }
+        })
+
+        const curTaskDetail = this.store.getState().task.detail
+        const rejectedCandidate = _.find(curTaskDetail.candidates, (o) => o._id === taskCandidateId)
+        rejectedCandidate.status = TASK_CANDIDATE_STATUS.REJECTED
+
+        if (task.status === TASK_STATUS.ASSIGNED) {
+            curTaskDetail.status = TASK_STATUS.ASSIGNED
+        }
+
+        this.dispatch(taskRedux.actions.loading_update(false))
+        this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
+
+        return task
+    }
+
+    async withdrawCandidate(taskCandidateId) {
+        const taskRedux = this.store.getRedux('task')
+
+        this.dispatch(taskRedux.actions.loading_update(true))
+
+        const task = await api_request({
+            path: '/api/task/withdrawCandidate',
+            method: 'post',
+            data: {
+                taskCandidateId
+            }
+        })
+
+        const curTaskDetail = this.store.getState().task.detail
+        const withdrawnCandidate = _.find(curTaskDetail.candidates, (o) => o._id === taskCandidateId)
+        curTaskDetail.candidates = _.without(curTaskDetail.candidates, withdrawnCandidate)
+
+        this.dispatch(taskRedux.actions.loading_update(false))
         this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
 
         return task

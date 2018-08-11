@@ -677,9 +677,67 @@ export default class extends Base {
     }
 
     public async rejectCandidate(param): Promise<boolean> {
-        return true;
+        const {taskCandidateId} = param
+        const db_task = this.getDBModel('Task')
+        const db_tc = this.getDBModel('Task_Candidate')
+
+        let doc = await db_tc.findById(taskCandidateId)
+
+        if (!doc || doc.status !== constant.TASK_CANDIDATE_STATUS.PENDING) {
+            throw 'Invalid status'
+        }
+
+        let task = await db_task.getDBInstance().findOne({_id: doc.task})
+            .populate('createdBy', sanitize)
+
+        if (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
+            (task.createdBy && task.createdBy._id.toString() !== this.currentUser._id.toString())) {
+            throw 'Access Denied'
+        }
+
+        await db_tc.update({
+            _id: taskCandidateId
+        }, {
+            status: constant.TASK_CANDIDATE_STATUS.REJECTED
+        })
+
+        return db_tc.getDBInstance().findOne({_id: taskCandidateId})
+            .populate('team')
+            .populate('user', sanitize)
     }
 
+    public async withdrawCandidate(param): Promise<Document>{
+        const {taskCandidateId} = param
+        const db_task = this.getDBModel('Task')
+        const db_tc = this.getDBModel('Task_Candidate')
+
+        let doc = await db_tc.findById(taskCandidateId)
+        await db_tc.db.populate(doc, ['team'])
+
+        if (!doc || doc.role === constant.TEAM_ROLE.OWNER) {
+            throw 'Invalid status'
+        }
+
+        if (doc.user.toString() !== this.currentUser._id.toString() ||
+            doc.team.owner.toString() !== this.currentUser._id.toString()) {
+            throw 'Access Denied'
+        }
+
+        await db_tc.remove({
+            _id: taskCandidateId
+        })
+
+        const task = await db_task.getDBInstance().findOne({_id: doc.task})
+        const result = await db_task.db.update({
+            _id: task._id
+        }, {
+            $pull: {
+                candidates: new ObjectId(taskCandidateId)
+            }
+        })
+
+        return result
+    }
 
     public validate_name(name){
         if(!validate.valid_string(name, 4)){

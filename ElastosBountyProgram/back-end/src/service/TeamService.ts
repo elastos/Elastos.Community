@@ -142,7 +142,6 @@ export default class extends Base {
 
         await team.save()
 
-        // populate the taskCandidate
         await db_ut.db.populate(teamCandidate, ['team', 'user'])
 
         const teamOwner = await db_user.findById(team.owner)
@@ -245,7 +244,7 @@ export default class extends Base {
         await db_ut.update({
             _id: teamCandidateId
         }, {
-            status: constant.TEAM_USER_STATUS.REJECT
+            status: constant.TEAM_USER_STATUS.REJECTED
         })
 
         return db_ut.getDBInstance().findOne({_id: teamCandidateId})

@@ -53,17 +53,16 @@ class C extends BaseComponent {
         this.props.history.push(`/admin/profile/${userId}`)
     }
 
-    approveUser(status, id) {
-        console.log(id);
-        // this.props.acceptCandidate(id);
+    approveUser(taskCandidateId) {
+        this.props.acceptCandidate(taskCandidateId);
     }
 
-    disapproveUser(id) {
-        // this.props.rejectCandidate(id);
+    disapproveUser(taskCandidateId) {
+        this.props.rejectCandidate(taskCandidateId);
     }
 
-    withdrawApplication(id) {
-        // this.props.rejectCandidate(id);
+    withdrawApplication(taskCandidateId) {
+        this.props.withdrawCandidate(taskCandidateId);
     }
 
     getUpperLeftBox() {
@@ -133,7 +132,8 @@ class C extends BaseComponent {
 
     getCurrentContributors() {
         const detail = this.props.detail
-        const contributors = _.map(detail.candidateCompleted, (candidate, ind) => {
+        const applicants = _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.APPROVED });
+        const contributors = _.map(applicants, (candidate, ind) => {
             let user = {
                 id: String,
                 fullName: Number,
@@ -199,8 +199,8 @@ class C extends BaseComponent {
 
     getCurrentApplicants() {
         const detail = this.props.detail
-        const canWithdraw = (teamCandidateId) => {
-            const candidate = _.find(detail.candidates, { _id: teamCandidateId })
+        const canWithdraw = (taskCandidateId) => {
+            const candidate = _.find(detail.candidates, { _id: taskCandidateId })
             if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
                 return candidate.user._id === this.props.currentUserId
             } else {
@@ -208,7 +208,7 @@ class C extends BaseComponent {
             }
 
         }
-        const applicants = detail.candidates;
+        const applicants = _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.PENDING });
         const columns = [{
             title: 'Name',
             key: 'user',

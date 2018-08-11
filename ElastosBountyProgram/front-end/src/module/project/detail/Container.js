@@ -43,6 +43,18 @@ export default createContainer(Component, (state) => {
 
         resetAllTeams() {
             return teamService.resetAllTeams()
+        },
+
+        async acceptCandidate(taskCandidateId) {
+            return taskService.acceptCandidate(taskCandidateId)
+        },
+
+        async rejectCandidate(taskCandidateId) {
+            return taskService.rejectCandidate(taskCandidateId)
+        },
+
+        async withdrawCandidate(taskCandidateId) {
+            return taskService.withdrawCandidate(taskCandidateId)
         }
     }
 })
