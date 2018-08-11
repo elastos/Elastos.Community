@@ -151,7 +151,8 @@ export default class extends StandardPage {
                 description: 'Lorem ipsum',
                 content: task.description,
                 owner: task.createdBy,
-                id: task._id
+                id: task._id,
+                task
             }
         })
 
@@ -178,6 +179,7 @@ export default class extends StandardPage {
                                 <div class="clearfix"/>
                                 <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
                             </div>
+                            {this.getCommentStatus(item.task)}
                             <Button type="primary" className="pull-down" onClick={this.linkTaskDetail.bind(this, item.id)}>View</Button>
                         </div>
                     </List.Item>
@@ -186,163 +188,40 @@ export default class extends StandardPage {
         )
     }
 
+    getCommentStatus(task) {
+        const isOwner = task.createdBy._id === this.props.currentUserId
+        const subscription = _.find(task.subscribers, (subscriber) => {
+            return subscriber.user && subscriber.user._id === this.props.currentUserId
+        })
+        const lastDate = isOwner
+            ? task.lastCommentSeenByOwner
+            : subscription && subscription.lastSeen
+
+        const unread = _.filter(task.comments, (comment) => {
+            return !lastDate || new Date(_.first(comment).createdAt) > new Date(lastDate)
+        })
+        const tooltipSuffix = unread.length > 1 ? 's' : ''
+        const tooltip = `${unread.length} new message${tooltipSuffix}`
+
+        return unread.length
+            ? (
+                <Tooltip title={tooltip}>
+                    <Badge dot count={unread.length}>
+                        <a onClick={this.linkTaskDetail.bind(this, task._id)} className="tableLink">
+                            <Icon type="message"/>
+                        </a>
+                    </Badge>
+                </Tooltip>
+            )
+            : null
+    }
+
     ord_renderContent () {
         const tasksActiveData = this.props.candidate_active_tasks
         const tasksPendingData = this.props.candidate_pending_tasks
         const tasksOwnedData = this.props.owned_tasks
         const tasksSubscribedData = this.props.subscribed_tasks
         const allTasks = this.props.all_tasks
-
-        const columns = [{
-            title: 'Name',
-            dataIndex: 'name',
-            width: '30%',
-            className: 'fontWeight500 allow-wrap',
-            render: (name, record) => {
-                return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
-            }
-        }, {
-            title: 'Owner',
-            dataIndex: 'createdBy.username'
-        }, {
-            title: 'Category',
-            dataIndex: 'category',
-            render: (category) => _.capitalize(category)
-        }, {
-            title: 'Type',
-            dataIndex: 'type',
-        }, {
-            title: 'Community',
-            dataIndex: 'community',
-            key: 'community',
-            render: (community, data) => {
-                if (!community) {
-                    return null;
-                }
-
-                if (data.communityParent) {
-                    let nameParent = data.communityParent.name;
-                    return (<p>{nameParent}/{community.name}</p>)
-                } else {
-                    return (<p>{community.name}</p>)
-                }
-
-            }
-        }, {
-            title: 'Date',
-            dataIndex: 'startTime',
-            render: (startTime) => moment(startTime).format('MMM D')
-        }, {
-            title: 'Created',
-            dataIndex: 'createdAt',
-            render: (createdAt) => moment(createdAt).format('MMM D')
-        }, {
-            title: '',
-            dataIndex: '_id',
-            key: 'actions',
-            render: this.getCommentActions.bind(this)
-        }]
-
-        const appliedColumns = [{
-            title: 'Name',
-            dataIndex: 'name',
-            width: '30%',
-            className: 'fontWeight500 allow-wrap',
-            render: (name, record) => {
-                return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
-            }
-        }, {
-            title: 'Owner',
-            dataIndex: 'createdBy.username'
-        }, {
-            title: 'Category',
-            dataIndex: 'category',
-            render: (category) => _.capitalize(category)
-        }, {
-            title: 'Type',
-            dataIndex: 'type',
-        }, {
-            title: 'Community',
-            dataIndex: 'community',
-            key: 'community',
-            render: (community, data) => {
-                if (!community) {
-                    return null;
-                }
-
-                if (data.communityParent) {
-                    let nameParent = data.communityParent.name;
-                    return (<p>{nameParent}/{community.name}</p>)
-                } else {
-                    return (<p>{community.name}</p>)
-                }
-
-            }
-        }, {
-            title: 'Date',
-            dataIndex: 'startTime',
-            render: (startTime) => moment(startTime).format('MMM D')
-        }, {
-            title: 'Created',
-            dataIndex: 'createdAt',
-            render: (createdAt) => moment(createdAt).format('MMM D')
-        }, {
-            title: '',
-            dataIndex: '_id',
-            key: 'actions',
-            render: this.getCandidateCommentActions.bind(this, 'lastSeenByCandidate')
-        }]
-
-        // TODO: this should be moved to a more restrictive admin
-        const ownedColumns = [{
-            title: 'Name',
-            dataIndex: 'name',
-            width: '30%',
-            className: 'fontWeight500 allow-wrap',
-            render: (name, record) => {
-                return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
-            }
-        }, {
-            title: 'Category',
-            dataIndex: 'category',
-            render: (category) => _.capitalize(category)
-        }, {
-            title: 'Type',
-            dataIndex: 'type',
-        }, {
-            title: 'Community',
-            dataIndex: 'community',
-            key: 'community',
-            render: (community, data) => {
-                if (!community) {
-                    return null;
-                }
-
-                if (data.communityParent) {
-                    let nameParent = data.communityParent.name;
-                    return (<p>{nameParent}/{community.name}</p>)
-                } else {
-                    return (<p>{community.name}</p>)
-                }
-
-            }
-        }, {
-            title: 'Status',
-            dataIndex: 'status'
-        },{
-            title: 'Date',
-            dataIndex: 'startTime',
-            render: (startTime) => moment(startTime).format('MMM D')
-        }, {
-            title: 'Created',
-            dataIndex: 'createdAt',
-            render: (createdAt) => moment(createdAt).format('MMM D')
-        }, {
-            title: '',
-            dataIndex: '_id',
-            key: 'actions',
-            render: this.getOwnerCommentActions.bind(this)
-        }]
 
         return (
             <div className="p_ProfileProjects">
