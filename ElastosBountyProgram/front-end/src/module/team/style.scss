@@ -46,7 +46,9 @@
     }
 
     .ant-row {
-      margin: $gap_0 0;
+      .main-area {
+        margin: $gap_3 0;
+      }
 
       div[class^="ant-col-"]{
         @media only screen and (max-width: $mobile-width) {

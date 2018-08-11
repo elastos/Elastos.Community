@@ -1,0 +1,10 @@
+@import '@/style/variable';
+@import '@/style/color';
+
+.public {
+  .ant-row {
+    .main-area {
+      margin: $gap_3 0;
+    }
+  }
+}

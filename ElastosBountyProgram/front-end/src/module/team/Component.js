@@ -43,9 +43,9 @@ export default class extends BaseComponent {
     }
 
     ord_render () {
-        return (_.isEmpty(this.props.team) || this.props.team.loading ?
-            <div class="center"><Spin size="large" /></div> :
-            this.renderMain()
+        return (_.isEmpty(this.props.team) || this.props.team.loading ?  (
+            <div class="center"><Spin size="large" /></div>) : (
+            this.renderMain())
         )
     }
 

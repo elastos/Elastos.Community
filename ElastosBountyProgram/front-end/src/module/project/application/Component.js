@@ -5,6 +5,7 @@ import _ from 'lodash'
 import { Col, Row, Button, Spin, Divider, message, List, Icon, Tooltip, Popconfirm, Card, Avatar } from 'antd'
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_TYPE, TASK_CANDIDATE_STATUS} from '@/constant'
 import Comments from '@/module/common/comments/Container'
+import './style.scss'
 
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
