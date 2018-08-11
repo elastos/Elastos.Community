@@ -1,4 +1,5 @@
 @import "./color";
+@import "./variable";
 
 // Helpers IMPROVEME make separate helper scss
 .no-margin {
@@ -15,6 +16,14 @@
 
 .full-height {
   height: 100% !important;
+}
+
+.gap-right {
+  margin-right: $gap_0;
+}
+
+.gap-left {
+  margin-left: $gap_0;
 }
 
 .valign-wrapper {
@@ -227,6 +236,10 @@ h3.one-line {
     top: $gap_1;
     right: $gap_1;
   }
+}
+
+.ant-modal-body {
+  padding: 36px;
 }
 
 .ant-affix {

@@ -12,41 +12,9 @@ const FormItem = Form.Item
 class C extends BaseComponent {
 
     componentDidMount() {
-        const taskId = this.props.match.params.taskId
-        const submissionId = this.props.match.params.submissionId
-        const teamId = this.props.match.params.teamId
-
-        switch (this.props.reduxType) {
-            case 'task':
-                this.props.getTaskDetail(taskId)
-                break
-            case 'sumbission':
-                this.props.getSubmissionDetail(submissionId)
-                break
-            case 'team':
-                this.props.getTeamDetail(teamId)
-                break
-            default:
-                // do nothing
-                break
-        }
     }
 
     componentWillUnmount() {
-        switch (this.props.reduxType) {
-            case 'task':
-                this.props.resetTaskDetail()
-                break
-            case 'sumbission':
-                this.props.resetSubmissionDetail()
-                break
-            case 'team':
-                this.props.resetTeamDetail()
-                break
-            default:
-                // do nothing
-                break
-        }
     }
 
     // only wraps loading / renderMain
@@ -95,11 +63,15 @@ class C extends BaseComponent {
         })
     }
 
+    isLoading() {
+        return this.props.loading[this.props.reduxType || this.props.type]
+    }
+
     getSubscribeButton() {
         if (this.isUserSubscribed()) {
             return (
                 <Button className="ant-btn-ebp pull-left" size="small"
-                    onClick={this.unsubscribe.bind(this)} loading={this.props.loading[this.props.type]}>
+                    onClick={this.unsubscribe.bind(this)} loading={this.isLoading()}>
                     Unsubscribe
                 </Button>
             )
@@ -107,7 +79,7 @@ class C extends BaseComponent {
 
         return this.props.canSubscribe ?
             (<Button className="ant-btn-ebp pull-left" size="small"
-                onClick={this.subscribe.bind(this)} loading={this.props.loading[this.props.type]}>
+                onClick={this.subscribe.bind(this)} loading={this.isLoading()}>
                 Subscribe
             </Button>) : null
     }
@@ -129,7 +101,7 @@ class C extends BaseComponent {
                 <FormItem>
                     {subscribeButton}
                     <Button className="ant-btn-ebp pull-right" type="primary" size="small"
-                        htmlType="submit" loading={this.props.loading[this.props.type]}>
+                        htmlType="submit" loading={this.isLoading()}>
                         Post
                     </Button>
                 </FormItem>
@@ -220,6 +192,7 @@ class C extends BaseComponent {
 
     handleSubmit(e) {
         e.preventDefault()
+        debugger
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 this.props.postComment(this.props.type,
