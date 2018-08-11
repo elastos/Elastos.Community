@@ -215,17 +215,6 @@ class C extends BaseComponent {
                     </div>)
             }
         }, {
-            title: 'Status',
-            key: 'status',
-            render: candidate => {
-                return (
-                    <div key={candidate._id}>
-                        {candidate.status}
-                    </div>
-                )
-            }
-        },
-        {
             title: 'Action',
             key: 'action',
             render: candidate => {
