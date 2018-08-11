@@ -130,7 +130,7 @@ class C extends BaseComponent {
             } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
                 user.id = candidate.team._id
                 user.fullName = candidate.team.name || ''
-                user.avatar = candidate.team.profile.logo || ''
+                user.avatar = !_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url
             }
 
             return {
@@ -206,7 +206,7 @@ class C extends BaseComponent {
                         }
                         {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
                         <div key={candidate._id}>
-                            <Avatar src={candidate.team.profile.logo} />
+                            <Avatar src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
                             <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
                                 {candidate.team.name}
                             </a>
