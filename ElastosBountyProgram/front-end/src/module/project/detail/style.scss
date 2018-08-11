@@ -152,8 +152,13 @@
 
   .contributors {
     margin-top: $gap_2;
-    .title {
-      font-size: 24px;
+    text-align: center;
+    .leave-button {
+      text-align:center;
+      margin: $gap_2;
+    }
+    .align-left {
+      text-align: left;
     }
     .row-name-link {
       margin-left: $gap_1;

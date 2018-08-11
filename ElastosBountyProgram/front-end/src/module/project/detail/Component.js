@@ -49,6 +49,31 @@ class C extends BaseComponent {
         return this.props.detail.createdBy._id === this.props.currentUserId
     }
 
+    isMember(taskCandidateId) {
+        const candidate = _.find(this.props.detail.candidates, { _id: taskCandidateId })
+        if (!candidate) {
+            return false
+        }
+        if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
+            return candidate.user._id === this.props.currentUserId
+        } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
+            return _.find(this.props.ownedTeams, (item) => item._id === candidate.team._id)
+        }
+    }
+
+    isMemberByUserId(userId) {
+        const candidate = _.find(this.props.detail.candidates, (candidate) => {
+            if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
+                return candidate.user._id === userId
+            }
+            return false
+        })
+        if (!candidate) {
+            return false
+        }
+        return this.isMember(candidate._id)
+    }
+
     linkProfileInfo(userId) {
         this.props.history.push(`/admin/profile/${userId}`)
     }
@@ -63,6 +88,17 @@ class C extends BaseComponent {
 
     withdrawApplication(taskCandidateId) {
         this.props.withdrawCandidate(taskCandidateId);
+    }
+
+    removeUser(taskCandidateId) {
+    }
+
+    removeUserByUserId(userId) {
+        const candidate = _.find(this.props.candidates, (candidate) => candidate.user._id === userId)
+        if (!candidate) {
+            return false
+        }
+        return this.removeUser(candidate._id)
     }
 
     getUpperLeftBox() {
@@ -164,38 +200,14 @@ class C extends BaseComponent {
                     </div>)
             }
         }, {
-            title: 'Progress',
-            key: 'progress',
+            title: 'Action',
+            key: 'action',
             render: candidate => {
                 return (
                     <div>
-                        {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
-                        <div>
-                            {candidate.user.progress}
-                        </div>
-                        }
-                        {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
-                        <div>
-                            {candidate.team.progress}
-                        </div>
-                        }
-                    </div>
-                )
-            }
-        }, {
-            title: 'Notes',
-            key: 'notes',
-            render: candidate => {
-                return (
-                    <div>
-                        {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
-                        <div>
-                            {candidate.user.notes}
-                        </div>
-                        }
-                        {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
-                        <div>
-                            {candidate.team.notes}
+                        {this.isTeamOwner() && candidate._id !== 'such_fake_id' &&
+                        <div className="text-right">
+                            <a onClick={this.removeUser.bind(this, candidate._id)}>Remove</a>
                         </div>
                         }
                     </div>
@@ -217,15 +229,6 @@ class C extends BaseComponent {
 
     getCurrentApplicants() {
         const detail = this.props.detail
-        const canWithdraw = (taskCandidateId) => {
-            const candidate = _.find(detail.candidates, { _id: taskCandidateId })
-            if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
-                return candidate.user._id === this.props.currentUserId
-            } else {
-                return _.find(this.props.ownedTeams, (item) => item._id === candidate.team._id)
-            }
-
-        }
         const applicants = _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.PENDING });
         const columns = [{
             title: 'Name',
@@ -257,21 +260,21 @@ class C extends BaseComponent {
             render: candidate => {
                 return (
                     <div className="text-right">
-                        {this.props.page === 'LEADER' && (this.isTeamOwner() || canWithdraw(candidate._id)) && (
+                        {this.props.page === 'LEADER' && (this.isTeamOwner() || this.isMember(candidate._id)) && (
                             <span>
                                 <a onClick={this.showAppModal.bind(this, candidate._id)}>View</a>
                                 <Divider type="vertical"/>
                             </span>
                         )}
                         {this.isTeamOwner() &&
-                        <span className="text-right">
+                        <span>
                             <a onClick={this.approveUser.bind(this, candidate._id)}>Approve</a>
                             <Divider type="vertical"/>
                             <a onClick={this.disapproveUser.bind(this, candidate._id)}>Disapprove</a>
-                            {canWithdraw(candidate._id) && <Divider type="vertical"/>}
+                            {this.isMember(candidate._id) && <Divider type="vertical"/>}
                         </span>
                         }
-                        {canWithdraw(candidate._id) && (
+                        {this.isMember(candidate._id) && (
                             <span>
                                 <a onClick={this.withdrawApplication.bind(this, candidate._id)}>Withdraw Application</a>
                             </span>)
@@ -392,6 +395,7 @@ class C extends BaseComponent {
         const loading = _.isEmpty(this.props.detail)
         const isTaskOwner = (this.props.task &&
             this.props.task.createdBy && this.props.task.createdBy._id) === this.props.currentUserId
+        const isMember = this.isMemberByUserId(this.props.currentUserId)
         return (
             <div className="c_Project">
                 { loading
@@ -427,7 +431,10 @@ class C extends BaseComponent {
 
                             {!this.state.applying &&
                                 <Row className="contributors">
-                                    <h3 className="no-margin">Current Contributors</h3>
+                                    { isMember &&
+                                        <Button onClick={this.removeUserByUserId.bind(this, this.props.currentUserId)} className="leave-button">Leave</Button>
+                                    }
+                                    <h3 className="no-margin align-left">Current Contributors</h3>
                                     {this.getCurrentContributors()}
                                 </Row>
                             }
