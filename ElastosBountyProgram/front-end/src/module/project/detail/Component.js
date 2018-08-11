@@ -344,7 +344,6 @@ class C extends BaseComponent {
         const loading = _.isEmpty(this.props.detail)
         const isTaskOwner = (this.props.task &&
             this.props.task.createdBy && this.props.task.createdBy._id) === this.props.currentUserId
-
         return (
             <div className="c_Project">
                 { loading

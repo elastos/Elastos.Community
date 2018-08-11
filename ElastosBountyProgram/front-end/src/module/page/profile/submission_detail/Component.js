@@ -34,7 +34,6 @@ export default class extends StandardPage {
     }
 
     ord_renderContent () {
-
         return (
             <div className="p_ProfileSubmissionDetail">
                 <div className="ebp-header-divider">
@@ -48,8 +47,8 @@ export default class extends StandardPage {
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>Profile</Breadcrumb.Item>
-                                <Breadcrumb.Item href="/profile/tasks">Submissions</Breadcrumb.Item>
-                                <Breadcrumb.Item></Breadcrumb.Item>
+                                <Breadcrumb.Item href="/profile/submissions">Submissions</Breadcrumb.Item>
+                                <Breadcrumb.Item>{this.props.submission.title}</Breadcrumb.Item>
                             </Breadcrumb>
                         </div>
                         <div className="p_admin_content">
