@@ -18,6 +18,7 @@ export default class extends Base {
         const db_commentable = this.getDBModel(type)
         let commentable = await db_commentable.getDBInstance().findOne({_id: id})
             .populate('createdBy')
+            .populate('owner')
             .populate('subscribers', sanitizeWithEmail)
 
         if (commentable) {
@@ -45,6 +46,8 @@ export default class extends Base {
                         })
                     }
                 }
+            } else if (commentable.owner) {
+                this.sendNotificationEmail(type, param, createdBy, commentable.owner, null)
             } else {
                 commentable = await db_commentable.getDBInstance().findOne({_id: id})
                     .populate('createdBy')

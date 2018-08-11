@@ -2,6 +2,7 @@ import {createContainer} from "@/util"
 import Component from './Component'
 import CommentService from '@/service/CommentService'
 import TaskService from '@/service/TaskService'
+import TeamService from '@/service/TeamService'
 import SubmissionService from '@/service/SubmissionService'
 import {message} from 'antd'
 
@@ -10,10 +11,12 @@ export default createContainer(Component, (state) => {
     return {
         task: state.task.detail,
         submission: state.submission.detail,
+        team: state.team.detail,
         loading: {
             task: state.task.loading,
             taskCandidate: state.task.loading,
             submission: state.submission.loading,
+            team: state.team.loading
         },
         currentUserId: state.user.current_user_id
     }
@@ -22,6 +25,7 @@ export default createContainer(Component, (state) => {
     const commentService = new CommentService()
     const submissionService = new SubmissionService()
     const taskService = new TaskService()
+    const teamService = new TeamService()
 
     return {
         async postComment(type, reduxType, detailReducer, parentId, comment) {
@@ -66,6 +70,14 @@ export default createContainer(Component, (state) => {
 
         async resetSubmissionDetail(submissionId) {
             return submissionService.resetSubmissionDetail()
+        },
+
+        async getTeamDetail(teamId) {
+            return teamService.get(teamId)
+        },
+
+        resetTeamDetail() {
+            return teamService.resetTeamDetail()
         }
     }
 })

@@ -1,5 +1,6 @@
 import {Schema} from 'mongoose';
 import {PictureSchema} from './PictureSchema'
+import {CommentSchema} from './CommentSchema'
 
 export const TeamProfile = {
     description: String,
@@ -21,7 +22,8 @@ export const Team = {
     recruitedSkillsets: [String],
     owner: {type: Schema.Types.ObjectId, ref: 'users'},
     members: [{type: Schema.Types.ObjectId, ref: 'user_team'}],
-    pictures: [PictureSchema]
+    pictures: [PictureSchema],
+    comments: [[CommentSchema]]
 };
 
 export const User_Team = {

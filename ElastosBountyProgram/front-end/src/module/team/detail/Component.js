@@ -341,9 +341,9 @@ class C extends BaseComponent {
                                 </Row>
                             }
 
-                            {false && this.props.page === 'LEADER' &&
+                            {!this.state.applying && this.props.page === 'LEADER' &&
                                 <Row>
-                                    <Comments type="team" canPost={true} canSubscribe={!isTeamOwner} model={this.props.teamId}/>
+                                    <Comments type="team" canPost={true} model={this.props.teamId}/>
                                 </Row>
                             }
                         </div>

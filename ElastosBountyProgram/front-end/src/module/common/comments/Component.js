@@ -14,6 +14,7 @@ class C extends BaseComponent {
     componentDidMount() {
         const taskId = this.props.match.params.taskId
         const submissionId = this.props.match.params.submissionId
+        const teamId = this.props.match.params.teamId
 
         switch (this.props.reduxType) {
             case 'task':
@@ -21,6 +22,9 @@ class C extends BaseComponent {
                 break
             case 'sumbission':
                 this.props.getSubmissionDetail(submissionId)
+                break
+            case 'team':
+                this.props.getTeamDetail(teamId)
                 break
             default:
                 // do nothing
@@ -35,6 +39,9 @@ class C extends BaseComponent {
                 break
             case 'sumbission':
                 this.props.resetSubmissionDetail()
+                break
+            case 'team':
+                this.props.resetTeamDetail()
                 break
             default:
                 // do nothing

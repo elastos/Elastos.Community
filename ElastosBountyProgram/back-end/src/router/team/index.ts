@@ -6,6 +6,7 @@ import add_candidate from './add_candidate';
 import action from './action';
 import get from './get';
 import list from './list'
+import comment from './comment'
 
 
 export default Base.setRouter([
@@ -38,5 +39,10 @@ export default Base.setRouter([
         path : '/:teamId',
         router : get,
         method : 'get'
-    }
+    },
+    {
+        path : '/:id/comment',
+        router : comment,
+        method : 'post'
+    },
 ]);
