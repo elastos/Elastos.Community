@@ -376,7 +376,7 @@ export default class extends BaseComponent {
                         extra={this.getCarousel(item)}
                     >
                         <h3 class="no-margin no-padding one-line brand-color">
-                            <a onClick={clickHandler}>{item.title}</a>
+                            <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
                         </h3>
                         <h5 class="no-margin">
                             {item.description}

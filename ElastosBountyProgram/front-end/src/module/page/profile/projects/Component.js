@@ -164,7 +164,7 @@ export default class extends StandardPage {
                         extra={this.getCarousel(item)}
                     >
                         <h3 class="no-margin no-padding one-line brand-color">
-                            <a href={item.href}>{item.title}</a>
+                            <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
                         </h3>
                         <h5 class="no-margin">
                             {item.description}
