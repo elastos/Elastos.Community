@@ -1,15 +1,34 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
-import {message, Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select, Table, Input, Form, Divider} from 'antd'
-import { TASK_CANDIDATE_TYPE, TASK_CANDIDATE_STATUS, TEAM_USER_STATUS } from '@/constant'
+import {
+    message,
+    Col,
+    Row,
+    Tag,
+    Icon,
+    Carousel,
+    Avatar,
+    Button,
+    Spin,
+    Select,
+    Table,
+    Input,
+    Form,
+    Divider,
+    Modal
+} from 'antd'
+import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS } from '@/constant'
 import Comments from '@/module/common/comments/Container'
+import ProjectApplication from '@/module/project/application/Container'
 import _ from 'lodash'
 import './style.scss'
 
 class C extends BaseComponent {
     ord_states() {
         return {
+            showAppModal: false,
+            projectCandidateId: null
         }
     }
 
@@ -220,6 +239,12 @@ class C extends BaseComponent {
             render: candidate => {
                 return (
                     <div className="text-right">
+                        {this.props.page === 'LEADER' && (this.isTeamOwner() || canWithdraw(candidate._id)) && (
+                            <span>
+                                <a onClick={this.showAppModal.bind(this, candidate._id)}>View</a>
+                                <Divider type="vertical"/>
+                            </span>
+                        )}
                         {this.isTeamOwner() &&
                         <span className="text-right">
                             <a onClick={this.approveUser.bind(this, candidate._id)}>Approve</a>
@@ -404,8 +429,37 @@ class C extends BaseComponent {
                         </div>
                     )
                 }
+                <Modal
+                    className="project-detail-nobar"
+                    visible={this.state.showAppModal}
+                    onOk={this.handleAppModalOk}
+                    onCancel={this.handleAppModalCancel}
+                    footer={null}
+                    width="70%"
+                >
+                    <ProjectApplication applicantId={this.state.projectCandidateId}/>
+                </Modal>
             </div>
         )
+    }
+
+    showAppModal = (projectCandidateId) => {
+        this.setState({
+            showAppModal: true,
+            projectCandidateId
+        })
+    }
+
+    handleAppModalOk = (e) => {
+        this.setState({
+            showAppModal: false
+        })
+    }
+
+    handleAppModalCancel = (e) => {
+        this.setState({
+            showAppModal: false
+        })
     }
 }
 
