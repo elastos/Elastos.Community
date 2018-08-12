@@ -2,10 +2,17 @@
 @import "../../../style/variable";
 @import "../../../style/color";
 
+$mobile-padding: $gap_0 0px;
+$max-width-mobile: 768px;
+
 .p_Developer {
   background: #ffffff;
   text-align: left;
   padding: 0 48px;
+
+  @media (max-width: $max-width-mobile) {
+    padding: 0 24px;
+  }
 
   .ebp-wrap {
     max-width: 1200px;
@@ -22,12 +29,18 @@
       align-items: flex-end;
       height: 50%;
       min-height: 175px;
+      @media (max-width: $max-width-mobile) {
+        min-height: unset;
+      }
 
       span {
         z-index: 1;
         font-weight: bold;
         font-size: 2rem;
         color: $primary_color;
+        @media (max-width: $max-width-mobile) {
+          font-size: 1.5rem;
+        }
       }
 
       img {
@@ -39,6 +52,13 @@
         max-width: 35%;
         max-height: 150px;
         filter: alpha(opacity=25); // IE8 and earlier
+        @media (max-width: $max-width-mobile) {
+          top: unset;
+          margin: 0px $gap_1 $gap_1 $gap_1;
+          min-width: 25px;
+          max-width: 45px;
+          max-height: 45px;
+        }
       }
     }
 
@@ -54,6 +74,24 @@
       height: 50%;
       padding: 5px 10px;
       font-size: 16px;
+      @media (max-width: $max-width-mobile) {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .d_rowTop {
+    @media (max-width: $max-width-mobile) {
+      .d_box {
+        width: 100%;
+        margin-top: $gap_0;
+        margin-bottom: $gap_0;
+      }
+      .ant-card {
+        @media (max-width: $max-width-mobile) {
+          margin: 0;
+        }
+      }
     }
   }
 
@@ -61,11 +99,19 @@
     margin: 100px 0;
     text-align: center;
 
+    @media (max-width: $max-width-mobile) {
+      margin: 50px 0;
+    }
+
     .info-button {
       width: 50%;
       border-color: $primary_color;
       color: $primary_color;
       vertical-align: middle;
+
+      @media (max-width: $max-width-mobile) {
+        width: 100%;
+      }
     }
     .info-button:hover {
       background-color: $primary_light_color;
@@ -78,6 +124,9 @@
 
     .title {
       font-size: 2rem;
+      @media (max-width: $max-width-mobile) {
+        font-size: 1.5rem;
+      }
     }
 
     .component-box {
@@ -87,6 +136,10 @@
       background-color: $bg_gray;
       border-radius: 5px;
 
+      @media (max-width: $max-width-mobile) {
+        margin: 20px 0px;
+      }
+
       .d_leftCol {
         padding: 10px;
         .component-name {
@@ -94,13 +147,23 @@
           .languages {
             color: $primary_color;
           }
+          @media (max-width: $max-width-mobile) {
+            font-size: 16px;
+          }
         }
         .component-divider {
           margin: 5px 15px;
           border: 1px solid gray;
+          @media (max-width: $max-width-mobile) {
+            margin: $mobile-padding;
+          }
         }
         .component-description {
           padding: 10px;
+          @media (max-width: $max-width-mobile) {
+            font-size: 12px;
+            padding: 5px 0px 0px 0px;
+          }
         }
       }
 
@@ -113,6 +176,13 @@
           margin: 5px;
           border: 1px solid gray;
           background-color: $border_gray;
+        }
+
+        @media (max-width: $max-width-mobile) {
+          button {
+            width: 100%;
+            margin: $mobile-padding;
+          }
         }
 
         button:hover {
