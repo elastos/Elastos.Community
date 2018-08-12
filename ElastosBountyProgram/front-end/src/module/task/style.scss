@@ -4,13 +4,6 @@
 
 .c_ProfileContainer {
   background: white;
-  .applicants {
-    .ant-list-item.active {
-      a {
-        color: $primary_dark_color;
-      }
-    }
-  }
 }
 
 .c_TaskDetail,
@@ -23,6 +16,10 @@
 
   .form-wrapper {
     padding: $gap_2 0;
+  }
+
+  &.admin-right-column {
+    min-height: 192px;
   }
 
   p {

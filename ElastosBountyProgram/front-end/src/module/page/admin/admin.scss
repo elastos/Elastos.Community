@@ -12,8 +12,8 @@
 .p_admin_content {
 }
 
-.admin-left-column.ant-col-4, .admin-right-column.ant-col-20 {
-  padding: 0 20px;
+.admin-left-column, .admin-right-column {
+  padding: 0 20px !important;
   text-align: left;
 }
 
@@ -21,8 +21,8 @@
   background: #FFF;
 }
 
-.admin-right-column.ant-col-20 {
-  padding-right: 0;
+.admin-right-column {
+  padding-right: 0 !important;
   border-left: 1px solid #ccc;
   min-height: 192px; // height of the sidebox
 }
