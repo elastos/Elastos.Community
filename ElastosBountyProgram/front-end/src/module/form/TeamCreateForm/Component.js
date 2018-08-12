@@ -38,10 +38,26 @@ class C extends BaseComponent {
         }
     }
 
+    constructor (props) {
+        super(props)
+
+        this.state = {
+            editing: !!props.existingTask,
+            fileList: (props.existingTask && props.existingTask.pictures) || [],
+            previewVisible: false,
+            previewImage: ''
+        }
+
+        this.pictureUrlLookups = []
+        _.each(this.state.fileList, (file) => {
+            this.pictureUrlLookups[file.uid] = file.url
+        })
+    }
+
     handleSubmit (e) {
         e.preventDefault()
 
-        const tags = this.props.form.getFieldInstance('tags').getValue();
+        const tags = this.props.form.getFieldInstance('tags').getValue()
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
                 this.setState({ loading: true });
@@ -60,17 +76,22 @@ class C extends BaseComponent {
                     }
                 })
 
-                await this.props.create(createParams);
+                if (this.state.editing) {
+                    await this.props.update(createParams)
+                    this.props.switchEditMode()
+                } else {
+                    await this.props.create(createParams)
+                    this.props.history.push('/profile/teams')
+                }
 
-                this.setState({loading: false});
-                this.props.history.push('/profile/teams');
+                this.setState({loading: false})
             }
         })
     }
 
     getInputProps () {
-        const {getFieldDecorator} = this.props.form;
-        const team = this.props.data;
+        const {getFieldDecorator} = this.props.form
+        const existingTask = this.props.existingTask
 
         const input_el = (
             <Input size="large"/>
@@ -82,7 +103,7 @@ class C extends BaseComponent {
 
         const name_fn = getFieldDecorator('name', {
             rules: [{required: true, message: 'team name is required'}],
-            initialValue: ''
+            initialValue: existingTask && existingTask.name || ''
         })
 
         const specs = [
@@ -133,7 +154,7 @@ class C extends BaseComponent {
 
         const type_fn = getFieldDecorator('domain', {
             rules: [],
-            initialValue: []
+            initialValue: existingTask && existingTask.domain || []
         })
         const type_el = (
             <TreeSelect treeData={specs} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
@@ -141,7 +162,7 @@ class C extends BaseComponent {
 
         const skillset_fn = getFieldDecorator('recruitedSkillsets', {
             rules: [],
-            initialValue: []
+            initialValue: existingTask && existingTask.recruitedSkillsets || []
         })
         const skillset_el = (
             <TreeSelect treeData={skillsets} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
@@ -149,19 +170,14 @@ class C extends BaseComponent {
 
         const description_fn = getFieldDecorator('description', {
             rules: [],
-            initialValue: ''
+            initialValue: existingTask && existingTask.description || ''
         })
 
         const tags_fn = getFieldDecorator('tags', {
             rules: [],
-            initialValue: ''
+            initialValue: existingTask && existingTask.tags || ''
         })
         const tags_el = <InputTags />
-
-        const pictures_fn = getFieldDecorator('pictures', {
-            rules: [],
-            initialValue: ''
-        })
 
         const p_pictures = {
             listType: 'picture-card',
@@ -186,7 +202,7 @@ class C extends BaseComponent {
 
         const pictures_el = (
             <Upload name='pictures' {...p_pictures}>
-                {this.state.fileList.length >= 3 ? null : uploadButton}
+                {this.state.fileList.length >= 5 ? null : uploadButton}
             </Upload>
         )
 
@@ -256,7 +272,7 @@ class C extends BaseComponent {
 
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
                             <Button loading={this.state.loading} type="ebp" htmlType="submit" className="d_btn">
-                                Create Team
+                                {this.state.editing ? 'Save' : 'Create'}
                             </Button>
                         </FormItem>
                     </div>

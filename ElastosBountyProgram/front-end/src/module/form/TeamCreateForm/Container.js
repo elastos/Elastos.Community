@@ -12,7 +12,11 @@ export default createContainer(Component, (state) => {
     const ts = new TeamService();
     return {
         async create(param) {
-            return ts.create(param);
+            return ts.create(param)
+        },
+
+        async update(param) {
+            return ts.update(param)
         }
     };
 });

@@ -122,7 +122,7 @@ class C extends BaseComponent {
             fileList: (props.existingTask && props.existingTask.pictures) || [],
             previewVisible: false,
             previewImage: ''
-        };
+        }
 
         this.pictureUrlLookups = []
         _.each(this.state.fileList, (file) => {
@@ -512,11 +512,6 @@ class C extends BaseComponent {
             <TreeSelect treeData={skillsets} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
         )
 
-        const pictures_fn = getFieldDecorator('pictures', {
-            rules: [],
-            initialValue: (this.props.existingTask && this.props.existingTask.pictures) || []
-        })
-
         const p_pictures = {
             listType: 'picture-card',
             fileList: this.state.fileList,
@@ -540,7 +535,7 @@ class C extends BaseComponent {
 
         const pictures_el = (
             <Upload name='pictures' {...p_pictures}>
-                {this.state.fileList.length >= 3 ? null : uploadButton}
+                {this.state.fileList.length >= 5 ? null : uploadButton}
             </Upload>
         )
 

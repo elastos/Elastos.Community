@@ -24,11 +24,29 @@ export default class extends BaseComponent {
     }
 
     renderMain() {
+        const isTeamOwner = this.props.current_user_id ===
+            (this.props.team.owner && this.props.team.owner._id)
+
         return (
             <div className="c_TeamDetail">
+                {isTeamOwner && this.renderHeader()}
                 {this.state.editing ? this.renderEditForm() : this.renderDetail()}
             </div>
         )
+    }
+
+    renderHeader() {
+        return <div className="l_banner">
+            <div className="pull-left">
+                Lorem ipsum
+            </div>
+            <div className="pull-right right-align">
+                <Button onClick={this.switchEditMode.bind(this)}>
+                    {this.state.editing ? 'Cancel' : 'Edit'}
+                </Button>
+            </div>
+            <div className="clearfix"/>
+        </div>
     }
 
     renderEditForm() {
@@ -43,7 +61,7 @@ export default class extends BaseComponent {
     }
 
     ord_render () {
-        return (_.isEmpty(this.props.team) || this.props.team.loading ?  (
+        return (_.isEmpty(this.props.team) || this.props.team.loading ? (
             <div class="center"><Spin size="large" /></div>) : (
             this.renderMain())
         )

@@ -72,7 +72,6 @@ export default class extends BaseService {
     }
 
     async update(param) {
-        // TODO
         const teamRedux = this.store.getRedux('team')
         this.dispatch(teamRedux.actions.loading_update(true))
 
@@ -83,7 +82,7 @@ export default class extends BaseService {
         });
 
         const detail = {
-            ...this.store.getState().task.detail,
+            ...this.store.getState().team.detail,
             ...param
         }
 
