@@ -6,17 +6,25 @@ import _ from 'lodash'
 
 export default createContainer(Component, (state) => {
     return {
-
+        loading: state.team.loading
     };
 }, () => {
-    const ts = new TeamService();
+    const teamService = new TeamService();
     return {
+        async getTeamDetail(teamId) {
+            return teamService.get(teamId)
+        },
+
+        resetTeamDetail() {
+            return teamService.resetTeamDetail()
+        },
+
         async create(param) {
-            return ts.create(param)
+            return teamService.create(param)
         },
 
         async update(param) {
-            return ts.update(param)
+            return teamService.update(param)
         }
     };
 });

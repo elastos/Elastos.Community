@@ -29,6 +29,15 @@ const TextArea = Input.TextArea
 const RadioGroup = Radio.Group
 
 class C extends BaseComponent {
+    componentDidMount() {
+        const teamId = this.props.match.params.teamId
+        teamId && this.props.getTeamDetail(teamId)
+    }
+
+    componentWillUnmount() {
+        this.props.resetTeamDetail()
+    }
+
     constructor (props) {
         super(props)
 
@@ -69,8 +78,8 @@ class C extends BaseComponent {
                     createParams.teamId = this.props.existingTeam._id
                     this.props.update(createParams).then(() => {
                         this.props.getTeamDetail(this.props.existingTeam._id)
+                        this.props.switchEditMode()
                     })
-                    this.props.switchEditMode()
                 } else {
                     await this.props.create(createParams)
                     this.props.history.push('/profile/teams')
