@@ -78,7 +78,7 @@ class C extends BaseComponent {
         const leaderName = detail.owner.profile
             ? (detail.owner.profile.firstName + ' ' + detail.owner.profile.lastName)
             : ''
-        const teamSize = /* detail.candidateCompleted.length || */ ''
+        const teamSize = _.size(_.filter(detail.members, { status: TEAM_USER_STATUS.NORMAL }))
         const description = detail.profile.description || ''
         const leaderImage = detail.owner.profile.avatar || ''
 
@@ -92,7 +92,10 @@ class C extends BaseComponent {
                     <div className="ellipsis">{leaderName}</div>
                 </div>
                 <div className="content">
-                    <div className="entry">{I18N.get('project.detail.team_size')}: {teamSize}</div>
+                    <div className="entry">
+                        <h3 className="no-margin no-padding text-right">{teamSize}</h3>
+                        <span> members</span>
+                    </div>
                 </div>
                 <div class="description-box">
                     <hr className="divider"/>

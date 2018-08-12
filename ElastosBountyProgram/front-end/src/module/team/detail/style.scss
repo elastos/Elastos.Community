@@ -121,6 +121,9 @@
 
         .entry {
           margin: $gap_0 0;
+          position: absolute;
+          bottom: 0;
+          right: $gap_2;
         }
       }
 
