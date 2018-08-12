@@ -67,17 +67,7 @@ h3.one-line {
 }
 
 .ant-btn {
-  &:hover,
-  &:focus,
-  &.selected {
-    border-color: $cr_color;
-    color: $cr_color;
-  }
-
   &.ant-btn-ebp{
-    font-size: 1.1rem;
-    padding: 0 40px;
-
     &.ant-btn-sm {
       line-height: 0.9rem;
       font-size: 0.9rem;
@@ -123,23 +113,6 @@ h3.one-line {
   border-color: transparent;
   color: $text_light_gray;
   margin-right: 0;
-}
-
-.ant-tabs-nav .ant-tabs-tab-active {
-  color: $cr_light_color;
-
-  &:hover {
-    color: $cr_color;
-  }
-}
-
-.ant-tabs-ink-bar {
-  background-color: $cr_light_color;;
-}
-
-.ant-menu-horizontal > .ant-menu-item.ant-menu-item-active {
-  color: $cr_light_color;
-  border-color: $cr_light_color;
 }
 
 .ant-menu-inline {
