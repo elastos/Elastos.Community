@@ -400,11 +400,11 @@ export default class extends BaseComponent {
                             {item.content}
                         </div>
                         <div className="ant-list-item-right-box">
-                            <div className="pull-up">
+                            <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
                                 <Avatar size="large" className="pull-right" src={item.owner.profile.avatar}/>
                                 <div class="clearfix"/>
                                 <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
-                            </div>
+                            </a>
                             <Button onClick={clickHandler.bind(this, item.id)}
                                 type="primary" className="pull-down">Apply</Button>
                         </div>
@@ -412,5 +412,9 @@ export default class extends BaseComponent {
                 )}
             />
         )
+    }
+
+    linkUserDetail(user) {
+        this.props.history.push(`/member/${user._id}`)
     }
 }

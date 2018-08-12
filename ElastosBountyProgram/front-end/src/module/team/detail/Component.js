@@ -30,7 +30,7 @@ class C extends BaseComponent {
     }
 
     linkProfileInfo(userId) {
-        this.props.history.push(`/admin/profile/${userId}`)
+        this.props.history.push(`/member/${userId}`)
     }
 
     approveUser(teamCandidateId) {
@@ -98,10 +98,10 @@ class C extends BaseComponent {
                 <div className="title">
                     <span>{name}</span>
                 </div>
-                <div className="leader">
+                <a className="leader" onClick={this.linkUserDetail.bind(this, detail.owner)}>
                     <Avatar size="large" src={leaderImage} />
                     <div className="ellipsis">{leaderName}</div>
-                </div>
+                </a>
                 <div className="content">
                     <div className="entry">
                         <h3 className="no-margin no-padding text-right">{teamSize}</h3>
@@ -395,6 +395,10 @@ class C extends BaseComponent {
         this.setState({
             showAppModal: false
         })
+    }
+
+    linkUserDetail(user) {
+        this.props.history.push(`/member/${user._id}`)
     }
 }
 

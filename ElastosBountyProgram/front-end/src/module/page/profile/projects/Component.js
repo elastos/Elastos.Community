@@ -110,11 +110,11 @@ export default class extends StandardPage {
                             {item.content}
                         </div>
                         <div className="ant-list-item-right-box">
-                            <div className="pull-up">
+                            <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
                                 <Avatar size="large" icon="user" className="pull-right" src={item.owner.profile.avatar}/>
                                 <div class="clearfix"/>
                                 <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
-                            </div>
+                            </a>
                             <Button type="primary" className="pull-down" onClick={this.linkTaskDetail.bind(this, item.id)}>
                                 View
                                 <div class="pull-right">
@@ -286,5 +286,9 @@ export default class extends StandardPage {
 
     linkTaskCandidateDetail(taskId, taskCandidateId) {
         this.props.history.push(`/profile/task-app/${taskId}/${taskCandidateId}`)
+    }
+
+    linkUserDetail(user) {
+        this.props.history.push(`/member/${user._id}`)
     }
 }

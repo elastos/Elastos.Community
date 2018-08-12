@@ -197,11 +197,11 @@ export default class extends StandardPage {
                             {item.content}
                         </div>
                         <div className="ant-list-item-right-box">
-                            <div className="pull-up">
+                            <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
                                 <Avatar size="large" icon="user" className="pull-right" src={item.owner.profile.avatar}/>
                                 <div class="clearfix"/>
                                 <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
-                            </div>
+                            </a>
                             <Button type="primary" className="pull-down" onClick={this.linkTeamDetail.bind(this, item.id)}>View</Button>
                         </div>
                     </List.Item>
@@ -232,6 +232,10 @@ export default class extends StandardPage {
 
     goCreatepage() {
         this.props.history.push('/profile/teams/create');
+    }
+
+    linkUserDetail(user) {
+        this.props.history.push(`/member/${user._id}`)
     }
 
     linkTeamDetail(teamId) {

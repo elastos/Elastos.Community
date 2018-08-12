@@ -76,7 +76,7 @@ class C extends BaseComponent {
     }
 
     linkProfileInfo(userId) {
-        this.props.history.push(`/admin/profile/${userId}`)
+        this.props.history.push(`/member/${userId}`)
     }
 
     approveUser(taskCandidateId) {
@@ -158,10 +158,10 @@ class C extends BaseComponent {
                 <div className="title">
                     <span>{name}</span>
                 </div>
-                <div className="leader">
+                <a className="leader" onClick={this.linkProfileInfo.bind(this, detail.createdBy._id)}>
                     <Avatar size="large" src={leaderImage} />
                     <div className="ellipsis">{leaderName}</div>
-                </div>
+                </a>
                 <div className="content">
                     <div className="entry">{I18N.get('project.detail.deadline')}: {deadline}</div>
                     <div className="entry">{I18N.get('project.detail.progress')}: {progress}</div>
@@ -194,17 +194,17 @@ class C extends BaseComponent {
                     <div>
                         {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
                         <div>
-                            <Avatar className={(candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
-                                src={candidate.user.profile.avatar}/>
-                            <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                                <Avatar className={(candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
+                                    src={candidate.user.profile.avatar}/>
                                 {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
                             </a>
                         </div>
                         }
                         {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
                         <div>
-                            <Avatar src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
-                            <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
+                                <Avatar className="gap-right" src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
                                 {candidate.team.name}
                             </a>
                         </div>
@@ -250,16 +250,16 @@ class C extends BaseComponent {
                     <div>
                         {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
                         <div>
-                            <Avatar src={candidate.user.profile.avatar} />
-                            <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                                <Avatar className="gap-right" src={candidate.user.profile.avatar} />
                                 {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
                             </a>
                         </div>
                         }
                         {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
                         <div>
-                            <Avatar src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
-                            <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
+                                <Avatar className="gap-right" src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
                                 {candidate.team.name}
                             </a>
                         </div>

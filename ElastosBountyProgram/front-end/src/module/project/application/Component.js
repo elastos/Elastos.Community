@@ -43,10 +43,10 @@ export default class extends BaseComponent {
                                     </div>
                                 }>
                                     {applicant.user &&
-                                        <div>
+                                        <a onClick={this.linkUserDetail.bind(this, applicant.user)}>
                                             <Avatar className="gap-right" src={applicant.user.profile.avatar}/>
                                             {`${applicant.user.profile.firstName} ${applicant.user.profile.lastName}`}
-                                        </div>
+                                        </a>
                                     }
                                     <h5>
                                         {applicant.applyMsg}
@@ -62,6 +62,10 @@ export default class extends BaseComponent {
                 </Row>
             </div>
         )
+    }
+
+    linkUserDetail(user) {
+        this.props.history.push(`/member/${user._id}`)
     }
 
     async withdrawApplication() {

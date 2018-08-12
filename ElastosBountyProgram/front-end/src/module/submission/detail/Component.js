@@ -202,10 +202,10 @@ export default class extends BaseComponent {
                 <div className="title">
                     <span>{title || ''}</span>
                 </div>
-                <div className="leader">
+                <a className="leader" onClick={this.linkUserDetail.bind(this, createdBy)}>
                     <Avatar size="large" src={leaderImage} />
                     <div className="ellipsis">{leaderName}</div>
-                </div>
+                </a>
                 <div className="content">
                     { name && type && <div className="entry">Community: {`${name} ${type}`}</div> }
                     <div className="entry">Created Date: {createdDate}</div>
@@ -283,5 +283,9 @@ export default class extends BaseComponent {
         }
 
         return this.renderDetail()
+    }
+
+    linkUserDetail(user) {
+        this.props.history.push(`/member/${user._id}`)
     }
 }

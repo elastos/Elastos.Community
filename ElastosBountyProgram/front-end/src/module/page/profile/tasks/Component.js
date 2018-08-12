@@ -6,7 +6,7 @@ import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import './style.scss'
 import '../../admin/admin.scss'
 
-import { Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button, Table, Divider } from 'antd'
+import { Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Avatar, Button, Table, Divider } from 'antd'
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
 
@@ -142,7 +142,15 @@ export default class extends StandardPage {
             }
         }, {
             title: 'Owner',
-            dataIndex: 'createdBy.username'
+            dataIndex: 'createdBy',
+            width: '30%',
+            render: (createdBy) => {
+                const profile = createdBy && createdBy.profile ? createdBy.profile : {};
+                return <a onClick={this.linkUserDetail.bind(this, createdBy)} className="tableLink">
+                    <Avatar className="gap-right" src={profile.avatar} />
+                    {`${profile.firstName} ${profile.lastName}`}
+                </a>
+            }
         }, {
             title: 'Category',
             dataIndex: 'category',
@@ -150,23 +158,6 @@ export default class extends StandardPage {
         }, {
             title: 'Type',
             dataIndex: 'type',
-        }, {
-            title: 'Community',
-            dataIndex: 'community',
-            key: 'community',
-            render: (community, data) => {
-                if (!community) {
-                    return null;
-                }
-
-                if (data.communityParent) {
-                    let nameParent = data.communityParent.name;
-                    return (<p>{nameParent}/{community.name}</p>)
-                } else {
-                    return (<p>{community.name}</p>)
-                }
-
-            }
         }, {
             title: 'Date',
             dataIndex: 'startTime',
@@ -424,5 +415,9 @@ export default class extends StandardPage {
 
     linkTaskCandidateDetail(taskId, taskCandidateId) {
         this.props.history.push(`/profile/task-app/${taskId}/${taskCandidateId}`)
+    }
+
+    linkUserDetail(user) {
+        this.props.history.push(`/member/${user._id}`)
     }
 }
