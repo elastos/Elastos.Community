@@ -1,6 +1,7 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import {Col, Row, Icon, Input, Button, Breadcrumb, List, Checkbox, Radio, Carousel, Modal, Avatar, Affix} from 'antd'
+import {Col, Row, Icon, Input, Button, Breadcrumb, List, Checkbox, Radio,
+    Carousel, Modal, Avatar, Affix, Tag} from 'antd'
 import _ from 'lodash'
 import './style.scss'
 import moment from 'moment/moment'
@@ -8,6 +9,7 @@ import {SKILLSET_TYPE, TEAM_TASK_DOMAIN} from '@/constant'
 import ProjectDetail from '@/module/project/detail/Container'
 import TeamDetail from '@/module/team/detail/Container'
 import Footer from '@/module/layout/Footer/Container'
+import I18N from '@/I18N'
 
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
@@ -339,13 +341,26 @@ export default class extends BaseComponent {
             ? this.props.all_teams
             : this.props.all_tasks
 
+        const description_fn = (entity) => {
+            return _.isEmpty(entity.recruitedSkillsets)
+                ? I18N.get('project.detail.not_recruiting')
+                : (
+                    <div>
+                        <span className="gap-right">{I18N.get('project.detail.recruiting')}: </span>
+                        <span>
+                            {_.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>)}
+                        </span>
+                    </div>
+                )
+        }
+
         const data = this.isLookingForTeam()
             ? _.map(entities, (team, id) => {
                 return {
                     href: '',
                     title: team.name,
                     pictures: team.pictures || [],
-                    description: 'Lorem ipsum',
+                    description: description_fn(team),
                     content: team.profile.description,
                     owner: team.owner,
                     id: team._id
@@ -356,7 +371,7 @@ export default class extends BaseComponent {
                     href: '',
                     title: task.name,
                     pictures: task.pictures || [],
-                    description: 'Lorem ipsum',
+                    description: description_fn(task),
                     content: task.description,
                     owner: task.createdBy,
                     id: task._id
