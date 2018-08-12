@@ -32,10 +32,10 @@ export default class extends StandardPage {
                         </div>
                         <div className="p_ProfileTeams p_admin_content">
                             <Row>
-                                <Col span={4} className="admin-left-column wrap-box-navigator">
+                                <Col sm={24} md={4} className="admin-left-column wrap-box-navigator">
                                     <Navigator selectedItem={'profileTeams'}/>
                                 </Col>
-                                <Col span={20} className="admin-right-column wrap-box-user">
+                                <Col sm={24} md={20} className="admin-right-column wrap-box-user">
                                     <h4 className="p_profile_action_title">Create Team</h4>
                                     <TeamCreateForm />
                                 </Col>

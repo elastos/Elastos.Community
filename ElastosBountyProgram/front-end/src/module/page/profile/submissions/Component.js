@@ -132,12 +132,10 @@ export default class extends StandardPage {
                         </div>
                         <div className="p_admin_content">
                             <Row>
-                                <MediaQuery minWidth={720}>
-                                    <Col span={4} className="admin-left-column wrap-box-navigator">
-                                        <Navigator selectedItem={'profileSubmissions'}/>
-                                    </Col>
-                                </MediaQuery>
-                                <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-right-column wrap-box-user">
+                                <Col sm={24} md={4} className="admin-left-column wrap-box-navigator">
+                                    <Navigator selectedItem={'profileSubmissions'}/>
+                                </Col>
+                                <Col sm={24} md={20} className="c_ProfileContainer admin-right-column wrap-box-user">
                                     <div className="pull-right filter-group">
                                         <Button onClick={this.goCreatepage.bind(this)}>Create Issue</Button>
                                     </div>

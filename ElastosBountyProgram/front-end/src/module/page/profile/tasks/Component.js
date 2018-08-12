@@ -291,12 +291,10 @@ export default class extends StandardPage {
                         </div>
                         <div className="p_admin_content">
                             <Row>
-                                <MediaQuery minWidth={720}>
-                                    <Col span={4} className="admin-left-column wrap-box-navigator">
-                                        <Navigator selectedItem={'profileTasks'}/>
-                                    </Col>
-                                </MediaQuery>
-                                <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-right-column wrap-box-user">
+                                <Col sm={24} md={4} className="admin-left-column wrap-box-navigator">
+                                    <Navigator selectedItem={'profileTasks'}/>
+                                </Col>
+                                <Col sm={24} md={20} className="c_ProfileContainer admin-right-column wrap-box-user">
                                     {(this.props.is_leader || this.props.is_admin) &&
                                     <div className="pull-right">
                                         <Button onClick={() => this.props.history.push('/task-create/')}>Create Task</Button>

@@ -319,7 +319,7 @@ class C extends BaseComponent {
         const isTeamMember = this.isTeamMember()
 
         return (
-            <div className="c_Project c_TeamDetail">
+            <div className="c_Team c_TeamDetail">
                 { loading
                     ? (
                         <div className="full-width full-height valign-wrapper halign-wrapper">

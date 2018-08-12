@@ -7,6 +7,10 @@
   padding: $gap_3;
   width: 100%;
 
+  @media only screen and (max-width: $mobile-width) {
+    padding: $gap_1 0 0;
+  }
+
   .team-selector {
     width: 332px;
     margin-right: $gap_0;
@@ -41,9 +45,18 @@
     width: 752px;
     margin: 0 auto;
 
+    @media only screen and (max-width: $mobile-width) {
+      width: auto;
+    }
+
     .col-left {
       display: flex;
       width: 250px;
+
+      @media only screen and (max-width: $mobile-width) {
+        padding-top: $gap_1;
+        width: 100%;
+      }
 
       .left-container {
         width: 100%;
@@ -64,6 +77,11 @@
           justify-content: center;
           align-items: center;
           height: 250px;
+
+          @media only screen and (max-width: $mobile-width) {
+            height: auto;
+            margin: $gap_2 0;
+          }
         }
 
         .divider {
@@ -77,6 +95,11 @@
       border-left: 1px solid $border_gray;
       padding: $gap_2 $gap_0 $gap_2 $gap_2;
       height: 500px;
+
+      @media only screen and (max-width: $mobile-width) {
+        height: auto;
+        border-left: 0;
+      }
 
       .title {
         height: 108px;

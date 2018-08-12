@@ -8,6 +8,10 @@
 
   .filter-group {
     margin-bottom: $gap_2;
+
+    @media only screen and (max-width: $mobile-width) {
+      width: 100%;
+    }
   }
 
   .ant-list-item {

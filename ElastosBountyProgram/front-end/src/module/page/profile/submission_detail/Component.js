@@ -53,10 +53,10 @@ export default class extends StandardPage {
                         </div>
                         <div className="p_admin_content">
                             <Row>
-                                <Col span={4} className="admin-left-column wrap-box-navigator">
+                                <Col sm={24} md={4} className="admin-left-column wrap-box-navigator">
                                     <Navigator selectedItem={'profileSubmissions'} />
                                 </Col>
-                                <Col span={20} className="c_ProfileContainer admin-right-column wrap-box-user">
+                                <Col sm={24} md={20} className="c_ProfileContainer admin-right-column wrap-box-user">
                                     <SubmissionDetail submission={this.props.submission} />
                                 </Col>
                             </Row>

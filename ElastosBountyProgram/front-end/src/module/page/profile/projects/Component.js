@@ -10,6 +10,7 @@ import { Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button,
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
 import I18N from '@/I18N'
+import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from "../../../../config/constant"
 
 const FormItem = Form.Item;
 
@@ -96,33 +97,63 @@ export default class extends StandardPage {
             <List itemLayout='vertical' size='large' loading={this.props.loading}
                 className="with-right-box" dataSource={data}
                 renderItem={item => (
-                    <List.Item
-                        key={item.id}
-                        extra={this.getCarousel(item)}
-                    >
-                        <h3 class="no-margin no-padding one-line brand-color">
-                            <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
-                        </h3>
-                        <h5 class="no-margin">
-                            {item.description}
-                        </h5>
-                        <div>
-                            {item.content}
-                        </div>
-                        <div className="ant-list-item-right-box">
-                            <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
-                                <Avatar size="large" icon="user" className="pull-right" src={item.owner.profile.avatar}/>
-                                <div class="clearfix"/>
-                                <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
-                            </a>
-                            <Button type="primary" className="pull-down" onClick={this.linkTaskDetail.bind(this, item.id)}>
-                                View
-                                <div class="pull-right">
-                                    {this.props.page === 'LEADER' && this.getCommentStatus(item.task)}
+                    <div>
+                        <MediaQuery minWidth={MIN_WIDTH_PC}>
+                            <List.Item
+                                key={item.id}
+                                extra={this.getCarousel(item)}
+                            >
+                                <h3 class="no-margin no-padding one-line brand-color">
+                                    <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
+                                </h3>
+                                <h5 class="no-margin">
+                                    {item.description}
+                                </h5>
+                                <div>
+                                    {item.content}
                                 </div>
-                            </Button>
-                        </div>
-                    </List.Item>
+                                <div className="ant-list-item-right-box">
+                                    <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                        <Avatar size="large" icon="user" className="pull-right" src={item.owner.profile.avatar}/>
+                                        <div class="clearfix"/>
+                                        <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
+                                    </a>
+                                    <Button type="primary" className="pull-down" onClick={this.linkTaskDetail.bind(this, item.id)}>
+                                        View
+                                        <div class="pull-right">
+                                            {this.props.page === 'LEADER' && this.getCommentStatus(item.task)}
+                                        </div>
+                                    </Button>
+                                </div>
+                            </List.Item>
+                        </MediaQuery>
+                        <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                            <List.Item
+                                key={item.id}
+                                className="ignore-right-box"
+                            >
+                                <h3 class="no-margin no-padding one-line brand-color">
+                                    <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
+                                </h3>
+                                <h5 class="no-margin">
+                                    {item.description}
+                                </h5>
+                                <div>
+                                    <a onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                        <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
+                                        <Divider type="vertical"/>
+                                        <Avatar size="large" icon="user" src={item.owner.profile.avatar}/>
+                                    </a>
+                                    <Button type="primary" className="pull-right" onClick={this.linkTaskDetail.bind(this, item.id)}>
+                                        View
+                                        <div class="pull-right">
+                                            {this.props.page === 'LEADER' && this.getCommentStatus(item.task)}
+                                        </div>
+                                    </Button>
+                                </div>
+                            </List.Item>
+                        </MediaQuery>
+                    </div>
                 )}
             />
         )
@@ -211,14 +242,12 @@ export default class extends StandardPage {
                         </div>
                         <div className="p_admin_content">
                             <Row>
-                                <MediaQuery minWidth={720}>
-                                    <Col span={4} className="admin-left-column wrap-box-navigator">
-                                        <Navigator selectedItem={'profileProjects'}/>
-                                    </Col>
-                                </MediaQuery>
-                                <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-right-column wrap-box-user">
+                                <Col sm={24} md={4} className="admin-left-column wrap-box-navigator">
+                                    <Navigator selectedItem={'profileProjects'}/>
+                                </Col>
+                                <Col sm={24} md={20} className="c_ProfileContainer admin-right-column wrap-box-user">
                                     {(this.props.is_leader || this.props.is_admin) &&
-                                    <div className="pull-right">
+                                    <div className="pull-right filter-group">
                                         <Button onClick={() => this.props.history.push('/task-create?type=PROJECT&category=DEVELOPER')}>Create Project</Button>
                                     </div>
                                     }

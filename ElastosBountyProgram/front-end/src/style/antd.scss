@@ -145,6 +145,12 @@ h3.one-line {
   }
 }
 
+.ant-menu.no-padding-items {
+  .ant-menu-item[style] {
+    padding-left: 0 !important;
+  }
+}
+
 // Global declarations
 .c_Footer {
   margin-top: 72px;
@@ -166,6 +172,13 @@ h3.one-line {
     margin-bottom: 0;
     height: 100%;
     margin-right: $rightBoxWidth + 2*$gap_2;
+  }
+
+  .ignore-right-box {
+    margin: $gap_0 0;
+    .ant-list-item-content {
+      margin-right: 0;
+    }
   }
 
   .ant-list-item-extra {
