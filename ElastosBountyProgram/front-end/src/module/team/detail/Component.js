@@ -166,7 +166,7 @@ class C extends BaseComponent {
                     )}
                     {canWithdraw(candidate._id) && (
                         <span>
-                            <a onClick={this.withdrawUser.bind(this, candidate._id)}>{I18N.get('project.detail.withdraw')}</a>
+                            <a onClick={this.withdrawUser.bind(this, candidate._id)}>{I18N.get('project.detail.withdraw_application')}</a>
                             {isTeamOwner && <Divider type="vertical"/>}
                         </span>
                     )}

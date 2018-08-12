@@ -176,7 +176,7 @@ export default {
     'project.detail.view': 'View',
     'project.detail.approve': 'Approve',
     'project.detail.disapprove': 'Disapprove',
-    'project.detail.withdraw_application': 'Withdraw Application',
+    'project.detail.withdraw_application': 'Withdraw',
     'project.detail.popup.leave_question': 'Are you sure you want to leave?',
     'project.detail.popup.leave_team': 'Leave Team',
     'project.detail.popup.applied': 'Applied',
