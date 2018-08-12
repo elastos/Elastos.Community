@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom'
 import config from '@/config'
 import _ from 'lodash'
 import './style.scss'
+import I18N from '@/I18N'
 
-import { Col, Row, Icon, Form, Input, Button, Modal, Select, Table, List, Popover, Cascader, Tabs, Tree, Divider } from 'antd'
+import { Breadcrumb, Col, Row, Icon, Form, Input, Button, Modal, Select,
+    Table, List, Popover, Cascader, Tabs, Tree, Divider } from 'antd'
 import moment from 'moment/moment'
 
 // /////////////////
@@ -110,17 +112,17 @@ class TopicDetail extends React.Component {
 
     render() {
         return (
-            <div id="topicDetail">
+            <div>
                 <article>
                     {<p>A new technology made possible by public blockchains, smart contracts are difficult to understand because the term partly confuses the core interaction described.</p>}
                 </article>
                 <footer>
-                    <Row id="meta">
+                    <Row>
                         <Col span={12}><a href="#" title="Submit feedback.">Help us improve this page.</a></Col>
                         <Col span={12}>Last Updated: 07/07/2018</Col>
                     </Row>
                     <Divider />
-                    <Row id="nextTopic">
+                    <Row>
                         <Col span={24}><a href="#" title="Next topic">Next topic</a></Col>
                     </Row>
                 </footer>
@@ -163,7 +165,7 @@ class Topics extends React.Component {
     render() {
         const paneContent = this.p.paneContent;
         return (
-            <div id="topics">
+            <div>
                 <Tree onSelect={this.onSelect} showLine defaultExpandAll >
                     {this.buildTreeNodes(paneContent)}
                 </Tree>
@@ -182,14 +184,14 @@ class LearningContent extends React.Component {
         this.p = p;
     }
 
-    // getContetByTabID: consumes tabID, content
+    // getContentByTabID: consumes tabID, content
     // produces the content for tabID
-    getContetByTabID(tabID, contents) {
+    getContentByTabID(tabID, contents) {
         return contents.find(el => el.tabID === tabID);
     }
 
     render() {
-        const paneContent = this.getContetByTabID(this.p.tab.id, CONTENTS);
+        const paneContent = this.getContentByTabID(this.p.tab.id, CONTENTS);
         return (
             <Row gutter={16}>
                 <Col span={6}><Topics paneContent={paneContent} /></Col>
@@ -235,24 +237,20 @@ export default class extends StandardPage {
     ord_renderContent() {
         return (
             <div className="p_DeveloperLearn">
-                <div className="ebp-header-divider">
-                </div>
-                <div className="ebp-page-title">
-                    <h3 className="page-header">
-                    </h3>
-                </div>
-
-                <div className="ebp-page">
-                    <Row>
-                        <Col span={8}><h3>Search  goes here</h3></Col>
-                    </Row>
-                    <Row id="learnContent" className="d_row d_rowTop">
-                        <Col span={24}>
-                            <OptionTab tabs={TABS} defaultActiveKey="1" />
-                        </Col>
-                    </Row>
-                    <div className="horizGap">
-
+                <Breadcrumb className="p_admin_breadcrumb">
+                    <Breadcrumb.Item><Icon type="home"/></Breadcrumb.Item>
+                    <Breadcrumb.Item>{I18N.get('developer.breadcrumb.developers')}</Breadcrumb.Item>
+                    <Breadcrumb.Item>{I18N.get('developer.learn')}</Breadcrumb.Item>
+                </Breadcrumb>
+                <div className="p_admin_index ebp-wrap">
+                    <div className="d_box">
+                        <div className="p_admin_content">
+                            <Row className="d_row d_rowTop">
+                                <Col span={24}>
+                                    <OptionTab tabs={TABS} defaultActiveKey="1" />
+                                </Col>
+                            </Row>
+                        </div>
                     </div>
                 </div>
                 <Footer />
