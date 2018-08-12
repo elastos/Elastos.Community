@@ -132,7 +132,7 @@ class C extends BaseComponent {
         ]
 
         const type_fn = getFieldDecorator('domain', {
-            rules: [{required: true, message: 'domain is required'}],
+            rules: [],
             initialValue: []
         })
         const type_el = (
@@ -140,7 +140,7 @@ class C extends BaseComponent {
         )
 
         const skillset_fn = getFieldDecorator('recruitedSkillsets', {
-            rules: [{required: true, message: 'skillset is required'}],
+            rules: [],
             initialValue: []
         })
         const skillset_el = (
