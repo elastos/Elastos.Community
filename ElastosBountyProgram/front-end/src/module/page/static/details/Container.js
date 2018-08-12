@@ -20,7 +20,7 @@ export default createContainer(Component, (state, ownProps) => {
               && !this.loading);
         },
 
-        async resetTaskDetail() {
+        resetTaskDetail() {
             return taskService.resetTaskDetail()
         }
     }

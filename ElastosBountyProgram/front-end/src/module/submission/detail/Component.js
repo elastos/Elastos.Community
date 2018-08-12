@@ -3,12 +3,13 @@ import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
 import Comments from '@/module/common/comments/Container'
 
-import { Col, Row, Divider, Icon } from 'antd'
+import { Col, Row, Divider, Icon, Tag, Spin, Avatar } from 'antd'
 
 import {SUBMISSION_TYPE, SUBMISSION_CAMPAIGN} from '@/constant'
+import _ from 'lodash'
 
-const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 import '../style.scss'
+import './style.scss'
 
 import detailAnni2008 from './anniversary_2018'
 import detailAnniVideo2008 from './anniversary_video_2018'
@@ -173,86 +174,88 @@ export default class extends BaseComponent {
         </div>
     }
 
-    renderDetail() {
-        const communityName = this.props.submission.type === SUBMISSION_TYPE.ADD_COMMUNITY &&
-            (
-                <Row>
-                    <Col span={24}>
-                        <Row>
-                            <Col span={4} className="label-col">
-                                Community
-                            </Col>
-                            <Col span={20}>
-                                <p>
-                                    {this.props.submission.community.name} ({this.props.submission.community.type})
-                                </p>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
-            )
+    getUpperLeftBox() {
+        const submission = this.props.submission;
+        return (
+            <div className="left-container">
+                <div className="pictures-container">
+                    <Icon type="customer-service" />
+                </div>
+                <div className="domains-container">
+                    <Tag key={submission.type}>{submission.type}</Tag>
+                </div>
+            </div>
+        )
+    }
 
-        return <Row>
-            <Col span={18} className="gridCol main-area">
-                <Row>
-                    <Col span={6} className="label-col">
-                        <h4>
-                            Title
-                        </h4>
-                    </Col>
-                    <Col span={18}>
-                        <h4>
-                            {this.props.submission.title}
-                        </h4>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={6} className="label-col">
+    getUpperRightBox() {
+        const { description, title, createdBy, createdAt, community } = this.props.submission;
+        const name = community ? community.name : null;
+        const type = community ? community.type : null;
+        const profile = createdBy && createdBy.profile ? createdBy.profile : null;
+        const leaderImage = profile ? profile.avatar : '';
+        const leaderName = createdBy.profile ? (`${profile.firstName} ${profile.lastName}`) : '';
+        const createdDate = moment(createdAt).format('MMM D, YYYY');
+
+        return (
+            <div>
+                <div className="title">
+                    <span>{title || ''}</span>
+                </div>
+                <a className="leader" onClick={this.linkUserDetail.bind(this, createdBy)}>
+                    <Avatar size="large" src={leaderImage} />
+                    <div className="ellipsis">{leaderName}</div>
+                </a>
+                <div className="content">
+                    { name && type && <div className="entry">Community: {`${name} ${type}`}</div> }
+                    <div className="entry">Created Date: {createdDate}</div>
+                </div>
+                <div class="description-box">
+                    <hr className="divider"/>
+                    <div className="description-title">
                         {this.props.submission.campaign === 'Evangelist Training 1' ?
                             'Describe Elastos in your own words.' :
                             'Description'
                         }
-                    </Col>
-                    <Col span={18}>
-                        <p>
-                            {this.props.submission.description}
-                        </p>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={6} className="label-col">
-                        Type
-                    </Col>
-                    <Col span={18}>
-                        <p>
-                            {this.props.submission.type}
-                        </p>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={6} className="label-col">
-                        Created by
-                    </Col>
-                    <Col span={18}>
-                        <p>
-                            <a onClick={() => {this.props.submission.createdBy && this.props.history.push(`/member/${this.props.submission.createdBy._id}`)}}>
-                                {this.props.submission.createdBy && this.props.submission.createdBy.username}
-                            </a>
-                        </p>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={6} className="label-col">
-                        Created Date
-                    </Col>
-                    <Col span={18}>
-                        {moment(this.props.submission.createdAt).format('MMM D, YYYY')}
-                    </Col>
-                </Row>
-                {communityName}
-                <div className="vert-gap"/>
-            </Col>
-        </Row>
+                    </div>
+                    <hr className="divider"/>
+                    <div className="description-content">{description || ''}</div>
+                </div>
+            </div>
+        )
+    }
+
+    renderDetail() {
+        const loading = _.isEmpty(this.props.submission)
+        return (
+            <div className="c_Project">
+                { loading
+                    ? (
+                        <div className="full-width full-height valign-wrapper halign-wrapper">
+                            <Spin className="loading-spinner" />
+                        </div>
+                    )
+                    : (
+                        <div>
+                            <Row className="top-section">
+                                <Col xs={24} sm={24} md={8} className="col-left">
+                                    {this.getUpperLeftBox()}
+                                </Col>
+
+                                <Col xs={24} sm={24} md={16} className="col-right">
+                                    {this.getUpperRightBox()}
+                                </Col>
+                            </Row>
+
+                            <Row>
+                                <Comments type="submission" canPost={true} model={this.props.submission}
+                                    canSubscribe={this.canSubscribe()}/>
+                            </Row>
+                        </div>
+                    )
+                }
+            </div>
+        )
     }
 
     canSubscribe() {
@@ -262,11 +265,8 @@ export default class extends BaseComponent {
     }
 
     ord_render() {
-
         return <div className="public">
             {this.renderDynamic()}
-            <Comments type="submission" canPost={true} model={this.props.submission}
-                      canSubscribe={this.canSubscribe()}/>
         </div>
     }
 
@@ -283,5 +283,9 @@ export default class extends BaseComponent {
         }
 
         return this.renderDetail()
+    }
+
+    linkUserDetail(user) {
+        this.props.history.push(`/member/${user._id}`)
     }
 }

@@ -77,7 +77,6 @@ export default class extends BaseService {
      * @returns {Promise<*>}
      */
     async update(taskId, doc) {
-
         const taskRedux = this.store.getRedux('task')
 
         this.dispatch(taskRedux.actions.loading_update(true))
@@ -88,32 +87,13 @@ export default class extends BaseService {
             data: doc
         })
 
-        const curTaskDetail = this.store.getState().task.detail
-
-        let updateStatus = false
-
-        // if we are approving
-        if (curTaskDetail.status !== TASK_STATUS.APPROVED && result.status === TASK_STATUS.APPROVED) {
-            updateStatus = true
-        } else if (curTaskDetail.status !== TASK_STATUS.SUCCESS && result.status === TASK_STATUS.SUCCESS) {
-            // if we are marking accept it as complete
-            updateStatus = true
-        } else if (curTaskDetail.status !== TASK_STATUS.SUBMITTED && result.status === TASK_STATUS.SUBMITTED) {
-            // if we are marking submitted
-            updateStatus = true
-        } else if (curTaskDetail.status !== TASK_STATUS.ASSIGNED && result.status === TASK_STATUS.ASSIGNED) {
-            // if we are doing a force start
-            updateStatus = true
-        } else if (curTaskDetail.status !== TASK_STATUS.DISTRIBUTED && result.status === TASK_STATUS.DISTRIBUTED) {
-            // mark as distributed
-            updateStatus = true
+        const detail = {
+            ...this.store.getState().task.detail,
+            ...doc
         }
 
-        if (updateStatus) {
-            curTaskDetail.status = result.status
-            this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
-        }
-
+        this.dispatch(taskRedux.actions.detail_reset())
+        this.dispatch(taskRedux.actions.detail_update(detail))
         this.dispatch(taskRedux.actions.loading_update(false))
 
         return result
@@ -132,6 +112,7 @@ export default class extends BaseService {
     async pushCandidate(taskId, userId, teamId, applyMsg) {
 
         const taskRedux = this.store.getRedux('task')
+        this.dispatch(taskRedux.actions.loading_update(true))
 
         const result = await api_request({
             path: '/api/task/addCandidate',
@@ -144,10 +125,10 @@ export default class extends BaseService {
             }
         })
 
+        this.dispatch(taskRedux.actions.loading_update(false))
+
         const curTaskDetail = this.store.getState().task.detail
-
         curTaskDetail.candidates.push(result)
-
         this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
 
         return result
@@ -177,6 +158,9 @@ export default class extends BaseService {
 
     async acceptCandidate(taskCandidateId) {
         const taskRedux = this.store.getRedux('task')
+
+        this.dispatch(taskRedux.actions.loading_update(true))
+
         const task = await api_request({
             path: '/api/task/acceptCandidate',
             method: 'post',
@@ -197,6 +181,59 @@ export default class extends BaseService {
             curTaskDetail.status = TASK_STATUS.ASSIGNED
         }
 
+        debugger
+
+        this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
+        this.dispatch(taskRedux.actions.loading_update(false))
+
+        return task
+    }
+
+    async rejectCandidate(taskCandidateId) {
+        const taskRedux = this.store.getRedux('task')
+
+        this.dispatch(taskRedux.actions.loading_update(true))
+
+        const task = await api_request({
+            path: '/api/task/rejectCandidate',
+            method: 'post',
+            data: {
+                taskCandidateId
+            }
+        })
+
+        const curTaskDetail = this.store.getState().task.detail
+        const rejectedCandidate = _.find(curTaskDetail.candidates, (o) => o._id === taskCandidateId)
+        rejectedCandidate.status = TASK_CANDIDATE_STATUS.REJECTED
+
+        if (task.status === TASK_STATUS.ASSIGNED) {
+            curTaskDetail.status = TASK_STATUS.ASSIGNED
+        }
+
+        this.dispatch(taskRedux.actions.loading_update(false))
+        this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
+
+        return task
+    }
+
+    async withdrawCandidate(taskCandidateId) {
+        const taskRedux = this.store.getRedux('task')
+
+        this.dispatch(taskRedux.actions.loading_update(true))
+
+        const task = await api_request({
+            path: '/api/task/withdrawCandidate',
+            method: 'post',
+            data: {
+                taskCandidateId
+            }
+        })
+
+        const curTaskDetail = this.store.getState().task.detail
+        const withdrawnCandidate = _.find(curTaskDetail.candidates, (o) => o._id === taskCandidateId)
+        curTaskDetail.candidates = _.without(curTaskDetail.candidates, withdrawnCandidate)
+
+        this.dispatch(taskRedux.actions.loading_update(false))
         this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
 
         return task
@@ -221,18 +258,12 @@ export default class extends BaseService {
         return task
     }
 
-    async setFilter(options) {
-        const taskRedux = this.store.getRedux('task')
-
-
-    }
-
-    async resetAllTasks() {
+    resetAllTasks() {
         const taskRedux = this.store.getRedux('task')
         this.dispatch(taskRedux.actions.all_tasks_reset())
     }
 
-    async resetTaskDetail() {
+    resetTaskDetail() {
         const taskRedux = this.store.getRedux('task')
         this.dispatch(taskRedux.actions.detail_reset())
     }

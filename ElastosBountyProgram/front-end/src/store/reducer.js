@@ -3,6 +3,7 @@ import {routerReducer} from 'react-router-redux'
 
 import task from './redux/task'
 import user from './redux/user'
+import team from './redux/team'
 import community from './redux/community'
 import member from './redux/member'
 import submission from './redux/submission'
@@ -25,6 +26,7 @@ export default combineReducers({
     router: routerReducer,
     task: task.getReducer(),
     user: user.getReducer(),
+    team: team.getReducer(),
     community: community.getReducer(),
     member: member.getReducer(),
     submission: submission.getReducer(),

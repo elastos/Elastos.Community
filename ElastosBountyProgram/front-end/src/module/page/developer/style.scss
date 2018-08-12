@@ -2,61 +2,202 @@
 @import "../../../style/variable";
 @import "../../../style/color";
 
-.p_Developer {
+$mobile-padding: $gap_0 0px;
 
+.p_Developer {
   background: #ffffff;
   text-align: left;
+  padding: 0 48px;
 
-  .d_box {
-    padding: 0 $gap_3;
+  @media only screen and (max-width: $mobile-width) {
+    padding: 0 24px;
+  }
 
-    .pull-right {
-      text-align: right;
-    }
+  .ebp-wrap {
+    max-width: 1200px;
+  }
 
-    .btnContainer {
-      padding-top: $gap_1;
+  .feature-box {
+    margin: 5px;
+    border: 1px solid $primary_color;
+    height: 100%;
+    cursor: pointer;
 
-      .ant-cascader-picker-label {
-        text-align: left;
+    .title {
+      display: flex;
+      align-items: flex-end;
+      height: 50%;
+      min-height: 175px;
+      @media only screen and (max-width: $mobile-width) {
+        min-height: unset;
       }
 
-      .addTask {
-        vertical-align: middle;
-        margin-right: $gap_0;
-        font-size: 150%;
-        cursor: pointer;
-        color: $text_dark_gray;
+      span {
+        z-index: 1;
+        font-weight: bold;
+        font-size: 2rem;
+        color: $primary_color;
+        @media only screen and (max-width: $mobile-width) {
+          font-size: 1.5rem;
+        }
+      }
 
-        &:hover {
-          color: $text_light_gray;
+      img {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        opacity: 0.25;
+        min-width: 100px;
+        max-width: 35%;
+        max-height: 150px;
+        filter: alpha(opacity=25); // IE8 and earlier
+        @media only screen and (max-width: $mobile-width) {
+          top: unset;
+          margin: 0px $gap_1 $gap_1 $gap_1;
+          min-width: 25px;
+          max-width: 45px;
+          max-height: 45px;
+        }
+      }
+    }
+
+    .feature-box-divider {
+      display: block;
+      padding: 0 25px;
+      background-color: $primary_color;
+      border: 1px solid $primary_color;
+      margin: 5px 0;
+    }
+
+    .content {
+      height: 50%;
+      padding: 5px 10px;
+      font-size: 16px;
+      @media only screen and (max-width: $mobile-width) {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .d_rowTop {
+    @media only screen and (max-width: $mobile-width) {
+      .d_box {
+        width: 100%;
+        margin-top: $gap_0;
+        margin-bottom: $gap_0;
+      }
+      .ant-card {
+        @media only screen and (max-width: $mobile-width) {
+          margin: 0;
         }
       }
     }
   }
 
-  .d_leftContainer {
-    border-right: 1px solid #e0e0e0;
-  }
+  .d_midRow {
+    margin: 100px 0;
+    text-align: center;
 
-  table {
-    > thead.ant-table-thead > tr > th {
-      word-break: normal;
-      white-space: nowrap;
+    @media only screen and (max-width: $mobile-width) {
+      margin: 50px 0;
     }
 
-    td {
-      word-break: normal;
+    .info-button {
+      width: 50%;
+      border-color: $primary_color;
+      color: $primary_color;
+      vertical-align: middle;
 
-      &.col-name {
-        white-space: normal;
+      @media only screen and (max-width: $mobile-width) {
+        width: 100%;
       }
     }
+    .info-button:hover {
+      background-color: $primary_light_color;
+      color: white;
+    }
   }
 
-  .c_issueForm {
-    .ant-row.ant-form-item {
-      margin-bottom: 15px;
+  .d_bottomRow {
+    text-align: left;
+
+    .title {
+      font-size: 2rem;
+      @media only screen and (max-width: $mobile-width) {
+        font-size: 1.5rem;
+      }
+    }
+
+    .component-box {
+      margin: 20px 10px;
+      padding: 10px;
+      border: 1px solid $border_gray;
+      background-color: $bg_gray;
+      border-radius: 5px;
+
+      @media only screen and (max-width: $mobile-width) {
+        margin: 20px 0px;
+      }
+
+      .d_leftCol {
+        padding: 10px;
+        .component-name {
+          font-size: 24px;
+          .languages {
+            color: $primary_color;
+          }
+          @media only screen and (max-width: $mobile-width) {
+            font-size: 14px;
+          }
+        }
+        .component-divider {
+          margin: 5px 15px;
+          border: 1px solid gray;
+          @media only screen and (max-width: $mobile-width) {
+            margin: $mobile-padding;
+          }
+        }
+        .component-description {
+          padding: 10px;
+          @media only screen and (max-width: $mobile-width) {
+            font-size: 12px;
+            padding: 5px 0px 0px 0px;
+          }
+        }
+      }
+
+      .button-container {
+        text-align: right;
+
+        button {
+          width: 50%;
+          min-width: 100px;
+          margin: 5px;
+          border: 1px solid gray;
+          background-color: $border_gray;
+        }
+
+        @media only screen and (max-width: $mobile-width) {
+          button {
+            width: 100%;
+            margin: $mobile-padding;
+          }
+        }
+
+        button:hover {
+          background-color: $bg_gray;
+        }
+
+        .top-button {
+          background-color: $primary_color;
+          color: white;
+        }
+
+        .top-button:hover {
+          background-color: $primary_light_color;
+          color: white;
+        }
+      }
     }
   }
 }

@@ -4,17 +4,27 @@ import TeamService from '@/service/TeamService';
 import {message} from 'antd'
 import _ from 'lodash'
 
-
-
-export default createContainer(Component, (state)=>{
+export default createContainer(Component, (state) => {
     return {
-
+        loading: state.team.loading
     };
-}, ()=>{
-    const ts = new TeamService();
+}, () => {
+    const teamService = new TeamService();
     return {
-        async create(param){
-            return await ts.create(param);
+        async getTeamDetail(teamId) {
+            return teamService.get(teamId)
+        },
+
+        resetTeamDetail() {
+            return teamService.resetTeamDetail()
+        },
+
+        async create(param) {
+            return teamService.create(param)
+        },
+
+        async update(param) {
+            return teamService.update(param)
         }
     };
 });

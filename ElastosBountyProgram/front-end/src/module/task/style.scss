@@ -3,25 +3,12 @@
 @import '../../style/color';
 
 .c_ProfileContainer {
-  .applicants {
-    .ant-list-item.active {
-      a {
-        color: $primary_dark_color;
-      }
-    }
-  }
+  background: white;
 }
 
 .c_TaskDetail,
 .p_TaskApplication,
 .c_ProfileContainer {
-
-  margin-top: $gap_1;
-
-  .ant-btn-primary {
-    margin-right: $gap_0;
-  }
-
   .grid-col, .gridCol {
     padding: 0 $gap_2;
     margin: $gap_0 0;
@@ -29,6 +16,10 @@
 
   .form-wrapper {
     padding: $gap_2 0;
+  }
+
+  &.admin-right-column {
+    min-height: 192px;
   }
 
   p {

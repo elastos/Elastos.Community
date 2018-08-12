@@ -15,7 +15,7 @@ export default createContainer(Component, (state) => {
             return taskService.get(taskId)
         },
 
-        async resetTaskDetail() {
+        resetTaskDetail() {
             return taskService.resetTaskDetail()
         }
     }

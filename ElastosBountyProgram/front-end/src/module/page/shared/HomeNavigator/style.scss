@@ -1,0 +1,8 @@
+@import "../../../../style/variable";
+@import "../../../../style/color";
+
+.navigator {
+  @media only screen and (max-width: $mobile-width) {
+    margin-bottom: $gap_1;
+  }
+}

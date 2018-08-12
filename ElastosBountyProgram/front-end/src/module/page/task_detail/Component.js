@@ -24,7 +24,6 @@ export default class extends StandardPage {
     }
 
     ord_renderContent () {
-
         return (
             <div className="p_TaskDetail">
                 <div className="ebp-header-divider">

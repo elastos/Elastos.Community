@@ -32,27 +32,27 @@ class C extends BaseComponent {
     getInputProps() {
         const {getFieldDecorator} = this.props.form
         const userName_fn = getFieldDecorator('username', {
-            rules: [{required: true, message: I18N.get('3400')}],
+            rules: [{required: true, message: I18N.get('login.label_username')}],
             initialValue: ''
         })
         const userName_el = (
             <Input size="large"
                 prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                placeholder={I18N.get('3401')}/>
+                placeholder={I18N.get('login.username')}/>
         )
 
         const pwd_fn = getFieldDecorator('password', {
-            rules: [{required: true, message: I18N.get('3402')}]
+            rules: [{required: true, message: I18N.get('login.label_password')}]
         })
         const pwd_el = (
             <Input size="large"
                 prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                type="password" placeholder={I18N.get('3403')}/>
+                type="password" placeholder={I18N.get('login.password')}/>
         )
 
         const persist_fn = getFieldDecorator('persist')
         const persist_el = (
-            <Checkbox onClick={this.togglePersist.bind(this)} checked={this.state.persist}>{I18N.get('3404')}</Checkbox>
+            <Checkbox onClick={this.togglePersist.bind(this)} checked={this.state.persist}>{I18N.get('login.logged')}</Checkbox>
         )
 
         return {
@@ -81,11 +81,11 @@ class C extends BaseComponent {
                     {p.persist}
                 </FormItem>
                 <FormItem className="d_item">
-                    <a className="login-form-forgot" onClick={() => this.props.history.push('/forgot-password')}>{I18N.get('3405')}</a>
+                    <a className="login-form-forgot" onClick={() => this.props.history.push('/forgot-password')}>{I18N.get('login.forget')}</a>
                 </FormItem>
                 <FormItem>
                     <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
-                        {I18N.get('3406')}
+                        {I18N.get('login.submit')}
                     </Button>
                 </FormItem>
             </Form>

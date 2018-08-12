@@ -4,7 +4,7 @@ import TaskService from '@/service/TaskService'
 import TeamService from '@/service/TeamService'
 import _ from 'lodash'
 
-import {USER_ROLE, TASK_STATUS, TASK_CANDIDATE_STATUS} from '@/constant'
+import {USER_ROLE, TASK_TYPE, TASK_CANDIDATE_STATUS} from '@/constant'
 
 export default createContainer(Component, (state) => {
     const currentUserId = state.user.current_user_id
@@ -18,7 +18,6 @@ export default createContainer(Component, (state) => {
     if (!_.isArray(taskState.all_tasks)) {
         taskState.all_tasks = _.values(taskState.all_tasks)
     }
-
 
     taskState.filter = state.task.filter || {}
     taskState.owned_tasks = []
@@ -84,11 +83,12 @@ export default createContainer(Component, (state) => {
          */
         async getTasks(currentUserId) {
             return taskService.index({
-                profileListFor: currentUserId
+                profileListFor: currentUserId,
+                type: TASK_TYPE.TASK
             })
         },
 
-        async resetTasks () {
+        resetTasks () {
             return taskService.resetAllTasks()
         },
 

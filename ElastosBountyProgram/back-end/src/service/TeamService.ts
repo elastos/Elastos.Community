@@ -1,10 +1,22 @@
 import Base from './Base';
 import {Document, Types} from 'mongoose';
 import * as _ from 'lodash';
-import {validate} from '../utility';
+import {validate, mail} from '../utility';
 import {constant} from '../constant';
 import LogService from './LogService';
 import {DataList} from './interface';
+
+const sanitize = '-password -salt -email'
+const ObjectId = Types.ObjectId;
+
+const restrictedFields = {
+    update: [
+        '_id',
+        'status',
+        'password'
+    ]
+}
+
 
 export default class extends Base {
     private model;
@@ -16,167 +28,205 @@ export default class extends Base {
 
     public async create(param): Promise<Document>{
         const db_team = this.getDBModel('Team');
-        const db_user_team = this.getDBModel("User_Team");
+        const db_user_team = this.getDBModel('User_Team');
 
         // validate
         this.validate_name(param.name);
-        this.validate_type(param.type);
 
         const doc = {
-            name : param.name,
-            type : param.type,
-            metadata : this.param_metadata(param.metadata),
-            tags : this.param_tags(param.tags),
-            profile : {
-                logo : param.logo,
-                description : param.description
+            name: param.name,
+            domain: param.domain,
+            metadata: this.param_metadata(param.metadata),
+            tags: this.param_tags(param.tags),
+            profile: {
+                logo: param.logo,
+                description: param.description
             },
-            recruiting : param.recruiting || false,
-            owner : this.currentUser._id
+            recruitedSkillsets: param.recruitedSkillsets,
+            owner: this.currentUser,
+            pictures: param.pictures
         };
 
         console.log('create team => ', doc);
         const res = await db_team.save(doc);
-        console.log(res);
+        const team = await db_team.findOne({_id: res._id})
+
         // save to user team
         const doc_user_team = {
-            userId : this.currentUser._id,
-            teamId : res._id,
-            status : constant.TEAM_USER_STATUS.NORMAL,
-            role : constant.TEAM_ROLE.LEADER
+            user: this.currentUser,
+            team: res,
+            status: constant.TEAM_USER_STATUS.NORMAL,
+            role: constant.TEAM_ROLE.LEADER
         };
 
         console.log('create user_team => ', doc_user_team);
         const res1 = await db_user_team.save(doc_user_team);
 
-        return res;
+        team.members = [ res1._id ]
+        await team.save()
+
+        return team;
     }
 
     public async update(param): Promise<Document>{
-        if(!param.id){
-            throw 'invalid team id'
-        }
-        const db_team = this.model;
-        const team_doc = await db_team.getDBInstance().findOne({_id : param.id}, {
-            updatedAt: false
-        });
-        if(!team_doc){
-            throw 'invalid team id';
-        }
-        if(!(this.currentUser._id.equals(team_doc.owner) || this.currentUser.role === constant.USER_ROLE.ADMIN)){
-            throw 'no permission to operate';
-        }
-
-        const doc = _.merge(team_doc, {
-            name : param.name,
-            type : param.type,
-            metadata : this.param_metadata(param.metadata),
-            tags : this.param_tags(param.tags),
-            profile : {
-                logo : param.logo,
-                description : param.description
-            },
-            recruiting : param.recruiting
-        });
-
-        // validate
-        this.validate_name(doc.name);
-        this.validate_type(doc.type);
-
-        console.log('update team =>', doc);
-        const res = await db_team.update({_id: param.id}, doc);
-        if(res.ok){
-            return doc;
-        }
-
-        return res;
-    }
-
-    /*
-    * member apply to add a team
-    *
-    * */
-    public async applyToAddTeam(param): Promise<boolean>{
-        const {teamId, reason} = param;
-
-        const team_doc = await this.model.findOne({_id : teamId});
-        if(!team_doc){
-            throw 'invalid team id';
-        }
-
-        const tmp = await this.ut_model.findOne({
-            userId : this.currentUser._id,
+        const {
             teamId
-        });
-        if(tmp){
-            if(tmp.status === constant.TEAM_USER_STATUS.PENDING){
-                throw 'user applied team before';
-            }
-            if(tmp.status === constant.TEAM_USER_STATUS.NORMAL){
-                throw 'user already in team';
-            }
-            else{
-                // reject
-                throw 'team reject this member';
+        } = param
 
-                // remove record first
-                // await db_user_team.remove({
-                //     userId : this.currentUser._id,
-                //     teamId
-                // });
-            }
+        const db_team = this.getDBModel('Team')
+        const team = await db_team.findById(teamId)
+        await db_team.getDBInstance().populate(team, {
+            path: 'owner',
+            select: sanitize
+        })
+
+        if (this.currentUser._id.toString() !== team.owner._id.toString() &&
+            this.currentUser.role !== constant.USER_ROLE.ADMIN) {
+            throw 'Access Denied'
         }
 
         const doc = {
-            userId : this.currentUser._id,
-            teamId,
-            level : '',
-            role : constant.TEAM_ROLE.MEMBER,
-            apply_reason: reason,
-            status : constant.TEAM_USER_STATUS.PENDING
+            name: param.name,
+            domain: param.domain,
+            metadata: this.param_metadata(param.metadata),
+            tags: this.param_tags(param.tags),
+            profile: {
+                logo: param.logo,
+                description: param.description
+            },
+            recruitedSkillsets: param.recruitedSkillsets,
+            pictures: param.pictures
         };
 
-        await this.ut_model.save(doc);
+        this.validate_name(doc.name);
 
-        // add log
-        const logService = this.getService(LogService);
-        await logService.applyToAddTeam(teamId, this.currentUser._id, reason);
+        await db_team.update({_id: teamId}, doc)
 
-        return true;
+        return db_team.findById(teamId)
+    }
+
+    public async addCandidate(param): Promise<boolean>{
+        const {teamId, userId, applyMsg} = param
+        const doc: any = {
+            teamId,
+            team: teamId,
+            userId,
+            user: userId,
+            apply_reason: applyMsg,
+            role: constant.TEAM_ROLE.MEMBER,
+            status: constant.TEAM_USER_STATUS.PENDING,
+            level: ''
+        }
+        const db_user = this.getDBModel('User')
+        const db_team = this.getDBModel('Team')
+
+        if (!teamId) {
+            throw 'no team id'
+        }
+
+        doc.team = teamId
+        const team = await db_team.findOne({_id: teamId})
+        if (!team) {
+            throw 'invalid team id'
+        }
+
+        if (!userId) {
+            throw 'no user id'
+        }
+
+        doc.user = userId
+        const user = await db_user.findOne({_id: userId})
+        if (!user) {
+            throw 'invalid user id'
+        }
+
+        const db_ut = this.getDBModel('User_Team')
+        if (await db_ut.findOne(doc)) {
+            throw 'candidate already exists'
+        }
+
+        console.log('add team candidate =>', doc);
+        const teamCandidate = await db_ut.save(doc);
+
+        // add the candidate to the team too
+        team.members = team.members || []
+        team.members.push(teamCandidate._id)
+
+        await team.save()
+
+        await db_ut.db.populate(teamCandidate, ['team', 'user'])
+
+        const teamOwner = await db_user.findById(team.owner)
+        await this.sendAddCandidateEmail(this.currentUser, teamOwner, team)
+
+        return teamCandidate
+    }
+
+    public async sendAddCandidateEmail(curUser, teamOwner, team) {
+        let ownerSubject = `A candidate has applied for your team - ${team.name}`
+        let ownerBody = `
+            ${curUser.profile.firstName} ${curUser.profile.lastName} has applied for your team ${team.name}
+            <br/>
+            Please review their application
+            <br/>
+            <br/>
+            <a href="${process.env.SERVER_URL}/profile/team-detail/${team._id}">Click here to view the team</a>
+            `
+        let ownerTo = teamOwner.email
+        let ownerToName = `${teamOwner.profile.firstName} ${teamOwner.profile.lastName}`
+
+        await mail.send({
+            to: ownerTo,
+            toName: ownerToName,
+            subject: ownerSubject,
+            body: ownerBody
+        })
+
+        let candidateSubject = `Your application for team ${team.name} has been received`
+        let candidateBody = `Thank you, the team owner ${teamOwner.profile.firstName} ${teamOwner.profile.lastName} will review your application and be in contact`
+        let candidateTo = curUser.email
+        let candidateToName = `${curUser.profile.firstName} ${curUser.profile.lastName}`
+
+        await mail.send({
+            to: candidateTo,
+            toName: candidateToName,
+            subject: candidateSubject,
+            body: candidateBody
+        })
     }
 
     /*
     * only team owner or admin accept the apply request
     * */
     public async acceptApply(param): Promise<Document>{
-        const {teamId, userId, action} = param;
+        const {teamCandidateId} = param
 
-        const team_doc = await this.model.findOne({_id : teamId});
-        if(!team_doc){
-            throw 'invalid team id';
+        const db_team = this.getDBModel('Team')
+        const db_ut = this.getDBModel('User_Team')
+
+        let doc = await db_ut.findById(teamCandidateId)
+
+        if (!doc || doc.status !== constant.TEAM_USER_STATUS.PENDING) {
+            throw 'Invalid status'
         }
 
-        // check current user is admin or team owner
-        if(!(this.currentUser._id.equals(team_doc.owner) || this.currentUser.role === constant.USER_ROLE.ADMIN)){
-            throw 'no permission to operate';
+        let team = await db_team.getDBInstance().findOne({_id: doc.team})
+            .populate('owner', sanitize)
+
+        if (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
+            (team.owner && team.owner._id.toString() !== this.currentUser._id.toString())) {
+            throw 'Access Denied'
         }
 
-        const ut_doc = await this.ut_model.findOne({teamId, userId});
-        if(!ut_doc || ut_doc.status !== constant.TEAM_USER_STATUS.PENDING){
-            throw 'invalid params';
-        }
+        await db_ut.update({
+            _id: teamCandidateId
+        }, {
+            status: constant.TEAM_USER_STATUS.NORMAL
+        })
 
-        const count = await this.ut_model.count({
-            teamId,
-            status : constant.TEAM_USER_STATUS.NORMAL
-        });
-        if(count+1 > team_doc.memberLimit){
-            throw 'member count touch the limitation';
-        }
-
-        return await this.ut_model.update({teamId, userId}, {
-            status : constant.TEAM_USER_STATUS.NORMAL
-        });
+        return db_ut.getDBInstance().findOne({_id: teamCandidateId})
+            .populate('team')
+            .populate('user', sanitize)
     }
 
     /*
@@ -184,26 +234,66 @@ export default class extends Base {
     *
     * */
     public async rejectApply(param): Promise<Document>{
-        const {teamId, userId, action} = param;
+        const {teamCandidateId} = param
 
-        const team_doc = await this.model.findOne({_id : teamId});
-        if(!team_doc){
-            throw 'invalid team id';
+        const db_team = this.getDBModel('Team')
+        const db_ut = this.getDBModel('User_Team')
+
+        let doc = await db_ut.findById(teamCandidateId)
+
+        if (!doc || doc.status !== constant.TEAM_USER_STATUS.PENDING) {
+            throw 'Invalid status'
         }
 
-        // check current user is admin or team owner
-        if(!(this.currentUser._id.equals(team_doc.owner) || this.currentUser.role === constant.USER_ROLE.ADMIN)){
-            throw 'no permission to operate';
+        let team = await db_team.getDBInstance().findOne({_id: doc.team})
+            .populate('owner', sanitize)
+
+        if (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
+            (team.owner && team.owner._id.toString() !== this.currentUser._id.toString())) {
+            throw 'Access Denied'
         }
 
-        const ut_doc = await this.ut_model.findOne({teamId, userId});
-        if(!ut_doc || ut_doc.status !== constant.TEAM_USER_STATUS.PENDING){
-            throw 'invalid params';
+        await db_ut.update({
+            _id: teamCandidateId
+        }, {
+            status: constant.TEAM_USER_STATUS.REJECTED
+        })
+
+        return db_ut.getDBInstance().findOne({_id: teamCandidateId})
+            .populate('team')
+            .populate('user', sanitize)
+    }
+
+    public async withdrawApply(param): Promise<Document>{
+        const {teamCandidateId} = param
+
+        const db_ut = this.getDBModel('User_Team')
+        const db_team = this.getDBModel('Team')
+
+        let doc = await db_ut.findById(teamCandidateId)
+
+        if (!doc || doc.role === constant.TEAM_ROLE.OWNER) {
+            throw 'Invalid status'
         }
 
-        return await this.ut_model.update({teamId, userId}, {
-            status : constant.TEAM_USER_STATUS.REJECT
-        });
+        if (doc.user.toString() !== this.currentUser._id.toString()) {
+            throw 'Access Denied'
+        }
+
+        await db_ut.remove({
+            _id: teamCandidateId
+        })
+
+        const team = await db_team.getDBInstance().findOne({_id: doc.team})
+        const result = await db_team.db.update({
+            _id: team._id
+        }, {
+            $pull: {
+                members: new ObjectId(teamCandidateId)
+            }
+        })
+
+        return result
     }
 
     /*
@@ -211,34 +301,48 @@ export default class extends Base {
     * include all of members
     *
     * */
-    public async getWholeData(param): Promise<Document>{
+    public async show(param): Promise<Document>{
         const {teamId, status} = param;
+        const db_team = this.getDBModel('Team');
+        const db_user = this.getDBModel('User');
 
-        const team_doc = await this.model.findOne({_id : teamId});
+        const team = await db_team.getDBInstance().findOne({_id : teamId})
+            .populate('members', sanitize)
+            .populate('owner', sanitize)
 
-        const aggregate = this.ut_model.getAggregate();
-        const query: any = {
-            teamId : Types.ObjectId(teamId)
-        };
-        if(_.includes(constant.TEAM_USER_STATUS, status)){
-            query.status = status;
+        if (team) {
+            for (let member of team.members) {
+                await db_team.getDBInstance().populate(member, {
+                    path: 'team',
+                    select: sanitize
+                })
+
+                await db_user.getDBInstance().populate(member, {
+                    path: 'user',
+                    select: sanitize
+                })
+
+                for (let comment of member.comments) {
+                    for (let thread of comment) {
+                        await db_user.getDBInstance().populate(thread, {
+                            path: 'createdBy',
+                            select: sanitize
+                        })
+                    }
+                }
+            }
+
+            for (let comment of team.comments) {
+                for (let thread of comment) {
+                    await db_user.getDBInstance().populate(thread, {
+                        path: 'createdBy',
+                        select: sanitize
+                    })
+                }
+            }
         }
-        const rs = await aggregate.match(query)
-            .lookup({
-                from : 'users',
-                localField : 'userId',
-                foreignField : '_id',
-                as : 'user'
-            })
-            .unwind('$user')
-            .project({
-                'user.password' : 0,
-                'user.salt' : 0
-            });
 
-        const data = team_doc.toJSON();
-        data.members = rs;
-        return data;
+        return team
     }
 
     /*
@@ -246,42 +350,63 @@ export default class extends Base {
     *
     * */
     public async list(param): Promise<DataList>{
-
-        // this should be documented
-        const limit = param.limit || 10;
-
-        // TODO add filter
-        const query:any = {};
-
-        if (param.owner && param.owner.length === 24) {
-            query.owner = param.owner
-        }
+        const db_team = this.getDBModel('Team')
+        const db_user = this.getDBModel('User')
+        const query:any = {}
 
         if (param.archived) {
             query.archived = param.archived
         }
 
-        // get all teams that include the userId val of teamHasUser
-        if (param.teamHasUser && param.teamHasUser.length === 24) {
-            const userTeams = await this.ut_model.find({
-                userId: param.teamHasUser
+        if (param.domain) {
+            query.domain = { $in: param.domain.split(',') }
+        }
+
+        if (param.skillset) {
+            query.recruitedSkillsets = { $in: param.skillset.split(',') }
+        }
+
+        if (param.owner) {
+            query.owner = param.owner
+        }
+
+        if (param.teamHasUser) {
+            const db_user_team = this.getDBModel('User_Team')
+            let listObj:any = {
+                user: param.teamHasUser
+            }
+
+            if (param.teamHasUserStatus) {
+                listObj.status = { $in: param.teamHasUserStatus.split(',') }
+            }
+
+            const userTeams = await db_user_team.list(listObj)
+            query.$or = [
+                { _id: {$in: _.map(userTeams, 'team')} }
+            ]
+        }
+
+        const teams = await db_team.list(query, {
+            updatedAt: -1
+        });
+
+        for (let team of teams) {
+            await db_team.getDBInstance().populate(team, {
+                path: 'owner',
+                select: sanitize,
             })
 
-            query._id = {$in: _.map(userTeams, 'teamId')}
+            for (let comment of team.comments) {
+                for (let thread of comment) {
+                    await db_user.getDBInstance().populate(thread, {
+                        path: 'createdBy',
+                        select: sanitize
+                    })
+                }
+            }
         }
 
-        const count = await this.model.count(query);
-        const list = await this.model.list(query, {
-            updateAt: -1
-        }, limit);
-
-        // TODO add page and pageSize
-
-        return {
-            total : count,
-            list,
-            pageSize : limit
-        }
+        return teams
     }
 
     public async listMember(param): Promise<Document[]>{
@@ -334,10 +459,5 @@ export default class extends Base {
             rs = tags.split(',');
         }
         return rs;
-    }
-    public validate_type(type){
-        if(!type || !_.includes(constant.TEAM_TYPE, type)){
-            throw 'invalid team type';
-        }
     }
 }

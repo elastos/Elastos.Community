@@ -35,9 +35,7 @@ export default class extends AdminPage {
 
         return (
             <div>
-                <div className="ebp-header-divider">
-
-                </div>
+                <div className="ebp-header-divider" />
                 <div className="p_admin_index ebp-wrap">
                     <div className="d_box">
                         <div className="p_admin_breadcrumb">
@@ -55,11 +53,11 @@ export default class extends AdminPage {
                         </div>
                         <div className="p_admin_content">
                             <Row className="clearfix">
-                                <Col span={20} className="admin-left-column wrap-box-user">
-                                    <SubmissionDetail submission={this.props.submission}/>
-                                </Col>
-                                <Col span={4} className="admin-right-column wrap-box-navigator">
+                                <Col span={4} className="admin-left-column wrap-box-navigator">
                                     <Navigator selectedItem={this.props.submission.type === SUBMISSION_TYPE.FORM_EXT ? 'forms' : 'submissions'}/>
+                                </Col>
+                                <Col span={20} className="admin-right-column wrap-box-user">
+                                    <SubmissionDetail submission={this.props.submission}/>
                                 </Col>
                             </Row>
                         </div>

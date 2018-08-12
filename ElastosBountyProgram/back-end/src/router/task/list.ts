@@ -34,6 +34,14 @@ export default class extends Base{
             query.category = {$in: [constant.TASK_CATEGORY.DEVELOPER, constant.TASK_CATEGORY.SOCIAL]}
         }
 
+        if (param.domain) {
+            query.domain = { $in: param.domain.split(',') }
+        }
+
+        if (param.skillset) {
+            query.recruitedSkillsets = { $in: param.skillset.split(',') }
+        }
+
         // public page overrides all else
         if (param.public === 'true') {
             query.status = {
@@ -44,11 +52,9 @@ export default class extends Base{
                     constant.TASK_STATUS.SUBMITTED
                 ]
             }
-
         } else if (param.admin && this.session.user && this.session.user.role === constant.USER_ROLE.ADMIN) {
             delete param.admin;
             query.status = {$ne: constant.TASK_STATUS.CANCELED}
-
         } else if (param.profileListFor) {
 
             const currentUserId = new ObjectId(param.profileListFor)
@@ -96,7 +102,6 @@ export default class extends Base{
             }
 
         }
-
 
         const list = await taskService.list(query);
         const count = await taskService.getDBModel('Task').count(query);

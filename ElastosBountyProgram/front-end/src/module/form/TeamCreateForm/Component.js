@@ -15,116 +15,218 @@ import {
     Col,
     Upload,
     Cascader,
-    Divider
-
+    Divider,
+    TreeSelect,
+    Modal
 } from 'antd'
-
+import I18N from '@/I18N'
 import InputTags from '@/module/shared/InputTags/Component'
-
-
+import {TEAM_TASK_DOMAIN, SKILLSET_TYPE} from '@/constant'
+import {upload_file} from "@/util";
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
 const RadioGroup = Radio.Group
 
-
 class C extends BaseComponent {
+    componentDidMount() {
+        const teamId = this.props.match.params.teamId
+        teamId && this.props.getTeamDetail(teamId)
+    }
 
-    ord_states(){
-        return {
-            loading : false
+    componentWillUnmount() {
+        this.props.resetTeamDetail()
+    }
+
+    constructor (props) {
+        super(props)
+
+        this.state = {
+            editing: !!props.existingTeam,
+            fileList: (props.existingTeam && props.existingTeam.pictures) || [],
+            previewVisible: false,
+            previewImage: ''
         }
+
+        this.pictureUrlLookups = []
+        _.each(this.state.fileList, (file) => {
+            this.pictureUrlLookups[file.uid] = file.url
+        })
     }
 
     handleSubmit (e) {
         e.preventDefault()
 
-        const tags = this.props.form.getFieldInstance('tags').getValue();
+        const tags = this.props.form.getFieldInstance('tags').getValue()
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
-                this.setState({loading : true});
-                const res = await this.props.create({
+                let createParams = {
                     ...values,
-                    tags : tags.join(','),
-                    logo : '',
-                    metadata : ''
-                });
+                    tags: tags.join(','),
+                    logo: '',
+                    metadata: '',
+                    pictures: this.state.fileList || [],
+                }
 
-                console.log(res);
+                _.each(createParams.pictures, (pictureFile) => {
+                    if (this.pictureUrlLookups[pictureFile.uid]) {
+                        pictureFile.url = this.pictureUrlLookups[pictureFile.uid]
+                    }
+                })
 
-                this.setState({loading : false});
-                this.props.history.push('/profile/teams');
+                if (this.state.editing) {
+                    createParams.teamId = this.props.existingTeam._id
+                    this.props.update(createParams).then(() => {
+                        this.props.getTeamDetail(this.props.existingTeam._id)
+                        this.props.switchEditMode()
+                    })
+                } else {
+                    await this.props.create(createParams)
+                    this.props.history.push('/profile/teams')
+                }
             }
         })
     }
 
     getInputProps () {
-        const {getFieldDecorator} = this.props.form;
-        const team = this.props.data;
+        const {getFieldDecorator} = this.props.form
+        const existingTeam = this.props.existingTeam
 
         const input_el = (
             <Input size="large"/>
-        );
+        )
+
+        const textarea_el = (
+            <TextArea rows={4}/>
+        )
 
         const name_fn = getFieldDecorator('name', {
             rules: [{required: true, message: 'team name is required'}],
-            initialValue: ''
+            initialValue: existingTeam && existingTeam.name || ''
         })
 
-        const type_fn = getFieldDecorator('type', {
-            rules: [{required: true, message: 'type is required'}],
-            initialValue: 'DEVELOP'
+        const specs = [
+            {
+                title: I18N.get('team.spec.social'),
+                value: TEAM_TASK_DOMAIN.SOCIAL,
+                key: TEAM_TASK_DOMAIN.SOCIAL
+            },
+            {
+                title: I18N.get('team.spec.iot'),
+                value: TEAM_TASK_DOMAIN.IOT,
+                key: TEAM_TASK_DOMAIN.IOT
+            },
+            {
+                title: I18N.get('team.spec.media'),
+                value: TEAM_TASK_DOMAIN.MEDIA,
+                key: TEAM_TASK_DOMAIN.MEDIA
+            },
+            {
+                title: I18N.get('team.spec.finance'),
+                value: TEAM_TASK_DOMAIN.FINANCE,
+                key: TEAM_TASK_DOMAIN.FINANCE
+            }
+        ]
+
+        const skillsets = [
+            {
+                title: I18N.get('team.skillset.cpp'),
+                value: SKILLSET_TYPE.CPP,
+                key: SKILLSET_TYPE.CPP
+            },
+            {
+                title: I18N.get('team.skillset.javascript'),
+                value: SKILLSET_TYPE.JAVASCRIPT,
+                key: SKILLSET_TYPE.JAVASCRIPT
+            },
+            {
+                title: I18N.get('team.skillset.go'),
+                value: SKILLSET_TYPE.GO,
+                key: SKILLSET_TYPE.GO
+            },
+            {
+                title: I18N.get('team.skillset.python'),
+                value: SKILLSET_TYPE.PYTHON,
+                key: SKILLSET_TYPE.PYTHON
+            }
+        ]
+
+        const type_fn = getFieldDecorator('domain', {
+            rules: [],
+            initialValue: existingTeam && existingTeam.domain || []
         })
         const type_el = (
-            <RadioGroup>
-                {_.map(['DEVELOP', 'MARKET', 'DESIGN', 'PROJECT', 'OTHER'], (v, i)=>{
-                    return (
-                        <Radio key={i} value={v}>
-                            {v}
-                        </Radio>
-                    );
-                })}
-
-            </RadioGroup>
+            <TreeSelect treeData={specs} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
         )
 
-        const recruiting_fn = getFieldDecorator('recruiting', {
-            rules: [{required: true}],
-            initialValue: true
+        const skillset_fn = getFieldDecorator('recruitedSkillsets', {
+            rules: [],
+            initialValue: existingTeam && existingTeam.recruitedSkillsets || []
         })
-        const recruiting_el = (
-            <RadioGroup>
-                <Radio value={true}>
-                    Yes
-                </Radio>
-                <Radio value={false}>
-                    No
-                </Radio>
-
-            </RadioGroup>
+        const skillset_el = (
+            <TreeSelect treeData={skillsets} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
         )
 
         const description_fn = getFieldDecorator('description', {
             rules: [],
-            initialValue: ''
+            initialValue: existingTeam && existingTeam.profile.description || ''
         })
 
         const tags_fn = getFieldDecorator('tags', {
             rules: [],
-            initialValue: ''
+            initialValue: existingTeam && existingTeam.tags || ''
         })
         const tags_el = <InputTags />
 
+        const p_pictures = {
+            listType: 'picture-card',
+            fileList: this.state.fileList,
+            onChange: this.handleFileListChange.bind(this),
+            onPreview: this.handlePreview.bind(this),
+            customRequest: (info) => {
+                upload_file(info.file).then((d) => {
+                    this.pictureUrlLookups = this.pictureUrlLookups || []
+                    this.pictureUrlLookups[info.file.uid] = d.url
+                    info.onSuccess(null, info.file)
+                }, info.onError)
+            }
+        }
+
+        const uploadButton = (
+            <div>
+                <Icon type="plus" />
+                <div className="ant-upload-text">Upload</div>
+            </div>
+        )
+
+        const pictures_el = (
+            <Upload name='pictures' {...p_pictures}>
+                {this.state.fileList.length >= 5 ? null : uploadButton}
+            </Upload>
+        )
 
         return {
             name: name_fn(input_el),
             type: type_fn(type_el),
-            recruiting : recruiting_fn(recruiting_el),
-            description : description_fn(input_el),
-            tags : tags_fn(tags_el)
+            description: description_fn(textarea_el),
+            tags: tags_fn(tags_el),
+            skillset: skillset_fn(skillset_el),
+            pictures: pictures_el
         }
     }
 
+    handleCancel() {
+        this.setState({ previewVisible: false })
+    }
+
+    handlePreview(file) {
+        this.setState({
+            previewImage: file.url || file.thumbUrl,
+            previewVisible: true
+        })
+    }
+
+    handleFileListChange = ({ fileList }) => this.setState({ fileList })
 
     ord_render () {
         const p = this.getInputProps()
@@ -132,12 +234,12 @@ class C extends BaseComponent {
         const formItemLayout = {
             labelCol: {
                 xs: {span: 24},
-                sm: {span: 8},
+                sm: {span: 8}
             },
             wrapperCol: {
                 xs: {span: 24},
-                sm: {span: 12},
-            },
+                sm: {span: 12}
+            }
         }
 
         return (
@@ -151,20 +253,25 @@ class C extends BaseComponent {
                         <FormItem label="Type" {...formItemLayout}>
                             {p.type}
                         </FormItem>
-                        <FormItem label="Recruiting" {...formItemLayout}>
-                            {p.recruiting}
+                        <FormItem label="Recruiting Skillsets" {...formItemLayout}>
+                            {p.skillset}
                         </FormItem>
                         <FormItem label="Description" {...formItemLayout}>
                             {p.description}
                         </FormItem>
+                        <FormItem label="Pictures" {...formItemLayout}>
+                            {p.pictures}
+                        </FormItem>
+                        <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
+                            <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
+                        </Modal>
                         <FormItem label="Tags" {...formItemLayout}>
                             {p.tags}
                         </FormItem>
 
-
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
-                            <Button loading={this.state.loading} type="ebp" htmlType="submit" className="d_btn">
-                                Create Team
+                            <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
+                                {this.state.editing ? 'Save' : 'Create'}
                             </Button>
                         </FormItem>
                     </div>

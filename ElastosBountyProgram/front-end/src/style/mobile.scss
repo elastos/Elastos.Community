@@ -30,7 +30,7 @@
           display: inline-block;
           padding: 0 3px;
           top: 25px;
-          height: 15px;
+          height: 49px;
           font-size: 13px;
 
           margin-right: 2vw;
@@ -172,10 +172,34 @@
    */
   .admin-left-column, .admin-right-column {
     padding: 0;
+    border-left: 0;
   }
 
   .ant-form {
     padding: 0 $gap_1;
+  }
+
+  /*
+  ****************************************************************************
+  Developer
+  ****************************************************************************
+   */
+  .p_Developer {
+    .ebp-page {
+      .d_rowTop {
+        .d_box {
+          margin: 5px 0;
+        }
+      }
+      .d_bottomRow {
+        margin-bottom: 20px;
+        .component-box {
+          .button-container {
+            text-align: center;
+          }
+        }
+      }
+    }
   }
 
   /*

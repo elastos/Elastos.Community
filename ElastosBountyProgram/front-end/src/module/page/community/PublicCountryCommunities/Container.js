@@ -43,7 +43,7 @@ export default createContainer(Component, (state, ownProps) => {
                 category: TASK_CATEGORY.SOCIAL
             })
         },
-        async resetTasks() {
+        resetTasks() {
             return taskService.resetAllTasks()
         },
         async addMember(memberId, communityId) {

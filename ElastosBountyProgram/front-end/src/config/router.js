@@ -2,6 +2,8 @@ import LandingPage from '@/module/page/landing/Container'
 import HomePage from '@/module/page/home/Container'
 import SocialPage from '@/module/page/social/Container'
 import DeveloperPage from '@/module/page/developer/Container'
+import DeveloperLearnPage from '@/module/page/developer/learn/Container'
+import DeveloperSearchPage from '@/module/page/developer/search/Container'
 import LeaderPage from '@/module/page/leader/Container'
 
 // this is the leaders link in the header
@@ -31,7 +33,10 @@ import ProfileTaskApplicationDetailPage from '@/module/page/profile/task_candida
 import ProfileTeamsPage from '@/module/page/profile/teams/Container'
 import ProfileTeamDetailPage from '@/module/page/profile/team_detail/Container'
 import ProfileTeamCreatePage from '@/module/page/profile/team_create/Container'
+import ProfileProjectsPage from '@/module/page/profile/projects/Container'
+import ProfileProjectDetailPage from '@/module/page/profile/project_detail/Container'
 import ProfileSubmissionsPage from '@/module/page/profile/submissions/Container'
+import ProfileSubmissionCreatePage from '@/module/page/profile/submission_create/Container'
 import ProfileCommunitiesPage from '@/module/page/profile/communities/Container'
 import ProfileSubmissionDetailPage from '@/module/page/profile/submission_detail/Container'
 
@@ -85,6 +90,14 @@ export default [
     {
         path: '/developer',
         page: DeveloperPage
+    },
+    {
+        path: '/developer/learn',
+        page: DeveloperLearnPage
+    },
+    {
+        path: '/developer/search',
+        page: DeveloperSearchPage
     },
     {
         path: '/developer/country/:country',
@@ -190,8 +203,20 @@ export default [
         page: ProfileTaskDetailPage
     },
     {
+        path: '/profile/team-detail/:teamId',
+        page: ProfileTeamDetailPage
+    },
+    {
         path: '/profile/task-app/:taskId/:applicantId',
         page: ProfileTaskApplicationDetailPage
+    },
+    {
+        path: '/profile/projects',
+        page: ProfileProjectsPage
+    },
+    {
+        path: '/profile/project-detail/:taskId',
+        page: ProfileProjectDetailPage
     },
     {
         path: '/profile/teams',
@@ -202,12 +227,12 @@ export default [
         page : ProfileTeamCreatePage
     },
     {
-        path : '/profile/teams/:teamId',
-        page : ProfileTeamDetailPage
-    },
-    {
         path: '/profile/submissions',
         page: ProfileSubmissionsPage
+    },
+    {
+        path: '/profile/submissions/create',
+        page: ProfileSubmissionCreatePage
     },
     {
         path: '/profile/communities',

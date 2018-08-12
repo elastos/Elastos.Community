@@ -1,6 +1,6 @@
 import React from 'react';
 import StandardPage from '../../StandardPage';
-import Navigator from '@/module/page/shared/Navigator/Container'
+import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import config from '@/config';
 import TeamCreateForm from '@/module/form/TeamCreateForm/Container'
 
@@ -21,7 +21,7 @@ export default class extends StandardPage {
     ord_renderContent () {
 
         return (
-            <div>
+            <div className="c_ProfileContainer">
                 <div className="ebp-header-divider">
 
                 </div>
@@ -32,13 +32,12 @@ export default class extends StandardPage {
                         </div>
                         <div className="p_ProfileTeams p_admin_content">
                             <Row>
-                                <Col span={20} className="c_ProfileContainer admin-left-column wrap-box-user">
-
-                                    <Divider className="">Create Team</Divider>
-                                    <TeamCreateForm />
-                                </Col>
-                                <Col span={4} className="admin-right-column wrap-box-navigator">
+                                <Col sm={24} md={4} className="admin-left-column wrap-box-navigator">
                                     <Navigator selectedItem={'profileTeams'}/>
+                                </Col>
+                                <Col sm={24} md={20} className="admin-right-column wrap-box-user">
+                                    <h4 className="p_profile_action_title">Create Team</h4>
+                                    <TeamCreateForm />
                                 </Col>
                             </Row>
                         </div>

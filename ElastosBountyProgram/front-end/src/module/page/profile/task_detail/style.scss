@@ -2,11 +2,8 @@
 @import "../../../../style/variable";
 
 .p_ProfileTaskDetail {
+  background: white;
   text-align: left;
-
-  .ant-btn-primary {
-    margin-right: $gap_0;
-  }
 
   .gridCol {
     padding: 0 $gap_2;

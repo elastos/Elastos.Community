@@ -114,6 +114,7 @@ export default class extends AdminPage {
 
         return (
             <div className="p_admin_index ebp-wrap">
+                <div className="ebp-header-divider" />
                 <div className="d_box">
                     <div className="p_admin_breadcrumb">
                         <Breadcrumb>
@@ -126,7 +127,10 @@ export default class extends AdminPage {
                     </div>
                     <div className="p_admin_content">
                         <Row>
-                            <Col span={20} className="c_SubmissionTableContainer admin-left-column wrap-box-user">
+                            <Col span={4} className="admin-left-column wrap-box-navigator">
+                                <Navigator selectedItem={'forms'}/>
+                            </Col>
+                            <Col span={20} className="c_SubmissionTableContainer admin-right-column wrap-box-user">
                                 <div className="pull-right">
                                     <Select
                                         showSearch
@@ -159,9 +163,6 @@ export default class extends AdminPage {
                                     dataSource={submissionData}
                                     loading={this.props.loading}
                                />
-                            </Col>
-                            <Col span={4} className="admin-right-column wrap-box-navigator">
-                                <Navigator selectedItem={'forms'}/>
                             </Col>
                         </Row>
                     </div>

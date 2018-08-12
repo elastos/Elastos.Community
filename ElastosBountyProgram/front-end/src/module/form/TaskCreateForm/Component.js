@@ -15,15 +15,19 @@ import {
     Upload,
     Cascader,
     Divider,
-    Popconfirm
-
+    Popconfirm,
+    TreeSelect,
+    Modal
 } from 'antd'
 
+import I18N from '@/I18N'
 import {upload_file} from "@/util";
 import './style.scss'
 import moment from 'moment'
+import _ from 'lodash'
 
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_EVENT_DATE_TYPE} from '@/constant'
+import {TEAM_TASK_DOMAIN, SKILLSET_TYPE, TASK_CATEGORY, TASK_TYPE,
+    TASK_STATUS, TASK_EVENT_DATE_TYPE} from '@/constant'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
@@ -73,6 +77,18 @@ class C extends BaseComponent {
                     }
                 }
 
+                values.pictures = this.state.fileList || []
+                _.each(values.pictures, (pictureFile) => {
+                    if (this.pictureUrlLookups[pictureFile.uid]) {
+                        pictureFile.url = this.pictureUrlLookups[pictureFile.uid]
+                    }
+                })
+
+                if (this.props.is_project) {
+                    values.type = TASK_TYPE.PROJECT
+                    values.category = TASK_CATEGORY.DEVELOPER
+                }
+
                 if (this.state.editing) {
                     this.props.updateTask(values, this.state).then(() => {
                         this.props.getTaskDetail(this.props.existingTask._id)
@@ -93,23 +109,25 @@ class C extends BaseComponent {
             taskType: this.props.taskType || TASK_TYPE.EVENT,
             taskCategory: this.props.taskCategory || TASK_TYPE.SOCIAL,
             assignSelf: (props.existingTask && props.existingTask.assignSelf) || false,
-
             eventDateRange: (props.existingTask && props.existingTask.eventDateRange) || false,
-
             upload_url : null,
             upload_loading : false,
-
             attachment_url: (props.existingTask && props.existingTask.attachment) || null,
             attachment_loading: false,
             attachment_filename: (props.existingTask && props.existingTask.attachmentFilename) || '',
             attachment_type: '',
-
             removeAttachment: false,
-
             editing: !!props.existingTask,
+            isUsd: (props.existingTask && props.existingTask.reward.isUsd) || false,
+            fileList: (props.existingTask && props.existingTask.pictures) || [],
+            previewVisible: false,
+            previewImage: ''
+        }
 
-            isUsd: (props.existingTask && props.existingTask.reward.isUsd) || false
-        };
+        this.pictureUrlLookups = []
+        _.each(this.state.fileList, (file) => {
+            this.pictureUrlLookups[file.uid] = file.url
+        })
     }
 
     getInputProps () {
@@ -145,13 +163,14 @@ class C extends BaseComponent {
 
         const taskCategory_fn = getFieldDecorator('taskCategory', {
             rules: [{required: true, message: 'Please select a category'}],
-            initialValue: this.state.editing ? existingTask.category : (this.props.taskCategory || TASK_CATEGORY.SOCIAL)
+            initialValue: this.state.editing ? existingTask.category : (this.state.taskCategory || TASK_CATEGORY.SOCIAL)
         })
         const taskCategory_el = (
-            <Select disabled={hasLeaderEditRestrictions} onChange={(val) => {
+            <Select
+                disabled={hasLeaderEditRestrictions} onChange={(val) => {
                 this.setState({taskCategory: val})
                 if (this.state.taskCategory === TASK_TYPE.PROJECT) {
-                    // TODO: change taskType to something other than project
+                    // this.setState({taskType: TASK_TYPE.TASK})
                 }
             }}>
                 <Option value={TASK_CATEGORY.SOCIAL}>Social</Option>
@@ -164,10 +183,11 @@ class C extends BaseComponent {
         // sub-tasks are not here because those can only be created from an existing Task Detail Page
         const taskType_fn = getFieldDecorator('taskType', {
             rules: [{required: true, message: 'Please select a task type'}],
-            initialValue: this.state.editing ? existingTask.type : (this.props.taskType || TASK_TYPE.EVENT)
+            initialValue: this.state.editing ? existingTask.type : (this.state.taskType || TASK_TYPE.EVENT)
         })
         const taskType_el = (
-            <Select disabled={hasLeaderEditRestrictions} onChange={(val) => this.setState({taskType: val})}>
+            <Select
+                disabled={hasLeaderEditRestrictions} onChange={(val) => this.setState({taskType: val})}>
                 <Option value={TASK_TYPE.EVENT}>Event</Option>
                 <Option value={TASK_TYPE.TASK}>Task</Option>
                 {this.state.taskCategory === TASK_CATEGORY.DEVELOPER &&
@@ -430,8 +450,100 @@ class C extends BaseComponent {
             </Upload>
         );
 
+        const specs = [
+            {
+                title: I18N.get('team.spec.social'),
+                value: TEAM_TASK_DOMAIN.SOCIAL,
+                key: TEAM_TASK_DOMAIN.SOCIAL
+            },
+            {
+                title: I18N.get('team.spec.iot'),
+                value: TEAM_TASK_DOMAIN.IOT,
+                key: TEAM_TASK_DOMAIN.IOT
+            },
+            {
+                title: I18N.get('team.spec.media'),
+                value: TEAM_TASK_DOMAIN.MEDIA,
+                key: TEAM_TASK_DOMAIN.MEDIA
+            },
+            {
+                title: I18N.get('team.spec.finance'),
+                value: TEAM_TASK_DOMAIN.FINANCE,
+                key: TEAM_TASK_DOMAIN.FINANCE
+            }
+        ]
+
+        const skillsets = [
+            {
+                title: I18N.get('team.skillset.cpp'),
+                value: SKILLSET_TYPE.CPP,
+                key: SKILLSET_TYPE.CPP
+            },
+            {
+                title: I18N.get('team.skillset.javascript'),
+                value: SKILLSET_TYPE.JAVASCRIPT,
+                key: SKILLSET_TYPE.JAVASCRIPT
+            },
+            {
+                title: I18N.get('team.skillset.go'),
+                value: SKILLSET_TYPE.GO,
+                key: SKILLSET_TYPE.GO
+            },
+            {
+                title: I18N.get('team.skillset.python'),
+                value: SKILLSET_TYPE.PYTHON,
+                key: SKILLSET_TYPE.PYTHON
+            }
+        ]
+
+        const domain_fn = getFieldDecorator('domain', {
+            rules: [],
+            initialValue: (this.props.existingTask && this.props.existingTask.domain) || []
+        })
+        const domain_el = (
+            <TreeSelect treeData={specs} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
+        )
+
+        const skillset_fn = getFieldDecorator('recruitedSkillsets', {
+            rules: [],
+            initialValue: (this.props.existingTask && this.props.existingTask.recruitedSkillsets) || []
+        })
+        const skillset_el = (
+            <TreeSelect treeData={skillsets} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
+        )
+
+        const p_pictures = {
+            listType: 'picture-card',
+            fileList: this.state.fileList,
+            onChange: this.handleFileListChange.bind(this),
+            onPreview: this.handlePreview.bind(this),
+            customRequest: (info) => {
+                upload_file(info.file).then((d) => {
+                    this.pictureUrlLookups = this.pictureUrlLookups || []
+                    this.pictureUrlLookups[info.file.uid] = d.url
+                    info.onSuccess(null, info.file)
+                }, info.onError)
+            }
+        }
+
+        const uploadButton = (
+            <div>
+                <Icon type="plus" />
+                <div className="ant-upload-text">Upload</div>
+            </div>
+        )
+
+        const pictures_el = (
+            <Upload name='pictures' {...p_pictures}>
+                {this.state.fileList.length >= 5 ? null : uploadButton}
+            </Upload>
+        )
 
         return {
+            recruitedSkillsets: skillset_fn(skillset_el),
+            pictures: pictures_el,
+            domain: domain_fn(domain_el),
+
             assignSelf: assignSelf_fn(assignSelf_el),
 
             taskName: taskName_fn(taskName_el),
@@ -479,6 +591,19 @@ class C extends BaseComponent {
             })
         })
     }
+
+    handleCancel() {
+        this.setState({ previewVisible: false })
+    }
+
+    handlePreview(file) {
+        this.setState({
+            previewImage: file.url || file.thumbUrl,
+            previewVisible: true
+        })
+    }
+
+    handleFileListChange = ({ fileList }) => this.setState({ fileList })
 
     ord_render () {
         const {getFieldDecorator} = this.props.form
@@ -537,12 +662,12 @@ class C extends BaseComponent {
 
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
                     <div>
-                        <Divider>General Info</Divider>
+                        <h3 class="no-margin">General Info</h3>
                         {(!existingTask || existingTask.assignSelf) &&
                         <FormItem label="Assign to Self" {...formItemLayout}>
                             {p.assignSelf} - assigns you to the task and submits to an admin for approval
                         </FormItem>}
-                        <FormItem label="Task Name" {...formItemLayout}>
+                        <FormItem label="Name" {...formItemLayout}>
                             {p.taskName}
                         </FormItem>
                         <FormItem label="Community"  {...formItemLayout}>
@@ -553,12 +678,16 @@ class C extends BaseComponent {
                             {p.thumbnail}
                         </FormItem>
                         */}
-                        <FormItem label="Category" {...formItemLayout}>
-                            {p.taskCategory}
-                        </FormItem>
-                        <FormItem label="Type"  {...formItemLayout}>
-                            {p.taskType}
-                        </FormItem>
+                        {this.props.taskType !== 'PROJECT' &&
+                            <FormItem label="Category" {...formItemLayout}>
+                                {p.taskCategory}
+                            </FormItem>
+                        }
+                        {this.props.taskType !== 'PROJECT' &&
+                            <FormItem label="Type" {...formItemLayout}>
+                                {p.taskType}
+                            </FormItem>
+                        }
                         <Row>
                             <Col span={12}>
                                 <FormItem label="Application Deadline" {...formItemLayoutAdjLeft}>
@@ -577,7 +706,7 @@ class C extends BaseComponent {
 
                         <Row>
                             <Col offset="8" span="12">
-                                For larger events/tasks please breakdown the budget/rewards
+                                For larger events/tasks/projects please breakdown the budget/rewards
                             </Col>
                         </Row>
                         <FormItem {...formItemNoLabelLayout}>
@@ -590,6 +719,24 @@ class C extends BaseComponent {
                             {p.taskLink}
                         </FormItem>
 
+                        {((existingTask && existingTask.type === TASK_TYPE.PROJECT) ||
+                            this.state.taskType === TASK_TYPE.PROJECT) &&
+                            <div>
+                                <h3 class="no-margin">Recruitment</h3>
+                                <FormItem label="Domain" {...formItemLayout}>
+                                    {p.domain}
+                                </FormItem>
+                                <FormItem label="Recruiting Skillsets" {...formItemLayout}>
+                                    {p.recruitedSkillsets}
+                                </FormItem>
+                                <FormItem label="Pictures" {...formItemLayout}>
+                                    {p.pictures}
+                                </FormItem>
+                                <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
+                                    <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
+                                </Modal>
+                            </div>
+                        }
 
                         {/*
                         ********************************************************************************
@@ -598,7 +745,7 @@ class C extends BaseComponent {
                         */}
                         {this.state.taskType === TASK_TYPE.EVENT &&
                         <div>
-                            <Divider>Event Info</Divider>
+                            <h3 className="no-margin">Event Info</h3>
                             <FormItem label="Date Range" {...formItemLayout}>
                                 {p.eventDateRange}
                             </FormItem>
@@ -630,12 +777,12 @@ class C extends BaseComponent {
                         * Budget / Reward
                         ********************************************************************************
                         */}
-                        <Divider>
+                        <h3 class="no-margin">
                             Budget / Reward&nbsp;
                             <Popover content="Budget is for expenses/costs, reward is for labor and time">
                                 <Icon className="help-icon" type="question-circle-o"/>
                             </Popover>
-                        </Divider>
+                        </h3>
 
                         {!this.state.assignSelf &&
                         <Row>
@@ -653,7 +800,7 @@ class C extends BaseComponent {
 
                         <FormItem label="Fiat ($USD)" {...formItemLayout}>
                             <Checkbox name="isUsd" checked={this.state.isUsd} onChange={() => {this.setState({isUsd: !this.state.isUsd})}}/>
-                            &nbsp; - for larger tasks/events only - payment is always in ELA equivalent
+                            &nbsp; - for larger events/tasks/projects only - payment is always in ELA equivalent
                         </FormItem>
 
                         {this.state.isUsd ?
@@ -704,7 +851,7 @@ class C extends BaseComponent {
                         * Attachment
                         ********************************************************************************
                         */}
-                        <Divider>Attachment</Divider>
+                        <h3 className="no-margin">Attachment</h3>
                         {!this.state.attachment_url ?
                             <FormItem {...formItemNoLabelLayout}>
                                 {p.attachment}

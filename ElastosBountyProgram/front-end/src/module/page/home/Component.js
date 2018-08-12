@@ -29,7 +29,7 @@ export default class extends StandardPage {
             <Row className="c_Home">
                 <div className="d_topBackdrop" style={backdropStyle}>
                     <div className="d_topBackdrop_title">
-                        {I18N.get('3300')}
+                        {I18N.get('home.title')}
                         {/* Elastos - Cyber Republic */}
                     </div>
                 </div>
@@ -37,30 +37,30 @@ export default class extends StandardPage {
                 <Row className="d_rowHome">
                     <Col xs={{span: 24}} md={{span: 16}} className="d_developer">
                         <h3>
-                            {I18N.get('3301')}
+                            {I18N.get('home.developers')}
                             {/* Developers */}
                         </h3>
                         <h4>
-                            {I18N.get('3302')}
+                            {I18N.get('home.developers.help_1')}
                             {/* Write code, find bugs, earn ELA */}
                         </h4>
 
                         <p className="mobile-left-align">
-                            {I18N.get('3303')}
+                            {I18N.get('home.developers.help_2')}
                             {/* Earn ELA for contributing to the Elastos ecosystem through
                             everything  */}
                             <br/>
-                            {I18N.get('3304')}
+                            {I18N.get('home.developers.help_3')}
                             {/* from example apps to enterprise App development. */}
                             <br/>
                             <br/>
-                            {I18N.get('3305')}
+                            {I18N.get('home.developers.help_4')}
                             {/* You can also earn ELA for finding bugs and submitting issues. */}
                         </p>
 
                         <div>
                             <Button onClick={() => this.props.history.push('/developer')}>
-                                {I18N.get('3306')}
+                                {I18N.get('home.developers.action')}
                                 {/* Yes I am interested in Developing for Elastos */}
                             </Button>
                             {/* <Button onClick={this.notDeveloper.bind(this)}>No I am not a developer</Button> */}
@@ -83,33 +83,33 @@ export default class extends StandardPage {
                     </Col>
                     <Col xs={{span: 24}} md={{span: 12}} className="d_organizer">
                         <h3>
-                            {I18N.get('3307')}
+                            {I18N.get('home.organizers')}
                             {/* Organizers & Contributors */}
                         </h3>
                         <h4>
-                            {I18N.get('3308')}
+                            {I18N.get('home.organizers.help_1')}
                             {/* Help organize meetups and promote Elastos */}
                         </h4>
 
                         <p className="mobile-left-align">
-                            {I18N.get('3309')}
+                            {I18N.get('home.organizers.help_2')}
                             {/* Whether you're already part of the community or want to join, */}
                             <br/>
-                            {I18N.get('3310')}
+                            {I18N.get('home.organizers.help_3')}
                             {/* we reward you for various things you do to promote Elastos
                             either online, locally or worldwide. */}
                             <br/>
                             <br/>
-                            {I18N.get('3311')}
+                            {I18N.get('home.organizers.help_4')}
                             {/* You can also earn ELA for referring potential contributors. */}
                         </p>
 
                         <Button className="mobile-hide" onClick={() => this.props.history.push('/community')}>
-                            {I18N.get('3312')}
+                            {I18N.get('home.organizers.action_1')}
                             {/* Apply to be an Organizer */}
                         </Button>
                         <Button className="mobile-hide" onClick={() => this.props.history.push('/social')}>
-                            {I18N.get('3313')}
+                            {I18N.get('home.organizers.action_2')}
                             {/* View Events & Tasks I can contribute to */}
                         </Button>
 
@@ -124,10 +124,10 @@ export default class extends StandardPage {
                 <div className="entryContainer">
 
                     <div className="textContainer">
-                        {I18N.get('3314')}
+                        {I18N.get('home.summary_1')}
                         {/* We are a diverse democratic group of leaders, developers, organizers and designers */}
                         <br/>
-                        {I18N.get('3315')}
+                        {I18N.get('home.summary_2')}
                         {/* formed to promote Elastos in our communities. Membership is open to everyone. */}
                     </div>
                     <div className="bar bar1"/>

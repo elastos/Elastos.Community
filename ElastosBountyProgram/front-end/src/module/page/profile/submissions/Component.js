@@ -1,18 +1,35 @@
 import React from 'react';
 import StandardPage from '../../StandardPage';
 import Footer from '@/module/layout/Footer/Container'
-import Navigator from '@/module/page/shared/Navigator/Container'
+import Navigator from '@/module/page/shared/HomeNavigator/Container'
+import _ from 'lodash'
 
 import './style.scss'
 import '../../admin/admin.scss'
 
-import { Col, Row, Icon, Form, Tooltip, Badge, Breadcrumb, Button, Table, Divider } from 'antd'
+import { Col, Row, Icon, Select, Form, Tooltip, Badge, Breadcrumb, Button, Table } from 'antd'
 import moment from 'moment/moment'
+import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from "../../../../config/constant"
+
 const FormItem = Form.Item;
 
 import MediaQuery from 'react-responsive'
 
+const FILTERS = {
+    ALL: 'all',
+    CREATED: 'created',
+    SUBSCRIBED: 'subscribed'
+};
+
 export default class extends StandardPage {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            showMobile: false,
+            filter: FILTERS.ALL
+        }
+    }
 
     ord_checkLogin(isLogin) {
         if (!isLogin) {
@@ -58,6 +75,7 @@ export default class extends StandardPage {
     }
 
     ord_renderContent () {
+        const submissionsAllData = this.props.all_submissions;
         const submissionsOwnedData = this.props.owned_submissions
         const submissionsSubscribedData = this.props.subscribed_submissions
 
@@ -101,7 +119,7 @@ export default class extends StandardPage {
         ]
 
         return (
-            <div>
+            <div className="p_ProfileSubmissions">
                 <div className="ebp-header-divider">
 
                 </div>
@@ -112,55 +130,84 @@ export default class extends StandardPage {
                                 <Breadcrumb.Item href="/">
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
-                                <Breadcrumb.Item>Profile</Breadcrumb.Item>
-                                <Breadcrumb.Item>Submissions</Breadcrumb.Item>
+                                <Breadcrumb.Item>Issues</Breadcrumb.Item>
                             </Breadcrumb>
                         </div>
-                        <div className="p_ProfileSubmissions p_admin_content">
-                            <MediaQuery maxWidth={720}>
-                                <Row>
-                                    <Col className="admin-right-column wrap-box-navigator">
-                                        <Navigator selectedItem={'profileSubmissions'} />
-                                    </Col>
-                                </Row>
-                            </MediaQuery>
+                        <div className="p_admin_content">
                             <Row>
-                                <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-left-column wrap-box-user">
-                                    <div>
-                                        <Divider>Owned Submissions / Forms</Divider>
-
-                                        <Table
-                                            columns={columns}
-                                            rowKey={(item) => item._id}
-                                            dataSource={submissionsOwnedData}
-                                            loading={this.props.loading}
-                                        />
-                                    </div>
-                                    {submissionsOwnedData.length === 0 &&
-                                        <div className="vert-gap"/>
-                                    }
-                                    <div>
-                                        <Divider>Subscribed Submissions</Divider>
-
-                                        <Table
-                                            columns={columns}
-                                            rowKey={(item) => item._id}
-                                            dataSource={submissionsSubscribedData}
-                                            loading={this.props.loading}
-                                        />
-                                    </div>
+                                <Col sm={24} md={4} className="wrap-box-navigator">
+                                    <Navigator selectedItem={'profileSubmissions'}/>
                                 </Col>
-                                <MediaQuery minWidth={720}>
-                                    <Col span={4} className="admin-right-column wrap-box-navigator">
-                                        <Navigator selectedItem={'profileSubmissions'}/>
-                                    </Col>
-                                </MediaQuery>
+                                <Col sm={24} md={20} className="c_ProfileContainer admin-right-column wrap-box-user">
+                                    <div className="pull-right filter-group">
+                                        <Button onClick={this.goCreatepage.bind(this)}>Create Issue</Button>
+                                    </div>
+                                    <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                                        <Select
+                                            name="type"
+                                            onChange={this.onSelectFilter.bind(this)}
+                                            value={this.state.filter}
+                                        >
+                                            {_.map(FILTERS, (filter, key) => {
+                                                return <Select.Option key={filter} value={filter}>
+                                                    {key}
+                                                </Select.Option>
+                                            })}
+                                        </Select>
+                                    </MediaQuery>
+                                    <MediaQuery minWidth={MIN_WIDTH_PC}>
+                                        <Button.Group className="filter-group">
+                                            <Button
+                                                className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
+                                                onClick={this.clearFilters.bind(this)}>All</Button>
+                                            <Button
+                                                className={(this.state.filter === FILTERS.CREATED && 'selected') || ''}
+                                                onClick={this.setCreatedFilter.bind(this)}>Created</Button>
+                                            <Button
+                                                className={(this.state.filter === FILTERS.SUBSCRIBED && 'selected') || ''}
+                                                onClick={this.setSubscribedFilter.bind(this)}>Subscribed</Button>
+                                        </Button.Group>
+                                    </MediaQuery>
+                                    {this.state.filter === FILTERS.ALL &&
+                                        <div>
+                                            <Table
+                                                columns={columns}
+                                                rowKey={(item) => item._id}
+                                                dataSource={submissionsAllData}
+                                                loading={this.props.loading}
+                                            />
+                                        </div>
+                                    }
+
+                                    {this.state.filter === FILTERS.CREATED &&
+                                        <div>
+                                            <Table
+                                                columns={columns}
+                                                rowKey={(item) => item._id}
+                                                dataSource={submissionsOwnedData}
+                                                loading={this.props.loading}
+                                            />
+                                        </div>
+                                    }
+
+                                    {this.state.filter === FILTERS.SUBSCRIBED &&
+                                        <div>
+                                            <Table
+                                                columns={columns}
+                                                rowKey={(item) => item._id}
+                                                dataSource={submissionsSubscribedData}
+                                                loading={this.props.loading}
+                                            />
+                                        </div>
+                                    }
+                                </Col>
                             </Row>
                             <Row>
                                 <Col>
                                     <br/>
                                 </Col>
                             </Row>
+                            <Footer/>
                         </div>
                     </div>
                 </div>
@@ -168,7 +215,37 @@ export default class extends StandardPage {
         )
     }
 
+    onSelectFilter(value) {
+        switch (value) {
+            case FILTERS.CREATED:
+                this.setCreatedFilter();
+                break;
+            case FILTERS.SUBSCRIBED:
+                this.setSubscribedFilter();
+                break;
+            default:
+                this.clearFilters();
+                break;
+        }
+    }
+
+    clearFilters() {
+        this.setState({ filter: FILTERS.ALL })
+    }
+
+    setCreatedFilter() {
+        this.setState({ filter: FILTERS.CREATED })
+    }
+
+    setSubscribedFilter() {
+        this.setState({ filter: FILTERS.SUBSCRIBED })
+    }
+
     linkSubmissionDetail(submissionId) {
         this.props.history.push(`/profile/submission-detail/${submissionId}`)
+    }
+
+    goCreatepage() {
+        this.props.history.push('/profile/submissions/create');
     }
 }

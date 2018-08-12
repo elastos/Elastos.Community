@@ -22,6 +22,8 @@ const store = createStore(
 store.history = history;
 // store.actions = action;
 
+store.history.listen(() => window.scrollTo({ left: 0, top: 0 }))
+
 store.getRedux = (name)=>{
 	try{
         const redux = require('./redux/'+name);

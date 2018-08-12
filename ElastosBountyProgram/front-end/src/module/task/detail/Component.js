@@ -50,8 +50,8 @@ export default class extends BaseComponent {
     }
 
     ord_render () {
-
-        const isTaskOwner = (this.props.task && this.props.task.createdBy && this.props.task.createdBy._id) === this.props.userId
+        const isTaskOwner = (this.props.task && this.props.task.createdBy &&
+            this.props.task.createdBy._id) === this.props.userId
         return (
             <div className="public">
                 <Row>

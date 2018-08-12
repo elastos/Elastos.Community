@@ -7,6 +7,8 @@ import update from './update';
 import addCandidate from './add_candidate';
 import removeCandidate from './remove_candidate';
 import acceptCandidate from './accept_candidate';
+import rejectCandidate from './reject_candidate';
+import withdrawCandidate from './withdraw_candidate';
 import markComplete from './mark_complete';
 import markVisited from './mark_visited';
 import comment from './comment';
@@ -48,6 +50,16 @@ export default Base.setRouter([
     {
         path : '/acceptCandidate',
         router : acceptCandidate,
+        method : 'post'
+    },
+    {
+        path : '/rejectCandidate',
+        router : rejectCandidate,
+        method : 'post'
+    },
+    {
+        path : '/withdrawCandidate',
+        router : withdrawCandidate,
         method : 'post'
     },
     {

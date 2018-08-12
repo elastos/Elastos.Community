@@ -1,51 +1,40 @@
 import {Schema} from 'mongoose';
+import {PictureSchema} from './PictureSchema'
+import {CommentSchema} from './CommentSchema'
 
 export const TeamProfile = {
-    description : String,
+    description: String,
     logo : String
 };
 
-
 export const Team = {
-    name : {
+    name: {
         type : String,
         required : true
     },
-    type : String,
-    metadata : {
-        type : Map,
-        of : String
+    metadata: {
+        type: Map,
+        of: String
     },
-    tags : [String],
-    profile : TeamProfile,
-    memberLimit : {
-        type : Number,
-        default : 10
-    },
-    recruiting : {
-        type : Boolean,
-        default : false
-    },
-    owner : Schema.Types.ObjectId
+    tags: [String],
+    profile: TeamProfile,
+    domain: [String],
+    recruitedSkillsets: [String],
+    owner: {type: Schema.Types.ObjectId, ref: 'users'},
+    members: [{type: Schema.Types.ObjectId, ref: 'user_team'}],
+    pictures: [PictureSchema],
+    comments: [[CommentSchema]]
 };
 
-
-
 export const User_Team = {
-    userId : {
-        required : true,
-        type : Schema.Types.ObjectId
+    status: {
+        type: String
     },
-    teamId : {
-        required : true,
-        type : Schema.Types.ObjectId
-    },
-    status : {
-        type : String
-    },
-    level : String,
-    role : String,
-    title : String,
-
-    apply_reason : String
+    level: String,
+    role: String,
+    title: String,
+    apply_reason : String,
+    team: {type: Schema.Types.ObjectId, ref: 'team'},
+    user: {type: Schema.Types.ObjectId, ref: 'users'},
+    comments: [[CommentSchema]]
 };

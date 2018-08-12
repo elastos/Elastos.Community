@@ -29,13 +29,13 @@ class C extends BaseComponent {
     getInputProps() {
         const {getFieldDecorator} = this.props.form
         const email_fn = getFieldDecorator('email', {
-            rules: [{required: true, message: I18N.get('3400')}],
+            rules: [{required: true, message: I18N.get('forgot.form.label_email')}],
             initialValue: ''
         })
         const email_el = (
             <Input size="large"
                 prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                placeholder={I18N.get('3519')}/>
+                placeholder={I18N.get('forgot.form.email')}/>
         )
 
         const recaptcha_fn = getFieldDecorator('recaptcha', {
@@ -67,7 +67,7 @@ class C extends BaseComponent {
                 </FormItem>
                 <FormItem>
                     <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
-                        {I18N.get('3407')}
+                        {I18N.get('forgot.form.submit')}
                     </Button>
                 </FormItem>
             </Form>

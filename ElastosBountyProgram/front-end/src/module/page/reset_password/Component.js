@@ -12,7 +12,7 @@ export default class extends StandardPage {
             <div className="p_resetPassword ebp-wrap">
                 <div className="d_box">
                     <p>
-                        {I18N.get('3602')}
+                        {I18N.get('forgot.new_password')}
                     </p>
                     <ResetPasswordForm />
                 </div>

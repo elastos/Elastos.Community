@@ -4,6 +4,7 @@ import { Form, Col, Row, List, Avatar, Icon, Divider, Button, Input } from 'antd
 import config from '@/config'
 import './style.scss'
 import moment from 'moment'
+import _ from 'lodash'
 
 const TextArea = Input.TextArea
 const FormItem = Form.Item
@@ -11,34 +12,9 @@ const FormItem = Form.Item
 class C extends BaseComponent {
 
     componentDidMount() {
-        const taskId = this.props.match.params.taskId
-        const submissionId = this.props.match.params.submissionId
-
-        switch (this.props.reduxType) {
-            case 'task':
-                this.props.getTaskDetail(taskId)
-                break
-            case 'sumbission':
-                this.props.getSubmissionDetail(submissionId)
-                break
-            default:
-                // do nothing
-                break
-        }
     }
 
     componentWillUnmount() {
-        switch (this.props.reduxType) {
-            case 'task':
-                this.props.resetTaskDetail()
-                break
-            case 'sumbission':
-                this.props.resetSubmissionDetail()
-                break
-            default:
-                // do nothing
-                break
-        }
     }
 
     // only wraps loading / renderMain
@@ -59,10 +35,9 @@ class C extends BaseComponent {
     }
 
     renderHeader() {
-        return <div>
-            <Divider>Comments</Divider>
-            <div className="clearfix"/>
-        </div>
+        return (
+            <h3 className="no-margin">Comments</h3>
+        )
     }
 
     getInputProps() {
@@ -72,7 +47,7 @@ class C extends BaseComponent {
             initialValue: ''
         })
         const comment_el = (
-            <TextArea rows={2} placeholder="Comments or updates"/>
+            <TextArea rows={4} placeholder="Comments or updates"/>
         )
 
         return {
@@ -88,11 +63,15 @@ class C extends BaseComponent {
         })
     }
 
+    isLoading() {
+        return this.props.loading[this.props.reduxType || this.props.type]
+    }
+
     getSubscribeButton() {
-        if (this.isUserSubscribed()) {
+        if (this.isUserSubscribed() && this.props.canSubscribe) {
             return (
                 <Button className="ant-btn-ebp pull-left" size="small"
-                    onClick={this.unsubscribe.bind(this)} loading={this.props.loading[this.props.type]}>
+                    onClick={this.unsubscribe.bind(this)} loading={this.isLoading()}>
                     Unsubscribe
                 </Button>
             )
@@ -100,7 +79,7 @@ class C extends BaseComponent {
 
         return this.props.canSubscribe ?
             (<Button className="ant-btn-ebp pull-left" size="small"
-                onClick={this.subscribe.bind(this)} loading={this.props.loading[this.props.type]}>
+                onClick={this.subscribe.bind(this)} loading={this.isLoading()}>
                 Subscribe
             </Button>) : null
     }
@@ -122,19 +101,25 @@ class C extends BaseComponent {
                 <FormItem>
                     {subscribeButton}
                     <Button className="ant-btn-ebp pull-right" type="primary" size="small"
-                        htmlType="submit" loading={this.props.loading[this.props.type]}>
+                        htmlType="submit" loading={this.isLoading()}>
                         Post
                     </Button>
                 </FormItem>
             </Form>) : null;
     }
 
+    getModelId() {
+        return _.isString(this.props.model) // Bit naive IMPROVEME
+            ? this.props.model
+            : this.props.model._id
+    }
+
     subscribe() {
-        this.props.subscribe(this.props.type, this.props.model._id)
+        this.props.subscribe(this.props.type, this.getModelId())
     }
 
     unsubscribe() {
-        this.props.unsubscribe(this.props.type, this.props.model._id)
+        this.props.unsubscribe(this.props.type, this.getModelId())
     }
 
     renderComments() {
@@ -212,7 +197,7 @@ class C extends BaseComponent {
                 this.props.postComment(this.props.type,
                     this.props.reduxType,
                     this.props.detailReducer,
-                    this.props.model._id,
+                    this.getModelId(),
                     values.comment).then(() => {
                         this.props.form.resetFields()
                     })

@@ -4,7 +4,6 @@ import TaskService from '@/service/TaskService'
 import { message } from 'antd/lib/index'
 
 export default createContainer(Component, (state) => {
-
     return {
         task: state.task.detail,
         loading: state.task.loading
@@ -17,7 +16,7 @@ export default createContainer(Component, (state) => {
             return taskService.get(taskId)
         },
 
-        async resetTaskDetail () {
+        resetTaskDetail () {
             return taskService.resetTaskDetail()
         }
     }

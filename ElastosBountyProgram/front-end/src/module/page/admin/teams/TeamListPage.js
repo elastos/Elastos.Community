@@ -20,6 +20,7 @@ const Component = class extends BaseAdmin {
     ord_renderContent(){
         return (
             <div className="p_admin_index ebp-wrap">
+                <div className="ebp-header-divider" />
                 <div className="d_box">
                     <div className="p_admin_breadcrumb">
                         <Breadcrumb>
@@ -32,12 +33,12 @@ const Component = class extends BaseAdmin {
                     </div>
                     <div className="p_admin_content">
                         <Row>
-                            <Col span={20} className="c_TaskTableContainer admin-left-column wrap-box-user">
+                            <Col span={4} className="admin-left-column wrap-box-navigator">
+                                <Navigator selectedItem={'teams'}/>
+                            </Col>
+                            <Col span={20} className="c_TaskTableContainer admin-right-column wrap-box-user">
 
                                 {this.renderList()}
-                            </Col>
-                            <Col span={4} className="admin-right-column wrap-box-navigator">
-                                <Navigator selectedItem={'teams'}/>
                             </Col>
                         </Row>
                     </div>
@@ -97,9 +98,8 @@ const Component = class extends BaseAdmin {
 
         const d = await this.props.list();
         this.setState({
-            total : d.total,
-            list : d.list,
-            loading : false
+            list: d,
+            loading: false
         });
     }
 };

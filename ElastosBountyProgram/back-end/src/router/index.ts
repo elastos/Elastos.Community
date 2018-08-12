@@ -9,6 +9,7 @@ import user from './user';
 import team from './team';
 import task from './task';
 import taskCandidate from './task_candidate';
+import teamCandidate from './team_candidate';
 import community from './community';
 import submission from './submission';
 
@@ -79,6 +80,7 @@ router.use('/user', user);
 router.use('/team', team);
 router.use('/task', task);
 router.use('/taskCandidate', taskCandidate)
+router.use('/teamCandidate', teamCandidate)
 router.use('/community', community);
 router.use('/upload', upload);
 router.use('/submission', submission);

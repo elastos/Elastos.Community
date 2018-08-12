@@ -10,13 +10,13 @@ export default class extends Base {
         const teamService = this.buildService(TeamService);
 
         let rs = null;
-        if(action === 'accept'){
+        if (action === 'accept') {
             rs = await teamService.acceptApply(param);
-        }
-        else if(action === 'reject'){
+        } else if (action === 'reject') {
             rs = await teamService.rejectApply(param);
-        }
-        else{
+        } else if (action === 'withdraw') {
+            rs = await teamService.withdrawApply(param);
+        } else {
             return this.res.sendStatus(403);
         }
 

@@ -22,9 +22,10 @@ const sanitize = '-password -salt -email -resetToken'
 
 export default class extends Base {
     public async show(param): Promise<Document> {
-        const db_task = this.getDBModel('Task');
-        const db_task_candidate = this.getDBModel('Task_Candidate');
-        const db_user = this.getDBModel('User');
+        const db_task = this.getDBModel('Task')
+        const db_task_candidate = this.getDBModel('Task_Candidate')
+        const db_user = this.getDBModel('User')
+        const db_team = this.getDBModel('Team')
 
         const task = await db_task.getDBInstance().findOne({_id: param.taskId})
             .populate('candidates', sanitize)
@@ -52,11 +53,13 @@ export default class extends Base {
             }
 
             for (let candidate of task.candidates) {
-                await db_task_candidate.getDBInstance().populate(candidate, {
+                await db_user.getDBInstance().populate(candidate, {
                     path: 'user',
                     select: sanitize
                 })
-                await db_task_candidate.getDBInstance().populate(candidate, ['team'])
+                await db_team.getDBInstance().populate(candidate, {
+                    path: 'team'
+                })
 
                 for (let comment of candidate.comments) {
                     for (let thread of comment) {
@@ -98,11 +101,12 @@ export default class extends Base {
         return updatedTask
     }
 
-    public async list(query): Promise<Document> {
+    public async list(param): Promise<Document> {
         const db_task = this.getDBModel('Task');
         const db_task_candidate = this.getDBModel('Task_Candidate');
         const db_user = this.getDBModel('User');
-        const tasks = await db_task.list(query, {
+
+        const tasks = await db_task.list(param, {
             updatedAt: -1
         });
 
@@ -176,7 +180,9 @@ export default class extends Base {
             eventDateRange, eventDateRangeStart, eventDateRangeEnd, eventDateStatus,
             location,
 
-            attachment, attachmentType, attachmentFilename, isUsd
+            attachment, attachmentType, attachmentFilename, isUsd,
+
+            domain, recruitedSkillsets, pictures
         } = param;
         this.validate_name(name);
         this.validate_description(description);
@@ -201,6 +207,9 @@ export default class extends Base {
             startTime,
             endTime,
             thumbnail,
+            domain,
+            recruitedSkillsets,
+            pictures,
 
             eventDateRange, eventDateRangeStart, eventDateRangeEnd, eventDateStatus,
             location,
@@ -668,9 +677,67 @@ export default class extends Base {
     }
 
     public async rejectCandidate(param): Promise<boolean> {
-        return true;
+        const {taskCandidateId} = param
+        const db_task = this.getDBModel('Task')
+        const db_tc = this.getDBModel('Task_Candidate')
+
+        let doc = await db_tc.findById(taskCandidateId)
+
+        if (!doc || doc.status !== constant.TASK_CANDIDATE_STATUS.PENDING) {
+            throw 'Invalid status'
+        }
+
+        let task = await db_task.getDBInstance().findOne({_id: doc.task})
+            .populate('createdBy', sanitize)
+
+        if (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
+            (task.createdBy && task.createdBy._id.toString() !== this.currentUser._id.toString())) {
+            throw 'Access Denied'
+        }
+
+        await db_tc.update({
+            _id: taskCandidateId
+        }, {
+            status: constant.TASK_CANDIDATE_STATUS.REJECTED
+        })
+
+        return db_tc.getDBInstance().findOne({_id: taskCandidateId})
+            .populate('team')
+            .populate('user', sanitize)
     }
 
+    public async withdrawCandidate(param): Promise<Document>{
+        const {taskCandidateId} = param
+        const db_task = this.getDBModel('Task')
+        const db_tc = this.getDBModel('Task_Candidate')
+
+        let doc = await db_tc.findById(taskCandidateId)
+        await db_tc.db.populate(doc, ['team'])
+
+        if (!doc || doc.role === constant.TEAM_ROLE.OWNER) {
+            throw 'Invalid status'
+        }
+
+        if (doc.user.toString() !== this.currentUser._id.toString() ||
+            doc.team.owner.toString() !== this.currentUser._id.toString()) {
+            throw 'Access Denied'
+        }
+
+        await db_tc.remove({
+            _id: taskCandidateId
+        })
+
+        const task = await db_task.getDBInstance().findOne({_id: doc.task})
+        const result = await db_task.db.update({
+            _id: task._id
+        }, {
+            $pull: {
+                candidates: new ObjectId(taskCandidateId)
+            }
+        })
+
+        return result
+    }
 
     public validate_name(name){
         if(!validate.valid_string(name, 4)){

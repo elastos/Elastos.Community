@@ -92,7 +92,7 @@ export default createContainer(Component, (state) => {
             return communityService.getMyCommunities(currentUserId)
         },
 
-        async resetTasks() {
+        resetTasks() {
             return taskService.resetAllTasks()
         },
 

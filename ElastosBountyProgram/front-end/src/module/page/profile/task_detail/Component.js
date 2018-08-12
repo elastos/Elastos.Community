@@ -1,16 +1,14 @@
 import React from 'react'
 import StandardPage from '../../StandardPage'
-
 // TODO: proper naming scheme
 import TaskDetail from '@/module/task/Container'
-import Navigator from '@/module/page/shared/Navigator/Container'
-
+import Navigator from '@/module/page/shared/HomeNavigator/Container'
+import Footer from '@/module/layout/Footer/Container';
 import config from '@/config'
-
 import './style.scss'
 import '../../admin/admin.scss'
-
 import { Col, Row, Breadcrumb, Icon } from 'antd'
+import { TASK_TYPE } from '@/constant'
 
 export default class extends StandardPage {
 
@@ -29,7 +27,7 @@ export default class extends StandardPage {
 
     ord_renderContent () {
         return (
-            <div>
+            <div className="p_ProfileTaskDetail">
                 <div className="ebp-header-divider">
 
                 </div>
@@ -47,18 +45,19 @@ export default class extends StandardPage {
                                 </Breadcrumb.Item>
                             </Breadcrumb>
                         </div>
-                        <div className="p_ProfileTaskDetail p_admin_content">
+                        <div className="p_admin_content">
                             <Row>
-                                <Col span={20} className="c_ProfileContainer admin-left-column wrap-box-user">
-                                    <TaskDetail task={this.props.task} />
+                                <Col sm={24} md={4} className="admin-left-column wrap-box-navigator">
+                                    <Navigator selectedItem="profileTasks" />
                                 </Col>
-                                <Col span={4} className="admin-right-column wrap-box-navigator">
-                                    <Navigator selectedItem={'profileTasks'} />
+                                <Col sm={24} md={20} className="c_ProfileContainer admin-right-column wrap-box-user">
+                                    <TaskDetail task={this.props.task} />
                                 </Col>
                             </Row>
                         </div>
                     </div>
                 </div>
+                <Footer/>
             </div>
         )
     }

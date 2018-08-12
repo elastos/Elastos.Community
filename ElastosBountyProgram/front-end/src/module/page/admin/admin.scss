@@ -13,18 +13,18 @@
 }
 
 .admin-left-column, .admin-right-column {
-  padding: 0 20px;
+  padding: 0 20px !important;
   text-align: left;
 }
 
 .admin-left-column {
-  padding-top: 20px;
-  padding-bottom: 20px;
   background: #FFF;
 }
 
 .admin-right-column {
-  padding-right: 0;
+  padding-right: 0 !important;
+  border-left: 1px solid #ccc;
+  min-height: 192px; // height of the sidebox
 }
 
 .wrap-box-navigator {

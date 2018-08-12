@@ -7,11 +7,11 @@ import {TASK_CATEGORY, TASK_TYPE} from '@/constant'
 
 export default createContainer(Component, (state, ownProps) => {
     let taskState = state.task
-    
+
     if (!_.isArray(state.task.all_tasks)) {
         taskState.all_tasks = _.values(state.task.all_tasks)
     }
-    
+
     taskState.events = _.filter(taskState.all_tasks, {type: TASK_TYPE.EVENT})
     taskState.tasks = _.filter(taskState.all_tasks, {type: TASK_TYPE.TASK})
 
@@ -20,11 +20,11 @@ export default createContainer(Component, (state, ownProps) => {
         current_user_id: state.user.current_user_id
     };
 }, () => {
-    
+
     const communityService = new CommunityService()
     const userService = new UserService()
     const taskService = new TaskService()
-    
+
     return {
         async getAllCountryCommunity () {
             return communityService.getAllCountryCommunities()
@@ -52,7 +52,7 @@ export default createContainer(Component, (state, ownProps) => {
                 category: TASK_CATEGORY.SOCIAL
             })
         },
-        async resetTasks() {
+        resetTasks() {
             return taskService.resetAllTasks()
         },
         async addMember(memberId, communityId) {

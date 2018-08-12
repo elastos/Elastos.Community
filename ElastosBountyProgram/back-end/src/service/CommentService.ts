@@ -18,6 +18,7 @@ export default class extends Base {
         const db_commentable = this.getDBModel(type)
         let commentable = await db_commentable.getDBInstance().findOne({_id: id})
             .populate('createdBy')
+            .populate('owner')
             .populate('subscribers', sanitizeWithEmail)
 
         if (commentable) {
@@ -45,7 +46,9 @@ export default class extends Base {
                         })
                     }
                 }
-            } else {
+            } else if (commentable.owner) {
+                this.sendNotificationEmail(type, param, createdBy, commentable.owner, null)
+            } else if (type === 'Task_Candidate') {
                 commentable = await db_commentable.getDBInstance().findOne({_id: id})
                     .populate('createdBy')
                     .populate('user')
@@ -55,6 +58,15 @@ export default class extends Base {
                     .populate('createdBy')
 
                 this.sendNotificationEmail('Application', param, createdBy, task.createdBy, commentable.user)
+            } else if (type === 'User_Team') {
+                commentable = await db_commentable.getDBInstance().findOne({_id: id})
+                    .populate('user')
+
+                const db_team = this.getDBModel('Team')
+                const team = await db_team.getDBInstance().findOne({_id: commentable.team})
+                    .populate('owner')
+
+                this.sendNotificationEmail('Application', param, createdBy, team.owner, commentable.user)
             }
 
             return await db_commentable.update({_id: id}, updateObj)

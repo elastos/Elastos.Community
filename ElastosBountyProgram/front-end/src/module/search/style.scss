@@ -1,0 +1,21 @@
+@import '../../style/variable';
+@import '../../style/color';
+
+.c_Search {
+  .admin-left-column {
+    padding-top: 0;
+  }
+
+  .admin-right-column {
+    min-height: 392px;
+  }
+
+  .filters-tree {
+    margin-bottom: $gap_1;
+  }
+}
+
+.filters-menu {
+  background-color: white;
+  padding: $gap_2;
+}

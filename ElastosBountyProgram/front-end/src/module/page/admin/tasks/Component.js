@@ -132,6 +132,7 @@ export default class extends AdminPage {
 
         return (
             <div className="p_admin_index ebp-wrap">
+                <div className="ebp-header-divider" />
                 <div className="d_box">
                     <div className="p_admin_breadcrumb">
                         <Breadcrumb>
@@ -144,7 +145,10 @@ export default class extends AdminPage {
                     </div>
                     <div className="p_admin_content">
                         <Row>
-                            <Col span={20} className="c_TaskTableContainer admin-left-column wrap-box-user">
+                            <Col span={4} className="admin-left-column wrap-box-navigator">
+                                <Navigator selectedItem={'tasks'}/>
+                            </Col>
+                            <Col span={20} className="c_TaskTableContainer admin-right-column wrap-box-user">
                                 <div className="pull-right">
                                     <Input.Search onSearch={this.handleSearchTask.bind(this)}
                                                   prefix={<Icon type="solution" style={{color: 'rgba(0,0,0,.25)'}}/>}
@@ -158,9 +162,6 @@ export default class extends AdminPage {
                                     loading={this.props.loading}
                                     onChange={this.handleChange}
                                 />
-                            </Col>
-                            <Col span={4} className="admin-right-column wrap-box-navigator">
-                                <Navigator selectedItem={'tasks'}/>
                             </Col>
                         </Row>
                     </div>

@@ -9,17 +9,16 @@ message.config({
     top: 100
 })
 
-
-export default createContainer(Component, (state)=>{
+export default createContainer(Component, (state) => {
     return {
         is_admin: state.user.is_admin
     };
-}, ()=>{
+}, () => {
     const taskService = new TaskService();
     const communityService = new CommunityService();
 
     return {
-        async createTask(formData, st){
+        async createTask(formData, st) {
             try {
                 let createObj = {
 
@@ -47,6 +46,9 @@ export default createContainer(Component, (state)=>{
                     attachment: st.attachment_url,
                     attachmentFilename: st.attachment_filename,
                     attachmentType: st.attachment_type,
+                    pictures: formData.pictures,
+                    domain: formData.domain,
+                    recruitedSkillsets: formData.recruitedSkillsets,
                     community: formData.community,
                     communityParent: formData.communityParent,
 
@@ -111,6 +113,9 @@ export default createContainer(Component, (state)=>{
 
                     infoLink: formData.taskLink,
                     thumbnail: st.upload_url,
+                    pictures: formData.pictures,
+                    domain: formData.domain,
+                    recruitedSkillsets: formData.recruitedSkillsets,
                     community: !formData.community ? null : formData.community,
                     communityParent: formData.communityParent,
 
@@ -171,7 +176,7 @@ export default createContainer(Component, (state)=>{
             return taskService.get(taskId)
         },
 
-        async resetTaskDetail() {
+        resetTaskDetail() {
             return taskService.resetTaskDetail()
         },
 
