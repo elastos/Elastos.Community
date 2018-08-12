@@ -54,7 +54,7 @@ class C extends BaseComponent {
         const form = this.props.form
 
         if (reqCode && reqCode.toString() !== value) {
-            callback(I18N.get('3504')) // The code you entered does not match
+            callback(I18N.get('register.no_match.code')) // The code you entered does not match
         } else {
             callback()
         }
@@ -63,7 +63,7 @@ class C extends BaseComponent {
     compareToFirstPassword(rule, value, callback) {
         const form = this.props.form
         if (value && value !== form.getFieldValue('password')) {
-            callback(I18N.get('3505')) // Two passwords you entered do not match'
+            callback(I18N.get('register.error.passwords')) // Two passwords you entered do not match'
         } else {
             callback()
         }
@@ -75,7 +75,7 @@ class C extends BaseComponent {
             form.validateFields(['confirmPassword'], { force: true })
         }
         if (value && value.length < MIN_LENGTH_PASSWORD) {
-            callback(`${I18N.get('3506')} ${MIN_LENGTH_PASSWORD} ${I18N.get('3507')}`)
+            callback(`${I18N.get('register.error.password_length_1')} ${MIN_LENGTH_PASSWORD} ${I18N.get('register.error.password_length_2')}`)
         }
         callback()
     }
@@ -84,12 +84,12 @@ class C extends BaseComponent {
         const {getFieldDecorator} = this.props.form
 
         const regCode_fn = getFieldDecorator('reg_code', {
-            rules: [{required: true, message: I18N.get('3508')},
+            rules: [{required: true, message: I18N.get('register.form.input_code')},
                 {validator: this.validateRegCode.bind(this)}]
         })
         const regCode_el = (
             <Input size="large"
-                   placeholder={I18N.get('3509')}/>
+                placeholder={I18N.get('register.form.confirmation_code')}/>
         )
 
         return {
@@ -101,54 +101,54 @@ class C extends BaseComponent {
         const {getFieldDecorator} = this.props.form
 
         const firstName_fn = getFieldDecorator('firstName', {
-            rules: [{required: true, message: I18N.get('3510')}],
+            rules: [{required: true, message: I18N.get('register.form.label_first_name')}],
             initialValue: ''
         })
         const firstName_el = (
             <Input size="large"
-                   prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                   placeholder={I18N.get('3511')}/>
+                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                placeholder={I18N.get('register.form.first_name')}/>
         )
 
         const lastName_fn = getFieldDecorator('lastName', {
-            rules: [{required: true, message: I18N.get('3512')}],
+            rules: [{required: true, message: I18N.get('register.form.label_last_name')}],
             initialValue: ''
         })
         const lastName_el = (
             <Input size="large"
-                   prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                   placeholder={I18N.get('3513')}/>
+                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                placeholder={I18N.get('register.form.last_name')}/>
         )
 
         const username_fn = getFieldDecorator('username', {
             rules: [
-                {required: true, message: I18N.get('3514')},
-                {min: 6, message: I18N.get('3515')}
+                {required: true, message: I18N.get('register.form.label_username')},
+                {min: 6, message: I18N.get('register.error.username')}
             ],
             initialValue: ''
         })
         const username_el = (
             <Input size="large"
                 prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                placeholder={I18N.get('3516')}/>
+                placeholder={I18N.get('register.form.username')}/>
         )
 
         const email_fn = getFieldDecorator('email', {
             rules: [{
-                required: true, message: I18N.get('3517')
+                required: true, message: I18N.get('register.form.label_email')
             }, {
-                type: 'email', message: I18N.get('3518')
-            }],
+                type: 'email', message: I18N.get('register.error.email')
+            }]
         })
         const email_el = (
             <Input size="large"
                 prefix={<Icon type="mail" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                placeholder={I18N.get('3519')}/>
+                placeholder={I18N.get('register.form.email')}/>
         )
 
         const pwd_fn = getFieldDecorator('password', {
             rules: [{
-                required: true, message: I18N.get('3520')
+                required: true, message: I18N.get('register.form.label_password')
             }, {
                 validator: this.validateToNextPassword.bind(this)
             }]
@@ -156,30 +156,30 @@ class C extends BaseComponent {
         const pwd_el = (
             <Input size="large"
                 prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                type="password" placeholder={I18N.get('3521')}/>
+                type="password" placeholder={I18N.get('register.form.password')}/>
         )
 
         const pwdConfirm_fn = getFieldDecorator('passwordConfirm', {
             rules: [{
-                required: true, message: I18N.get('3522')
+                required: true, message: I18N.get('register.form.label_password_confirm')
             }, {
                 validator: this.compareToFirstPassword.bind(this)
             }]
         })
         const pwdConfirm_el = (
             <Input size="large"
-                   prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                   type="password" placeholder={I18N.get('3523')}/>
+                prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                type="password" placeholder={I18N.get('register.form.password_confirm')}/>
         )
 
         const country_fn = getFieldDecorator('country', {
-            rules: [{required: true, message: I18N.get('3524')}]
+            rules: [{required: true, message: I18N.get('register.form.label_country')}]
         })
         const country_el = (
             <Select size="large"
-                    showSearch
-                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                placeholder={I18N.get('3534')}>
+                showSearch
+                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                placeholder={I18N.get('register.form.option')}>
                 {_.entries(config.data.mappingCountryCodeToName).map(([key, val]) => {
                     return <Select.Option key={key} value={key}>
                         {val}
@@ -193,39 +193,39 @@ class C extends BaseComponent {
         })
         const recaptcha_el = (
             <ReCAPTCHA
-                 ref={(el) => { this.captcha = el }}
-                 sitekey={RECAPTCHA_KEY}
-             />
+                ref={(el) => { this.captcha = el }}
+                sitekey={RECAPTCHA_KEY}
+            />
         )
 
         const organizer_fn = getFieldDecorator('beOrganizer', {
-            rules: [{message: I18N.get('3525')}]
+            rules: [{message: I18N.get('register.form.options')}]
         })
         const organizer_el = (
             <Select size="large"
-                    placeholder={I18N.get('3526')}>
-                <Select.Option value="yes">{I18N.get('3527')}</Select.Option>
-                <Select.Option value="no">{I18N.get('3528')}</Select.Option>
+                placeholder={I18N.get('register.form.organizer')}>
+                <Select.Option value="yes">{I18N.get('register.form.yes')}</Select.Option>
+                <Select.Option value="no">{I18N.get('register.form.no')}</Select.Option>
             </Select>
         )
 
         const developer_fn = getFieldDecorator('isDeveloper', {
-            rules: [{message: I18N.get('3525')}]
+            rules: [{message: I18N.get('register.form.option')}]
         })
         const developer_el = (
             <Select size="large"
-                    placeholder={I18N.get('3529')}>
-                <Select.Option value="yes">{I18N.get('3527')}</Select.Option>
-                <Select.Option value="no">{I18N.get('3528')}</Select.Option>
+                placeholder={I18N.get('register.form.developer')}>
+                <Select.Option value="yes">{I18N.get('register.form.yes')}</Select.Option>
+                <Select.Option value="no">{I18N.get('register.form.no')}</Select.Option>
             </Select>
         )
 
         const source_fn = getFieldDecorator('source', {
-            rules: [{message: ''}],
+            rules: [{message: ''}]
         })
         const source_el = (
             <Input size="large"
-                   placeholder={I18N.get('3530')}/>
+                placeholder={I18N.get('register.form.hear')}/>
         )
 
         return {
@@ -243,7 +243,7 @@ class C extends BaseComponent {
 
             source: source_fn(source_el),
 
-            recaptcha: recaptcha_fn(recaptcha_el),
+            recaptcha: recaptcha_fn(recaptcha_el)
         }
     }
 
@@ -252,13 +252,13 @@ class C extends BaseComponent {
             const p = this.getConfirmInputProps()
             return (
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
-                    <Divider>{I18N.get('3531')}</Divider>
+                    <Divider>{I18N.get('register.code')}</Divider>
                     <FormItem>
                         {p.regCode}
                     </FormItem>
                     <FormItem>
                         <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn" onClick={this.handleSubmit.bind(this)}>
-                            {I18N.get('3532')}
+                            {I18N.get('register.submit')}
                         </Button>
                     </FormItem>
                 </Form>
@@ -267,7 +267,7 @@ class C extends BaseComponent {
             const p = this.getInputProps()
             return (
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
-                    <Divider>{I18N.get('3503')}{/* Required Fields */}</Divider>
+                    <Divider>{I18N.get('register.required')}{/* Required Fields */}</Divider>
                     <FormItem>
                         {p.firstName}
                     </FormItem>
@@ -304,7 +304,7 @@ class C extends BaseComponent {
                     </FormItem>
                     <FormItem>
                         <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn" onClick={this.handleSubmit.bind(this)}>
-                            {I18N.get('3532')}
+                            {I18N.get('register.submit')}
                         </Button>
                     </FormItem>
                 </Form>
@@ -324,15 +324,15 @@ class C extends BaseComponent {
             <div className="c_registerContainer">
 
                 <h2>
-                    {I18N.get('3500')}
+                    {I18N.get('register.title')}
                     {/* Become a Contributor */}
                 </h2>
 
                 <p>
-                    {I18N.get('3501')}
+                    {I18N.get('register.description_1')}
                     {/* As a member you can sign up for bounties on EBP,  */}
                     <br/>
-                    {I18N.get('3502')}
+                    {I18N.get('register.description_2')}
                     {/* you do not need to be a member to join events. */}
                 </p>
 
