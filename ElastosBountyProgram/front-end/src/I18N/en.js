@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 export default {
     // Header
@@ -131,36 +131,33 @@ export default {
     '3602': 'Please enter a new password',
     '3603': 'Password changed successfully',
 
-    // Developer breadcrumb
-    '3000': 'Home',
-    '3001': 'Developers',
-
     // Developer
-    '3010': 'Learn',
-    '3011': 'Elastos Basics',
-    '3012': 'Key Concepts',
-    '3013': 'Getting Started',
-    '3014': 'Tutorials',
-    '3015': 'Training, webinars, bootcamps',
-    '3020': 'Team Search',
-    '3021': 'Join a team looking for your skills',
-    '3022': 'Create a profile',
-    '3023': 'Create a project',
-    '3030': 'Project Search',
-    '3031': 'Top 100 projects',
-    '3032': 'Join a project that is in active development',
-    '3033': 'Submit an issue',
-    '3040': 'Is Elastos suited to my project?',
-    '3050': 'Elastos Core Components',
-    '3051': 'Elastos RunTime (RT)',
-    '3052': 'lots of information about Elastos Run Time',
-    '3053': 'C++',
-    '3060': 'Elastos SPV (SPV)',
-    '3061': 'Payment module with full feature SDK',
-    '3062': 'C++, Javascript, Go',
-    '3070': 'Issues',
-    '3071': 'Docs',
-    '3072': 'More Info',
+    'developer.breadcrumb.developers': 'Developers',
+    'developer.learn': 'Learn',
+    'developer.learn.basics': 'Elastos Basics',
+    'developer.learn.concepts': 'Key Concepts',
+    'developer.learn.start': 'Getting Started',
+    'developer.learn.tutorials': 'Tutorials',
+    'developer.learn.resources': 'Training, webinars, bootcamps',
+    'developer.team': 'Team Search',
+    'developer.team.join': 'Join a team looking for your skills',
+    'developer.team.create_profile': 'Create a profile',
+    'developer.team.create_project': 'Create a project',
+    'developer.project': 'Project Search',
+    'developer.project.top': 'Top 100 projects',
+    'developer.project.join': 'Join a project that is in active development',
+    'developer.project.issue': 'Submit an issue',
+    'developer.action': 'Is Elastos suited to my project?',
+    'developer.components': 'Elastos Core Components',
+    'developer.components.core.title': 'Elastos RunTime (RT)',
+    'developer.components.core.languages': 'C++',
+    'developer.components.core.description': 'lots of information about Elastos Run Time',
+    'developer.components.spv': 'Elastos SPV (SPV)',
+    'developer.components.spv.languages': 'C++, Javascript, Go',
+    'developer.components.spv.description': 'Payment module with full feature SDK',
+    'developer.components.issues': 'Issues',
+    'developer.components.docs': 'Docs',
+    'developer.components.info': 'More Info',
 
     // Project/Team detail
     'project.detail.deadline': 'Deadline',
