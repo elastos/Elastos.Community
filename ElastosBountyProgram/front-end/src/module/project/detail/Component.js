@@ -142,6 +142,17 @@ class C extends BaseComponent {
         const description = detail.descBreakdown || detail.description || ''
         const leaderImage = detail.createdBy.profile.avatar || ''
 
+        const recruiting_el = _.isEmpty(detail.recruitedSkillsets)
+            ? I18N.get('project.detail.not_recruiting')
+            : (
+                <div>
+                    <span className="gap-right">{I18N.get('project.detail.recruiting')}: </span>
+                    <span>
+                        {_.map(detail.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>)}
+                    </span>
+                </div>
+            )
+
         return (
             <div>
                 <div className="title">
@@ -159,7 +170,7 @@ class C extends BaseComponent {
                 </div>
                 <div class="description-box">
                     <hr className="divider"/>
-                    <div className="description-title">{I18N.get('project.detail.description')}</div>
+                    <div className="description-title">{recruiting_el}</div>
                     <hr className="divider"/>
                     <div className="description-content">{description}</div>
                 </div>
