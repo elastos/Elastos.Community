@@ -2,6 +2,62 @@
 @import "../../../../style/variable";
 @import "../../../../style/color";
 
-.p_DeveloperLearn {
 
+.p_DeveloperLearn {
+   text-align: left;
 }
+
+// topicDetail
+#topicDetail {
+    border: solid rgba(125,125,125,0.15);
+    border-width: 0 0 0 1px;
+    padding-left: 30px;
+    height: 500px;
+}
+#topicDetail article {
+    height:80%;
+}
+#topicDetail footer {
+    height: 20%;
+}
+#meta div:last-child,
+#nextTopic div {
+    text-align: right;
+}
+
+// topics
+#topics .ant-tree-node-selected {
+    text-decoration: none;
+    color: #47aaa7;
+    background: none;
+}
+
+// learnConent
+#learnContent {
+    margin: 0 20px;
+}
+
+// tabs
+.ant-tabs-nav .ant-tabs-tab {
+    color: #000000;
+    background: #efefef;
+    border-radius: 5px 5px 0 0;
+    box-shadow: inset 0px 3px 3px 0px #9D9A9E;
+    opacity: 0.7;
+}
+.ant-tabs-nav .ant-tabs-tab-active {
+    background: #ffffff;
+    opacity:1;
+    font-weight: normal;
+}
+
+.ant-tabs.ant-tabs-card > .ant-tabs-bar .ant-tabs-tab-active {
+    color: #128783;
+}
+
+.ant-tabs, .ant-tree-node-content-wrapper {
+    font-size: 1em;
+    line-height: 1.5rem;
+}
+
+
