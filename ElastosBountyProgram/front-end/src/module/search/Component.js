@@ -345,11 +345,11 @@ export default class extends BaseComponent {
             return _.isEmpty(entity.recruitedSkillsets)
                 ? I18N.get('project.detail.not_recruiting')
                 : (
-                    <div>
-                        <span className="gap-right">{I18N.get('project.detail.recruiting')}: </span>
-                        <span>
+                    <div className="valign-wrapper">
+                        <div className="gap-right pull-left">{I18N.get('project.detail.recruiting')}: </div>
+                        <div className="pull-left">
                             {_.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>)}
-                        </span>
+                        </div>
                     </div>
                 )
         }
