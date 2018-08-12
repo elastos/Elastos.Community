@@ -246,14 +246,14 @@ export default class extends BaseComponent {
                         <Affix offsetTop={15}>
                             <Input.Search placeholder="Search"/>
                             <div className="group">
-                                <div className="title">Looking For:</div>
+                                <div className="title">Looking For</div>
                                 <div className="content">
                                     {lookingForElement}
                                 </div>
                             </div>
 
                             <div className="group">
-                                <div className="title">Skillset:</div>
+                                <div className="title">Skillset</div>
                                 <div className="content">
                                     {skillsetElement}
                                     {skillsetOptions.length > this.state.entryCount &&
@@ -268,7 +268,7 @@ export default class extends BaseComponent {
                             </div>
 
                             <div className="group">
-                                <div className="title">Category:</div>
+                                <div className="title">Category</div>
                                 <div className="content">
                                     {categoryElement}
                                     { categoryOptions.length > this.state.entryCount &&
