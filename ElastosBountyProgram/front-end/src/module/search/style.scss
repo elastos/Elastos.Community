@@ -9,4 +9,13 @@
   .admin-right-column {
     min-height: 392px;
   }
+
+  .filters-tree {
+    margin-bottom: $gap_1;
+  }
+}
+
+.filters-menu {
+  background-color: white;
+  padding: $gap_2;
 }

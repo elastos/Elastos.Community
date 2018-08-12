@@ -1,18 +1,20 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import {Col, Row, Icon, Input, Button, Breadcrumb, List, Checkbox, Radio,
-    Carousel, Modal, Avatar, Affix, Tag} from 'antd'
+import {Col, Row, Icon, Input, Button, List, Checkbox, Radio,
+    Carousel, Modal, Avatar, Affix, Tag, TreeSelect } from 'antd'
 import _ from 'lodash'
 import './style.scss'
-import moment from 'moment/moment'
 import {SKILLSET_TYPE, TEAM_TASK_DOMAIN} from '@/constant'
 import ProjectDetail from '@/module/project/detail/Container'
 import TeamDetail from '@/module/team/detail/Container'
 import Footer from '@/module/layout/Footer/Container'
+import MediaQuery from 'react-responsive'
+import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant';
 import I18N from '@/I18N'
 
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
+const TreeNode = TreeSelect.TreeNode;
 
 export default class extends BaseComponent {
     componentDidMount() {
@@ -35,7 +37,9 @@ export default class extends BaseComponent {
             showProjectModal: false,
             showTeamModal: false,
             taskDetailId: 0,
-            teamDetailId: 0
+            teamDetailId: 0,
+            showMobile: false,
+            filtersTree: ['TEAM']
         }
     }
 
@@ -178,20 +182,66 @@ export default class extends BaseComponent {
         );
     }
 
-    enableSkillsetEntries() {
-        this.setState({
-            skillsetShowAllEntries: !this.state.skillsetShowAllEntries
-        });
+    getLookingForTree(lookingForOptions) {
+        const filtered = _.take(lookingForOptions, lookingForOptions.length)
+        const elements = _.map(filtered, (option) => {
+            return (
+                <TreeNode value={option.value} title={option.label} key={option.value}/>
+            )
+        })
+
+        return elements;
     }
 
-    enableCategoryEntries() {
-        this.setState({
-            categoryShowAllEntries: !this.state.categoryShowAllEntries
-        });
+    getSkillsetTree(skillsetOptions) {
+        const filtered = _.take(skillsetOptions, skillsetOptions.length)
+        const elements = _.map(filtered, (option) => {
+            return (
+                <TreeNode value={option.value} title={option.label} key={option.value}/>
+            );
+        })
+        return elements;
     }
 
-    renderMain() {
-        const lookingForOptions = [
+    getCategoryTree(categoryOptions) {
+        const filtered = _.take(categoryOptions, categoryOptions.length)
+        const elements = _.map(filtered, (option) => {
+            return (
+                <TreeNode value={option.value} title={option.label} key={option.value}/>
+            );
+        })
+        return elements;
+    }
+
+    handleOnFiltersChange(e) {
+        this.setState({
+            filtersTree: e
+        })
+
+        for (let item of e) {
+            let found = this.getLookingForOptions().find((option) => item === option.value)
+            if (found) {
+                this.setState({
+                    lookingFor: found
+                }, this.refetch.bind(this))
+            }
+            found = this.getSkillsetOptions().find((option) => item === option)
+            if (found) {
+                this.setState({
+                    skillset: found
+                }, this.refetch.bind(this))
+            }
+            found = this.getCategoryOptions().find((option) => item === option)
+            if (found) {
+                this.setState({
+                    domain: found
+                }, this.refetch.bind(this))
+            }
+        }
+    }
+
+    getLookingForOptions() {
+        return [
             {
                 label: 'Team',
                 value: 'TEAM'
@@ -201,7 +251,10 @@ export default class extends BaseComponent {
                 value: 'PROJECT'
             }
         ]
-        const skillsetOptions = [
+    }
+
+    getSkillsetOptions() {
+        return [
             {
                 label: 'C++',
                 value: SKILLSET_TYPE.CPP
@@ -219,7 +272,10 @@ export default class extends BaseComponent {
                 value: SKILLSET_TYPE.PYTHON
             }
         ]
-        const categoryOptions = [
+    }
+
+    getCategoryOptions() {
+        return [
             {
                 label: 'Social',
                 value: TEAM_TASK_DOMAIN.SOCIAL
@@ -237,55 +293,107 @@ export default class extends BaseComponent {
                 value: TEAM_TASK_DOMAIN.FINANCE
             }
         ]
-        const lookingForElement = this.renderLookingFor(lookingForOptions, true);
-        const skillsetElement = this.renderSkillset(skillsetOptions, this.state.skillsetShowAllEntries);
-        const categoryElement = this.renderCategory(categoryOptions, this.state.categoryShowAllEntries);
+    }
 
+    getSidebarMenu() {
+        const lookingForOptions = this.getLookingForOptions()
+        const skillsetOptions = this.getSkillsetOptions()
+        const categoryOptions = this.getCategoryOptions()
+        const lookingForElement = this.renderLookingFor(lookingForOptions, true)
+        const skillsetElement = this.renderSkillset(skillsetOptions, this.state.skillsetShowAllEntries)
+        const categoryElement = this.renderCategory(categoryOptions, this.state.categoryShowAllEntries)
+        const lookingForElementTree = this.getLookingForTree(lookingForOptions)
+        const skillsetElementTree = this.getSkillsetTree(skillsetOptions)
+        const categoryElementTree = this.getCategoryTree(categoryOptions)
+        return (
+            <div>
+                <MediaQuery minWidth={MIN_WIDTH_PC}>
+                    <Input.Search placeholder="Search"/>
+                    <div className="group">
+                        <div className="title">Looking For</div>
+                        <div className="content">
+                            {lookingForElement}
+                        </div>
+                    </div>
+                    <div className="group">
+                        <div className="title">Skillset</div>
+                        <div className="content">
+                            {skillsetElement}
+                            {skillsetOptions.length > this.state.entryCount &&
+                            <div className="showMore" onClick={this.enableSkillsetEntries.bind(this)}>
+                                {
+                                    !this.state.skillsetShowAllEntries ? (<span>Show More…</span>)
+                                        : (<span>Hide</span>)
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div className="group">
+                        <div className="title">Category</div>
+                        <div className="content">
+                            {categoryElement}
+                            { categoryOptions.length > this.state.entryCount &&
+                            <div className="showMore" onClick={this.enableCategoryEntries.bind(this)}>
+                                {
+                                    !this.state.categoryShowAllEntries ? (<span>Show More…</span>)
+                                        : (<span>Hide</span>)
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </MediaQuery>
+                <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                    <TreeSelect
+                        className="filters-tree"
+                        showSearch
+                        style={{ width: 300 }}
+                        value={this.state.filtersTree}
+                        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                        placeholder="Filters"
+                        allowClear
+                        multiple
+                        treeDefaultExpandAll
+                        treeCheckable={true}
+                        onChange={this.handleOnFiltersChange.bind(this)}
+                    >
+                        <TreeNode value="0" title="Looking For" key="0">
+                            {lookingForElementTree}
+                        </TreeNode>
+                        <TreeNode value="1" title="Skillset" key="1">
+                            {skillsetElementTree}
+                        </TreeNode>
+                        <TreeNode value="3" title="Category" key="2">
+                            {categoryElementTree}
+                        </TreeNode>
+                    </TreeSelect>
+                </MediaQuery>
+            </div>)
+    }
+
+    enableSkillsetEntries() {
+        this.setState({
+            skillsetShowAllEntries: !this.state.skillsetShowAllEntries
+        })
+    }
+
+    enableCategoryEntries() {
+        this.setState({
+            categoryShowAllEntries: !this.state.categoryShowAllEntries
+        })
+    }
+
+    renderMain() {
         return (
             <div className="c_Search">
                 <Row className="d_row">
-                    <Col span={4} className="admin-left-column wrap-box-user">
+                    <Col sm={24} md={4} className="admin-left-column wrap-box-user">
                         <Affix offsetTop={15}>
-                            <Input.Search placeholder="Search"/>
-                            <div className="group">
-                                <div className="title">Looking For</div>
-                                <div className="content">
-                                    {lookingForElement}
-                                </div>
-                            </div>
-
-                            <div className="group">
-                                <div className="title">Skillset</div>
-                                <div className="content">
-                                    {skillsetElement}
-                                    {skillsetOptions.length > this.state.entryCount &&
-                                        <div className="showMore" onClick={this.enableSkillsetEntries.bind(this)}>
-                                            {
-                                                !this.state.skillsetShowAllEntries ? (<span>Show More…</span>)
-                                                    : (<span>Hide</span>)
-                                            }
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-
-                            <div className="group">
-                                <div className="title">Category</div>
-                                <div className="content">
-                                    {categoryElement}
-                                    { categoryOptions.length > this.state.entryCount &&
-                                        <div className="showMore" onClick={this.enableCategoryEntries.bind(this)}>
-                                            {
-                                                !this.state.categoryShowAllEntries ? (<span>Show More…</span>)
-                                                    : (<span>Hide</span>)
-                                            }
-                                        </div>
-                                    }
-                                </div>
-                            </div>
+                            {this.getSidebarMenu()}
                         </Affix>
                     </Col>
-                    <Col span={20} className="admin-right-column wrap-box-user">
+                    <Col sm={24} md={20} className="admin-right-column wrap-box-user">
                         {this.renderList()}
                     </Col>
                 </Row>
