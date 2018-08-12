@@ -85,10 +85,22 @@ export default class extends Base {
             throw 'Access Denied'
         }
 
-        const updateObj:any = _.omit(param, restrictedFields.update)
-        this.validate_name(updateObj.name);
+        const doc = {
+            name: param.name,
+            domain: param.domain,
+            metadata: this.param_metadata(param.metadata),
+            tags: this.param_tags(param.tags),
+            profile: {
+                logo: param.logo,
+                description: param.description
+            },
+            recruitedSkillsets: param.recruitedSkillsets,
+            pictures: param.pictures
+        };
 
-        await db_team.update({_id: teamId}, updateObj)
+        this.validate_name(doc.name);
+
+        await db_team.update({_id: teamId}, doc)
 
         return db_team.findById(teamId)
     }

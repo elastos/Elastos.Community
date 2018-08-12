@@ -182,6 +182,8 @@ export default {
     'project.detail.popup.applied': 'Applied',
     'project.detail.popup.join_team': 'Join Team',
 
+    'team.detail.team_active': 'Your team is currently active',
+
     // Team specializations
     'team.spec.social': 'Social',
     'team.spec.iot': 'IoT',
@@ -195,5 +197,8 @@ export default {
     'team.skillset.python': 'Python',
 
     // General
-    'select.placeholder': 'Please select'
+    'select.placeholder': 'Please select',
+    '.ok': 'Ok',
+    '.cancel': 'Cancel',
+    '.edit': 'Edit'
 };

@@ -7,6 +7,7 @@ import TeamPublicDetail from './detail/Container'
 import './style.scss'
 import moment from 'moment/moment'
 import _ from 'lodash'
+import I18N from '@/I18N'
 
 /**
  * This has 3 views
@@ -38,11 +39,11 @@ export default class extends BaseComponent {
     renderHeader() {
         return <div className="l_banner">
             <div className="pull-left">
-                Lorem ipsum
+                {I18N.get('team.detail.team_active')}.
             </div>
             <div className="pull-right right-align">
                 <Button onClick={this.switchEditMode.bind(this)}>
-                    {this.state.editing ? 'Cancel' : 'Edit'}
+                    {this.state.editing ? I18N.get('.cancel') : I18N.get('.edit')}
                 </Button>
             </div>
             <div className="clearfix"/>

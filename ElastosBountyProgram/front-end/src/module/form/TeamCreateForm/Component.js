@@ -29,21 +29,12 @@ const TextArea = Input.TextArea
 const RadioGroup = Radio.Group
 
 class C extends BaseComponent {
-    ord_states() {
-        return {
-            loading: false,
-            fileList: [],
-            previewVisible: false,
-            previewImage: ''
-        }
-    }
-
     constructor (props) {
         super(props)
 
         this.state = {
-            editing: !!props.existingTask,
-            fileList: (props.existingTask && props.existingTask.pictures) || [],
+            editing: !!props.existingTeam,
+            fileList: (props.existingTeam && props.existingTeam.pictures) || [],
             previewVisible: false,
             previewImage: ''
         }
@@ -60,14 +51,12 @@ class C extends BaseComponent {
         const tags = this.props.form.getFieldInstance('tags').getValue()
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
-                this.setState({ loading: true });
-
                 let createParams = {
                     ...values,
                     tags: tags.join(','),
                     logo: '',
                     metadata: '',
-                    pictures: this.state.fileList || []
+                    pictures: this.state.fileList || [],
                 }
 
                 _.each(createParams.pictures, (pictureFile) => {
@@ -77,21 +66,22 @@ class C extends BaseComponent {
                 })
 
                 if (this.state.editing) {
-                    await this.props.update(createParams)
+                    createParams.teamId = this.props.existingTeam._id
+                    this.props.update(createParams).then(() => {
+                        this.props.getTeamDetail(this.props.existingTeam._id)
+                    })
                     this.props.switchEditMode()
                 } else {
                     await this.props.create(createParams)
                     this.props.history.push('/profile/teams')
                 }
-
-                this.setState({loading: false})
             }
         })
     }
 
     getInputProps () {
         const {getFieldDecorator} = this.props.form
-        const existingTask = this.props.existingTask
+        const existingTeam = this.props.existingTeam
 
         const input_el = (
             <Input size="large"/>
@@ -103,7 +93,7 @@ class C extends BaseComponent {
 
         const name_fn = getFieldDecorator('name', {
             rules: [{required: true, message: 'team name is required'}],
-            initialValue: existingTask && existingTask.name || ''
+            initialValue: existingTeam && existingTeam.name || ''
         })
 
         const specs = [
@@ -154,7 +144,7 @@ class C extends BaseComponent {
 
         const type_fn = getFieldDecorator('domain', {
             rules: [],
-            initialValue: existingTask && existingTask.domain || []
+            initialValue: existingTeam && existingTeam.domain || []
         })
         const type_el = (
             <TreeSelect treeData={specs} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
@@ -162,7 +152,7 @@ class C extends BaseComponent {
 
         const skillset_fn = getFieldDecorator('recruitedSkillsets', {
             rules: [],
-            initialValue: existingTask && existingTask.recruitedSkillsets || []
+            initialValue: existingTeam && existingTeam.recruitedSkillsets || []
         })
         const skillset_el = (
             <TreeSelect treeData={skillsets} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
@@ -170,12 +160,12 @@ class C extends BaseComponent {
 
         const description_fn = getFieldDecorator('description', {
             rules: [],
-            initialValue: existingTask && existingTask.description || ''
+            initialValue: existingTeam && existingTeam.profile.description || ''
         })
 
         const tags_fn = getFieldDecorator('tags', {
             rules: [],
-            initialValue: existingTask && existingTask.tags || ''
+            initialValue: existingTeam && existingTeam.tags || ''
         })
         const tags_el = <InputTags />
 
@@ -271,7 +261,7 @@ class C extends BaseComponent {
                         </FormItem>
 
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
-                            <Button loading={this.state.loading} type="ebp" htmlType="submit" className="d_btn">
+                            <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
                                 {this.state.editing ? 'Save' : 'Create'}
                             </Button>
                         </FormItem>
