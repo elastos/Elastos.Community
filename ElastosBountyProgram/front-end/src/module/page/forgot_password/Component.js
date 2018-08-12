@@ -7,12 +7,12 @@ import './style.scss'
 
 export default class extends StandardPage {
 
-    ord_renderContent(){
+    ord_renderContent() {
         return (
             <div className="p_forgotPassword ebp-wrap">
                 <div className="d_box">
                     <p>
-                        {I18N.get('3600')}
+                        {I18N.get('forgot.title')}
                     </p>
                     <ForgotPasswordForm />
                 </div>

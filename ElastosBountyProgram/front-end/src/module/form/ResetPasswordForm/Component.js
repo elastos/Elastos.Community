@@ -37,7 +37,7 @@ class C extends BaseComponent {
     compareToFirstPassword(rule, value, callback) {
         const form = this.props.form
         if (value && value !== form.getFieldValue('password')) {
-            callback(I18N.get('3505')) // Two passwords you entered do not match'
+            callback(I18N.get('register.error.passwords')) // Two passwords you entered do not match'
         } else {
             callback()
         }
@@ -49,7 +49,7 @@ class C extends BaseComponent {
             form.validateFields(['confirmPassword'], { force: true })
         }
         if (value && value.length < MIN_LENGTH_PASSWORD) {
-            callback(`${I18N.get('3506')} ${MIN_LENGTH_PASSWORD} ${I18N.get('3507')}`)
+            callback(`${I18N.get('register.error.password_length_1')} ${MIN_LENGTH_PASSWORD} ${I18N.get('register.error.password_length_2')}`)
         }
         callback()
     }
@@ -58,28 +58,28 @@ class C extends BaseComponent {
         const {getFieldDecorator} = this.props.form
         const pwd_fn = getFieldDecorator('password', {
             rules: [{
-                required: true, message: I18N.get('3520')
+                required: true, message: I18N.get('register.form.label_password')
             }, {
                 validator: this.validateToNextPassword.bind(this)
             }]
         })
         const pwd_el = (
             <Input size="large"
-                   prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                   type="password" placeholder={I18N.get('3521')}/>
+                prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                type="password" placeholder={I18N.get('register.form.password')}/>
         )
 
         const pwdConfirm_fn = getFieldDecorator('passwordConfirm', {
             rules: [{
-                required: true, message: I18N.get('3522')
+                required: true, message: I18N.get('register.form.label_password_confirm')
             }, {
                 validator: this.compareToFirstPassword.bind(this)
             }]
         })
         const pwdConfirm_el = (
             <Input size="large"
-                   prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                   type="password" placeholder={I18N.get('3523')}/>
+                prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                type="password" placeholder={I18N.get('register.form.password_confirm')}/>
         )
 
         return {
@@ -102,7 +102,7 @@ class C extends BaseComponent {
                 </FormItem>
                 <FormItem>
                     <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
-                        {I18N.get('3407')}
+                        {I18N.get('login.reset')}
                     </Button>
                 </FormItem>
             </Form>

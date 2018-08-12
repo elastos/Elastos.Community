@@ -23,7 +23,7 @@ export default createContainer(Component, (state) => {
                 const rs = await userService.resetPassword(resetToken, password)
 
                 if (rs) {
-                    message.success(I18N.get('3603'))
+                    message.success(I18N.get('forgot.success'))
                     this.history.push('/login')
                 }
 

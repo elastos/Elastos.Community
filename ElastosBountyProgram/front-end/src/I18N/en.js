@@ -79,14 +79,14 @@ export default {
     'home.summary_2': 'formed to promote Elastos in our communities. Membership is open to everyone.',
 
     // LoginForm
-    '3400': 'Please input your username',
-    '3401': 'Username',
-    '3402': 'Please input your password',
-    '3403': 'Password',
-    '3404': 'Keep me logged in',
-    '3405': 'Forgot password',
-    '3406': 'Log in',
-    '3407': 'Reset password',
+    'login.label_username': 'Please input your username',
+    'login.username': 'Username',
+    'login.label_password': 'Please input your password',
+    'login.password': 'Password',
+    'login.logged': 'Keep me logged in',
+    'login.forget': 'Forgot password',
+    'login.submit': 'Log in',
+    'login.reset': 'Reset password',
 
     // RegisterFrom
     'register.title': 'Become a Contributor',
@@ -126,10 +126,13 @@ export default {
     '3534': 'Country',
 
     // Forgot / Reset Password Form
-    '3600': 'Forgot your password? Enter your email to be sent a reset password link.',
-    '3601': 'Success, if the email matches your user you should receive an email',
-    '3602': 'Please enter a new password',
-    '3603': 'Password changed successfully',
+    'forgot.title': 'Forgot your password? Enter your email to be sent a reset password link.',
+    'forgot.form.label_email': 'Please input a email',
+    'forgot.form.email': 'Email',
+    'forgot.form.submit': 'Reset password',
+    'forgot.sent_email': 'Success, if the email matches your user you should receive an email',
+    'forgot.new_password': 'Please enter a new password',
+    'forgot.success': 'Password changed successfully',
 
     // Developer
     'developer.breadcrumb.developers': 'Developers',

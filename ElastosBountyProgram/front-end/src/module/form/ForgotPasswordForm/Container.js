@@ -8,7 +8,6 @@ message.config({
     top: 100
 })
 
-
 export default createContainer(Component, (state) => {
     return {
         ...state.user.login_form,
@@ -23,7 +22,7 @@ export default createContainer(Component, (state) => {
                 const rs = await userService.forgotPassword(email)
 
                 if (rs) {
-                    message.success(I18N.get('3601'))
+                    message.success(I18N.get('forgot.sent_email'))
                 }
 
             } catch (err) {
