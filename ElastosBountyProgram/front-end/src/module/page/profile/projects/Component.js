@@ -5,9 +5,11 @@ import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import _ from 'lodash'
 import './style.scss'
 import '../../admin/admin.scss'
-import { Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button, Table, Divider, List, Carousel, Avatar } from 'antd'
+import { Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button,
+    Table, Divider, List, Carousel, Avatar, Tag } from 'antd'
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
+import I18N from '@/I18N'
 
 const FormItem = Form.Item;
 
@@ -64,12 +66,25 @@ export default class extends StandardPage {
     }
 
     getListComponent(tasks) {
+        const description_fn = (entity) => {
+            return _.isEmpty(entity.recruitedSkillsets)
+                ? I18N.get('project.detail.not_recruiting')
+                : (
+                    <div className="valign-wrapper">
+                        <div className="gap-right pull-left">{I18N.get('project.detail.recruiting')}: </div>
+                        <div className="pull-left">
+                            {_.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>)}
+                        </div>
+                    </div>
+                )
+        }
+
         const data = _.map(tasks, (task, id) => {
             return {
                 href: '',
                 title: task.name,
                 pictures: task.pictures || [],
-                description: 'Lorem ipsum',
+                description: description_fn(task),
                 content: task.description,
                 owner: task.createdBy,
                 id: task._id,

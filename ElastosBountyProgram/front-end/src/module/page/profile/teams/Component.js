@@ -5,11 +5,13 @@ import config from '@/config';
 import _ from 'lodash'
 import './style.scss'
 import '../../admin/admin.scss'
-import { Col, Row, Icon, Form, Input, Breadcrumb, Button, Divider, Table, List, Carousel, Avatar } from 'antd'
+import { Col, Row, Icon, Form, Input, Breadcrumb, Button,
+    Divider, Table, List, Carousel, Avatar, Tag } from 'antd'
 import { TEAM_USER_STATUS } from '@/constant'
 import MediaQuery from 'react-responsive'
 import moment from 'moment/moment'
 import Footer from '@/module/layout/Footer/Container'
+import I18N from '@/I18N'
 
 const FormItem = Form.Item;
 
@@ -153,11 +155,24 @@ export default class extends StandardPage {
 
     getListComponent() {
         const teams = this.props.all_teams
+        const description_fn = (entity) => {
+            return _.isEmpty(entity.recruitedSkillsets)
+                ? I18N.get('project.detail.not_recruiting')
+                : (
+                    <div className="valign-wrapper">
+                        <div className="gap-right pull-left">{I18N.get('project.detail.recruiting')}: </div>
+                        <div className="pull-left">
+                            {_.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>)}
+                        </div>
+                    </div>
+                )
+        }
+
         const data = _.map(teams, (team, id) => {
             return {
                 title: team.name,
                 pictures: team.pictures || [],
-                description: 'Lorem ipsum',
+                description: description_fn(team),
                 content: team.profile.description,
                 owner: team.owner,
                 id: team._id
