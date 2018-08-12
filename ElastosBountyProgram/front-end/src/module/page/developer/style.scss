@@ -3,14 +3,13 @@
 @import "../../../style/color";
 
 $mobile-padding: $gap_0 0px;
-$max-width-mobile: 768px;
 
 .p_Developer {
   background: #ffffff;
   text-align: left;
   padding: 0 48px;
 
-  @media (max-width: $max-width-mobile) {
+  @media only screen and (max-width: $mobile-width) {
     padding: 0 24px;
   }
 
@@ -29,7 +28,7 @@ $max-width-mobile: 768px;
       align-items: flex-end;
       height: 50%;
       min-height: 175px;
-      @media (max-width: $max-width-mobile) {
+      @media only screen and (max-width: $mobile-width) {
         min-height: unset;
       }
 
@@ -38,7 +37,7 @@ $max-width-mobile: 768px;
         font-weight: bold;
         font-size: 2rem;
         color: $primary_color;
-        @media (max-width: $max-width-mobile) {
+        @media only screen and (max-width: $mobile-width) {
           font-size: 1.5rem;
         }
       }
@@ -52,7 +51,7 @@ $max-width-mobile: 768px;
         max-width: 35%;
         max-height: 150px;
         filter: alpha(opacity=25); // IE8 and earlier
-        @media (max-width: $max-width-mobile) {
+        @media only screen and (max-width: $mobile-width) {
           top: unset;
           margin: 0px $gap_1 $gap_1 $gap_1;
           min-width: 25px;
@@ -74,21 +73,21 @@ $max-width-mobile: 768px;
       height: 50%;
       padding: 5px 10px;
       font-size: 16px;
-      @media (max-width: $max-width-mobile) {
+      @media only screen and (max-width: $mobile-width) {
         font-size: 12px;
       }
     }
   }
 
   .d_rowTop {
-    @media (max-width: $max-width-mobile) {
+    @media only screen and (max-width: $mobile-width) {
       .d_box {
         width: 100%;
         margin-top: $gap_0;
         margin-bottom: $gap_0;
       }
       .ant-card {
-        @media (max-width: $max-width-mobile) {
+        @media only screen and (max-width: $mobile-width) {
           margin: 0;
         }
       }
@@ -99,7 +98,7 @@ $max-width-mobile: 768px;
     margin: 100px 0;
     text-align: center;
 
-    @media (max-width: $max-width-mobile) {
+    @media only screen and (max-width: $mobile-width) {
       margin: 50px 0;
     }
 
@@ -109,7 +108,7 @@ $max-width-mobile: 768px;
       color: $primary_color;
       vertical-align: middle;
 
-      @media (max-width: $max-width-mobile) {
+      @media only screen and (max-width: $mobile-width) {
         width: 100%;
       }
     }
@@ -124,7 +123,7 @@ $max-width-mobile: 768px;
 
     .title {
       font-size: 2rem;
-      @media (max-width: $max-width-mobile) {
+      @media only screen and (max-width: $mobile-width) {
         font-size: 1.5rem;
       }
     }
@@ -136,7 +135,7 @@ $max-width-mobile: 768px;
       background-color: $bg_gray;
       border-radius: 5px;
 
-      @media (max-width: $max-width-mobile) {
+      @media only screen and (max-width: $mobile-width) {
         margin: 20px 0px;
       }
 
@@ -147,20 +146,20 @@ $max-width-mobile: 768px;
           .languages {
             color: $primary_color;
           }
-          @media (max-width: $max-width-mobile) {
+          @media only screen and (max-width: $mobile-width) {
             font-size: 14px;
           }
         }
         .component-divider {
           margin: 5px 15px;
           border: 1px solid gray;
-          @media (max-width: $max-width-mobile) {
+          @media only screen and (max-width: $mobile-width) {
             margin: $mobile-padding;
           }
         }
         .component-description {
           padding: 10px;
-          @media (max-width: $max-width-mobile) {
+          @media only screen and (max-width: $mobile-width) {
             font-size: 12px;
             padding: 5px 0px 0px 0px;
           }
@@ -178,7 +177,7 @@ $max-width-mobile: 768px;
           background-color: $border_gray;
         }
 
-        @media (max-width: $max-width-mobile) {
+        @media only screen and (max-width: $mobile-width) {
           button {
             width: 100%;
             margin: $mobile-padding;
