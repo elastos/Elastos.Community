@@ -6,7 +6,7 @@ import _ from 'lodash'
 import './style.scss'
 import '../../admin/admin.scss'
 import { Col, Row, Icon, Form, Input, Breadcrumb, Button,
-    Divider, Table, List, Carousel, Avatar, Tag } from 'antd'
+    Divider, Select, Table, List, Carousel, Avatar, Tag } from 'antd'
 import { TEAM_USER_STATUS } from '@/constant'
 import MediaQuery from 'react-responsive'
 import moment from 'moment/moment'
@@ -104,23 +104,38 @@ export default class extends StandardPage {
                                     <div className="pull-right filter-group">
                                         <Button onClick={this.goCreatepage.bind(this)}>Create Team</Button>
                                     </div>
-                                    <Button.Group className="filter-group">
-                                        <Button
-                                            className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
-                                            onClick={this.clearFilters.bind(this)}>All</Button>
-                                        <Button
-                                            className={(this.state.filter === FILTERS.OWNED && 'selected') || ''}
-                                            onClick={this.setOwnedFilter.bind(this)}>Owned</Button>
-                                        <Button
-                                            className={(this.state.filter === FILTERS.ACTIVE && 'selected') || ''}
-                                            onClick={this.setActiveFilter.bind(this)}>Active</Button>
-                                        <Button
-                                            className={(this.state.filter === FILTERS.APPLIED && 'selected') || ''}
-                                            onClick={this.setAppliedFilter.bind(this)}>Applied</Button>
-                                        <Button
-                                            className={(this.state.filter === FILTERS.REJECTED && 'selected') || ''}
-                                            onClick={this.setRejectedFilter.bind(this)}>Rejected</Button>
-                                    </Button.Group>
+                                    <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                                        <Select
+                                            name="type"
+                                            onChange={this.onSelectFilter.bind(this)}
+                                            value={this.state.filter}
+                                        >
+                                            {_.map(FILTERS, (filter, key) => {
+                                                return <Select.Option key={filter} value={filter}>
+                                                    {key}
+                                                </Select.Option>
+                                            })}
+                                        </Select>
+                                    </MediaQuery>
+                                    <MediaQuery minWidth={MIN_WIDTH_PC}>
+                                        <Button.Group className="filter-group">
+                                            <Button
+                                                className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
+                                                onClick={this.clearFilters.bind(this)}>All</Button>
+                                            <Button
+                                                className={(this.state.filter === FILTERS.OWNED && 'selected') || ''}
+                                                onClick={this.setOwnedFilter.bind(this)}>Owned</Button>
+                                            <Button
+                                                className={(this.state.filter === FILTERS.ACTIVE && 'selected') || ''}
+                                                onClick={this.setActiveFilter.bind(this)}>Active</Button>
+                                            <Button
+                                                className={(this.state.filter === FILTERS.APPLIED && 'selected') || ''}
+                                                onClick={this.setAppliedFilter.bind(this)}>Applied</Button>
+                                            <Button
+                                                className={(this.state.filter === FILTERS.REJECTED && 'selected') || ''}
+                                                onClick={this.setRejectedFilter.bind(this)}>Rejected</Button>
+                                        </Button.Group>
+                                    </MediaQuery>
                                     <div className="clearfix"/>
                                     {this.getListComponent()}
                                 </Col>
@@ -231,6 +246,26 @@ export default class extends StandardPage {
                 )}
             />
         )
+    }
+
+    onSelectFilter(value) {
+        switch (value) {
+            case FILTERS.ACTIVE:
+                this.setActiveFilter();
+                break;
+            case FILTERS.APPLIED:
+                this.setAppliedFilter();
+                break;
+            case FILTERS.REJECTED:
+                this.setRejectedFilter();
+                break;
+            case FILTERS.OWNED:
+                this.setOwnedFilter();
+                break;
+            default:
+                this.clearFilters();
+                break;
+        }
     }
 
     clearFilters() {

@@ -2,13 +2,15 @@ import React from 'react';
 import StandardPage from '../../StandardPage';
 import Footer from '@/module/layout/Footer/Container'
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
+import _ from 'lodash'
 
 import './style.scss'
 import '../../admin/admin.scss'
 
-import { Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Avatar, Button, Table, Divider } from 'antd'
+import { Col, Row, Icon, Select, Form, Badge, Tooltip, Breadcrumb, Avatar, Button, Table, Divider } from 'antd'
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
+import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from "../../../../config/constant"
 
 const FormItem = Form.Item;
 
@@ -296,28 +298,42 @@ export default class extends StandardPage {
                                 </Col>
                                 <Col sm={24} md={20} className="c_ProfileContainer admin-right-column wrap-box-user">
                                     {(this.props.is_leader || this.props.is_admin) &&
-                                    <div className="pull-right">
+                                    <div className="pull-right filter-group">
                                         <Button onClick={() => this.props.history.push('/task-create/')}>Create Task</Button>
                                     </div>
                                     }
-                                    <Button.Group className="filter-group">
-                                        <Button
-                                            className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
-                                            onClick={this.clearFilters.bind(this)}>All</Button>
-                                        <Button
-                                            className={(this.state.filter === FILTERS.OWNED && 'selected') || ''}
-                                            onClick={this.setOwnedFilter.bind(this)}>Owned</Button>
-                                        <Button
-                                            className={(this.state.filter === FILTERS.ACTIVE && 'selected') || ''}
-                                            onClick={this.setActiveFilter.bind(this)}>Active</Button>
-                                        <Button
-                                            className={(this.state.filter === FILTERS.APPLIED && 'selected') || ''}
-                                            onClick={this.setAppliedFilter.bind(this)}>Applied</Button>
-                                        <Button
-                                            className={(this.state.filter === FILTERS.SUBSCRIBED && 'selected') || ''}
-                                            onClick={this.setSubscribedFilter.bind(this)}>Subscribed</Button>
-                                    </Button.Group>
-
+                                    <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                                        <Select
+                                            name="type"
+                                            onChange={this.onSelectFilter.bind(this)}
+                                            value={this.state.filter}
+                                        >
+                                            {_.map(FILTERS, (filter, key) => {
+                                                return <Select.Option key={filter} value={filter}>
+                                                    {key}
+                                                </Select.Option>
+                                            })}
+                                        </Select>
+                                    </MediaQuery>
+                                    <MediaQuery minWidth={MIN_WIDTH_PC}>
+                                        <Button.Group className="filter-group">
+                                            <Button
+                                                className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
+                                                onClick={this.clearFilters.bind(this)}>All</Button>
+                                            <Button
+                                                className={(this.state.filter === FILTERS.OWNED && 'selected') || ''}
+                                                onClick={this.setOwnedFilter.bind(this)}>Owned</Button>
+                                            <Button
+                                                className={(this.state.filter === FILTERS.ACTIVE && 'selected') || ''}
+                                                onClick={this.setActiveFilter.bind(this)}>Active</Button>
+                                            <Button
+                                                className={(this.state.filter === FILTERS.APPLIED && 'selected') || ''}
+                                                onClick={this.setAppliedFilter.bind(this)}>Applied</Button>
+                                            <Button
+                                                className={(this.state.filter === FILTERS.SUBSCRIBED && 'selected') || ''}
+                                                onClick={this.setSubscribedFilter.bind(this)}>Subscribed</Button>
+                                        </Button.Group>
+                                    </MediaQuery>
                                     {this.state.filter === FILTERS.ALL &&
                                         <div>
                                             <Table
@@ -385,6 +401,26 @@ export default class extends StandardPage {
                 </div>
             </div>
         )
+    }
+
+    onSelectFilter(value) {
+        switch (value) {
+            case FILTERS.ACTIVE:
+                this.setActiveFilter();
+                break;
+            case FILTERS.APPLIED:
+                this.setAppliedFilter();
+                break;
+            case FILTERS.SUBSCRIBED:
+                this.setSubscribedFilter();
+                break;
+            case FILTERS.OWNED:
+                this.setOwnedFilter();
+                break;
+            default:
+                this.clearFilters();
+                break;
+        }
     }
 
     clearFilters() {

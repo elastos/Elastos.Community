@@ -2,12 +2,15 @@ import React from 'react';
 import StandardPage from '../../StandardPage';
 import Footer from '@/module/layout/Footer/Container'
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
+import _ from 'lodash'
 
 import './style.scss'
 import '../../admin/admin.scss'
 
-import { Col, Row, Icon, Form, Tooltip, Badge, Breadcrumb, Button, Table } from 'antd'
+import { Col, Row, Icon, Select, Form, Tooltip, Badge, Breadcrumb, Button, Table } from 'antd'
 import moment from 'moment/moment'
+import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from "../../../../config/constant"
+
 const FormItem = Form.Item;
 
 import MediaQuery from 'react-responsive'
@@ -139,18 +142,32 @@ export default class extends StandardPage {
                                     <div className="pull-right filter-group">
                                         <Button onClick={this.goCreatepage.bind(this)}>Create Issue</Button>
                                     </div>
-                                    <Button.Group className="filter-group">
-                                        <Button
-                                            className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
-                                            onClick={this.clearFilters.bind(this)}>All</Button>
-                                        <Button
-                                            className={(this.state.filter === FILTERS.CREATED && 'selected') || ''}
-                                            onClick={this.setCreatedFilter.bind(this)}>Created</Button>
-                                        <Button
-                                            className={(this.state.filter === FILTERS.SUBSCRIBED && 'selected') || ''}
-                                            onClick={this.setSubscribedFilter.bind(this)}>Subscribed</Button>
-                                    </Button.Group>
-
+                                    <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                                        <Select
+                                            name="type"
+                                            onChange={this.onSelectFilter.bind(this)}
+                                            value={this.state.filter}
+                                        >
+                                            {_.map(FILTERS, (filter, key) => {
+                                                return <Select.Option key={filter} value={filter}>
+                                                    {key}
+                                                </Select.Option>
+                                            })}
+                                        </Select>
+                                    </MediaQuery>
+                                    <MediaQuery minWidth={MIN_WIDTH_PC}>
+                                        <Button.Group className="filter-group">
+                                            <Button
+                                                className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
+                                                onClick={this.clearFilters.bind(this)}>All</Button>
+                                            <Button
+                                                className={(this.state.filter === FILTERS.CREATED && 'selected') || ''}
+                                                onClick={this.setCreatedFilter.bind(this)}>Created</Button>
+                                            <Button
+                                                className={(this.state.filter === FILTERS.SUBSCRIBED && 'selected') || ''}
+                                                onClick={this.setSubscribedFilter.bind(this)}>Subscribed</Button>
+                                        </Button.Group>
+                                    </MediaQuery>
                                     {this.state.filter === FILTERS.ALL &&
                                         <div>
                                             <Table
@@ -196,6 +213,20 @@ export default class extends StandardPage {
                 </div>
             </div>
         )
+    }
+
+    onSelectFilter(value) {
+        switch (value) {
+            case FILTERS.CREATED:
+                this.setCreatedFilter();
+                break;
+            case FILTERS.SUBSCRIBED:
+                this.setSubscribedFilter();
+                break;
+            default:
+                this.clearFilters();
+                break;
+        }
     }
 
     clearFilters() {
