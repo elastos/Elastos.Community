@@ -245,3 +245,9 @@ h3.one-line {
   border: 1px solid $primary_color;
   color: $primary_color;
 }
+
+.ant-menu-horizontal > .ant-menu-item {
+  &.right {
+    float: right;
+  }
+}

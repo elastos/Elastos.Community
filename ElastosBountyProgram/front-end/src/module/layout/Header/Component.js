@@ -79,6 +79,37 @@ export default class extends BaseComponent {
         )
     }
 
+    buildHelpDropdown() {
+        const langDropdown = this.buildLanguageDropdown()
+
+        return (
+            <Menu onClick={this.clickItem.bind(this)}>
+                <Menu.Item key="help">
+                    {I18N.get('0007')}
+                </Menu.Item>
+                <Menu.Item key="about">
+                    {I18N.get('0008')}
+                </Menu.Item>
+
+                <Menu.Item key="faq">
+                    {I18N.get('0009')}
+                </Menu.Item>
+
+                <Menu.Item key="slack">
+                    {I18N.get('0011')}
+                </Menu.Item>
+
+                <Menu.Item key="language">
+                    <Dropdown overlay={langDropdown} style="margin-top: 24px;">
+                        <a className="ant-dropdown-link" href="#">
+                            {I18N.get('0300')} <Icon type="down" />
+                        </a>
+                    </Dropdown>
+                </Menu.Item>
+            </Menu>
+        )
+    }
+
     getSelectedKeys() {
         const keys = _.map(['profile', 'developer', 'social', 'community'], (key) => {
             return ((this.props.pathname || '').indexOf(`/${key}`) === 0) ? key : ''
@@ -92,11 +123,11 @@ export default class extends BaseComponent {
 
         // const overviewDropdown = this.buildOverviewDropdown()
         const acctDropdown = this.buildAcctDropdown()
-        const langDropdown = this.buildLanguageDropdown()
+        const helpDropdown = this.buildHelpDropdown()
 
         return (
             <Header className="c_Header">
-                <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu"
+                <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu c_Main_Menu pull-left"
                     selectedKeys={this.getSelectedKeys()} mode="horizontal">
                     <Menu.Item className="c_MenuItem logo" key="home">
                         <img src='/assets/images/cr_seal_white.png' />
@@ -112,10 +143,18 @@ export default class extends BaseComponent {
                     */}
 
                     {this.props.isLogin &&
-                        <Menu.Item className="c_MenuItem link" key="profile">
+                        <Menu.Item className="c_MenuItem link right" key="profile">
                             {I18N.get('0104')}
                         </Menu.Item>
                     }
+
+                    <Menu.Item className="c_MenuItem link" key="cr100">
+                        CR100
+                    </Menu.Item>
+
+                    <Menu.Item className="c_MenuItem link" key="empower">
+                        Empower
+                    </Menu.Item>
 
                     <Menu.Item className="c_MenuItem link" key="developer">
                         {I18N.get('0100')}
@@ -143,42 +182,22 @@ export default class extends BaseComponent {
                         {I18N.get('0005')}
                     </Menu.Item>
                     */}
-                    <Menu.Item className="c_MenuItem account right-side">
+                </Menu>
+                <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu c_Side_Menu pull-right">
+                    <Menu.Item className="c_MenuItem help pull-right" key="help">
+                        <Dropdown overlay={helpDropdown} style="margin-top: 24px;">
+                            <a className="ant-dropdown-link" href="#">
+                                <Icon className="no-margin" type="question-circle-o" />
+                            </a>
+                        </Dropdown>
+                    </Menu.Item>
+                    <Menu.Item className="c_MenuItem account pull-right">
                         <Dropdown overlay={acctDropdown} style="margin-top: 24px;">
                             <a className="ant-dropdown-link" href="#">
                                 {I18N.get('0004')} <Icon type="down" />
                             </a>
                         </Dropdown>
                     </Menu.Item>
-                </Menu>
-                <Menu onClick={this.clickItem.bind(this)} className="c_MenuTopRight" mode="horizontal">
-                    <Menu.Item key="help">
-                        {I18N.get('0007')}
-                    </Menu.Item>
-                    <Menu.Item key="about">
-                        {I18N.get('0008')}
-                    </Menu.Item>
-
-                    <Menu.Item key="faq">
-                        {I18N.get('0009')}
-                    </Menu.Item>
-
-                    <Menu.Item key="slack">
-                        {I18N.get('0011')}
-                    </Menu.Item>
-
-                    <Menu.Item key="language">
-                        <Dropdown overlay={langDropdown} style="margin-top: 24px;">
-                            <a className="ant-dropdown-link" href="#">
-                                {I18N.get('0300')} <Icon type="down" />
-                            </a>
-                        </Dropdown>
-                    </Menu.Item>
-                    {/*
-                    <Menu.Item key="contact">
-                        {I18N.get('0010')}
-                    </Menu.Item>
-                    */}
                 </Menu>
             </Header>
         )
