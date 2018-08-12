@@ -83,7 +83,7 @@ export default class extends BaseComponent {
         const langDropdown = this.buildLanguageDropdown()
 
         return (
-            <Menu onClick={this.clickItem.bind(this)}>
+            <Menu onClick={this.clickItem.bind(this)} className="help-menu">
                 <Menu.Item key="help">
                     {I18N.get('0007')}
                 </Menu.Item>

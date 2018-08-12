@@ -251,3 +251,11 @@ h3.one-line {
     float: right;
   }
 }
+
+.ant-menu > .ant-menu-item {
+  &.ant-menu-item-active {
+    & > a {
+      color: $primary_color;
+    }
+  }
+}
