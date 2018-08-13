@@ -55,7 +55,7 @@ export default class extends BaseComponent {
         return (
             <div className="public">
                 <Row>
-                    <Col sm={24} md={18} className="gridCol main-area">
+                    <Col sm={24} md={24} lg={18} className="gridCol main-area">
                         <Row>
                             <Col>
                                 <h4 className="center">
@@ -73,12 +73,12 @@ export default class extends BaseComponent {
                                         Organizer
                                     </Col>
                                     <Col span={20}>
-                                        {this.props.task && this.props.task.createdBy ?
-                                        <p>
-                                            <a onClick={() => {this.props.history.push(`/member/${this.props.task.createdBy._id}`)}}>
-                                                {this.props.task.createdBy.username}
-                                            </a>
-                                        </p> : <div className="center"><Spin size="small"/></div>}
+                                        {this.props.task && this.props.task.createdBy ? (
+                                            <p>
+                                                <a onClick={() => {this.props.history.push(`/member/${this.props.task.createdBy._id}`)}}>
+                                                    {this.props.task.createdBy.username}
+                                                </a>
+                                            </p>) : <div className="center"><Spin size="small"/></div>}
                                     </Col>
                                 </Row>
                                 <Row>
@@ -145,8 +145,10 @@ export default class extends BaseComponent {
                                 </Row>
                                 {this.props.task.descBreakdown &&
                                 <Row>
-                                    <Col span={20} offset={4}>
-                                        <span className="no-info">Breakdown of Budget/Reward</span>
+                                    <Col sm={24} md={4}>
+                                        <span className="no-info">Breakdown of Budget / Reward</span>
+                                    </Col>
+                                    <Col sm={24} md={20}>
                                         <p>
                                             {this.props.task.descBreakdown}
                                         </p>
@@ -154,7 +156,7 @@ export default class extends BaseComponent {
                                 </Row>}
                                 {this.props.task.goals &&
                                 <Row>
-                                    <Col span={4} className="label-col">
+                                    <Col sm={24} md={4} className="label-col">
                                         Goals
                                     </Col>
                                     <Col span={20}>
@@ -165,10 +167,10 @@ export default class extends BaseComponent {
                                 </Row>}
                                 {this.props.task.infoLink &&
                                 <Row>
-                                    <Col span={4} className="label-col">
+                                    <Col sm={24} md={4} className="label-col">
                                         Info Link
                                     </Col>
-                                    <Col span={20}>
+                                    <Col sm={24} md={20}>
                                         <a target="_blank" href={this.props.task.infoLink}>
                                             {this.props.task.infoLink}
                                         </a>
@@ -283,20 +285,20 @@ export default class extends BaseComponent {
                                     </div> :
                                     <div>
                                         <Row>
-                                            <Col span={4} className="label-col">
+                                            <Col sm={24} md={4} className="label-col">
                                                 ELA Budget
                                             </Col>
-                                            <Col span={20}>
+                                            <Col sm={24} md={20}>
                                                 <p>
                                                     {this.props.task.rewardUpfront && this.props.task.rewardUpfront.ela / 1000}
                                                 </p>
                                             </Col>
                                         </Row>
                                         <Row>
-                                            <Col span={4} className="label-col">
+                                            <Col sm={24} md={4} className="label-col">
                                                 ELA Reward
                                             </Col>
-                                            <Col span={20}>
+                                            <Col sm={24} md={20}>
                                                 <p>
                                                     {this.props.task.reward && this.props.task.reward.ela / 1000}
                                                 </p>
@@ -316,19 +318,19 @@ export default class extends BaseComponent {
                             <Divider>{this.state.isDeveloperEvent ? 'Registration Info' : 'Application Info'}</Divider>
                             <Row>
                                 {!this.state.isDeveloperEvent && this.props.task.candidateLimit &&
-                                <Col span={4} className="label-col">
+                                <Col sm={24} md={4} className="label-col">
                                     Max Applicants
                                 </Col>
                                 }
                                 {!this.state.isDeveloperEvent && this.props.task.candidateLimit &&
-                                <Col span={8}>
+                                <Col sm={24} md={8}>
                                     {this.props.task.candidateLimit}
                                 </Col>
                                 }
-                                <Col span={4} className="label-col">
+                                <Col sm={24} md={4} className="label-col">
                                     Max Accepted
                                 </Col>
-                                <Col span={8}>
+                                <Col sm={24} md={8}>
                                     {this.props.task.candidateSltLimit}
                                 </Col>
                             </Row>
@@ -366,7 +368,7 @@ export default class extends BaseComponent {
                     * Applicants (Right Col)
                     ********************************************************************************
                     */}
-                    <Col sm={24} md={6} className="gridCol applicants">
+                    <Col sm={24} lg={6} className="gridCol applicants">
                         <h4>{this.state.isDeveloperEvent ? 'Registrants' : 'Applicants'}</h4>
 
                         {(this.props.task.candidates && this.props.task.candidates.length) ?
