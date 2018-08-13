@@ -127,7 +127,7 @@ class C extends BaseComponent {
             render: candidate => {
                 return (
                     <div key={candidate._id}>
-                        <Avatar className={(candidate.role === 'LEADER' ? 'avatar-leader' : 'avatar-member')}
+                        <Avatar className={'gap-right ' + (candidate.role === 'LEADER' ? 'avatar-leader' : 'avatar-member')}
                             src={candidate.user.profile.avatar}/>
                         <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
                             {`${candidate.user.profile.firstName} ${candidate.user.profile.lastName}`}</a>
@@ -187,7 +187,7 @@ class C extends BaseComponent {
             render: candidate => {
                 return (
                     <div key={candidate._id}>
-                        <Avatar src={candidate.user.profile.avatar} />
+                        <Avatar className="gap-right" src={candidate.user.profile.avatar} />
                         <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
                             {`${candidate.user.profile.firstName} ${candidate.user.profile.lastName}`}</a>
                     </div>)

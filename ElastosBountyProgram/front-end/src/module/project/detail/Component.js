@@ -195,7 +195,7 @@ class C extends BaseComponent {
                         {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
                         <div>
                             <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
-                                <Avatar className={(candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
+                                <Avatar className={'gap-right ' + (candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
                                     src={candidate.user.profile.avatar}/>
                                 {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
                             </a>
