@@ -196,7 +196,7 @@ export default class extends StandardPage {
             <List itemLayout='vertical' size='large' loading={this.props.loading}
                 className="with-right-box" dataSource={data}
                 renderItem={item => (
-                    <div>
+                    <div className="list-item">
                         <MediaQuery minWidth={MIN_WIDTH_PC}>
                             <List.Item
                                 key={item.id}
