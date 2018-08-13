@@ -183,17 +183,17 @@ export default class extends BaseComponent {
                     </Menu.Item>
                     */}
                 </Menu>
-                <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu c_Side_Menu pull-right">
+                <Menu className="c_Header_Menu c_Side_Menu pull-right">
                     <Menu.Item className="c_MenuItem help pull-right" key="help">
                         <Dropdown overlay={helpDropdown} style="margin-top: 24px;">
-                            <a className="ant-dropdown-link" href="#">
+                            <a className="ant-dropdown-link">
                                 <Icon className="no-margin" type="question-circle-o" />
                             </a>
                         </Dropdown>
                     </Menu.Item>
                     <Menu.Item className="c_MenuItem account pull-right">
                         <Dropdown overlay={acctDropdown} style="margin-top: 24px;">
-                            <a className="ant-dropdown-link" href="#">
+                            <a className="ant-dropdown-link">
                                 {I18N.get('0004')} <Icon type="down" />
                             </a>
                         </Dropdown>
