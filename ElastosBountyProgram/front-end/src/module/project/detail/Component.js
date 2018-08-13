@@ -160,7 +160,7 @@ class C extends BaseComponent {
                 </div>
                 <a className="leader" onClick={this.linkProfileInfo.bind(this, detail.createdBy._id)}>
                     <Avatar size="large" src={leaderImage} />
-                    <div className="ellipsis">{leaderName}</div>
+                    <span className="ellipsis">{leaderName}</span>
                 </a>
                 <div className="content">
                     <div className="entry">{I18N.get('project.detail.deadline')}: {deadline}</div>
@@ -278,18 +278,18 @@ class C extends BaseComponent {
                                 <Divider type="vertical"/>
                             </span>
                         )}
-                        {this.isTeamOwner() &&
-                        <span>
-                            <a onClick={this.approveUser.bind(this, candidate._id)}>{I18N.get('project.detail.approve')}</a>
-                            <Divider type="vertical"/>
-                            <a onClick={this.disapproveUser.bind(this, candidate._id)}>{I18N.get('project.detail.disapprove')}</a>
-                            {this.isMember(candidate._id) && <Divider type="vertical"/>}
-                        </span>
-                        }
                         {this.isMember(candidate._id) && (
                             <span>
                                 <a onClick={this.withdrawApplication.bind(this, candidate._id)}>{I18N.get('project.detail.withdraw_application')}</a>
+                                {this.isMember(candidate._id) && <Divider type="vertical"/>}
                             </span>)
+                        }
+                        {this.isTeamOwner() &&
+                        <span className="inline-block">
+                            <a onClick={this.approveUser.bind(this, candidate._id)}>{I18N.get('project.detail.approve')}</a>
+                            <Divider type="vertical"/>
+                            <a onClick={this.disapproveUser.bind(this, candidate._id)}>{I18N.get('project.detail.disapprove')}</a>
+                        </span>
                         }
                     </div>
                 )
