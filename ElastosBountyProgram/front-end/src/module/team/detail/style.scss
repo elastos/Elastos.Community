@@ -105,6 +105,10 @@
         height: 108px;
         width: 300px;
         overflow: hidden;
+        @media only screen and (max-width: $mobile-width) {
+          width: auto;
+          text-align: center;
+        }
         span {
           color: $primary_color;
           font-size: 24px;
@@ -122,6 +126,13 @@
         right: $gap_2;
         display: inline-block;
         text-align: right;
+
+        @media only screen and (max-width: $mobile-width) {
+          position: static;
+          text-align: left;
+          width: auto;
+          margin: 0 $gap_2;
+        }
 
         & > div {
           margin-top: $gap_0;
@@ -147,6 +158,16 @@
           position: absolute;
           bottom: 0;
           right: $gap_2;
+
+          @media only screen and (max-width: $mobile-width) {
+            position: static;
+            text-align: left;
+
+            h3 {
+              position: static;
+              text-align: left;
+            }
+          }
         }
       }
 

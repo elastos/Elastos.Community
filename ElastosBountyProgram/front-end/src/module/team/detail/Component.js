@@ -1,7 +1,6 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import moment from 'moment'
-import {message, Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select,
+import {message, Col, Row, Tag, Carousel, Avatar, Button, Spin,
     Table, Input, Form, Divider, Popconfirm, Modal} from 'antd'
 import _ from 'lodash'
 import './style.scss'
@@ -9,8 +8,6 @@ import I18N from '@/I18N'
 import Comments from '@/module/common/comments/Container'
 import TeamApplication from '@/module/team/application/Container'
 import { TEAM_USER_STATUS } from '@/constant'
-
-const { Column } = Table;
 
 class C extends BaseComponent {
     ord_states() {
