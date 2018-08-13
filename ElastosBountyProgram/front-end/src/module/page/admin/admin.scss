@@ -1,4 +1,7 @@
 
+@import '@/style/variable';
+@import '@/style/color';
+
 .p_admin_breadcrumb {
   padding: 10px 0px;
   text-align: left;
@@ -15,6 +18,12 @@
 .admin-left-column, .admin-right-column {
   padding: 0 20px !important;
   text-align: left;
+}
+
+@media only screen and (min-width: $mobile-width) and (max-width: $lg-width) {
+  .admin-left-column {
+    padding-left: 0 !important;
+  }
 }
 
 .admin-left-column {

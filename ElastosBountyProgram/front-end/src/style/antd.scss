@@ -145,9 +145,11 @@ h3.one-line {
   }
 }
 
-.ant-menu.no-padding-items {
-  .ant-menu-item[style] {
-    padding-left: 0 !important;
+@media only screen and (min-width: $mobile-width) and (max-width: $lg-width) {
+  .ant-menu.no-padding-items {
+    .ant-menu-item[style] {
+      padding-left: 0 !important;
+    }
   }
 }
 

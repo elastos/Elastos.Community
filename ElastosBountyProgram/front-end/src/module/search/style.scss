@@ -3,7 +3,18 @@
 
 .c_Search {
   .admin-left-column {
-    padding-top: 0;
+    .filter-switch {
+      padding-bottom: $gap_0;
+
+      span {
+        margin-right: $gap_0;
+      }
+
+      .label {
+        font-size: 18px;
+        vertical-align: middle;
+      }
+    }
   }
 
   .admin-right-column {
