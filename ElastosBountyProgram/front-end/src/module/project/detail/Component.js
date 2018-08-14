@@ -405,8 +405,7 @@ class C extends BaseComponent {
 
     ord_render () {
         const loading = _.isEmpty(this.props.detail)
-        const isTaskOwner = (this.props.task &&
-            this.props.task.createdBy && this.props.task.createdBy._id) === this.props.currentUserId
+        const isTaskOwner = this.props.detail.createdBy && (this.props.detail.createdBy._id === this.props.currentUserId)
         const isMember = this.isMemberByUserId(this.props.currentUserId)
         return (
             <div className="c_Project c_Detail">
