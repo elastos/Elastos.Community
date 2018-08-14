@@ -388,7 +388,7 @@ class C extends BaseComponent {
     }
 
     canComment() {
-        const isTeamMember = _.find(this.props.detail.candidates, (candidate) => {
+        const isTaskCandidate = _.find(this.props.detail.candidates, (candidate) => {
             return candidate.user && candidate.user._id === this.props.currentUserId &&
                 candidate.status === TASK_CANDIDATE_STATUS.APPROVED
         })
@@ -399,8 +399,9 @@ class C extends BaseComponent {
 
         const currentUserTeamIds = _.map(this.props.ownedTeams, '_id')
         const belongsToMemberTeam = !_.isEmpty(_.intersection(allCandidateTeamIds, currentUserTeamIds))
+        const isTaskOwner = this.props.detail.createdBy && (this.props.detail.createdBy._id === this.props.currentUserId)
 
-        return isTeamMember || belongsToMemberTeam
+        return isTaskCandidate || belongsToMemberTeam || isTaskOwner
     }
 
     ord_render () {
