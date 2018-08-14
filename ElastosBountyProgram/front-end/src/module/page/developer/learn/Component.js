@@ -7,6 +7,9 @@ import _ from 'lodash'
 import './style.scss'
 import I18N from '@/I18N'
 
+import MediaQuery from 'react-responsive'
+import { MAX_WIDTH_MOBILE, MIN_WIDTH_PC } from '@/config/constant'
+
 import { Breadcrumb, Col, Row, Icon, Form, Input, Button, Modal, Select,
     Table, List, Popover, Cascader, Tabs, Tree, Divider } from 'antd'
 import moment from 'moment'
@@ -260,8 +263,14 @@ class LearningContent extends React.Component {
         const paneContent = this.getContentByTabID(this.p.tab.id, CONTENTS);
         return (
             <Row gutter={16}>
-                <Col span={8}><Topics paneContent={paneContent} onTopicSelect={this.onTopicSelect} /></Col>
-                <Col span={16}><TopicDetail paneContent={paneContent} selectedTopic={this.state.selectedTopic} /></Col>
+                <MediaQuery minWidth={MIN_WIDTH_PC}>
+                    <Col span={8}><Topics paneContent={paneContent} onTopicSelect={this.onTopicSelect} /></Col>
+                    <Col span={16}><TopicDetail paneContent={paneContent} selectedTopic={this.state.selectedTopic} /></Col>
+                </MediaQuery>
+                <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                    <Col span={24}><Topics paneContent={paneContent} onTopicSelect={this.onTopicSelect} /></Col>
+                    <Col span={24}><TopicDetail paneContent={paneContent} selectedTopic={this.state.selectedTopic} /></Col>
+                </MediaQuery>
             </Row>
         );
     }
