@@ -7,9 +7,29 @@ import _ from 'lodash'
 import './style.scss'
 import I18N from '@/I18N'
 
+import MediaQuery from 'react-responsive'
+import { MAX_WIDTH_MOBILE, MIN_WIDTH_PC } from '@/config/constant'
+
 import { Breadcrumb, Col, Row, Icon, Form, Input, Button, Modal, Select,
     Table, List, Popover, Cascader, Tabs, Tree, Divider } from 'antd'
-import moment from 'moment/moment'
+import moment from 'moment'
+
+// /////////////////
+// Content
+// /////////////////
+import IntroductionDetail from './detail/GettingStarted/Introduction/Component';
+import BasicsDetail from './detail/GettingStarted/Basics/Component';
+import BlockchainArchitectureDetail from './detail/GettingStarted/BlockchainArchitecture/Component';
+import ComponentAssemblyRuntimeDetail from './detail/GettingStarted/ComponentAssemblyRuntime/Component';
+import ResourcesDetail from './detail/GettingStarted/Resources/Component';
+
+import MiningTestnetWalletDemoDetail from './detail/Tutorials/MiningTestnetWalletDemo/Component';
+import CarrierChatAppDetail from './detail/Tutorials/CarrierDemo/Component';
+
+import BlockchainSmartContractsDetail from './detail/TheFourPillars/BlockchainSmartContracts/Component';
+import ElastosCarrierDetail from './detail/TheFourPillars/ElastosCarrier/Component';
+import ElastosRuntimeDetail from './detail/TheFourPillars/ElastosRuntime/Component';
+import ElastosSDKDetail from './detail/TheFourPillars/ElastosSDK/Component';
 
 // /////////////////
 // Constant
@@ -21,8 +41,8 @@ const TreeNode = Tree.TreeNode;
 // /////////////////
 // Data: Dummy
 // /////////////////
-
-const TABS = [{ id: 1, title: 'Getting Started' }, { id: 2, title: 'Tutorial' }, { id: 3, title: 'Smart Contracts' }, { id: 4, title: 'Training' }];
+const DEFAULT_ID = '1-1';
+const TABS = [{ id: 1, title: 'Getting Started' }, { id: 2, title: 'Tutorials' }, { id: 3, title: 'Smart Contracts' }, { id: 4, title: 'The Four Pillars' }];
 const CONTENTS = [
     {
         tabID: 1,
@@ -30,34 +50,32 @@ const CONTENTS = [
             {
                 id: 1,
                 topic: 'Introduction',
-                detail: 'bal bal bal bla',
+                detail: IntroductionDetail,
                 children: []
             },
             {
                 id: 2,
-                topic: 'Basic',
-                detail: 'introduction to basics',
-                children: [
-                    {
-                        id: 3,
-                        topic: 'How to use Ark Explore',
-                        detail: 'How to use Ark Explore',
-                        children: []
-                    },
-                    {
-                        id: 4,
-                        topic: 'How to use Desktop Wallet',
-                        detail: 'How to use Desktop Wallet',
-                        children: []
-                    },
-                    {
-                        id: 5,
-                        topic: 'How to use Mobile Wallet',
-                        detail: 'How to use Mobile Wallet',
-                        children: []
-                    }
-                ]
-
+                topic: 'Basics',
+                detail: BasicsDetail,
+                children: []
+            },
+            {
+                id: 3,
+                topic: 'Blockchain Architecture',
+                detail: BlockchainArchitectureDetail,
+                children: []
+            },
+            {
+                id: 4,
+                topic: 'Component Assembly Runtime (CAR)',
+                detail: ComponentAssemblyRuntimeDetail,
+                children: []
+            },
+            {
+                id: 5,
+                topic: 'Resources',
+                detail: ResourcesDetail,
+                children: []
             }
 
         ]
@@ -67,8 +85,14 @@ const CONTENTS = [
         content: [
             {
                 id: 1,
-                topic: 'tutorial',
-                detail: 'what is smartcontract. Well, it is exactly what it means. s the inverse(DumbContract).',
+                topic: 'Elastos Mining, Testnet and Wallet Demo',
+                detail: MiningTestnetWalletDemoDetail,
+                children: []
+            },
+            {
+                id: 2,
+                topic: 'Elastos Carrier Chat App Demo',
+                detail: CarrierChatAppDetail,
                 children: []
             }
         ]
@@ -78,8 +102,8 @@ const CONTENTS = [
         content: [
             {
                 id: 1,
-                topic: 'intro',
-                detail: 'bal bal bal bla',
+                topic: 'Smart Contracts',
+                detail: IntroductionDetail,
                 children: []
             }
         ]
@@ -89,8 +113,26 @@ const CONTENTS = [
         content: [
             {
                 id: 1,
-                topic: 'intro',
-                detail: 'bal bal bal bla',
+                topic: 'Blockchain and Smart Contracts',
+                detail: BlockchainSmartContractsDetail,
+                children: []
+            },
+            {
+                id: 2,
+                topic: 'Elastos Carrier',
+                detail: ElastosCarrierDetail,
+                children: []
+            },
+            {
+                id: 3,
+                topic: 'Elastos Runtime',
+                detail: ElastosRuntimeDetail,
+                children: []
+            },
+            {
+                id: 4,
+                topic: 'Elastos SDK',
+                detail: ElastosSDKDetail,
                 children: []
             }
         ]
@@ -105,21 +147,42 @@ const isEmpty = ([first, ...rest]) => first === undefined;
 
 // TopicDetail: displays the detail of a topic
 class TopicDetail extends React.Component {
-    constructor(p) {
-        super(p);
-        this.p = p;
+
+    getTopicContent() {
+        const selectedKey = parseInt((this.props.selectedTopic || DEFAULT_ID).split('-').pop());
+        const contents = this.props.paneContent ? this.props.paneContent.content : [];
+        const topicContent = this.getTopicChild(contents, selectedKey);
+        return topicContent ? topicContent.detail : null;
+    }
+
+    getTopicChild(children, id) {
+        let result = null;
+
+        children.some((child, key) => {
+            if (child.id === id) {
+                result = child;
+            } else if (child.children) {
+                result = this.getTopicChild(child.children, id)
+            }
+            if (result) {
+                return true;
+            }
+        });
+        return result;
     }
 
     render() {
+        const Content = this.getTopicContent();
         return (
             <div>
                 <article>
-                    {<p>A new technology made possible by public blockchains, smart contracts are difficult to understand because the term partly confuses the core interaction described.</p>}
+                    <Content />
                 </article>
+                <Divider />
                 <footer>
                     <Row>
                         <Col span={12}><a href="#" title="Submit feedback.">Help us improve this page.</a></Col>
-                        <Col span={12}>Last Updated: 07/07/2018</Col>
+                        <Col span={12}>Last Updated: 08/12/2018</Col>
                     </Row>
                     <Divider />
                     <Row>
@@ -138,10 +201,6 @@ class Topics extends React.Component {
         this.p = p;
     }
 
-    onSelect = (selectedKeys, info) => {
-        console.log('selected', selectedKeys, info);
-    }
-
     buildTreeNodes(paneContent) {
 
         // consumes a node data
@@ -152,7 +211,7 @@ class Topics extends React.Component {
         const buildNodeNode = (n) => {
             const childNodes = n.children.map(el => buildLeafNode(el));
             return (<TreeNode title={n.topic} key={n.id}>
-                {childNodes};
+                {childNodes}
             </TreeNode>);
         }
 
@@ -166,7 +225,7 @@ class Topics extends React.Component {
         const paneContent = this.p.paneContent;
         return (
             <div>
-                <Tree onSelect={this.onSelect} showLine defaultExpandAll >
+                <Tree defaultSelectedKeys={[DEFAULT_ID]} onSelect={this.p.onTopicSelect} showLine defaultExpandAll >
                     {this.buildTreeNodes(paneContent)}
                 </Tree>
             </div>
@@ -182,6 +241,9 @@ class LearningContent extends React.Component {
     constructor(p) {
         super(p);
         this.p = p;
+        this.state = {
+            selectedTopic: DEFAULT_ID
+        };
     }
 
     // getContentByTabID: consumes tabID, content
@@ -190,12 +252,25 @@ class LearningContent extends React.Component {
         return contents.find(el => el.tabID === tabID);
     }
 
+    onTopicSelect = (selectionInfo, b, c, d) => {
+        const selection = selectionInfo && selectionInfo.length > 0 ? selectionInfo[0] : '';
+        if (selection) {
+            this.setState({selectedTopic: selection})
+        }
+    }
+
     render() {
         const paneContent = this.getContentByTabID(this.p.tab.id, CONTENTS);
         return (
             <Row gutter={16}>
-                <Col span={6}><Topics paneContent={paneContent} /></Col>
-                <Col span={18}><TopicDetail paneContent={paneContent} /></Col>
+                <MediaQuery minWidth={MIN_WIDTH_PC}>
+                    <Col span={8}><Topics paneContent={paneContent} onTopicSelect={this.onTopicSelect} /></Col>
+                    <Col span={16}><TopicDetail paneContent={paneContent} selectedTopic={this.state.selectedTopic} /></Col>
+                </MediaQuery>
+                <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                    <Col span={24}><Topics paneContent={paneContent} onTopicSelect={this.onTopicSelect} /></Col>
+                    <Col span={24}><TopicDetail paneContent={paneContent} selectedTopic={this.state.selectedTopic} /></Col>
+                </MediaQuery>
             </Row>
         );
     }

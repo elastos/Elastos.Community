@@ -23,6 +23,11 @@ $mobile-padding: $gap_0 0px;
     height: 100%;
     cursor: pointer;
 
+    &:hover {
+      box-shadow: 0 2px 8px $primary_color;
+      border-color: $primary_color;
+    }
+
     .title {
       display: flex;
       align-items: flex-end;

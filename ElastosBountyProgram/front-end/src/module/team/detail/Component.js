@@ -1,7 +1,6 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import moment from 'moment'
-import {message, Col, Row, Tag, Icon, Carousel, Avatar, Button, Spin, Select,
+import {message, Col, Row, Tag, Carousel, Avatar, Button, Spin,
     Table, Input, Form, Divider, Popconfirm, Modal} from 'antd'
 import _ from 'lodash'
 import './style.scss'
@@ -9,8 +8,6 @@ import I18N from '@/I18N'
 import Comments from '@/module/common/comments/Container'
 import TeamApplication from '@/module/team/application/Container'
 import { TEAM_USER_STATUS } from '@/constant'
-
-const { Column } = Table;
 
 class C extends BaseComponent {
     ord_states() {
@@ -127,7 +124,7 @@ class C extends BaseComponent {
             render: candidate => {
                 return (
                     <div key={candidate._id}>
-                        <Avatar className={(candidate.role === 'LEADER' ? 'avatar-leader' : 'avatar-member')}
+                        <Avatar className={'gap-right ' + (candidate.role === 'LEADER' ? 'avatar-leader' : 'avatar-member')}
                             src={candidate.user.profile.avatar}/>
                         <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
                             {`${candidate.user.profile.firstName} ${candidate.user.profile.lastName}`}</a>
@@ -187,7 +184,7 @@ class C extends BaseComponent {
             render: candidate => {
                 return (
                     <div key={candidate._id}>
-                        <Avatar src={candidate.user.profile.avatar} />
+                        <Avatar className="gap-right" src={candidate.user.profile.avatar} />
                         <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
                             {`${candidate.user.profile.firstName} ${candidate.user.profile.lastName}`}</a>
                     </div>)

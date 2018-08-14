@@ -164,9 +164,6 @@ export default class extends BaseComponent {
                         {I18N.get('0102')}
                     </Menu.Item>
 
-                    <Menu.Item className="c_MenuItem mobile" key="mobileMenu" onClick={this.props.toggleMobileMenu}>
-                        <Icon type="menu-fold"/>
-                    </Menu.Item>
                     {/*
                     <Menu.Item className="c_MenuItem" key="directory">
                         {I18N.get('0003')}
@@ -183,20 +180,23 @@ export default class extends BaseComponent {
                     </Menu.Item>
                     */}
                 </Menu>
-                <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu c_Side_Menu pull-right">
-                    <Menu.Item className="c_MenuItem help pull-right" key="help">
+                <Menu className="c_Header_Menu c_Side_Menu pull-right">
+                    <Menu.Item className="c_MenuItem help pull-right no-margin" key="help">
                         <Dropdown overlay={helpDropdown} style="margin-top: 24px;">
-                            <a className="ant-dropdown-link" href="#">
+                            <a className="ant-dropdown-link">
                                 <Icon className="no-margin" type="question-circle-o" />
                             </a>
                         </Dropdown>
                     </Menu.Item>
-                    <Menu.Item className="c_MenuItem account pull-right">
+                    <Menu.Item className="c_MenuItem account pull-right no-margin">
                         <Dropdown overlay={acctDropdown} style="margin-top: 24px;">
-                            <a className="ant-dropdown-link" href="#">
+                            <a className="ant-dropdown-link">
                                 {I18N.get('0004')} <Icon type="down" />
                             </a>
                         </Dropdown>
+                    </Menu.Item>
+                    <Menu.Item className="c_MenuItem mobile" key="mobileMenu" onClick={this.props.toggleMobileMenu}>
+                        <Icon type="menu-fold"/>
                     </Menu.Item>
                 </Menu>
             </Header>

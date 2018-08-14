@@ -1,7 +1,9 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import {Col, Row, Icon, Input, Button, List, Checkbox, Radio,
-    Carousel, Modal, Avatar, Affix, Tag, TreeSelect } from 'antd'
+import {
+    Col, Row, Icon, Input, Button, List, Checkbox, Radio,
+    Carousel, Modal, Avatar, Affix, Tag, TreeSelect, Switch, Divider
+} from 'antd'
 import _ from 'lodash'
 import './style.scss'
 import {SKILLSET_TYPE, TEAM_TASK_DOMAIN} from '@/constant'
@@ -88,6 +90,12 @@ export default class extends BaseComponent {
         }, this.refetch.bind(this))
     }
 
+    onChangeLookingForSwitch(value) {
+        this.setState({
+            lookingFor: value ? 'TEAM' : 'PROJECT'
+        }, this.refetch.bind(this))
+    }
+
     showProjectModal = (id) => {
         this.setState({
             showProjectModal: true,
@@ -139,7 +147,7 @@ export default class extends BaseComponent {
             <RadioGroup onChange={this.onChangeLookingFor.bind(this)} value={this.state.lookingFor}>
                 {elements}
             </RadioGroup>
-        );
+        )
     }
 
     renderSkillset(skillsetOptions, showAll) {
@@ -152,14 +160,14 @@ export default class extends BaseComponent {
                         {option.label}
                     </Checkbox>
                 </div>
-            );
+            )
         })
 
         return (
             <CheckboxGroup onChange={this.onChangeSkillset.bind(this)}>
                 {elements}
             </CheckboxGroup>
-        );
+        )
     }
 
     renderCategory(categoryOptions, showAll) {
@@ -179,18 +187,7 @@ export default class extends BaseComponent {
             <CheckboxGroup onChange={this.onChangeDomain.bind(this)}>
                 {elements}
             </CheckboxGroup>
-        );
-    }
-
-    getLookingForTree(lookingForOptions) {
-        const filtered = _.take(lookingForOptions, lookingForOptions.length)
-        const elements = _.map(filtered, (option) => {
-            return (
-                <TreeNode value={option.value} title={option.label} key={option.value}/>
-            )
-        })
-
-        return elements;
+        )
     }
 
     getSkillsetTree(skillsetOptions) {
@@ -198,7 +195,7 @@ export default class extends BaseComponent {
         const elements = _.map(filtered, (option) => {
             return (
                 <TreeNode value={option.value} title={option.label} key={option.value}/>
-            );
+            )
         })
         return elements;
     }
@@ -208,36 +205,30 @@ export default class extends BaseComponent {
         const elements = _.map(filtered, (option) => {
             return (
                 <TreeNode value={option.value} title={option.label} key={option.value}/>
-            );
+            )
         })
         return elements;
     }
 
     handleOnFiltersChange(e) {
-        this.setState({
-            filtersTree: e
-        })
-
+        const skillset = []
+        const domain = []
         for (let item of e) {
-            let found = this.getLookingForOptions().find((option) => item === option.value)
+            let found = this.getSkillsetOptions().find((option) => item === option.value)
             if (found) {
-                this.setState({
-                    lookingFor: found
-                }, this.refetch.bind(this))
+                skillset.push(found.value)
             }
-            found = this.getSkillsetOptions().find((option) => item === option)
+            found = this.getCategoryOptions().find((option) => item === option.value)
             if (found) {
-                this.setState({
-                    skillset: found
-                }, this.refetch.bind(this))
-            }
-            found = this.getCategoryOptions().find((option) => item === option)
-            if (found) {
-                this.setState({
-                    domain: found
-                }, this.refetch.bind(this))
+                domain.push(found.value)
             }
         }
+        console.log(this.state)
+        this.setState({
+            filtersTree: e,
+            skillset: skillset,
+            domain: domain
+        }, this.refetch.bind(this))
     }
 
     getLookingForOptions() {
@@ -302,49 +293,59 @@ export default class extends BaseComponent {
         const lookingForElement = this.renderLookingFor(lookingForOptions, true)
         const skillsetElement = this.renderSkillset(skillsetOptions, this.state.skillsetShowAllEntries)
         const categoryElement = this.renderCategory(categoryOptions, this.state.categoryShowAllEntries)
-        const lookingForElementTree = this.getLookingForTree(lookingForOptions)
         const skillsetElementTree = this.getSkillsetTree(skillsetOptions)
         const categoryElementTree = this.getCategoryTree(categoryOptions)
         return (
             <div>
                 <MediaQuery minWidth={MIN_WIDTH_PC}>
-                    <Input.Search placeholder="Search"/>
-                    <div className="group">
-                        <div className="title">Looking For</div>
-                        <div className="content">
-                            {lookingForElement}
+                    <Affix offsetTop={15}>
+                        <Input.Search placeholder="Search"/>
+                        <div className="group">
+                            <div className="title">Looking For</div>
+                            <div className="content">
+                                {lookingForElement}
+                            </div>
                         </div>
-                    </div>
-                    <div className="group">
-                        <div className="title">Skillset</div>
-                        <div className="content">
-                            {skillsetElement}
-                            {skillsetOptions.length > this.state.entryCount &&
-                            <div className="showMore" onClick={this.enableSkillsetEntries.bind(this)}>
-                                {
-                                    !this.state.skillsetShowAllEntries ? (<span>Show More…</span>)
-                                        : (<span>Hide</span>)
+                        <div className="group">
+                            <div className="title">Skillset</div>
+                            <div className="content">
+                                {skillsetElement}
+                                {skillsetOptions.length > this.state.entryCount &&
+                                <div className="showMore" onClick={this.enableSkillsetEntries.bind(this)}>
+                                    {
+                                        !this.state.skillsetShowAllEntries ? (<span>Show More…</span>)
+                                            : (<span>Hide</span>)
+                                    }
+                                </div>
                                 }
                             </div>
-                            }
                         </div>
-                    </div>
-                    <div className="group">
-                        <div className="title">Category</div>
-                        <div className="content">
-                            {categoryElement}
-                            { categoryOptions.length > this.state.entryCount &&
-                            <div className="showMore" onClick={this.enableCategoryEntries.bind(this)}>
-                                {
-                                    !this.state.categoryShowAllEntries ? (<span>Show More…</span>)
-                                        : (<span>Hide</span>)
+                        <div className="group">
+                            <div className="title">Category</div>
+                            <div className="content">
+                                {categoryElement}
+                                { categoryOptions.length > this.state.entryCount &&
+                                <div className="showMore" onClick={this.enableCategoryEntries.bind(this)}>
+                                    {
+                                        !this.state.categoryShowAllEntries ? (<span>Show More…</span>)
+                                            : (<span>Hide</span>)
+                                    }
+                                </div>
                                 }
                             </div>
-                            }
                         </div>
-                    </div>
+                    </Affix>
                 </MediaQuery>
                 <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                    <div className="filter-switch">
+                        <Switch defaultChecked onChange={this.onChangeLookingForSwitch.bind(this)} />
+                        {this.state.lookingFor === lookingForOptions[0].value &&
+                        <span className="label">{lookingForOptions[0].label}</span>
+                        }
+                        {this.state.lookingFor === lookingForOptions[1].value &&
+                        <span className="label">{lookingForOptions[1].label}</span>
+                        }
+                    </div>
                     <TreeSelect
                         className="filters-tree"
                         showSearch
@@ -358,13 +359,10 @@ export default class extends BaseComponent {
                         treeCheckable={true}
                         onChange={this.handleOnFiltersChange.bind(this)}
                     >
-                        <TreeNode value="0" title="Looking For" key="0">
-                            {lookingForElementTree}
-                        </TreeNode>
-                        <TreeNode value="1" title="Skillset" key="1">
+                        <TreeNode value="0" title="Skillset" key="0">
                             {skillsetElementTree}
                         </TreeNode>
-                        <TreeNode value="3" title="Category" key="2">
+                        <TreeNode value="1" title="Category" key="1">
                             {categoryElementTree}
                         </TreeNode>
                     </TreeSelect>
@@ -389,9 +387,7 @@ export default class extends BaseComponent {
             <div className="c_Search">
                 <Row className="d_row">
                     <Col sm={24} md={4} className="admin-left-column wrap-box-user">
-                        <Affix offsetTop={15}>
-                            {this.getSidebarMenu()}
-                        </Affix>
+                        {this.getSidebarMenu()}
                     </Col>
                     <Col sm={24} md={20} className="admin-right-column wrap-box-user">
                         {this.renderList()}
@@ -494,29 +490,55 @@ export default class extends BaseComponent {
             <List loading={this.props.loading} itemLayout='vertical' size='large'
                 className="with-right-box" dataSource={data}
                 renderItem={item => (
-                    <List.Item
-                        key={item.id}
-                        extra={this.getCarousel(item)}
-                    >
-                        <h3 class="no-margin no-padding one-line brand-color">
-                            <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
-                        </h3>
-                        <h5 class="no-margin">
-                            {item.description}
-                        </h5>
-                        <div>
-                            {item.content}
-                        </div>
-                        <div className="ant-list-item-right-box">
-                            <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
-                                <Avatar size="large" className="pull-right" src={item.owner.profile.avatar}/>
-                                <div class="clearfix"/>
-                                <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
-                            </a>
-                            <Button onClick={clickHandler.bind(this, item.id)}
-                                type="primary" className="pull-down">Apply</Button>
-                        </div>
-                    </List.Item>
+                    <div>
+                        <MediaQuery minWidth={MIN_WIDTH_PC}>
+                            <List.Item
+                                key={item.id}
+                                extra={this.getCarousel(item)}
+                            >
+                                <h3 class="no-margin no-padding one-line brand-color">
+                                    <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
+                                </h3>
+                                <h5 class="no-margin">
+                                    {item.description}
+                                </h5>
+                                <div>
+                                    {item.content}
+                                </div>
+                                <div className="ant-list-item-right-box">
+                                    <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                        <Avatar size="large" className="pull-right" src={item.owner.profile.avatar}/>
+                                        <div class="clearfix"/>
+                                        <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
+                                    </a>
+                                    <Button onClick={clickHandler.bind(this, item.id)}
+                                        type="primary" className="pull-down">Apply</Button>
+                                </div>
+                            </List.Item>
+                        </MediaQuery>
+                        <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                            <List.Item
+                                key={item.id}
+                                className="ignore-right-box"
+                            >
+                                <h3 class="no-margin no-padding one-line brand-color">
+                                    <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
+                                </h3>
+                                <h5 class="no-margin">
+                                    {item.description}
+                                </h5>
+                                <div>
+                                    <a onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                        <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
+                                        <Divider type="vertical"/>
+                                        <Avatar size="large" src={item.owner.profile.avatar}/>
+                                    </a>
+                                    <Button onClick={clickHandler.bind(this, item.id)}
+                                        type="primary" className="pull-right">Apply</Button>
+                                </div>
+                            </List.Item>
+                        </MediaQuery>
+                    </div>
                 )}
             />
         )

@@ -7,6 +7,10 @@
   padding: $gap_3;
   width: 100%;
 
+  @media only screen and (max-width: $mobile-width) {
+    padding: 0;
+  }
+
   .team-selector {
     width: 332px;
     margin-right: $gap_0;
@@ -101,11 +105,21 @@
         height: 108px;
         width: 300px;
         overflow: hidden;
+
+        @media only screen and (max-width: $mobile-width) {
+          width: auto;
+          text-align: center;
+        }
+
+        @media only screen and (max-width: $mobile-width) {
+          width: auto;
+          height: auto;
+          margin-bottom: $gap_2;
+        }
         span {
           color: $primary_color;
           font-size: 24px;
         }
-
         .badge {
           padding-left: $gap_2;
         }
@@ -119,6 +133,14 @@
         display: inline-block;
         text-align: right;
 
+        @media only screen and (max-width: $mobile-width) {
+          position: static;
+          width: auto;
+
+          .ellipsis {
+            margin-left: $gap_0;
+          }
+        }
         & > div {
           margin-top: $gap_0;
         }
@@ -130,12 +152,19 @@
         padding: $gap_0 $gap_2 0 $gap_2;
         height: 120px;
 
+        @media only screen and (max-width: $mobile-width) {
+          height: auto;
+        }
+
         .reward {
           position: absolute;
           bottom: 0;
           right: $gap_2;
           text-align: right;
           font-size: 24px;
+          @media only screen and (max-width: $mobile-width) {
+            position: static;
+          }
         }
 
         .entry {

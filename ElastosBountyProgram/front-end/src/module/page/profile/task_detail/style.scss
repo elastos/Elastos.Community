@@ -12,6 +12,9 @@
 
   .ant-row > .label-col {
     padding: 0 $gap_1;
+    @media only screen and (max-width: $mobile-width) {
+      padding: $gap_0 $gap_0 $gap_0 0;
+    }
   }
 
   .form-wrapper {

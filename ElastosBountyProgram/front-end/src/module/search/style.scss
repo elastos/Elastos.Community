@@ -3,11 +3,26 @@
 
 .c_Search {
   .admin-left-column {
-    padding-top: 0;
+    .filter-switch {
+      padding-bottom: $gap_0;
+
+      span {
+        margin-right: $gap_0;
+      }
+
+      .label {
+        font-size: 18px;
+        vertical-align: middle;
+      }
+    }
   }
 
   .admin-right-column {
     min-height: 392px;
+
+    .ant-list-item {
+      margin: $gap_0 0;
+    }
   }
 
   .filters-tree {

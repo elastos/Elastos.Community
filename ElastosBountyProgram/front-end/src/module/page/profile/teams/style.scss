@@ -21,6 +21,10 @@
     }
   }
 
+  .list-item {
+    margin: $gap_0 0;
+  }
+
   .ant-list-item {
     border: 1px solid $border_gray;
     padding: 16px;
