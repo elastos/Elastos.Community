@@ -3,7 +3,8 @@ import BaseComponent from '@/model/BaseComponent'
 import {Layout, Menu, Icon, Badge, Avatar, Modal, Dropdown} from 'antd'
 import _ from 'lodash'
 import I18N from '@/I18N'
-
+import MediaQuery from 'react-responsive'
+import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
 import {USER_ROLE} from '@/constant'
 
 const {Header} = Layout
@@ -181,13 +182,15 @@ export default class extends BaseComponent {
                     */}
                 </Menu>
                 <Menu className="c_Header_Menu c_Side_Menu pull-right">
-                    <Menu.Item className="c_MenuItem help pull-right no-margin" key="help">
-                        <Dropdown overlay={helpDropdown} style="margin-top: 24px;">
-                            <a className="ant-dropdown-link">
-                                <Icon className="no-margin" type="question-circle-o" />
-                            </a>
-                        </Dropdown>
-                    </Menu.Item>
+                    <MediaQuery minWidth={MIN_WIDTH_PC}>
+                        <Menu.Item className="c_MenuItem help pull-right no-margin" key="help">
+                            <Dropdown overlay={helpDropdown} style="margin-top: 24px;">
+                                <a className="ant-dropdown-link">
+                                    <Icon className="no-margin" type="question-circle-o" />
+                                </a>
+                            </Dropdown>
+                        </Menu.Item>
+                    </MediaQuery>
                     <Menu.Item className="c_MenuItem account pull-right no-margin">
                         <Dropdown overlay={acctDropdown} style="margin-top: 24px;">
                             <a className="ant-dropdown-link">

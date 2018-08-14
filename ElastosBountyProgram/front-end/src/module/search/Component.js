@@ -11,7 +11,7 @@ import ProjectDetail from '@/module/project/detail/Container'
 import TeamDetail from '@/module/team/detail/Container'
 import Footer from '@/module/layout/Footer/Container'
 import MediaQuery from 'react-responsive'
-import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant';
+import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
 import I18N from '@/I18N'
 
 const CheckboxGroup = Checkbox.Group;

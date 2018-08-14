@@ -64,6 +64,32 @@ export default class extends BaseComponent {
                         onClick={this.handleMenuClick.bind(this)}
                         mode="inline"
                     >
+                        <Menu.Item key="cr100">
+                            CR100
+                        </Menu.Item>
+                        <Menu.Item key="empower">
+                            Empower
+                        </Menu.Item>
+                        <Menu.Item key="developer">
+                            {I18N.get('0100')}
+                        </Menu.Item>
+                        <Menu.Item key="community">
+                            {I18N.get('0102')}
+                        </Menu.Item>
+                    </Menu>
+                </Col>
+            </Row>
+            <Row>
+                <Col className="menuContainer">
+                    <Menu
+                        onClick={this.handleMenuClick.bind(this)}
+                        mode="inline"
+                    >
+                        {isLogin &&
+                            <Menu.Item key="profile/teams">
+                                {I18N.get('0104')}
+                            </Menu.Item>
+                        }
                         {isLogin ?
                             <Menu.Item key="profile/info">
                                 {I18N.get('0200')}
