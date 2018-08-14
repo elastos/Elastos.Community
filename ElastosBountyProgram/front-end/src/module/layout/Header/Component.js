@@ -164,9 +164,6 @@ export default class extends BaseComponent {
                         {I18N.get('0102')}
                     </Menu.Item>
 
-                    <Menu.Item className="c_MenuItem mobile" key="mobileMenu" onClick={this.props.toggleMobileMenu}>
-                        <Icon type="menu-fold"/>
-                    </Menu.Item>
                     {/*
                     <Menu.Item className="c_MenuItem" key="directory">
                         {I18N.get('0003')}
@@ -197,6 +194,9 @@ export default class extends BaseComponent {
                                 {I18N.get('0004')} <Icon type="down" />
                             </a>
                         </Dropdown>
+                    </Menu.Item>
+                    <Menu.Item className="c_MenuItem mobile" key="mobileMenu" onClick={this.props.toggleMobileMenu}>
+                        <Icon type="menu-fold"/>
                     </Menu.Item>
                 </Menu>
             </Header>

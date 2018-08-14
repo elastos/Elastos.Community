@@ -228,7 +228,7 @@ export default class extends BaseComponent {
     renderDetail() {
         const loading = _.isEmpty(this.props.submission)
         return (
-            <div className="c_Project">
+            <div className="c_SubmissionDetail">
                 { loading
                     ? (
                         <div className="full-width full-height valign-wrapper halign-wrapper">
