@@ -17,8 +17,10 @@
   z-index: 10000;
 
   .closeMobileMenu {
+    color: $primary_color;
     padding: $gap_2;
     font-size: 150%;
+    font-weight: 600;
   }
 
   .menuContainer {
