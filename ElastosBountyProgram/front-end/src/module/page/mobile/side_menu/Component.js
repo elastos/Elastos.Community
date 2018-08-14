@@ -20,8 +20,10 @@ export default class extends BaseComponent {
             'register',
             'signup',
             'profile/info',
+            'profile/teams',
+            'developer',
+            'community',
             'admin/tasks',
-
             'help',
             'about',
             'faq',
