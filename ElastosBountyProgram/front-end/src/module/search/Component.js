@@ -9,6 +9,7 @@ import './style.scss'
 import {SKILLSET_TYPE, TEAM_TASK_DOMAIN} from '@/constant'
 import ProjectDetail from '@/module/project/detail/Container'
 import TeamDetail from '@/module/team/detail/Container'
+import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
 import Footer from '@/module/layout/Footer/Container'
 import MediaQuery from 'react-responsive'
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
@@ -38,6 +39,7 @@ export default class extends BaseComponent {
             categoryShowAllEntries: false,
             showProjectModal: false,
             showTeamModal: false,
+            showLoginRegisterModal: false,
             taskDetailId: 0,
             teamDetailId: 0,
             showMobile: false,
@@ -110,6 +112,12 @@ export default class extends BaseComponent {
         })
     }
 
+    showLoginRegisterModal = () => {
+        this.setState({
+            showLoginRegisterModal: true
+        })
+    }
+
     handleProjectModalOk = (e) => {
         this.setState({
             showProjectModal: false
@@ -131,6 +139,18 @@ export default class extends BaseComponent {
     handleTeamModalCancel = (e) => {
         this.setState({
             showTeamModal: false
+        })
+    }
+
+    handleLoginRegisterModalOk = (e) => {
+        this.setState({
+            showLoginRegisterModal: false
+        })
+    }
+
+    handleLoginRegisterModalCancel = (e) => {
+        this.setState({
+            showLoginRegisterModal: false
         })
     }
 
@@ -413,6 +433,16 @@ export default class extends BaseComponent {
                 >
                     <TeamDetail teamId={this.state.teamDetailId}/>
                 </Modal>
+                <Modal
+                    className="project-detail-nobar"
+                    visible={this.state.showLoginRegisterModal}
+                    onOk={this.handleLoginRegisterModalOk}
+                    onCancel={this.handleLoginRegisterModalCancel}
+                    footer={null}
+                    width="70%"
+                >
+                    <LoginOrRegisterForm />
+                </Modal>
                 <Footer/>
             </div>
         )
@@ -482,7 +512,9 @@ export default class extends BaseComponent {
                 }
             })
 
-        const clickHandler = this.isLookingForTeam()
+        const clickHandler = !this.props.is_login
+            ? this.showLoginRegisterModal
+            : this.isLookingForTeam()
             ? this.showTeamModal
             : this.showProjectModal
 

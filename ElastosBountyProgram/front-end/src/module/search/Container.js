@@ -9,6 +9,7 @@ export default createContainer(Component, (state) => {
     return {
         ...state.task,
         ...state.team,
+        ...state.user,
         loading: state.team.loading || state.task.loading
     }
 }, () => {
