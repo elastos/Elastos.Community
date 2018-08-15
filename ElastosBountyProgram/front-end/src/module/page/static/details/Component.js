@@ -35,6 +35,8 @@ const { Meta } = Card;
 export default class extends EmptyPage {
 
     state = {
+        // TODO: Add API key for google maps
+        apiKey: '',
         lat: 18.7,
         lng: 98.98
     }
@@ -42,20 +44,8 @@ export default class extends EmptyPage {
     async componentDidMount() {
         const taskId = this.props.match.params.eventId
         this.props.getTaskDetail(taskId)
-    }
 
-    navigateToEvents() {
-        this.props.history.push('/events/')
-    }
-
-    navigateToUserProfile(userId) {
-        this.props.history.push(`/member/${userId}`)
-    }
-
-    renderMapComponent() {
-        // TODO: Add API key for google maps
-        let apiKey = ''
-        Geocode.setApiKey(apiKey)
+        Geocode.setApiKey(this.state.apiKey)
         // TODO: this needs testing
         Geocode.fromAddress(this.props.task.location || 'New York').then(
             response => {
@@ -69,15 +59,25 @@ export default class extends EmptyPage {
                 console.error(error);
             }
         );
+    }
 
+    navigateToEvents() {
+        this.props.history.push('/events/')
+    }
+
+    navigateToUserProfile(userId) {
+        this.props.history.push(`/member/${userId}`)
+    }
+
+    renderMapComponent() {
         const CustomMapComponent = withScriptjs(withGoogleMap((props) =>
             <GoogleMap
                 defaultZoom={8}
-                defaultCenter={{ lat: 0, lng: 0 }} >
+                defaultCenter={{ lat: this.state.lat, lng: this.state.lng }} >
                 {<Marker position={{ lat: this.state.lat, lng: this.state.lng }} />}
             </GoogleMap>
         ))
-        let url = 'https://maps.googleapis.com/maps/api/js?' + apiKey + 'v=3.exp&libraries=geometry,drawing,places';
+        let url = 'https://maps.googleapis.com/maps/api/js?' + this.state.apiKey + 'v=3.exp&libraries=geometry,drawing,places';
         const mapElement = (<CustomMapComponent
             isMarkerShown
             googleMapURL={url}
@@ -139,19 +139,20 @@ export default class extends EmptyPage {
                 </Row>
                 <Divider className="event-details-divider"/>
                 <div className="event-detail-description">
-                    { descriptionTitle &&
                     <div className="event-detail-description-title">
-                        {descriptionTitle}
+                        {descriptionTitle || 'Description'}
                     </div>
-                    }
-                    {goals &&
-                    <div className="event-detailgoals">
-                        {goals}
-                    </div>
-                    }
                     <div className="event-detail-description-content">
                         {description}
                     </div>
+                    {goals &&
+                    <div className="event-detail-goals">
+                        <div className="event-detail-description-title">Goals</div>
+                        <div>
+                            {goals}
+                        </div>
+                    </div>
+                    }
                 </div>
             </Col>);
     }
@@ -229,7 +230,6 @@ export default class extends EmptyPage {
         if (this.props.isTaskLoading()) {
             return false;
         }
-        console.log(this.props.task);
         let communityName = (this.props.task.community && this.props.task.community.name) || 'Elastos Event';
         let backButton = '< Back';
         // TODO: Replace d_row_lower with sensible data

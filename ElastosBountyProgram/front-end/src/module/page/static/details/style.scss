@@ -77,12 +77,16 @@ $md-width: 992px;
         }
 
         .event-detail-description {
-          padding: 20px;
+          padding: $gap_1;
 
           .event-detail-description-title {
             font-weight: bold;
             padding-bottom: 20px;
             font-size: 1.25rem;
+          }
+
+          .event-detail-goals {
+            margin-top: $gap_1;
           }
         }
       }
