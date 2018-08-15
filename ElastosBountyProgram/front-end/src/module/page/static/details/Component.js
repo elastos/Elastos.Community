@@ -58,6 +58,7 @@ export default class extends EmptyPage {
             </GoogleMap>
         ));
 
+        // TODO: Add API key for google maps
         let apiKey = '';
         let url = 'https://maps.googleapis.com/maps/api/js?' + apiKey + 'v=3.exp&libraries=geometry,drawing,places';
         const mapElement = (<CustomMapComponent
@@ -81,8 +82,11 @@ export default class extends EmptyPage {
         let eventDate = this.props.task.startTime || 'To Be Determined';
         let eventType = this.props.task.type || '-';
         let eventInfo = this.props.task.info || '-';
-        let descriptionTitle = this.props.task.description || '';
-        let description = this.props.task.fullDescription || '';
+        // descriptionTitle disabled until implemented backend
+        let descriptionTitle = '';
+        let description = this.props.task.description || '';
+
+        console.log(this.props.task);
 
         return (
             <Col sm={{span: 24}} md={{span: 12}} className="d_col_left">
@@ -129,9 +133,8 @@ export default class extends EmptyPage {
 
     renderEventActions() {
         let attendance = true;
-        let eventImage = this.props.task.attachment ||
-            'https://www.whitecase.com/sites/whitecase/files/images/locations/melbourne_thumbnailmobileimage_720x500.jpg';
-        let shareQuote = this.props.task.name || 'Visit more events: events.elastos.org!';
+        let eventImage = this.props.task.attachment || '/assets/images/Elastos_Logo_Temp.png';
+        let shareQuote = this.props.task.name || 'Visit us at elastos.org!';
 
         const buttonActionLabel = attendance ? 'DEREGISTER' : 'REGISTER';
         const buttonActionClass = 'actionButton ' + (attendance ? 'actionDeregister' : 'actionRegister');
@@ -202,7 +205,7 @@ export default class extends EmptyPage {
             return false;
         }
         console.log(this.props.task);
-        let communityName = (this.props.task.community && this.props.task.community.name) || '-';
+        let communityName = (this.props.task.community && this.props.task.community.name) || 'Elastos Event';
         let backButton = '< Back';
         return (
             <div className="p_EVENT_DETAILS">

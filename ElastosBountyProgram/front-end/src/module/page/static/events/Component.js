@@ -177,6 +177,7 @@ export default class extends EmptyPage {
         );
     }
 
+    // Disabled until hash-tags implemented backend
     renderHashTags(hashTags) {
         let elements = [];
         for (let i = 0; i < hashTags.length; i++) {
@@ -190,15 +191,15 @@ export default class extends EmptyPage {
             ? socialEvent.candidates.find((user) => user.user && user.user._id === this.state.user_id) : null;
         let hashTags = ['#4ever', '#elastos'];
         let image = socialEvent.attachment ? socialEvent.attachment
-            : 'https://www.whitecase.com/sites/whitecase/files/images/locations/melbourne_thumbnailmobileimage_720x500.jpg';
-        let date = socialEvent.startTime ? moment(socialEvent.startTime).format('MMMM Do YYYY. h:mm a') : 'To Be Determined';
-        let community = socialEvent.community ? socialEvent.community.name : '-';
+            : '/assets/images/Elastos_Logo_Temp.png';
+        let date = socialEvent.eventDateRangeStart ? moment(socialEvent.eventDateRangeStart).format('MMMM Do YYYY. h:mm a') : 'TBD';
+        let community = socialEvent.location || 'TBD';
         let svgStarClass = this.state.favorites.find((item) => item.key === socialEvent._id && item.value) ? this.getStarActiveClass() : 'star-poly';
 
         return (
             <Card
                 key={socialEvent._id}
-                cover={<img className="event-card-image" src={image} />}>
+                cover={ <img className="event-card-image" src={image} />}>
                 <div className="card-icon" onClick={() => this.animateStar(socialEvent._id)}>
                     <svg width="50%" height="50%" viewBox="0 0 40 37" className="star">
                         <polygon className={svgStarClass} points="272 30 260.244 36.18 262.489 23.09 252.979 13.82 266.122 11.91 272 0 277.878 11.91 291.021 13.82 281.511 23.09 283.756 36.18" transform="translate(-252)"/>
@@ -207,7 +208,7 @@ export default class extends EmptyPage {
                 <div className="events-card-detail">
                     <div className="events-card-time">{date}</div>
                     <div className="events-card-title"
-                        onClick={(e) => this.navigateToEvent(socialEvent._id)}>{socialEvent.name}</div>
+                        onClick={() => this.navigateToEvent(socialEvent._id)}>{socialEvent.name}</div>
                     <div className="events-card-location">{community}</div>
                     <div className="events-card-button-container">
                         {this.renderSubscriptionButton(candidate, socialEvent._id)}
@@ -216,9 +217,11 @@ export default class extends EmptyPage {
                         {this.renderDetails(socialEvent._id)}
                     </div>
                 </div>
+                {false &&
                 <div className="events-card-hashtags">
-                    {this.renderHashTags(hashTags)}
+                    this.renderHashTags(hashTags)
                 </div>
+                }
             </Card>
         )
     }

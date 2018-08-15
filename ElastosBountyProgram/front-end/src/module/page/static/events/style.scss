@@ -1,5 +1,6 @@
 
-@import "../../../../style/variable";
+@import "@/style/variable";
+@import "@/style/color";
 
 .p_EVENTS {
 
@@ -114,6 +115,8 @@
 
         .ant-card-cover {
           height: 50%;
+          display: flex;
+          align-items: center;
         }
 
         .card-icon {
@@ -155,6 +158,12 @@
 
         .event-card-image {
           height: 100%;
+          background-color: white;
+          border: 1px solid $bg_gray;
+        }
+
+        .event-card-icon {
+          font-size: 5rem;
         }
 
         .ant-card-body {
@@ -165,7 +174,7 @@
           align-items: center;
 
           .events-card-detail {
-            margin-top: auto;
+            margin: auto 0;
             width: 100%;
             text-align: center;
 
