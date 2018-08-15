@@ -22,14 +22,14 @@ import {
     LinkedinIcon,
     TelegramIcon,
     RedditIcon,
-    EmailIcon,
+    EmailIcon
 } from 'react-share';
 import {
     withScriptjs,
     withGoogleMap,
     GoogleMap,
     Marker
-} from "react-google-maps";
+} from 'react-google-maps';
 
 const { Meta } = Card;
 
@@ -41,7 +41,7 @@ export default class extends EmptyPage {
     }
 
     navigateToEvents() {
-        this.props.history.push("/events/");
+        this.props.history.push('/events/');
     }
 
     navigateToUserProfile(userId) {
@@ -58,8 +58,8 @@ export default class extends EmptyPage {
             </GoogleMap>
         ));
 
-        let apiKey = "";
-        let url = "https://maps.googleapis.com/maps/api/js?" + apiKey + "v=3.exp&libraries=geometry,drawing,places";
+        let apiKey = '';
+        let url = 'https://maps.googleapis.com/maps/api/js?' + apiKey + 'v=3.exp&libraries=geometry,drawing,places';
         const mapElement = (<CustomMapComponent
             isMarkerShown
             googleMapURL={url}
@@ -72,23 +72,22 @@ export default class extends EmptyPage {
     }
 
     renderEventDetails() {
-        let eventName = this.props.task.name || "-";
-        let hostedBy = this.props.task.createdBy ? this.props.task.createdBy.profile.firstName + " " +
-            this.props.task.createdBy.profile.lastName : "-";
-        let hostedByID = this.props.task.createdBy ? this.props.task.createdBy._id : "not-found";
+        let eventName = this.props.task.name || '-';
+        let hostedBy = this.props.task.createdBy ? this.props.task.createdBy.profile.firstName + ' ' +
+            this.props.task.createdBy.profile.lastName : '-';
+        let hostedByID = this.props.task.createdBy ? this.props.task.createdBy._id : 'not-found';
         let hostedByAvatar = this.props.task.createdBy ? this.props.task.createdBy.profile.avatar : null;
         let eventLocation = (this.props.task.community && this.props.task.community.name) || '';
-        let eventDate = this.props.task.startTime || "To Be Determined";
-        let eventType = this.props.task.type || "-";
-        let eventInfo = this.props.task.info || "Offered in English";
-        let descriptionTitle = this.props.task.description || "-";
-        let description = this.props.task.fullDescription || "Squash is all about having " +
-            "fun and learning a new skill, Squash is excellent for all levels of fitness no previous experience needed.";
+        let eventDate = this.props.task.startTime || 'To Be Determined';
+        let eventType = this.props.task.type || '-';
+        let eventInfo = this.props.task.info || '-';
+        let descriptionTitle = this.props.task.description || '';
+        let description = this.props.task.fullDescription || '';
 
         return (
             <Col sm={{span: 24}} md={{span: 12}} className="d_col_left">
                 <Row type="flex">
-                    <Col xs={{span:24}} sm={{span: 24}} md={{span: 16}}>
+                    <Col xs={{span: 24}} sm={{span: 24}} md={{span: 16}}>
                         <span className="event-name">{eventName}</span>
                         <span className="event-hosted-by">Hosted by <a onClick={() => this.navigateToUserProfile(hostedByID)}>{hostedBy}</a></span>
                         <div className="event-detail-container">
@@ -110,7 +109,7 @@ export default class extends EmptyPage {
                             </Row>
                         </div>
                     </Col>
-                    <Col xs={{span:24}} sm={{span: 24}} md={{span: 8}} className="hosted-by-avatar-container">
+                    <Col xs={{span: 24}} sm={{span: 24}} md={{span: 8}} className="hosted-by-avatar-container">
                         {hostedByAvatar &&
                             <Avatar className="hosted-by-avatar" src={hostedByAvatar}/>
                         }
@@ -131,11 +130,11 @@ export default class extends EmptyPage {
     renderEventActions() {
         let attendance = true;
         let eventImage = this.props.task.attachment ||
-            "https://www.whitecase.com/sites/whitecase/files/images/locations/melbourne_thumbnailmobileimage_720x500.jpg";
-        let shareQuote = this.props.task.name || "Visit more events: events.elastos.org!";
+            'https://www.whitecase.com/sites/whitecase/files/images/locations/melbourne_thumbnailmobileimage_720x500.jpg';
+        let shareQuote = this.props.task.name || 'Visit more events: events.elastos.org!';
 
-        const buttonActionLabel = attendance ? "DEREGISTER" : "REGISTER";
-        const buttonActionClass = "actionButton " + (attendance ? "actionDeregister" : "actionRegister");
+        const buttonActionLabel = attendance ? 'DEREGISTER' : 'REGISTER';
+        const buttonActionClass = 'actionButton ' + (attendance ? 'actionDeregister' : 'actionRegister');
         return (
             <Col sm={{span: 24}} md={{span: 12}} className="d_col_right">
                 <img src={eventImage}/>
@@ -199,12 +198,12 @@ export default class extends EmptyPage {
     }
 
     ord_renderContent () {
-        if(this.props.isTaskLoading()) {
+        if (this.props.isTaskLoading()) {
             return false;
         }
         console.log(this.props.task);
-        let communityName = (this.props.task.community && this.props.task.community.name) || "-";
-        let backButton = "< Back";
+        let communityName = (this.props.task.community && this.props.task.community.name) || '-';
+        let backButton = '< Back';
         return (
             <div className="p_EVENT_DETAILS">
                 <div className="ebp-page">

@@ -1,10 +1,10 @@
 import React from 'react'
-import MediaQuery from "react-responsive"
+import MediaQuery from 'react-responsive'
 import EmptyPage from '../../EmptyPage'
 import './style.scss'
-import {Row, Icon, Button, Spin, Checkbox, Card, Tag, Cascader, Select, Divider} from "antd"
+import {Row, Icon, Button, Spin, Checkbox, Card, Tag, Cascader, Select, Divider} from 'antd'
 import moment from 'moment/moment'
-import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from "../../../../config/constant"
+import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '../../../../config/constant'
 
 const Option = Select.Option;
 
@@ -15,7 +15,7 @@ export default class extends EmptyPage {
         socialEvents: [],
         communityTrees: [],
         filterCommunity: [],
-        user_id: "5b28f21925220612fc4ff911",
+        user_id: '5b28f21925220612fc4ff911',
         favorites: [],
         showFavoritesOnly: false
     };
@@ -50,7 +50,7 @@ export default class extends EmptyPage {
 
         for (let i = 0; i < months.length; i++) {
             let idx = (i === this.state.activeMonth && months[i].length === 4) ? 4 : 3;
-            let monthClass = i === this.state.activeMonth ? "ebp-events-month ebp-events-active-month" : "ebp-events-month";
+            let monthClass = i === this.state.activeMonth ? 'ebp-events-month ebp-events-active-month' : 'ebp-events-month';
             monthsElements.push(
                 <span className={monthClass} key={i} onClick={this.handleMonthChange.bind(this, i)}>
                     {months[i].substr(0, idx)}
@@ -118,8 +118,8 @@ export default class extends EmptyPage {
     }
 
     handleUnregisterUser(candidate, socialEventId) {
-        for(let i = 0; i < this.state.socialEvents.length; i++) {
-            if(this.state.socialEvents[i]._id === socialEventId) {
+        for (let i = 0; i < this.state.socialEvents.length; i++) {
+            if (this.state.socialEvents[i]._id === socialEventId) {
                 let socialEvents = this.state.socialEvents;
                 let idx = socialEvents[i].candidates.indexOf(candidate);
                 socialEvents[i].candidates.splice(idx, 1);
@@ -135,14 +135,14 @@ export default class extends EmptyPage {
         let favorites = this.state.favorites;
         let found = favorites.find((item) => item.key === socialEventId);
 
-        if(found) {
+        if (found) {
             let idx = favorites.indexOf(found);
             favorites[idx].value = !favorites[idx].value;
         } else {
             favorites.push({
-                    key: socialEventId,
-                    value: true
-                }
+                key: socialEventId,
+                value: true
+            }
             );
         }
 
@@ -152,7 +152,7 @@ export default class extends EmptyPage {
     }
 
     getStarActiveClass() {
-        return "star-poly-active"
+        return 'star-poly-active'
     }
 
     renderSubscriptionButton(candidate, socialEventId) {
@@ -163,7 +163,7 @@ export default class extends EmptyPage {
             <Button className="events-card-button-unregister" onClick={() => this.handleUnregisterUser(candidate, socialEventId)}><span>Going</span></Button>
         );
 
-        if(!candidate) {
+        if (!candidate) {
             return register;
         }
         return unregister;
@@ -186,14 +186,14 @@ export default class extends EmptyPage {
     }
 
     renderEventCard(socialEvent) {
-        let candidate = socialEvent.candidates ?
-            socialEvent.candidates.find((user) => user.user && user.user._id === this.state.user_id) : null;
-        let hashTags = ["#4ever", "#elastos"];
-        let image = socialEvent.attachment ? socialEvent.attachment :
-            "https://www.whitecase.com/sites/whitecase/files/images/locations/melbourne_thumbnailmobileimage_720x500.jpg";
-        let date = socialEvent.startTime ? moment(socialEvent.startTime).format("MMMM Do YYYY. h:mm a") : "To Be Determined";
-        let community = socialEvent.community ? socialEvent.community.name : "-";
-        let svgStarClass = this.state.favorites.find((item) => item.key === socialEvent._id && item.value) ? this.getStarActiveClass() : "star-poly";
+        let candidate = socialEvent.candidates
+            ? socialEvent.candidates.find((user) => user.user && user.user._id === this.state.user_id) : null;
+        let hashTags = ['#4ever', '#elastos'];
+        let image = socialEvent.attachment ? socialEvent.attachment
+            : 'https://www.whitecase.com/sites/whitecase/files/images/locations/melbourne_thumbnailmobileimage_720x500.jpg';
+        let date = socialEvent.startTime ? moment(socialEvent.startTime).format('MMMM Do YYYY. h:mm a') : 'To Be Determined';
+        let community = socialEvent.community ? socialEvent.community.name : '-';
+        let svgStarClass = this.state.favorites.find((item) => item.key === socialEvent._id && item.value) ? this.getStarActiveClass() : 'star-poly';
 
         return (
             <Card
@@ -207,7 +207,7 @@ export default class extends EmptyPage {
                 <div className="events-card-detail">
                     <div className="events-card-time">{date}</div>
                     <div className="events-card-title"
-                         onClick={(e) => this.navigateToEvent(socialEvent._id)}>{socialEvent.name}</div>
+                        onClick={(e) => this.navigateToEvent(socialEvent._id)}>{socialEvent.name}</div>
                     <div className="events-card-location">{community}</div>
                     <div className="events-card-button-container">
                         {this.renderSubscriptionButton(candidate, socialEvent._id)}
@@ -226,34 +226,34 @@ export default class extends EmptyPage {
     getFilteredEvents(socialEvents) {
         return socialEvents.filter((item) => {
 
-            if(this.state.showFavoritesOnly
-                && !this.state.favorites.find((favorite) => favorite.key === item._id && favorite.value)) {
+            if (this.state.showFavoritesOnly &&
+                !this.state.favorites.find((favorite) => favorite.key === item._id && favorite.value)) {
                 return false;
             }
 
             let dateValid = item.startTime ? new Date(item.startTime).getMonth() === this.state.activeMonth : true;
 
-            if(this.state.filterCommunity.length === 0) {
+            if (this.state.filterCommunity.length === 0) {
                 return dateValid;
             }
-            else if(!item.community) {
+            else if (!item.community) {
                 return dateValid && this.state.filterCommunity.length === 0;
             }
 
             let communityValid = false;
-            if(this.state.filterCommunity.length > 1) {
+            if (this.state.filterCommunity.length > 1) {
                 if (item.community._id === this.state.filterCommunity[1]) {
                     communityValid = true;
                     return dateValid && communityValid;
                 }
                 return false;
-            } else if(this.state.filterCommunity[0] === item.community._id) {
+            } else if (this.state.filterCommunity[0] === item.community._id) {
                 communityValid = true;
             } else {
                 let found = this.state.communityTrees.find((community) => community.value === this.state.filterCommunity[0]);
-                if(found && found.children) {
-                    for(let j = 0; j < found.children.length; j++) {
-                        if(found.children[j].value === item.community._id) {
+                if (found && found.children) {
+                    for (let j = 0; j < found.children.length; j++) {
+                        if (found.children[j].value === item.community._id) {
                             communityValid = true;
                             return dateValid && communityValid;
                         }
@@ -270,10 +270,6 @@ export default class extends EmptyPage {
         for (let i = 0; i < filteredSocialEvents.length; i++) {
             eventCards.push(this.renderEventCard(filteredSocialEvents[i]));
         }
-        /*if(eventCards.length === 0) {
-            eventCards.push(<div className="no-events" key={1}>No events found</div>);
-        }*/
-
         return eventCards;
     }
 

@@ -4,7 +4,7 @@ import TaskService from '@/service/TaskService'
 import CommunityService from '@/service/CommunityService'
 
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS} from '@/constant'
-import _ from "lodash";
+import _ from 'lodash';
 
 export default createContainer(Component, (state, ownProps) => {
     return {}
@@ -22,11 +22,11 @@ export default createContainer(Component, (state, ownProps) => {
         async getAllCommunities() {
             return new Promise((resolve, reject) => {
                 communityService.getAll().then((data) => {
-                    const cascaderItems =  data.map((item) => {
+                    const cascaderItems = data.map((item) => {
                         return {
                             value: item._id,
                             label: item.name,
-                            parentId: item.parentCommunityId,
+                            parentId: item.parentCommunityId
                         }
                     })
 
