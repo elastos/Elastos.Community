@@ -7,7 +7,9 @@ import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS} from '@/co
 import _ from 'lodash';
 
 export default createContainer(Component, (state, ownProps) => {
-    return {}
+    return {
+        currentUserId: state.user.current_user_id
+    }
 }, () => {
     const taskService = new TaskService()
     const communityService = new CommunityService()
@@ -49,10 +51,6 @@ export default createContainer(Component, (state, ownProps) => {
                     reject(err)
                 })
             })
-        },
-
-        // Subscribe the current user to the event with ID: socialEventId
-        async subscribe(socialEventId) {
         }
     }
 })

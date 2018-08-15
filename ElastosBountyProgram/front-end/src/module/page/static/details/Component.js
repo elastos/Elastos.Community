@@ -61,6 +61,11 @@ export default class extends EmptyPage {
         );
     }
 
+    // TODO: subscribe user to the task
+    subscriptionAction(subscribe) {
+        // this.props.task._id << subscribe or unsubscribe
+    }
+
     navigateToEvents() {
         this.props.history.push('/events/')
     }
@@ -158,7 +163,7 @@ export default class extends EmptyPage {
     }
 
     renderEventActions() {
-        let attendance = true;
+        let attendance = this.props.task.candidates.find((i) => i.user._id === this.props.currentUserId)
         let eventImage = this.props.task.attachment || '/assets/images/Elastos_Logo_Temp.png';
         let shareQuote = this.props.task.name || 'Visit us at elastos.org!';
 
@@ -167,7 +172,7 @@ export default class extends EmptyPage {
         return (
             <Col sm={{span: 24}} md={{span: 12}} className="d_col_right">
                 <img src={eventImage}/>
-                <Button className={buttonActionClass}>{buttonActionLabel}</Button>
+                <Button className={buttonActionClass} onClick={() => this.subscriptionAction.bind(this, attendance)}>{buttonActionLabel}</Button>
                 <span className="share-with-friends">SHARE WITH FRIENDS</span>
                 <Row className="social-share-actions">
                     <FacebookShareButton

@@ -5,7 +5,8 @@ import TaskService from '@/service/TaskService'
 export default createContainer(Component, (state, ownProps) => {
     return {
         task: state.task.detail,
-        loading: state.task.loading
+        loading: state.task.loading,
+        currentUserId: state.user.current_user_id
     }
 }, () => {
 
@@ -16,8 +17,8 @@ export default createContainer(Component, (state, ownProps) => {
         },
 
         isTaskLoading() {
-          return this.loading || (Object.keys(this.task).length === 0 && this.task.constructor === Object
-              && !this.loading);
+            return this.loading || (Object.keys(this.task).length === 0 && this.task.constructor === Object
+                && !this.loading);
         },
 
         resetTaskDetail() {

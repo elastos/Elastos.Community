@@ -15,7 +15,6 @@ export default class extends EmptyPage {
         socialEvents: [],
         communityTrees: [],
         filterCommunity: [],
-        user_id: '5b28f21925220612fc4ff911',
         favorites: [],
         showFavoritesOnly: false
     };
@@ -113,22 +112,12 @@ export default class extends EmptyPage {
         })
     }
 
+    // TODO: subscribe user to the task
     handleRegisterUser(socialEventId) {
-        this.props.subscribe(socialEventId);
     }
 
+    // TODO: unsubscribe user to the task
     handleUnregisterUser(candidate, socialEventId) {
-        for (let i = 0; i < this.state.socialEvents.length; i++) {
-            if (this.state.socialEvents[i]._id === socialEventId) {
-                let socialEvents = this.state.socialEvents;
-                let idx = socialEvents[i].candidates.indexOf(candidate);
-                socialEvents[i].candidates.splice(idx, 1);
-                this.setState({
-                    socialEvents: socialEvents
-                });
-                break;
-            }
-        }
     }
 
     animateStar(socialEventId) {
@@ -188,7 +177,7 @@ export default class extends EmptyPage {
 
     renderEventCard(socialEvent) {
         let candidate = socialEvent.candidates
-            ? socialEvent.candidates.find((user) => user.user && user.user._id === this.state.user_id) : null;
+            ? socialEvent.candidates.find((user) => user.user && user.user._id === this.props.currentUserId) : null;
         let hashTags = ['#4ever', '#elastos'];
         let image = socialEvent.attachment ? socialEvent.attachment
             : '/assets/images/Elastos_Logo_Temp.png';
