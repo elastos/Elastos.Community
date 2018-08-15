@@ -4,5 +4,9 @@
 .navigator {
   @media only screen and (max-width: $mobile-width) {
     margin-bottom: $gap_1;
+    .ant-menu {
+      display: flex;
+      overflow-x: auto;
+    }
   }
 }
