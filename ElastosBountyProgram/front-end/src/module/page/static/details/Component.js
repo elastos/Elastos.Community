@@ -3,11 +3,8 @@ import EmptyPage from '../../EmptyPage'
 import './style.scss'
 import { Col, Row, Icon, Button, Divider, Avatar, Card } from 'antd'
 import {
-    FacebookShareCount,
-    LinkedinShareCount,
     TwitterShareCount,
     TelegramShareCount,
-    RedditShareCount,
     EmailShareCount,
 
     FacebookShareButton,
@@ -23,43 +20,63 @@ import {
     TelegramIcon,
     RedditIcon,
     EmailIcon
-} from 'react-share';
+} from 'react-share'
 import {
     withScriptjs,
     withGoogleMap,
     GoogleMap,
     Marker
-} from 'react-google-maps';
+} from 'react-google-maps'
+import Geocode from 'react-geocode'
+import moment from 'moment'
 
 const { Meta } = Card;
 
 export default class extends EmptyPage {
 
+    state = {
+        lat: 18.7,
+        lng: 98.98
+    }
+
     async componentDidMount() {
-        const taskId = this.props.match.params.eventId;
-        this.props.getTaskDetail(taskId);
+        const taskId = this.props.match.params.eventId
+        this.props.getTaskDetail(taskId)
     }
 
     navigateToEvents() {
-        this.props.history.push('/events/');
+        this.props.history.push('/events/')
     }
 
     navigateToUserProfile(userId) {
-        this.props.history.push(`/member/${userId}`);
+        this.props.history.push(`/member/${userId}`)
     }
 
     renderMapComponent() {
+        // TODO: Add API key for google maps
+        let apiKey = ''
+        Geocode.setApiKey(apiKey)
+        // TODO: this needs testing
+        Geocode.fromAddress(this.props.task.location || 'New York').then(
+            response => {
+                const { lat, lng } = response.results[0].geometry.location;
+                this.setState({
+                    lat: lat,
+                    lng: lng
+                })
+            },
+            error => {
+                console.error(error);
+            }
+        );
 
         const CustomMapComponent = withScriptjs(withGoogleMap((props) =>
             <GoogleMap
                 defaultZoom={8}
-                defaultCenter={{ lat: 18.7, lng: 98.98 }} >
-                {<Marker position={{ lat: 18.7, lng: 98.98 }} />}
+                defaultCenter={{ lat: 0, lng: 0 }} >
+                {<Marker position={{ lat: this.state.lat, lng: this.state.lng }} />}
             </GoogleMap>
-        ));
-
-        // TODO: Add API key for google maps
-        let apiKey = '';
+        ))
         let url = 'https://maps.googleapis.com/maps/api/js?' + apiKey + 'v=3.exp&libraries=geometry,drawing,places';
         const mapElement = (<CustomMapComponent
             isMarkerShown
@@ -67,26 +84,27 @@ export default class extends EmptyPage {
             loadingElement={<div style={{ height: `100%` }} />}
             containerElement={<div style={{ height: `400px` }} />}
             mapElement={<div style={{ height: `100%` }} />}
-        />);
+        />)
 
-        return mapElement;
+        return mapElement
     }
 
     renderEventDetails() {
-        let eventName = this.props.task.name || '-';
+        let eventName = this.props.task.name || '';
         let hostedBy = this.props.task.createdBy ? this.props.task.createdBy.profile.firstName + ' ' +
-            this.props.task.createdBy.profile.lastName : '-';
+            this.props.task.createdBy.profile.lastName : 'unknown user';
         let hostedByID = this.props.task.createdBy ? this.props.task.createdBy._id : 'not-found';
         let hostedByAvatar = this.props.task.createdBy ? this.props.task.createdBy.profile.avatar : null;
-        let eventLocation = (this.props.task.community && this.props.task.community.name) || '';
-        let eventDate = this.props.task.startTime || 'To Be Determined';
-        let eventType = this.props.task.type || '-';
+        let eventLocation = (this.props.task.location && this.props.task.location) || 'TBD';
+        let eventDate = this.props.task.eventDateRangeStart ? (
+            moment(this.props.task.eventDateRangeStart).format('MMMM Do YYYY. h:mm a')) : 'TBD';
+        let eventType = this.props.task.type ? (
+            (this.props.task.type[0] + this.props.task.type.toLowerCase().substr(1, this.props.task.type.length))) : '-';
         let eventInfo = this.props.task.info || '-';
         // descriptionTitle disabled until implemented backend
         let descriptionTitle = '';
         let description = this.props.task.description || '';
-
-        console.log(this.props.task);
+        let goals = this.props.task.goals || '';
 
         return (
             <Col sm={{span: 24}} md={{span: 12}} className="d_col_left">
@@ -121,9 +139,16 @@ export default class extends EmptyPage {
                 </Row>
                 <Divider className="event-details-divider"/>
                 <div className="event-detail-description">
+                    { descriptionTitle &&
                     <div className="event-detail-description-title">
                         {descriptionTitle}
                     </div>
+                    }
+                    {goals &&
+                    <div className="event-detailgoals">
+                        {goals}
+                    </div>
+                    }
                     <div className="event-detail-description-content">
                         {description}
                     </div>
@@ -207,6 +232,7 @@ export default class extends EmptyPage {
         console.log(this.props.task);
         let communityName = (this.props.task.community && this.props.task.community.name) || 'Elastos Event';
         let backButton = '< Back';
+        // TODO: Replace d_row_lower with sensible data
         return (
             <div className="p_EVENT_DETAILS">
                 <div className="ebp-page">
@@ -223,24 +249,26 @@ export default class extends EmptyPage {
                             {this.renderMapComponent()}
                         </div>
                     </Row>
-                    <Row className="d_row_lower">
-                        <span className="title">
+                    { false &&
+                        <Row className="d_row_lower">
+                            <span className="title">
                             BALAYAGE w/ KITTY COLOURIST - VIC
-                        </span>
-                        <span>at</span>
-                        <span className="title-2">
+                            </span>
+                            <span>at</span>
+                            <span className="title-2">
                             La Biosthetique Academie
-                        </span>
-                        <span className="address">
+                            </span>
+                            <span className="address">
                             1209 High Street Armadale, Melbourne, Victoria 3143
-                        </span>
-                        <Row>
-                            <Icon type="link" />
-                            <Icon type="link" />
-                            <Icon type="link" />
-                            <Icon type="link" />
+                            </span>
+                            <Row>
+                                <Icon type="link"/>
+                                <Icon type="link"/>
+                                <Icon type="link"/>
+                                <Icon type="link"/>
+                            </Row>
                         </Row>
-                    </Row>
+                    }
                 </div>
             </div>
         )
