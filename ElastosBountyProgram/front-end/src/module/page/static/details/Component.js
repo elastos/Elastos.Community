@@ -1,7 +1,7 @@
 import React from 'react'
 import EmptyPage from '../../EmptyPage'
 import './style.scss'
-import { Col, Row, Icon, Button, Divider, Avatar, Card } from 'antd'
+import { Col, Row, Icon, Button, Divider, Avatar, Card, Spin } from 'antd'
 import {
     TwitterShareCount,
     TelegramShareCount,
@@ -29,6 +29,7 @@ import {
 } from 'react-google-maps'
 import Geocode from 'react-geocode'
 import moment from 'moment'
+import _ from 'lodash'
 
 const { Meta } = Card;
 
@@ -163,7 +164,7 @@ export default class extends EmptyPage {
     }
 
     renderEventActions() {
-        let attendance = this.props.task.candidates.find((i) => i.user._id === this.props.currentUserId)
+        let attendance = _.find(this.props.task.candidates, (i) => i.user && i.user._id === this.props.currentUserId)
         let eventImage = this.props.task.attachment || '/assets/images/Elastos_Logo_Temp.png';
         let shareQuote = this.props.task.name || 'Visit us at elastos.org!';
 
@@ -233,7 +234,7 @@ export default class extends EmptyPage {
 
     ord_renderContent () {
         if (this.props.isTaskLoading()) {
-            return false;
+            return <div className="center"><Spin size="large"/></div>
         }
         let communityName = (this.props.task.community && this.props.task.community.name) || 'Elastos Event';
         let backButton = '< Back';
