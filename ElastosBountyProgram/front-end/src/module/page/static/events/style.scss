@@ -47,6 +47,7 @@
 
       .ebp-events-month {
         padding: 10px;
+        border-top: 2px solid transparent;
       }
 
       .ebp-events-month-all {
@@ -64,6 +65,7 @@
       .ebp-events-active-month {
         border-top: 2px solid green;
         font-size: 3rem;
+        padding-top: 0;
       }
     }
 
