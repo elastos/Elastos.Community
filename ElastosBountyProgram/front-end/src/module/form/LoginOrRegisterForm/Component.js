@@ -16,7 +16,7 @@ export default class extends BaseComponent {
 
         this.state = {
             persist: true,
-            activeKey: 'login'
+            activeKey: 'register'
         }
     }
 
@@ -40,11 +40,11 @@ export default class extends BaseComponent {
 
         return (
             <Tabs activeKey={this.state.activeKey} onChange={this.handleChangeTab()}>
-                <TabPane tab="Login" key="login">
-                    <LoginForm />
-                </TabPane>
                 <TabPane tab="Register" key="register">
                     <RegisterForm />
+                </TabPane>
+                <TabPane tab="Login" key="login">
+                    <LoginForm />
                 </TabPane>
             </Tabs>
         )
