@@ -145,7 +145,7 @@ export default class extends EmptyPage {
 
     renderSubscriptionButton(candidate, socialEventId) {
         const register = (
-            <Button className="events-card-button-register" loading={this.props.loading}
+            <Button className="events-card-button-register" type="primary" loading={this.props.loading}
                 onClick={() => this.handleRegisterUser(socialEventId)}>
                 <span>Register</span>
             </Button>
