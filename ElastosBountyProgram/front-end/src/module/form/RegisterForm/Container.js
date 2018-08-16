@@ -32,7 +32,16 @@ export default createContainer(Component, (state) => {
                 if (rs) {
                     userService.sendConfirmationEmail(profile.email)
                     message.success('Successfully Registered - Please Login')
-                    this.history.replace('/login')
+
+                    const registerRedirect = sessionStorage.getItem('registerRedirect')
+
+                    if (registerRedirect) {
+                        sessionStorage.removeItem('registerRedirect')
+                        sessionStorage.setItem('registered', true)
+                        this.history.push(registerRedirect)
+                    } else {
+                        this.history.replace('/login')
+                    }
                 }
             } catch (err) {
                 console.error(err)
