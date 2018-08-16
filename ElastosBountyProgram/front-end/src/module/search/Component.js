@@ -113,6 +113,9 @@ export default class extends BaseComponent {
     }
 
     showLoginRegisterModal = () => {
+        sessionStorage.setItem('loginRedirect', '/developer/search')
+        sessionStorage.setItem('registerRedirect', '/developer/search')
+
         this.setState({
             showLoginRegisterModal: true
         })
@@ -143,12 +146,16 @@ export default class extends BaseComponent {
     }
 
     handleLoginRegisterModalOk = (e) => {
+        sessionStorage.removeItem('registerRedirect')
+
         this.setState({
             showLoginRegisterModal: false
         })
     }
 
     handleLoginRegisterModalCancel = (e) => {
+        sessionStorage.removeItem('registerRedirect')
+
         this.setState({
             showLoginRegisterModal: false
         })
@@ -207,6 +214,25 @@ export default class extends BaseComponent {
             <CheckboxGroup onChange={this.onChangeDomain.bind(this)}>
                 {elements}
             </CheckboxGroup>
+        )
+    }
+
+    renderLoginOrRegisterModal() {
+        if (this.props.is_login) {
+            return
+        }
+
+        return (
+            <Modal
+                className="project-detail-nobar"
+                visible={this.state.showLoginRegisterModal}
+                onOk={this.handleLoginRegisterModalOk}
+                onCancel={this.handleLoginRegisterModalCancel}
+                footer={null}
+                width="70%"
+            >
+                <LoginOrRegisterForm />
+            </Modal>
         )
     }
 
@@ -433,16 +459,7 @@ export default class extends BaseComponent {
                 >
                     <TeamDetail teamId={this.state.teamDetailId}/>
                 </Modal>
-                <Modal
-                    className="project-detail-nobar"
-                    visible={this.state.showLoginRegisterModal}
-                    onOk={this.handleLoginRegisterModalOk}
-                    onCancel={this.handleLoginRegisterModalCancel}
-                    footer={null}
-                    width="70%"
-                >
-                    <LoginOrRegisterForm />
-                </Modal>
+                {this.renderLoginOrRegisterModal()}
                 <Footer/>
             </div>
         )
