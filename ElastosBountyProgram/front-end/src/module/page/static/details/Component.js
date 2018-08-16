@@ -44,11 +44,14 @@ export default class extends EmptyPage {
 
     async componentDidMount() {
         const taskId = this.props.match.params.eventId
-        this.props.getTaskDetail(taskId)
+        await this.props.getTaskDetail(taskId)
 
         Geocode.setApiKey(this.state.apiKey)
-        // TODO: this needs testing
-        Geocode.fromAddress(this.props.task.location || 'New York').then(
+
+        const location = this.props.task.location ||
+            (this.props.task.community && this.props.task.community.name) || 'New York'
+
+        Geocode.fromAddress(location).then(
             response => {
                 const { lat, lng } = response.results[0].geometry.location;
                 this.setState({
