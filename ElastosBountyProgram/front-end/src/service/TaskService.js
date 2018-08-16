@@ -134,10 +134,54 @@ export default class extends BaseService {
         return result
     }
 
+    async register(taskId, userId) {
+        const taskRedux = this.store.getRedux('task')
+        this.dispatch(taskRedux.actions.loading_update(true))
+
+        const result = await api_request({
+            path: '/api/task/register',
+            method: 'post',
+            data: {
+                taskId,
+                userId
+            }
+        })
+
+        this.dispatch(taskRedux.actions.loading_update(false))
+
+        const curTaskDetail = this.store.getState().task.detail
+        curTaskDetail.candidates.push(result)
+        this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
+
+        return result
+    }
+
     async pullCandidate(taskId, taskCandidateId) {
         const taskRedux = this.store.getRedux('task')
         const result = await api_request({
             path: '/api/task/removeCandidate',
+            method: 'post',
+            data: {
+                taskId,
+                taskCandidateId
+            }
+        })
+
+        const curTaskDetail = this.store.getState().task.detail
+
+        _.remove(curTaskDetail.candidates, (candidate) => {
+            return candidate._id === taskCandidateId
+        })
+
+        this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
+
+        return result
+    }
+
+    async deregister(taskId, taskCandidateId) {
+        const taskRedux = this.store.getRedux('task')
+        const result = await api_request({
+            path: '/api/task/deregister',
             method: 'post',
             data: {
                 taskId,

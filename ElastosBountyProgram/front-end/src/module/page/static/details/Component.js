@@ -62,9 +62,12 @@ export default class extends EmptyPage {
         );
     }
 
-    // TODO: subscribe user to the task
-    subscriptionAction(subscribe) {
-        // this.props.task._id << subscribe or unsubscribe
+    register() {
+        this.props.register(this.props.task._id, this.props.currentUserId)
+    }
+
+    deregister(candidate) {
+        this.props.deregister(this.props.task._id, candidate._id)
     }
 
     navigateToEvents() {
@@ -170,10 +173,12 @@ export default class extends EmptyPage {
 
         const buttonActionLabel = attendance ? 'DEREGISTER' : 'REGISTER';
         const buttonActionClass = 'actionButton ' + (attendance ? 'actionDeregister' : 'actionRegister');
+        const subscriptionAction = attendance ? this.deregister : this.register
+
         return (
             <Col sm={{span: 24}} md={{span: 12}} className="d_col_right">
                 <img src={eventImage}/>
-                <Button className={buttonActionClass} onClick={() => this.subscriptionAction.bind(this, attendance)}>{buttonActionLabel}</Button>
+                <Button className={buttonActionClass} onClick={subscriptionAction.bind(this, attendance)}>{buttonActionLabel}</Button>
                 <span className="share-with-friends">SHARE WITH FRIENDS</span>
                 <Row className="social-share-actions">
                     <FacebookShareButton

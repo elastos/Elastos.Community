@@ -1,19 +1,21 @@
-import Base from '../Base';
+import Base from '../Base'
 
-import get from './get';
-import create from './create';
-import list from './list';
-import update from './update';
-import addCandidate from './add_candidate';
-import removeCandidate from './remove_candidate';
-import acceptCandidate from './accept_candidate';
-import rejectCandidate from './reject_candidate';
-import withdrawCandidate from './withdraw_candidate';
-import markComplete from './mark_complete';
-import markVisited from './mark_visited';
-import comment from './comment';
-import subscribe from './subscribe';
-import unsubscribe from './unsubscribe';
+import get from './get'
+import create from './create'
+import list from './list'
+import update from './update'
+import addCandidate from './add_candidate'
+import removeCandidate from './remove_candidate'
+import acceptCandidate from './accept_candidate'
+import rejectCandidate from './reject_candidate'
+import withdrawCandidate from './withdraw_candidate'
+import markComplete from './mark_complete'
+import markVisited from './mark_visited'
+import comment from './comment'
+import subscribe from './subscribe'
+import unsubscribe from './unsubscribe'
+import register from './register'
+import deregister from './deregister'
 
 export default Base.setRouter([
 
@@ -45,6 +47,16 @@ export default Base.setRouter([
     {
         path : '/removeCandidate',
         router : removeCandidate,
+        method : 'post'
+    },
+    {
+        path : '/register',
+        router : register,
+        method : 'post'
+    },
+    {
+        path : '/deregister',
+        router : deregister,
         method : 'post'
     },
     {

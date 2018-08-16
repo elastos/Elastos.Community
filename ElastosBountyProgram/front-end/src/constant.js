@@ -76,6 +76,10 @@ export const TASK_CANDIDATE_TYPE = {
     TEAM: 'TEAM'
 }
 
+export const TASK_CANDIDATE_CATEGORY = {
+    RSVP: 'RSVP'
+}
+
 export const TASK_CANDIDATE_STATUS = {
     // NOT_REQUIRED: 'NOT_REQUIRED',
     PENDING: 'PENDING',

@@ -61,6 +61,8 @@ export const TaskCandidate = {
     team : {type: Schema.Types.ObjectId, ref: 'team'},
     user : {type: Schema.Types.ObjectId, ref: 'users'},
 
+    category: String,
+
     // constants.TASK_CANDIDATE_STATUS - PENDING, APPROVED
     status : {
         type : String

@@ -107,3 +107,7 @@ export const TEAM_TASK_DOMAIN = create(['SOCIAL', 'IOT', 'MEDIA', 'FINANCE']);
 export const TEAM_ROLE = create(['MEMBER', 'LEADER']);
 export const TEAM_USER_STATUS = create(['NORMAL', 'PENDING', 'REJECT']);
 export const TEAM_TYPE = create(['DEVELOP', 'MARKET', 'DESIGN', 'PROJECT', 'OTHER']);
+
+export const TASK_CANDIDATE_CATEGORY = {
+    RSVP: 'RSVP'
+}

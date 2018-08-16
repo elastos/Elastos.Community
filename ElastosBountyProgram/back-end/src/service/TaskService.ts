@@ -541,6 +541,58 @@ export default class extends Base {
         return taskCandidate
     }
 
+    public async register(param): Promise<boolean> {
+        const {userId, taskId} = param;
+        const doc: any = {
+            task: taskId,
+            category: constant.TASK_CANDIDATE_CATEGORY.RSVP,
+            status: constant.TASK_CANDIDATE_STATUS.APPROVED
+        };
+        const db_user = this.getDBModel('User');
+
+        if (userId) {
+            doc.user = userId;
+            const user = await db_user.findOne({_id: userId});
+            if (!user) {
+                throw 'invalid user id';
+            }
+            doc.type = constant.TASK_CANDIDATE_TYPE.USER;
+        } else {
+            throw 'no user id';
+        }
+
+        const db_tc = this.getDBModel('Task_Candidate');
+        if (await db_tc.findOne(doc)) {
+            throw 'candidate already exists';
+        }
+
+        const db_task = this.getDBModel('Task');
+        const task = await db_task.findOne({_id: taskId});
+        if (!task) {
+            throw 'invalid task id';
+        }
+
+        console.log('register task candidate =>', doc);
+        const taskCandidate = await db_tc.save(doc);
+
+        // add the candidate to the task too
+        if (task.candidates && task.candidates.length) {
+            task.candidates.push(taskCandidate._id)
+        } else {
+            task.candidates = [taskCandidate._id]
+        }
+
+        await task.save()
+
+        // populate the taskCandidate
+        await db_tc.db.populate(taskCandidate, ['user', 'team'])
+
+        const taskOwner = await db_user.findById(task.createdBy)
+        await this.sendAddCandidateEmail(this.currentUser, taskOwner, task)
+
+        return taskCandidate
+    }
+
     /**
      * You can either be the candidate or the task owner, or admin/council
      * @param param
@@ -626,6 +678,47 @@ export default class extends Base {
 
         const db_tc = this.getDBModel('Task_Candidate');
         */
+    }
+
+    public async deregister(param): Promise<boolean> {
+        const {taskId, taskCandidateId} = param
+
+        const db_task = this.getDBModel('Task')
+        const db_tc = this.getDBModel('Task_Candidate')
+
+        let task = await db_task.getDBInstance().findOne({_id: taskId})
+            .populate('createdBy', sanitize)
+        let doc = await db_tc.findOne({_id: taskCandidateId})
+
+        if (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
+            this.currentUser.role !== constant.USER_ROLE.COUNCIL &&
+            (taskCandidateId && this.currentUser._id.toString() !== doc.user._id.toString()) &&
+            (task.createdBy && task.createdBy._id.toString() !== this.currentUser._id.toString())) {
+            throw 'Access Denied'
+        }
+
+        doc = {
+            _id: taskCandidateId
+        }
+
+        await db_tc.remove(doc);
+
+        task = await db_task.findOne({_id: taskId});
+        if(!task){
+            throw 'invalid task id';
+        }
+
+        const result = await db_task.db.update({
+            _id: task._id
+        }, {
+            $pull: {
+                candidates: new ObjectId(taskCandidateId)
+            }
+        })
+
+        console.log('remove task candidate =>', doc);
+
+        return result
     }
 
     /**

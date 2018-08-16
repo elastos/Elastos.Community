@@ -23,6 +23,14 @@ export default createContainer(Component, (state, ownProps) => {
 
         resetTaskDetail() {
             return taskService.resetTaskDetail()
+        },
+
+        async register(taskId, userId) {
+            return taskService.register(taskId, userId)
+        },
+
+        async deregister(taskId, taskCandidateId) {
+            return taskService.deregister(taskId, taskCandidateId)
         }
     }
 })
