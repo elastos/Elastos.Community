@@ -31,7 +31,7 @@ export default class extends BaseService {
         // TODO: why does this set it as a struct?
         this.dispatch(taskRedux.actions.loading_update(false))
         this.dispatch(taskRedux.actions.all_tasks_reset())
-        this.dispatch(taskRedux.actions.all_tasks_update(result.list))
+        this.dispatch(taskRedux.actions.all_tasks_update(_.values(result.list)))
 
         return result
     }
@@ -150,7 +150,18 @@ export default class extends BaseService {
         this.dispatch(taskRedux.actions.loading_update(false))
 
         const curTaskDetail = this.store.getState().task.detail
+        curTaskDetail.candidates = curTaskDetail.candidates || []
         curTaskDetail.candidates.push(result)
+
+        let all_tasks = this.store.getState().task.all_tasks
+        if (!_.isEmpty(all_tasks)) {
+            let task = _.find(all_tasks, {_id: taskId})
+            const ind = _.indexOf(_.values(all_tasks), task)
+
+            all_tasks[ind].candidates = curTaskDetail.candidates
+            this.dispatch(taskRedux.actions.all_tasks_update(all_tasks))
+        }
+
         this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
 
         return result
@@ -180,6 +191,8 @@ export default class extends BaseService {
 
     async deregister(taskId, taskCandidateId) {
         const taskRedux = this.store.getRedux('task')
+        this.dispatch(taskRedux.actions.loading_update(true))
+
         const result = await api_request({
             path: '/api/task/deregister',
             method: 'post',
@@ -189,11 +202,21 @@ export default class extends BaseService {
             }
         })
 
+        this.dispatch(taskRedux.actions.loading_update(false))
         const curTaskDetail = this.store.getState().task.detail
 
         _.remove(curTaskDetail.candidates, (candidate) => {
             return candidate._id === taskCandidateId
         })
+
+        let all_tasks = this.store.getState().task.all_tasks
+        if (!_.isEmpty(all_tasks)) {
+            let task = _.find(all_tasks, {_id: taskId})
+            const ind = _.indexOf(_.values(all_tasks), task)
+
+            all_tasks[ind].candidates = curTaskDetail.candidates
+            this.dispatch(taskRedux.actions.all_tasks_update(all_tasks))
+        }
 
         this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
 

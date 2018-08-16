@@ -58,12 +58,12 @@
       }
 
       .ebp-events-month:hover, .ebp-events-month-all:hover {
-        border-top: 2px solid green;
+        border-top: 2px solid $primary_color;
         cursor: pointer;
       }
 
       .ebp-events-active-month {
-        border-top: 2px solid green;
+        border-top: 2px solid $primary_color;
         font-size: 3rem;
         padding-top: 0;
       }
@@ -202,7 +202,7 @@
           padding: 10px;
           margin-bottom: 10px;
 
-          > button {
+          & > button {
             display: inline-block;
             width: 40%;
           }
@@ -213,32 +213,30 @@
           }
 
           .events-card-button-register {
-            background-color: forestgreen;
+            background-color: $primary_color;
             color: white;
-          }
-
-          .events-card-button-register:hover {
-            border-color: rgba(34, 139, 34, 0.9);
-            background-color: rgba(34, 139, 34, 0.9);
-          }
-
-          .events-card-button-unregister {
-            border: 1px solid forestgreen;
           }
 
           .events-card-button-unregister:hover {
-            background-color: indianred;
-            border-color: indianred;
+            background-color: $danger_red;
+            border-color: $danger_red;
             color: white;
-
-            span {
-              display: none;
-            }
           }
 
-          .events-card-button-unregister:hover:after {
-            content: "Cancel?";
-            font-style: italic;
+          .cancel-text {
+            display: none;
+          }
+
+          .events-card-button-unregister:hover,
+          .ant-btn-loading {
+            .cancel-text {
+              margin-left: $gap_0;
+              display: inline-block;
+            }
+
+            .going-text {
+              display: none;
+            }
           }
         }
 

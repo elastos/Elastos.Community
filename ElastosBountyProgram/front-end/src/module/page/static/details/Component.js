@@ -43,6 +43,7 @@ export default class extends EmptyPage {
     }
 
     async componentDidMount() {
+        this.setState({loading : true});
         const taskId = this.props.match.params.eventId
         await this.props.getTaskDetail(taskId)
 
@@ -63,6 +64,7 @@ export default class extends EmptyPage {
                 console.error(error);
             }
         );
+        this.setState({loading : false});
     }
 
     register() {
@@ -176,12 +178,18 @@ export default class extends EmptyPage {
 
         const buttonActionLabel = attendance ? 'DEREGISTER' : 'REGISTER';
         const buttonActionClass = 'actionButton ' + (attendance ? 'actionDeregister' : 'actionRegister');
+        const buttonType = attendance ? 'danger' : 'primary'
         const subscriptionAction = attendance ? this.deregister : this.register
 
         return (
             <Col sm={{span: 24}} md={{span: 12}} className="d_col_right">
                 <img src={eventImage}/>
-                <Button className={buttonActionClass} onClick={subscriptionAction.bind(this, attendance)}>{buttonActionLabel}</Button>
+                <Button loading={this.props.loading}
+                    className={buttonActionClass}
+                    type={buttonType}
+                    onClick={subscriptionAction.bind(this, attendance)}>
+                    <span>{buttonActionLabel}</span>
+                </Button>
                 <span className="share-with-friends">SHARE WITH FRIENDS</span>
                 <Row className="social-share-actions">
                     <FacebookShareButton
@@ -241,7 +249,7 @@ export default class extends EmptyPage {
     }
 
     ord_renderContent () {
-        if (this.props.isTaskLoading()) {
+        if (this.state.loading) {
             return <div className="center"><Spin size="large"/></div>
         }
         let communityName = (this.props.task.community && this.props.task.community.name) || 'Elastos Event';

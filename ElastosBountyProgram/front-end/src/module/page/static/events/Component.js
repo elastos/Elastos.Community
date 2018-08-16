@@ -5,6 +5,7 @@ import './style.scss'
 import {Row, Icon, Button, Spin, Checkbox, Card, Tag, Cascader, Select, Divider} from 'antd'
 import moment from 'moment/moment'
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '../../../../config/constant'
+import _ from 'lodash'
 
 const Option = Select.Option;
 
@@ -12,21 +13,15 @@ export default class extends EmptyPage {
 
     state = {
         activeMonth: new Date().getMonth(),
-        socialEvents: [],
         communityTrees: [],
         filterCommunity: [],
         favorites: [],
-        showFavoritesOnly: false,
-        loading: true
+        showFavoritesOnly: false
     };
 
     async componentDidMount() {
-        const socialEvents = await this.props.getSocialEvents();
-        this.setState({
-            socialEvents: socialEvents.list,
-            loading: false
-        });
-        this.getAllCommunities();
+        this.props.getSocialEvents()
+        this.getAllCommunities()
     }
 
     getAllCommunities() {
@@ -116,12 +111,12 @@ export default class extends EmptyPage {
         })
     }
 
-    // TODO: subscribe user to the task
     handleRegisterUser(socialEventId) {
+        this.props.register(socialEventId, this.props.currentUserId)
     }
 
-    // TODO: unsubscribe user to the task
     handleUnregisterUser(candidate, socialEventId) {
+        this.props.deregister(socialEventId, candidate._id)
     }
 
     animateStar(socialEventId) {
@@ -150,10 +145,17 @@ export default class extends EmptyPage {
 
     renderSubscriptionButton(candidate, socialEventId) {
         const register = (
-            <Button className="events-card-button-register" onClick={() => this.handleRegisterUser(candidate, socialEventId)}><span>Register</span></Button>
+            <Button className="events-card-button-register" loading={this.props.loading}
+                onClick={() => this.handleRegisterUser(socialEventId)}>
+                <span>Register</span>
+            </Button>
         );
         const unregister = (
-            <Button className="events-card-button-unregister" onClick={() => this.handleUnregisterUser(candidate, socialEventId)}><span>Going</span></Button>
+            <Button className="events-card-button-unregister" loading={this.props.loading}
+                onClick={() => this.handleUnregisterUser(candidate, socialEventId)}>
+                <span className="going-text">Going</span>
+                <span className="cancel-text">Cancel?</span>
+            </Button>
         );
 
         if (!candidate) {
@@ -220,7 +222,7 @@ export default class extends EmptyPage {
     }
 
     getFilteredEvents(socialEvents) {
-        return socialEvents.filter((item) => {
+        return _.filter(socialEvents, (item) => {
 
             if (this.state.showFavoritesOnly &&
                 !this.state.favorites.find((favorite) => favorite.key === item._id && favorite.value)) {
@@ -296,22 +298,12 @@ export default class extends EmptyPage {
                         {this.renderFavoritesFilter()}
                     </div>
                     <Divider />
-                    { this.state.loading ? (
-                        <div className="events-spinner">
-                            <Spin indicator={
-                                <Icon type="loading" style={{ fontSize: 24 }} spin />
-                            } size="large"/>
-                        </div>
-                    ) : (
-                        <div>
-                            <div className="events-count">
-                                {this.getFilteredEvents(this.state.socialEvents).length} events total
-                            </div>
-                            <Row className="d_row" type="flex" justify="space-around">
-                                {this.renderEventCards(this.state.socialEvents)}
-                            </Row>
-                        </div>
-                    )}
+                    <div className="events-count">
+                        {this.getFilteredEvents(this.props.all_tasks).length} events total
+                    </div>
+                    <Row className="d_row" type="flex" justify="space-around">
+                        {this.renderEventCards(this.props.all_tasks)}
+                    </Row>
                 </div>
             </div>
         )

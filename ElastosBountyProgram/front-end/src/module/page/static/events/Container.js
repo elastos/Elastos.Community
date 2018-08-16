@@ -8,7 +8,9 @@ import _ from 'lodash';
 
 export default createContainer(Component, (state, ownProps) => {
     return {
-        currentUserId: state.user.current_user_id
+        currentUserId: state.user.current_user_id,
+        loading: state.task.loading,
+        all_tasks: state.task.all_tasks
     }
 }, () => {
     const taskService = new TaskService()
@@ -51,6 +53,14 @@ export default createContainer(Component, (state, ownProps) => {
                     reject(err)
                 })
             })
+        },
+
+        async register(taskId, userId) {
+            return taskService.register(taskId, userId)
+        },
+
+        async deregister(taskId, taskCandidateId) {
+            return taskService.deregister(taskId, taskCandidateId)
         }
     }
 })
