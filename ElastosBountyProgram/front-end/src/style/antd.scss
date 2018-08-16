@@ -254,9 +254,11 @@ h3.one-line {
   }
 }
 
-.ant-menu-horizontal > .ant-menu-item:hover {
-  border-bottom: unset;
-  color: unset;
+@media only screen and (max-width: $lg_width) {
+  .ant-menu-horizontal > .ant-menu-item:hover {
+    border-bottom: unset;
+    color: unset;
+  }
 }
 
 .ant-menu > .ant-menu-item {
