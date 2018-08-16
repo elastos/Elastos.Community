@@ -112,7 +112,7 @@ export default class extends EmptyPage {
             moment(this.props.task.eventDateRangeStart).format('MMMM Do YYYY. h:mm a')) : 'TBD';
         let eventType = this.props.task.type ? (
             (this.props.task.type[0] + this.props.task.type.toLowerCase().substr(1, this.props.task.type.length))) : '-';
-        let eventInfo = this.props.task.info || '-';
+        let eventInfo = this.props.task.infoLink || '-';
         // descriptionTitle disabled until implemented backend
         let descriptionTitle = '';
         let description = this.props.task.description || '';
