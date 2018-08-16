@@ -16,12 +16,16 @@ export default class extends EmptyPage {
         communityTrees: [],
         filterCommunity: [],
         favorites: [],
-        showFavoritesOnly: false
+        showFavoritesOnly: false,
+        loading: true
     };
 
     async componentDidMount() {
         const socialEvents = await this.props.getSocialEvents();
-        this.setState({socialEvents: socialEvents.list});
+        this.setState({
+            socialEvents: socialEvents.list,
+            loading: false
+        });
         this.getAllCommunities();
     }
 
@@ -223,7 +227,8 @@ export default class extends EmptyPage {
                 return false;
             }
 
-            let dateValid = item.startTime ? new Date(item.startTime).getMonth() === this.state.activeMonth : true;
+            let dateValid = item.eventDateRangeStart
+                ? new Date(item.eventDateRangeStart).getMonth() === this.state.activeMonth : true;
 
             if (this.state.filterCommunity.length === 0) {
                 return dateValid;
@@ -291,7 +296,7 @@ export default class extends EmptyPage {
                         {this.renderFavoritesFilter()}
                     </div>
                     <Divider />
-                    { this.state.socialEvents.length === 0 ? (
+                    { this.state.loading ? (
                         <div className="events-spinner">
                             <Spin indicator={
                                 <Icon type="loading" style={{ fontSize: 24 }} spin />

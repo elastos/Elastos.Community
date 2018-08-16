@@ -107,7 +107,7 @@ export default class extends EmptyPage {
             this.props.task.createdBy.profile.lastName : 'unknown user';
         let hostedByID = this.props.task.createdBy ? this.props.task.createdBy._id : 'not-found';
         let hostedByAvatar = this.props.task.createdBy ? this.props.task.createdBy.profile.avatar : null;
-        let eventLocation = (this.props.task.location && this.props.task.location) || 'TBD';
+        let eventLocation = this.props.task.location || 'TBD';
         let eventDate = this.props.task.eventDateRangeStart ? (
             moment(this.props.task.eventDateRangeStart).format('MMMM Do YYYY. h:mm a')) : 'TBD';
         let eventType = this.props.task.type ? (

@@ -16,8 +16,8 @@ export default createContainer(Component, (state, ownProps) => {
     return {
         async getSocialEvents () {
             return taskService.index({
-                public: true,
-                category: TASK_CATEGORY.DEVELOPER
+                type: TASK_TYPE.EVENT,
+                status: TASK_STATUS.ASSIGNED
             })
         },
 
