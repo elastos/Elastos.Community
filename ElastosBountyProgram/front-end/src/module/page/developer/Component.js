@@ -78,9 +78,9 @@ export default class extends StandardPage {
                 {(matches) => {
                     return (
                         <div className="d_midRow">
-                            <Button block={matches} className="info-button">
+                            {/*<Button block={matches} className="info-button">
                                 {I18N.get('developer.action')}
-                            </Button>
+                            </Button>*/}
                         </div>
                     )
                 }}
@@ -107,14 +107,22 @@ export default class extends StandardPage {
                                 </Col>
                                 <Col sm={{span: 24}} md={{span: 6}}>
                                     <div className="button-container">
-                                        <Button block={matches} className="top-button">{I18N.get('developer.components.issues')}</Button>
+                                        <Button block={matches} className="top-button">
+                                            <a target="_blank" href="https://github.com/elastos/Elastos.RT/issues">
+                                                {I18N.get('developer.components.issues')}
+                                            </a>
+                                        </Button>
                                     </div>
                                     <div className="button-container">
-                                        <Button block={matches}>{I18N.get('developer.components.docs')}</Button>
+                                        <Button block={matches}>
+                                            <a target="_blank" href="https://github.com/elastos/Elastos.Community/tree/master/ElastosBountyProgram">
+                                                {I18N.get('developer.components.docs')}
+                                            </a>
+                                        </Button>
                                     </div>
-                                    <div className="button-container">
+                                    {/*<div className="button-container">
                                         <Button block={matches}>{I18N.get('developer.components.info')}</Button>
-                                    </div>
+                                    </div>*/}
                                 </Col>
                             </Row>
                             <Row className="component-box">
@@ -129,14 +137,20 @@ export default class extends StandardPage {
                                 </Col>
                                 <Col sm={{span: 24}} md={{span: 6}}>
                                     <div className="button-container">
-                                        <Button block={matches} className="top-button">{I18N.get('developer.components.issues')}</Button>
+                                        <Button block={matches} className="top-button">
+                                            <a target="_blank" href="https://github.com/elastos/Elastos.ELA.SPV/issues">
+                                                {I18N.get('developer.components.issues')}
+                                            </a>
+                                        </Button>
                                     </div>
                                     <div className="button-container">
-                                        <Button block={matches}>{I18N.get('developer.components.docs')}</Button>
+                                        <a target="_blank" href="https://github.com/elastos/Elastos.ELA.SPV">
+                                            <Button block={matches}>{I18N.get('developer.components.docs')}</Button>
+                                        </a>
                                     </div>
-                                    <div className="button-container">
+                                    {/*<div className="button-container">
                                         <Button block={matches}>{I18N.get('developer.components.info')}</Button>
-                                    </div>
+                                    </div>*/}
                                 </Col>
                             </Row>
                         </div>
