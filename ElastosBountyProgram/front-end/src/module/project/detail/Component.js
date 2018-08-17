@@ -431,10 +431,7 @@ class C extends BaseComponent {
                             {this.props.page !== 'LEADER' && !isTaskOwner &&
                                 <Row className="actions">
                                     <Button type="primary" onClick={() => this.setState({ applying: true })}>
-                                        Join Project
-                                    </Button>
-                                    <Button>
-                                        Message
+                                        {I18N.get('project.detail.popup.join_project')}
                                     </Button>
                                 </Row>
                             }

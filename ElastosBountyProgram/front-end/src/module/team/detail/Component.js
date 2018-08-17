@@ -295,7 +295,7 @@ class C extends BaseComponent {
                 <Button disabled={hasApplied} type="primary" onClick={() => this.setState({ applying: true })}>
                     {hasApplied
                         ? I18N.get('project.detail.popup.applied')
-                        : I18N.get('project.detail.popup.join-team')
+                        : I18N.get('project.detail.popup.join_team')
                     }
                 </Button>
             )
@@ -303,9 +303,6 @@ class C extends BaseComponent {
         return (
             <Row className="actions">
                 {mainActionButton}
-                <Button>
-                    Message
-                </Button>
             </Row>
         )
     }

@@ -183,6 +183,7 @@ export default {
     'project.detail.popup.leave_team': 'Leave Team',
     'project.detail.popup.applied': 'Applied',
     'project.detail.popup.join_team': 'Join Team',
+    'project.detail.popup.join_project': 'Join Project',
 
     'team.detail.team_active': 'Your team is currently active',
 
