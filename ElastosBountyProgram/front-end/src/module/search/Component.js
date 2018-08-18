@@ -307,6 +307,14 @@ export default class extends BaseComponent {
             {
                 label: 'Python',
                 value: SKILLSET_TYPE.PYTHON
+            },
+            {
+                label: 'Java',
+                value: SKILLSET_TYPE.JAVA
+            },
+            {
+                label: 'Swift',
+                value: SKILLSET_TYPE.SWIFT
             }
         ]
     }
