@@ -28,6 +28,7 @@ import {
     Marker
 } from 'react-google-maps'
 import Geocode from 'react-geocode'
+Geocode.setApiKey(process.env.GOOGLE_MAPS_API_KEY)
 import moment from 'moment'
 import _ from 'lodash'
 
@@ -37,7 +38,7 @@ export default class extends EmptyPage {
 
     state = {
         // TODO: Add API key for google maps
-        apiKey: '',
+        hasLocation: false,
         lat: 18.7,
         lng: 98.98
     }
@@ -47,24 +48,40 @@ export default class extends EmptyPage {
         const taskId = this.props.match.params.eventId
         await this.props.getTaskDetail(taskId)
 
-        Geocode.setApiKey(this.state.apiKey)
+        // we are defaulting to the country if there is no exact location
+        const location = this.props.task.location || (this.props.task.community && this.props.task.community.name)
 
-        const location = this.props.task.location ||
-            (this.props.task.community && this.props.task.community.name) || 'New York'
+        console.log(`location: ${location}`)
 
-        Geocode.fromAddress(location).then(
-            response => {
-                const { lat, lng } = response.results[0].geometry.location;
-                this.setState({
-                    lat: lat,
-                    lng: lng
-                })
-            },
-            error => {
-                console.error(error);
-            }
-        );
-        this.setState({loading : false});
+        if (location) {
+            await this.setState({
+                hasLocation: true
+            })
+        }
+
+        if (this.state.hasLocation) {
+            Geocode.fromAddress(location).then(
+                async(response) => {
+                    const {lat, lng} = response.results[0].geometry.location;
+
+                    this.setState({
+                        lat: lat,
+                        lng: lng,
+                        loading: false
+                    })
+
+                },
+                error => {
+                    console.error(error);
+                }
+            )
+        } else {
+            this.setState({loading: false})
+        }
+    }
+
+    async componentWillUnmount() {
+        await this.props.resetTaskDetail()
     }
 
     register() {
@@ -86,12 +103,12 @@ export default class extends EmptyPage {
     renderMapComponent() {
         const CustomMapComponent = withScriptjs(withGoogleMap((props) =>
             <GoogleMap
-                defaultZoom={8}
+                defaultZoom={10}
                 defaultCenter={{ lat: this.state.lat, lng: this.state.lng }} >
                 {<Marker position={{ lat: this.state.lat, lng: this.state.lng }} />}
             </GoogleMap>
         ))
-        let url = 'https://maps.googleapis.com/maps/api/js?' + this.state.apiKey + 'v=3.exp&libraries=geometry,drawing,places';
+        let url = 'https://maps.googleapis.com/maps/api/js?key=' + process.env.GOOGLE_MAPS_API_KEY + '&v=3.exp&libraries=geometry,drawing,places';
         const mapElement = (<CustomMapComponent
             isMarkerShown
             googleMapURL={url}
@@ -266,11 +283,12 @@ export default class extends EmptyPage {
                         {this.renderEventDetails()}
                         {this.renderEventActions()}
                     </Row>
+                    {this.state.hasLocation &&
                     <Row className="d_row_mid">
                         <div className="map">
                             {this.renderMapComponent()}
                         </div>
-                    </Row>
+                    </Row>}
                     { false &&
                         <Row className="d_row_lower">
                             <span className="title">

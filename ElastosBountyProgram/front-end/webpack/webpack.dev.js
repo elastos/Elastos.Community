@@ -90,7 +90,10 @@ module.exports = merge(common, {
                 NODE_ENV: JSON.stringify('development'),
                 PLATFORM_ENV: JSON.stringify('web'),
                 SERVER_URL: JSON.stringify('http://localhost:3000'),
-                CR_VERSION: process.env.CR_VERSION
+                CR_VERSION: JSON.stringify(process.env.CR_VERSION),
+
+                // throw-away API key - unsecured for dev
+                GOOGLE_MAPS_API_KEY: JSON.stringify('AIzaSyDZ_zcnebLVZTIlizE4hnS1En1e1SQj1vQ')
             },
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),

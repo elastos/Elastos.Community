@@ -229,8 +229,9 @@ export default class extends EmptyPage {
                 return false;
             }
 
+            // event must have a date to be shown
             let dateValid = item.eventDateRangeStart
-                ? new Date(item.eventDateRangeStart).getMonth() === this.state.activeMonth : true;
+                ? new Date(item.eventDateRangeStart).getMonth() === this.state.activeMonth : false;
 
             if (this.state.filterCommunity.length === 0) {
                 return dateValid;
