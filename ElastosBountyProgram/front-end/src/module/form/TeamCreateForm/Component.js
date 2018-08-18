@@ -148,6 +148,16 @@ class C extends BaseComponent {
                 title: I18N.get('team.skillset.python'),
                 value: SKILLSET_TYPE.PYTHON,
                 key: SKILLSET_TYPE.PYTHON
+            },
+            {
+                title: I18N.get('team.skillset.java'),
+                value: SKILLSET_TYPE.JAVA,
+                key: SKILLSET_TYPE.JAVA
+            },
+            {
+                title: I18N.get('team.skillset.swift'),
+                value: SKILLSET_TYPE.SWIFT,
+                key: SKILLSET_TYPE.SWIFT
             }
         ]
 

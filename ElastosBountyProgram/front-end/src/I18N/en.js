@@ -198,6 +198,8 @@ export default {
     'team.skillset.javascript': 'JavaScript',
     'team.skillset.go': 'Go',
     'team.skillset.python': 'Python',
+    'team.skillset.java': 'Java',
+    'team.skillset.swift': 'Swift',
 
     // General
     'select.placeholder': 'Please select',
