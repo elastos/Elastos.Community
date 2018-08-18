@@ -84,7 +84,7 @@ export default class extends StandardPage {
             return {
                 href: '',
                 title: task.name,
-                pictures: task.pictures || [],
+                pictures: task.pictures && task.pictures.length > 0 ? task.pictures : [{ url: '/assets/images/Elastos_Logo.png' }],
                 description: description_fn(task),
                 content: task.description,
                 owner: task.createdBy,

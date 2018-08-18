@@ -518,7 +518,7 @@ export default class extends BaseComponent {
                 return {
                     href: '',
                     title: team.name,
-                    pictures: team.pictures || [],
+                    pictures: team.pictures && team.pictures.length > 0 ? team.pictures : [{ url: '/assets/images/Elastos_Logo.png' }],
                     description: description_fn(team),
                     content: team.profile.description,
                     owner: team.owner,
@@ -529,7 +529,7 @@ export default class extends BaseComponent {
                 return {
                     href: '',
                     title: task.name,
-                    pictures: task.pictures || [],
+                    pictures: task.pictures && task.pictures.length > 0 ? task.pictures : [{ url: '/assets/images/Elastos_Logo.png' }],
                     description: description_fn(task),
                     content: task.description,
                     owner: task.createdBy,

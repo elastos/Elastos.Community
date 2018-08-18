@@ -184,7 +184,7 @@ export default class extends StandardPage {
         const data = _.map(teams, (team, id) => {
             return {
                 title: team.name,
-                pictures: team.pictures || [],
+                pictures: team.pictures && team.pictures.length > 0 ? team.pictures : [{ url: '/assets/images/Elastos_Logo.png' }],
                 description: description_fn(team),
                 content: team.profile.description,
                 owner: team.owner,
