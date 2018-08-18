@@ -9,6 +9,7 @@ import './style.scss'
 import {SKILLSET_TYPE, TEAM_TASK_DOMAIN} from '@/constant'
 import ProjectDetail from '@/module/project/detail/Container'
 import TeamDetail from '@/module/team/detail/Container'
+import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
 import Footer from '@/module/layout/Footer/Container'
 import MediaQuery from 'react-responsive'
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
@@ -38,6 +39,7 @@ export default class extends BaseComponent {
             categoryShowAllEntries: false,
             showProjectModal: false,
             showTeamModal: false,
+            showLoginRegisterModal: false,
             taskDetailId: 0,
             teamDetailId: 0,
             showMobile: false,
@@ -110,6 +112,15 @@ export default class extends BaseComponent {
         })
     }
 
+    showLoginRegisterModal = () => {
+        sessionStorage.setItem('loginRedirect', '/developer/search')
+        sessionStorage.setItem('registerRedirect', '/developer/search')
+
+        this.setState({
+            showLoginRegisterModal: true
+        })
+    }
+
     handleProjectModalOk = (e) => {
         this.setState({
             showProjectModal: false
@@ -131,6 +142,22 @@ export default class extends BaseComponent {
     handleTeamModalCancel = (e) => {
         this.setState({
             showTeamModal: false
+        })
+    }
+
+    handleLoginRegisterModalOk = (e) => {
+        sessionStorage.removeItem('registerRedirect')
+
+        this.setState({
+            showLoginRegisterModal: false
+        })
+    }
+
+    handleLoginRegisterModalCancel = (e) => {
+        sessionStorage.removeItem('registerRedirect')
+
+        this.setState({
+            showLoginRegisterModal: false
         })
     }
 
@@ -187,6 +214,25 @@ export default class extends BaseComponent {
             <CheckboxGroup onChange={this.onChangeDomain.bind(this)}>
                 {elements}
             </CheckboxGroup>
+        )
+    }
+
+    renderLoginOrRegisterModal() {
+        if (this.props.is_login) {
+            return
+        }
+
+        return (
+            <Modal
+                className="project-detail-nobar"
+                visible={this.state.showLoginRegisterModal}
+                onOk={this.handleLoginRegisterModalOk}
+                onCancel={this.handleLoginRegisterModalCancel}
+                footer={null}
+                width="70%"
+            >
+                <LoginOrRegisterForm />
+            </Modal>
         )
     }
 
@@ -261,6 +307,14 @@ export default class extends BaseComponent {
             {
                 label: 'Python',
                 value: SKILLSET_TYPE.PYTHON
+            },
+            {
+                label: 'Java',
+                value: SKILLSET_TYPE.JAVA
+            },
+            {
+                label: 'Swift',
+                value: SKILLSET_TYPE.SWIFT
             }
         ]
     }
@@ -413,6 +467,7 @@ export default class extends BaseComponent {
                 >
                     <TeamDetail teamId={this.state.teamDetailId}/>
                 </Modal>
+                {this.renderLoginOrRegisterModal()}
                 <Footer/>
             </div>
         )
@@ -463,7 +518,7 @@ export default class extends BaseComponent {
                 return {
                     href: '',
                     title: team.name,
-                    pictures: team.pictures || [],
+                    pictures: team.pictures && team.pictures.length > 0 ? team.pictures : [{ url: '/assets/images/Elastos_Logo.png' }],
                     description: description_fn(team),
                     content: team.profile.description,
                     owner: team.owner,
@@ -474,7 +529,7 @@ export default class extends BaseComponent {
                 return {
                     href: '',
                     title: task.name,
-                    pictures: task.pictures || [],
+                    pictures: task.pictures && task.pictures.length > 0 ? task.pictures : [{ url: '/assets/images/Elastos_Logo.png' }],
                     description: description_fn(task),
                     content: task.description,
                     owner: task.createdBy,
@@ -482,7 +537,9 @@ export default class extends BaseComponent {
                 }
             })
 
-        const clickHandler = this.isLookingForTeam()
+        const clickHandler = !this.props.is_login
+            ? this.showLoginRegisterModal
+            : this.isLookingForTeam()
             ? this.showTeamModal
             : this.showProjectModal
 

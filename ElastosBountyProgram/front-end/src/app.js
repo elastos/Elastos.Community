@@ -22,7 +22,6 @@ const App = () => {
     return (
         <div>
             <Helmet>
-                <meta name="description" content="Elastos Cyber Republic" />
                 <meta name="cr-env" content={process.env.NODE_ENV} />
                 <meta name="cr-version-number" content={process.env.CR_VERSION ? '' + process.env.CR_VERSION : 'unknown'} />
                 {process.env.NODE_ENV === 'production' && <script async src={'https://www.googletagmanager.com/gtag/js?id=' + process.env.GA_ID}></script>}

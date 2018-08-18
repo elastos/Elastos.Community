@@ -31,6 +31,8 @@ import ElastosCarrierDetail from './detail/TheFourPillars/ElastosCarrier/Compone
 import ElastosRuntimeDetail from './detail/TheFourPillars/ElastosRuntime/Component';
 import ElastosSDKDetail from './detail/TheFourPillars/ElastosSDK/Component';
 
+import EndToEndDemoDApp from './detail/SmartwebAlpha/EndToEndDemoDApp/Component';
+
 // /////////////////
 // Constant
 // /////////////////
@@ -42,7 +44,13 @@ const TreeNode = Tree.TreeNode;
 // Data: Dummy
 // /////////////////
 const DEFAULT_ID = '1-1';
-const TABS = [{ id: 1, title: 'Getting Started' }, { id: 2, title: 'Tutorials' }, { id: 3, title: 'Smart Contracts' }, { id: 4, title: 'The Four Pillars' }];
+const TABS = [
+    { id: 1, title: 'Getting Started' },
+    { id: 2, title: 'Tutorials' },
+    { id: 3, title: 'Smart Contracts' },
+    { id: 4, title: 'The Four Pillars' },
+    { id: 5, title: 'Smartweb Alpha' }
+];
 const CONTENTS = [
     {
         tabID: 1,
@@ -133,6 +141,17 @@ const CONTENTS = [
                 id: 4,
                 topic: 'Elastos SDK',
                 detail: ElastosSDKDetail,
+                children: []
+            }
+        ]
+    },
+    {
+        tabID: 5,
+        content: [
+            {
+                id: 1,
+                topic: 'End to End Demo dApp',
+                detail: EndToEndDemoDApp,
                 children: []
             }
         ]

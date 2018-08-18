@@ -110,6 +110,10 @@ class C extends BaseComponent {
             carouselImages.push(<img src={i.url} key={i}/>)
         }
 
+        if (carouselImages.length === 0) {
+            carouselImages.push(<img src={'/assets/images/Elastos_Logo.png'} key={0} />);
+        }
+
         let domains = []
         for (let i of details.domain) {
             domains.push(<Tag key={i}>{i}</Tag>)
@@ -431,10 +435,7 @@ class C extends BaseComponent {
                             {this.props.page !== 'LEADER' && !isTaskOwner &&
                                 <Row className="actions">
                                     <Button type="primary" onClick={() => this.setState({ applying: true })}>
-                                        Join Project
-                                    </Button>
-                                    <Button>
-                                        Message
+                                        {I18N.get('project.detail.popup.join_project')}
                                     </Button>
                                 </Row>
                             }

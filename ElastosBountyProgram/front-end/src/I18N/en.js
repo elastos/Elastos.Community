@@ -87,11 +87,12 @@ export default {
     'login.forget': 'Forgot password',
     'login.submit': 'Log in',
     'login.reset': 'Reset password',
+    'login.title': 'Login to Cyber Republic',
+    'login.description_1': 'Input your credentials below.',
 
     // RegisterFrom
     'register.title': 'Become a Contributor',
-    'register.description_1': 'As a member you can sign up for bounties on EBP,',
-    'register.description_2': 'you do not need to be a member to join events.',
+    'register.description_1': 'As a member you can sign up for bounties on Cyber Republic.',
     'register.required': 'Required Fields',
     'register.error.code': 'The code you entered does not match',
     'register.error.passwords': 'Two passwords you entered do not match',
@@ -114,7 +115,8 @@ export default {
     'register.form.label_password_confirm': 'Please input your password again',
     'register.form.password_confirm': 'Password confirm',
     'register.form.label_country': 'Please select your country',
-    'register.form.option': 'Please select an option',
+    'register.form.option': 'Where are you from?',
+    'register.form.about_section': 'Tell us a bit about yourself.',
     'register.form.organizer': 'Do you want to be an organizer?',
     'register.form.yes': 'Yes',
     'register.form.no': 'No',
@@ -181,6 +183,7 @@ export default {
     'project.detail.popup.leave_team': 'Leave Team',
     'project.detail.popup.applied': 'Applied',
     'project.detail.popup.join_team': 'Join Team',
+    'project.detail.popup.join_project': 'Join Project',
 
     'team.detail.team_active': 'Your team is currently active',
 
@@ -195,6 +198,8 @@ export default {
     'team.skillset.javascript': 'JavaScript',
     'team.skillset.go': 'Go',
     'team.skillset.python': 'Python',
+    'team.skillset.java': 'Java',
+    'team.skillset.swift': 'Swift',
 
     // General
     'select.placeholder': 'Please select',

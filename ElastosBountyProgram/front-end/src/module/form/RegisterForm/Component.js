@@ -1,6 +1,6 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import {Form, Icon, Input, Button, Checkbox, message, Select, Divider} from 'antd'
+import {Form, Icon, Input, Button, Checkbox, message, Select, Divider, Collapse} from 'antd'
 import ReCAPTCHA from 'react-google-recaptcha'
 import {
     RECAPTCHA_KEY,
@@ -267,13 +267,6 @@ class C extends BaseComponent {
             const p = this.getInputProps()
             return (
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
-                    <Divider>{I18N.get('register.required')}{/* Required Fields */}</Divider>
-                    <FormItem>
-                        {p.firstName}
-                    </FormItem>
-                    <FormItem>
-                        {p.lastName}
-                    </FormItem>
                     <FormItem>
                         {p.userName}
                     </FormItem>
@@ -286,18 +279,32 @@ class C extends BaseComponent {
                     <FormItem>
                         {p.pwdConfirm}
                     </FormItem>
+                    <h5>
+                        {I18N.get('register.form.about_section')}
+                    </h5>
+                    <FormItem>
+                        {p.firstName}
+                    </FormItem>
+                    <FormItem>
+                        {p.lastName}
+                    </FormItem>
                     <FormItem>
                         {p.country}
                     </FormItem>
-                    <Divider>Optional Info</Divider>
                     <FormItem>
-                        {p.organizer}
-                    </FormItem>
-                    <FormItem>
-                        {p.developer}
-                    </FormItem>
-                    <FormItem>
-                        {p.source}
+                        <Collapse accordion={true} bordered={false}>
+                            <Collapse.Panel header={I18N.get('3533')} key="1">
+                                <FormItem>
+                                    {p.organizer}
+                                </FormItem>
+                                <FormItem>
+                                    {p.developer}
+                                </FormItem>
+                                <FormItem>
+                                    {p.source}
+                                </FormItem>
+                            </Collapse.Panel>
+                        </Collapse>
                     </FormItem>
                     <FormItem>
                         {p.recaptcha}
@@ -322,19 +329,15 @@ class C extends BaseComponent {
 
         return (
             <div className="c_registerContainer">
-
                 <h2>
                     {I18N.get('register.title')}
                     {/* Become a Contributor */}
                 </h2>
 
-                <p>
+                <h5>
                     {I18N.get('register.description_1')}
                     {/* As a member you can sign up for bounties on EBP,  */}
-                    <br/>
-                    {I18N.get('register.description_2')}
-                    {/* you do not need to be a member to join events. */}
-                </p>
+                </h5>
 
                 {form}
             </div>

@@ -254,10 +254,23 @@ h3.one-line {
   }
 }
 
+@media only screen and (max-width: $lg_width) {
+  .ant-menu-horizontal > .ant-menu-item:hover {
+    border-bottom: unset;
+    color: unset;
+  }
+}
+
 .ant-menu > .ant-menu-item {
   &.ant-menu-item-active {
     & > a {
       color: $primary_color;
     }
+  }
+}
+
+.ant-collapse.ant-collapse-borderless {
+  .ant-collapse-item {
+    border: 0;
   }
 }

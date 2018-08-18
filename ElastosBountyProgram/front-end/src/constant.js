@@ -129,6 +129,6 @@ export const SUBMISSION_CAMPAIGN = {
     ANNI_VIDEO_2008: 'ANNI_VIDEO_2008'
 };
 
-export const SKILLSET_TYPE = create(['CPP', 'JAVASCRIPT', 'GO', 'PYTHON']);
+export const SKILLSET_TYPE = create(['CPP', 'JAVASCRIPT', 'GO', 'PYTHON', 'JAVA', 'SWIFT']);
 export const TEAM_TASK_DOMAIN = create(['SOCIAL', 'IOT', 'MEDIA', 'FINANCE']);
 export const TEAM_USER_STATUS = create(['NORMAL', 'PENDING', 'REJECT']);
