@@ -17,8 +17,18 @@ $mobile-padding: $gap_0 0px;
     max-width: 1200px;
   }
 
+  .c_projectList {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  $projectBoxSize: 156px;
   .c_project {
     cursor: pointer;
+    height: $projectBoxSize;
+    width: $projectBoxSize;
+    text-align: center;
+    padding: ($gap_2 / 2);
   }
 }
 

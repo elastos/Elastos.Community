@@ -87,7 +87,7 @@ export default class extends StandardPage {
                     <div className="c_projectList">
                         {_.map(list, (project, ind) => (
                             <div key={ind} className="c_project">
-                                <Avatar shape="square" size={64} src={project.thumbnail}
+                                <Avatar shape="square" size={96} src={project.thumbnail}
                                     onClick={this.showDetailModal.bind(this, project._id)}/>
                                 <div>{project.name}</div>
                             </div>
