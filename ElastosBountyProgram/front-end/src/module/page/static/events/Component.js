@@ -187,19 +187,20 @@ export default class extends EmptyPage {
         let hashTags = ['#4ever', '#elastos'];
         let image = socialEvent.attachment ? socialEvent.attachment
             : '/assets/images/Elastos_Logo_Temp.png';
-        let date = socialEvent.eventDateRangeStart ? moment(socialEvent.eventDateRangeStart).format('MMMM Do YYYY. h:mm a') : 'TBD';
-        let community = socialEvent.location || 'TBD';
+        let date = socialEvent.eventDateRangeStart ? moment(socialEvent.eventDateRangeStart).format('MMMM Do YYYY - h:mma') : 'TBD';
+        let community = socialEvent.location || 'Location TBD';
         let svgStarClass = this.state.favorites.find((item) => item.key === socialEvent._id && item.value) ? this.getStarActiveClass() : 'star-poly';
 
         return (
             <Card
                 key={socialEvent._id}
                 cover={ <img className="event-card-image" src={image} />}>
-                <div className="card-icon" onClick={() => this.animateStar(socialEvent._id)}>
+                <div className="card-icon" onClick={() => this.navigateToEvent(socialEvent._id)} style={{cursor: 'pointer'}}/>
+                {/*<div className="card-icon" onClick={() => this.animateStar(socialEvent._id)}>
                     <svg width="50%" height="50%" viewBox="0 0 40 37" className="star">
                         <polygon className={svgStarClass} points="272 30 260.244 36.18 262.489 23.09 252.979 13.82 266.122 11.91 272 0 277.878 11.91 291.021 13.82 281.511 23.09 283.756 36.18" transform="translate(-252)"/>
                     </svg>
-                </div>
+                </div>*/}
                 <div className="events-card-detail">
                     <div className="events-card-time">{date}</div>
                     <div className="events-card-title"
@@ -295,9 +296,9 @@ export default class extends EmptyPage {
                     <div className="ebp-events-location">
                         {this.renderCommunityDropDown()}
                     </div>
-                    <div className="ebp-events-favorites">
+                    {/*<div className="ebp-events-favorites">
                         {this.renderFavoritesFilter()}
-                    </div>
+                    </div>*/}
                     <Divider />
                     <div className="events-count">
                         {this.getFilteredEvents(this.props.all_tasks).length} events total

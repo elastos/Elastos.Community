@@ -52,6 +52,9 @@ export default class extends Base{
                     constant.TASK_STATUS.SUBMITTED
                 ]
             }
+        } else if (param.status) {
+            query.status = param.status
+
         } else if (param.admin && this.session.user && this.session.user.role === constant.USER_ROLE.ADMIN) {
             delete param.admin;
             query.status = {$ne: constant.TASK_STATUS.CANCELED}
@@ -102,6 +105,8 @@ export default class extends Base{
             }
 
         }
+
+        console.log(query)
 
         const list = await taskService.list(query);
         const count = await taskService.getDBModel('Task').count(query);

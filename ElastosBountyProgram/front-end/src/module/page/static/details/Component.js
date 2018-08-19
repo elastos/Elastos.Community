@@ -28,7 +28,7 @@ import {
     Marker
 } from 'react-google-maps'
 import Geocode from 'react-geocode'
-Geocode.setApiKey(process.env.GOOGLE_MAPS_API_KEY)
+process.env.NODE_ENV === 'production' && Geocode.setApiKey(process.env.GOOGLE_MAPS_API_KEY)
 import moment from 'moment'
 import _ from 'lodash'
 
@@ -108,7 +108,13 @@ export default class extends EmptyPage {
                 {<Marker position={{ lat: this.state.lat, lng: this.state.lng }} />}
             </GoogleMap>
         ))
-        let url = 'https://maps.googleapis.com/maps/api/js?key=' + process.env.GOOGLE_MAPS_API_KEY + '&v=3.exp&libraries=geometry,drawing,places';
+        let url
+
+        if (process.env.NODE_ENV === 'production') {
+            url = 'https://maps.googleapis.com/maps/api/js?key=' + process.env.GOOGLE_MAPS_API_KEY + '&v=3.exp&libraries=geometry,drawing,places';
+        } else {
+            url = 'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places';
+        }
         const mapElement = (<CustomMapComponent
             isMarkerShown
             googleMapURL={url}

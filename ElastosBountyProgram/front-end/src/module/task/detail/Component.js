@@ -190,7 +190,7 @@ export default class extends BaseComponent {
                                             Date Start
                                         </Col>
                                         <Col span={8}>
-                                            {moment(this.props.task.eventDateRangeStart).format('MMM D, YYYY')}
+                                            {moment(this.props.task.eventDateRangeStart).format('MMM D, YYYY - HH:mm')}
                                         </Col>
                                         {this.props.task.eventDateRangeEnd &&
                                         <Col span={4} className="label-col">
@@ -198,7 +198,7 @@ export default class extends BaseComponent {
                                         </Col>}
                                         {this.props.task.eventDateRangeEnd &&
                                         <Col span={8}>
-                                            {moment(this.props.task.eventDateRangeEnd).format('MMM D, YYYY')}
+                                            {moment(this.props.task.eventDateRangeEnd).format('MMM D, YYYY - HH:mm')}
                                         </Col>}
                                     </Row>}
                                     {this.props.task.eventDateRangeStart &&

@@ -290,7 +290,10 @@ class C extends BaseComponent {
                 moment(existingTask.eventDateRangeStart).isValid() ? moment(existingTask.eventDateRangeStart) : null
         })
         const eventDateRangeStart_el = (
-            <DatePicker/>
+            <DatePicker
+                showTime
+                format="YYYY-MM-DD HH:mm"
+            />
         )
 
         const eventDateRangeEnd_fn = getFieldDecorator('eventDateRangeEnd', {
@@ -299,7 +302,10 @@ class C extends BaseComponent {
             moment(existingTask.eventDateRangeEnd).isValid() ? moment(existingTask.eventDateRangeEnd) : null
         })
         const eventDateRangeEnd_el = (
-            <DatePicker/>
+            <DatePicker
+                showTime
+                format="YYYY-MM-DD HH:mm"
+            />
         )
 
         const taskLocation_fn = getFieldDecorator('taskLocation', {
@@ -760,10 +766,14 @@ class C extends BaseComponent {
                                 {p.eventDateRange}
                             </FormItem>
                             <Row>
-                                <Col span={12}>
+                                <Col span={this.state.eventDateRange ? 12 : 24}>
+                                    {this.state.eventDateRange ?
                                     <FormItem label={'Event Date' + (this.state.eventDateRange ? ' Start' : '')} {...formItemLayoutAdjLeft}>
                                         {p.eventDateRangeStart}
-                                    </FormItem>
+                                    </FormItem> :
+                                    <FormItem label={'Event Date' + (this.state.eventDateRange ? ' Start' : '')} {...formItemLayout}>
+                                        {p.eventDateRangeStart}
+                                    </FormItem>}
                                 </Col>
                                 {this.state.eventDateRange &&
                                 <Col span={12}>
