@@ -213,6 +213,7 @@ export default class extends BaseComponent {
         if (_.includes([
             'home',
             'developer',
+            'cr100',
             'social',
             'leader',
             'community',
