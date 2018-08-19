@@ -66,7 +66,9 @@ export default class extends StandardPage {
                     footer={null}
                     width="70%"
                 >
-                    <ProjectDetail taskId={this.state.showDetailId}/>
+                    { this.state.showDetailId &&
+                        <ProjectDetail taskId={this.state.showDetailId}/>
+                    }
                 </Modal>
                 <Footer/>
             </div>
