@@ -164,6 +164,12 @@ export default {
     'developer.components.docs': 'Docs',
     'developer.components.info': 'More Info',
     'developer.cr100.projects': 'Projects',
+    'developer.cr100.submit_whitepaper': 'Submit Whitepaper',
+    'developer.cr100.pitch.problem': 'Problem',
+    'developer.cr100.pitch.valueProposition': 'Value Proposition',
+    'developer.cr100.pitch.useCase': 'Use Case',
+    'developer.cr100.pitch.beneficiaries': 'Beneficiaries',
+    'developer.cr100.pitch.elaInfrastructure': 'Elastos Infrastructure',
 
     // Project/Team detail
     'project.detail.deadline': 'Deadline',

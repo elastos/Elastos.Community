@@ -618,11 +618,11 @@ class C extends BaseComponent {
             <TextArea rows={4}></TextArea>
         )
 
-        const usecase_fn = getFieldDecorator('usecase', {
+        const usecase_fn = getFieldDecorator('useCase', {
             rules: [
                 {max: 4096, message: 'Too long'}
             ],
-            initialValue: this.state.editing ? existingTask.pitch && existingTask.pitch.usecase : ''
+            initialValue: this.state.editing ? existingTask.pitch && existingTask.pitch.useCase : ''
         })
         const usecase_el = (
             <TextArea rows={4}></TextArea>

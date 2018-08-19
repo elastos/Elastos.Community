@@ -1,12 +1,10 @@
 import React from 'react'
 import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
+import ProjectDetail from './detail/Container'
 import I18N from '@/I18N'
-import { Link } from 'react-router-dom'
 import './style.scss'
-import MediaQuery from 'react-responsive'
-import { Col, Row, Card, Button, Breadcrumb, Icon, List, Spin, Avatar } from 'antd'
-import {MAX_WIDTH_MOBILE} from "../../../config/constant"
+import { Col, Row, Card, Button, Breadcrumb, Icon, List, Spin, Avatar, Modal } from 'antd'
 import _ from 'lodash'
 
 export default class extends StandardPage {
@@ -18,6 +16,30 @@ export default class extends StandardPage {
         this.props.resetTasks()
     }
 
+    checkForLoading(followup) {
+        return this.props.loading
+            ? <Spin size="large"/>
+            : _.isFunction(followup) && followup()
+    }
+
+    ord_states() {
+        return {
+            showDetailId: null
+        }
+    }
+
+    showDetailModal(id) {
+        this.setState({
+            showDetailId: id
+        })
+    }
+
+    handleDetailModalClose(e) {
+        this.setState({
+            showDetailId: null
+        })
+    }
+
     ord_renderContent () {
         return (
             <div className="p_Cr100">
@@ -26,12 +48,22 @@ export default class extends StandardPage {
                     <div className="d_box">
                         <div className="p_admin_content">
                             {this.buildHeader()}
-                            {this.ifNotLoading(this.buildList.bind(this))}
+                            {this.checkForLoading(this.buildList.bind(this))}
                             {this.buildDisclaimer()}
                             {this.buildFooter()}
                         </div>
                     </div>
                 </div>
+                <Modal
+                    className="project-detail-nobar"
+                    visible={!!this.state.showDetailId}
+                    onOk={this.handleDetailModalClose.bind(this)}
+                    onCancel={this.handleDetailModalClose.bind(this)}
+                    footer={null}
+                    width="70%"
+                >
+                    <ProjectDetail taskId={this.state.showDetailId}/>
+                </Modal>
                 <Footer/>
             </div>
         )
@@ -39,12 +71,6 @@ export default class extends StandardPage {
 
     buildHeader() {
 
-    }
-
-    ifNotLoading(followup) {
-        return this.props.loading
-            ? <Spin size="large"/>
-            : _.isFunction(followup) && followup()
     }
 
     buildList() {
@@ -61,7 +87,8 @@ export default class extends StandardPage {
                     <div className="c_projectList">
                         {_.map(list, (project, ind) => (
                             <div key={ind} className="c_project">
-                                <Avatar shape="square" size={64} src={project.thumbnail}/>
+                                <Avatar shape="square" size={64} src={project.thumbnail}
+                                    onClick={this.showDetailModal.bind(this, project._id)}/>
                                 <div>{project.name}</div>
                             </div>
                         ))}
