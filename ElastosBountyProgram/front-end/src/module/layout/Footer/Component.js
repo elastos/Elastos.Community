@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent';
-import { Col, Row, Icon } from 'antd'
+import { Col, Row, Icon, Avatar } from 'antd'
 
 import './style.scss'
 
@@ -43,10 +43,10 @@ export default class extends BaseComponent {
                                 <div className="title brand-color">
                                     Join Us On
                                 </div>
-                                <a>T</a>
-                                <a>G</a>
-                                <a>I</a>
-                                <a>R</a>
+                                <Avatar shape="square" size={64} icon="github"/>
+                                <Avatar shape="square" size={64} icon="twitter"/>
+                                <Avatar shape="square" size={64} icon="youtube"/>
+                                <Avatar shape="square" size={64} icon="instagram"/>
                             </div>
                         </Col>
                     </Row>
