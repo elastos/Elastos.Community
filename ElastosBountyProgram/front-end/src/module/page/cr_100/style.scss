@@ -7,14 +7,13 @@ $mobile-padding: $gap_0 0px;
 .p_Cr100 {
   background: #ffffff;
   text-align: left;
-  padding: 0 48px;
 
   @media only screen and (max-width: $mobile-width) {
     padding: 0 24px;
   }
 
   .ebp-wrap {
-    max-width: 1200px;
+    padding: 0;
   }
 
   .c_projectList {
@@ -31,9 +30,37 @@ $mobile-padding: $gap_0 0px;
     padding: ($gap_2 / 2);
   }
 
-  .c_list {
+  .c_list_wrapper {
     background: $bg_blue;
-    padding: 0 $gap_2;
+    position: relative;
+    padding-bottom: 140px;
+  }
+
+  .cr100-header {
+    margin-bottom: 180px;
+  }
+
+  .disclaimer-box {
+    background: $bg_dark;
+    padding: $gap_2 0;
+    position: relative;
+  }
+
+  .footer_enrich {
+    position: absolute;
+    top: -110px;
+    right: 0;
+  }
+
+  .c_list {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .cr100_logo_text {
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 
   .welcomeBox {

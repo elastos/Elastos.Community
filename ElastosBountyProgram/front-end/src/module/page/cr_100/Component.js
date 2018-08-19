@@ -71,7 +71,7 @@ export default class extends StandardPage {
 
     buildHeader() {
         return (
-            <div>
+            <div className="cr100-header">
                 <div className="welcomeBox">
                     <div className="title">
                         {I18N.get('developer.cr100.welcome.title')}
@@ -112,18 +112,22 @@ export default class extends StandardPage {
         })
 
         return (
-            <div className="c_list">
-                <h2>
-                    {I18N.get('developer.cr100.projects')}
-                </h2>
-                {list}
+            <div className="c_list_wrapper">
+                <div className="c_list">
+                    <h2>
+                        {I18N.get('developer.cr100.projects')}
+                    </h2>
+                    {list}
+
+                    <img className="cr100_logo_text" src="/assets/images/cr100_logo_text.png"/>
+                </div>
             </div>
         )
     }
 
     buildDisclaimer() {
         return (
-            <div>
+            <div className="disclaimer-box">
                 <div className="welcomeBox">
                     <div className="title">
                         {I18N.get('developer.cr100.disclaimer.title')}
@@ -140,6 +144,8 @@ export default class extends StandardPage {
                         </Button>
                     </div>
                 </div>
+
+                <img className="footer_enrich" src="/assets/images/footer_enrich.png"/>
             </div>
         )
     }
