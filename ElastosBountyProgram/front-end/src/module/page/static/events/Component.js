@@ -185,7 +185,7 @@ export default class extends EmptyPage {
         let candidate = socialEvent.candidates
             ? socialEvent.candidates.find((user) => user.user && user.user._id === this.props.currentUserId) : null;
         let hashTags = ['#4ever', '#elastos'];
-        let image = socialEvent.attachment ? socialEvent.attachment
+        let image = socialEvent.thumbnail ? socialEvent.thumbnail
             : '/assets/images/Elastos_Logo_Temp.png';
         let date = socialEvent.eventDateRangeStart ? moment(socialEvent.eventDateRangeStart).format('MMMM Do YYYY - h:mma') : 'TBD';
         let community = socialEvent.location || 'Location TBD';
