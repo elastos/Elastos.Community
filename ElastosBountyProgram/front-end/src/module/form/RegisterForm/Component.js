@@ -188,6 +188,7 @@ class C extends BaseComponent {
             </Select>
         )
 
+        /*
         const recaptcha_fn = getFieldDecorator('recaptcha', {
             rules: [{required: true}]
         })
@@ -197,6 +198,7 @@ class C extends BaseComponent {
                 sitekey={RECAPTCHA_KEY}
             />
         )
+        */
 
         const organizer_fn = getFieldDecorator('beOrganizer', {
             rules: [{message: I18N.get('register.form.options')}]
@@ -241,9 +243,9 @@ class C extends BaseComponent {
             organizer: organizer_fn(organizer_el),
             developer: developer_fn(developer_el),
 
-            source: source_fn(source_el),
+            source: source_fn(source_el)
 
-            recaptcha: recaptcha_fn(recaptcha_el)
+            // recaptcha: recaptcha_fn(recaptcha_el)
         }
     }
 
@@ -306,9 +308,9 @@ class C extends BaseComponent {
                             </Collapse.Panel>
                         </Collapse>
                     </FormItem>
-                    <FormItem>
+                    {/*<FormItem>
                         {p.recaptcha}
-                    </FormItem>
+                    </FormItem>*/}
                     <FormItem>
                         <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn" onClick={this.handleSubmit.bind(this)}>
                             {I18N.get('register.submit')}
