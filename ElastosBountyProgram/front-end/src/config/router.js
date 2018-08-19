@@ -5,6 +5,7 @@ import DeveloperPage from '@/module/page/developer/Container'
 import DeveloperLearnPage from '@/module/page/developer/learn/Container'
 import DeveloperSearchPage from '@/module/page/developer/search/Container'
 import LeaderPage from '@/module/page/leader/Container'
+import Cr100Page from '@/module/page/cr_100/Container'
 
 // this is the leaders link in the header
 import DirectoryPage from '@/module/page/directory/Container'
@@ -86,6 +87,10 @@ export default [
     {
         path: '/social',
         page: SocialPage
+    },
+    {
+        path: '/cr100',
+        page: Cr100Page
     },
     {
         path: '/developer',
