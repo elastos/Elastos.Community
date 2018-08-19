@@ -119,10 +119,33 @@ export default class extends StandardPage {
     }
 
     buildDisclaimer() {
-
+        return (
+            <div>
+                <div className="welcomeBox">
+                    <div className="title">
+                        {I18N.get('developer.cr100.disclaimer.title')}
+                    </div>
+                    <div className="content">
+                        {I18N.get('developer.cr100.disclaimer')}
+                    </div>
+                    <div className="content">
+                        {I18N.get('developer.cr100.dontseeProject.title')}
+                    </div>
+                    <div className="content">
+                        <Button onClick={this.handleSubmitProjectProposal.bind(this)}>
+                            {I18N.get('developer.cr100.dontseeProject')}
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     buildFooter() {
+
+    }
+
+    handleSubmitProjectProposal() {
 
     }
 }
