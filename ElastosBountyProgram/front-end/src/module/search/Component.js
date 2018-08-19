@@ -486,6 +486,14 @@ export default class extends BaseComponent {
             )
         })
 
+        if (item.thumbnail) {
+            pictures.unshift(
+                <div key="main">
+                    <img width={188} height={188} alt="logo" src={item.thumbnail} />
+                </div>
+            )
+        }
+
         return (
             <div className="carousel-wrapper">
                 <Carousel autoplay>

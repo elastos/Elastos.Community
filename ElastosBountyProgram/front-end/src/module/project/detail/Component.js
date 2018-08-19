@@ -106,6 +106,11 @@ class C extends BaseComponent {
         const details = this.props.detail;
 
         let carouselImages = []
+
+        if (details.thumbnail) {
+            carouselImages.push(<img src={details.thumbnail} key="main"/>)
+        }
+
         for (let i of details.pictures) {
             carouselImages.push(<img src={i.url} key={i}/>)
         }
