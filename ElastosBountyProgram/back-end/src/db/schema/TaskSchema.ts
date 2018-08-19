@@ -91,6 +91,14 @@ export const TaskActivity = {
     notes : String
 }
 
+const ProjectPitch = {
+    problem: String,
+    valueProposition: String,
+    useCase: String,
+    beneficiaries: String,
+    elaInfrastructure: String
+}
+
 /**
  * A task is a base class for any event
  *
@@ -107,6 +115,8 @@ export const Task = {
     },
     descBreakdown: String,
     goals: String,
+
+    pitch: ProjectPitch,
 
     thumbnail : {
         type : String

@@ -182,7 +182,7 @@ export default class extends Base {
 
             attachment, attachmentType, attachmentFilename, isUsd,
 
-            domain, recruitedSkillsets, pictures
+            domain, recruitedSkillsets, pictures, pitch
         } = param;
         this.validate_name(name);
         this.validate_description(description);
@@ -217,6 +217,7 @@ export default class extends Base {
             attachment, attachmentType, attachmentFilename,
             candidateLimit,
             candidateSltLimit,
+            pitch,
             rewardUpfront: rewardUpfront,
             reward : reward,
             assignSelf: assignSelf,

@@ -86,8 +86,14 @@ class C extends BaseComponent {
 
                 if (this.props.is_project) {
                     values.type = TASK_TYPE.PROJECT
-                    values.category = TASK_CATEGORY.DEVELOPER
                 }
+
+                values.pitch = values.pitch || {}
+                _.each(['problem', 'valueProposition', 'useCase',
+                    'beneficiaries', 'elaInfrastructure'], (pitchKeyword) => {
+                    values.pitch[pitchKeyword] = values[pitchKeyword]
+                    delete values[pitchKeyword]
+                })
 
                 if (this.state.editing) {
                     this.props.updateTask(values, this.state).then(() => {
@@ -592,7 +598,63 @@ class C extends BaseComponent {
             </Upload>
         )
 
+        const problem_fn = getFieldDecorator('problem', {
+            rules: [
+                {max: 4096, message: 'Too long'}
+            ],
+            initialValue: this.state.editing ? existingTask.pitch && existingTask.pitch.problem : ''
+        })
+        const problem_el = (
+            <TextArea rows={4}></TextArea>
+        )
+
+        const valueProposition_fn = getFieldDecorator('valueProposition', {
+            rules: [
+                {max: 4096, message: 'Too long'}
+            ],
+            initialValue: this.state.editing ? existingTask.pitch && existingTask.pitch.valueProposition : ''
+        })
+        const valueProposition_el = (
+            <TextArea rows={4}></TextArea>
+        )
+
+        const usecase_fn = getFieldDecorator('usecase', {
+            rules: [
+                {max: 4096, message: 'Too long'}
+            ],
+            initialValue: this.state.editing ? existingTask.pitch && existingTask.pitch.usecase : ''
+        })
+        const usecase_el = (
+            <TextArea rows={4}></TextArea>
+        )
+
+        const beneficiaries_fn = getFieldDecorator('beneficiaries', {
+            rules: [
+                {max: 4096, message: 'Too long'}
+            ],
+            initialValue: this.state.editing ? existingTask.pitch && existingTask.pitch.beneficiaries : ''
+        })
+        const beneficiaries_el = (
+            <TextArea rows={4}></TextArea>
+        )
+
+        const elaInfrastructure_fn = getFieldDecorator('elaInfrastructure', {
+            rules: [
+                {max: 4096, message: 'Too long'}
+            ],
+            initialValue: this.state.editing ? existingTask.pitch && existingTask.pitch.elaInfrastructure : ''
+        })
+        const elaInfrastructure_el = (
+            <TextArea rows={4}></TextArea>
+        )
+
         return {
+            problem: problem_fn(problem_el),
+            valueProposition: valueProposition_fn(valueProposition_el),
+            usecase: usecase_fn(usecase_el),
+            beneficiaries: beneficiaries_fn(beneficiaries_el),
+            elaInfrastructure: elaInfrastructure_fn(elaInfrastructure_el),
+
             recruitedSkillsets: skillset_fn(skillset_el),
             pictures: pictures_el,
             domain: domain_fn(domain_el),
@@ -737,7 +799,7 @@ class C extends BaseComponent {
                                         Thumbnail
                                     </label>
                                 </Col>
-                                <Col span={16} style={{'line-height': '40px'}}>
+                                <Col span={16} style={{'lineHeight': '40px'}}>
                                     <a target="_blank" href={this.state.thumbnail}>
                                         <Icon type="file-image"/>
                                         {this.state.thumbnail_filename}
@@ -749,12 +811,9 @@ class C extends BaseComponent {
                                 </Col>
                             </Row>
                         }
-
-                        {this.props.taskType !== 'PROJECT' &&
-                            <FormItem label="Category" {...formItemLayout}>
-                                {p.taskCategory}
-                            </FormItem>
-                        }
+                        <FormItem label="Category" {...formItemLayout}>
+                            {p.taskCategory}
+                        </FormItem>
                         {this.props.taskType !== 'PROJECT' &&
                             <FormItem label="Type" {...formItemLayout}>
                                 {p.taskType}
@@ -794,7 +853,24 @@ class C extends BaseComponent {
                         {((existingTask && existingTask.type === TASK_TYPE.PROJECT) ||
                             this.state.taskType === TASK_TYPE.PROJECT) &&
                             <div>
-                                <h3 class="no-margin">Recruitment</h3>
+                                <h3 className="no-margin">Pitch</h3>
+                                <FormItem label="Problem you want to solve" {...formItemLayout}>
+                                    {p.problem}
+                                </FormItem>
+                                <FormItem label="Value proposition" {...formItemLayout}>
+                                    {p.valueProposition}
+                                </FormItem>
+                                <FormItem label="Use Case" {...formItemLayout}>
+                                    {p.usecase}
+                                </FormItem>
+                                <FormItem label="Beneficiaries" {...formItemLayout}>
+                                    {p.beneficiaries}
+                                </FormItem>
+                                <FormItem label="ELA Infrastructure" {...formItemLayout}>
+                                    {p.elaInfrastructure}
+                                </FormItem>
+
+                                <h3 className="no-margin">Recruitment</h3>
                                 <FormItem label="Domain" {...formItemLayout}>
                                     {p.domain}
                                 </FormItem>

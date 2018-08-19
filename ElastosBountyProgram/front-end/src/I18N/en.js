@@ -163,6 +163,7 @@ export default {
     'developer.components.issues': 'Issues',
     'developer.components.docs': 'Docs',
     'developer.components.info': 'More Info',
+    'developer.cr100.projects': 'Projects',
 
     // Project/Team detail
     'project.detail.deadline': 'Deadline',

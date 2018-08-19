@@ -72,9 +72,9 @@ export default class extends StandardPage {
 
         return (
             <div className="c_list">
-                <h3>
-                    Projects
-                </h3>
+                <h2>
+                    {I18N.get('developer.cr100.projects')}
+                </h2>
                 {list}
             </div>
         )
