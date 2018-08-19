@@ -5,8 +5,17 @@ services:
     image: nginx:alpine
     ports:
       - 80:80
-#    build: .
 
     volumes:
       - ./nginx/proxy.prod.conf:/etc/nginx/conf.d/default.conf
+      - ./dist:/www/dist
+
+  cr-events-proxy:
+    container_name: cr-events-proxy
+    image: nginx:alpine
+    ports:
+      - 3002:80
+
+    volumes:
+      - ./nginx/proxy.prod.events.conf:/etc/nginx/conf.d/default.conf
       - ./dist:/www/dist
