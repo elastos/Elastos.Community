@@ -31,6 +31,11 @@ $mobile-padding: $gap_0 0px;
     padding: ($gap_2 / 2);
   }
 
+  .c_list {
+    background: $bg_blue;
+    padding: 0 $gap_2;
+  }
+
   .welcomeBox {
     max-width: 800px;
     margin: $gap_5 auto;
@@ -38,6 +43,19 @@ $mobile-padding: $gap_0 0px;
     font-size: 20px;
     text-align: center;
     background: $bg_blue;
+    position: relative;
+
+    .cr100_logo {
+      position: absolute;
+      top: -$gap_4;
+      left: -$gap_4;
+    }
+
+    .oomph_box {
+      position: absolute;
+      bottom: -$gap_2;
+      right: -$gap_3;
+    }
 
     .title {
       font-size: 24px;

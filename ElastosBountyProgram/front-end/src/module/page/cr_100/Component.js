@@ -79,6 +79,9 @@ export default class extends StandardPage {
                     <div className="content">
                         {I18N.get('developer.cr100.welcome')}
                     </div>
+
+                    <img className="cr100_logo" src="/assets/images/CR100_Logo.png"/>
+                    <img className="oomph_box" src="/assets/images/oomph.png"/>
                 </div>
             </div>
         )
