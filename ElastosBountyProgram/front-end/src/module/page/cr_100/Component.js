@@ -70,7 +70,18 @@ export default class extends StandardPage {
     }
 
     buildHeader() {
-
+        return (
+            <div>
+                <div className="welcomeBox">
+                    <div className="title">
+                        {I18N.get('developer.cr100.welcome.title')}
+                    </div>
+                    <div className="content">
+                        {I18N.get('developer.cr100.welcome')}
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     buildList() {

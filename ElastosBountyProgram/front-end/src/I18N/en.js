@@ -165,6 +165,8 @@ export default {
     'developer.components.info': 'More Info',
     'developer.cr100.projects': 'Projects',
     'developer.cr100.submit_whitepaper': 'Submit Whitepaper',
+    'developer.cr100.welcome': 'CyberRepublic100 is a cornerstone project of the Elastos Foundation which comprises 100 different projects that demonstrate some of the capabilities of the Elastos ecosystem. They include but are not limited to solutions for infrastructure, dApps and utilities.',
+    'developer.cr100.welcome.title': 'Cyber Republic 100',
     'developer.cr100.pitch.problem': 'Problem',
     'developer.cr100.pitch.valueProposition': 'Value Proposition',
     'developer.cr100.pitch.useCase': 'Use Case',

@@ -30,5 +30,20 @@ $mobile-padding: $gap_0 0px;
     text-align: center;
     padding: ($gap_2 / 2);
   }
+
+  .welcomeBox {
+    max-width: 800px;
+    margin: $gap_5 auto;
+    padding: $gap_4;
+    font-size: 20px;
+    text-align: center;
+    background: $bg_gray;
+
+    .title {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: $gap_1;
+    }
+  }
 }
 
