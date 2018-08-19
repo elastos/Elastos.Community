@@ -31,7 +31,8 @@ export const TASK_TYPE = {
 export const TASK_CATEGORY = {
     DEVELOPER: 'DEVELOPER',
     SOCIAL: 'SOCIAL',
-    LEADER: 'LEADER'
+    LEADER: 'LEADER',
+    CR100: 'CR100'
 }
 
 export const TASK_STATUS = {
@@ -102,7 +103,17 @@ export const SUBMISSION_CAMPAIGN = {
 };
 
 export const SKILLSET_TYPE = create(['CPP', 'JAVASCRIPT', 'GO', 'PYTHON', 'JAVA', 'SWIFT']);
-export const TEAM_TASK_DOMAIN = create(['SOCIAL', 'IOT', 'MEDIA', 'FINANCE']);
+export const TEAM_TASK_DOMAIN = create([
+    'MEDIA',
+    'IOT',
+    'AUTHENTICITY',
+    'CURRENCY',
+    'GAMING',
+    'FINANCE',
+    'SOVEREIGNTY',
+    'SOCIAL',
+    'EXCHANGE'
+])
 
 export const TEAM_ROLE = create(['MEMBER', 'LEADER']);
 export const TEAM_USER_STATUS = create(['NORMAL', 'PENDING', 'REJECT']);
