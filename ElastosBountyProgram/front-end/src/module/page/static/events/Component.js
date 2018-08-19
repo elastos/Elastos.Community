@@ -223,7 +223,7 @@ export default class extends EmptyPage {
     }
 
     getFilteredEvents(socialEvents) {
-        return _.filter(socialEvents, (item) => {
+        socialEvents = _.filter(socialEvents, (item) => {
 
             if (this.state.showFavoritesOnly &&
                 !this.state.favorites.find((favorite) => favorite.key === item._id && favorite.value)) {
@@ -263,6 +263,12 @@ export default class extends EmptyPage {
             }
             return dateValid && communityValid;
         });
+
+        socialEvents.sort((a, b) => {
+            return moment(a.eventDateRangeStart) - moment(b.eventDateRangeStart)
+        })
+
+        return socialEvents
     }
 
     renderEventCards(socialEvents) {
