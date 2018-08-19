@@ -42,6 +42,9 @@ $md-width: 992px;
         }
 
         .event-detail-container {
+
+          word-break: break-all;
+
           i {
             vertical-align: middle;
             margin: 10px 15px 10px 0;

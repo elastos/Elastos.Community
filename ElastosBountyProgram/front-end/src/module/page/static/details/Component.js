@@ -41,7 +41,9 @@ export default class extends EmptyPage {
         loading: true,
         hasLocation: false,
         lat: 18.7,
-        lng: 98.98
+        lng: 98.98,
+
+        defaultZoom: 10
     }
 
     async componentDidMount() {
@@ -50,9 +52,21 @@ export default class extends EmptyPage {
         await this.props.getTaskDetail(taskId)
 
         // we are defaulting to the country if there is no exact location
-        const location = this.props.task.location || (this.props.task.community && this.props.task.community.name)
+        let location
 
-        console.log(`location: ${location}`)
+        if (this.props.task.location && this.props.task.location !== 'TBD') {
+            location = this.props.task.location
+            await this.setState({
+                defaultZoom: 10
+            })
+        } else if (this.props.task.community && this.props.task.community.name) {
+            location = this.props.task.community.name
+            await this.setState({
+                defaultZoom: 3
+            })
+        }
+
+        console.log(`location: ${location} - zoom: ${this.state.defaultZoom}`)
 
         if (location) {
             await this.setState({
@@ -105,7 +119,7 @@ export default class extends EmptyPage {
     renderMapComponent() {
         const CustomMapComponent = withScriptjs(withGoogleMap((props) =>
             <GoogleMap
-                defaultZoom={10}
+                defaultZoom={this.state.defaultZoom}
                 defaultCenter={{ lat: this.state.lat, lng: this.state.lng }} >
                 {<Marker position={{ lat: this.state.lat, lng: this.state.lng }} />}
             </GoogleMap>
