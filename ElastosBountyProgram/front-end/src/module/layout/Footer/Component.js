@@ -11,7 +11,7 @@ export default class extends BaseComponent {
                 <div className="horizGap">
 
                 </div>
-                <div className="">
+                <div className="footer-box">
                     <Row className="d_rowFooter d_footerSection">
                         <Col span={6}>
                             <img className="logo_own" src="/assets/images/logo_own.png"/>

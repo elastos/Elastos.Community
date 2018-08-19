@@ -3,11 +3,6 @@
 @import "../../../style/color";
 
 .d_rowFooter {
-  max-width: 1200px;
-  margin: 0 auto;
-  margin-left: auto; // override antd styling for .ant-row
-  margin-right: auto; // override antd styling for .ant-row
-
   padding-bottom: $gap_2;
 }
 
@@ -20,16 +15,21 @@
   background: $bg_dark;
   position: relative;
   padding: 0 $gap_4;
-}
 
-.footer-vertical-section {
-  line-height: 40px;
-  .title {
-    font-weight: 600;
-    margin-bottom: $gap_0;
+  .footer-box {
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
-  .ant-avatar {
-    background-color: transparent;
+  .footer-vertical-section {
+    line-height: 40px;
+    .title {
+      font-weight: 600;
+      margin-bottom: $gap_0;
+    }
+
+    .ant-avatar {
+      background-color: transparent;
+    }
   }
 }
