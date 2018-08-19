@@ -9,7 +9,10 @@ import _ from 'lodash'
 
 export default class extends StandardPage {
     componentDidMount() {
-        this.props.getTasks()
+        this.setState({ loading: true })
+        this.props.getTasks().then(() => {
+            this.setState({ loading: false })
+        })
     }
 
     componentWillUnmount() {
@@ -17,14 +20,15 @@ export default class extends StandardPage {
     }
 
     checkForLoading(followup) {
-        return this.props.loading
+        return this.state.loading
             ? <Spin size="large"/>
             : _.isFunction(followup) && followup()
     }
 
     ord_states() {
         return {
-            showDetailId: null
+            showDetailId: null,
+            loading: false
         }
     }
 
