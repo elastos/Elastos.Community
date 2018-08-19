@@ -18,7 +18,7 @@ const prodEnv = {
     SERVER_URL: JSON.stringify('https://ebp-api-beta.elastos.org'),
     CR_VERSION: JSON.stringify(process.env.CR_VERSION),
     GA_ID: JSON.stringify(process.env.GA_ID),
-    GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY
+    GOOGLE_MAPS_API_KEY: JSON.stringify(process.env.GOOGLE_MAPS_API_KEY)
 };
 
 const stagingEnv = {
