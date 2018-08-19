@@ -5,8 +5,9 @@ import I18N from '@/I18N'
 import { Link } from 'react-router-dom'
 import './style.scss'
 import MediaQuery from 'react-responsive'
-import { Col, Row, Card, Button, Breadcrumb, Icon } from 'antd'
+import { Col, Row, Card, Button, Breadcrumb, Icon, List, Spin } from 'antd'
 import {MAX_WIDTH_MOBILE} from "../../../config/constant"
+import _ from 'lodash'
 
 export default class extends StandardPage {
     componentDidMount() {
@@ -25,7 +26,7 @@ export default class extends StandardPage {
                     <div className="d_box">
                         <div className="p_admin_content">
                             {this.buildHeader()}
-                            {this.buildList()}
+                            {this.ifNotLoading(this.buildList.bind(this))}
                             {this.buildDisclaimer()}
                             {this.buildFooter()}
                         </div>
@@ -40,8 +41,42 @@ export default class extends StandardPage {
 
     }
 
-    buildList() {
+    ifNotLoading(followup) {
+        return this.props.loading
+            ? <Spin size="large"/>
+            : _.isFunction(followup) && followup()
+    }
 
+    buildList() {
+        // Note, the project can be in multiple domains, but categorizing by the top one
+        const categorizedList = _.groupBy(this.props.all_tasks, (task) => _.first(task.domain))
+
+        const list = _.map(categorizedList, (list, category) => {
+            const sanitizedCategory = category || 'Uncategorized'
+            return (
+                <div key={sanitizedCategory}>
+                    <h3>
+                        {sanitizedCategory}
+                    </h3>
+                    <div className="c_projectList">
+                        {_.map(list, (project, ind) => (
+                            <div key={ind} className="c_project">
+                                <Avatar shape="square" size="large" src={(_.first(project.pictures) || {}).url}/>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )
+        })
+
+        return (
+            <div className="c_list">
+                <h3>
+                    Projects
+                </h3>
+                {list}
+            </div>
+        )
     }
 
     buildDisclaimer() {
