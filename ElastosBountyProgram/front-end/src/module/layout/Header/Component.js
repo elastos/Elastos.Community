@@ -149,6 +149,7 @@ export default class extends BaseComponent {
                         </Menu.Item>
                     }
 
+                    {/*
                     <Menu.Item className="c_MenuItem link" key="cr100">
                         CR100
                     </Menu.Item>
@@ -156,6 +157,7 @@ export default class extends BaseComponent {
                     <Menu.Item className="c_MenuItem link" key="empower">
                         Empower
                     </Menu.Item>
+                    */}
 
                     <Menu.Item className="c_MenuItem link" key="developer">
                         {I18N.get('0100')}

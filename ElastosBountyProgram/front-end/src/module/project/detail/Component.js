@@ -142,7 +142,7 @@ class C extends BaseComponent {
         const deadline = detail.date || ''
         const progress = detail.progress || ''
         const teamSize = detail.candidateCompleted.length || ''
-        const reward = detail.reward.isUsd ? detail.reward.usd + ' USD' : detail.reward.ela + ' ELA'
+        const reward = detail.reward.isUsd ? detail.reward.usd + ' USD' : (detail.reward.ela / 1000) + ' ELA'
         const description = detail.descBreakdown || detail.description || ''
         const leaderImage = detail.createdBy.profile.avatar || ''
 
