@@ -5,7 +5,7 @@ import I18N from '@/I18N'
 import { Link } from 'react-router-dom'
 import './style.scss'
 import MediaQuery from 'react-responsive'
-import { Col, Row, Card, Button, Breadcrumb, Icon, List, Spin } from 'antd'
+import { Col, Row, Card, Button, Breadcrumb, Icon, List, Spin, Avatar } from 'antd'
 import {MAX_WIDTH_MOBILE} from "../../../config/constant"
 import _ from 'lodash'
 
@@ -52,16 +52,17 @@ export default class extends StandardPage {
         const categorizedList = _.groupBy(this.props.all_tasks, (task) => _.first(task.domain))
 
         const list = _.map(categorizedList, (list, category) => {
-            const sanitizedCategory = category || 'Uncategorized'
+            const sanitizedCategory = (category || 'uncategorized').toLowerCase()
             return (
                 <div key={sanitizedCategory}>
-                    <h3>
-                        {sanitizedCategory}
+                    <h3 className="brand-color">
+                        {I18N.get(`team.spec.${sanitizedCategory}`)}
                     </h3>
                     <div className="c_projectList">
                         {_.map(list, (project, ind) => (
                             <div key={ind} className="c_project">
-                                <Avatar shape="square" size="large" src={(_.first(project.pictures) || {}).url}/>
+                                <Avatar shape="square" size={64} src={project.thumbnail}/>
+                                <div>{project.name}</div>
                             </div>
                         ))}
                     </div>
