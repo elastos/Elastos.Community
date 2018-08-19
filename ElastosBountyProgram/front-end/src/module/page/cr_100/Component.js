@@ -118,7 +118,7 @@ export default class extends StandardPage {
         return (
             <div className="c_list_wrapper">
                 <div className="c_list">
-                    <h2>
+                    <h2 className="project-title">
                         {I18N.get('developer.cr100.projects')}
                     </h2>
                     {list}
