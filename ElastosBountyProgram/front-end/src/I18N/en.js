@@ -188,10 +188,15 @@ export default {
     'team.detail.team_active': 'Your team is currently active',
 
     // Team specializations
-    'team.spec.social': 'Social',
-    'team.spec.iot': 'IoT',
     'team.spec.media': 'Media',
+    'team.spec.iot': 'IoT',
+    'team.spec.authenticity': 'Authenticity',
+    'team.spec.currency': 'Currency',
+    'team.spec.gaming': 'Gaming',
     'team.spec.finance': 'Finance',
+    'team.spec.sovereignty': 'Sovereignty',
+    'team.spec.social': 'Social',
+    'team.spec.exchange': 'Exchange',
 
     // Skillsets
     'team.skillset.cpp': 'C++',
