@@ -110,12 +110,17 @@ class C extends BaseComponent {
             taskCategory: this.props.taskCategory || TASK_TYPE.SOCIAL,
             assignSelf: (props.existingTask && props.existingTask.assignSelf) || false,
             eventDateRange: (props.existingTask && props.existingTask.eventDateRange) || false,
-            upload_url : null,
-            upload_loading : false,
+
+            thumbnail_url : (props.existingTask && props.existingTask.thumbnail) || null,
+            thumbnail_loading : false,
+            thumbnail_filename: (props.existingTask && props.existingTask.thumbnailFilename) || '',
+            thumbnail_type: '',
+
             attachment_url: (props.existingTask && props.existingTask.attachment) || null,
             attachment_loading: false,
             attachment_filename: (props.existingTask && props.existingTask.attachmentFilename) || '',
             attachment_type: '',
+
             removeAttachment: false,
             editing: !!props.existingTask,
             isUsd: (props.existingTask && props.existingTask.reward.isUsd) || false,
@@ -389,13 +394,17 @@ class C extends BaseComponent {
             showUploadList: false,
             customRequest :(info)=>{
                 this.setState({
-                    upload_loading: true
+                    thumbnail_loading: true
                 });
                 upload_file(info.file).then((d)=>{
                     const url = d.url;
                     this.setState({
-                        upload_loading: false,
-                        upload_url : url
+                        thumbnail_loading: false,
+                        thumbnail_url : url,
+                        thumbnail_type: d.type,
+                        thumbnail_filename: d.filename,
+
+                        removeThumbnail: false
                     });
                 })
             }
@@ -403,10 +412,10 @@ class C extends BaseComponent {
         const thumbnail_el = (
             <Upload name="logo" listType="picture" {...p_thumbnail}>
                 {
-                    this.state.upload_url ? (
-                        <img style={{height:'100px'}} src={this.state.upload_url} />
+                    this.state.thumbnail_url ? (
+                        <img style={{height:'100px'}} src={this.state.thumbnail_url} />
                         ) : (
-                        <Button loading={this.state.upload_loading}>
+                        <Button loading={this.state.thumbnail_loading}>
                             <Icon type="upload" /> Click to upload
                         </Button>
                     )
@@ -593,7 +602,7 @@ class C extends BaseComponent {
             taskRewardUsd: taskRewardUsd_fn(taskRewardUsd_el),
             taskRewardElaPerUsd: taskRewardElaPerUsd_fn(taskRewardElaPerUsd_el),
 
-            // thumbnail: thumbnail_fn(thumbnail_el),
+            thumbnail: thumbnail_fn(thumbnail_el),
 
             // TODO: fix issue where existing attachment can't be removed
             attachment: attachment_fn(attachment_el)
@@ -689,11 +698,30 @@ class C extends BaseComponent {
                         <FormItem label="Community"  {...formItemLayout}>
                             {p.taskCommunity}
                         </FormItem>
-                        {/*
-                        <FormItem label="Thumbnail" {...formItemLayout}>
-                            {p.thumbnail}
-                        </FormItem>
-                        */}
+
+                        {!this.state.thumbnail_url ?
+                            <FormItem label="Thumbnail" {...formItemLayout}>
+                                {p.thumbnail}
+                            </FormItem> :
+                            <Row className="ant-form-item">
+                                <Col span={8} className="ant-form-item-label text-right">
+                                    <label>
+                                        Thumbnail
+                                    </label>
+                                </Col>
+                                <Col span={16} style={{'line-height': '40px'}}>
+                                    <a target="_blank" href={this.state.thumbnail}>
+                                        <Icon type="file-image"/>
+                                        {this.state.thumbnail_filename}
+                                    </a>
+                                    <Popconfirm title="Are you sure you want to remove this thumbnail?" okText="Yes" onConfirm={this.removeThumbnail.bind(this)}>
+                                        <Icon className="remove-attachment" type="close-circle"/>
+                                    </Popconfirm>
+                                    <br/>
+                                </Col>
+                            </Row>
+                        }
+
                         {this.props.taskType !== 'PROJECT' &&
                             <FormItem label="Category" {...formItemLayout}>
                                 {p.taskCategory}
@@ -915,5 +943,15 @@ class C extends BaseComponent {
         })
     }
 
+    removeThumbnail() {
+        this.setState({
+            thumbnail_loading: false,
+            thumbnail_url : null,
+            thumbnail_type: '',
+            thumbnail_filename: '',
+
+            removeThumbnail: true
+        })
+    }
 }
 export default Form.create()(C)

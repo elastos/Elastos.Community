@@ -212,7 +212,7 @@ export default class extends EmptyPage {
 
     renderEventActions() {
         let attendance = _.find(this.props.task.candidates, (i) => i.user && i.user._id === this.props.currentUserId)
-        let eventImage = this.props.task.attachment || '/assets/images/Elastos_Logo_Temp.png';
+        let eventImage = this.props.task.thumbnail || '/assets/images/Elastos_Logo_Temp.png';
         let shareQuote = this.props.task.name || 'Visit us at elastos.org!';
 
         const buttonActionLabel = attendance ? 'DEREGISTER' : 'REGISTER';

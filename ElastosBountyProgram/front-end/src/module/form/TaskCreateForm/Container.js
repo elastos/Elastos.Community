@@ -42,10 +42,15 @@ export default createContainer(Component, (state) => {
                     location: formData.taskLocation,
 
                     infoLink: formData.taskLink,
-                    thumbnail: st.upload_url,
+
+                    thumbnail: st.thumbnail_url,
+                    thumbnailFilename: st.thumbnail_filename,
+                    thumbnailType: st.thumbnail_type,
+
                     attachment: st.attachment_url,
                     attachmentFilename: st.attachment_filename,
                     attachmentType: st.attachment_type,
+
                     pictures: formData.pictures,
                     domain: formData.domain,
                     recruitedSkillsets: formData.recruitedSkillsets,
@@ -155,6 +160,20 @@ export default createContainer(Component, (state) => {
                         attachment: st.attachment_url,
                         attachmentFilename: st.attachment_filename,
                         attachmentType: st.attachment_type,
+                    })
+                }
+
+                if (st.removeThumbnail) {
+                    Object.assign(updateObj, {
+                        thumbnail: null,
+                        thumbnailFilename: null,
+                        thumbnailType: null
+                    })
+                } else if (st.thumbnail_url) {
+                    Object.assign(updateObj, {
+                        thumbnail: st.thumbnail_url,
+                        thumbnailFilename: st.thumbnail_filename,
+                        thumbnailType: st.thumbnail_type,
                     })
                 }
 

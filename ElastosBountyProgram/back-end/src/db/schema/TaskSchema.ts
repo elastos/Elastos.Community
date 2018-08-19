@@ -111,6 +111,8 @@ export const Task = {
     thumbnail : {
         type : String
     },
+    thumbnailType: String,
+    thumbnailFilename: String,
 
     attachment: {
         type : String
