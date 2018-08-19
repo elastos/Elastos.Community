@@ -106,8 +106,6 @@ export default class extends Base{
 
         }
 
-        console.log(query)
-
         const list = await taskService.list(query);
         const count = await taskService.getDBModel('Task').count(query);
 

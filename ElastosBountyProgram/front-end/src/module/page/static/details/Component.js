@@ -38,6 +38,7 @@ export default class extends EmptyPage {
 
     state = {
         // TODO: Add API key for google maps
+        loading: true,
         hasLocation: false,
         lat: 18.7,
         lng: 98.98
@@ -73,6 +74,7 @@ export default class extends EmptyPage {
                 },
                 error => {
                     console.error(error);
+                    this.setState({loading: false})
                 }
             )
         } else {

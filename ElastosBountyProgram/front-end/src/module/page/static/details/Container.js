@@ -16,11 +16,6 @@ export default createContainer(Component, (state, ownProps) => {
             return taskService.get(taskId);
         },
 
-        isTaskLoading() {
-            return this.loading || (Object.keys(this.task).length === 0 && this.task.constructor === Object
-                && !this.loading);
-        },
-
         resetTaskDetail() {
             return taskService.resetTaskDetail()
         },
