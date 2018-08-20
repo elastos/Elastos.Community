@@ -67,6 +67,8 @@ export default class extends StandardPage {
                             {this.buildEmpower()}
                             {this.buildTeamHeader()}
                             {this.buildTeamBusiness()}
+                            {this.buildTeamMarketing()}
+                            {this.buildTeamLegal()}
                             {this.buildFooter()}
                         </div>
                     </div>
@@ -133,7 +135,9 @@ export default class extends StandardPage {
         return (
             <div className="emp35-teamHeader">
                 <div className="container">
-                    <span className="title">{I18N.get('emp35.teamHeader.title')}</span>
+                    <div className="inner-container">
+                        <span className="title">{I18N.get('emp35.teamHeader.title')}</span>
+                    </div>
                 </div>
             </div>
         )
@@ -142,39 +146,179 @@ export default class extends StandardPage {
     // TODO: load these via db
     buildTeamBusiness() {
 
-        const image = '/assets/images/Elastos_Logo_Temp.png'
+        const image = '/assets/images/user_blurred.png'
 
         return (
             <div className="emp35-teamBusiness">
                 <div className="container">
-                    <span className="blue-title">Business</span>
+                    <div className="inner-container">
+                        <span className="blue-title">Business</span>
 
-                    <div className="row-positions">
-                        <Card
-                            className="card-emp35-position"
-                            bordered={false}
-                            hoverable={true}
-                            key="business-pos-1"
-                            onClick={() => this.setState({visibleModalEmpowerApply: true})}
-                            cover={<img className="event-card-image" src={image}/>}>
+                        <div className="row-positions">
+                            <Card
+                                className="card-emp35-position"
+                                bordered={false}
+                                hoverable={true}
+                                key="business-pos-1"
+                                onClick={() => this.setState({visibleModalEmpowerApply: true})}
+                                cover={<img className="event-card-image" src={image}/>}>
 
-                            <Card.Meta
-                                description={'Position Open'}
-                            />
-                        </Card>
+                                <Card.Meta
+                                    description={'Position Open'}
+                                />
+                            </Card>
 
-                        <Card
-                            className="card-emp35-position"
-                            bordered={false}
-                            hoverable={true}
-                            key="business-pos-2"
-                            onClick={() => this.setState({visibleModalEmpowerView: true})}
-                            cover={<img className="event-card-image" src={image}/>}>
+                            <Card
+                                className="card-emp35-position"
+                                bordered={false}
+                                hoverable={true}
+                                key="business-pos-2"
+                                onClick={() => this.setState({visibleModalEmpowerView: true})}
+                                cover={<img className="event-card-image" src={image}/>}>
 
-                            <Card.Meta
-                                description={'John Smith'}
-                            />
-                        </Card>
+                                <Card.Meta
+                                    description={'John Smith'}
+                                />
+                            </Card>
+
+                            <Card
+                                className="card-emp35-position"
+                                bordered={false}
+                                hoverable={true}
+                                key="business-pos-3"
+                                onClick={() => this.setState({visibleModalEmpowerApply: true})}
+                                cover={<img className="event-card-image" src={image}/>}>
+
+                                <Card.Meta
+                                    description={'Position Open'}
+                                />
+                            </Card>
+
+                            <Card
+                                className="card-emp35-position"
+                                bordered={false}
+                                hoverable={true}
+                                key="business-pos-4"
+                                onClick={() => this.setState({visibleModalEmpowerApply: true})}
+                                cover={<img className="event-card-image" src={image}/>}>
+
+                                <Card.Meta
+                                    description={'Position Open'}
+                                />
+                            </Card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    buildTeamMarketing() {
+
+        const image = '/assets/images/user_blurred.png'
+
+        return (
+            <div className="emp35-teamMarketing">
+                <div className="container">
+                    <div className="inner-container">
+                        <span className="blue-title">Marketing</span>
+
+                        <div className="row-positions">
+                            <Card
+                                className="card-emp35-position"
+                                bordered={false}
+                                hoverable={true}
+                                key="marketing-pos-1"
+                                onClick={() => this.setState({visibleModalEmpowerApply: true})}
+                                cover={<img className="event-card-image" src={image}/>}>
+
+                                <Card.Meta
+                                    description={'Position Open'}
+                                />
+                            </Card>
+
+                            <Card
+                                className="card-emp35-position"
+                                bordered={false}
+                                hoverable={true}
+                                key="marketing-pos-2"
+                                onClick={() => this.setState({visibleModalEmpowerApply: true})}
+                                cover={<img className="event-card-image" src={image}/>}>
+
+                                <Card.Meta
+                                    description={'Position Open'}
+                                />
+                            </Card>
+
+                            <Card
+                                className="card-emp35-position"
+                                bordered={false}
+                                hoverable={true}
+                                key="marketing-pos-3"
+                                onClick={() => this.setState({visibleModalEmpowerApply: true})}
+                                cover={<img className="event-card-image" src={image}/>}>
+
+                                <Card.Meta
+                                    description={'Position Open'}
+                                />
+                            </Card>
+
+                            <Card
+                                className="card-emp35-position"
+                                bordered={false}
+                                hoverable={true}
+                                key="marketing-pos-4"
+                                onClick={() => this.setState({visibleModalEmpowerApply: true})}
+                                cover={<img className="event-card-image" src={image}/>}>
+
+                                <Card.Meta
+                                    description={'Position Open'}
+                                />
+                            </Card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    buildTeamLegal() {
+
+        const image = '/assets/images/user_blurred.png'
+
+        return (
+            <div className="emp35-teamLegal">
+                <div className="container">
+                    <div className="inner-container">
+                        <span className="blue-title">Legal</span>
+
+                        <div className="row-positions">
+                            <Card
+                                className="card-emp35-position"
+                                bordered={false}
+                                hoverable={true}
+                                key="legal-pos-1"
+                                onClick={() => this.setState({visibleModalEmpowerApply: true})}
+                                cover={<img className="event-card-image" src={image}/>}>
+
+                                <Card.Meta
+                                    description={'Position Open'}
+                                />
+                            </Card>
+
+                            <Card
+                                className="card-emp35-position"
+                                bordered={false}
+                                hoverable={true}
+                                key="legal-pos-2"
+                                onClick={() => this.setState({visibleModalEmpowerApply: true})}
+                                cover={<img className="event-card-image" src={image}/>}>
+
+                                <Card.Meta
+                                    description={'Position Open'}
+                                />
+                            </Card>
+                        </div>
                     </div>
                 </div>
             </div>

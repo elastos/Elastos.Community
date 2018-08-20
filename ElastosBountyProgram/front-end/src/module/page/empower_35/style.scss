@@ -3,10 +3,34 @@
 @import "../../../style/color";
 
 $mobile-padding: $gap_0 0px;
+$landingPageWidth: 1152px;
 
 .p_emp35 {
   background: #ffffff;
   text-align: left;
+
+  %container {
+    max-width: $landingPageWidth;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  %team-dark {
+    background-color: $bg_obsidian;
+    color: #fff;
+
+    .container {
+      @extend %container;
+
+      .inner-container {
+        margin: 0 66px;
+      }
+    }
+
+    .row-positions {
+      margin-top: 24px;
+    }
+  }
 
   @media only screen and (max-width: $mobile-width) {
     padding: 0 24px;
@@ -123,27 +147,42 @@ $mobile-padding: $gap_0 0px;
 
   // this is only the gap between empower and team
   .emp35-teamHeader {
-    background-color: $bg_navy;
-    color: #fff;
 
-    .container {
+    @extend %team-dark;
+
+    .container .inner-container {
       padding-top: 127px;
-      margin: 0 66px;
+    }
 
-      .title {
-        font-family: "synthese",sans-serif;
-        font-size: 48px;
-      }
+    .title {
+      font-family: "synthese",sans-serif;
+      font-size: 48px;
     }
   }
 
   .emp35-teamBusiness {
-    background-color: $bg_navy;
-    color: #fff;
+    @extend %team-dark;
 
-    .container {
+    .container .inner-container {
       padding-top: 72px;
-      margin: 0 66px;
+    }
+  }
+
+  .emp35-teamMarketing {
+    @extend %team-dark;
+
+    .container .inner-container {
+      padding-top: 50px;
+    }
+
+    padding-left: 237px;
+  }
+
+  .emp35-teamLegal {
+    @extend %team-dark;
+
+    .container .inner-container {
+      padding-top: 50px;
     }
   }
 
@@ -154,11 +193,12 @@ $mobile-padding: $gap_0 0px;
    */
   .card-emp35-position {
     max-width: 172px;
-    background-color: $bg_navy;
+    background-color: $bg_obsidian;
     display: inline-block;
     margin-right: 40px;
 
     .ant-card-cover {
+      height: 172px;
       background-color: #1B2E3C;
     }
 
