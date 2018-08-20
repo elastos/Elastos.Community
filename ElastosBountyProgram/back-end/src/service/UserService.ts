@@ -8,6 +8,8 @@ import {validate, utilCrypto, mail} from '../utility';
 import CommunityService from "./CommunityService";
 import CommentService from "./CommentService";
 
+let selectFields = '-salt -password -elaBudget -elaOwed -votePower -resetToken'
+
 const restrictedFields = {
     update: [
         '_id',
@@ -94,7 +96,6 @@ export default class extends Base {
         const {userId} = param
 
         const db_user = this.getDBModel('User');
-        let selectFields = '-salt -password -elaBudget -elaOwed -votePower -resetToken'
 
         if (param.admin && (!this.currentUser || (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
             this.currentUser._id !== userId))) {
@@ -176,18 +177,22 @@ export default class extends Base {
 
     public async findUsers(query): Promise<Document[]>{
         const db_user = this.getDBModel('User');
-        return await db_user.find({
+        selectFields += ' -email'
+
+        return await db_user.getDBInstance().find({
             '_id' : {
                 $in : query.userIds
             }
-        });
+        }).select(selectFields)
     }
 
     public async findAll(): Promise<Document[]>{
         const db_user = this.getDBModel('User');
+        selectFields += ' -email'
+
         return await db_user.getDBInstance().find({
             active : true
-        }).sort({username: 1});
+        }).select(selectFields).sort({username: 1});
     }
 
     public async changePassword(param): Promise<boolean>{
