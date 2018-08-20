@@ -12,8 +12,10 @@ export default createContainer(Component, (state) => {
     const userService = new UserService()
 
     return {
-        async getEmpowerBusiness() {
-            return userService.getAll()
+        async getEmpowerUsers() {
+            return userService.getAll({
+                empower: JSON.stringify({$exists: true})
+            })
         }
     }
 })

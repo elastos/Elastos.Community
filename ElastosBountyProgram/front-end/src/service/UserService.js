@@ -191,7 +191,7 @@ export default class extends BaseService {
         return result
     }
 
-    async getAll() {
+    async getAll(query) {
         const memberRedux = this.store.getRedux('member')
 
         await this.dispatch(memberRedux.actions.loading_update(true))
@@ -199,6 +199,7 @@ export default class extends BaseService {
         const result = await api_request({
             path : `/api/user/list`,
             method : 'get',
+            data: query
         });
 
         await this.dispatch(memberRedux.actions.users_update(result))

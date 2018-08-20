@@ -24,7 +24,7 @@ export default class extends StandardPage {
 
     async componentDidMount() {
         this.setState({ loading: false })
-        await this.props.getEmpowerBusiness()
+        await this.props.getEmpowerUsers()
     }
 
     componentWillUnmount() {
@@ -102,10 +102,12 @@ export default class extends StandardPage {
                         <div className="rect"></div>
                     </div>
                     <div className="title">
-                        <span className="text">{I18N.get('emp35.header.title')}</span>
+                        {I18N.get('emp35.header.title')}
                     </div>
                     <div className="content">
-                        {I18N.get('emp35.header.content')}
+                        <div class="center">
+                            <u>{I18N.get('emp35.header.content')}</u>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -117,10 +119,10 @@ export default class extends StandardPage {
             <div className="emp35-empower">
                 <div className="container">
                     <div className="title">
-                        <span className="text">{I18N.get('emp35.empower.title')}</span>
+                        {I18N.get('emp35.empower.title')}
                     </div>
                     <div className="content">
-                        <span className="text">{I18N.get('emp35.empower.content')}</span>
+                        {I18N.get('emp35.empower.content')}
                     </div>
                 </div>
             </div>
@@ -131,7 +133,7 @@ export default class extends StandardPage {
         return (
             <div className="emp35-teamHeader">
                 <div className="container">
-                    <span className="title">Empower 35 Team</span>
+                    <span className="title">{I18N.get('emp35.teamHeader.title')}</span>
                 </div>
             </div>
         )

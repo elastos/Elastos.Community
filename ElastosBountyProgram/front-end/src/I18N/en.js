@@ -178,11 +178,12 @@ export default {
     'developer.cr100.pitch.elaInfrastructure': 'Elastos Infrastructure',
 
     // Empower 35
-    'emp35.header.title': 'We Build It Together',
-    'emp35.header.content': 'Content here',
+    'emp35.header.title': 'We Will Build It Together',
+    'emp35.header.content': 'We are democratically elected cross-functional group of community evangelists empowered to spearhead projects in Elastos',
 
     'emp35.empower.title': 'Empower 35',
     'emp35.empower.content': 'CyberRepublic will empower 35 community evangelists with USD$10-30K annual compensation in ELA to lead their own teams and work on different projects and find talent in their field of expertise to grow the Elastos ecosystem',
+    'emp35.teamHeader.title': 'Empower35 Team',
 
     // Project/Team detail
     'project.detail.deadline': 'Deadline',

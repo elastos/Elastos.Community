@@ -11,7 +11,7 @@ export default class extends Base {
         if (userIds) {
             return await this.show(userIds);
         } else {
-            return await this.listUser();
+            return await this.listUser(this.getParam());
         }
     }
 
@@ -30,9 +30,10 @@ export default class extends Base {
      * TODO: may need to add security
      * @returns {Promise<{code: number; data: any; message: string} | {code: number; type: string; error: string}>}
      */
-    async listUser() {
+    async listUser(query) {
+
         const userService = this.buildService(UserService);
-        const users = await userService.findAll();
+        const users = await userService.findAll(query);
 
         return this.result(1, users);
     }
