@@ -201,7 +201,6 @@ export default class extends BaseService {
             method : 'get',
         });
 
-
         await this.dispatch(memberRedux.actions.users_update(result))
         await this.dispatch(memberRedux.actions.loading_update(false))
 

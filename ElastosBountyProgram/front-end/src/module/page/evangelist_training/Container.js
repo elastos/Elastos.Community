@@ -1,5 +1,5 @@
 import {createContainer} from '@/util'
-import UserService from '@/service/UserService'
+import TaskService from '@/service/TaskService'
 import Component from './Component'
 import {TASK_TYPE, TASK_CATEGORY} from '@/constant'
 import _ from 'lodash'
@@ -9,11 +9,9 @@ export default createContainer(Component, (state) => {
         ...state.task
     }
 }, () => {
-    const userService = new UserService()
+    const taskService = new TaskService()
 
     return {
-        async getEmpowerBusiness() {
-            return userService.getAll()
-        }
+
     }
 })

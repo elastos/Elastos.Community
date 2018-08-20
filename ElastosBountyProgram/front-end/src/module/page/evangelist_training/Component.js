@@ -22,9 +22,8 @@ export default class extends StandardPage {
         }
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         this.setState({ loading: false })
-        await this.props.getEmpowerBusiness()
     }
 
     componentWillUnmount() {
