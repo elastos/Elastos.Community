@@ -6,6 +6,7 @@ import DeveloperLearnPage from '@/module/page/developer/learn/Container'
 import DeveloperSearchPage from '@/module/page/developer/search/Container'
 import LeaderPage from '@/module/page/leader/Container'
 import Cr100Page from '@/module/page/cr_100/Container'
+import Emp35Page from '@/module/page/empower_35/Container'
 
 // this is the leaders link in the header
 import DirectoryPage from '@/module/page/directory/Container'
@@ -91,6 +92,10 @@ export default [
     {
         path: '/cr100',
         page: Cr100Page
+    },
+    {
+        path: '/empower35',
+        page: Emp35Page
     },
     {
         path: '/developer',
