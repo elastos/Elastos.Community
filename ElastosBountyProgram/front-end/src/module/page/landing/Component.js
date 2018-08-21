@@ -659,8 +659,8 @@ export default class extends EmptyPage {
                                                   style={{
                                                       fill: 'none',
                                                       stroke: '#1de9b6',
-                                                      'stroke-miterlimit': 10,
-                                                      'stroke-width': '1.36px'
+                                                      'strokeMiterlimit': 10,
+                                                      'strokeWidth': '1.36px'
                                                   }}/>
                                         </svg>
                                         <div className="dot path-move" data-num="1"></div>
@@ -672,8 +672,8 @@ export default class extends EmptyPage {
                                                   style={{
                                                       fill: 'none',
                                                       stroke: '#1de9b6',
-                                                      'stroke-miterlimit': 10,
-                                                      'stroke-width': '1.36px'
+                                                      'strokeMiterlimit': 10,
+                                                      'strokeWidth': '1.36px'
                                                   }}/>
                                         </svg>
                                         <div className="dot path-move" data-num="2"></div>
@@ -1044,8 +1044,8 @@ export default class extends EmptyPage {
                                                 style={{
                                                   fill: 'none',
                                                   stroke: '#1de9b6',
-                                                  'stroke-miterlimit': 10,
-                                                  'stroke-width': '1.25px'
+                                                  'strokeMiterlimit': 10,
+                                                  'strokeWidth': '1.25px'
                                                 }}/>
                                             </svg>
                                             <div className="dot"></div>
@@ -1056,8 +1056,8 @@ export default class extends EmptyPage {
                                                       style={{
                                                           fill: 'none',
                                                           stroke: '#1de9b6',
-                                                          'stroke-miterlimit': 10,
-                                                          'stroke-width': '1.25px'
+                                                          'strokeMiterlimit': 10,
+                                                          'strokeWidth': '1.25px'
                                                       }}/>
                                             </svg>
                                             <div className="dot"></div>
@@ -1068,8 +1068,8 @@ export default class extends EmptyPage {
                                                       style={{
                                                           fill: 'none',
                                                           stroke: '#1de9b6',
-                                                          'stroke-miterlimit': 10,
-                                                          'stroke-width': '1.25px'
+                                                          'strokeMiterlimit': 10,
+                                                          'strokeWidth': '1.25px'
                                                       }}/>
                                             </svg>
                                             <div className="dot"></div>
@@ -1080,8 +1080,8 @@ export default class extends EmptyPage {
                                                       style={{
                                                           fill: 'none',
                                                           stroke: '#1de9b6',
-                                                          'stroke-miterlimit': 10,
-                                                          'stroke-width': '1.25px'
+                                                          'strokeMiterlimit': 10,
+                                                          'strokeWidth': '1.25px'
                                                       }}/>
                                             </svg>
                                             <div className="dot"></div>
@@ -1092,8 +1092,8 @@ export default class extends EmptyPage {
                                                       style={{
                                                           fill: 'none',
                                                           stroke: '#1de9b6',
-                                                          'stroke-miterlimit': 10,
-                                                          'stroke-width': '1.25px'
+                                                          'strokeMiterlimit': 10,
+                                                          'strokeWidth': '1.25px'
                                                       }}/>
                                             </svg>
                                             <div className="dot"></div>
@@ -1104,8 +1104,8 @@ export default class extends EmptyPage {
                                                       style={{
                                                           fill: 'none',
                                                           stroke: '#1de9b6',
-                                                          'stroke-miterlimit': 10,
-                                                          'stroke-width': '1.25px'
+                                                          'strokeMiterlimit': 10,
+                                                          'strokeWidth': '1.25px'
                                                       }}/>
                                             </svg>
                                             <div className="dot"></div>
@@ -1228,20 +1228,11 @@ export default class extends EmptyPage {
                                         </div>
                                     </div>
 
-
-
-
                                     <div className="type-wrap part-wrap">
                                         <div className="type part"><img src="assets/images/parts/token-type.svg"/></div>
                                     </div>
 
-
-
-
                                     <div className="bigA part"><img src="assets/images/parts/token-a.svg"/></div>
-
-
-
 
                                     <div className="cardfly-wrap part-wrap" data-num="1">
                                         <div className="cardfly part" data-num="1"><img src="assets/images/parts/cardfly1.svg"/></div>
@@ -1254,20 +1245,11 @@ export default class extends EmptyPage {
                                         <div className="cardfly part" data-num="3"><img src="assets/images/parts/cardfly3.svg"/></div>
                                     </div>
 
-
-
-
                                     <div className="radio-group light" data-num="1"></div>
                                     <div className="radio-group light" data-num="2"></div>
                                     <div className="radio-group" data-num="3"></div>
 
-
-
-
                                     <div className="token-city part"><img src="assets/images/parts/token-city.svg"/></div>
-
-
-
 
                                     <div className="glow-line">
                                         <div className="glow-ball"></div>
@@ -1316,9 +1298,6 @@ export default class extends EmptyPage {
                     </div>
                 </div>
             </section>
-
-
-
 
 
             <section id="cyber" className="hasAnim">
@@ -1402,10 +1381,6 @@ export default class extends EmptyPage {
                 <div className="notch bot lt"></div>
             </section>
 
-
-
-
-
             <section id="team">
 
                 <div className="contentContainer">
@@ -1487,10 +1462,6 @@ export default class extends EmptyPage {
 
             </section>
 
-
-
-
-
             <footer id="globalFooter" className="global hasAnim">
 
                 <div className="footer-illus">
@@ -1518,9 +1489,6 @@ export default class extends EmptyPage {
                     <div className="footer-city">
                         <img src="assets/images/footer-city.svg" className="base"/>
 
-
-
-
                         <div className="cardfly-wrap part-wrap" data-num="1">
                             <div className="cardfly part" data-num="1"><img src="assets/images/parts/token-card2.svg"/></div>
                             <div className="cardfly part" data-num="2"><img src="assets/images/parts/token-card3.svg"/></div>
@@ -1532,14 +1500,8 @@ export default class extends EmptyPage {
                             <div className="cardfly part" data-num="3"><img src="assets/images/parts/token-card2.svg"/></div>
                         </div>
 
-
-
-
                         <div className="radio-group" data-num="1"></div>
                         <div className="radio-group" data-num="2"></div>
-
-
-
 
                         <div className="glow-line" data-num="1">
                             <div className="glow-ball"></div>
