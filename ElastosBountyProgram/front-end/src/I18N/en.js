@@ -188,6 +188,30 @@ export default {
     'emp35.empower.content': 'CyberRepublic will empower 35 community evangelists with USD$10-30K annual compensation in ELA to lead their own teams and work on different projects and find talent in their field of expertise to grow the Elastos ecosystem',
     'emp35.teamHeader.title': 'Empower35 Team',
 
+    // Training
+    'training.header.title': 'Evangelist Training',
+    'training.header.content': 'Every quarter Cyber Republic offers all expenses paid training with the leadership of Elastos in Silicon Valley for 10 evangelists',
+    'training.evangelist.title': 'Evangelist Training',
+    'training.evangelist.content': 'We do lots of cool things, we have fun, we drink pinacoladas and sometimes save the world from oblivion.',
+
+    // Itinerary
+    'training.itinerary.title': 'Itinerary',
+    'training.itinerary.content.venueLabel': 'Venue',
+    'training.itinerary.content.venue': 'Houses in Silicon Valley',
+    'training.itinerary.content.accomodationLabel': 'Accomodation',
+    'training.itinerary.content.accomodation': 'Houses in Silicon Valley',
+    'training.itinerary.content.day13Label': 'Day 1-3',
+    'training.itinerary.content.day13': 'Learning Elastos Tech with Rong and tech team',
+    'training.itinerary.content.day4Label': 'Day 4',
+    'training.itinerary.content.day4': 'Public Speaking Skills, Q&A training',
+    'training.itinerary.content.day5Label': 'Day 5',
+    'training.itinerary.content.day5': 'Team Training',
+    'training.itinerary.content.day6Label': 'Day 6',
+    'training.itinerary.content.day6': 'Pitch presentation practice',
+    'training.itinerary.content.day7Label': 'Day 7',
+    'training.itinerary.content.day7': 'Pitch day with judges',
+
+
     // Project/Team detail
     'project.detail.deadline': 'Deadline',
     'project.detail.progress': 'Progress',

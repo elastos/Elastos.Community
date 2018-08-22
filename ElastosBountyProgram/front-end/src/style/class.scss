@@ -1,3 +1,5 @@
+@import './color.scss';
+
 .flex-center{
   display: flex;
   align-content: center;
@@ -132,9 +134,9 @@
 }
 
 .alpha-tag {
-  padding-top: $gap_0;
-  color: red;
+  color: $red;
   font-size: 20px;
   font-weight: bold;
   text-align: right;
+  opacity: 0.38;
 }
