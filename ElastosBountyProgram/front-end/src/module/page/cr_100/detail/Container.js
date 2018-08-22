@@ -31,7 +31,7 @@ export default createContainer(Component, (state) => {
             return taskService.get(taskId)
         },
 
-        resetTaskDetail () {
+        resetTaskDetail() {
             return taskService.resetTaskDetail()
         },
 
@@ -39,12 +39,20 @@ export default createContainer(Component, (state) => {
             return teamService.index(query)
         },
 
-        async applyToTask(taskId, userId, teamId, applyMsg) {
-            return taskService.pushCandidate(taskId, userId, teamId, applyMsg)
+        async applyToTask(taskId, userId, teamId, applyMsg, attachment) {
+            return taskService.pushCandidate(taskId, userId, teamId, applyMsg, attachment)
         },
 
         resetAllTeams() {
             return teamService.resetAllTeams()
+        },
+
+        async acceptCandidate(taskCandidateId) {
+            return taskService.acceptCandidate(taskCandidateId)
+        },
+
+        async rejectCandidate(taskCandidateId) {
+            return taskService.rejectCandidate(taskCandidateId)
         },
 
         async withdrawCandidate(taskCandidateId) {

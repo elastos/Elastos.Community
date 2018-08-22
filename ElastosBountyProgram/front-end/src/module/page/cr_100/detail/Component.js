@@ -16,8 +16,10 @@ import {
     Input,
     Form,
     Divider,
-    Modal
+    Modal,
+    Upload
 } from 'antd'
+import {upload_file} from "@/util";
 import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS } from '@/constant'
 import I18N from '@/I18N'
 import _ from 'lodash'
@@ -26,7 +28,11 @@ import './style.scss'
 class C extends BaseComponent {
     ord_states() {
         return {
-            applying: false
+            applying: false,
+            attachment_url: null,
+            attachment_loading: false,
+            attachment_filename: '',
+            attachment_type: ''
         }
     }
 
@@ -55,7 +61,7 @@ class C extends BaseComponent {
                 const userId = isSelf && this.props.currentUserId
                 const teamId = !isSelf && values.applicant
 
-                this.props.applyToTask(this.props.taskId, userId, teamId, values.applyMsg)
+                this.props.applyToTask(this.props.taskId, userId, teamId, values.applyMsg, values.attachment)
                     .then(() => {
                         this.setState({ applying: false })
                         message.success('Application sent. Thank you!')
@@ -175,12 +181,24 @@ class C extends BaseComponent {
         )
     }
 
+    approveUser(taskCandidateId) {
+        this.props.acceptCandidate(taskCandidateId)
+    }
+
+    disapproveUser(taskCandidateId) {
+        this.props.rejectCandidate(taskCandidateId)
+    }
+
+    withdrawApplication(taskCandidateId) {
+        this.props.withdrawCandidate(taskCandidateId)
+    }
 
     removeUser(taskCandidateId) {
+        this.props.rejectCandidate(taskCandidateId)
     }
 
     removeUserByUserId(userId) {
-        const candidate = _.find(this.props.candidates, (candidate) => candidate.user._id === userId)
+        const candidate = _.find(this.props.detail.candidates, (candidate) => candidate.user._id === userId)
         if (!candidate) {
             return false
         }
@@ -295,6 +313,48 @@ class C extends BaseComponent {
         )
         const applyMsgPanel = applyMsg_fn(applyMsg_el)
 
+        const attachment_fn = getFieldDecorator('attachment', {
+            rules: []
+        });
+        const p_attachment = {
+            showUploadList: false,
+            customRequest :(info)=>{
+                this.setState({
+                    attachment_loading: true
+                });
+                upload_file(info.file).then((d)=>{
+                    const url = d.url;
+                    this.setState({
+                        attachment_loading: false,
+                        attachment_url : url,
+                        attachment_type: d.type,
+                        attachment_filename: d.filename,
+                        removeAttachment: false
+                    });
+                })
+            }
+        };
+        const attachment_el = (
+            <Upload name="attachment" {...p_attachment}>
+                {
+                    this.state.attachment_url ? (
+                        <a target="_blank" href={this.state.attachment_url}>
+                            {this.state.attachment_type === 'application/pdf' ?
+                                <Icon type="file-pdf"/> :
+                                <Icon type="file"/>
+                            } &nbsp;
+                            {this.state.attachment_filename}
+                        </a>
+                    ) : (
+                        <Button loading={this.state.attachment_loading}>
+                            <Icon type="upload" /> Click to upload
+                        </Button>
+                    )
+                }
+            </Upload>
+        );
+
+
         const applicant_fn = getFieldDecorator('applicant', {
             rules: [],
             initialValue: '$me'
@@ -325,11 +385,15 @@ class C extends BaseComponent {
             </Select>
         )
         const applicantPanel = applicant_fn(applicant_el)
+        const attachmentPanel = attachment_fn(attachment_el)
 
         return (
             <Form onSubmit={this.handleSubmit.bind(this)} className="application-form">
                 <Form.Item className="no-margin">
                     {applyMsgPanel}
+                </Form.Item>
+                <Form.Item>
+                    {attachmentPanel}
                 </Form.Item>
                 <Button disabled={this.props.loading} className="d_btn pull-left" onClick={() => this.setState({ applying: false })}>
                     Cancel

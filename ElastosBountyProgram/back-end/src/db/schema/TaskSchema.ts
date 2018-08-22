@@ -61,6 +61,13 @@ export const TaskCandidate = {
     team : {type: Schema.Types.ObjectId, ref: 'team'},
     user : {type: Schema.Types.ObjectId, ref: 'users'},
 
+    attachment: {
+        type : String
+    },
+
+    attachmentType: String,
+    attachmentFilename: String,
+
     category: String,
 
     // constants.TASK_CANDIDATE_STATUS - PENDING, APPROVED
