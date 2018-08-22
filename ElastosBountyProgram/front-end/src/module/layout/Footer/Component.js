@@ -21,10 +21,11 @@ export default class extends BaseComponent {
                                 <div className="title brand-color">
                                     Links
                                 </div>
-                                <div><a>Resources</a></div>
-                                <div><a>Resources</a></div>
-                                <div><a>Resources</a></div>
-                                <div><a>Resources</a></div>
+                                <div><a href="https://wallet.elastos.org/">Wallet</a></div>
+                                <div><a href="https://blockchain.elastos.org/status">Block Explorer</a></div>
+                                <div><a href="https://github.com/elastos" target="_blank">GitHub</a></div>
+                                <div><a href="https://github.com/elastos/Elastos.Community/tree/master/CyberRepublicLogoAssets" target="_blank">Logo Assets</a></div>
+                                <div><a href="https://elanews.net/">ELA News</a></div>
                             </div>
                         </Col>
                         <Col span={8}>
@@ -32,10 +33,10 @@ export default class extends BaseComponent {
                                 <div className="title brand-color">
                                     Contact
                                 </div>
-                                <div><a>cyberrepublic@elastos.org</a></div>
-                                <div><a>cyberrepublic@elastos.org</a></div>
-                                <div><a>cyberrepublic@elastos.org</a></div>
-                                <div><a>cyberrepublic@elastos.org</a></div>
+                                <div className="footer-color-dark">Cyber Republic: <a href="mailto:cyberrepublic@elastos.org">cyberrepublic@elastos.org</a></div>
+                                <div className="footer-color-dark">Global Community: <a href="mailto:global-community@elastos.org">global-community@elastos.org</a></div>
+                                <div className="footer-color-dark">Support: <a href="mailto:support@elastos.org">support@elastos.org</a></div>
+                                <div className="footer-color-dark">Other Contacts: <a href="mailto:contact@elastos.org">contact@elastos.org</a></div>
                             </div>
                         </Col>
                         <Col span={6}>
@@ -43,10 +44,14 @@ export default class extends BaseComponent {
                                 <div className="title brand-color">
                                     Join Us On
                                 </div>
-                                <Avatar shape="square" size={64} icon="github"/>
-                                <Avatar shape="square" size={64} icon="twitter"/>
-                                <Avatar shape="square" size={64} icon="youtube"/>
-                                <Avatar shape="square" size={64} icon="instagram"/>
+                                <a href="https://t.me/elastosgroup" target="_blank"><Avatar shape="square" size={64} className="icon icon-paper-plane"/></a>                                    
+                                <a href="https://github.com/elastos" target="_blank"><Avatar shape="square" size={64} className="icon icon-github"/></a>
+                                <a href="https://discordapp.com/invite/MHSUVZN" target="_blank"><Avatar shape="square" size={64} className="icon icon-crabface"/></a>
+                                <a href="https://twitter.com/Elastos_org" target="_blank"><Avatar shape="square" size={64} className="icon icon-twitter"/></a>
+                                <a href="https://elastos.slack.com/" target="_blank"><Avatar shape="square" size={64} className="icon icon-slack"/></a>
+                                <a href="https://www.reddit.com/r/Elastos/" target="_blank"><Avatar shape="square" size={64} className="icon icon-reddit-alien"/></a>
+                                <a href="https://www.youtube.com/channel/UCy5AjgpQIQq3bv8oy_L5WTQ/" target="_blank"><Avatar shape="square" size={64} className="icon icon-youtube-play"/></a>
+                                <a href="https://www.instagram.com/elastosofficial/" target="_blank"><Avatar shape="square" size={64} className="icon icon-instagram"/></a>
                             </div>
                         </Col>
                     </Row>
