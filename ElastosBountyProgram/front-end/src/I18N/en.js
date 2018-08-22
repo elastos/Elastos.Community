@@ -182,10 +182,14 @@ export default {
 
     // Empower 35
     'emp35.header.title': 'We Will Build It Together',
-    'emp35.header.content': 'We are democratically elected cross-functional group of community evangelists empowered to spearhead projects in Elastos',
+    'emp35.header.content.1': 'We are democratically elected cross-functional group',
+    'emp35.header.content.2': 'of community evangelists empowered to spearhead',
+    'emp35.header.content.3': 'projects in Elastos',
 
     'emp35.empower.title': 'Empower 35',
-    'emp35.empower.content': 'CyberRepublic will empower 35 community evangelists with USD$10-30K annual compensation in ELA to lead their own teams and work on different projects and find talent in their field of expertise to grow the Elastos ecosystem',
+    'emp35.empower.content.1': 'Empower35 is a project to select the future leaders, managers, and congresspeople of Cyber Republic. This group of experts in business, marketing, writing, visual arts, design, law and public speaking will be the first representatives that will shape and enable all future growth of our autonomous and decentralized democratic republic.',
+    'emp35.empower.content.2': 'In the coming weeks, we will begin accepting applications for each role and positions will be selected by our Cyber Republic Council. Qualified applicants who are selected will be paid in ELA and can apply for a budget based on their proposal to manage and hire their own teams in each respective area.',
+    'emp35.empower.content.3': 'These 35 will build and grow the ecosystem and be tasked with finding the next group of leaders as our republic continues to expand and work towards our goal of full democratic decentralization.',
     'emp35.teamHeader.title': 'Empower35 Team',
 
     // Project/Team detail
