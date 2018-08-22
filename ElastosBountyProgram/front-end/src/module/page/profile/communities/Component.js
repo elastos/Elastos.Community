@@ -1,6 +1,6 @@
 import React from 'react';
 import StandardPage from '../../StandardPage';
-import Navigator from '@/module/page/shared/Navigator/Container'
+import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import { message } from 'antd'
 import config from '@/config'
 import './style.scss'
@@ -83,14 +83,19 @@ export default class extends StandardPage {
                         <div className="p_ProfileCommunities p_admin_content">
                             <MediaQuery maxWidth={720}>
                                 <Row>
-                                    <Col className="admin-right-column wrap-box-navigator">
+                                    <Col className="admin-left-column wrap-box-navigator">
                                         <Navigator selectedItem={'profileCommunities'} />
                                     </Col>
                                 </Row>
                             </MediaQuery>
                             <Row>
-                                <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-left-column wrap-box-user">
-                                    <Divider>Joined Communities</Divider>
+                                <MediaQuery minWidth={720}>
+                                    <Col span={4} className="admin-left-column wrap-box-navigator">
+                                        <Navigator selectedItem={'profileCommunities'}/>
+                                    </Col>
+                                </MediaQuery>
+                                <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-right-column wrap-box-user">
+                                    <h3 className="no-margin">Joined Communities</h3>
 
                                     <Table
                                         columns={columns}
@@ -99,11 +104,6 @@ export default class extends StandardPage {
                                         loading={this.props.loading}
                                     />
                                 </Col>
-                                <MediaQuery minWidth={720}>
-                                    <Col span={4} className="admin-right-column wrap-box-navigator">
-                                        <Navigator selectedItem={'profileCommunities'}/>
-                                    </Col>
-                                </MediaQuery>
                             </Row>
                         </div>
                     </div>

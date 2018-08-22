@@ -56,11 +56,11 @@ export default {
     '1305': 'Forms',
 
     // Profile navigator
-    '2300': 'Info',
+    '2300': 'My Profile',
     '2301': 'My Tasks',
     '2302': 'My Teams',
     '2303': 'My Issues',
-    '2304': 'Communities',
+    '2304': 'My Communities',
     '2305': 'My Projects',
 
     // Home

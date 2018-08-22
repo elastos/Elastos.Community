@@ -37,6 +37,12 @@ export default class extends BaseComponent {
             case 'profileSubmissions':
                 this.props.history.push('/profile/submissions')
                 break
+            case 'profileInfo':
+                this.props.history.push('/profile/info')
+                break
+            case 'profileCommunities':
+                this.props.history.push('/profile/communities')
+                break
         }
     }
 
@@ -64,6 +70,12 @@ export default class extends BaseComponent {
                             <Menu.Item key="profileSubmissions">
                                 {I18N.get('2303')}
                             </Menu.Item>
+                            <Menu.Item key="profileCommunities">
+                                {I18N.get('2304')}
+                            </Menu.Item>
+                            <Menu.Item key="profileInfo">
+                                {I18N.get('2300')}
+                            </Menu.Item>
                         </Menu>
                     </Affix>
                 </MediaQuery>
@@ -84,6 +96,12 @@ export default class extends BaseComponent {
                         </Menu.Item>
                         <Menu.Item key="profileSubmissions">
                             {I18N.get('2303')}
+                        </Menu.Item>
+                        <Menu.Item key="profileCommunities">
+                            {I18N.get('2304')}
+                        </Menu.Item>
+                        <Menu.Item key="profileInfo">
+                            {I18N.get('2300')}
                         </Menu.Item>
                     </Menu>
                 </MediaQuery>
