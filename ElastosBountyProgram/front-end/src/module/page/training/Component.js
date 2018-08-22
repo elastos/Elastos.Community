@@ -48,7 +48,7 @@ export default class extends StandardPage {
                         <div className="p_admin_content">
                             {this.buildHeader()}
                             {this.buildTraining()}
-                            {this.builditinerary()}
+                            {this.buildItinerary()}
                             {this.buildFooter()}
                         </div>
                     </div>
@@ -93,9 +93,12 @@ export default class extends StandardPage {
         )
     }
 
-    builditinerary() {
+    buildItinerary() {
         return (
             <div className="itinerary">
+                <div>
+                    <img className="connector" src="assets/images/training_connector.png"/>
+                </div>
                 <div className="container">
                     <div className="title">
                         {I18N.get('training.itinerary.title')}

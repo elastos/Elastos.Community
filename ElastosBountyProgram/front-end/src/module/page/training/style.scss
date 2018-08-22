@@ -124,7 +124,6 @@ $landingPageWidth: 1152px;
       font-size: 36px;
       padding-top: 102px;
       text-align: center;
-      font-size: 36px;
     }
 
     .content {
@@ -141,6 +140,12 @@ $landingPageWidth: 1152px;
     min-height: 600px;
     background-color: #fff;
     padding-top: 100px;
+    position: relative;
+
+    .connector {
+      position: absolute;
+      top: -92.5px;
+    }
 
     .title {
       font-family: "synthese",sans-serif;
