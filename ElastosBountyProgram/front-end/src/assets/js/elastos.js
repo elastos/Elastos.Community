@@ -6,7 +6,7 @@ var path;
 function freezePage(){$('body').css({'width':'100%','height':'100%','overflow':'hidden'});}
 function unfreezePage(){$('body').css({'width':'','height':'','overflow':''});}
 function animScroll(sec, speed, offset){
-	activeOffset = $(sec).offset().top+offset;	
+	activeOffset = $(sec).offset().top+offset;
 	TweenMax.to('html,body', speed, {scrollTop:activeOffset, ease:Expo.easeInOut});
 }
 function randomOffsets(elem, limit){
@@ -26,13 +26,13 @@ $(window).resize(function(){
 	winW = $(window).width();
 	winH = window.innerHeight;
 	//console.log(winW+' / '+winH);
-	
+
 	// update sticky
 	updateSticky();
-	
+
 	// update scaler elements
 	updateScales();
-	
+
 	// update model swiper
 	if(winW<=650){
 		if(!draggableOn){
@@ -43,11 +43,11 @@ $(window).resize(function(){
 		if(draggableOn){
 			removeModelSwiper();
 		}
-		
+
 		// update slideshow
 		updateModelW();
 	}
-	
+
 	// update team grid
 	updateTeam();
 })
@@ -63,45 +63,45 @@ var closingMenu = false;
 var menuBW = $('.menu-btn').width();
 var menuBH = $('.menu-btn').height();
 
-$('.menu-btn').click(function(){		
-		
+$('.menu-btn').click(function(){
+
 	if(!menuOpen){
-		
+
 		$('#globalMenu').addClass('open expanded');
-				
-		// get menu bg position	
+
+		// get menu bg position
 		menuBW = $('.menu-btn').width();
 		menuBH = $('.menu-btn').height();
 		menuCloseX = menuBW/winW;
 		menuCloseY = menuBH/winH;
-	
+
 		// animate open
-		TweenMax.to('.menu-bg', .75, {startAt:{scaleX:menuCloseX, scaleY:menuCloseY}, scaleX:1, scaleY:1, ease:Power3.easeInOut})		
+		TweenMax.to('.menu-bg', .75, {startAt:{scaleX:menuCloseX, scaleY:menuCloseY}, scaleX:1, scaleY:1, ease:Power3.easeInOut})
 		TweenMax.to('.menu-wrap', .75, {delay:.75, opacity:1, 'display':'block', onComplete:function(){freezePage();}})
-							
+
 		menuOpen = true;
-	} else if(!closingMenu) {			
-		closeMenu();	
+	} else if(!closingMenu) {
+		closeMenu();
 	}
 })
 
 function closeMenu(){
 	closingMenu = true;
-	
+
 	$('#globalMenu').removeClass('open');
-	
+
 	menuBW = $('.menu-btn').width();
 	menuBH = $('.menu-btn').height();
 	menuCloseX = menuBW/winW;
 	menuCloseY = menuBH/winH;
-	
-	TweenMax.to('.menu-wrap', .5, {opacity:0, 'display':'none'})		
+
+	TweenMax.to('.menu-wrap', .5, {opacity:0, 'display':'none'})
 	TweenMax.to('.menu-bg', .75, {delay:.25, scaleX:menuCloseX, scaleY:menuCloseY, ease:Power3.easeInOut, onComplete:function(){
 		unfreezePage();
 		$('.menu-wrap').hide();
 		$('#globalMenu').removeClass('expanded');
 		closingMenu = false;
-	}})			
+	}})
 
 	menuOpen = false;
 }
@@ -114,11 +114,11 @@ $('#globalNav').find('a').click(function(){
 		tmpOff = $(tmpID).attr('data-offset');
 	}
 	closeMenu();
-	
+
 	setTimeout(function(){
 		animScroll($(tmpID), .75, tmpOff);
 	}, 750)
-	
+
 	return false;
 })
 
@@ -137,13 +137,13 @@ var sT;
 
 $(window).on("scrollstart",function(){
 	//console.log('start scroll');
-	scroll_interval = setInterval(function(){			
-	
+	scroll_interval = setInterval(function(){
+
 		sT = $(this).scrollTop();
-		
+
 		// set sticky bar
 		setSticky();
-		
+
 	}, 10);
 })
 $(window).on("scrollstop",function(){
@@ -168,15 +168,15 @@ var lastSt = 0;
 var autoOff = false;
 
 function setSticky(){
-	
+
 	// drop sticky bar on scroll up
-	if(sT<lastSt && winW>=stickyBreak){	
+	if(sT<lastSt && winW>=stickyBreak){
 		if(!stickyOpen && sT > 110){
 			$('.sticky').addClass('open');
-			TweenMax.to($('.sticky'), .75, {delay:.2, 'transform':'translate3d(0px, '+ 0 +'px, 0px)', 'display':'block', ease:Power3.easeOut});	
+			TweenMax.to($('.sticky'), .75, {delay:.2, 'transform':'translate3d(0px, '+ 0 +'px, 0px)', 'display':'block', ease:Power3.easeOut});
 			stickyOpen = true;
-		}	
-		
+		}
+
 		// remove sticky if top of page
 		if(stickyOpen && sT <= 100){
 			$('.sticky').removeClass('open');
@@ -184,27 +184,27 @@ function setSticky(){
 			stickyOpen = false;
 		}
 	}
-	
+
 	// remove sticky on scroll down
 	if(sT>lastSt){
 		if(stickyOpen){
 			$('.sticky').removeClass('open');
-			TweenMax.to($('.sticky'), .75, {'transform':'translate3d(0px, '+ -stickyH +'px, 0px)', ease:Power3.easeInOut});					
+			TweenMax.to($('.sticky'), .75, {'transform':'translate3d(0px, '+ -stickyH +'px, 0px)', ease:Power3.easeInOut});
 			stickyOpen = false;
 		}
 	}
-	
+
 	if(sT<=0 && !autoOff){
 		TweenMax.killTweensOf($('.sticky'));
 		autoOff = true;
 		TweenMax.to($('.sticky'), .75, {'transform':'translate3d(0px, '+ -stickyH +'px, 0px)', 'display':'none', ease:Power3.easeOut, onComplete:function(){
 			autoOff = false;
-		}});					
-		
+		}});
+
 		stickyOpen = false;
 	}
 
-	
+
 	// set menu button sticky
 	if(sT>20 && winW>900){
 		$('#globalMenu').addClass('on');
@@ -222,10 +222,10 @@ function updateSticky(){
 // 	} else if(!$('#globalMenu').hasClass('on')){
 // 		$('#globalMenu').addClass('on');
 // 	}
-	
+
 	if(winW<=stickyBreak && $('.sticky').hasClass('open')){
 		$('.sticky').removeClass('open');
-		TweenMax.to($('.sticky'), .75, {'transform':'translate3d(0px, '+ -stickyH +'px, 0px)', ease:Power3.easeInOut});					
+		TweenMax.to($('.sticky'), .75, {'transform':'translate3d(0px, '+ -stickyH +'px, 0px)', ease:Power3.easeInOut});
 		stickyOpen = false;
 	}
 }
@@ -247,44 +247,44 @@ $('.signup-form').submit(function(){
 });
 
 function sendForm(formObj){
-	
-formURL = formObj.attr('action');
 
-// animation actions
-formObj.addClass('sending');
+	formURL = formObj.attr('action');
 
-var formData = formObj.serialize();
+	// animation actions
+	formObj.addClass('sending');
 
-$.ajax({
-    url: formURL,
-    type: 'GET',
-    data: formData,
-	dataType: "jsonp",
-    jsonp: "c",
-    contentType: "application/json; charset=utf-8",
-        
-    success: function(data){	
-		formSent = true;
-		console.log(data.result);
-		setTimeout(function(){
-			formObj.removeClass('sending').addClass('thanks');
-			TweenMax.to(formObj.find('input[name="EMAIL"]'), .3, {opacity:0, onCompleteParams:[formObj.find('input[name="EMAIL"]')], onComplete:function(t){
-				t.val('We will be in contact shortly!');
-				TweenMax.to(t, .3, {opacity:1}) 
-				TweenMax.to(t, .3, {delay:2, opacity:0}) 
-				TweenMax.to(t, .3, {delay:2.3, opacity:1, onStart:function(){
-					t.val('');
-					formObj.removeClass('thanks');
-				}}) 
-			}})
-			//TweenMax.to('.thanks', .5, {'opacity':1, 'display':'block'})
-		}, 1500);
-    }
-});
+	var formData = formObj.serialize();
+
+	$.ajax({
+		url: formURL,
+		type: 'GET',
+		data: formData,
+		dataType: "jsonp",
+		jsonp: "c",
+		contentType: "application/json; charset=utf-8",
+
+		success: function(data){
+			formSent = true;
+			console.log(data.result);
+			setTimeout(function(){
+				formObj.removeClass('sending').addClass('thanks');
+				TweenMax.to(formObj.find('input[name="EMAIL"]'), .3, {opacity:0, onCompleteParams:[formObj.find('input[name="EMAIL"]')], onComplete:function(t){
+					t.val('We will be in contact shortly!');
+					TweenMax.to(t, .3, {opacity:1})
+					TweenMax.to(t, .3, {delay:2, opacity:0})
+					TweenMax.to(t, .3, {delay:2.3, opacity:1, onStart:function(){
+						t.val('');
+						formObj.removeClass('thanks');
+					}})
+				}})
+				//TweenMax.to('.thanks', .5, {'opacity':1, 'display':'block'})
+			}, 1500);
+		}
+	});
 
 }
 
-function validateForm(formObj){	
+function validateForm(formObj){
 	var vNum = 0;
 	$(formObj).find('[data-type="req"]').each(function(){
 		if($(this).val() == ""){
@@ -301,7 +301,7 @@ function validateForm(formObj){
 
 $('input').focus(function(){
 	$(this).parents('.email-wrap').removeClass('error');
-	formSent = false;	
+	formSent = false;
 })
 
 
@@ -324,42 +324,41 @@ var topDel = loadDel*6;
 //var endDel = ((topDel*2)*1000) - 200;
 var endDel = 2;
 var loadEase = 'Power3.easeInOut';
-	
+
 freezePage();
 
 function animateLogo(){
 	TweenMax.to($('.logo-mark>img'), .5, {scaleX:1, scaleY:1, opacity:1, ease:Power3.easeOut});
-		
+
 	// set for listener to open page
 	setTimeout(function(){
 		loadReady = true;
 	}, 100)
-	
+
 }
 
 setTimeout(function(){animateLogo()}, 500);
 
-$(window).on('load', function(){
-	
-	loadChecker = setInterval(function(){
-		if(loadReady){
-			
-			// slide over
-			TweenMax.to('.load-clip', .75, {delay:.5, x:0, ease:Power3.easeInOut})
-			TweenMax.to('.logo-text', .5, {delay:.7, 'width':'259px', opacity:1, ease:Power3.easeInOut})
-			
-			// reveal page
-			loadSC = .6; if(winW<=650){loadSC = .4;}
-			TweenMax.to('.load-clip', .5, {delay:1.5, opacity:0, scaleX:loadSC, scaleY:loadSC, ease:Power3.easeInOut})
-			TweenMax.to('#loader', .75, {delay:1.7, opacity:0, 'display':'none', onComplete:function(){
-				unfreezePage();
-			}});
-			$(window).resize();
- 			clearInterval(loadChecker);
-		}
-	}, 30)
-	
-})
+
+var loadChecker = setInterval(function(){
+
+	if(loadReady){
+
+		// slide over
+		TweenMax.to('.load-clip', .75, {delay:.5, x:0, ease:Power3.easeInOut})
+		TweenMax.to('.logo-text', .5, {delay:.7, 'width':'259px', opacity:1, ease:Power3.easeInOut})
+
+		// reveal page
+		loadSC = .6; if(winW<=650){loadSC = .4;}
+		TweenMax.to('.load-clip', .5, {delay:1.5, opacity:0, scaleX:loadSC, scaleY:loadSC, ease:Power3.easeInOut})
+		TweenMax.to('#loader', .75, {delay:1.7, opacity:0, 'display':'none', onComplete:function(){
+			unfreezePage();
+		}});
+		$(window).resize();
+		clearInterval(loadChecker);
+	}
+}, 30)
+
 
 
 
@@ -375,20 +374,20 @@ function openVideoOverlay(){
 
 	$('#video-overlay').css({'display':'block'});
 	TweenMax.to($('#video-overlay'), .5, {opacity:1});
-	
+
 	lb_video.pause();
-	
+
 	vidHTML = '<source src="video/' + vid + '.webm" type="video/webm">';
 	vidHTML += '<source src="video/' + vid + '.ogv" type="video/ogg">';
 	vidHTML += '<source src="video/' + vid + '.mp4" type="video/mp4">';
-	
+
 	$('#lbvid').html(vidHTML);
 	$('#lbvid').attr('poster',vid+'.jpg');
 	lb_video.load();
-	
+
 	lb_video.addEventListener('loadedmetadata', function() {
 		lb_video.play();
-	}, false);	
+	}, false);
 }
 
 function closeVideoOverlay(){
@@ -406,7 +405,7 @@ $('#lbvid').click(function(e){
 })
 
 $('.video-btn').click(function(){
-	openVideoOverlay();	
+	openVideoOverlay();
 	return false;
 })
 
@@ -483,7 +482,7 @@ function turnOffPillars(){
 	tl2.pause();
 }
 
-  
+
 
 
 //! - SECTION: 4a MODEL
@@ -507,7 +506,7 @@ function initModelSS(){
 	modelCur = 0;
 	nextCur = 0;
 	updateModelW();
-	
+
 	// reset counter/arrows
 	$('#model').find('.arrow-btn.left').addClass('off');
 	$('#model').find('.count-current').text('01');
@@ -515,52 +514,52 @@ function initModelSS(){
 
 function updateModelW(){
 	// update variables based on screen size
-	
+
 	// desktop
 	if(winW>980){
 		modelRow = 3;
 		totModelGroups = Math.ceil(totModelSlides/modelRow);
-		modelPer = .3;	
-	
+		modelPer = .3;
+
 	// tablet
 	} else if(winW<=980 && winW>650){
 		modelRow = 2;
 		totModelGroups = Math.ceil(totModelSlides/modelRow);
 		modelPer = .44;
-		
+
 	// mobile
 	} else if(winW<=650){
 		modelRow = 1;
 		totModelGroups = totModelSlides;
-		modelPer = .8;		
+		modelPer = .8;
 	}
-	
+
 	// get slide container width
 	slideWinW = $('.model-slides').find('.contentContainer').width();
 	//console.log('--- '+slideWinW)
-	
+
 	// figure out slide width
 	modelW = slideWinW*modelPer;
 	if(winW>980){
 		if(modelW>modelMax){modelW = modelMax;}
 	}
 	$('.model-slide').width(Math.round(modelW));
-	
+
 	// figure out gap width
 	if(winW>980){modelGap = (slideWinW-(modelRow*modelW))/2;}
-	if(winW<=980 && winW>650){modelGap = slideWinW-(modelRow*modelW);}	
+	if(winW<=980 && winW>650){modelGap = slideWinW-(modelRow*modelW);}
 	if(winW<=650){modelGap = 40;}
 	vdivX = -(Math.round(modelGap/2));
 	$('.model-slide').find('.vdiv').css({'left':vdivX+'px'})
-	
+
 	// add together for total
 	totalModelW = Math.ceil((totModelSlides*modelW)+((totModelSlides-1)*modelGap));
 	$('.model-slides-wrap').width(totalModelW);
-	
+
 	// change counter
 	if(totModelGroups<10){totCt = '0'+(totModelGroups)} else {totCt = totModelGroups;}
 	$('#model').find('.count-total').text(totCt);
-	
+
 	// adjust model position
 	if(modelCur > 0){
 		updateModelP();
@@ -583,16 +582,16 @@ $('#model').find('.arrow-btn').click(function(){
 })
 
 function changeModelSlider(dir){
-	
+
 	// change active num, get new offset position
 	modelCur += dir;
 	nextCur = modelCur;
 	newPos = (slideWinW*modelCur)+(modelGap*modelCur);
 	if(winW<=650){newPos = (modelW*modelCur)+(modelGap*modelCur);}
-	
+
 	// slide over
 	TweenMax.to($('.model-slides-wrap'), 1, {x:-newPos, ease:Power3.easeInOut});
-	
+
 	// turn on active sides
 	modelSet = modelRow*modelCur;
 	$('.model-slide').each(function(i){
@@ -600,27 +599,27 @@ function changeModelSlider(dir){
 			$(this).removeClass('off');
 		} else {
 			$(this).addClass('off');
-		}		
+		}
 	})
-	
-	
+
+
 	// special adjustments
 	if(modelCur == 0){
 		$('#model').find('.arrow-btn.left').addClass('off');
 	} else if($('#model').find('.arrow-btn.left').hasClass('off')) {
 		$('#model').find('.arrow-btn.left').removeClass('off');
 	}
-	
+
 	if(modelCur == (totModelGroups-1)){
 		$('#model').find('.arrow-btn.right').addClass('off');
 	} else if($('#model').find('.arrow-btn.right').hasClass('off')) {
 		$('#model').find('.arrow-btn.right').removeClass('off');
 	}
-					
+
 	// change counter
 	if((nextCur+1)<10){showCur = '0'+((nextCur+1))} else {showCur = (nextCur+1);}
 	$('#model').find('.count-current').text(showCur);
-	
+
 }
 
 
@@ -634,14 +633,14 @@ var msActive = 0;
 function updateModelSwipe(){
 	totalModelW = Math.ceil((totModelSlides*modelW)+((totModelSlides-1)*modelGap));
 	$('.model-slides-wrap').width(totalModelW);
-	
+
 	// position timeline if moved
 	msX = -(msActive*modelW);
 	TweenMax.set('#model-slider', {'transform':'translate3d('+msX+'px,0,0)'})
-	
+
 	msGridW = (modelW+modelGap);
 	msBoundX = totalModelW-modelW;
-	
+
 	// update draggable instance for mobile
 	if(draggable){
 		updateModelSwipeBounds();
@@ -661,18 +660,18 @@ function buildModelSwiper(){
 		edgeResistance:0.65,
 		allowNativeTouchScrolling: true,
 		bounds: {minX:-msBoundX, maxX:0, minY:0, maxY:0},
-		
+
 		snap: {
 	        x: function(endValue) {
 	            return Math.round(endValue / msGridW) * msGridW;
-	            
+
 	        },
 	    },
-	    onThrowComplete: function(){		   
+	    onThrowComplete: function(){
 		    updateMSActive(draggable.x);
 	    }
 	});
-	draggable = Draggable.get("#model-slider");	
+	draggable = Draggable.get("#model-slider");
 	draggableOn = true;
 }
 
@@ -707,13 +706,13 @@ function updateModelArrows(){
 	} else if($('#model').find('.arrow-btn.left').hasClass('off')) {
 		$('#model').find('.arrow-btn.left').removeClass('off');
 	}
-	
+
 	if(modelCur == (totModelGroups-1)){
 		$('#model').find('.arrow-btn.right').addClass('off');
 	} else if($('#model').find('.arrow-btn.right').hasClass('off')) {
 		$('#model').find('.arrow-btn.right').removeClass('off');
 	}
-					
+
 	// change counter
 	if((nextCur+1)<10){showCur = '0'+((nextCur+1))} else {showCur = (nextCur+1);}
 	$('#model').find('.count-current').text(showCur);
@@ -767,8 +766,8 @@ var teamSt = 4;
 var teamM;
 
 function updateTeam(){
-	if(winW>550){		
-	
+	if(winW>550){
+
 		if(winW<=800){
 			teamRow = 2;
 			teamSt = 3;
@@ -776,10 +775,10 @@ function updateTeam(){
 			teamRow = 3;
 			teamSt = 4;
 		}
-		
+
 		teamM = ($('.team-grid').width()-($('.team-box').width()*teamRow))/(teamRow-1)
 		$('.team-box:nth-child(n+'+teamSt+')').css({'margin-top':teamM+'px'})
-	
+
 	} else {
 		$('.team-box').css({'margin-top':''})
 	}
@@ -801,7 +800,7 @@ function addStatic(elem, amt){
 	elem.append(tmpS);
 }
 
-// add static 
+// add static
 
 addStatic($('#hero').find('.static-lines'), 20);
 $('h2.hasStatic').prepend('<span class="static-lines"></span>');
@@ -814,11 +813,11 @@ radioOffset = 2;
 
 function offsetPings(elem, offset){
 	if(offset == 0){os = radioOffset;} else {os = offset;}
-	
+
 	elem.find('.radio-group').each(function(i){
 		rgap = radioGap;
 		if($(this).hasClass('light')){rgap = .75;}
-		
+
 		$(this).find('.radio-circle').each(function(n){
 			tmpDel = (os*i)+(rgap*n);
 			$(this).css({'animation-delay':-tmpDel+'s'})
@@ -861,7 +860,7 @@ $('.hasAnim').each(function(){
 });
 
 	// pillars section call function
-	
+
 	var pillarsScene = new ScrollMagic.Scene({
 			triggerElement: "#pillars",
 			triggerHook: 2,
@@ -874,10 +873,10 @@ $('.hasAnim').each(function(){
 			turnOffPillars();
 		})
 		.addTo(controller);
-		
-		
+
+
 	// applications section call function
-	
+
 	var appScene = new ScrollMagic.Scene({
 			triggerElement: "#applications",
 			triggerHook: 2,
@@ -889,8 +888,8 @@ $('.hasAnim').each(function(){
 		.on('leave',function(){
 			turnOffApp();
 		})
-		.addTo(controller);	
-		
+		.addTo(controller);
+
 }
 
 var scrollMagicOn = true;
