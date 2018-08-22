@@ -133,6 +133,7 @@ export default class extends BaseComponent {
                     <Menu.Item className="c_MenuItem logo" key="landing">
                         <img src="/assets/images/logo.svg" alt="Cyber Republic" className="dsk"/>
                         <img src="/assets/images/logo-mark.svg" className="mob"/>
+                        <div className="alpha-tag">ALPHA</div>
                     </Menu.Item>
                 </Menu>
                     {/*

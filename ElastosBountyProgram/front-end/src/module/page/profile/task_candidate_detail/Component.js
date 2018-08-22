@@ -2,7 +2,7 @@ import React from 'react'
 import StandardPage from '../../StandardPage'
 
 import TaskApplicationDetail from '@/module/task/application/Container'
-import Navigator from '@/module/page/shared/Navigator/Container'
+import Navigator from '@/module/page/shared/HomeNavigator/Container'
 
 import config from '@/config'
 

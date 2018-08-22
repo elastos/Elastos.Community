@@ -56,11 +56,11 @@ export default {
     '1305': 'Forms',
 
     // Profile navigator
-    '2300': 'Info',
+    '2300': 'My Profile',
     '2301': 'My Tasks',
     '2302': 'My Teams',
     '2303': 'My Issues',
-    '2304': 'Communities',
+    '2304': 'My Communities',
     '2305': 'My Projects',
 
     // Home
@@ -191,6 +191,30 @@ export default {
     'emp35.empower.content.2': 'In the coming weeks, we will begin accepting applications for each role and positions will be selected by our Cyber Republic Council. Qualified applicants who are selected will be paid in ELA and can apply for a budget based on their proposal to manage and hire their own teams in each respective area.',
     'emp35.empower.content.3': 'These 35 will build and grow the ecosystem and be tasked with finding the next group of leaders as our republic continues to expand and work towards our goal of full democratic decentralization.',
     'emp35.teamHeader.title': 'Empower35 Team',
+
+    // Training
+    'training.header.title': 'Evangelist Training',
+    'training.header.content': 'Every quarter Cyber Republic offers all expenses paid training with the leadership of Elastos in Silicon Valley for 10 evangelists',
+    'training.evangelist.title': 'Evangelist Training',
+    'training.evangelist.content': 'We do lots of cool things, we have fun, we drink pinacoladas and sometimes save the world from oblivion.',
+
+    // Itinerary
+    'training.itinerary.title': 'Itinerary',
+    'training.itinerary.content.venueLabel': 'Venue',
+    'training.itinerary.content.venue': 'Houses in Silicon Valley',
+    'training.itinerary.content.accomodationLabel': 'Accomodation',
+    'training.itinerary.content.accomodation': 'Houses in Silicon Valley',
+    'training.itinerary.content.day13Label': 'Day 1-3',
+    'training.itinerary.content.day13': 'Learning Elastos Tech with Rong and tech team',
+    'training.itinerary.content.day4Label': 'Day 4',
+    'training.itinerary.content.day4': 'Public Speaking Skills, Q&A training',
+    'training.itinerary.content.day5Label': 'Day 5',
+    'training.itinerary.content.day5': 'Team Training',
+    'training.itinerary.content.day6Label': 'Day 6',
+    'training.itinerary.content.day6': 'Pitch presentation practice',
+    'training.itinerary.content.day7Label': 'Day 7',
+    'training.itinerary.content.day7': 'Pitch day with judges',
+
 
     // Project/Team detail
     'project.detail.deadline': 'Deadline',

@@ -108,9 +108,7 @@ export default createContainer(Component, (state) => {
         },
 
         async getUserTeams(currentUserId) {
-
             const teamService = new TeamService()
-
             return teamService.getUserTeams(currentUserId)
         }
     }

@@ -29,6 +29,7 @@ export default class extends EmptyPage {
                     <div className="logo sized">
                         <img src="assets/images/logo.svg" alt="Cyber Republic" className="dsk"/>
                         <img src="assets/images/logo-mark.svg" className="mob"/>
+                        <div class="alpha-tag">ALPHA</div>
                     </div>
 
 

@@ -5,12 +5,20 @@ import {
     message,
     Col,
     Row,
+    Tag,
+    Icon,
+    Carousel,
     Avatar,
     Button,
     Spin,
+    Select,
+    Table,
+    Input,
     Form,
+    Divider,
     Modal
 } from 'antd'
+import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS } from '@/constant'
 import I18N from '@/I18N'
 import _ from 'lodash'
 import './style.scss'
@@ -18,16 +26,46 @@ import './style.scss'
 class C extends BaseComponent {
     ord_states() {
         return {
+            applying: false
         }
     }
 
     componentDidMount() {
         const taskId = this.props.taskId
         this.props.getTaskDetail(taskId)
+        this.props.getTeams({
+            owner: this.props.currentUserId
+        })
     }
 
     componentWillUnmount() {
         this.props.resetTaskDetail()
+        this.props.resetAllTeams()
+    }
+
+    isTaskOwner() {
+        return this.props.detail.createdBy && this.props.detail.createdBy._id === this.props.currentUserId
+    }
+
+    handleSubmit(e) {
+        e.preventDefault()
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                const isSelf = (values.applicant === '$me')
+                const userId = isSelf && this.props.currentUserId
+                const teamId = !isSelf && values.applicant
+
+                this.props.applyToTask(this.props.taskId, userId, teamId, values.applyMsg)
+                    .then(() => {
+                        this.setState({ applying: false })
+                        message.success('Application sent. Thank you!')
+                    })
+            }
+        })
+    }
+
+    linkProfileInfo(userId) {
+        this.props.history.push(`/member/${userId}`)
     }
 
     checkForLoading(followup) {
@@ -36,13 +74,208 @@ class C extends BaseComponent {
             : _.isFunction(followup) && followup()
     }
 
+    isMemberByUserId(userId) {
+        const candidate = _.find(this.props.detail.candidates, (candidate) => {
+            if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
+                return candidate.user._id === userId
+            }
+            return false
+        })
+        if (!candidate) {
+            return false
+        }
+        return this.isMember(candidate._id)
+    }
+
+    isMember(taskCandidateId) {
+        const candidate = _.find(this.props.detail.candidates, { _id: taskCandidateId })
+        if (!candidate) {
+            return false
+        }
+        if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
+            return candidate.user._id === this.props.currentUserId
+        } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
+            return _.find(this.props.ownedTeams, (item) => item._id === candidate.team._id)
+        }
+    }
+
+    isMemberByUserId(userId) {
+        const candidate = _.find(this.props.detail.candidates, (candidate) => {
+            if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
+                return candidate.user._id === userId
+            }
+            return false
+        })
+        if (!candidate) {
+            return false
+        }
+        return this.isMember(candidate._id)
+    }
+
+    getCurrentContributors() {
+        const detail = this.props.detail
+        const applicants = _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.APPROVED });
+        if (this.isTaskOwner()) {
+            applicants.unshift({
+                _id: 'such_fake_id',
+                user: this.props.detail.createdBy,
+                type: TASK_CANDIDATE_TYPE.USER
+            })
+        }
+        const columns = [{
+            title: 'Name',
+            key: 'name',
+            render: candidate => {
+                return (
+                    <div>
+                        {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
+                        <div>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                                <Avatar className={'gap-right ' + (candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
+                                    src={candidate.user.profile.avatar}/>
+                                {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
+                            </a>
+                        </div>
+                        }
+                        {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
+                        <div>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
+                                <Avatar className="gap-right" src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
+                                {candidate.team.name}
+                            </a>
+                        </div>
+                        }
+                    </div>)
+            }
+        }, {
+            title: 'Action',
+            key: 'action',
+            render: candidate => {
+                return (
+                    <div>
+                        {this.isTaskOwner() && candidate._id !== 'such_fake_id' &&
+                        <div className="text-right">
+                            <a onClick={this.removeUser.bind(this, candidate._id)}>{I18N.get('project.detail.remove')}</a>
+                        </div>
+                        }
+                    </div>
+                )
+            }
+        }]
+
+        return (
+            <Table
+                className="no-borders headerless"
+                dataSource={applicants}
+                columns={columns}
+                bordered={false}
+                pagination={false}
+                rowKey="_id"
+            />
+        )
+    }
+
+
+    removeUser(taskCandidateId) {
+    }
+
+    removeUserByUserId(userId) {
+        const candidate = _.find(this.props.candidates, (candidate) => candidate.user._id === userId)
+        if (!candidate) {
+            return false
+        }
+        return this.removeUser(candidate._id)
+    }
+
+    getCurrentApplicants() {
+        const detail = this.props.detail
+        const applicants = _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.PENDING });
+        const columns = [{
+            title: 'Name',
+            key: 'user',
+            render: candidate => {
+                return (
+                    <div>
+                        {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
+                        <div>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                                <Avatar className="gap-right" src={candidate.user.profile.avatar} />
+                                {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
+                            </a>
+                        </div>
+                        }
+                        {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
+                        <div>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
+                                <Avatar className="gap-right" src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
+                                {candidate.team.name}
+                            </a>
+                        </div>
+                        }
+                    </div>)
+            }
+        }, {
+            title: 'Action',
+            key: 'action',
+            render: candidate => {
+                return (
+                    <div className="text-right">
+                        {this.isMember(candidate._id) && (
+                            <span>
+                                <a onClick={this.withdrawApplication.bind(this, candidate._id)}>{I18N.get('project.detail.withdraw_application')}</a>
+                                {this.isMember(candidate._id) && <Divider type="vertical"/>}
+                            </span>)
+                        }
+                        {this.isTaskOwner() &&
+                        <span className="inline-block">
+                            <a onClick={this.approveUser.bind(this, candidate._id)}>{I18N.get('project.detail.approve')}</a>
+                            <Divider type="vertical"/>
+                            <a onClick={this.disapproveUser.bind(this, candidate._id)}>{I18N.get('project.detail.disapprove')}</a>
+                        </span>
+                        }
+                    </div>
+                )
+            }
+        }]
+
+        return (
+            <Table
+                className="no-borders headerless"
+                dataSource={applicants}
+                columns={columns}
+                bordered={false}
+                pagination={false}
+                rowKey="_id">
+            </Table>
+        )
+    }
+
     ord_render () {
+        const isMember = this.isMemberByUserId(this.props.currentUserId)
+
         return (
             <div className="c_Project c_Detail">
                 { this.checkForLoading(() =>
                     <div>
                         {this.getHeader()}
                         {this.getDescription()}
+                        {this.state.applying && this.getApplicationForm()}
+                        {(this.props.is_admin || this.isTaskOwner()) && !this.state.applying &&
+                            <Row className="contributors">
+                                { isMember &&
+                                    <Button onClick={this.removeUserByUserId.bind(this, this.props.currentUserId)} className="leave-button">{I18N.get('project.detail.leave')}</Button>
+                                }
+                                <h3 className="no-margin align-left">{I18N.get('project.detail.current_contributors')}</h3>
+                                {this.getCurrentContributors()}
+                            </Row>
+                        }
+
+                        {(this.props.is_admin || this.isTaskOwner()) && !this.state.applying &&
+                            <Row className="applications">
+                                <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
+                                {this.getCurrentApplicants()}
+                            </Row>
+                        }
                         {this.getFooter()}
                     </div>
                 )}
@@ -50,13 +283,74 @@ class C extends BaseComponent {
         )
     }
 
+    getApplicationForm() {
+        const {getFieldDecorator} = this.props.form
+        const applyMsg_fn = getFieldDecorator('applyMsg', {
+            rules: [{required: true, message: 'Application is required'}],
+            initialValue: ''
+        })
+        const applyMsg_el = (
+            <Input.TextArea rows={8} className="team-application" disabled={this.props.loading}
+                placeholder="Tell us why you want to join."/>
+        )
+        const applyMsgPanel = applyMsg_fn(applyMsg_el)
+
+        const applicant_fn = getFieldDecorator('applicant', {
+            rules: [],
+            initialValue: '$me'
+        })
+        const applicant_el = (
+            <Select className="team-selector pull-right" disabled={this.props.loading}
+                // https://github.com/vazco/uniforms/issues/228
+                getPopupContainer={x => {
+                    while (x && x.tagName.toLowerCase() !== 'form') {
+                        x = x.parentElement;
+                    }
+
+                    return x;
+                }}>
+                <Select.Option value="$me">
+                    Apply as myself
+                    <Avatar size="small" src={this.props.currentUserAvatar} className="pull-right"/>
+                </Select.Option>
+                {_.map(this.props.ownedTeams, (team) =>
+                    <Select.Option key={team._id} value={team._id}>
+                        Apply with {team.name}
+                        {!_.isEmpty(team.pictures)
+                            ? <Avatar size="small" src={team.pictures[0].thumbUrl} className="pull-right"/>
+                            : <Avatar size="small" type="user" className="pull-right"/>
+                        }
+                    </Select.Option>
+                )}
+            </Select>
+        )
+        const applicantPanel = applicant_fn(applicant_el)
+
+        return (
+            <Form onSubmit={this.handleSubmit.bind(this)} className="application-form">
+                <Form.Item className="no-margin">
+                    {applyMsgPanel}
+                </Form.Item>
+                <Button disabled={this.props.loading} className="d_btn pull-left" onClick={() => this.setState({ applying: false })}>
+                    Cancel
+                </Button>
+                <Button disabled={this.props.loading} className="d_btn pull-right" type="primary" htmlType="submit">
+                    Apply
+                </Button>
+                <Form.Item className="pull-right">
+                    {applicantPanel}
+                </Form.Item>
+                <div class="clearfix"/>
+            </Form>
+        )
+    }
+
+
     getHeader() {
         return (
             <div>
                 <Avatar size={64} src={this.props.detail.thumbnail}/>
                 <div>{this.props.detail.name}</div>
-                <Button className="pull-right" onClick={this.handleSubmitWhitepaper.bind(this)}>
-                    {I18N.get('developer.cr100.submit_whitepaper')}</Button>
                 <div className="clearfix"/>
             </div>
         )
@@ -65,7 +359,7 @@ class C extends BaseComponent {
     getFooter() {
         return (
             <div className="halign-wrapper">
-                <Button onClick={this.handleSubmitWhitepaper.bind(this)}>
+                <Button onClick={() => this.setState({applying: true})}>
                     {I18N.get('developer.cr100.submit_whitepaper')}</Button>
             </div>
         )
@@ -110,10 +404,6 @@ class C extends BaseComponent {
                 </div>
             </div>
         )
-    }
-
-    handleSubmitWhitepaper() {
-
     }
 }
 

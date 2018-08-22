@@ -214,9 +214,9 @@ export default class extends EmptyPage {
                     </div>
                 </div>
                 {false &&
-                <div className="events-card-hashtags">
-                    this.renderHashTags(hashTags)
-                </div>
+                    <div className="events-card-hashtags">
+                        this.renderHashTags(hashTags)
+                    </div>
                 }
             </Card>
         )

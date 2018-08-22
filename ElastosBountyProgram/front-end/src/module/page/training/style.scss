@@ -1,0 +1,182 @@
+
+@import "../../../style/variable";
+@import "../../../style/color";
+
+$mobile-padding: $gap_0 0px;
+$landingPageWidth: 1152px;
+
+.p_training {
+  background: #ffffff;
+  text-align: left;
+
+  %container {
+    max-width: $landingPageWidth;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  %team-dark {
+    background-color: $bg_obsidian;
+    color: #fff;
+
+    .container {
+      @extend %container;
+
+      .inner-container {
+        margin: 0 66px;
+      }
+    }
+
+    .row-positions {
+      margin-top: 24px;
+    }
+  }
+
+  @media only screen and (max-width: $mobile-width) {
+    padding: 0 24px;
+  }
+
+  .ebp-wrap {
+    padding: 0;
+  }
+
+  .training-header {
+
+    background-color: #031E28;
+    min-height: 600px;
+
+    .container {
+
+      padding-top: 95px;
+
+      position: relative;
+      text-align: center;
+
+      // this floats behind the text
+      .rect-container {
+        z-index: 1;
+
+        position: absolute;
+        width: 100%;
+
+        .rect {
+          position: static;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          border: 38px solid $bg_blue;
+          width: 450px;
+          height: 450px;
+          opacity: 0.20;
+        }
+
+        //
+      }
+
+      .title {
+        margin-top: 106px;
+
+        font-family: "komu-a",sans-serif;
+        font-size: 75px;
+        color: $cr100_green;
+      }
+
+      .content {
+        margin-top: 240px;
+
+        font-family: "synthese",sans-serif;
+        font-size: 24px;
+        color: white;
+
+        > .center {
+          margin-left: auto;
+          margin-right: auto;
+          width: 645px;
+        }
+      }
+
+      .title,
+      .content {
+        width: 100%;
+        position: absolute;
+        z-index: 5;
+      }
+    }
+  }
+
+  .evangelist {
+
+    min-height: 600px;
+
+    background-color: $bg_blue;
+    padding-top: 100px;
+
+    .container {
+      margin-left: auto;
+      margin-right: auto;
+
+      max-width: 915px;
+      background-color: #fff;
+    }
+
+    .title {
+      font-family: "synthese",sans-serif;
+      font-size: 36px;
+      padding-top: 102px;
+      text-align: center;
+      font-size: 36px;
+    }
+
+    .content {
+      font-family: "synthese",sans-serif;
+      font-weight: 200;
+      font-size: 24px;
+      padding: 38px 80px 74px;
+      text-align: center;
+    }
+  }
+
+  .itinerary {
+
+    min-height: 600px;
+    background-color: #fff;
+    padding-top: 100px;
+
+    .title {
+      font-family: "synthese",sans-serif;
+      font-size: 48px;
+      padding-top: 102px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .content {
+      padding: $gap_5 0;
+      font-family: "synthese",sans-serif;
+      font-weight: 200;
+      font-size: 24px;
+      text-align: right;
+
+      .left-col {
+        padding-right: $gap_1;
+      }
+
+      .right-col {
+        padding-left: $gap_1;
+        text-align: left;
+
+        > div {
+          padding: $gap_1 0;
+        }
+      }
+
+      .label {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .c_Footer {
+    margin-top: 0;
+  }
+}
