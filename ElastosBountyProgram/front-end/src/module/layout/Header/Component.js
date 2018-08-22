@@ -112,7 +112,7 @@ export default class extends BaseComponent {
     }
 
     getSelectedKeys() {
-        const keys = _.map(['profile', 'developer', 'social', 'community'], (key) => {
+        const keys = _.map(['cr100', 'empower35', 'training', 'profile', 'developer', 'social', 'community'], (key) => {
             return ((this.props.pathname || '').indexOf(`/${key}`) === 0) ? key : ''
         })
 
@@ -128,11 +128,13 @@ export default class extends BaseComponent {
 
         return (
             <Header className="c_Header">
-                <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu c_Main_Menu pull-left"
+                <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu pull-left"
                     selectedKeys={this.getSelectedKeys()} mode="horizontal">
-                    <Menu.Item className="c_MenuItem logo" key="home">
-                        <img src='/assets/images/cr_seal_white.png' />
+                    <Menu.Item className="c_MenuItem logo" key="landing">
+                        <img src="/assets/images/logo.svg" alt="Cyber Republic" className="dsk"/>
+                        <img src="/assets/images/logo-mark.svg" className="mob"/>
                     </Menu.Item>
+                </Menu>
                     {/*
                     <Menu.Item className="c_MenuItem overview">
                         <Dropdown overlay={overviewDropdown} style="margin-top: 24px;">
@@ -142,27 +144,32 @@ export default class extends BaseComponent {
                         </Dropdown>
                     </Menu.Item>
                     */}
-
-                    {this.props.isLogin &&
+                <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu pull-right"
+                      selectedKeys={this.getSelectedKeys()} mode="horizontal">
+                    {/*this.props.isLogin &&
                         <Menu.Item className="c_MenuItem link right" key="profile">
                             {I18N.get('0104')}
                         </Menu.Item>
-                    }
-
-                    <Menu.Item className="c_MenuItem link" key="empower35">
-                        Empower 35
-                    </Menu.Item>
+                    */}
 
                     <Menu.Item className="c_MenuItem link" key="cr100">
-                        CR100
+                        {I18N.get('0105')}
+                    </Menu.Item>
+
+                    <Menu.Item className="c_MenuItem link" key="empower35">
+                        {I18N.get('0106')}
+                    </Menu.Item>
+
+                    <Menu.Item className="c_MenuItem link" key="training">
+                        {I18N.get('0107')}
                     </Menu.Item>
 
                     <Menu.Item className="c_MenuItem link" key="developer">
-                        {I18N.get('0100')}
+                        {I18N.get('0102')}
                     </Menu.Item>
 
-                    <Menu.Item className="c_MenuItem link" key="community">
-                        {I18N.get('0102')}
+                    <Menu.Item className="c_MenuItem link" key="profile">
+                        {I18N.get('0104')}
                     </Menu.Item>
 
                     {/*
@@ -181,6 +188,7 @@ export default class extends BaseComponent {
                     </Menu.Item>
                     */}
                 </Menu>
+                {/*
                 <Menu className="c_Header_Menu c_Side_Menu pull-right">
                     <MediaQuery minWidth={MIN_WIDTH_PC}>
                         <Menu.Item className="c_MenuItem help pull-right no-margin" key="help">
@@ -202,17 +210,21 @@ export default class extends BaseComponent {
                         <Icon type="menu-fold"/>
                     </Menu.Item>
                 </Menu>
+                */}
             </Header>
         )
     }
 
     clickItem(e) {
+
         const key = e.key
         if (_.includes([
+            'landing',
             'home',
             'developer',
             'cr100',
             'empower35',
+            'training',
             'social',
             'leader',
             'community',
@@ -232,7 +244,13 @@ export default class extends BaseComponent {
             'contact',
             'slack'
         ], key)) {
-            this.props.history.push('/' + e.key)
+
+            if (key === 'landing') {
+                this.props.history.push('/')
+                window.location.reload()
+            } else {
+                this.props.history.push('/' + e.key)
+            }
         }
         else if (key === 'logout') {
             Modal.confirm({

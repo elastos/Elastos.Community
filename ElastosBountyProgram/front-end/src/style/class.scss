@@ -91,9 +91,9 @@
 }
 
 .ebp-header-divider {
-  height: 2px;
-  background: linear-gradient(90deg, #ffffff 3.52% ,rgba(71, 170, 167, 0.55) 47.51%, rgba(224, 224, 224, 0.55) 100%);
-  transform: matrix(1, 0, 0, -1, 0, 0);
+  height: 0;
+  // background: linear-gradient(90deg, #ffffff 3.52% ,rgba(71, 170, 167, 0.55) 47.51%, rgba(224, 224, 224, 0.55) 100%);
+  // transform: matrix(1, 0, 0, -1, 0, 0);
 }
 
 //Common class

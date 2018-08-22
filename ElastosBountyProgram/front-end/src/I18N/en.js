@@ -18,6 +18,9 @@ export default {
     '0101': 'Events',
     '0102': 'Community',
     '0104': 'My Republic',
+    '0105': 'CR100',
+    '0106': 'Empower35',
+    '0107': 'Training',
 
     '0200': 'Profile',
     '0201': 'Login',

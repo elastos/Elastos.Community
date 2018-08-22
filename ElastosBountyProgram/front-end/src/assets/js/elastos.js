@@ -377,9 +377,9 @@ function openVideoOverlay(){
 
 	lb_video.pause();
 
-	vidHTML = '<source src="video/' + vid + '.webm" type="video/webm">';
-	vidHTML += '<source src="video/' + vid + '.ogv" type="video/ogg">';
-	vidHTML += '<source src="video/' + vid + '.mp4" type="video/mp4">';
+	vidHTML = '<source src="/assets/video/' + vid + '.webm" type="video/webm">';
+	vidHTML += '<source src="/assets/video/' + vid + '.ogv" type="video/ogg">';
+	vidHTML += '<source src="/assets/video/' + vid + '.mp4" type="video/mp4">';
 
 	$('#lbvid').html(vidHTML);
 	$('#lbvid').attr('poster',vid+'.jpg');

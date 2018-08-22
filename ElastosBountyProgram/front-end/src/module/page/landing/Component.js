@@ -62,18 +62,18 @@ export default class extends EmptyPage {
 
                     <div className="menu-lines">
                         <div className="menu-row top">
-                            <div className="menu-line" data-num="1"></div>
-                            <div className="menu-line" data-num="2"></div>
-                            <div className="menu-line" data-num="3"></div>
+                            <div className="menu-line" data-num="1"/>
+                            <div className="menu-line" data-num="2"/>
+                            <div className="menu-line" data-num="3"/>
                         </div>
                         <div className="menu-row mid">
-                            <div className="menu-line" data-num="1"></div>
-                            <div className="menu-line" data-num="2"></div>
+                            <div className="menu-line" data-num="1"/>
+                            <div className="menu-line" data-num="2"/>
                         </div>
                         <div className="menu-row bot">
-                            <div className="menu-line" data-num="1"></div>
-                            <div className="menu-line" data-num="2"></div>
-                            <div className="menu-line" data-num="3"></div>
+                            <div className="menu-line" data-num="1"/>
+                            <div className="menu-line" data-num="2"/>
+                            <div className="menu-line" data-num="3"/>
                         </div>
                     </div>
                 </div>

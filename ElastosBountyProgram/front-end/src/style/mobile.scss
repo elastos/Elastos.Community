@@ -5,6 +5,21 @@
   display: none;
 }
 
+.logo .mob {
+  display: none;
+}
+
+/*! mq: 550 */
+@media screen and (max-width: $mobile-width) {
+  .c_Header .logo .dsk {
+    display: none;
+  }
+  .c_Header .logo .mob {
+    display: block;
+    width: 35px;
+  }
+}
+
 // mobile
 @media only screen and (max-width: $mobile-width) {
 
