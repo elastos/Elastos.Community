@@ -265,5 +265,51 @@ export default {
     'select.placeholder': 'Please select',
     '.ok': 'Ok',
     '.cancel': 'Cancel',
-    '.edit': 'Edit'
+    '.edit': 'Edit',
+
+    // Landing
+    'landing.alpha': 'ALPHA',
+    'landing.playVideo': 'Play Video',
+    'landing.stayUpdate': 'Stay up to date with Cyber Republic',
+    'landing.whatIs': 'What is Elastos?',
+
+    'landing.elaSol': 'The Elastos Solution',
+    'landing.fourPillars': 'The Four Pillars',
+    'landing.businessModal': 'The Elastos Business Model',
+    'landing.applications': 'Applications',
+    'landing.elaToken': 'Elastos Token (ELA)',
+    'landing.contribute': 'Become a Contributor',
+    'landing.scalability': 'Scalability',
+    'landing.mainSideChain': 'Main Chain + Sidechain Structure',
+    'landing.security': 'Security',
+    'landing.mergeMining': 'Merge Mining',
+    'landing.consensus': 'Consensus',
+    'landing.consensusMulti': 'Multiple Consensus Methods',
+
+    'landing.0100': 'Elastos is a “Cyber Republic” that enables wealth',
+    'landing.0101': 'generation through the ownership and exchange',
+    'landing.0102': 'of data and digital assets.',
+
+    'landing.0110': 'Elastos is the first completely safe and decentralized environment on the internet. Built with blockchain, it provides a virtual ecosystem where decentralized applications are protected from direct access with the internet while allowing near infinite scalability to billions of users.',
+    'landing.0111': 'Elastos is a “Cyber Republic” that enables wealth generation through the ownership and exchange of data and digital assets.',
+
+    'landing.0120': 'Welcome to the Internet of',
+    'landing.0121': 'Everything, where security',
+    'landing.0122': ' & freedom are by design',
+    'landing.0123': 'Join Us in Building the First 100 Projects',
+
+    'landing.0200': 'The main chain handles basic payments and hash storage. Everything else, including smart contracts, run on sidechains where applications have the ability to create additional sidechains.',
+    'landing.0201': 'Elastos is merge mined with Bitcoin to reduce energy consumption and provide the Bitcoin network security to all applications. Sidechains are included thereby utilizing Bitcoin hashpower in multiple chains at once.',
+    'landing.0202': 'Employing PoW+DPoS as a consensus model for the Elastos Blockchain, sidechains may choose POW merge mining with ELA or between consensus models such as PoS, DPoS, DBFT, and others.',
+
+    // Our Vision
+    'vision.00': 'Our Vision',
+    'vision.01': 'The vision for Cyber Republic starts with an ambitious idea: create a self-running and self-governed community of entrepreneurs and developers who can function independently of Elastos but with the unified goal to grow it into a global success.',
+    'vision.02': 'This new website is being launched in its Alpha version. The basic functions of finding tasks and earning ELA remain, but the addition of our CR100 and Empower35 projects are still in their early stages and are meant to not only represent our plan for long term success but are presented as programs that need the community and future leaders of Cyber Republic to help craft and shape the mechanics, workflow, and economics of these projects.',
+    'vision.03': 'The truth is, Rong Chen and the Elastos Foundation have unselfishly given a large responsibility and power to the international community to determine the direction of the project. While Cyber Republic is certainly part of Elastos, the future governance and economic model of this project will be self-organized by the members of Cyber Republic, not The Elastos Foundation. Cyber Republic will in many ways become completely independent of the Foundation and control its own destiny. This vision, however, will take time to achieve.',
+    'vision.04': 'In the meantime, we have assembled a Cyber Republic Council to make the important decisions as this project moves in the direction of full democratic decentralization. This Council, made up of members Fay Li, Kevin Zhang, and Yipeng Su, will utilize community input and make strategic decisions to grow the project. In time, the members of the Empower35 project along with other leaders in Cyber Republic will form a government and become self-running. Our Constitution is currently in progress.',
+    'vision.05': 'The Elastos vision to change the internet runs parallel to Cyber Republic’s vision to change the way people organize and build a global project. This Alpha version is the template and the framework for our goal to move towards a completely modern and unique online republic. Your input and active participation are necessary for this vision to continue to take shape.',
+    'vision.06': 'More information and more specifics on how to apply for individual projects are to come.',
+    'vision.07': 'We look forward to building an international haven for entrepreneurship  and innovation for the new internet.'
+
 };
