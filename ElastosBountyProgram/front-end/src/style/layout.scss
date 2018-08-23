@@ -25,6 +25,17 @@
   text-align: center;
   box-shadow: none;
 
+  .c_Affix_Menu {
+    .c_Affix_Menu_Item {
+      width: 156;
+      height: 74px;
+      position: absolute;
+      &.hidden {
+        display: none;
+      }
+    }
+  }
+
   .c_Header_Menu.ant-menu {
     padding-top: 0;
   }

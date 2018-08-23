@@ -1,9 +1,10 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import {Layout, Menu, Icon, Badge, Avatar, Modal, Dropdown} from 'antd'
+import {Affix, Layout, Menu, Icon, Badge, Avatar, Modal, Dropdown, Popover} from 'antd'
 import _ from 'lodash'
 import I18N from '@/I18N'
 import MediaQuery from 'react-responsive'
+import Flyout from './Flyout';
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
 import {USER_ROLE} from '@/constant'
 
@@ -12,7 +13,13 @@ const SubMenu = Menu.SubMenu
 const MenuItemGroup = Menu.ItemGroup
 
 export default class extends BaseComponent {
-
+    constructor() {
+        super();
+        this.state = {
+            affixed: false,
+            popover: false
+        }
+    }
     /*
     buildOverviewDropdown() {
         return (
@@ -131,9 +138,24 @@ export default class extends BaseComponent {
         // const overviewDropdown = this.buildOverviewDropdown()
         const acctDropdown = this.buildAcctDropdown()
         const helpDropdown = this.buildHelpDropdown()
-
         return (
             <Header className="c_Header">
+                <Affix
+                    className="c_Affix_Menu"
+                    onChange={affixed => this.setState({affixed})}>
+                    <div className={`c_Affix_Menu_Item ${this.state.affixed ? null : 'hidden'}`}>
+                        <Popover
+                            visible={this.state.popover}
+                            onVisibleChange={popover => this.setState({popover})}
+                            placement="bottomLeft"
+                            content={<Flyout />}
+                            trigger="click"
+                            style={{ padding: 'unset' }}
+                        >
+                            {!this.state.popover && <img width={156} height={74} src="/assets/images/ela_hamburger.png" alt="Cyber Republic"/>}
+                        </Popover>
+                    </div>
+                </Affix>
                 <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu pull-left"
                     selectedKeys={this.getSelectedKeys()} mode="horizontal">
                     <Menu.Item className="c_MenuItem logo" key="landing">
