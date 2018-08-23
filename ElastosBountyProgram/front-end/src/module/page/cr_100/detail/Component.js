@@ -422,7 +422,7 @@ class C extends BaseComponent {
     }
 
     getFooter() {
-        return !this.state.applying &&
+        return !this.state.applying && !this.isTaskOwner() &&
             <div className="halign-wrapper footer">
                 <Button onClick={() => this.setState({applying: true})}>
                     {I18N.get('developer.cr100.submit_whitepaper')}</Button>
