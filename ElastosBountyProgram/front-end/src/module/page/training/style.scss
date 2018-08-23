@@ -15,23 +15,6 @@ $landingPageWidth: 1152px;
     margin-right: auto;
   }
 
-  %team-dark {
-    background-color: $bg_obsidian;
-    color: #fff;
-
-    .container {
-      @extend %container;
-
-      .inner-container {
-        margin: 0 66px;
-      }
-    }
-
-    .row-positions {
-      margin-top: 24px;
-    }
-  }
-
   @media only screen and (max-width: $mobile-width) {
     padding: 0 24px;
   }
@@ -43,7 +26,66 @@ $landingPageWidth: 1152px;
   .training-header {
 
     background-color: #031E28;
-    min-height: 600px;
+    min-height: 750px;
+    position: relative;
+
+    .circle-container {
+      position: absolute;
+      bottom: 50%;
+      left: $gap_5;
+
+      .circle {
+        display: block;
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    .right-box-container {
+      position: absolute;
+      top: $gap_4;
+      right: $gap_3;
+
+      .small-box {
+
+      }
+      .box {
+        margin-left: 50px;
+      }
+      img {
+        position: absolute;
+        top: 62.5px;
+        left: 62.5px;
+        width: 75px;
+        height: 75px;
+      }
+    }
+
+    .bottom-box-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    .connector-container {
+      position: absolute;
+      bottom: -21.5px;
+      right: 20%;
+    }
+
+    .small-box {
+      width: 50px;
+      height: 50px;
+      background-color: #434D72;
+      opacity: 0.4;
+    }
+
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: #434D72;
+      opacity: 0.4;
+    }
 
     .container {
 
@@ -64,13 +106,11 @@ $landingPageWidth: 1152px;
           display: block;
           margin-left: auto;
           margin-right: auto;
-          border: 38px solid $bg_blue;
+          border: 38px solid #434D72;
           width: 450px;
           height: 450px;
-          opacity: 0.20;
+          opacity: 0.4;
         }
-
-        //
       }
 
       .title {
@@ -91,7 +131,62 @@ $landingPageWidth: 1152px;
         > .center {
           margin-left: auto;
           margin-right: auto;
-          width: 645px;
+          width: 850px;
+        }
+
+        /*
+        ************************************************************************
+        Strike Text Green
+        ************************************************************************
+        */
+        .strike-text {
+          position: relative;
+          display: inline-block;
+
+          .strike-line {
+            position: absolute;
+            left: 0;
+            top: 24px;
+            width: 100%;
+            height: 12px;
+            background-color: #434D72;
+            opacity: 0.4;
+            z-index: 0;
+          }
+          .strike-line:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -14px;
+            width: 14px;
+            height: 12px;
+            background-color: #434D72;
+            z-index: 0;
+          }
+          .strike-line:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: auto;
+            right: -14px;
+            width: 14px;
+            height: 12px;
+            background-color: #434D72;
+          }
+          p {
+            position: relative;
+            z-index: 1;
+            padding-bottom: 0;
+          }
+
+          &.filler {
+            width: 100%;
+            height: 0;
+          }
+
+          &.mob {
+            display: none;
+          }
         }
       }
 
@@ -105,18 +200,30 @@ $landingPageWidth: 1152px;
   }
 
   .evangelist {
-
-    min-height: 600px;
+    min-height: 750px;
 
     background-color: $bg_blue;
     padding-top: 100px;
 
     .container {
+      position: relative;
       margin-left: auto;
       margin-right: auto;
+      padding-bottom: $gap_5;
 
       max-width: 915px;
       background-color: #fff;
+
+      .left-box-container {
+        position: absolute;
+        top: -50px;
+        left: -50px;
+      }
+      .right-box-container {
+        position: absolute;
+        bottom: $gap_1;
+        right: -29.5px;
+      }
     }
 
     .title {
@@ -137,14 +244,16 @@ $landingPageWidth: 1152px;
 
   .itinerary {
 
-    min-height: 600px;
+    min-height: 750px;
     background-color: #fff;
     padding-top: 100px;
+    padding-bottom: $gap_5;
     position: relative;
 
     .connector {
       position: absolute;
       top: -92.5px;
+      left: $gap_5;
     }
 
     .title {

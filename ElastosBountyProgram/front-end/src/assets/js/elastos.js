@@ -449,7 +449,12 @@ function updateScales(){
 //! - SECTION: 3 PILLARS
 
 var tl1 = new TimelineMax({repeat:-1, onRepeat: fireRadio1});
-var motionPath1 = MorphSVGPlugin.pathDataToBezier("#pillar-path1");
+var motionPath1;
+
+if ($('#pillar-path1').length) {
+	motionPath1 = MorphSVGPlugin.pathDataToBezier("#pillar-path1");
+}
+
 tl1.set('.dot.path-move[data-num="1"]', {xPercent:-50, yPercent:-50});
 tl1.to('.dot.path-move[data-num="1"]', 4, {bezier: {values:motionPath1, type:"cubic"}, ease:Linear.easeNone});
 tl1.add(resetRadio1, tl1.duration()/2);
@@ -464,7 +469,12 @@ function resetRadio1(){$('.pillar-box[data-num="4"]').find('.radio-group[data-nu
 function fireRadio1a(){$('.pillar-box[data-num="4"]').find('.radio-group[data-num="3"]').find('.radio-circle').addClass('radio-ping');}
 
 var tl2 = new TimelineMax({repeat:-1, onRepeat: fireRadio2});
-var motionPath2 = MorphSVGPlugin.pathDataToBezier("#pillar-path2");
+var motionPath2;
+
+if ($('#pillar-path2').length) {
+	motionPath2 = MorphSVGPlugin.pathDataToBezier("#pillar-path2");
+}
+
 tl2.set('.dot.path-move[data-num="2"]', {xPercent:-50, yPercent:-50});
 tl2.to('.dot.path-move[data-num="2"]', 4, {bezier: {values:motionPath2, type:"cubic"}, ease:Linear.easeNone});
 tl2.add(resetRadio2, tl2.duration()/2);
@@ -726,12 +736,29 @@ function updateModelArrows(){
 //! - SECTION: 5 APPLICATIONS
 
 var app_paths = [];
-app_paths[0] = MorphSVGPlugin.pathDataToBezier("#app-path1");
-app_paths[1] = MorphSVGPlugin.pathDataToBezier("#app-path2");
-app_paths[2] = MorphSVGPlugin.pathDataToBezier("#app-path3");
-app_paths[3] = MorphSVGPlugin.pathDataToBezier("#app-path4");
-app_paths[4] = MorphSVGPlugin.pathDataToBezier("#app-path5");
-app_paths[5] = MorphSVGPlugin.pathDataToBezier("#app-path6");
+if ($('#app-path1').length) {
+	app_paths[0] = MorphSVGPlugin.pathDataToBezier("#app-path1");
+}
+
+if ($('#app-path2').length) {
+	app_paths[1] = MorphSVGPlugin.pathDataToBezier("#app-path2");
+}
+
+if ($('#app-path3').length) {
+	app_paths[2] = MorphSVGPlugin.pathDataToBezier("#app-path3");
+}
+
+if ($('#app-path4').length) {
+	app_paths[3] = MorphSVGPlugin.pathDataToBezier("#app-path4");
+}
+
+if ($('#app-path5').length) {
+	app_paths[4] = MorphSVGPlugin.pathDataToBezier("#app-path5");
+}
+
+if ($('#app-path6').length) {
+	app_paths[5] = MorphSVGPlugin.pathDataToBezier("#app-path6");
+}
 
 var app_offsets = [0,1,1.6,.3,.8,1.2];
 

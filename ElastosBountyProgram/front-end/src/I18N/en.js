@@ -194,9 +194,12 @@ export default {
 
     // Training
     'training.header.title': 'Evangelist Training',
-    'training.header.content': 'Every quarter Cyber Republic offers all expenses paid training with the leadership of Elastos in Silicon Valley for 10 evangelists',
-    'training.evangelist.title': 'Evangelist Training',
-    'training.evangelist.content': 'We do lots of cool things, we have fun, we drink pinacoladas and sometimes save the world from oblivion.',
+    'training.header.content.1': 'Cyber Republic will offer an all expenses paid trip to spend one week',
+    'training.header.content.2': 'training with the Elastos Team to become an official Elastos Evangelist.',
+    'training.header.content.3': 'Graduates of the program will be given an ELA budget and be',
+    'training.header.content.4': ' empowered to speak on behalf of Cyber Republic at events and meetups.',
+    'training.evangelist.title': 'Goals',
+    'training.evangelist.content': 'The goal of the program is for participants to not only learn the technology from the Elastos Team first hand, but to develop a presentation crafted with marketing and PR professionals that will allow evangelists to be professionally prepared to represent the project to the public. Cyber Republic plans to run this program several times per year and applications will be available soon. ',
 
     // Itinerary
     'training.itinerary.title': 'Itinerary',

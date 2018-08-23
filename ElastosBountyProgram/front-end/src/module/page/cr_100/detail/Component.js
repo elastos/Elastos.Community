@@ -61,7 +61,8 @@ class C extends BaseComponent {
                 const userId = isSelf && this.props.currentUserId
                 const teamId = !isSelf && values.applicant
 
-                this.props.applyToTask(this.props.taskId, userId, teamId, values.applyMsg, values.attachment)
+                this.props.applyToTask(this.props.taskId, userId, teamId, values.applyMsg,
+                    this.state.attachment_url, this.state.attachment_filename)
                     .then(() => {
                         this.setState({ applying: false })
                         message.success('Application sent. Thank you!')
@@ -76,7 +77,7 @@ class C extends BaseComponent {
 
     checkForLoading(followup) {
         return this.props.loading
-            ? <Spin size="large"/>
+            ? <div className="valign-wrapper halign-wrapper"><Spin size="large"/></div>
             : _.isFunction(followup) && followup()
     }
 
@@ -413,25 +414,24 @@ class C extends BaseComponent {
     getHeader() {
         return (
             <div>
-                <Avatar size={64} src={this.props.detail.thumbnail}/>
-                <div>{this.props.detail.name}</div>
+                <Avatar size={64} shape="square" className="pull-left" src={this.props.detail.thumbnail}/>
+                <div className="project-name">Elastos dApp - {this.props.detail.name}</div>
                 <div className="clearfix"/>
             </div>
         )
     }
 
     getFooter() {
-        return (
-            <div className="halign-wrapper">
+        return !this.state.applying && !this.isTaskOwner() &&
+            <div className="halign-wrapper footer">
                 <Button onClick={() => this.setState({applying: true})}>
                     {I18N.get('developer.cr100.submit_whitepaper')}</Button>
             </div>
-        )
     }
 
     getDescription() {
         return (
-            <div>
+            <div className="description">
                 <h3>
                     {I18N.get('developer.cr100.pitch.problem')}
                 </h3>
