@@ -109,7 +109,7 @@ export default class extends BaseService {
      * @param applyMsg
      * @returns {Promise<*>}
      */
-    async pushCandidate(taskId, userId, teamId, applyMsg) {
+    async pushCandidate(taskId, userId, teamId, applyMsg, attachment) {
 
         const taskRedux = this.store.getRedux('task')
         this.dispatch(taskRedux.actions.loading_update(true))
@@ -121,7 +121,8 @@ export default class extends BaseService {
                 taskId,
                 userId,
                 teamId,
-                applyMsg
+                applyMsg,
+                attachment
             }
         })
 
