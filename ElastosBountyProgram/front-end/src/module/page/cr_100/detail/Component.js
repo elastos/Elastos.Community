@@ -415,7 +415,7 @@ class C extends BaseComponent {
         return (
             <div>
                 <Avatar size={64} shape="square" className="pull-left" src={this.props.detail.thumbnail}/>
-                <div className="project-name">{this.props.detail.name}</div>
+                <div className="project-name">Elastos dApp - {this.props.detail.name}</div>
                 <div className="clearfix"/>
             </div>
         )
