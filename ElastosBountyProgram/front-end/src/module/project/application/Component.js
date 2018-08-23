@@ -51,6 +51,9 @@ export default class extends BaseComponent {
                                     <h5>
                                         {applicant.applyMsg}
                                     </h5>
+                                    {
+                                        this.showAttachment()
+                                    }
                                 </Card>
                             </Col>
                         </Row>
@@ -62,6 +65,15 @@ export default class extends BaseComponent {
                 </Row>
             </div>
         )
+    }
+
+    showAttachment() {
+        const applicant = this.getApplicant()
+        const attachment = applicant.attachment
+
+        return attachment
+            ? <h5>Attachment</h5>
+            : <h5>No attachments</h5>
     }
 
     linkUserDetail(user) {
