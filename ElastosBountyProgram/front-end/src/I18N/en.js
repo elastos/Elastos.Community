@@ -194,7 +194,9 @@ export default {
 
     // Training
     'training.header.title': 'Evangelist Training',
-    'training.header.content': 'Every quarter Cyber Republic offers all expenses paid training with the leadership of Elastos in Silicon Valley for 10 evangelists',
+    'training.header.content.1': 'Every quarter Cyber Republic offers all expenses paid',
+    'training.header.content.2': 'training with the leadership of Elastos',
+    'training.header.content.3': 'in Silicon Valley for 10 evangelists',
     'training.evangelist.title': 'Evangelist Training',
     'training.evangelist.content': 'We do lots of cool things, we have fun, we drink pinacoladas and sometimes save the world from oblivion.',
 

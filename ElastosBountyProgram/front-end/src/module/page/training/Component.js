@@ -3,10 +3,8 @@ import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import I18N from '@/I18N'
 import './style.scss'
-import { Col, Row, Card, Button, Breadcrumb, Icon, List, Spin, Avatar, Modal } from 'antd'
+import { Col, Row, Spin } from 'antd'
 import _ from 'lodash'
-
-import ModalEmpowerForm from './modal_form/Component'
 
 export default class extends StandardPage {
 
@@ -61,6 +59,21 @@ export default class extends StandardPage {
     buildHeader() {
         return (
             <div className="training-header">
+                <div className="circle-container">
+                    <img className="circle" src="assets/images/training_circle.png"></img>
+                    <img className="circle" src="assets/images/training_circle.png"></img>
+                </div>
+                <div className="right-box-container">
+                    <div className="small-box"></div>
+                    <div className="box"></div>
+                    <img src="assets/images/training_white_slashed_box.png"/>
+                </div>
+                <div className="bottom-box-container">
+                    <div className="box"></div>
+                </div>
+                <div className="connector-container">
+                    <img src="assets/images/training_mini_connector.png"/>
+                </div>
                 <div className="container">
                     <div className="rect-container">
                         <div className="rect"></div>
@@ -70,7 +83,18 @@ export default class extends StandardPage {
                     </div>
                     <div className="content">
                         <div class="center">
-                            <span>{I18N.get('training.header.content')}</span>
+                            <div className="strike-text">
+                                <div className="strike-line"/>
+                                <p>{I18N.get('training.header.content.1')}</p>
+                            </div>
+                            <div className="strike-text">
+                                <div className="strike-line"/>
+                                <p>{I18N.get('training.header.content.2')}</p>
+                            </div>
+                            <div className="strike-text">
+                                <div className="strike-line"/>
+                                <p>{I18N.get('training.header.content.3')}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -82,6 +106,12 @@ export default class extends StandardPage {
         return (
             <div className="evangelist">
                 <div className="container">
+                    <div className="left-box-container">
+                        <img src="assets/images/training_evangelist_logo.png"/>
+                    </div>
+                    <div className="right-box-container">
+                        <img src="assets/images/training_green_slashed_box.png"/>
+                    </div>
                     <div className="title">
                         {I18N.get('training.evangelist.title')}
                     </div>

@@ -99,7 +99,7 @@ export default [
         page: Emp35Page
     },
     {
-        path: '/training',
+        path: '/evangelist-training',
         page: Training
     },
     {
