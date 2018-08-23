@@ -5,6 +5,7 @@ import I18N from '@/I18N'
 import './style.scss'
 import { Col, Row, Card, Button, message, Spin, Avatar, Modal } from 'antd'
 import _ from 'lodash'
+import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
 import {USER_EMPOWER_TYPE} from '@/constant'
 
 import ModalEmpowerForm from './modal_form/Component'
@@ -33,6 +34,7 @@ export default class extends StandardPage {
 
         this.state = {
             loading: false,
+            showLoginRegisterModal: false,
             visibleModalEmpowerApply: false,
             visibleModalEmpowerView: false
         }
@@ -92,6 +94,7 @@ export default class extends StandardPage {
                     </div>
                 </div>
 
+                {/* TODO: when we have actual positions filled
                 <Modal
                     visible={this.state.visibleModalEmpowerView}
                     onCancel={() => this.setState({visibleModalEmpowerView: false})}
@@ -100,12 +103,15 @@ export default class extends StandardPage {
                     width="90%"
                     style={{top: '5%'}}
                 >
-                    Hello World
+
                 </Modal>
+                */}
+                {this.renderLoginOrRegisterModal()}
 
                 <ModalEmpowerForm
                     wrappedComponentRef={this.saveFormEmpowerApplyRef}
                     empowerType={this.state.applyEmpowerType}
+                    isLogin={this.state.is_login}
                     visible={this.state.visibleModalEmpowerApply}
                     onCancel={this.handleCancelModalEmpowerApply.bind(this)}
                     onApply={this.handleApplyModalEmpowerApply.bind(this)}
@@ -194,10 +200,17 @@ export default class extends StandardPage {
                     bordered={false}
                     hoverable={true}
                     key={empowerType.toLowerCase() + '-pos-' + index}
-                    onClick={() => this.setState({
-                        applyEmpowerType: empowerType,
-                        visibleModalEmpowerApply: true
-                    })}
+                    onClick={() => {
+                        if (!this.props.is_login) {
+                            this.showLoginRegisterModal()
+                            return
+                        }
+
+                        this.setState({
+                            applyEmpowerType: empowerType,
+                            visibleModalEmpowerApply: true
+                        })
+                    }}
                     cover={<img className="event-card-image" src={colorScheme === 'WHITE' ? image_white : image}/>}>
 
                     <Card.Meta
@@ -443,7 +456,6 @@ export default class extends StandardPage {
     }
 
     handleApplyModalEmpowerApply() {
-        console.log('handleApplyModalEmpowerApply')
 
         const form = this.formEmpowerApply.props.form
 
@@ -462,6 +474,55 @@ export default class extends StandardPage {
                 console.error(err);
                 message.error('Error - Please email us')
             })
+        })
+    }
+
+    /*
+    ************************************************************************************
+    * Login / Register Modal
+    ************************************************************************************
+     */
+    renderLoginOrRegisterModal() {
+        if (this.props.is_login) {
+            return
+        }
+
+        return (
+            <Modal
+                className="project-detail-nobar"
+                visible={this.state.showLoginRegisterModal}
+                onOk={this.handleLoginRegisterModalOk}
+                onCancel={this.handleLoginRegisterModalCancel}
+                footer={null}
+                width="70%"
+            >
+                <LoginOrRegisterForm />
+            </Modal>
+        )
+    }
+
+    showLoginRegisterModal = () => {
+        sessionStorage.setItem('loginRedirect', '/empower35')
+        sessionStorage.setItem('registerRedirect', '/empower35')
+
+        this.setState({
+            showLoginRegisterModal: true
+        })
+    }
+
+    handleLoginRegisterModalOk = (e) => {
+        sessionStorage.removeItem('registerRedirect')
+
+        this.setState({
+            showLoginRegisterModal: false
+        })
+    }
+
+    handleLoginRegisterModalCancel = (e) => {
+        sessionStorage.removeItem('registerRedirect')
+
+        this.setState({
+            showLoginRegisterModal: false
         })
     }
 }

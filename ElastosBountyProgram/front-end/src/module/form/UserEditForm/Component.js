@@ -403,10 +403,10 @@ class C extends BaseComponent {
 
                         <Divider>Questions</Divider>
 
-                        <FormItem label="Do you want to an organizer" {...formItemLayout}>
+                        <FormItem label="Do you want to be an organizer?" {...formItemLayout}>
                             {p.organizer}
                         </FormItem>
-                        <FormItem label="Are you a software developer or organizer?" {...formItemLayout}>
+                        <FormItem label="Are you a software developer or engineer?" {...formItemLayout}>
                             {p.developer}
                         </FormItem>
 

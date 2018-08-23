@@ -1,5 +1,5 @@
 import {createContainer} from '@/util'
-import UserService from '@/service/UserService'
+// import UserService from '@/service/UserService'
 import Component from './Component'
 import {TASK_TYPE, TASK_CATEGORY} from '@/constant'
 import SubmissionService from '@/service/SubmissionService'
@@ -13,7 +13,7 @@ export default createContainer(Component, (state) => {
         is_login: state.user.is_login
     }
 }, () => {
-    const userService = new UserService()
+    // const userService = new UserService()
     const submissionService = new SubmissionService();
 
     return {
