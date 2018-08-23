@@ -56,6 +56,83 @@ $landingPageWidth: 1152px;
   background: #ffffff;
   text-align: left;
 
+  /*
+  ************************************************************************
+  Abs Position Gfx
+  ************************************************************************
+   */
+  .p_content {
+
+    .emp35-empower > .container {
+      position: relative;
+
+      #emp35_logo {
+        position: absolute;
+        left: -38px;
+        top: -50px;
+      }
+
+      #emp35_greenDiag {
+        position: absolute;
+        right: -30px;
+        bottom: 30px;
+      }
+    }
+
+    .emp35-header .content {
+
+      #emp35_down_arrow {
+        margin-top: 35px;
+      }
+    }
+
+    .emp35-teamHeader .container {
+      position: relative;
+
+      #emp35_darkBlock {
+        position: absolute;
+        height: 35px;
+        width: 100vw;
+        top: -35px;
+        right: 65%;
+        background-color: $bg_obsidian;
+      }
+
+      #emp35_lock {
+        position: absolute;
+
+        top: -62px;
+        right: 20px;
+
+        width: 252px;
+        height: 301px;
+      }
+
+      #emp35_square {
+        position: absolute;
+
+        left: 66px;
+        top: 60px;
+      }
+    }
+
+    .emp35-teamMedia .container {
+
+      text-align: center;
+
+      #emp35_seal {
+        margin-top: 33%;
+        width: 372px;
+        height: 372px;
+      }
+    }
+  }
+
+  /*
+  ************************************************************************
+  Sections
+  ************************************************************************
+   */
   %container {
     max-width: $landingPageWidth;
     margin-left: auto;
@@ -118,6 +195,28 @@ $landingPageWidth: 1152px;
 
       position: relative;
       text-align: center;
+
+      #box_top_right_1 {
+        position: absolute;
+        right: 49px;
+        top: 40px;
+        z-index: 5;
+      }
+
+      #box_top_right_rect_sm {
+        position: absolute;
+        z-index: 3;
+
+        right: 129px;
+        top: -30px;
+      }
+
+      #box_top_right_rect_lg {
+        position: absolute;
+        right: 30px;
+        top: 20px;
+        z-index: 4;
+      }
 
       // this floats behind the text
       .rect-container {
@@ -202,7 +301,7 @@ $landingPageWidth: 1152px;
     @extend %team-dark;
 
     .container .inner-container {
-      padding-top: 127px;
+      padding-top: 92px;
     }
 
     .title {
@@ -234,8 +333,25 @@ $landingPageWidth: 1152px;
 
     padding-bottom: 70px;
 
-    .container .inner-container {
-      padding-top: 50px;
+    .container {
+
+      position: relative;
+
+      #ela_logo_dark {
+        position: absolute;
+        right: 30px;
+        top: 100px;
+      }
+
+      #ela_logo_white {
+        position: absolute;
+        right: 110px;
+        top: 90px;
+      }
+
+      .inner-container {
+        padding-top: 50px;
+      }
     }
   }
 

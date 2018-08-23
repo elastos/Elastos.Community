@@ -80,7 +80,7 @@ export default class extends StandardPage {
                 <div className="ebp-header-divider" />
                 <div className="p_admin_index ebp-wrap">
                     <div className="d_box">
-                        <div className="p_admin_content">
+                        <div className="p_content">
                             {this.buildHeader()}
                             {this.buildEmpower()}
                             {this.buildTeamHeader()}
@@ -126,6 +126,9 @@ export default class extends StandardPage {
             <div className="emp35-header">
                 <div className="container">
                     <div className="rect-container">
+                        <img id="box_top_right_1" src="/assets/images/emp35/emp35_topRight1.png"/>
+                        <img id="box_top_right_rect_sm" src="/assets/images/emp35/emp35_rectSmall.png"/>
+                        <img id="box_top_right_rect_lg" src="/assets/images/emp35/emp35_rectLarge.png"/>
                         <div className="rect"></div>
                     </div>
                     <div className="title">
@@ -154,6 +157,9 @@ export default class extends StandardPage {
                                 <div className="strike-line"/>
                                 <p>{I18N.get('emp35.header.content.1')}</p>
                             </div>
+
+                            <br/>
+                            <img id="emp35_down_arrow" src="/assets/images/emp35/down_arrow.png"/>
                         </div>
                     </div>
                 </div>
@@ -165,6 +171,8 @@ export default class extends StandardPage {
         return (
             <div className="emp35-empower">
                 <div className="container">
+                    <img id="emp35_logo" src="/assets/images/emp35/E35.png"/>
+                    <img id="emp35_greenDiag" src="/assets/images/emp35/green_diag.png"/>
                     <div className="title">
                         {I18N.get('emp35.empower.title')}
                     </div>
@@ -182,6 +190,9 @@ export default class extends StandardPage {
         return (
             <div className="emp35-teamHeader">
                 <div className="container">
+                    <div id="emp35_darkBlock"/>
+                    <img id="emp35_lock" src="/assets/images/emp35/lock.png"/>
+                    <img id="emp35_square" src="/assets/images/emp35/square.png"/>
                     <div className="inner-container">
                         <span className="title">{I18N.get('emp35.teamHeader.title')}</span>
                     </div>
@@ -244,7 +255,7 @@ export default class extends StandardPage {
                     <div className="inner-container">
                         <span className="blue-title">Business</span>
 
-                        {this.generatePositionCards(USER_EMPOWER_TYPE.BUSINESS, 3, COLOR_SCHEME.DARK)}
+                        {this.generatePositionCards(USER_EMPOWER_TYPE.BUSINESS, 4, COLOR_SCHEME.DARK)}
 
                     </div>
                 </div>
@@ -272,6 +283,10 @@ export default class extends StandardPage {
         return (
             <div className="emp35-teamLegal">
                 <div className="container">
+
+                    <img id="ela_logo_dark" src="/assets/images/emp35/ELA_logo_dark.png"/>
+                    <img id="ela_logo_white" src="/assets/images/emp35/White.png"/>
+
                     <div className="inner-container">
                         <span className="blue-title">Legal</span>
 
@@ -346,6 +361,7 @@ export default class extends StandardPage {
 
                         {this.generatePositionCards(USER_EMPOWER_TYPE.MEDIA, 2, COLOR_SCHEME.WHITE)}
                     </div>
+                    <img id="emp35_seal" src="/assets/images/emp35/CyberRepublic-Blue.png"/>
                 </div>
             </div>
         )
@@ -353,7 +369,7 @@ export default class extends StandardPage {
 
     buildLowerSection() {
         return <section>
-            <div className="emp35-teamDark">
+            <div className="emp35-teamDark" style={{paddingTop: '45px'}}>
                 <div className="container">
                     <div className="inner-container">
                         <span className="dark-title">dApp Analyst</span>
@@ -361,6 +377,9 @@ export default class extends StandardPage {
                         {this.generatePositionCards(USER_EMPOWER_TYPE.DAPP_ANALYST, 5, COLOR_SCHEME.DARK)}
                     </div>
                 </div>
+            </div>
+            <div className="emp35-teamDark">
+                <br/>
             </div>
             <div className="emp35-teamDark">
                 <div className="container">
