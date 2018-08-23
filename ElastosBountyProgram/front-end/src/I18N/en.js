@@ -302,6 +302,19 @@ export default {
     'landing.0201': 'Elastos is merge mined with Bitcoin to reduce energy consumption and provide the Bitcoin network security to all applications. Sidechains are included thereby utilizing Bitcoin hashpower in multiple chains at once.',
     'landing.0202': 'Employing PoW+DPoS as a consensus model for the Elastos Blockchain, sidechains may choose POW merge mining with ELA or between consensus models such as PoS, DPoS, DBFT, and others.',
 
+    'landing.0210': 'We are a diverse democratic group of',
+    'landing.0211': 'leaders, developers, organizers and',
+    'landing.0212': 'designers formed to promote Elastos',
+    'landing.0213': 'in our communities. Membership is',
+    'landing.0214': 'open to everyone.',
+
+    'landing.0220': 'ELA tokens will be used to register IDs on the blockchain, opening the door to the Elastos ecosystem. Once inside, countless exchange opportunities will be available.',
+    'landing.0221': 'You can purchase Decentralized Applications, acquire Cloud storage, buy and sell digital products and assets like songs, movies, books, and videos, and limitless other resources.',
+    'landing.0222': 'In addition, holders of ELA tokens will be provided the opportunity to invest in numerous projects. For every DApp operating on Elastos, it will be essential to have ELA for registering digital assets thus creating a continuous necessity for the token.',
+
+    'landing.0230': 'Applications on Elastos will run in a trustful runtime environment that utilizes blockchain technology. This creates real security by providing a “sandboxed” environment that will need verification from the blockchain before allowing access to the internet. This enables massive potential for the construction of any type of application with any use case or scenario.',
+    'landing.0230': '',
+
     // Our Vision
     'vision.00': 'Our Vision',
     'vision.01': 'The vision for Cyber Republic starts with an ambitious idea: create a self-running and self-governed community of entrepreneurs and developers who can function independently of Elastos but with the unified goal to grow it into a global success.',
