@@ -95,6 +95,10 @@ export default class extends StandardPage {
                                 <div className="strike-line"/>
                                 <p>{I18N.get('training.header.content.3')}</p>
                             </div>
+                            <div className="strike-text">
+                                <div className="strike-line"/>
+                                <p>{I18N.get('training.header.content.4')}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
