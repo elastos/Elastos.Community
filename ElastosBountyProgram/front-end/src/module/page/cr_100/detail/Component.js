@@ -431,7 +431,7 @@ class C extends BaseComponent {
 
     getDescription() {
         return (
-            <div>
+            <div className="description">
                 <h3>
                     {I18N.get('developer.cr100.pitch.problem')}
                 </h3>

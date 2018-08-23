@@ -18,4 +18,10 @@
     .footer {
         margin-top: $gap_2;
     }
+
+    .description {
+        & > h3 {
+            color: $primary_color;
+        }
+    }
 }
