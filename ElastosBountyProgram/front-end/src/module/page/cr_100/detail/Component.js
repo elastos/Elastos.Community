@@ -26,6 +26,7 @@ import _ from 'lodash'
 import './style.scss'
 
 class C extends BaseComponent {
+
     ord_states() {
         return {
             applying: false,
@@ -104,19 +105,6 @@ class C extends BaseComponent {
         } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
             return _.find(this.props.ownedTeams, (item) => item._id === candidate.team._id)
         }
-    }
-
-    isMemberByUserId(userId) {
-        const candidate = _.find(this.props.detail.candidates, (candidate) => {
-            if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
-                return candidate.user._id === userId
-            }
-            return false
-        })
-        if (!candidate) {
-            return false
-        }
-        return this.isMember(candidate._id)
     }
 
     getCurrentContributors() {

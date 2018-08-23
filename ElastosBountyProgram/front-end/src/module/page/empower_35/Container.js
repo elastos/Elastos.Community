@@ -34,10 +34,12 @@ export default createContainer(Component, (state) => {
                 campaign: state.applyEmpowerType,
 
                 reason: formData.applyReason,
-                suitedReason: formData.suitedReason
+                suitedReason: formData.suitedReason,
 
-                // fullLegalName: formData.fullLegalName,
-                // email: this.user.email,
+                attachment: formData.filePath,
+                attachmentFilename: formData.fileName,
+                attachmentType: formData.fileType,
+
             })
         }
     }

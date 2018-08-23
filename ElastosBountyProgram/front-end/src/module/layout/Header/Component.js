@@ -89,6 +89,7 @@ export default class extends BaseComponent {
 
     buildHelpDropdown() {
         const langDropdown = this.buildLanguageDropdown()
+        const hasAdminAccess = [USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(this.props.role)
 
         return (
             <Menu onClick={this.clickItem.bind(this)} className="help-menu">
@@ -98,7 +99,6 @@ export default class extends BaseComponent {
                 <Menu.Item key="about">
                     {I18N.get('0008')}
                 </Menu.Item>
-
                 <Menu.Item key="faq">
                     {I18N.get('0009')}
                 </Menu.Item>
@@ -114,6 +114,12 @@ export default class extends BaseComponent {
                         </a>
                     </Dropdown>
                 </Menu.Item>
+
+                {this.props.isLogin && hasAdminAccess &&
+                    <Menu.Item key="admin/tasks">
+                        {I18N.get('0203')}
+                    </Menu.Item>
+                }
 
                 {this.props.isLogin &&
                     <Menu.Item key="logout">
