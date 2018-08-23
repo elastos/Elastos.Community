@@ -5,6 +5,53 @@
 $mobile-padding: $gap_0 0px;
 $landingPageWidth: 1152px;
 
+.emp35-apply-modal {
+
+  .ant-modal-content {
+    border-radius: 0;
+    background-color: $modal_bg;
+  }
+
+  .role-title {
+    font-size: 48px;
+    color: $text_new_gray;
+    padding-left: 12px;
+    line-height: 56px;
+  }
+
+  .role-funding {
+    font-size: 32px;
+    color: $bg_navy;
+    line-height: 38px;
+  }
+
+  .seal {
+    width: 90px;
+    padding-right: 32px;
+  }
+
+  .form-title {
+    font-size: 36px;
+    color: $bg_navy;
+    line-height: 42px;
+  }
+
+  .header-spacer {
+    padding-bottom: 45px;
+  }
+
+  .ant-modal-body {
+    padding: 75px 82px;
+  }
+
+  .ant-modal-close-x {
+    width: 90px;
+    height: 90px;
+    line-height: 90px;
+    font-size: 34px;
+  }
+}
+
 .p_emp35 {
   background: #ffffff;
   text-align: left;
@@ -32,6 +79,12 @@ $landingPageWidth: 1152px;
     }
   }
 
+  %section-title {
+    font-family: "komu-a", sans-serif;
+    font-size: 48px;
+    text-transform: uppercase;
+  }
+
   @media only screen and (max-width: $mobile-width) {
     padding: 0 24px;
   }
@@ -40,11 +93,18 @@ $landingPageWidth: 1152px;
     padding: 0;
   }
 
+  .lower-section {
+    padding-top: 150px;
+  }
+
   .blue-title {
-    font-family: "komu-a", sans-serif;
-    font-size: 48px;
+    @extend %section-title;
     color: $cr100_sky_blue;
-    text-transform: uppercase;
+  }
+
+  .dark-title {
+    @extend %section-title;
+    color: $text_new_gray;
   }
 
   .emp35-header {
@@ -89,18 +149,9 @@ $landingPageWidth: 1152px;
       .content {
         margin-top: 240px;
 
-        font-family: "synthese",sans-serif;
-        font-size: 24px;
-
-        > .center {
-          margin-left: auto;
-          margin-right: auto;
-          width: 645px;
-
-          u {
-            text-decoration: none;
-            border-bottom: 10px solid $cr100_green;
-          }
+        p {
+          font-family: "synthese", sans-serif;
+          font-size: 24px;
         }
       }
 
@@ -115,7 +166,7 @@ $landingPageWidth: 1152px;
 
   .emp35-empower {
 
-    min-height: 600px;
+    min-height: 1200px;
 
     background-color: $bg_blue;
     padding-top: 100px;
@@ -136,11 +187,11 @@ $landingPageWidth: 1152px;
       font-size: 36px;
     }
 
-    .content {
+    .content > p {
       font-family: "synthese",sans-serif;
       font-weight: 200;
       font-size: 24px;
-      padding: 38px 80px 74px;
+      padding: 38px 74px;
       text-align: center;
     }
   }
@@ -181,9 +232,54 @@ $landingPageWidth: 1152px;
   .emp35-teamLegal {
     @extend %team-dark;
 
+    padding-bottom: 70px;
+
     .container .inner-container {
       padding-top: 50px;
     }
+  }
+
+  .emp35-teamDesigner {
+
+    .container {
+      @extend %container;
+
+      .inner-container {
+        margin: 0;
+        margin-left: 66px;
+      }
+    }
+
+    .row-positions {
+      margin-top: 24px;
+    }
+  }
+
+  .emp35-teamMedia {
+
+    .container {
+      @extend %container;
+
+      .inner-container {
+        margin: 0;
+        margin-left: 66px;
+      }
+    }
+
+    .row-positions {
+      margin-top: 24px;
+    }
+  }
+
+  .emp35-teamDark {
+    @extend %team-dark;
+  }
+
+  .lower-section {
+    max-width: $landingPageWidth;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 40px;
   }
 
   /*
@@ -192,25 +288,90 @@ $landingPageWidth: 1152px;
   ************************************************************************
    */
   .card-emp35-position {
-    max-width: 172px;
+    max-width: 150px;
     background-color: $bg_obsidian;
     display: inline-block;
     margin-right: 40px;
 
+    &.white {
+      background-color: transparent;
+
+      .ant-card-cover {
+        background-color: transparent;
+      }
+    }
+
     .ant-card-cover {
-      height: 172px;
+      height: 150px;
       background-color: #1B2E3C;
     }
 
     .ant-card-meta-description {
       font-family: "komu-a",sans-serif;
-      font-size: 36px;
-      line-height: 42px;
+      font-size: 30px;
+      line-height: 36px;
       letter-spacing: 0.1em;
       color: $cr100_green;
       text-transform: uppercase;
     }
   }
+
+  /*
+  ************************************************************************
+  Strike Text Green
+  ************************************************************************
+   */
+  .strike-text {
+    position: relative;
+    display: inline-block;
+
+    .strike-line {
+      position: absolute;
+      left: 0;
+      top: 0;
+      top: 24px;
+      width: 100%;
+      height: 12px;
+      background-color: #1de9b6;
+      z-index: 0;
+    }
+    .strike-line:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      left: -14px;
+      width: 14px;
+      height: 12px;
+      background-color: #1de9b6;
+    }
+    .strike-line:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      left: auto;
+      right: -14px;
+      width: 14px;
+      height: 12px;
+      background-color: #1de9b6;
+    }
+    p {
+      position: relative;
+      z-index: 1;
+      padding-bottom: 0;
+    }
+
+    &.filler {
+      width: 100%;
+      height: 0px;
+    }
+
+    &.mob {
+      display: none;
+    }
+  }
+
 
   .c_Footer {
     margin-top: 0;
@@ -219,102 +380,5 @@ $landingPageWidth: 1152px;
 
 .empower-modal-view {
 
-}
-
-.p_Cr100 {
-  background: #ffffff;
-  text-align: left;
-
-  @media only screen and (max-width: $mobile-width) {
-    padding: 0 24px;
-  }
-
-  .ebp-wrap {
-    padding: 0;
-  }
-
-  .c_projectList {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  $projectBoxSize: 156px;
-  .c_project {
-    cursor: pointer;
-    height: $projectBoxSize;
-    width: $projectBoxSize;
-    text-align: center;
-    padding: ($gap_2 / 2);
-  }
-
-  .c_list_wrapper {
-    background: $bg_blue;
-    position: relative;
-    padding-bottom: 140px;
-  }
-
-  .cr100-header {
-    margin-bottom: 180px;
-  }
-
-  .project-title {
-    margin-bottom: $gap_2;
-  }
-
-  .disclaimer-box {
-    background: $bg_dark;
-    padding: $gap_2 0;
-    position: relative;
-  }
-
-  .footer_enrich {
-    position: absolute;
-    top: -110px;
-    right: 0;
-  }
-
-  .c_list {
-    max-width: 1200px;
-    margin: 0 auto;
-    position: relative;
-  }
-
-  .cr100_logo_text {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-
-  .welcomeBox {
-    max-width: 800px;
-    margin: $gap_5 auto;
-    padding: $gap_4;
-    font-size: 20px;
-    text-align: center;
-    background: $bg_blue;
-    position: relative;
-
-    .cr100_logo {
-      position: absolute;
-      top: -$gap_4;
-      left: -$gap_4;
-    }
-
-    .oomph_box {
-      position: absolute;
-      bottom: -$gap_2;
-      right: -$gap_3;
-    }
-
-    .title {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: $gap_1;
-    }
-
-    .content {
-      margin-bottom: $gap_1;
-    }
-  }
 }
 

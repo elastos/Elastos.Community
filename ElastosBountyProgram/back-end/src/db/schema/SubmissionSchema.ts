@@ -55,6 +55,7 @@ export const Submission = {
     dob: Date,
 
     reason: String,
+    suitedReason: String,
 
     attachment: String,
     attachmentType: String,

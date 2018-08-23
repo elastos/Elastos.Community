@@ -31,7 +31,8 @@ export default class extends Base{
         if (param.category && _.values(constant.TASK_CATEGORY).includes(param.category)) {
             query.category = param.category;
         } else {
-            query.category = {$in: [constant.TASK_CATEGORY.DEVELOPER, constant.TASK_CATEGORY.SOCIAL]}
+            query.category = {$in: [constant.TASK_CATEGORY.DEVELOPER, constant.TASK_CATEGORY.SOCIAL,
+                constant.TASK_CATEGORY.CR100]}
         }
 
         if (param.domain) {
@@ -73,7 +74,7 @@ export default class extends Base{
             ]
 
             // make sure this is the logged in user
-            if (this.session.userId !== currentUserId.toString()) {
+            if (this.session.userId.toString() !== currentUserId.toString()) {
                 throw 'task.list API - profileListFor does not match session.userId'
             }
 
