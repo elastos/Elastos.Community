@@ -107,6 +107,12 @@ export default class extends BaseComponent {
                         </a>
                     </Dropdown>
                 </Menu.Item>
+
+                {isLogin &&
+                    <Menu.Item key="logout">
+                        {I18N.get('0204')}
+                    </Menu.Item>
+                }
             </Menu>
         )
     }
@@ -136,6 +142,22 @@ export default class extends BaseComponent {
                         <div className="alpha-tag">ALPHA</div>
                     </Menu.Item>
                 </Menu>
+                {
+                <Menu className="c_Header_Menu c_Side_Menu pull-right">
+                    <MediaQuery minWidth={MIN_WIDTH_PC}>
+                        <Menu.Item className="c_MenuItem help pull-right no-margin" key="help">
+                            <Dropdown overlay={helpDropdown} style="margin-top: 24px;">
+                                <a className="ant-dropdown-link">
+                                    <Icon className="no-margin" type="question-circle-o" />
+                                </a>
+                            </Dropdown>
+                        </Menu.Item>
+                    </MediaQuery>
+                    <Menu.Item className="c_MenuItem mobile" key="mobileMenu" onClick={this.props.toggleMobileMenu}>
+                        <Icon type="menu-fold"/>
+                    </Menu.Item>
+                </Menu>
+                }
                     {/*
                     <Menu.Item className="c_MenuItem overview">
                         <Dropdown overlay={overviewDropdown} style="margin-top: 24px;">
@@ -194,29 +216,6 @@ export default class extends BaseComponent {
                     </Menu.Item>
                     */}
                 </Menu>
-                {/*
-                <Menu className="c_Header_Menu c_Side_Menu pull-right">
-                    <MediaQuery minWidth={MIN_WIDTH_PC}>
-                        <Menu.Item className="c_MenuItem help pull-right no-margin" key="help">
-                            <Dropdown overlay={helpDropdown} style="margin-top: 24px;">
-                                <a className="ant-dropdown-link">
-                                    <Icon className="no-margin" type="question-circle-o" />
-                                </a>
-                            </Dropdown>
-                        </Menu.Item>
-                    </MediaQuery>
-                    <Menu.Item className="c_MenuItem account pull-right no-margin">
-                        <Dropdown overlay={acctDropdown} style="margin-top: 24px;">
-                            <a className="ant-dropdown-link">
-                                {I18N.get('0004')} <Icon type="down" />
-                            </a>
-                        </Dropdown>
-                    </Menu.Item>
-                    <Menu.Item className="c_MenuItem mobile" key="mobileMenu" onClick={this.props.toggleMobileMenu}>
-                        <Icon type="menu-fold"/>
-                    </Menu.Item>
-                </Menu>
-                */}
             </Header>
         )
     }

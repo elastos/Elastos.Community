@@ -19,19 +19,18 @@
 }
 
 .c_Header.ant-layout-header {
-
   background: #fff;
   height: $header_height;
   padding: 0;
   text-align: center;
   box-shadow: none;
-  padding-right: 48px;
 
   .c_Header_Menu.ant-menu {
     padding-top: 0;
   }
 
   .c_Side_Menu {
+    border-right: 0;
     .c_MenuItem.ant-menu-item-selected {
       .ant-dropdown-link {
         color: inherit;
