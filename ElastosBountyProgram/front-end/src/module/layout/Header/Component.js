@@ -108,7 +108,7 @@ export default class extends BaseComponent {
                     </Dropdown>
                 </Menu.Item>
 
-                {isLogin &&
+                {this.props.isLogin &&
                     <Menu.Item key="logout">
                         {I18N.get('0204')}
                     </Menu.Item>
