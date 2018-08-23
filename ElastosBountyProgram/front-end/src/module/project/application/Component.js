@@ -69,10 +69,10 @@ export default class extends BaseComponent {
 
     showAttachment() {
         const applicant = this.getApplicant()
-        const attachment = applicant.attachment
+        const {attachment, attachmentFilename} = applicant
 
         return attachment
-            ? <h5>Attachment</h5>
+            ? <h5><a href={attachment} target="_blank">{attachmentFilename}</a></h5>
             : <h5>No attachments</h5>
     }
 

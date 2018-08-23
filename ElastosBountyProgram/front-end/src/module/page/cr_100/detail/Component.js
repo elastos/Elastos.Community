@@ -61,7 +61,8 @@ class C extends BaseComponent {
                 const userId = isSelf && this.props.currentUserId
                 const teamId = !isSelf && values.applicant
 
-                this.props.applyToTask(this.props.taskId, userId, teamId, values.applyMsg, values.attachment)
+                this.props.applyToTask(this.props.taskId, userId, teamId, values.applyMsg,
+                    this.state.attachment_url, this.state.attachment_filename)
                     .then(() => {
                         this.setState({ applying: false })
                         message.success('Application sent. Thank you!')
