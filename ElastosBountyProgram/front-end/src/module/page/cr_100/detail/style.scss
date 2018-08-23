@@ -1,5 +1,21 @@
+@import '../../../../style/variable';
+@import '../../../../style/color';
+
 .c_Project.c_Detail {
     .application-form {
-        margin-top: 25px;
+        margin-top: $gap_2;
+    }
+
+    .project-name {
+        height: 64px;
+        line-height: 64px;
+        margin-left: 80px;
+        margin-bottom: $gap_2;
+        font-size: 24px;
+        font-weight: 500;
+    }
+
+    .footer {
+        margin-bottom: $gap_2;
     }
 }

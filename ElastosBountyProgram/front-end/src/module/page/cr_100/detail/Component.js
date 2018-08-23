@@ -414,8 +414,8 @@ class C extends BaseComponent {
     getHeader() {
         return (
             <div>
-                <Avatar size={64} src={this.props.detail.thumbnail}/>
-                <div>{this.props.detail.name}</div>
+                <Avatar size={64} className="pull-left" src={this.props.detail.thumbnail}/>
+                <div className="project-name">{this.props.detail.name}</div>
                 <div className="clearfix"/>
             </div>
         )
@@ -423,7 +423,7 @@ class C extends BaseComponent {
 
     getFooter() {
         return (
-            <div className="halign-wrapper">
+            <div className="halign-wrapper footer">
                 <Button onClick={() => this.setState({applying: true})}>
                     {I18N.get('developer.cr100.submit_whitepaper')}</Button>
             </div>
