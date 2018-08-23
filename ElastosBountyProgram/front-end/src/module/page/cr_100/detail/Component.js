@@ -77,7 +77,7 @@ class C extends BaseComponent {
 
     checkForLoading(followup) {
         return this.props.loading
-            ? <Spin size="large"/>
+            ? <div className="valign-wrapper halign-wrapper"><Spin size="large"/></div>
             : _.isFunction(followup) && followup()
     }
 
