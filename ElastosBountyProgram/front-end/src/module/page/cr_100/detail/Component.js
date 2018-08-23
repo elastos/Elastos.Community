@@ -414,7 +414,7 @@ class C extends BaseComponent {
     getHeader() {
         return (
             <div>
-                <Avatar size={64} className="pull-left" src={this.props.detail.thumbnail}/>
+                <Avatar size={64} shape="square" className="pull-left" src={this.props.detail.thumbnail}/>
                 <div className="project-name">{this.props.detail.name}</div>
                 <div className="clearfix"/>
             </div>
