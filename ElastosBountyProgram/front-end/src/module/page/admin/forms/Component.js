@@ -80,13 +80,16 @@ export default class extends AdminPage {
 
         }, {
             title: 'Name',
-            dataIndex: 'fullLegalName'
+            dataIndex: 'fullLegalName',
+            render: (fullLegalName, record) => {
+                return fullLegalName || (record.createdBy ? (record.createdBy.profile.firstName + ' ' + record.createdBy.profile.lastName) : '')
+            }
         }, {
             title: 'Campaign',
             dataIndex: 'campaign',
             className: 'fontWeight500 allow-wrap',
             render: (campaign, record) => {
-                return config.dict.formCampaigns[campaign]
+                return config.dict.formCampaigns[campaign] || campaign
             }
         }, {
             title: 'Created',

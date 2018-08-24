@@ -44,11 +44,11 @@ export default class extends BaseComponent {
                                 <div className="title brand-color">
                                     Join Us On
                                 </div>
-                                <a href="https://t.me/elastosgroup" target="_blank"><Avatar shape="square" size={64} className="icon icon-paper-plane"/></a>                                    
+                                <a href="https://t.me/elastosgroup" target="_blank"><Avatar shape="square" size={64} className="icon icon-paper-plane"/></a>
                                 <a href="https://github.com/elastos" target="_blank"><Avatar shape="square" size={64} className="icon icon-github"/></a>
                                 <a href="https://discordapp.com/invite/MHSUVZN" target="_blank"><Avatar shape="square" size={64} className="icon icon-crabface"/></a>
                                 <a href="https://twitter.com/Elastos_org" target="_blank"><Avatar shape="square" size={64} className="icon icon-twitter"/></a>
-                                <a href="https://elastos.slack.com/" target="_blank"><Avatar shape="square" size={64} className="icon icon-slack"/></a>
+                                <a href="https://elastos-ebp.slack.com/" target="_blank"><Avatar shape="square" size={64} className="icon icon-slack"/></a>
                                 <a href="https://www.reddit.com/r/Elastos/" target="_blank"><Avatar shape="square" size={64} className="icon icon-reddit-alien"/></a>
                                 <a href="https://www.youtube.com/channel/UCy5AjgpQIQq3bv8oy_L5WTQ/" target="_blank"><Avatar shape="square" size={64} className="icon icon-youtube-play"/></a>
                                 <a href="https://www.instagram.com/elastosofficial/" target="_blank"><Avatar shape="square" size={64} className="icon icon-instagram"/></a>

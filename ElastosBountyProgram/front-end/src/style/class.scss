@@ -140,3 +140,19 @@
   text-align: right;
   opacity: 0.66;
 }
+
+.cr-btn {
+  border-radius: 0;
+  border: 1px solid #0F2631;
+  background-color: $bg_blue;
+
+  > span {
+    color: #000;
+    font-family: "komu-a", sans-serif;
+    font-size: 28px;
+    line-height: 33px;
+    letter-spacing: 0.1em;
+  }
+  padding: 15px 31px 10px;
+  height: 53px;
+}

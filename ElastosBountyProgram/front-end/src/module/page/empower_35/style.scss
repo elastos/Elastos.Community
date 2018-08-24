@@ -37,7 +37,7 @@ $landingPageWidth: 1152px;
   }
 
   .header-spacer {
-    padding-bottom: 45px;
+    padding-bottom: 30px;
   }
 
   .ant-modal-body {
@@ -130,7 +130,7 @@ $landingPageWidth: 1152px;
 
   /*
   ************************************************************************
-  Sections
+  Sections / General
   ************************************************************************
    */
   %container {
@@ -184,6 +184,11 @@ $landingPageWidth: 1152px;
     color: $text_new_gray;
   }
 
+  /*
+  ************************************************************************
+  Header
+  ************************************************************************
+   */
   .emp35-header {
 
     min-height: 600px;
@@ -263,9 +268,14 @@ $landingPageWidth: 1152px;
     }
   }
 
+  /*
+  ************************************************************************
+  Empower Text
+  ************************************************************************
+   */
   .emp35-empower {
 
-    min-height: 1200px;
+    min-height: 900px;
 
     background-color: $bg_blue;
     padding-top: 100px;
@@ -286,12 +296,18 @@ $landingPageWidth: 1152px;
       font-size: 36px;
     }
 
-    .content > p {
-      font-family: "synthese",sans-serif;
-      font-weight: 200;
-      font-size: 24px;
-      padding: 38px 74px;
-      text-align: center;
+    .content {
+
+      padding-bottom: 38px;
+
+      p {
+        font-family: "synthese", sans-serif;
+        font-weight: 200;
+        font-size: 18px;
+        padding: 0 74px;
+        margin: 38px 0;
+        text-align: center;
+      }
     }
   }
 
@@ -488,6 +504,49 @@ $landingPageWidth: 1152px;
     }
   }
 
+  .disclaimer-box {
+    background: $bg_dark;
+    padding: $gap_2 0;
+    position: relative;
+  }
+
+  .footer_enrich {
+    position: absolute;
+    top: -110px;
+    right: 0;
+  }
+
+  .welcomeBox {
+    max-width: 800px;
+    margin: $gap_5 auto;
+    padding: $gap_4;
+    font-size: 20px;
+    text-align: center;
+    background: $bg_blue;
+    position: relative;
+
+    .cr100_logo {
+      position: absolute;
+      top: -$gap_4;
+      left: -$gap_4;
+    }
+
+    .oomph_box {
+      position: absolute;
+      bottom: -$gap_2;
+      right: -$gap_3;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: $gap_1;
+    }
+
+    .content {
+      margin-bottom: $gap_1;
+    }
+  }
 
   .c_Footer {
     margin-top: 0;

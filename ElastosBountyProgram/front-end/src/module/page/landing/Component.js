@@ -29,20 +29,20 @@ export default class extends EmptyPage {
                     <div className="logo sized">
                         <img src="assets/images/logo.svg" alt="Cyber Republic" className="dsk"/>
                         <img src="assets/images/logo-mark.svg" className="mob"/>
-                        <div class="alpha-tag">ALPHA</div>
+                        <div class="alpha-tag">{I18N.get('0000')}</div>
                     </div>
 
 
                     <nav className="toplinks">
                         <ul>
-                            <li><a href="/cr100">CR100</a></li>
-                            <li><a href="/empower35">Empower35</a></li>
-                            <li><a href="/evangelist-training">Training</a></li>
-                            <li><a href="/developer">Community</a></li>
-                            <li><a href="/profile/teams">My Republic</a></li>
+                            <li><a href="/cr100">{I18N.get('0105')}</a></li>
+                            <li><a href="/empower35">{I18N.get('0106')}</a></li>
+                            <li><a href="/evangelist-training">{I18N.get('0107')}</a></li>
+                            <li><a href="/developer">{I18N.get('0102')}</a></li>
+                            <li><a href="/profile/teams">{I18N.get('0104')}</a></li>
 
                             <li className="hasIcon">
-                                <span className="txt">Play Video</span>
+                                <span className="txt">{I18N.get('landing.playVideo')}</span>
                                 <div className="arrow-btn">
                                     <div className="arrow-circle"><img src="assets/images/arrow-submit.svg"/></div>
                                     <div className="arrow-border"></div>
@@ -116,7 +116,7 @@ export default class extends EmptyPage {
                     <div className="hline top mob"></div>
 
                     <div className="form-wrap mob">
-                        <p>Stay up to date with Cyber Republic</p>
+                        <p>{I18N.get('landing.stayUpdate')}</p>
                         <form id="menu-form-mob" className="signup-form" name="mailing-list"
                               action="https://cyberrepublic.us19.list-manage.com/subscribe/post-json?u=acb5b0ce41bfe293d881da424&id=272f303492" method="get">
                             <div className="email-wrap">
@@ -142,7 +142,7 @@ export default class extends EmptyPage {
                             <div className="col left">
                                 <nav id="globalNav">
                                     <ul>
-                                        <li><a href="#what">What is Elastos?</a></li>
+                                        <li><a href="#what">{I18N.get('landing.whatIs')}</a></li>
                                         <li><a href="#cr100">CR100</a></li>
                                         <li><a href="#solution">The Elastos Solution</a></li>
                                         <li><a href="#pillars">The Four Pillars</a></li>
@@ -210,7 +210,7 @@ export default class extends EmptyPage {
                                 <li><a href="https://discordapp.com/invite/MHSUVZN" target="_blank"><span className="icon icon-crabface"></span></a></li>
                                 <li><a href="https://twitter.com/Elastos_org" target="_blank"><span className="icon icon-twitter"></span></a></li>
                                 <li className="mob"></li>
-                                <li><a href="https://elastos.slack.com/" target="_blank"><span className="icon icon-slack"></span></a></li>
+                                <li><a href="https://elastos-ebp.slack.com/" target="_blank"><span className="icon icon-slack"></span></a></li>
                                 <li><a href="https://www.reddit.com/r/Elastos/" target="_blank"><span className="icon icon-reddit-alien"></span></a></li>
                                 <li><a href="https://www.youtube.com/channel/UCy5AjgpQIQq3bv8oy_L5WTQ/" target="_blank"><span className="icon icon-youtube-play"></span></a></li>
                                 <li><a href="https://www.instagram.com/elastosofficial/" target="_blank"><span className="icon icon-instagram"></span></a></li>
@@ -1574,7 +1574,7 @@ export default class extends EmptyPage {
                                 <li><a href="https://discordapp.com/invite/MHSUVZN" target="_blank"><span className="icon icon-crabface"></span></a></li>
                                 <li><a href="https://twitter.com/Elastos_org" target="_blank"><span className="icon icon-twitter"></span></a></li>
                                 <li className="mob"></li>
-                                <li><a href="https://elastos.slack.com/" target="_blank"><span className="icon icon-slack"></span></a></li>
+                                <li><a href="https://elastos-ebp.slack.com/" target="_blank"><span className="icon icon-slack"></span></a></li>
                                 <li><a href="https://www.reddit.com/r/Elastos/" target="_blank"><span className="icon icon-reddit-alien"></span></a></li>
                                 <li><a href="https://www.youtube.com/channel/UCy5AjgpQIQq3bv8oy_L5WTQ/" target="_blank"><span className="icon icon-youtube-play"></span></a></li>
                                 <li><a href="https://www.instagram.com/elastosofficial/" target="_blank"><span className="icon icon-instagram"></span></a></li>
