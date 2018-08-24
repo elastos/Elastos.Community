@@ -2,6 +2,7 @@ import React from 'react'
 
 export default {
     // Header
+    '0000': 'ALPHA',
     '0001': 'Bounty Programs',
     '0002': 'Community',
     '0003': 'Organizers',
