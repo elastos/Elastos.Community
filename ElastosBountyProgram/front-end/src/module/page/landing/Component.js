@@ -39,7 +39,11 @@ export default class extends EmptyPage {
                             <li><a href="/empower35">{I18N.get('0106')}</a></li>
                             <li><a href="/evangelist-training">{I18N.get('0107')}</a></li>
                             <li><a href="/developer">{I18N.get('0102')}</a></li>
-                            <li><a href="/profile/teams">{I18N.get('0104')}</a></li>
+
+                            {this.props.is_login
+                                ? <li><a href="/profile/teams">{I18N.get('0104')}</a></li>
+                                : <li><a href="/login">{I18N.get('0201')}</a></li>
+                            }
 
                             <li className="hasIcon">
                                 <span className="txt">{I18N.get('landing.playVideo')}</span>
