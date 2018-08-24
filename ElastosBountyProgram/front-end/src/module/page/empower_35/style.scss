@@ -130,7 +130,7 @@ $landingPageWidth: 1152px;
 
   /*
   ************************************************************************
-  Sections
+  Sections / General
   ************************************************************************
    */
   %container {
@@ -184,6 +184,11 @@ $landingPageWidth: 1152px;
     color: $text_new_gray;
   }
 
+  /*
+  ************************************************************************
+  Header
+  ************************************************************************
+   */
   .emp35-header {
 
     min-height: 600px;
@@ -263,9 +268,14 @@ $landingPageWidth: 1152px;
     }
   }
 
+  /*
+  ************************************************************************
+  Empower Text
+  ************************************************************************
+   */
   .emp35-empower {
 
-    min-height: 1200px;
+    min-height: 900px;
 
     background-color: $bg_blue;
     padding-top: 100px;
@@ -286,12 +296,18 @@ $landingPageWidth: 1152px;
       font-size: 36px;
     }
 
-    .content > p {
-      font-family: "synthese",sans-serif;
-      font-weight: 200;
-      font-size: 24px;
-      padding: 38px 74px;
-      text-align: center;
+    .content {
+
+      padding-bottom: 38px;
+
+      p {
+        font-family: "synthese", sans-serif;
+        font-weight: 200;
+        font-size: 18px;
+        padding: 0 74px;
+        margin: 38px 0;
+        text-align: center;
+      }
     }
   }
 

@@ -210,7 +210,7 @@ export default class extends EmptyPage {
                                 <li><a href="https://discordapp.com/invite/MHSUVZN" target="_blank"><span className="icon icon-crabface"></span></a></li>
                                 <li><a href="https://twitter.com/Elastos_org" target="_blank"><span className="icon icon-twitter"></span></a></li>
                                 <li className="mob"></li>
-                                <li><a href="https://elastos.slack.com/" target="_blank"><span className="icon icon-slack"></span></a></li>
+                                <li><a href="https://elastos-ebp.slack.com/" target="_blank"><span className="icon icon-slack"></span></a></li>
                                 <li><a href="https://www.reddit.com/r/Elastos/" target="_blank"><span className="icon icon-reddit-alien"></span></a></li>
                                 <li><a href="https://www.youtube.com/channel/UCy5AjgpQIQq3bv8oy_L5WTQ/" target="_blank"><span className="icon icon-youtube-play"></span></a></li>
                                 <li><a href="https://www.instagram.com/elastosofficial/" target="_blank"><span className="icon icon-instagram"></span></a></li>
@@ -1574,7 +1574,7 @@ export default class extends EmptyPage {
                                 <li><a href="https://discordapp.com/invite/MHSUVZN" target="_blank"><span className="icon icon-crabface"></span></a></li>
                                 <li><a href="https://twitter.com/Elastos_org" target="_blank"><span className="icon icon-twitter"></span></a></li>
                                 <li className="mob"></li>
-                                <li><a href="https://elastos.slack.com/" target="_blank"><span className="icon icon-slack"></span></a></li>
+                                <li><a href="https://elastos-ebp.slack.com/" target="_blank"><span className="icon icon-slack"></span></a></li>
                                 <li><a href="https://www.reddit.com/r/Elastos/" target="_blank"><span className="icon icon-reddit-alien"></span></a></li>
                                 <li><a href="https://www.youtube.com/channel/UCy5AjgpQIQq3bv8oy_L5WTQ/" target="_blank"><span className="icon icon-youtube-play"></span></a></li>
                                 <li><a href="https://www.instagram.com/elastosofficial/" target="_blank"><span className="icon icon-instagram"></span></a></li>

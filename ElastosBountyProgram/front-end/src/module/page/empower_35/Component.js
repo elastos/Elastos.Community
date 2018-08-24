@@ -11,7 +11,7 @@ import {USER_EMPOWER_TYPE} from '@/constant'
 import ModalEmpowerForm from './modal_form/Component'
 
 // person head profile
-const image = '/assets/images/user_blurred.png'
+const image = '/assets/images/emp35/profile_new.jpg'
 const image_white = '/assets/images/user_blurred_white.png'
 
 const COLOR_SCHEME = {
@@ -391,69 +391,6 @@ export default class extends StandardPage {
                 </div>
             </div>
         </section>
-    }
-
-    buildList() {
-        // Note, the project can be in multiple domains, but categorizing by the top one
-        const categorizedList = _.groupBy(this.props.all_tasks, (task) => _.first(task.domain))
-
-        const list = _.map(categorizedList, (list, category) => {
-            const sanitizedCategory = (category || 'uncategorized').toLowerCase()
-            return (
-                <div key={sanitizedCategory}>
-                    <h3 className="brand-color">
-                        {I18N.get(`team.spec.${sanitizedCategory}`)}
-                    </h3>
-                    <div className="c_projectList">
-                        {_.map(list, (project, ind) => (
-                            <div key={ind} className="c_project">
-                                <Avatar shape="square" size={96} src={project.thumbnail}
-                                    onClick={this.showDetailModal.bind(this, project._id)}/>
-                                <div>{project.name}</div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )
-        })
-
-        return (
-            <div className="c_list_wrapper">
-                <div className="c_list">
-                    <h2 className="project-title">
-                        {I18N.get('developer.cr100.projects')}
-                    </h2>
-                    {list}
-
-                    <img className="cr100_logo_text" src="/assets/images/cr100_logo_text.png"/>
-                </div>
-            </div>
-        )
-    }
-
-    buildDisclaimer() {
-        return (
-            <div className="disclaimer-box">
-                <div className="welcomeBox">
-                    <div className="title">
-                        {I18N.get('developer.cr100.disclaimer.title')}
-                    </div>
-                    <div className="content">
-                        {I18N.get('developer.cr100.disclaimer')}
-                    </div>
-                    <div className="content">
-                        {I18N.get('developer.cr100.dontseeProject.title')}
-                    </div>
-                    <div className="content">
-                        <Button onClick={this.handleSubmitProjectProposal.bind(this)}>
-                            {I18N.get('developer.cr100.dontseeProject')}
-                        </Button>
-                    </div>
-                </div>
-
-                <img className="footer_enrich" src="/assets/images/footer_enrich.png"/>
-            </div>
-        )
     }
 
     buildFooter() {
