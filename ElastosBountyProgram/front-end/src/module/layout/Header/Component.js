@@ -148,22 +148,6 @@ export default class extends BaseComponent {
         const helpDropdown = this.buildHelpDropdown()
         return (
             <Header className="c_Header">
-                <Affix
-                    className="c_Affix_Menu"
-                    onChange={affixed => this.setState({affixed})}>
-                    <div className={`c_Affix_Menu_Item ${this.state.affixed ? null : 'hidden'}`}>
-                        <Popover
-                            visible={this.state.popover}
-                            onVisibleChange={popover => this.setState({popover})}
-                            placement="bottomLeft"
-                            content={<Flyout />}
-                            trigger="click"
-                            style={{ padding: 'unset' }}
-                        >
-                            {!this.state.popover && <img width={156} height={74} src="/assets/images/ela_hamburger.png" alt="Cyber Republic"/>}
-                        </Popover>
-                    </div>
-                </Affix>
                 <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu pull-left"
                     selectedKeys={this.getSelectedKeys()} mode="horizontal">
                     <Menu.Item className="c_MenuItem logo" key="landing">

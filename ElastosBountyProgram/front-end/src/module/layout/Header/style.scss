@@ -2,70 +2,10 @@
 @import "../../../style/variable";
 @import "../../../style/color";
 
-.p_Flyout {
-    background-color: $bg_dark;
-    width: 94vw;
-    height: 70vh;
-
-    .ant-layout-header {
-        background-color: $bg_dark;
-
-        .ant-row {
-            .ant-col-12 {
-                .ant-menu-horizontal {
-                    background: transparent;
-                    border-bottom: unset;
-                    color: $bg_gray;
-                    font-weight: 600;
-                    margin: 20px $gap_2;
-                    &.ant-menu-item-selected {
-                        background: unset;
-                    }
-                }
-            }
+.c_Header {
+    .ant-menu-item.logo {
+        &:hover {
+            border-bottom: none;
         }
     }
-
-    .ant-layout {
-        .p_Flyout_Content {
-            .intro-content {
-                color: $primary_color;
-                font-size: 14px;
-                margin: $gap_4 $gap_5;
-            }
-            .intro-heading {
-                color: $primary_color;
-                font-size: 14px;
-                margin: $gap_2 $gap_5;
-                font-weight: 700;
-            }
-            .ant-input {
-                width: inherit;
-                margin: $gap_0 $gap_5;
-            }
-
-            .ant-row {
-                color: $text_new_gray;
-                font-weight: 700;
-                margin: $gap_0 $gap_5;
-            }
-        }
-
-        .p_Flyout_Sidenav {
-            .ant-menu-root {
-                margin: $gap_3 $gap_5;
-                background-color: unset;
-                color: $bg_gray;
-                border-right: unset;
-
-                .ant-menu-item {
-                    font-weight: 600;
-                    font-size: 24px;
-                    background: unset;
-                }
-            }
-        }
-    }
-
 }
-
