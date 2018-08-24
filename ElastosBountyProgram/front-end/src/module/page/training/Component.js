@@ -3,7 +3,7 @@ import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import I18N from '@/I18N'
 import './style.scss'
-import { Col, Row, Spin } from 'antd'
+import { Col, Row, Spin, Button } from 'antd'
 import _ from 'lodash'
 
 export default class extends StandardPage {
@@ -28,6 +28,11 @@ export default class extends StandardPage {
         return this.state.loading
             ? <Spin size="large"/>
             : _.isFunction(followup) && followup()
+    }
+
+    // Use this to record users' emails
+    subscribe() {
+
     }
 
     ord_states() {
@@ -99,6 +104,10 @@ export default class extends StandardPage {
                                 <div className="strike-line"/>
                                 <p>{I18N.get('training.header.content.4')}</p>
                             </div>
+                            <div className="strike-text">
+                                <div className="strike-line"/>
+                                <p>{I18N.get('training.header.content.5')}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -138,7 +147,7 @@ export default class extends StandardPage {
                         {I18N.get('training.itinerary.title')}
                     </div>
                     <div className="content">
-                        <Row>
+                        <Row className="d_Row">
                             <Col span="12" className="left-col">
                                 <img src="assets/images/training_itinerary.png"/>
                             </Col>
@@ -146,10 +155,6 @@ export default class extends StandardPage {
                                 <div>
                                     <span className="label">{I18N.get('training.itinerary.content.venueLabel')}: </span>
                                     <span>{I18N.get('training.itinerary.content.venue')}</span>
-                                </div>
-                                <div>
-                                    <span className="label">{I18N.get('training.itinerary.content.accomodationLabel')}: </span>
-                                    <span>{I18N.get('training.itinerary.content.accomodation')}</span>
                                 </div>
                                 <div>
                                     <span className="label">{I18N.get('training.itinerary.content.day13Label')}: </span>
@@ -172,6 +177,11 @@ export default class extends StandardPage {
                                     <span>{I18N.get('training.itinerary.content.day7')}</span>
                                 </div>
                             </Col>
+                        </Row>
+                        <Row className="d_Row subscribe" justify="center">
+                            <div>Stay updated by subscribing below with your E-Mail!</div>
+                            <Button type="primary" onClick={this.subscribe.bind(this)}>Subscribe</Button>
+                            <div className="apply-soon">(Applications available soon)</div>
                         </Row>
                     </div>
                 </div>

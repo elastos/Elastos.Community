@@ -169,7 +169,7 @@ export default {
     'developer.components.info': 'More Info',
     'developer.cr100.projects': 'Projects',
     'developer.cr100.submit_whitepaper': 'Submit Whitepaper',
-    'developer.cr100.welcome': 'CyberRepublic100 is a cornerstone project of the Elastos Foundation which comprises 100 different projects that demonstrate some of the capabilities of the Elastos ecosystem. They include but are not limited to solutions for infrastructure, dApps and utilities.',
+    'developer.cr100.welcome': 'CR100 is our flagship project, inviting teams of entrepreneurs to apply for funding to design and build the next great Elastos Ecosystem DApp. The 100 projects listed are templates that exemplify the diversity and abilities of the Elastos infrastructure. Each project represents a different use case for a decentralized application that can disrupt the current landscape of applications. Teams are asked to use these ideas as inspirations for either their own future or existing whitepapers and to submit detailed proposals that outline their plan. The Cyber Republic Council will select projects that are particularly promising and provide funding up to 500k USD to a chosen team. Please note that while CR100 is designed to create variety, we may fund more than one DApp for each category. Also, if you do not see a category for your project, you can submit it anyway. Details are at the bottom of this page.',
     'developer.cr100.welcome.title': 'Cyber Republic 100',
     'developer.cr100.disclaimer': 'Projects described above are subject to change and are only used as an example.',
     'developer.cr100.disclaimer.title': 'Disclaimer',
@@ -198,10 +198,11 @@ export default {
 
     // Training
     'training.header.title': 'Evangelist Training',
-    'training.header.content.1': 'Cyber Republic will offer an all expenses paid trip to spend one week',
-    'training.header.content.2': 'training with the Elastos Team to become an official Elastos Evangelist.',
-    'training.header.content.3': 'Graduates of the program will be given an ELA budget and be',
-    'training.header.content.4': ' empowered to speak on behalf of Cyber Republic at events and meetups.',
+    'training.header.content.1': 'Cyber Republic will offer an all expenses paid trip to spend',
+    'training.header.content.2': 'one week training with the Elastos Team to become an official',
+    'training.header.content.3': 'Elastos Evangelist. Graduates of the program will be given',
+    'training.header.content.4': 'an ELA budget and be empowered to speak on behalf of',
+    'training.header.content.5': 'Cyber Republic at events and meetups.',
     'training.evangelist.title': 'Goals',
     'training.evangelist.content': 'The goal of the program is for participants to not only learn the technology from the Elastos Team first hand, but to develop a presentation crafted with marketing and PR professionals that will allow evangelists to be professionally prepared to represent the project to the public. Cyber Republic plans to run this program several times per year and applications will be available soon. ',
 
@@ -209,8 +210,6 @@ export default {
     'training.itinerary.title': 'Itinerary',
     'training.itinerary.content.venueLabel': 'Venue',
     'training.itinerary.content.venue': 'Houses in Silicon Valley',
-    'training.itinerary.content.accomodationLabel': 'Accomodation',
-    'training.itinerary.content.accomodation': 'Houses in Silicon Valley',
     'training.itinerary.content.day13Label': 'Day 1-3',
     'training.itinerary.content.day13': 'Learning Elastos Tech with Rong and tech team',
     'training.itinerary.content.day4Label': 'Day 4',
