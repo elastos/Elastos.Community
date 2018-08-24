@@ -142,7 +142,7 @@ export default Form.create()(
                         <div className="pull-left">
                             <span className="role-title komu-a">{empowerType}</span>
                             <br/>
-                            {<span className="role-funding komu-a">Funding: US $100K Annual in ELA</span>
+                            <span className="role-funding komu-a">Funding: US $100K Annual in ELA</span>
                         </div>
                     </div>
                     <Form>
