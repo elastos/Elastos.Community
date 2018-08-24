@@ -28,6 +28,7 @@ import AboutPage from '@/module/page/static/about/Container'
 import SlackPage from '@/module/page/static/slack/Container'
 import EventsPage from '@/module/page/static/events/Container'
 import EventPage from '@/module/page/static/details/Container'
+import VisionPage from '@/module/page/vision/Container'
 
 import ProfileInfoPage from '@/module/page/profile/info/Container'
 import ProfileTasksPage from '@/module/page/profile/tasks/Container'
@@ -199,6 +200,10 @@ export default [
     {
         path: '/events/:eventId',
         page: EventPage
+    },
+    {
+        path: '/vision',
+        page: VisionPage
     },
     /*
     ********************************************************************************

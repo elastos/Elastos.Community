@@ -21,6 +21,7 @@ export default class extends BaseComponent {
                                 <div className="title brand-color">
                                     Links
                                 </div>
+                                <div><a href="/vision">Our Vision</a></div>
                                 <div><a href="https://wallet.elastos.org/">Wallet</a></div>
                                 <div><a href="https://blockchain.elastos.org/status">Block Explorer</a></div>
                                 <div><a href="https://github.com/elastos" target="_blank">GitHub</a></div>
