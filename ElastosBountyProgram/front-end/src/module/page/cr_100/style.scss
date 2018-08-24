@@ -1,6 +1,7 @@
 
 @import "../../../style/variable";
 @import "../../../style/color";
+@import "../../../style/typography";
 
 $mobile-padding: $gap_0 0px;
 
@@ -14,6 +15,10 @@ $mobile-padding: $gap_0 0px;
 
   .c_Footer {
     margin-top: 0;
+  }
+
+  h3 {
+    @extend .komu-a;
   }
 
   .ebp-wrap {
