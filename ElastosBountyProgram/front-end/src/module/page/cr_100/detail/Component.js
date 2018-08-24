@@ -382,7 +382,7 @@ class C extends BaseComponent {
                     {applyMsgPanel}
                 </Form.Item>
                 <Form.Item>
-                    {attachmentPanel}
+                    Whitepaper: {attachmentPanel}
                 </Form.Item>
                 <Button disabled={this.props.loading} className="d_btn pull-left" onClick={() => this.setState({ applying: false })}>
                     Cancel
