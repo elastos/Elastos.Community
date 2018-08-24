@@ -424,35 +424,35 @@ class C extends BaseComponent {
     getDescription() {
         return (
             <div className="description">
-                <h3>
+                <h3 className="komu-a">
                     {I18N.get('developer.cr100.pitch.problem')}
                 </h3>
                 <div>
                     {this.props.detail.pitch && this.props.detail.pitch.problem}
                 </div>
 
-                <h3>
+                <h3 className="komu-a">
                     {I18N.get('developer.cr100.pitch.valueProposition')}
                 </h3>
                 <div>
                     {this.props.detail.pitch && this.props.detail.pitch.valueProposition}
                 </div>
 
-                <h3>
+                <h3 className="komu-a">
                     {I18N.get('developer.cr100.pitch.useCase')}
                 </h3>
                 <div>
                     {this.props.detail.pitch && this.props.detail.pitch.useCase}
                 </div>
 
-                <h3>
+                <h3 className="komu-a">
                     {I18N.get('developer.cr100.pitch.beneficiaries')}
                 </h3>
                 <div>
                     {this.props.detail.pitch && this.props.detail.pitch.beneficiaries}
                 </div>
 
-                <h3>
+                <h3 className="komu-a">
                     {I18N.get('developer.cr100.pitch.elaInfrastructure')}
                 </h3>
                 <div>
