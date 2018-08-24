@@ -30,6 +30,11 @@ export default class extends StandardPage {
             : _.isFunction(followup) && followup()
     }
 
+    // Use this to record users' emails
+    subscribe() {
+
+    }
+
     ord_states() {
         return {
             showDetailId: null,
@@ -175,7 +180,7 @@ export default class extends StandardPage {
                         </Row>
                         <Row className="d_Row subscribe" justify="center">
                             <div>Stay updated by subscribing below with your E-Mail!</div>
-                            <Button type="primary">Subscribe</Button>
+                            <Button type="primary" onClick={this.subscribe.bind(this)}>Subscribe</Button>
                             <div className="apply-soon">(Applications available soon)</div>
                         </Row>
                     </div>
