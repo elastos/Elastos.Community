@@ -97,7 +97,7 @@ export default class extends StandardPage {
         // Note, the project can be in multiple domains, but categorizing by the top one
         const categorizedList = _.groupBy(this.props.all_tasks, (task) => _.first(task.domain))
 
-        const list = _.map(categorizedList, (list, category) => {
+        let list = _.map(categorizedList, (list, category) => {
             const sanitizedCategory = (category || 'uncategorized').toLowerCase()
             return (
                 <div key={sanitizedCategory}>
@@ -116,6 +116,8 @@ export default class extends StandardPage {
                 </div>
             )
         })
+
+        list = _.sortBy(list, ['key'])
 
         return (
             <div className="c_list_wrapper">
