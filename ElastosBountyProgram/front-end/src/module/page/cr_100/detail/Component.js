@@ -382,7 +382,7 @@ class C extends BaseComponent {
                     {applyMsgPanel}
                 </Form.Item>
                 <Form.Item>
-                    {attachmentPanel}
+                    Whitepaper: {attachmentPanel}
                 </Form.Item>
                 <Button disabled={this.props.loading} className="d_btn pull-left" onClick={() => this.setState({ applying: false })}>
                     Cancel
@@ -400,10 +400,14 @@ class C extends BaseComponent {
 
 
     getHeader() {
+        const project = _.find(_.values(this.props.all_tasks), { _id: this.props.taskId })
+        const projectIndex = _.indexOf(_.values(this.props.all_tasks), project) + 1 // 1-indexed
+
         return (
             <div>
                 <Avatar size={64} shape="square" className="pull-left" src={this.props.detail.thumbnail}/>
-                <div className="project-name">Elastos dApp - {this.props.detail.name}</div>
+                <div className="project-name komu-a">dApp #{projectIndex} - {this.props.detail.name}</div>
+                <div className="project-funding komu-a">Funding: up to $500k in ELA</div>
                 <div className="clearfix"/>
             </div>
         )
@@ -412,7 +416,7 @@ class C extends BaseComponent {
     getFooter() {
         return !this.state.applying && !this.isTaskOwner() &&
             <div className="halign-wrapper footer">
-                <Button onClick={() => this.setState({applying: true})}>
+                <Button className="submit-button" onClick={() => this.setState({applying: true})}>
                     {I18N.get('developer.cr100.submit_whitepaper')}</Button>
             </div>
     }
