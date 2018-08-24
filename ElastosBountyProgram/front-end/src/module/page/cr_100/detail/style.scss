@@ -1,5 +1,6 @@
 @import '../../../../style/variable';
 @import '../../../../style/color';
+@import '../../../../style/typography';
 
 .c_Project.c_Detail {
     .application-form {
@@ -16,15 +17,28 @@
         text-transform: uppercase;
     }
 
+    .project-name {
+        font-size: 36px;
+        padding-top: $gap_0;
+    }
+
     .footer {
         margin-top: $gap_2;
     }
 
     .description {
         margin-top: $gap_3;
+    }
 
-        & > h3 {
-            color: $primary_color;
-        }
+    h3 {
+        @extend .komu-a;
+        color: $cr100_green;
+        font-size: 36px;
+    }
+
+    .submit-button {
+        @extend .komu-a;
+        background: $text_new_gray;
+        color: $cr100_green;
     }
 }

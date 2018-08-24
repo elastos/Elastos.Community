@@ -416,7 +416,7 @@ class C extends BaseComponent {
     getFooter() {
         return !this.state.applying && !this.isTaskOwner() &&
             <div className="halign-wrapper footer">
-                <Button onClick={() => this.setState({applying: true})}>
+                <Button className="submit-button" onClick={() => this.setState({applying: true})}>
                     {I18N.get('developer.cr100.submit_whitepaper')}</Button>
             </div>
     }
@@ -424,35 +424,35 @@ class C extends BaseComponent {
     getDescription() {
         return (
             <div className="description">
-                <h3 className="komu-a">
+                <h3>
                     {I18N.get('developer.cr100.pitch.problem')}
                 </h3>
                 <div>
                     {this.props.detail.pitch && this.props.detail.pitch.problem}
                 </div>
 
-                <h3 className="komu-a">
+                <h3>
                     {I18N.get('developer.cr100.pitch.valueProposition')}
                 </h3>
                 <div>
                     {this.props.detail.pitch && this.props.detail.pitch.valueProposition}
                 </div>
 
-                <h3 className="komu-a">
+                <h3>
                     {I18N.get('developer.cr100.pitch.useCase')}
                 </h3>
                 <div>
                     {this.props.detail.pitch && this.props.detail.pitch.useCase}
                 </div>
 
-                <h3 className="komu-a">
+                <h3>
                     {I18N.get('developer.cr100.pitch.beneficiaries')}
                 </h3>
                 <div>
                     {this.props.detail.pitch && this.props.detail.pitch.beneficiaries}
                 </div>
 
-                <h3 className="komu-a">
+                <h3>
                     {I18N.get('developer.cr100.pitch.elaInfrastructure')}
                 </h3>
                 <div>
