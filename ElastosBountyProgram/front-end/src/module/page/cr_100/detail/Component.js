@@ -407,7 +407,7 @@ class C extends BaseComponent {
             <div>
                 <Avatar size={64} shape="square" className="pull-left" src={this.props.detail.thumbnail}/>
                 <div className="project-name komu-a">dApp #{projectIndex} - {this.props.detail.name}</div>
-                <div className="project-funding komu-a">Funding: up to $500k in ELA</div>
+                <div className="project-funding komu-a">Funding: 100k for 5% of the equity or coins/tokens</div>
                 <div className="clearfix"/>
             </div>
         )
