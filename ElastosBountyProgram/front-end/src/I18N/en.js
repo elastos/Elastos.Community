@@ -193,6 +193,9 @@ export default {
     'emp35.empower.content.3': 'These 35 will build and grow the ecosystem and be tasked with finding the next group of leaders as our republic continues to expand and work towards our goal of full democratic decentralization.',
     'emp35.teamHeader.title': 'Empower35 Team',
 
+    'emp35.disclaimer.title': 'Disclaimer',
+    'emp35.disclaimer.content': 'Roles described above and the number of positions are subject to change. The first group of Empower 35 candidates will be directly chosen by the council.',
+
     // Training
     'training.header.title': 'Evangelist Training',
     'training.header.content.1': 'Cyber Republic will offer an all expenses paid trip to spend one week',
@@ -314,7 +317,7 @@ export default {
     'landing.0222': 'In addition, holders of ELA tokens will be provided the opportunity to invest in numerous projects. For every DApp operating on Elastos, it will be essential to have ELA for registering digital assets thus creating a continuous necessity for the token.',
 
     'landing.0230': 'Applications on Elastos will run in a trustful runtime environment that utilizes blockchain technology. This creates real security by providing a “sandboxed” environment that will need verification from the blockchain before allowing access to the internet. This enables massive potential for the construction of any type of application with any use case or scenario.',
-    'landing.0230': '',
+    'landing.0231': '',
 
     // Our Vision
     'vision.00': 'Our Vision',

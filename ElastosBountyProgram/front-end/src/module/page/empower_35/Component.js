@@ -89,7 +89,7 @@ export default class extends StandardPage {
                             {this.buildTeamLegal()}
                             {this.buildMidSection()}
                             {this.buildLowerSection()}
-                            {this.buildFooter()}
+                            {this.buildDisclaimer()}
                         </div>
                     </div>
                 </div>
@@ -329,7 +329,7 @@ export default class extends StandardPage {
             <div className="emp35-teamDesigner">
                 <div className="container">
                     <div className="inner-container">
-                        <span className="dark-title">Content</span>
+                        <span className="dark-title">Content Writer</span>
 
                         {this.generatePositionCards(USER_EMPOWER_TYPE.WRITER_CONTENT, 3, COLOR_SCHEME.WHITE)}
                     </div>
@@ -343,7 +343,7 @@ export default class extends StandardPage {
             <div className="emp35-teamDesigner">
                 <div className="container">
                     <div className="inner-container">
-                        <span className="dark-title">Writer</span>
+                        <span className="dark-title">Technical Writer</span>
 
                         {this.generatePositionCards(USER_EMPOWER_TYPE.WRITER_TECHNICAL, 3, COLOR_SCHEME.WHITE)}
                     </div>
@@ -391,6 +391,21 @@ export default class extends StandardPage {
                 </div>
             </div>
         </section>
+    }
+
+    buildDisclaimer() {
+        return (
+            <div className="disclaimer-box">
+                <div className="welcomeBox">
+                    <div className="title">
+                        {I18N.get('emp35.disclaimer.title')}
+                    </div>
+                    <div className="content">
+                        {I18N.get('emp35.disclaimer.content')}
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     buildFooter() {
