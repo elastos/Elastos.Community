@@ -400,10 +400,13 @@ class C extends BaseComponent {
 
 
     getHeader() {
+        const project = _.find(_.values(this.props.all_tasks), { _id: this.props.taskId })
+        const projectIndex = _.indexOf(_.values(this.props.all_tasks), project) + 1 // 1-indexed
+
         return (
             <div>
                 <Avatar size={64} shape="square" className="pull-left" src={this.props.detail.thumbnail}/>
-                <div className="project-name">Elastos dApp - {this.props.detail.name}</div>
+                <div className="project-name">dApp #{projectIndex} - {this.props.detail.name}</div>
                 <div className="clearfix"/>
             </div>
         )
