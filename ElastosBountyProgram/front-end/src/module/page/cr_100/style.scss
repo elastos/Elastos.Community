@@ -19,6 +19,8 @@ $mobile-padding: $gap_0 0px;
 
   h3 {
     @extend .komu-a;
+    font-size: 32px;
+    padding: $gap_3 0;
   }
 
   .ebp-wrap {
