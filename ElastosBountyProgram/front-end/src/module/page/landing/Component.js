@@ -152,11 +152,13 @@ export default class extends EmptyPage {
                 <div className="contentContainer">
                     <h1 className="mob">Elastos</h1>
                     <h2 className="mob">Powering Cyber Republic.</h2>
+                    {/*
                     <div className="cta-btn">
                         <p>Join us on <strong>GitHub</strong></p>
                         <div className="arrow sized"><img src="assets/images/arrow.svg"/></div>
                         <a href="https://github.com/elastos" target="_blank"></a>
                     </div>
+                    */}
                 </div>
             </section>
 

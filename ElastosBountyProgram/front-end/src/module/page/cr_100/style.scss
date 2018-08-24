@@ -68,8 +68,8 @@ $mobile-padding: $gap_0 0px;
   }
 
   .c_list {
+    margin: 0 66px;
     max-width: 1200px;
-    margin: 0 auto;
     position: relative;
   }
 
@@ -108,10 +108,17 @@ $mobile-padding: $gap_0 0px;
     }
 
     .content {
-      font-family: 'Synthese', sans-serif;
-      font-weight: 200;
-      font-size: 24px;
+
       margin-bottom: $gap_1;
+
+      p {
+        font-family: "synthese", sans-serif;
+        font-weight: 200;
+        font-size: 18px;
+        padding: 0 74px;
+        margin: 38px 0;
+        text-align: center;
+      }
     }
   }
 }

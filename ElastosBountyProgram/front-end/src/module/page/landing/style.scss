@@ -3761,11 +3761,14 @@
     #hero .contentContainer {
       position: static;
     }
+    /*
+    // removed due to css issues 1024-1200px width
     #hero .cta-btn {
       position: absolute;
       bottom: 35px;
       right: 50px;
     }
+    */
   }
   /*! mq: 1250 */
   @media screen and (max-width: 1250px) {
@@ -3881,9 +3884,6 @@
     }
     #globalMenu .hline.top {
       display: block;
-    }
-    #hero .cta-btn {
-      right: 35px;
     }
     #what {
       padding-top: 70px;

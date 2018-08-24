@@ -14,7 +14,7 @@ export default class extends BaseComponent {
                 <div className="footer-box">
                     <Row className="d_rowFooter d_footerSection">
                         <Col xs={24} sm={12} md={6}>
-                            <img className="logo_own" src="/assets/images/logo_own.png"/>
+                            <img className="logo_own" src="/assets/images/footer-shield.svg"/>
                         </Col>
                         <Col xs={24} sm={12} md={6}>
                             <div className="links footer-vertical-section">

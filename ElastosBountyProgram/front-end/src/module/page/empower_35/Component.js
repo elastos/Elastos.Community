@@ -190,7 +190,7 @@ export default class extends StandardPage {
         return (
             <div className="emp35-teamHeader">
                 <div className="container">
-                    <div id="emp35_darkBlock"/>
+                    {/* <div id="emp35_darkBlock"/> */}
                     <img id="emp35_lock" src="/assets/images/emp35/lock.png"/>
                     <img id="emp35_square" src="/assets/images/emp35/square.png"/>
                     <div className="inner-container">
@@ -350,7 +350,7 @@ export default class extends StandardPage {
                     <div className="inner-container">
                         <span className="dark-title">Lead Developer Support</span>
 
-                        {this.generatePositionCards(USER_EMPOWER_TYPE.WRITER_CONTENT, 2, COLOR_SCHEME.WHITE)}
+                        {this.generatePositionCards(USER_EMPOWER_TYPE.LEAD_DEVELOPER_SUPPORT, 2, COLOR_SCHEME.WHITE)}
                     </div>
                 </div>
             </div>

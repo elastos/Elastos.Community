@@ -83,7 +83,9 @@ export default class extends StandardPage {
                         {I18N.get('developer.cr100.welcome.title')}
                     </div>
                     <div className="content">
-                        {I18N.get('developer.cr100.welcome')}
+                        <p>{I18N.get('developer.cr100.welcome.1')}</p>
+                        <p>{I18N.get('developer.cr100.welcome.2')}</p>
+                        <p>{I18N.get('developer.cr100.welcome.3')}</p>
                     </div>
 
                     <img className="cr100_logo" src="/assets/images/CR100_Logo.png"/>
