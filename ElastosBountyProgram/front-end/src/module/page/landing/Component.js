@@ -65,7 +65,11 @@ export default class extends EmptyPage {
                             <li><a href="/empower35">Empower35</a></li>
                             <li><a href="/evangelist-training">Training</a></li>
                             <li><a href="/community">Community</a></li>
-                            <li><a href="/profile/teams">My Republic</a></li>
+
+                            {this.props.is_login
+                                ? <li><a href="/profile/teams">My Republic</a></li>
+                                : <li><a href="/login">Login</a></li>
+                            }
 
                             <li className="hasIcon">
                                 <span className="txt">Play Video</span>
