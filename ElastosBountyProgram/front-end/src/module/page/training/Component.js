@@ -148,10 +148,10 @@ export default class extends StandardPage {
                     </div>
                     <div className="content">
                         <Row className="d_Row">
-                            <Col span="12" className="left-col">
+                            <Col xs={24} sm={24} md={12} className="left-col">
                                 <img src="assets/images/training_itinerary.jpg"/>
                             </Col>
-                            <Col span="12" className="right-col">
+                            <Col xs={24} sm={24} md={12} className="right-col">
                                 <div>
                                     <span className="label">{I18N.get('training.itinerary.content.venueLabel')}: </span>
                                     <span>{I18N.get('training.itinerary.content.venue')}</span>

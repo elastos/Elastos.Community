@@ -273,6 +273,10 @@ $landingPageWidth: 1152px;
 
       .left-col {
         padding-right: $gap_1;
+
+        img {
+          width: 80%;
+        }
       }
 
       .right-col {
@@ -295,7 +299,9 @@ $landingPageWidth: 1152px;
         button {
           margin-top: $gap_3;
           margin-bottom: $gap_0;
-          width: 250px;
+          width: 80%;
+          height: 50px;
+          max-width: 300px;
         }
 
         .apply-soon {

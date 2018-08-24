@@ -13,10 +13,10 @@ export default class extends BaseComponent {
                 </div>
                 <div className="footer-box">
                     <Row className="d_rowFooter d_footerSection">
-                        <Col span={6}>
+                        <Col xs={24} sm={12} md={6}>
                             <img className="logo_own" src="/assets/images/logo_own.png"/>
                         </Col>
-                        <Col span={4}>
+                        <Col xs={24} sm={12} md={6}>
                             <div className="links footer-vertical-section">
                                 <div className="title brand-color">
                                     Links
@@ -29,7 +29,7 @@ export default class extends BaseComponent {
                                 <div><a href="https://elanews.net/">ELA News</a></div>
                             </div>
                         </Col>
-                        <Col span={8}>
+                        <Col xs={24} sm={24} md={6}>
                             <div className="contact footer-vertical-section">
                                 <div className="title brand-color">
                                     Contact
@@ -40,7 +40,7 @@ export default class extends BaseComponent {
                                 <div className="footer-color-dark">Other Contacts: <a href="mailto:contact@elastos.org">contact@elastos.org</a></div>
                             </div>
                         </Col>
-                        <Col span={6}>
+                        <Col xs={24} sm={24} md={6}>
                             <div className="join footer-vertical-section">
                                 <div className="title brand-color">
                                     Join Us On
