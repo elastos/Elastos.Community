@@ -194,10 +194,11 @@ export default {
 
     // Training
     'training.header.title': 'Evangelist Training',
-    'training.header.content.1': 'Cyber Republic will offer an all expenses paid trip to spend one week',
-    'training.header.content.2': 'training with the Elastos Team to become an official Elastos Evangelist.',
-    'training.header.content.3': 'Graduates of the program will be given an ELA budget and be',
-    'training.header.content.4': ' empowered to speak on behalf of Cyber Republic at events and meetups.',
+    'training.header.content.1': 'Cyber Republic will offer an all expenses paid trip to spend',
+    'training.header.content.2': 'one week training with the Elastos Team to become an official',
+    'training.header.content.3': 'Elastos Evangelist. Graduates of the program will be given',
+    'training.header.content.4': 'an ELA budget and be empowered to speak on behalf of',
+    'training.header.content.5': 'Cyber Republic at events and meetups.',
     'training.evangelist.title': 'Goals',
     'training.evangelist.content': 'The goal of the program is for participants to not only learn the technology from the Elastos Team first hand, but to develop a presentation crafted with marketing and PR professionals that will allow evangelists to be professionally prepared to represent the project to the public. Cyber Republic plans to run this program several times per year and applications will be available soon. ',
 
@@ -205,8 +206,6 @@ export default {
     'training.itinerary.title': 'Itinerary',
     'training.itinerary.content.venueLabel': 'Venue',
     'training.itinerary.content.venue': 'Houses in Silicon Valley',
-    'training.itinerary.content.accomodationLabel': 'Accomodation',
-    'training.itinerary.content.accomodation': 'Houses in Silicon Valley',
     'training.itinerary.content.day13Label': 'Day 1-3',
     'training.itinerary.content.day13': 'Learning Elastos Tech with Rong and tech team',
     'training.itinerary.content.day4Label': 'Day 4',

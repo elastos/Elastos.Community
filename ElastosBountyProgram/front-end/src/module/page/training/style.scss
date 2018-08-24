@@ -287,6 +287,22 @@ $landingPageWidth: 1152px;
       .label {
         font-weight: bold;
       }
+
+      .d_Row {
+        padding: $gap_5 0;
+        text-align: center;
+
+        button {
+          margin-top: $gap_3;
+          margin-bottom: $gap_0;
+          width: 250px;
+        }
+
+        .apply-soon {
+          font-style: italic;
+          font-size: 18px;
+        }
+      }
     }
   }
 
