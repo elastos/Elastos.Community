@@ -449,17 +449,32 @@ class C extends BaseComponent {
                     {I18N.get('developer.cr100.pitch.beneficiaries')}
                 </h3>
                 <div>
-                    {this.props.detail.pitch && this.props.detail.pitch.beneficiaries}
+                    {this.props.detail.pitch && this.format(this.props.detail.pitch.beneficiaries)}
                 </div>
 
                 <h3>
                     {I18N.get('developer.cr100.pitch.elaInfrastructure')}
                 </h3>
                 <div>
-                    {this.props.detail.pitch && this.props.detail.pitch.elaInfrastructure}
+                    {this.props.detail.pitch && this.format(this.props.detail.pitch.elaInfrastructure)}
                 </div>
             </div>
         )
+    }
+
+    format(contents) {
+        let first = true;
+        let elements = []
+        for(let char of contents) {
+            if (char === '-') {
+                if (!first) {
+                    elements.push(<br/>)
+                }
+                first = false
+           }
+           elements.push(char)
+        }
+        return elements
     }
 }
 
