@@ -107,6 +107,7 @@ export default class extends BaseComponent {
                     {I18N.get('0011')}
                 </Menu.Item>
 
+                {/*
                 <Menu.Item key="language">
                     <Dropdown overlay={langDropdown} style="margin-top: 24px;">
                         <a className="ant-dropdown-link" href="#">
@@ -114,6 +115,7 @@ export default class extends BaseComponent {
                         </a>
                     </Dropdown>
                 </Menu.Item>
+                */}
 
                 {this.props.isLogin && hasAdminAccess &&
                     <Menu.Item key="admin/tasks">

@@ -130,7 +130,7 @@ export default Form.create()(
                 <Modal
                     wrapClassName="emp35-apply-modal"
                     visible={visible}
-                    footer={footerModal}
+                    footer={null}
                     okText="Apply"
                     onCancel={onCancel}
                     onOk={onApply}
@@ -176,6 +176,12 @@ export default Form.create()(
                             {p.attachment}
                         </FormItem>
                     </Form>
+
+                    <div className="center">
+                        <br/>
+                        <Button onClick={onApply} className="cr-btn" type="primary">Apply</Button>
+                    </div>
+
                 </Modal>
             )
         }

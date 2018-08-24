@@ -1,7 +1,3 @@
-if (process.env.NODE_ENV === 'staging' || process.env.NODE_ENV === 'production') {
-    require('newrelic')
-}
-
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as helmet from 'helmet';

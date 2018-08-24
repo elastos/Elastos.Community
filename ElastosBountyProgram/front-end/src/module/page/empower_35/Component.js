@@ -356,8 +356,8 @@ export default class extends StandardPage {
         return (
             <div className="emp35-teamMedia">
                 <div className="container">
-                    <div className="inner-container">
-                        <span className="dark-title">Media</span>
+                    <div className="inner-container" style={{textAlign: 'left'}}>
+                        <span className="dark-title">MEDIA</span>
 
                         {this.generatePositionCards(USER_EMPOWER_TYPE.MEDIA, 2, COLOR_SCHEME.WHITE)}
                     </div>
