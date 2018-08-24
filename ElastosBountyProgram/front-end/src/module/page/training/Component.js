@@ -181,9 +181,21 @@ export default class extends StandardPage {
                             </Col>
                         </Row>
                         <Row className="d_Row subscribe" justify="center">
-                            <div>Stay updated by subscribing below with your E-Mail!</div>
-                            <Button type="primary" onClick={this.subscribe.bind(this)}>Subscribe</Button>
-                            <div className="apply-soon">(Applications available soon)</div>
+                            <div className="form-wrap">
+                                <p>Stay updated by subscribing below with your E-Mail</p>
+                                <form id="footer-form" className="signup-form" name="mailing-list" action="https://cyberrepublic.us19.list-manage.com/subscribe/post-json?u=acb5b0ce41bfe293d881da424&id=e6afbb4dba"
+                                      method="get">
+                                    <div className="email-wrap">
+                                        <input type="email" name="EMAIL" data-type="req" placeholder="Enter Email"/>
+                                        <button type="submit" className="arrow-submit">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 34">
+                                                <polygon points="0 0 0 33.487 16.744 16.744 0 0" style={{fill: '#1de9b6'}}/>
+                                                <polygon points="0 24.579 7.835 16.744 0 8.91 0 24.579" className="small-tri"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </Row>
                     </div>
                 </div>
