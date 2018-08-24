@@ -16,6 +16,7 @@ services:
     build: .
     command: npm run start:staging
     volumes:
+      - ./index.ts:/app/index.ts
       - ./src:/app/src
       - ./newrelic.js:/app/dist/newrelic.js
       - ./package.json:/app/package.json
