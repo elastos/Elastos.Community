@@ -124,12 +124,14 @@ export default class extends StandardPage {
         return (
             <div className="c_list_wrapper">
                 <div className="c_list">
-                    <h2 className="project-title">
-                        {I18N.get('developer.cr100.projects')}
-                    </h2>
-                    {list}
+                    <div className="inner-container">
+                        <h2 className="project-title">
+                            {I18N.get('developer.cr100.projects')}
+                        </h2>
+                        {list}
 
-                    <img className="cr100_logo_text" src="/assets/images/cr100_logo_text.png"/>
+                        <img className="cr100_logo_text" src="/assets/images/cr100_logo_text.png"/>
+                    </div>
                 </div>
             </div>
         )

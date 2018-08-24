@@ -68,9 +68,15 @@ $mobile-padding: $gap_0 0px;
   }
 
   .c_list {
-    margin: 0 66px;
+    margin: 0 auto;
     max-width: 1200px;
     position: relative;
+
+    @media screen and (max-width: 1300px) {
+      > .inner-container {
+        margin: 0 66px;
+      }
+    }
   }
 
   .cr100_logo_text {
