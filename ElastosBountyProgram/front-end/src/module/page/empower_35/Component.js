@@ -12,7 +12,7 @@ import ModalEmpowerForm from './modal_form/Component'
 
 // person head profile
 const image = '/assets/images/emp35/profile_new.jpg'
-const image_white = '/assets/images/user_blurred_white.png'
+const image_white = '/assets/images/user_blurred_white_2.png'
 
 const COLOR_SCHEME = {
     WHITE: 'WHITE',
@@ -250,14 +250,21 @@ export default class extends StandardPage {
     buildTeamBusiness() {
 
         return (
-            <div className="emp35-teamBusiness">
+            <div className="emp35-teamDark" style={{paddingTop: '120px'}}>
                 <div className="container">
-                    <div className="inner-container">
-                        <span className="blue-title">Business</span>
+                    <Row>
+                        <Col xs={{span: 24}} md={{span: 14}}>
+                            <span className="blue-title">Marketing</span>
 
-                        {this.generatePositionCards(USER_EMPOWER_TYPE.BUSINESS, 4, COLOR_SCHEME.DARK)}
+                            {this.generatePositionCards(USER_EMPOWER_TYPE.MARKETING, 3, COLOR_SCHEME.DARK)}
+                        </Col>
+                        <Col xs={{span: 24}} md={{span: 10}}>
 
-                    </div>
+                            <span className="blue-title">Product Manager</span>
+
+                            {this.generatePositionCards(USER_EMPOWER_TYPE.PRODUCT_MANAGER, 2, COLOR_SCHEME.DARK)}
+                        </Col>
+                    </Row>
                 </div>
             </div>
         )
@@ -266,13 +273,27 @@ export default class extends StandardPage {
     buildTeamMarketing() {
 
         return (
-            <div className="emp35-teamMarketing">
+            <div className="emp35-teamDark" style={{paddingTop: '120px'}}>
                 <div className="container">
-                    <div className="inner-container">
-                        <span className="blue-title">Marketing</span>
+                    <Row>
+                        <Col xs={{span: 24}} md={{span: 5}}>
+                            <span className="blue-title">Legal</span>
 
-                        {this.generatePositionCards(USER_EMPOWER_TYPE.MARKETING, 4, COLOR_SCHEME.DARK)}
-                    </div>
+                            {this.generatePositionCards(USER_EMPOWER_TYPE.LEGAL, 1, COLOR_SCHEME.DARK)}
+                        </Col>
+                        <Col xs={{span: 24}} md={{span: 9}}>
+
+                            <span className="blue-title">Writer</span>
+
+                            {this.generatePositionCards(USER_EMPOWER_TYPE.WRITER, 2, COLOR_SCHEME.DARK)}
+                        </Col>
+                        <Col xs={{span: 24}} md={{span: 10}}>
+
+                            <span className="blue-title">Partnership</span>
+
+                            {this.generatePositionCards(USER_EMPOWER_TYPE.PARTNERSHIP, 2, COLOR_SCHEME.DARK)}
+                        </Col>
+                    </Row>
                 </div>
             </div>
         )
@@ -281,17 +302,15 @@ export default class extends StandardPage {
     buildTeamLegal() {
 
         return (
-            <div className="emp35-teamLegal">
-                <div className="container">
+            <div className="emp35-teamLegal" style={{paddingTop: '120px'}}>
+                <div className="container" style={{paddingLeft: '66px'}}>
 
                     <img id="ela_logo_dark" src="/assets/images/emp35/ELA_logo_dark.png"/>
                     <img id="ela_logo_white" src="/assets/images/emp35/White.png"/>
 
-                    <div className="inner-container">
-                        <span className="blue-title">Legal</span>
+                    <span className="blue-title">Media Producer</span>
 
-                        {this.generatePositionCards(USER_EMPOWER_TYPE.LEGAL, 2, COLOR_SCHEME.DARK)}
-                    </div>
+                    {this.generatePositionCards(USER_EMPOWER_TYPE.MEDIA_PRODUCER, 1, COLOR_SCHEME.DARK)}
                 </div>
             </div>
         )
@@ -315,9 +334,9 @@ export default class extends StandardPage {
             <div className="emp35-teamDesigner">
                 <div className="container">
                     <div className="inner-container">
-                        <span className="dark-title">Designer</span>
+                        <span className="dark-title">Investments</span>
 
-                        {this.generatePositionCards(USER_EMPOWER_TYPE.DESIGNER, 2, COLOR_SCHEME.WHITE)}
+                        {this.generatePositionCards(USER_EMPOWER_TYPE.INVESTMENTS, 2, COLOR_SCHEME.WHITE)}
                     </div>
                 </div>
             </div>
@@ -329,9 +348,9 @@ export default class extends StandardPage {
             <div className="emp35-teamDesigner">
                 <div className="container">
                     <div className="inner-container">
-                        <span className="dark-title">Content Writer</span>
+                        <span className="dark-title">Lead Developer Support</span>
 
-                        {this.generatePositionCards(USER_EMPOWER_TYPE.WRITER_CONTENT, 3, COLOR_SCHEME.WHITE)}
+                        {this.generatePositionCards(USER_EMPOWER_TYPE.WRITER_CONTENT, 2, COLOR_SCHEME.WHITE)}
                     </div>
                 </div>
             </div>
@@ -340,13 +359,18 @@ export default class extends StandardPage {
 
     buildTeamWriter() {
         return (
-            <div className="emp35-teamDesigner">
+            <div className="emp35-teamMedia">
                 <div className="container">
-                    <div className="inner-container">
-                        <span className="dark-title">Technical Writer</span>
-
-                        {this.generatePositionCards(USER_EMPOWER_TYPE.WRITER_TECHNICAL, 3, COLOR_SCHEME.WHITE)}
-                    </div>
+                    <Row className="innerContainer">
+                        <Col xs={{span: 12}}>
+                            <span className="dark-title">dApp Analyst</span>
+                            {this.generatePositionCards(USER_EMPOWER_TYPE.DAPP_ANALYST, 1, COLOR_SCHEME.WHITE)}
+                        </Col>
+                        <Col xs={{span: 12}}>
+                            <span className="dark-title">dApp Consultant</span>
+                            {this.generatePositionCards(USER_EMPOWER_TYPE.DAPP_CONSULTANT, 1, COLOR_SCHEME.WHITE)}
+                        </Col>
+                    </Row>
                 </div>
             </div>
         )
@@ -357,9 +381,9 @@ export default class extends StandardPage {
             <div className="emp35-teamMedia">
                 <div className="container">
                     <div className="inner-container" style={{textAlign: 'left'}}>
-                        <span className="dark-title">MEDIA</span>
+                        <span className="dark-title">Business Development</span>
 
-                        {this.generatePositionCards(USER_EMPOWER_TYPE.MEDIA, 2, COLOR_SCHEME.WHITE)}
+                        {this.generatePositionCards(USER_EMPOWER_TYPE.BUSINESS_DEVELOPMENT, 1, COLOR_SCHEME.WHITE)}
                     </div>
                     <img id="emp35_seal" src="/assets/images/emp35/CyberRepublic-Blue.png"/>
                 </div>
@@ -369,25 +393,51 @@ export default class extends StandardPage {
 
     buildLowerSection() {
         return <section>
-            <div className="emp35-teamDark" style={{paddingTop: '45px'}}>
+            <div className="emp35-teamDark" style={{paddingTop: '120px'}}>
                 <div className="container">
-                    <div className="inner-container">
-                        <span className="dark-title">dApp Analyst</span>
+                    <Row>
+                        <Col xs={{span: 24}} md={{span: 10}}>
+                            <span className="blue-title">Lead Administrator</span>
 
-                        {this.generatePositionCards(USER_EMPOWER_TYPE.DAPP_ANALYST, 5, COLOR_SCHEME.DARK)}
-                    </div>
+                            {this.generatePositionCards(USER_EMPOWER_TYPE.ADMINISTRATOR, 1, COLOR_SCHEME.DARK)}
+                        </Col>
+                        <Col xs={{span: 24}} md={{span: 7}}>
+
+                            <span className="blue-title">Security</span>
+
+                            {this.generatePositionCards(USER_EMPOWER_TYPE.SECURITY, 1, COLOR_SCHEME.DARK)}
+                        </Col>
+                        <Col xs={{span: 24}} md={{span: 7}}>
+
+                            <span className="blue-title">HR Director</span>
+
+                            {this.generatePositionCards(USER_EMPOWER_TYPE.HR_DIRECTOR, 1, COLOR_SCHEME.DARK)}
+                        </Col>
+                    </Row>
                 </div>
             </div>
-            <div className="emp35-teamDark">
-                <br/>
-            </div>
-            <div className="emp35-teamDark">
+            <div className="emp35-teamDark" style={{paddingTop: '120px'}}>
                 <div className="container">
-                    <div className="inner-container">
-                        <span className="dark-title">Regional Evangelist</span>
+                    <Row>
+                        <Col xs={{span: 24}} md={{span: 10}}>
+                            <span className="blue-title">Lead Translator</span>
 
-                        {this.generatePositionCards(USER_EMPOWER_TYPE.REGIONAL_EVANGELIST, 10, COLOR_SCHEME.DARK)}
-                    </div>
+                            {this.generatePositionCards(USER_EMPOWER_TYPE.ADMINISTRATOR, 1, COLOR_SCHEME.DARK)}
+                        </Col>
+                        <Col xs={{span: 24}} md={{span: 14}}>
+
+                            <span className="blue-title">Open Titles</span>
+
+                            {this.generatePositionCards(USER_EMPOWER_TYPE.OPEN_TITLE, 3, COLOR_SCHEME.DARK)}
+                        </Col>
+                    </Row>
+                </div>
+            </div>
+            <div className="emp35-teamDark" style={{paddingTop: '120px'}}>
+                <div className="container">
+                    <span className="blue-title">Regional Evangelist</span>
+
+                    {this.generatePositionCards(USER_EMPOWER_TYPE.REGIONAL_EVANGELIST, 10, COLOR_SCHEME.DARK)}
                 </div>
             </div>
         </section>

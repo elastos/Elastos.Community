@@ -52,7 +52,7 @@ export default class extends StandardPage {
                             {this.buildHeader()}
                             {this.buildTraining()}
                             {this.buildItinerary()}
-                            {this.buildFooter()}
+                            {this.buildDisclaimer()}
                         </div>
                     </div>
                 </div>
@@ -172,10 +172,12 @@ export default class extends StandardPage {
                                     <span className="label">{I18N.get('training.itinerary.content.day6Label')}: </span>
                                     <span>{I18N.get('training.itinerary.content.day6')}</span>
                                 </div>
+                                {/*
                                 <div>
                                     <span className="label">{I18N.get('training.itinerary.content.day7Label')}: </span>
                                     <span>{I18N.get('training.itinerary.content.day7')}</span>
                                 </div>
+                                */}
                             </Col>
                         </Row>
                         <Row className="d_Row subscribe" justify="center">
@@ -189,7 +191,23 @@ export default class extends StandardPage {
         )
     }
 
-    buildFooter() {
+    buildDisclaimer() {
+        return (
+            <div className="disclaimer-box">
+                <div className="welcomeBox">
+                    <div className="title">
+                        {I18N.get('developer.cr100.disclaimer.title')}
+                    </div>
+                    <div className="content">
+                        {I18N.get('developer.cr100.disclaimer')}
+                    </div>
+                    <div className="content">
+                        {I18N.get('developer.cr100.dontseeProject.title')}
+                    </div>
+                </div>
 
+                <img className="footer_enrich" src="/assets/images/footer_enrich.png"/>
+            </div>
+        )
     }
 }

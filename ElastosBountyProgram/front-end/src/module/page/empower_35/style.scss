@@ -405,6 +405,10 @@ $landingPageWidth: 1152px;
 
   .emp35-teamDark {
     @extend %team-dark;
+
+    .container {
+      padding-left: 66px;
+    }
   }
 
   .lower-section {

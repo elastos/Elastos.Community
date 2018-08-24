@@ -198,8 +198,8 @@ export default {
 
     // Training
     'training.header.title': 'Evangelist Training',
-    'training.header.content.1': 'Cyber Republic will offer an all expenses paid trip to spend',
-    'training.header.content.2': 'one week training with the Elastos Team to become an official',
+    'training.header.content.1': 'Cyber Republic will offer an all expenses paid trip for evangelists and guest speakers to spend',
+    'training.header.content.2': 'one week training with the Elastos Team in various regions to become an official',
     'training.header.content.3': 'Elastos Evangelist. Graduates of the program will be given',
     'training.header.content.4': 'an ELA budget and be empowered to speak on behalf of',
     'training.header.content.5': 'Cyber Republic at events and meetups.',
@@ -210,17 +210,14 @@ export default {
     'training.itinerary.title': 'Itinerary',
     'training.itinerary.content.venueLabel': 'Venue',
     'training.itinerary.content.venue': 'Houses in Silicon Valley',
-    'training.itinerary.content.day13Label': 'Day 1-3',
-    'training.itinerary.content.day13': 'Learning Elastos Tech with Rong and tech team',
-    'training.itinerary.content.day4Label': 'Day 4',
+    'training.itinerary.content.day13Label': 'Day 1-4',
+    'training.itinerary.content.day13': 'Learning Elastos Vision and Tech',
+    'training.itinerary.content.day4Label': 'Day 5',
     'training.itinerary.content.day4': 'Public Speaking Skills, Q&A training',
-    'training.itinerary.content.day5Label': 'Day 5',
-    'training.itinerary.content.day5': 'Team Training',
-    'training.itinerary.content.day6Label': 'Day 6',
+    'training.itinerary.content.day5Label': 'Day 6',
+    'training.itinerary.content.day5': 'TBD',
+    'training.itinerary.content.day6Label': 'Day 7',
     'training.itinerary.content.day6': 'Pitch presentation practice',
-    'training.itinerary.content.day7Label': 'Day 7',
-    'training.itinerary.content.day7': 'Pitch day with judges',
-
 
     // Project/Team detail
     'project.detail.deadline': 'Deadline',

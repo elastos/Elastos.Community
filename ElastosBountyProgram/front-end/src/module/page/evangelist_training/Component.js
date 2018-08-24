@@ -66,7 +66,7 @@ export default class extends StandardPage {
                             {this.buildEmpower()}
                             {this.buildTeamHeader()}
                             {this.buildTeamBusiness()}
-                            {this.buildFooter()}
+                            {this.buildDisclaimer()}
                         </div>
                     </div>
                 </div>
