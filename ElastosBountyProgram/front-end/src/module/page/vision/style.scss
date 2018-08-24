@@ -28,12 +28,12 @@ $landingPageWidth: 1152px;
 
     background-color: $bg_blue;
     padding-top: 100px;
+    padding-bottom: 100px;
 
     .container {
       position: relative;
       margin-left: auto;
       margin-right: auto;
-      padding-bottom: $gap_5;
 
       max-width: 915px;
       background-color: #fff;
