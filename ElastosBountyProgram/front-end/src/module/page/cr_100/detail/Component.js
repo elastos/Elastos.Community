@@ -37,12 +37,14 @@ class C extends BaseComponent {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const taskId = this.props.taskId
-        this.props.getTaskDetail(taskId)
-        this.props.getTeams({
-            owner: this.props.currentUserId
-        })
+        await this.props.getTaskDetail(taskId)
+        if (this.props.currentUserId) {
+            await this.props.getTeams({
+                owner: this.props.currentUserId
+            })
+        }
     }
 
     componentWillUnmount() {
@@ -416,8 +418,12 @@ class C extends BaseComponent {
     getFooter() {
         return !this.state.applying && !this.isTaskOwner() &&
             <div className="halign-wrapper footer">
-                <Button className="submit-button" onClick={() => this.setState({applying: true})}>
-                    {I18N.get('developer.cr100.submit_whitepaper')}</Button>
+                {this.props.currentUserId ?
+                    <Button className="submit-button" onClick={() => this.setState({applying: true})}>
+                        {I18N.get('developer.cr100.submit_whitepaper')}
+                    </Button> :
+                    <a onClick={() => this.props.history.push('/login')}>Please login/register to apply</a>
+                }
             </div>
     }
 

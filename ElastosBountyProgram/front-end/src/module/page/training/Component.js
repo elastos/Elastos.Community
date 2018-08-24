@@ -205,8 +205,6 @@ export default class extends StandardPage {
                         {I18N.get('developer.cr100.dontseeProject.title')}
                     </div>
                 </div>
-
-                <img className="footer_enrich" src="/assets/images/footer_enrich.png"/>
             </div>
         )
     }
