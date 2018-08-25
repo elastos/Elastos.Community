@@ -151,9 +151,11 @@ export default class extends StandardPage {
                         {I18N.get('developer.cr100.dontseeProject.title')}
                     </div>
                     <div className="content">
-                        <Button onClick={this.handleSubmitProjectProposal.bind(this)}>
-                            {I18N.get('developer.cr100.dontseeProject')}
-                        </Button>
+                        <a href="mailto:cyberrepublic@elastos.org?subject=CR100 Project Proposal">
+                            <Button>{/* onClick={this.handleSubmitProjectProposal.bind(this)}> */}
+                                {I18N.get('developer.cr100.dontseeProject')}
+                            </Button>
+                        </a>
                     </div>
                 </div>
 
