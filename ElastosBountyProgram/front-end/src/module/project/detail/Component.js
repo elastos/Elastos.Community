@@ -46,7 +46,7 @@ class C extends BaseComponent {
         this.props.resetAllTeams()
     }
 
-    isTeamOwner() {
+    isTaskOwner() {
         return this.props.detail.createdBy._id === this.props.currentUserId
     }
 
@@ -106,6 +106,11 @@ class C extends BaseComponent {
         const details = this.props.detail;
 
         let carouselImages = []
+
+        if (details.thumbnail) {
+            carouselImages.push(<img src={details.thumbnail} key="main"/>)
+        }
+
         for (let i of details.pictures) {
             carouselImages.push(<img src={i.url} key={i}/>)
         }
@@ -185,11 +190,13 @@ class C extends BaseComponent {
     getCurrentContributors() {
         const detail = this.props.detail
         const applicants = _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.APPROVED });
-        applicants.unshift({
-            _id: 'such_fake_id',
-            user: this.props.detail.createdBy,
-            type: TASK_CANDIDATE_TYPE.USER
-        })
+        if (this.isTaskOwner()) {
+            applicants.unshift({
+                _id: 'such_fake_id',
+                user: this.props.detail.createdBy,
+                type: TASK_CANDIDATE_TYPE.USER
+            })
+        }
         const columns = [{
             title: 'Name',
             key: 'name',
@@ -221,7 +228,7 @@ class C extends BaseComponent {
             render: candidate => {
                 return (
                     <div>
-                        {this.isTeamOwner() && candidate._id !== 'such_fake_id' &&
+                        {this.isTaskOwner() && candidate._id !== 'such_fake_id' &&
                         <div className="text-right">
                             <a onClick={this.removeUser.bind(this, candidate._id)}>{I18N.get('project.detail.remove')}</a>
                         </div>
@@ -276,7 +283,7 @@ class C extends BaseComponent {
             render: candidate => {
                 return (
                     <div className="text-right">
-                        {this.props.page === 'LEADER' && (this.isTeamOwner() || this.isMember(candidate._id)) && (
+                        {this.props.page === 'LEADER' && (this.isTaskOwner() || this.isMember(candidate._id)) && (
                             <span>
                                 <a onClick={this.showAppModal.bind(this, candidate._id)}>{I18N.get('project.detail.view')}</a>
                                 <Divider type="vertical"/>
@@ -288,7 +295,7 @@ class C extends BaseComponent {
                                 {this.isMember(candidate._id) && <Divider type="vertical"/>}
                             </span>)
                         }
-                        {this.isTeamOwner() &&
+                        {this.isTaskOwner() &&
                         <span className="inline-block">
                             <a onClick={this.approveUser.bind(this, candidate._id)}>{I18N.get('project.detail.approve')}</a>
                             <Divider type="vertical"/>

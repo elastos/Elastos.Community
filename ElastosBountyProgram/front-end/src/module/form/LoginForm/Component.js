@@ -95,6 +95,11 @@ class C extends BaseComponent {
                         {I18N.get('login.submit')}
                     </Button>
                 </FormItem>
+                <FormItem>
+                    <Button onClick={() => this.props.history.push('/register')} type="ebp" htmlType="button" className="d_btn">
+                        Don't have an account? Click here to register.
+                    </Button>
+                </FormItem>
             </Form>
         )
     }

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Elastos Bounty Program Front-end",
   "scripts": {
-    "start": "rimraf dev_dist webpack-dev-server --mode development --config ./webpack/webpack.dev.js",
+    "start": "rimraf dev_dist && GOOGLE_MAPS_API_KEY=abc webpack-dev-server --mode development --config ./webpack/webpack.dev.js",
     "build:production": "rimraf dist && NODE_ENV=production webpack --mode production --config ./webpack/webpack.prod.js --colors --progress",
     "build:staging": "rimraf dist && NODE_ENV=staging webpack --mode development --config ./webpack/webpack.prod.js --colors --progress",
     "lint": "eslint ./src/**/**.js",
@@ -81,6 +81,7 @@
     "rimraf": "2.6.2",
     "sass-loader": "7.0.1",
     "style-loader": "0.21.0",
+    "svg-inline-loader": "^0.8.0",
     "url-loader": "1.0.1",
     "webpack": "4.8.1",
     "webpack-cli": "^2.1.3",

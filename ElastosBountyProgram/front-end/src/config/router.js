@@ -5,6 +5,9 @@ import DeveloperPage from '@/module/page/developer/Container'
 import DeveloperLearnPage from '@/module/page/developer/learn/Container'
 import DeveloperSearchPage from '@/module/page/developer/search/Container'
 import LeaderPage from '@/module/page/leader/Container'
+import Cr100Page from '@/module/page/cr_100/Container'
+import Emp35Page from '@/module/page/empower_35/Container'
+import Training from '@/module/page/training/Container'
 
 // this is the leaders link in the header
 import DirectoryPage from '@/module/page/directory/Container'
@@ -25,6 +28,7 @@ import AboutPage from '@/module/page/static/about/Container'
 import SlackPage from '@/module/page/static/slack/Container'
 import EventsPage from '@/module/page/static/events/Container'
 import EventPage from '@/module/page/static/details/Container'
+import VisionPage from '@/module/page/vision/Container'
 
 import ProfileInfoPage from '@/module/page/profile/info/Container'
 import ProfileTasksPage from '@/module/page/profile/tasks/Container'
@@ -86,6 +90,18 @@ export default [
     {
         path: '/social',
         page: SocialPage
+    },
+    {
+        path: '/cr100',
+        page: Cr100Page
+    },
+    {
+        path: '/empower35',
+        page: Emp35Page
+    },
+    {
+        path: '/evangelist-training',
+        page: Training
     },
     {
         path: '/developer',
@@ -184,6 +200,10 @@ export default [
     {
         path: '/events/:eventId',
         page: EventPage
+    },
+    {
+        path: '/vision',
+        page: VisionPage
     },
     /*
     ********************************************************************************

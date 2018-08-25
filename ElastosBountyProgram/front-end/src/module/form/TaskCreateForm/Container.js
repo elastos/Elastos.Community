@@ -51,6 +51,7 @@ export default createContainer(Component, (state) => {
                     attachmentFilename: st.attachment_filename,
                     attachmentType: st.attachment_type,
 
+                    pitch: formData.pitch,
                     pictures: formData.pictures,
                     domain: formData.domain,
                     recruitedSkillsets: formData.recruitedSkillsets,
@@ -58,7 +59,7 @@ export default createContainer(Component, (state) => {
                     communityParent: formData.communityParent,
 
                     candidateLimit: formData.taskCandLimit,
-                    candidateSltLimit: formData.taskCandSltLimit,
+                    candidateSltLimit: formData.taskCandSltLimit
                 }
 
                 Object.assign(createObj, {
@@ -120,6 +121,7 @@ export default createContainer(Component, (state) => {
                     thumbnail: st.upload_url,
                     pictures: formData.pictures,
                     domain: formData.domain,
+                    pitch: formData.pitch,
                     recruitedSkillsets: formData.recruitedSkillsets,
                     community: !formData.community ? null : formData.community,
                     communityParent: formData.communityParent,

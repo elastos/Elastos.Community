@@ -1,3 +1,5 @@
+@import './color.scss';
+
 .flex-center{
   display: flex;
   align-content: center;
@@ -91,9 +93,9 @@
 }
 
 .ebp-header-divider {
-  height: 2px;
-  background: linear-gradient(90deg, #ffffff 3.52% ,rgba(71, 170, 167, 0.55) 47.51%, rgba(224, 224, 224, 0.55) 100%);
-  transform: matrix(1, 0, 0, -1, 0, 0);
+  height: 0;
+  // background: linear-gradient(90deg, #ffffff 3.52% ,rgba(71, 170, 167, 0.55) 47.51%, rgba(224, 224, 224, 0.55) 100%);
+  // transform: matrix(1, 0, 0, -1, 0, 0);
 }
 
 //Common class
@@ -129,4 +131,28 @@
     padding: 0 15px;
     border-width: 0;
   }
+}
+
+.alpha-tag {
+  color: $primary_color;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: right;
+  opacity: 0.66;
+}
+
+.cr-btn {
+  border-radius: 0;
+  border: 1px solid #0F2631;
+  background-color: $bg_blue;
+
+  > span {
+    color: #000;
+    font-family: "komu-a", sans-serif;
+    font-size: 28px;
+    line-height: 33px;
+    letter-spacing: 0.1em;
+  }
+  padding: 15px 31px 10px;
+  height: 53px;
 }

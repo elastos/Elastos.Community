@@ -102,6 +102,7 @@ export default class extends Base {
             devBackground,
 
             reason,
+            suitedReason,
 
             attachment,
             attachmentType,
@@ -142,6 +143,7 @@ export default class extends Base {
             devBackground,
 
             reason,
+            suitedReason,
 
             attachment,
             attachmentType,

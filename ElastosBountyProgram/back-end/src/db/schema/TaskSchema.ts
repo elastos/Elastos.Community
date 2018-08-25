@@ -61,6 +61,13 @@ export const TaskCandidate = {
     team : {type: Schema.Types.ObjectId, ref: 'team'},
     user : {type: Schema.Types.ObjectId, ref: 'users'},
 
+    attachment: {
+        type : String
+    },
+
+    attachmentType: String,
+    attachmentFilename: String,
+
     category: String,
 
     // constants.TASK_CANDIDATE_STATUS - PENDING, APPROVED
@@ -91,6 +98,14 @@ export const TaskActivity = {
     notes : String
 }
 
+const ProjectPitch = {
+    problem: String,
+    valueProposition: String,
+    useCase: String,
+    beneficiaries: String,
+    elaInfrastructure: String
+}
+
 /**
  * A task is a base class for any event
  *
@@ -107,6 +122,8 @@ export const Task = {
     },
     descBreakdown: String,
     goals: String,
+
+    pitch: ProjectPitch,
 
     thumbnail : {
         type : String

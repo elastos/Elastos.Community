@@ -186,13 +186,31 @@ export default class extends Base {
         }).select(selectFields)
     }
 
-    public async findAll(): Promise<Document[]>{
+    /*
+    ************************************************************************************
+    * Find All Users
+    * - be very restrictive here, careful to not select sensitive fields
+    * - TODO: may need sorting by full name for Empower 35? Or something else?
+    ************************************************************************************
+     */
+    public async findAll(query): Promise<Document[]>{
         const db_user = this.getDBModel('User');
         selectFields += ' -email'
 
-        return await db_user.getDBInstance().find({
-            active : true
-        }).select(selectFields).sort({username: 1});
+        const finalQuery:any = {
+            active: true,
+            archived: {$ne: true}
+        }
+
+        if (query.empower) {
+            finalQuery.empower = JSON.parse(query.empower)
+        }
+
+        return await db_user
+            .getDBInstance()
+            .find(finalQuery)
+            .select(selectFields)
+            .sort({username: 1});
     }
 
     public async changePassword(param): Promise<boolean>{

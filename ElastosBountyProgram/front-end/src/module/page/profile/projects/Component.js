@@ -57,6 +57,22 @@ export default class extends StandardPage {
             )
         })
 
+        if (item.thumbnail) {
+            pictures.unshift(
+                <div key="main">
+                    <img width={188} height={188} alt="logo" src={item.thumbnail} />
+                </div>
+            )
+        }
+
+        if (_.isEmpty(pictures)) {
+            pictures.unshift(
+                <div key="main">
+                    <img width={188} height={188} alt="logo" src='/assets/images/Elastos_Logo.png' />
+                </div>
+            )
+        }
+
         return (
             <div className="carousel-wrapper">
                 <Carousel autoplay>
@@ -84,7 +100,6 @@ export default class extends StandardPage {
             return {
                 href: '',
                 title: task.name,
-                pictures: task.pictures && task.pictures.length > 0 ? task.pictures : [{ url: '/assets/images/Elastos_Logo.png' }],
                 description: description_fn(task),
                 content: task.description,
                 owner: task.createdBy,
@@ -101,7 +116,7 @@ export default class extends StandardPage {
                         <MediaQuery minWidth={MIN_WIDTH_PC}>
                             <List.Item
                                 key={item.id}
-                                extra={this.getCarousel(item)}
+                                extra={this.getCarousel(item.task)}
                             >
                                 <h3 class="no-margin no-padding one-line brand-color">
                                     <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
@@ -249,6 +264,11 @@ export default class extends StandardPage {
                                     {(this.props.is_leader || this.props.is_admin) &&
                                     <div className="pull-right filter-group">
                                         <Button onClick={() => this.props.history.push('/task-create?type=PROJECT&category=DEVELOPER')}>Create Project</Button>
+                                    </div>
+                                    }
+                                    {this.props.is_admin &&
+                                    <div className="pull-right filter-group gap-right">
+                                        <Button onClick={() => this.props.history.push('/task-create?type=PROJECT&category=CR100')}>Create CR100</Button>
                                     </div>
                                     }
                                     <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>

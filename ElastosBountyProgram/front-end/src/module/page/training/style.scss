@@ -1,0 +1,366 @@
+
+@import "../../../style/variable";
+@import "../../../style/color";
+
+$mobile-padding: $gap_0 0px;
+$landingPageWidth: 1152px;
+
+.p_training {
+  background: #ffffff;
+  text-align: left;
+
+  %container {
+    max-width: $landingPageWidth;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media only screen and (max-width: $mobile-width) {
+    padding: 0 24px;
+  }
+
+  .ebp-wrap {
+    padding: 0;
+  }
+
+  .training-header {
+
+    background-color: #031E28;
+    min-height: 750px;
+    position: relative;
+
+    .circle-container {
+      position: absolute;
+      bottom: 50%;
+      left: $gap_5;
+
+      .circle {
+        display: block;
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    .right-box-container {
+      position: absolute;
+      top: $gap_4;
+      right: $gap_3;
+
+      .small-box {
+
+      }
+      .box {
+        margin-left: 50px;
+      }
+      img {
+        position: absolute;
+        top: 62.5px;
+        left: 62.5px;
+        width: 75px;
+        height: 75px;
+      }
+    }
+
+    .bottom-box-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    .connector-container {
+      position: absolute;
+      bottom: -21.5px;
+      right: 20%;
+    }
+
+    .small-box {
+      width: 50px;
+      height: 50px;
+      background-color: #434D72;
+      opacity: 0.4;
+    }
+
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: #434D72;
+      opacity: 0.4;
+    }
+
+    .container {
+
+      padding-top: 95px;
+
+      position: relative;
+      text-align: center;
+
+      // this floats behind the text
+      .rect-container {
+        z-index: 1;
+
+        position: absolute;
+        width: 100%;
+
+        .rect {
+          position: static;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          border: 38px solid #434D72;
+          width: 450px;
+          height: 450px;
+          opacity: 0.4;
+        }
+      }
+
+      .title {
+        margin-top: 106px;
+
+        font-family: "komu-a",sans-serif;
+        font-size: 75px;
+        color: $cr100_green;
+      }
+
+      .content {
+        margin-top: 240px;
+
+        font-family: "synthese",sans-serif;
+        font-size: 24px;
+        color: white;
+
+        > .center {
+          margin-left: auto;
+          margin-right: auto;
+          width: 850px;
+        }
+
+        /*
+        ************************************************************************
+        Strike Text Green
+        ************************************************************************
+        */
+        .strike-text {
+          position: relative;
+          display: inline-block;
+
+          .strike-line {
+            position: absolute;
+            left: 0;
+            top: 24px;
+            width: 100%;
+            height: 12px;
+            background-color: #434D72;
+            opacity: 0.4;
+            z-index: 0;
+          }
+          .strike-line:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -14px;
+            width: 14px;
+            height: 12px;
+            background-color: #434D72;
+            z-index: 0;
+          }
+          .strike-line:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: auto;
+            right: -14px;
+            width: 14px;
+            height: 12px;
+            background-color: #434D72;
+          }
+          p {
+            position: relative;
+            z-index: 1;
+            padding-bottom: 0;
+          }
+
+          &.filler {
+            width: 100%;
+            height: 0;
+          }
+
+          &.mob {
+            display: none;
+          }
+        }
+      }
+
+      .title,
+      .content {
+        width: 100%;
+        position: absolute;
+        z-index: 5;
+      }
+    }
+  }
+
+  .evangelist {
+    min-height: 750px;
+
+    background-color: $bg_blue;
+    padding-top: 100px;
+
+    .container {
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+      padding-bottom: $gap_5;
+
+      max-width: 915px;
+      background-color: #fff;
+
+      .left-box-container {
+        position: absolute;
+        top: -50px;
+        left: -50px;
+      }
+      .right-box-container {
+        position: absolute;
+        bottom: $gap_1;
+        right: -29.5px;
+      }
+    }
+
+    .title {
+      font-family: "synthese",sans-serif;
+      font-size: 36px;
+      padding-top: 102px;
+      text-align: center;
+    }
+
+    .content {
+      font-family: "synthese",sans-serif;
+      font-weight: 200;
+      font-size: 24px;
+      padding: 38px 80px 74px;
+      text-align: center;
+    }
+  }
+
+  .itinerary {
+
+    min-height: 750px;
+    background-color: #fff;
+    padding-top: 100px;
+    padding-bottom: $gap_5;
+    position: relative;
+
+    .connector {
+      position: absolute;
+      top: -92.5px;
+      left: $gap_5;
+    }
+
+    .title {
+      font-family: "synthese",sans-serif;
+      font-size: 48px;
+      padding-top: 102px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .content {
+      padding: $gap_5 0;
+      font-family: "synthese",sans-serif;
+      font-weight: 200;
+      font-size: 24px;
+      text-align: right;
+
+      .left-col {
+        padding-right: $gap_1;
+
+        img {
+          width: 80%;
+        }
+      }
+
+      .right-col {
+        padding-left: $gap_1;
+        text-align: left;
+
+        > div {
+          padding: $gap_1 0;
+        }
+      }
+
+      .label {
+        font-weight: bold;
+      }
+
+      .d_Row {
+        padding: $gap_5 0;
+        text-align: center;
+
+        button {
+          margin-top: $gap_3;
+          margin-bottom: $gap_0;
+          width: 80%;
+          height: 50px;
+          max-width: 300px;
+        }
+
+        .apply-soon {
+          font-style: italic;
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
+  .c_Footer {
+    margin-top: 0;
+  }
+
+  .welcomeBox {
+    max-width: 800px;
+    margin: $gap_5 auto;
+    padding: $gap_4;
+    font-size: 20px;
+    text-align: center;
+    background: $bg_blue;
+    position: relative;
+
+    .cr100_logo {
+      position: absolute;
+      top: -$gap_4;
+      left: -$gap_4;
+    }
+
+    .oomph_box {
+      position: absolute;
+      bottom: -$gap_2;
+      right: -$gap_3;
+    }
+
+    .title {
+      font-size: 36px;
+      font-weight: 400;
+      margin-bottom: 38px;
+      font-family: 'Synthese', sans-serif;
+    }
+
+    .content {
+
+      margin-bottom: $gap_1;
+
+      p {
+        font-family: "synthese", sans-serif;
+        font-weight: 200;
+        font-size: 18px;
+        margin: 38px 0;
+        text-align: center;
+      }
+    }
+  }
+
+  .disclaimer-box {
+    background: $bg_dark;
+    padding: $gap_2 0;
+    position: relative;
+  }
+}

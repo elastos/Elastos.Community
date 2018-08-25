@@ -25,7 +25,9 @@ export default createContainer(Component, (state) => {
         async getSubmissions () {
             return submissionService.index({
                 admin: true,
-                type: SUBMISSION_TYPE.FORM_EXT
+                type: JSON.stringify({
+                    $in: [SUBMISSION_TYPE.FORM_EXT, SUBMISSION_TYPE.EMPOWER_35]
+                })
             })
         },
 
@@ -42,14 +44,18 @@ export default createContainer(Component, (state) => {
 
             return submissionService.index({
                 admin: true,
-                type: SUBMISSION_TYPE.FORM_EXT
+                type: JSON.stringify({
+                    $in: [SUBMISSION_TYPE.FORM_EXT, SUBMISSION_TYPE.EMPOWER_35]
+                })
             })
         },
 
         async showArchived(showArchived) {
             await submissionService.index({
                 admin: true,
-                type: SUBMISSION_TYPE.FORM_EXT,
+                type: JSON.stringify({
+                    $in: [SUBMISSION_TYPE.FORM_EXT, SUBMISSION_TYPE.EMPOWER_35]
+                }),
                 showArchived: showArchived
             })
         }

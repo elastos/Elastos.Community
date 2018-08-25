@@ -1,9 +1,10 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import {Layout, Menu, Icon, Badge, Avatar, Modal, Dropdown} from 'antd'
+import {Affix, Layout, Menu, Icon, Badge, Avatar, Modal, Dropdown, Popover} from 'antd'
 import _ from 'lodash'
 import I18N from '@/I18N'
 import MediaQuery from 'react-responsive'
+import Flyout from './Flyout';
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
 import {USER_ROLE} from '@/constant'
 
@@ -12,7 +13,13 @@ const SubMenu = Menu.SubMenu
 const MenuItemGroup = Menu.ItemGroup
 
 export default class extends BaseComponent {
-
+    constructor() {
+        super();
+        this.state = {
+            affixed: false,
+            popover: false
+        }
+    }
     /*
     buildOverviewDropdown() {
         return (
@@ -82,6 +89,7 @@ export default class extends BaseComponent {
 
     buildHelpDropdown() {
         const langDropdown = this.buildLanguageDropdown()
+        const hasAdminAccess = [USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(this.props.role)
 
         return (
             <Menu onClick={this.clickItem.bind(this)} className="help-menu">
@@ -91,7 +99,6 @@ export default class extends BaseComponent {
                 <Menu.Item key="about">
                     {I18N.get('0008')}
                 </Menu.Item>
-
                 <Menu.Item key="faq">
                     {I18N.get('0009')}
                 </Menu.Item>
@@ -100,6 +107,7 @@ export default class extends BaseComponent {
                     {I18N.get('0011')}
                 </Menu.Item>
 
+                {/*
                 <Menu.Item key="language">
                     <Dropdown overlay={langDropdown} style="margin-top: 24px;">
                         <a className="ant-dropdown-link" href="#">
@@ -107,12 +115,25 @@ export default class extends BaseComponent {
                         </a>
                     </Dropdown>
                 </Menu.Item>
+                */}
+
+                {this.props.isLogin && hasAdminAccess &&
+                    <Menu.Item key="admin/tasks">
+                        {I18N.get('0203')}
+                    </Menu.Item>
+                }
+
+                {this.props.isLogin &&
+                    <Menu.Item key="logout">
+                        {I18N.get('0204')}
+                    </Menu.Item>
+                }
             </Menu>
         )
     }
 
     getSelectedKeys() {
-        const keys = _.map(['profile', 'developer', 'social', 'community'], (key) => {
+        const keys = _.map(['cr100', 'empower35', 'evangelist-training', 'profile', 'developer', 'social', 'community'], (key) => {
             return ((this.props.pathname || '').indexOf(`/${key}`) === 0) ? key : ''
         })
 
@@ -125,14 +146,32 @@ export default class extends BaseComponent {
         // const overviewDropdown = this.buildOverviewDropdown()
         const acctDropdown = this.buildAcctDropdown()
         const helpDropdown = this.buildHelpDropdown()
-
         return (
             <Header className="c_Header">
-                <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu c_Main_Menu pull-left"
+                <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu pull-left"
                     selectedKeys={this.getSelectedKeys()} mode="horizontal">
-                    <Menu.Item className="c_MenuItem logo" key="home">
-                        <img src='/assets/images/cr_seal_white.png' />
+                    <Menu.Item className="c_MenuItem logo" key="landing">
+                        <img src="/assets/images/logo.svg" alt="Cyber Republic" className="dsk"/>
+                        <img src="/assets/images/logo-mark.svg" className="mob"/>
+                        <div className="alpha-tag">ALPHA</div>
                     </Menu.Item>
+                </Menu>
+                {
+                <Menu className="c_Header_Menu c_Side_Menu pull-right">
+                    <MediaQuery minWidth={MIN_WIDTH_PC}>
+                        <Menu.Item className="c_MenuItem help pull-right no-margin" key="help">
+                            <Dropdown overlay={helpDropdown} style="margin-top: 24px;">
+                                <a className="ant-dropdown-link">
+                                    <Icon className="no-margin" type="question-circle-o" />
+                                </a>
+                            </Dropdown>
+                        </Menu.Item>
+                    </MediaQuery>
+                    <Menu.Item className="c_MenuItem mobile" key="mobileMenu" onClick={this.props.toggleMobileMenu}>
+                        <Icon type="menu-fold"/>
+                    </Menu.Item>
+                </Menu>
+                }
                     {/*
                     <Menu.Item className="c_MenuItem overview">
                         <Dropdown overlay={overviewDropdown} style="margin-top: 24px;">
@@ -142,30 +181,38 @@ export default class extends BaseComponent {
                         </Dropdown>
                     </Menu.Item>
                     */}
-
-                    {this.props.isLogin &&
+                <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu pull-right"
+                      selectedKeys={this.getSelectedKeys()} mode="horizontal">
+                    {/*this.props.isLogin &&
                         <Menu.Item className="c_MenuItem link right" key="profile">
                             {I18N.get('0104')}
                         </Menu.Item>
-                    }
-
-                    {/*
-                    <Menu.Item className="c_MenuItem link" key="cr100">
-                        CR100
-                    </Menu.Item>
-
-                    <Menu.Item className="c_MenuItem link" key="empower">
-                        Empower
-                    </Menu.Item>
                     */}
 
-                    <Menu.Item className="c_MenuItem link" key="developer">
-                        {I18N.get('0100')}
+                    <Menu.Item className="c_MenuItem link" key="cr100">
+                        {I18N.get('0105')}
                     </Menu.Item>
 
-                    <Menu.Item className="c_MenuItem link" key="community">
+                    <Menu.Item className="c_MenuItem link" key="empower35">
+                        {I18N.get('0106')}
+                    </Menu.Item>
+
+                    <Menu.Item className="c_MenuItem link" key="evangelist-training">
+                        {I18N.get('0107')}
+                    </Menu.Item>
+
+                    <Menu.Item className="c_MenuItem link" key="developer">
                         {I18N.get('0102')}
                     </Menu.Item>
+
+                    { this.props.isLogin ?
+                        <Menu.Item className="c_MenuItem link" key="profile">
+                            {I18N.get('0104')}
+                        </Menu.Item>
+                        : <Menu.Item className="c_MenuItem link" key="login">
+                            {I18N.get('0201')}
+                        </Menu.Item>
+                    }
 
                     {/*
                     <Menu.Item className="c_MenuItem" key="directory">
@@ -183,36 +230,20 @@ export default class extends BaseComponent {
                     </Menu.Item>
                     */}
                 </Menu>
-                <Menu className="c_Header_Menu c_Side_Menu pull-right">
-                    <MediaQuery minWidth={MIN_WIDTH_PC}>
-                        <Menu.Item className="c_MenuItem help pull-right no-margin" key="help">
-                            <Dropdown overlay={helpDropdown} style="margin-top: 24px;">
-                                <a className="ant-dropdown-link">
-                                    <Icon className="no-margin" type="question-circle-o" />
-                                </a>
-                            </Dropdown>
-                        </Menu.Item>
-                    </MediaQuery>
-                    <Menu.Item className="c_MenuItem account pull-right no-margin">
-                        <Dropdown overlay={acctDropdown} style="margin-top: 24px;">
-                            <a className="ant-dropdown-link">
-                                {I18N.get('0004')} <Icon type="down" />
-                            </a>
-                        </Dropdown>
-                    </Menu.Item>
-                    <Menu.Item className="c_MenuItem mobile" key="mobileMenu" onClick={this.props.toggleMobileMenu}>
-                        <Icon type="menu-fold"/>
-                    </Menu.Item>
-                </Menu>
             </Header>
         )
     }
 
     clickItem(e) {
+
         const key = e.key
         if (_.includes([
+            'landing',
             'home',
             'developer',
+            'cr100',
+            'empower35',
+            'evangelist-training',
             'social',
             'leader',
             'community',
@@ -232,7 +263,13 @@ export default class extends BaseComponent {
             'contact',
             'slack'
         ], key)) {
-            this.props.history.push('/' + e.key)
+
+            if (key === 'landing') {
+                this.props.history.push('/')
+                window.location.reload()
+            } else {
+                this.props.history.push('/' + e.key)
+            }
         }
         else if (key === 'logout') {
             Modal.confirm({

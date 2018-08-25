@@ -1,0 +1,11 @@
+
+@import "../../../style/variable";
+@import "../../../style/color";
+
+.c_Header {
+    .ant-menu-item.logo {
+        &:hover {
+            border-bottom: none;
+        }
+    }
+}

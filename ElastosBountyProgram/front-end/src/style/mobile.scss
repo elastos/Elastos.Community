@@ -5,6 +5,53 @@
   display: none;
 }
 
+.logo .mob {
+  display: none;
+}
+
+/*
+************************************************************************
+CR 100, Empower 35, Training
+************************************************************************
+ */
+@media screen and (max-width: $mobile-width) {
+  .c_Header .logo .dsk {
+    display: none;
+  }
+  .c_Header .logo .mob {
+    display: block;
+    width: 35px;
+  }
+
+  .p_emp35 .strike-text {
+
+    p {
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    &.dsk {
+      display: none;
+    }
+
+    &.mob {
+      display: block;
+    }
+
+    .strike-line {
+      top: 12px;
+    }
+    .strike-line:before {
+      left: -5px;
+      width: 5px;
+    }
+    .strike-line:after {
+      right: -5px;
+      width: 5px;
+    }
+  }
+}
+
 // mobile
 @media only screen and (max-width: $mobile-width) {
 

@@ -18,20 +18,30 @@
   margin-right: -$gap_2;
 }
 
-.c_Header{
+.c_Header.ant-layout-header {
   background: #fff;
   height: $header_height;
   padding: 0;
   text-align: center;
   box-shadow: none;
 
-  .c_Header_Menu.ant-menu {
-    max-width: $main_width;
+  .c_Affix_Menu {
+    .c_Affix_Menu_Item {
+      width: 156;
+      height: 74px;
+      position: absolute;
+      &.hidden {
+        display: none;
+      }
+    }
+  }
 
+  .c_Header_Menu.ant-menu {
     padding-top: 0;
   }
 
   .c_Side_Menu {
+    border-right: 0;
     .c_MenuItem.ant-menu-item-selected {
       .ant-dropdown-link {
         color: inherit;
@@ -43,20 +53,21 @@
     }
   }
 
-  .c_Main_Menu {
-    width: calc(100% - 220px);
-  }
-
   .c_MenuItem {
     height: $header_height;
-    font-size: 16px;
-    font-weight: 600;
-    padding-top: 24px;
+    font-size: 14px;
+    font-weight: 300;
+    font-stretch: normal;
+    padding-top: 48px;
     line-height: 20px;
     margin: -1px 0 0 0;
 
+    &.link {
+      height: 100px;
+    }
+
     &.logo {
-      padding-top: 0;
+      padding-top: 24px;
 
       > img {
         margin-top: 8px;
@@ -175,5 +186,11 @@
 @media only screen and (max-width: 1700px) {
   .c_Header .c_MenuTopRight {
     margin-right: 0;
+  }
+}
+
+@media only (max-width: 1024px) {
+  .c_Side_Menu {
+    display: none;
   }
 }

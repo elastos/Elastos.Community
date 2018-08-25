@@ -95,8 +95,7 @@ export default createContainer(Component, (state) => {
         async getTasks(currentUserId) {
             return taskService.index({
                 profileListFor: currentUserId,
-                type: TASK_TYPE.PROJECT,
-                category: TASK_CATEGORY.DEVELOPER
+                type: TASK_TYPE.PROJECT
             })
         },
 
@@ -109,9 +108,7 @@ export default createContainer(Component, (state) => {
         },
 
         async getUserTeams(currentUserId) {
-
             const teamService = new TeamService()
-
             return teamService.getUserTeams(currentUserId)
         }
     }

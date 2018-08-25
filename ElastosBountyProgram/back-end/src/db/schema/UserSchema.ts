@@ -94,6 +94,10 @@ export const User = {
 
     // constants.USER_ROLE
     role : String,
+
+    // constants.USER_EMPOWER
+    empower: String,
+
     elaOwed : [ELA],
 
     notes: String, // private internal notes visible only to admin/council

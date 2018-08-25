@@ -455,7 +455,9 @@ export default class extends BaseComponent {
                     footer={null}
                     width="70%"
                 >
-                    <ProjectDetail taskId={this.state.taskDetailId}/>
+                    { this.state.showProjectModal &&
+                        <ProjectDetail taskId={this.state.taskDetailId}/>
+                    }
                 </Modal>
                 <Modal
                     className="project-detail-nobar"
@@ -465,7 +467,9 @@ export default class extends BaseComponent {
                     footer={null}
                     width="70%"
                 >
-                    <TeamDetail teamId={this.state.teamDetailId}/>
+                    { this.state.showTeamModal &&
+                        <TeamDetail teamId={this.state.teamDetailId}/>
+                    }
                 </Modal>
                 {this.renderLoginOrRegisterModal()}
                 <Footer/>
@@ -485,6 +489,14 @@ export default class extends BaseComponent {
                 </div>
             )
         })
+
+        if (item.thumbnail) {
+            pictures.unshift(
+                <div key="main">
+                    <img width={188} height={188} alt="logo" src={item.thumbnail} />
+                </div>
+            )
+        }
 
         return (
             <div className="carousel-wrapper">

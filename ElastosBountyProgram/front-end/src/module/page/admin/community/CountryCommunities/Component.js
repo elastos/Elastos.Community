@@ -58,6 +58,7 @@ export default class extends AdminPage {
             })
         })
     }
+
     saveFormAddCountryRef = (formRef) => {
         this.formRefAddCountry = formRef
     }

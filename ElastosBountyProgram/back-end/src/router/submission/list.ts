@@ -29,16 +29,15 @@ export default class extends Base{
             delete query.archived
         }
 
-        if (param.type && _.values(constant.SUBMISSION_TYPE).includes(param.type)) {
-            query.type = param.type;
-        }
+        console.log(param)
 
         // for now the admin separates FORM_EXT to another menu item
         // however this is not the case for users
         if (param.admin) {
             // by default we only show tasks with these statuses
-            query.type = {$ne: constant.SUBMISSION_TYPE.FORM_EXT}
+            query.type = {$nin: [constant.SUBMISSION_TYPE.FORM_EXT, constant.SUBMISSION_TYPE.EMPOWER_35]}
             delete param.admin;
+
         } else if (param.profileListFor) {
 
             const currentUserId = new ObjectId(param.profileListFor)
@@ -57,7 +56,11 @@ export default class extends Base{
         }
 
         if (param.type){
-            query.type = param.type
+            try {
+                query.type = JSON.parse(param.type)
+            } catch(err) {
+                query.type = param.type
+            }
         }
 
         const list = await submissionService.list(query);

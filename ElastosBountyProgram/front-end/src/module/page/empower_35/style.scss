@@ -1,0 +1,563 @@
+
+@import "../../../style/variable";
+@import "../../../style/color";
+
+$mobile-padding: $gap_0 0px;
+$landingPageWidth: 1152px;
+
+.emp35-apply-modal {
+
+  .ant-modal-content {
+    border-radius: 0;
+    background-color: $modal_bg;
+  }
+
+  .role-title {
+    font-size: 48px;
+    color: $text_new_gray;
+    padding-left: 12px;
+    line-height: 56px;
+  }
+
+  .role-funding {
+    font-size: 32px;
+    color: $bg_navy;
+    line-height: 38px;
+  }
+
+  .seal {
+    width: 90px;
+    padding-right: 32px;
+  }
+
+  .form-title {
+    font-size: 36px;
+    color: $bg_navy;
+    line-height: 42px;
+  }
+
+  .header-spacer {
+    padding-bottom: 30px;
+  }
+
+  .ant-modal-body {
+    padding: 75px 82px;
+  }
+
+  .ant-modal-close-x {
+    width: 90px;
+    height: 90px;
+    line-height: 90px;
+    font-size: 34px;
+  }
+}
+
+.p_emp35 {
+  background: #ffffff;
+  text-align: left;
+
+  /*
+  ************************************************************************
+  Abs Position Gfx
+  ************************************************************************
+   */
+  .p_content {
+
+    .emp35-empower > .container {
+      position: relative;
+
+      #emp35_logo {
+        position: absolute;
+        left: -38px;
+        top: -50px;
+      }
+
+      #emp35_greenDiag {
+        position: absolute;
+        right: -30px;
+        bottom: 30px;
+      }
+    }
+
+    .emp35-header .content {
+
+      #emp35_down_arrow {
+        margin-top: 35px;
+      }
+    }
+
+    .emp35-teamHeader .container {
+      position: relative;
+
+      #emp35_darkBlock {
+        position: absolute;
+        height: 35px;
+        width: 100vw;
+        top: -35px;
+        right: 65%;
+        background-color: $bg_obsidian;
+      }
+
+      #emp35_lock {
+        position: absolute;
+
+        top: -62px;
+        right: 20px;
+
+        width: 252px;
+        height: 301px;
+      }
+
+      #emp35_square {
+        position: absolute;
+
+        left: 66px;
+        top: 60px;
+      }
+    }
+
+    .emp35-teamMedia .container {
+
+      text-align: center;
+
+      #emp35_seal {
+        margin-top: 33%;
+        width: 372px;
+        height: 372px;
+      }
+    }
+  }
+
+  /*
+  ************************************************************************
+  Sections / General
+  ************************************************************************
+   */
+  %container {
+    max-width: $landingPageWidth;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  %team-dark {
+    background-color: $bg_obsidian;
+    color: #fff;
+
+    .container {
+      @extend %container;
+
+      .inner-container {
+        margin: 0 66px;
+      }
+    }
+
+    .row-positions {
+      margin-top: 24px;
+    }
+  }
+
+  %section-title {
+    font-family: "komu-a", sans-serif;
+    font-size: 48px;
+    text-transform: uppercase;
+  }
+
+  @media only screen and (max-width: $mobile-width) {
+    padding: 0 24px;
+  }
+
+  .ebp-wrap {
+    padding: 0;
+  }
+
+  .lower-section {
+    padding-top: 150px;
+  }
+
+  .blue-title {
+    @extend %section-title;
+    color: $cr100_sky_blue;
+  }
+
+  .dark-title {
+    @extend %section-title;
+    color: $text_new_gray;
+  }
+
+  /*
+  ************************************************************************
+  Header
+  ************************************************************************
+   */
+  .emp35-header {
+
+    min-height: 600px;
+    margin-bottom: 120px;
+
+    .container {
+
+      padding-top: 95px;
+
+      position: relative;
+      text-align: center;
+
+      #box_top_right_1 {
+        position: absolute;
+        right: 49px;
+        top: 40px;
+        z-index: 5;
+      }
+
+      #box_top_right_rect_sm {
+        position: absolute;
+        z-index: 3;
+
+        right: 129px;
+        top: -30px;
+      }
+
+      #box_top_right_rect_lg {
+        position: absolute;
+        right: 30px;
+        top: 20px;
+        z-index: 4;
+      }
+
+      // this floats behind the text
+      .rect-container {
+        z-index: 1;
+
+        position: absolute;
+        width: 100%;
+
+        .rect {
+          position: static;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          border: 38px solid $bg_blue;
+          width: 450px;
+          height: 450px;
+        }
+
+        //
+      }
+
+      .title {
+        margin-top: 106px;
+
+        font-family: "komu-a",sans-serif;
+        font-size: 75px;
+      }
+
+      .content {
+        margin-top: 240px;
+
+        p {
+          font-family: "synthese", sans-serif;
+          font-size: 24px;
+        }
+      }
+
+      .title,
+      .content {
+        width: 100%;
+        position: absolute;
+        z-index: 5;
+      }
+    }
+  }
+
+  /*
+  ************************************************************************
+  Empower Text
+  ************************************************************************
+   */
+  .emp35-empower {
+
+    min-height: 900px;
+
+    background-color: $bg_blue;
+    padding-top: 100px;
+
+    .container {
+      margin-left: auto;
+      margin-right: auto;
+
+      max-width: 915px;
+      background-color: #fff;
+    }
+
+    .title {
+      font-family: "synthese",sans-serif;
+      font-size: 36px;
+      padding-top: 102px;
+      text-align: center;
+      font-size: 36px;
+    }
+
+    .content {
+
+      padding-bottom: 38px;
+
+      p {
+        font-family: "synthese", sans-serif;
+        font-weight: 200;
+        font-size: 18px;
+        padding: 0 74px;
+        margin: 38px 0;
+        text-align: center;
+      }
+    }
+  }
+
+  // this is only the gap between empower and team
+  .emp35-teamHeader {
+
+    @extend %team-dark;
+
+    .container .inner-container {
+      padding-top: 92px;
+    }
+
+    .title {
+      font-family: "synthese",sans-serif;
+      font-size: 48px;
+    }
+  }
+
+  .emp35-teamBusiness {
+    @extend %team-dark;
+
+    .container .inner-container {
+      padding-top: 72px;
+    }
+  }
+
+  .emp35-teamMarketing {
+    @extend %team-dark;
+
+    .container .inner-container {
+      padding-top: 50px;
+    }
+
+    padding-left: 237px;
+  }
+
+  .emp35-teamLegal {
+    @extend %team-dark;
+
+    padding-bottom: 70px;
+
+    .container {
+
+      position: relative;
+
+      #ela_logo_dark {
+        position: absolute;
+        right: 30px;
+        top: 60px;
+      }
+
+      #ela_logo_white {
+        position: absolute;
+        right: 110px;
+        top: 45px;
+      }
+
+      .inner-container {
+        padding-top: 50px;
+      }
+    }
+  }
+
+  .emp35-teamDesigner {
+
+    .container {
+      @extend %container;
+
+      .inner-container {
+        margin: 0;
+        margin-left: 66px;
+      }
+    }
+
+    .row-positions {
+      margin-top: 24px;
+    }
+  }
+
+  .emp35-teamMedia {
+
+    .container {
+      @extend %container;
+
+      .inner-container {
+        margin: 0;
+        margin-left: 66px;
+      }
+    }
+
+    .row-positions {
+      margin-top: 24px;
+    }
+  }
+
+  .emp35-teamDark {
+    @extend %team-dark;
+
+    .container {
+      padding-left: 66px;
+    }
+  }
+
+  .lower-section {
+    max-width: $landingPageWidth;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 40px;
+  }
+
+  /*
+  ************************************************************************
+  Card
+  ************************************************************************
+   */
+  .card-emp35-position {
+    max-width: 150px;
+    background-color: $bg_obsidian;
+    display: inline-block;
+    margin-right: 40px;
+
+    &.white {
+      background-color: transparent;
+
+      .ant-card-cover {
+        background-color: transparent;
+      }
+    }
+
+    .ant-card-cover {
+      height: 150px;
+      background-color: #1B2E3C;
+    }
+
+    .ant-card-meta-description {
+      font-family: "komu-a",sans-serif;
+      font-size: 30px;
+      line-height: 36px;
+      letter-spacing: 0.1em;
+      color: $cr100_green;
+      text-transform: uppercase;
+    }
+  }
+
+  /*
+  ************************************************************************
+  Strike Text Green
+  ************************************************************************
+   */
+  .strike-text {
+    position: relative;
+    display: inline-block;
+
+    .strike-line {
+      position: absolute;
+      left: 0;
+      top: 0;
+      top: 24px;
+      width: 100%;
+      height: 12px;
+      background-color: #1de9b6;
+      z-index: 0;
+    }
+    .strike-line:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      left: -14px;
+      width: 14px;
+      height: 12px;
+      background-color: #1de9b6;
+    }
+    .strike-line:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      left: auto;
+      right: -14px;
+      width: 14px;
+      height: 12px;
+      background-color: #1de9b6;
+    }
+    p {
+      position: relative;
+      z-index: 1;
+      padding-bottom: 0;
+    }
+
+    &.filler {
+      width: 100%;
+      height: 0px;
+    }
+
+    &.mob {
+      display: none;
+    }
+  }
+
+  .disclaimer-box {
+    background: $bg_dark;
+    padding: $gap_2 0;
+    position: relative;
+  }
+
+  .footer_enrich {
+    position: absolute;
+    top: -110px;
+    right: 0;
+  }
+
+  .welcomeBox {
+    max-width: 800px;
+    margin: $gap_5 auto;
+    padding: $gap_4;
+    font-size: 20px;
+    text-align: center;
+    background: $bg_blue;
+    position: relative;
+
+    .cr100_logo {
+      position: absolute;
+      top: -$gap_4;
+      left: -$gap_4;
+    }
+
+    .oomph_box {
+      position: absolute;
+      bottom: -$gap_2;
+      right: -$gap_3;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: $gap_1;
+    }
+
+    .content {
+      margin-bottom: $gap_1;
+    }
+  }
+
+  .c_Footer {
+    margin-top: 0;
+  }
+}
+
+.empower-modal-view {
+
+}
+
