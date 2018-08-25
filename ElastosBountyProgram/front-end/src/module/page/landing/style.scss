@@ -3,6 +3,13 @@
 @import "../../../style/color";
 
 .p_landingBg {
+
+  .social-icons > a {
+    color: #fff !important;
+    display: inline-block;
+    padding: 0 $gap_2 $gap_2 0;
+  }
+
   section,
   .global {
     position: relative;

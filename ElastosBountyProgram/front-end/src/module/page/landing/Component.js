@@ -1400,17 +1400,18 @@ export default class extends EmptyPage {
                         <div className="col" data-num="4">
                             <ul className="social">
                                 <li className="title">Join Us On</li>
-                                <li><a href="https://t.me/elastosgroup" target="_blank"><span className="icon icon-paper-plane"></span></a></li>
-                                <li><a href="https://github.com/elastos" target="_blank"><span className="icon icon-github"></span></a></li>
-                                <li><a href="https://discordapp.com/invite/MHSUVZN" target="_blank"><span className="icon icon-crabface"></span></a></li>
-                                <li><a href="https://twitter.com/Elastos_org" target="_blank"><span className="icon icon-twitter"></span></a></li>
-                                <li className="mob"></li>
-                                <li><a href="https://elastos-ebp.slack.com/" target="_blank"><span className="icon icon-slack"></span></a></li>
-                                <li><a href="https://www.reddit.com/r/Elastos/" target="_blank"><span className="icon icon-reddit-alien"></span></a></li>
-                                <li><a href="https://www.youtube.com/channel/UCy5AjgpQIQq3bv8oy_L5WTQ/" target="_blank"><span className="icon icon-youtube-play"></span></a></li>
-                                <li><a href="https://www.instagram.com/elastosofficial/" target="_blank"><span className="icon icon-instagram"></span></a></li>
-                                <li className="filler"></li>
                             </ul>
+
+                            <div className="social-icons">
+                                <a href="https://t.me/elastosgroup" target="_blank"><i className="fab fa-telegram fa-2x"/></a>
+                                <a href="https://github.com/elastos" target="_blank"><i className="fab fa-github fa-2x"/></a>
+                                <a href="https://discordapp.com/invite/MHSUVZN" target="_blank"><i className="fab fa-discord fa-2x"/></a>
+                                <a href="https://twitter.com/Elastos_org" target="_blank"><i className="fab fa-twitter fa-2x"/></a>
+                                <a href="https://elastos-ebp.slack.com/" target="_blank"><i className="fab fa-slack fa-2x"/></a>
+                                <a href="https://www.reddit.com/r/Elastos/" target="_blank"><i className="fab fa-reddit fa-2x"/></a>
+                                <a href="https://www.youtube.com/channel/UCy5AjgpQIQq3bv8oy_L5WTQ/" target="_blank"><i className="fab fa-youtube fa-2x"/></a>
+                                <a href="https://www.instagram.com/elastosofficial/" target="_blank"><i className="fab fa-instagram fa-2x"/></a>
+                            </div>
                         </div>
                     </div>
 

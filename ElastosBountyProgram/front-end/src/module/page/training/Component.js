@@ -211,10 +211,7 @@ export default class extends StandardPage {
                         {I18N.get('developer.cr100.disclaimer.title')}
                     </div>
                     <div className="content">
-                        {I18N.get('developer.cr100.disclaimer')}
-                    </div>
-                    <div className="content">
-                        {I18N.get('developer.cr100.dontseeProject.title')}
+                        {I18N.get('training.disclaimer')}
                     </div>
                 </div>
             </div>

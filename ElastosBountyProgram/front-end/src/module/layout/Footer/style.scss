@@ -40,4 +40,10 @@
       background-color: transparent;
     }
   }
+
+  .social-icons > a {
+    color: #fff !important;
+    display: inline-block;
+    padding: 0 $gap_3 $gap_3 0;
+  }
 }

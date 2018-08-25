@@ -221,6 +221,8 @@ export default {
     'training.itinerary.content.day6Label': 'Day 7',
     'training.itinerary.content.day6': 'Pitch presentation practice',
 
+    'training.disclaimer': 'Training content and itinerary subject to change',
+
     // Project/Team detail
     'project.detail.deadline': 'Deadline',
     'project.detail.progress': 'Progress',
