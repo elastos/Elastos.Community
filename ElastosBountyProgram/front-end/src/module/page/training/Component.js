@@ -120,7 +120,7 @@ export default class extends StandardPage {
             <div className="evangelist">
                 <div className="container">
                     <div className="left-box-container">
-                        <img src="assets/images/training_evangelist_logo.png"/>
+                        <img className="evangelist_logo" src="assets/images/training_evangelist_logo.png"/>
                     </div>
                     <div className="right-box-container">
                         <img src="assets/images/training_green_slashed_box.png"/>
