@@ -4113,6 +4113,11 @@
     #team p {
       font-size: 15px;
     }
+
+    /* Added this for mobile - Clarence */
+    #globalHeader .toplinks {
+      display: none;
+    }
   }
   /*! mq: 800 */
   @media screen and (max-width: 800px) {
