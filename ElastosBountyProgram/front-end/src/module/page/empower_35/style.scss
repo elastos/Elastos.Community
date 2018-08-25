@@ -70,6 +70,10 @@ $landingPageWidth: 1152px;
         position: absolute;
         left: -38px;
         top: -50px;
+        @media only screen and (max-width: $mobile-width) {
+          left: -$gap_0;
+          width: 150px;
+        }
       }
 
       #emp35_greenDiag {

@@ -132,6 +132,10 @@ $landingPageWidth: 1152px;
           margin-left: auto;
           margin-right: auto;
           width: 850px;
+          @media only screen and (max-width: $mobile-width) {
+            font-size: 18px;
+            width: 100%;
+          }
         }
 
         /*
@@ -219,6 +223,17 @@ $landingPageWidth: 1152px;
         top: -50px;
         left: -50px;
       }
+
+      .evangelist_logo {
+        position: absolute;
+        top: -$gap_0;
+        left: -gap_0;
+        @media only screen and (max-width: $mobile-width) {
+          left: $gap_4;
+          width: 150px;
+        }
+      }
+      
       .right-box-container {
         position: absolute;
         bottom: $gap_1;
