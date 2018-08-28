@@ -156,7 +156,7 @@ export default class extends BaseComponent {
                         <div className="alpha-tag">ALPHA</div>
                     </Menu.Item>
                 </Menu>
-                {
+
                 <Menu className="c_Header_Menu c_Side_Menu pull-right">
                     <MediaQuery minWidth={MIN_WIDTH_PC}>
                         <Menu.Item className="c_MenuItem help pull-right no-margin" key="help">
@@ -171,16 +171,16 @@ export default class extends BaseComponent {
                         <Icon type="menu-fold"/>
                     </Menu.Item>
                 </Menu>
-                }
-                    {/*
-                    <Menu.Item className="c_MenuItem overview">
-                        <Dropdown overlay={overviewDropdown} style="margin-top: 24px;">
-                            <a className="ant-dropdown-link" href="#">
-                                {I18N.get('0001')} <Icon type="down" />
-                            </a>
-                        </Dropdown>
-                    </Menu.Item>
-                    */}
+
+                {/*
+                <Menu.Item className="c_MenuItem overview">
+                    <Dropdown overlay={overviewDropdown} style="margin-top: 24px;">
+                        <a className="ant-dropdown-link" href="#">
+                            {I18N.get('0001')} <Icon type="down" />
+                        </a>
+                    </Dropdown>
+                </Menu.Item>
+                */}
                 <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu pull-right"
                       selectedKeys={this.getSelectedKeys()} mode="horizontal">
                     {/*this.props.isLogin &&

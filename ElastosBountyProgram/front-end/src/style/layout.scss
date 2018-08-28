@@ -190,7 +190,7 @@
 }
 
 .c_Side_Menu {
-  display: none;
+  // display: none;
   @media only screen and (max-width: $mobile-width) {
     display: unset;
   }
