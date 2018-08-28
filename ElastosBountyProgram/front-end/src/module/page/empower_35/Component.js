@@ -212,6 +212,10 @@ export default class extends StandardPage {
                     hoverable={true}
                     key={empowerType.toLowerCase() + '-pos-' + index}
                     onClick={() => {
+                        if (empowerType === 'OPEN_TITLE') {
+                            return
+                        }
+
                         if (!this.props.is_login) {
                             this.showLoginRegisterModal()
                             return
@@ -422,7 +426,7 @@ export default class extends StandardPage {
                         <Col xs={{span: 24}} md={{span: 10}}>
                             <span className="blue-title">Lead Translator</span>
 
-                            {this.generatePositionCards(USER_EMPOWER_TYPE.ADMINISTRATOR, 1, COLOR_SCHEME.DARK)}
+                            {this.generatePositionCards(USER_EMPOWER_TYPE.LEAD_TRANSLATOR, 1, COLOR_SCHEME.DARK)}
                         </Col>
                         <Col xs={{span: 24}} md={{span: 14}}>
 
