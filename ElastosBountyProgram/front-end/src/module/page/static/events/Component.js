@@ -309,7 +309,7 @@ export default class extends EmptyPage {
                     <div className="events-count">
                         {this.getFilteredEvents(this.props.all_tasks).length} events total
                     </div>
-                    <Row className="d_row" type="flex" justify="space-around">
+                    <Row className="d_row" type="flex" justify="left">
                         {this.renderEventCards(this.props.all_tasks)}
                     </Row>
                 </div>
