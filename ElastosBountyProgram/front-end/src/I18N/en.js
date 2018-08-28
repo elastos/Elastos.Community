@@ -196,7 +196,7 @@ export default {
     'emp35.teamHeader.title': 'Empower35 Team',
 
     'emp35.disclaimer.title': 'Disclaimer',
-    'emp35.disclaimer.content': 'Roles described above and the number of positions are subject to change. The first group of Empower 35 candidates will be directly chosen by the council.',
+    'emp35.disclaimer.content': 'Roles described above are managerial level positions and the number of open positions are subject to change. The first group of Empower 35 candidates will be directly chosen by the council.',
 
     // Training
     'training.header.title': 'Evangelist Training',
