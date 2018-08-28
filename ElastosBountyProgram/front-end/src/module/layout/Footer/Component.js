@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent';
-import { Col, Row, Icon, Avatar } from 'antd'
+import { Col, Row, Avatar } from 'antd'
 
 import './style.scss'
 
@@ -13,10 +13,10 @@ export default class extends BaseComponent {
                 </div>
                 <div className="footer-box">
                     <Row className="d_rowFooter d_footerSection">
-                        <Col xs={24} sm={12} md={6}>
+                        <Col xs={24} sm={12} md={5}>
                             <img className="logo_own" src="/assets/images/footer-shield.svg"/>
                         </Col>
-                        <Col xs={24} sm={12} md={6}>
+                        <Col xs={24} sm={12} md={5}>
                             <div className="links footer-vertical-section">
                                 <div className="title brand-color">
                                     Links
@@ -29,7 +29,7 @@ export default class extends BaseComponent {
                                 <div><a href="https://elanews.net/">ELA News</a></div>
                             </div>
                         </Col>
-                        <Col xs={24} sm={24} md={6}>
+                        <Col xs={24} sm={24} md={7}>
                             <div className="contact footer-vertical-section">
                                 <div className="title brand-color">
                                     Contact
@@ -40,19 +40,21 @@ export default class extends BaseComponent {
                                 <div className="footer-color-dark">Other Contacts: <a href="mailto:contact@elastos.org">contact@elastos.org</a></div>
                             </div>
                         </Col>
-                        <Col xs={24} sm={24} md={6}>
+                        <Col xs={24} sm={24} md={7}>
                             <div className="join footer-vertical-section">
                                 <div className="title brand-color">
                                     Join Us On
                                 </div>
-                                <a href="https://t.me/elastosgroup" target="_blank"><Avatar shape="square" size={64} className="icon icon-paper-plane"/></a>
-                                <a href="https://github.com/elastos" target="_blank"><Avatar shape="square" size={64} className="icon icon-github"/></a>
-                                <a href="https://discordapp.com/invite/MHSUVZN" target="_blank"><Avatar shape="square" size={64} className="icon icon-crabface"/></a>
-                                <a href="https://twitter.com/Elastos_org" target="_blank"><Avatar shape="square" size={64} className="icon icon-twitter"/></a>
-                                <a href="https://elastos-ebp.slack.com/" target="_blank"><Avatar shape="square" size={64} className="icon icon-slack"/></a>
-                                <a href="https://www.reddit.com/r/Elastos/" target="_blank"><Avatar shape="square" size={64} className="icon icon-reddit-alien"/></a>
-                                <a href="https://www.youtube.com/channel/UCy5AjgpQIQq3bv8oy_L5WTQ/" target="_blank"><Avatar shape="square" size={64} className="icon icon-youtube-play"/></a>
-                                <a href="https://www.instagram.com/elastosofficial/" target="_blank"><Avatar shape="square" size={64} className="icon icon-instagram"/></a>
+                                <div className="social-icons">
+                                    <a href="https://t.me/elastosgroup" target="_blank"><i className="fab fa-telegram fa-2x"/></a>
+                                    <a href="https://github.com/elastos" target="_blank"><i className="fab fa-github fa-2x"/></a>
+                                    <a href="https://discordapp.com/invite/MHSUVZN" target="_blank"><i className="fab fa-discord fa-2x"/></a>
+                                    <a href="https://twitter.com/Elastos_org" target="_blank"><i className="fab fa-twitter fa-2x"/></a>
+                                    <a href="https://elastos-ebp.slack.com/" target="_blank"><i className="fab fa-slack fa-2x"/></a>
+                                    <a href="https://www.reddit.com/r/Elastos/" target="_blank"><i className="fab fa-reddit fa-2x"/></a>
+                                    <a href="https://www.youtube.com/channel/UCy5AjgpQIQq3bv8oy_L5WTQ/" target="_blank"><i className="fab fa-youtube fa-2x"/></a>
+                                    <a href="https://www.instagram.com/elastosofficial/" target="_blank"><i className="fab fa-instagram fa-2x"/></a>
+                                </div>
                             </div>
                         </Col>
                     </Row>

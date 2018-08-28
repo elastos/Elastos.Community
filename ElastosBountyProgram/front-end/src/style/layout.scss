@@ -189,8 +189,10 @@
   }
 }
 
-@media only (max-width: 1024px) {
-  .c_Side_Menu {
-    display: none;
+.c_Side_Menu {
+  display: none;
+  @media only screen and (max-width: $mobile-width) {
+    display: unset;
   }
 }
+

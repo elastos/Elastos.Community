@@ -3,6 +3,13 @@
 @import "../../../style/color";
 
 .p_landingBg {
+
+  .social-icons > a {
+    color: #fff !important;
+    display: inline-block;
+    padding: 0 $gap_2 $gap_2 0;
+  }
+
   section,
   .global {
     position: relative;
@@ -4105,6 +4112,11 @@
     }
     #team p {
       font-size: 15px;
+    }
+
+    /* Added this for mobile - Clarence */
+    #globalHeader .toplinks {
+      display: none;
     }
   }
   /*! mq: 800 */

@@ -98,6 +98,10 @@ $mobile-padding: $gap_0 0px;
       position: absolute;
       top: -$gap_4;
       left: -$gap_4;
+      @media only screen and (max-width: $mobile-width) {
+        left: -$gap_0;
+        width: 150px;
+      }
     }
 
     .oomph_box {
