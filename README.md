@@ -114,7 +114,7 @@ We are looking for community leaders globally. If you are active Elastos communi
 * http://elanews.net
 
 ## Elastos Youtube
-- [What is Elastos?](https://www.youtube.com/watch?v=20mTY3G5y0c)
+- [What is Elastos?](https://www.youtube.com/watch?v=sIO5j1Lx-Os&feature=youtu.be)
 - [Official Elastos Youtube Channel](https://www.youtube.com/channel/UCy5AjgpQIQq3bv8oy_L5WTQ)
 - [Elastos Video Series by KP Woods](https://www.youtube.com/channel/UCu1XxDJE84ZvgLJ-EssbveA)
 - [Elastos Virtual Meetups](https://www.youtube.com/playlist?list=PLoxCTwcUvvNvWe5pD1oZ0FRtV4HhU9Jt0)

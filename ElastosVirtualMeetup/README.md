@@ -6,9 +6,12 @@ We will regularly schedule virtual meetups where the community members can direc
 ### TBD
 
 ## Past Meetups
+### Elastos Anniversary Recap and AMA 
+- [Virtual Meetup 1: Aug 25th 2018](https://www.youtube.com/watch?v=AVJ-qiJmwH0)
+- [Virtual Meetup 2: Aug 26th 2018](https://www.youtube.com/watch?v=E7Zn-ASQfPo)
 ### Thursday, Aug 16th 2018 at 13:00 Eastern Daylight Time: Prepping for the Anniversary
 - [Link to powerpoint slides](https://docs.google.com/presentation/d/1bNyncCLu9Cq3rqrPJesRK_zZWmkv2OKxyG77TmlTpbw/edit?usp=sharing)
-- [Link to youtube recording]()
+- [Link to youtube recording](https://www.youtube.com/watch?v=kAKrnfCKnyg&t=2129s)
 
 ### Thursday, July 26th 2018 at 21:00 Eastern Daylight Time: Cyber Republic Tasks and Anniversary Annoucement
 - [Link to powerpoint slides](https://docs.google.com/presentation/d/1skeuqVpFEID0-bEEBuw-pQJ96iPCo4HBcAKXPK05eHI/edit?usp=sharing)
