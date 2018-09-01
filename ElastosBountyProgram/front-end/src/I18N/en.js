@@ -22,6 +22,7 @@ export default {
     '0105': 'CR100',
     '0106': 'Empower35',
     '0107': 'Training',
+    '0108': 'Council',
 
     '0200': 'Profile',
     '0201': 'Login',

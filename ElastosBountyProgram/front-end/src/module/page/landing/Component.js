@@ -37,6 +37,7 @@ export default class extends EmptyPage {
                         <ul>
                             <li><a href="/cr100">{I18N.get('0105')}</a></li>
                             <li><a href="/empower35">{I18N.get('0106')}</a></li>
+                            <li><a href="/council">{I18N.get('0108')}</a></li>
                             <li><a href="/evangelist-training">{I18N.get('0107')}</a></li>
                             <li><a href="/developer">{I18N.get('0102')}</a></li>
 

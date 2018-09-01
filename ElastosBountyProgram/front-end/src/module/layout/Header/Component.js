@@ -197,6 +197,10 @@ export default class extends BaseComponent {
                         {I18N.get('0106')}
                     </Menu.Item>
 
+                    <Menu.Item className="c_MenuItem link" key="council">
+                        {I18N.get('0108')}
+                    </Menu.Item>
+
                     <Menu.Item className="c_MenuItem link" key="evangelist-training">
                         {I18N.get('0107')}
                     </Menu.Item>
@@ -247,6 +251,7 @@ export default class extends BaseComponent {
             'social',
             'leader',
             'community',
+            'council',
             'directory',
             'account',
             'teams',
