@@ -175,7 +175,7 @@ export default {
     'developer.cr100.welcome.title': 'Cyber Republic 100',
     'developer.cr100.disclaimer': 'Projects described above are subject to change and are only used as an example.',
     'developer.cr100.disclaimer.title': 'Disclaimer',
-    'developer.cr100.dontseeProject': 'Submit a Project Proposal',
+    'developer.cr100.dontseeProject': 'Submit Your Own Idea/Proposal',
     'developer.cr100.dontseeProject.title': "Don't see a project you like?",
     'developer.cr100.pitch.problem': 'Problem',
     'developer.cr100.pitch.valueProposition': 'Value Proposition',
