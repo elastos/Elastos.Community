@@ -23,7 +23,7 @@ export default createContainer(Component, (state) => {
 
                 if (rs) {
                     message.success('login success')
-                    userService.path.push('/home')
+                    userService.path.push('/profile/teams')
                 }
             } catch (err) {
                 message.error('login failed')

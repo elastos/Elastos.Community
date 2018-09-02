@@ -63,6 +63,7 @@ export default class extends Base{
         } else if (param.admin && this.session.user && this.session.user.role === constant.USER_ROLE.ADMIN) {
             delete param.admin;
             query.status = {$ne: constant.TASK_STATUS.CANCELED}
+
         } else if (param.profileListFor) {
 
             const currentUserId = new ObjectId(param.profileListFor)

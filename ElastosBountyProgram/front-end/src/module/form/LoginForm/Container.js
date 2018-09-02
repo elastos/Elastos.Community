@@ -33,7 +33,7 @@ export default createContainer(Component, (state) => {
                         if (rs.is_admin) {
                             this.history.push('/admin/tasks')
                         } else {
-                            this.history.push('/home')
+                            this.history.push('/profile/teams')
                         }
                     }
                 }
