@@ -27,8 +27,14 @@ const App = () => {
                 {process.env.NODE_ENV === 'production' && <script async src={'https://www.googletagmanager.com/gtag/js?id=' + process.env.GA_ID}></script>}
                 {process.env.NODE_ENV === 'production' && <script>{`window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '` + process.env.GA_ID + `');`}</script>}
                 <script defer src="/assets/js/elastos.js"></script>
+                <script>{
+                    (function() {
+                        window.Intercom("update");
+                    })()
+                }</script>
             </Helmet>
             <Switch id="ebp-main">
+
                 {
                     _.map(config.router, (item, i) => {
                         const props = _.omit(item, ['page', 'path', 'type']);
