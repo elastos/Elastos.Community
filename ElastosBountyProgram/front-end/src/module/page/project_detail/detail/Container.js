@@ -5,12 +5,14 @@ import Component from './Component'
 import _ from 'lodash'
 
 export default createContainer(Component, (state) => {
-    let page = 'PUBLIC' // default
+    let page = 'CR100' // default
 
     if (/^\/admin/.test(state.router.location.pathname)) {
         page = 'ADMIN'
     } else if (/^\/profile/.test(state.router.location.pathname)) {
         page = 'LEADER'
+    } else if (/^\/project-detail/.test(state.router.location.pathname)) {
+        page = 'PUBLIC'
     }
 
     return {

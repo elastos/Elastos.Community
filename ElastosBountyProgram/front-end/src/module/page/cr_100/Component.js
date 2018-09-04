@@ -1,7 +1,6 @@
 import React from 'react'
 import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
-import ProjectDetail from './detail/Container'
 import I18N from '@/I18N'
 import './style.scss'
 import { Col, Row, Card, Button, Breadcrumb, Icon, List, Spin, Avatar, Modal } from 'antd'
@@ -27,21 +26,12 @@ export default class extends StandardPage {
 
     ord_states() {
         return {
-            showDetailId: null,
             loading: false
         }
     }
 
     showDetailModal(id) {
-        this.setState({
-            showDetailId: id
-        })
-    }
-
-    handleDetailModalClose(e) {
-        this.setState({
-            showDetailId: null
-        })
+        this.props.history.push(`/project-detail/${id}`)
     }
 
     ord_renderContent () {
@@ -58,18 +48,6 @@ export default class extends StandardPage {
                         </div>
                     </div>
                 </div>
-                <Modal
-                    className="project-detail-nobar"
-                    visible={!!this.state.showDetailId}
-                    onOk={this.handleDetailModalClose.bind(this)}
-                    onCancel={this.handleDetailModalClose.bind(this)}
-                    footer={null}
-                    width="70%"
-                >
-                    { this.state.showDetailId &&
-                        <ProjectDetail taskId={this.state.showDetailId}/>
-                    }
-                </Modal>
                 <Footer/>
             </div>
         )

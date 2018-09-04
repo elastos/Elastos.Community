@@ -112,16 +112,17 @@ class C extends BaseComponent {
     getCurrentContributors() {
         const detail = this.props.detail
         const applicants = _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.APPROVED });
-        if (this.isTaskOwner()) {
+        if (this.props.detail.createdBy) {
             applicants.unshift({
                 _id: 'such_fake_id',
                 user: this.props.detail.createdBy,
                 type: TASK_CANDIDATE_TYPE.USER
             })
         }
+
         const columns = [{
             title: 'Name',
-            key: 'name',
+            key: '_id',
             render: candidate => {
                 return (
                     <div>
@@ -146,7 +147,6 @@ class C extends BaseComponent {
             }
         }, {
             title: 'Action',
-            key: 'action',
             render: candidate => {
                 return (
                     <div>
@@ -265,6 +265,19 @@ class C extends BaseComponent {
         )
     }
 
+    getActions() {
+        return (
+            <div className="halign-wrapper valign-wrapper action-wrapper">
+                <Button icon="like">
+                    Like
+                </Button>
+                <Button icon="message">
+                    Get Involved
+                </Button>
+            </div>
+        )
+    }
+
     ord_render () {
         const isMember = this.isMemberByUserId(this.props.currentUserId)
 
@@ -273,9 +286,12 @@ class C extends BaseComponent {
                 { this.checkForLoading(() =>
                     <div>
                         {this.getHeader()}
-                        {this.getDescription()}
-                        {this.state.applying && this.getApplicationForm()}
-                        {(this.props.is_admin || this.isTaskOwner()) && !this.state.applying &&
+
+                        {!this.isTaskOwner() && this.props.page === 'PUBLIC' &&
+                            this.getActions()
+                        }
+
+                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') && !this.state.applying &&
                             <Row className="contributors">
                                 { isMember &&
                                     <Button onClick={this.removeUserByUserId.bind(this, this.props.currentUserId)} className="leave-button">{I18N.get('project.detail.leave')}</Button>
@@ -285,12 +301,14 @@ class C extends BaseComponent {
                             </Row>
                         }
 
-                        {(this.props.is_admin || this.isTaskOwner()) && !this.state.applying &&
+                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') && !this.state.applying &&
                             <Row className="applications">
                                 <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
                                 {this.getCurrentApplicants()}
                             </Row>
                         }
+                        {this.getDescription()}
+                        {this.state.applying && this.getApplicationForm()}
                         {this.getFooter()}
                     </div>
                 )}
@@ -315,15 +333,15 @@ class C extends BaseComponent {
         });
         const p_attachment = {
             showUploadList: false,
-            customRequest :(info)=>{
+            customRequest: (info) => {
                 this.setState({
                     attachment_loading: true
                 });
-                upload_file(info.file).then((d)=>{
+                upload_file(info.file).then((d) => {
                     const url = d.url;
                     this.setState({
                         attachment_loading: false,
-                        attachment_url : url,
+                        attachment_url: url,
                         attachment_type: d.type,
                         attachment_filename: d.filename,
                         removeAttachment: false
@@ -366,7 +384,7 @@ class C extends BaseComponent {
 
                     return x;
                 }}>
-                <Select.Option value="$me">
+                <Select.Option value="$me" key="$me">
                     Apply as myself
                     <Avatar size="small" src={this.props.currentUserAvatar} className="pull-right"/>
                 </Select.Option>
@@ -477,14 +495,15 @@ class C extends BaseComponent {
     format(contents) {
         let first = true;
         let elements = []
-        for(let char of contents) {
+        let key = 0
+        for (let char of contents) {
             if (char === '-') {
                 if (!first) {
-                    elements.push(<br/>)
+                    elements.push(<br key={key++}/>)
                 }
                 first = false
-           }
-           elements.push(char)
+            }
+            elements.push(char)
         }
         return elements
     }

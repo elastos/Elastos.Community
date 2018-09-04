@@ -17,6 +17,7 @@ import TeamsPage from '@/module/page/teams/Container'
 import TasksPage from '@/module/page/tasks/Container'
 import TaskDetailPage from '@/module/page/task_detail/Container'
 import TaskApplicationPage from '@/module/page/task_application/Container'
+import ProjectDetailPage from '@/module/page/project_detail/Container'
 
 import LoginPage from '@/module/page/login/Container'
 import RegisterPage from '@/module/page/register/Container'
@@ -245,12 +246,16 @@ export default [
         page: ProfileProjectDetailPage
     },
     {
+        path: '/project-detail/:taskId',
+        page: ProjectDetailPage
+    },
+    {
         path: '/profile/teams',
         page: ProfileTeamsPage
     },
     {
-        path : '/profile/teams/create',
-        page : ProfileTeamCreatePage
+        path: '/profile/teams/create',
+        page: ProfileTeamCreatePage
     },
     {
         path: '/profile/submissions',
