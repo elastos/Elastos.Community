@@ -2,7 +2,7 @@ const s3 = require('s3')
 const fs = require('fs')
 
 const config = {
-    bucket : "ebp-staging-files",
+    bucket : "ebp-staging-files/cr100",
     region : "us-west-1"
 }
 
@@ -56,14 +56,12 @@ async function upload(file_name) {
         });
         // On S3 success
         uploader.on('end', ()=>{
-            //Removing file from server after uploaded to S3
-            fs.unlinkSync('cr100/' + file_name);
 
             // get public url
             const url = s3.getPublicUrl(config.bucket, file_name, config.region);
             resolve(url);
 
-            console.log('uploaded', file_name)
+            console.log('uploaded', url)
         });
     });
 }
