@@ -208,6 +208,36 @@ class C extends BaseComponent {
         return this.removeUser(candidate._id)
     }
 
+    getCurrentSubscribers() {
+        const subscribers = this.props.detail.subscribers
+        const columns = [{
+            title: 'Name',
+            key: 'user',
+            render: candidate => {
+                return (
+                    <div>
+                        <div>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                                <Avatar className="gap-right" src={candidate.user.profile.avatar} />
+                                {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
+                            </a>
+                        </div>
+                    </div>)
+            }
+        }]
+
+        return (
+            <Table
+                className="no-borders headerless"
+                dataSource={subscribers}
+                columns={columns}
+                bordered={false}
+                pagination={false}
+                rowKey="_id">
+            </Table>
+        )
+    }
+
     getCurrentApplicants() {
         const detail = this.props.detail
         const applicants = _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.PENDING });
@@ -322,6 +352,14 @@ class C extends BaseComponent {
                                 {this.getCurrentApplicants()}
                             </Row>
                         }
+
+                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
+                            <Row className="subscribers">
+                                <h3 className="no-margin">{I18N.get('project.detail.subscribers')}</h3>
+                                {this.getCurrentSubscribers()}
+                            </Row>
+                        }
+
                         {this.getDescription()}
                         <Comments type="task" canPost={true} canSubscribe={!this.isTaskOwner()} model={this.props.detail}/>
                     </div>

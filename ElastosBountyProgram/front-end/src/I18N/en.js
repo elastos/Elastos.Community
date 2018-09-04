@@ -233,6 +233,7 @@ export default {
     'project.detail.not_recruiting': 'Recruitment Closed',
     'project.detail.current_contributors': 'Current Contributors',
     'project.detail.pending_applications': 'Pending Applications',
+    'project.detail.subscribers': 'Liked By',
     'project.detail.current_members': 'Current Members',
     'project.detail.leave': 'Leave',
     'project.detail.remove': 'Remove',
