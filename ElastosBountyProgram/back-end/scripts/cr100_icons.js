@@ -13,8 +13,8 @@ const s3_client = s3.createClient({
     multipartUploadThreshold: 20971520, // this is the default (20 MB)
     multipartUploadSize: 5242880, // 5 MB
     s3Options: {
-        accessKeyId: process.env.AWS_ACCESS_KEY,
-        secretAccessKey: process.env.AWS_ACCESS_SECRET,
+        accessKeyId: "",            // <--- FILL THIS
+        secretAccessKey: "",        // <--- FILL THIS
         region: config.region,
         // endpoint: 's3.yourdomain.com',
         // sslEnabled: false
@@ -30,7 +30,7 @@ function readFiles(dirname, onFileContent, onError) {
             return;
         }
         filenames.forEach(function(filename) {
-            onFileContent(dirname + filename);
+            onFileContent(filename);
         });
     });
 }
@@ -39,7 +39,7 @@ async function upload(file_name) {
     console.log('name:', file_name)
     // TODO: add retry
     const uploader = s3_client.uploadFile({
-        localFile : file_name,
+        localFile : 'cr100/' + file_name,
         s3Params : {
             ACL:'public-read',
             Bucket : config.bucket,
@@ -57,7 +57,7 @@ async function upload(file_name) {
         // On S3 success
         uploader.on('end', ()=>{
             //Removing file from server after uploaded to S3
-            fs.unlinkSync(file_name);
+            fs.unlinkSync('cr100/' + file_name);
 
             // get public url
             const url = s3.getPublicUrl(config.bucket, file_name, config.region);
@@ -71,8 +71,8 @@ async function upload(file_name) {
 
 (async () => {
     readFiles('cr100/', function(filename) {
-        console.log('uploading file ', filename, '...')
-        upload(filename);
+        console.log('uploading file', filename, '...')
+        upload(filename)
     }, function(err) {
         console.log(err)
         throw err;
