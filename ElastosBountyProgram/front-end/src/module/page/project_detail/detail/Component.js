@@ -23,14 +23,15 @@ import {
 import {upload_file} from "@/util";
 import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS } from '@/constant'
 import Comments from '@/module/common/comments/Container'
+import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
 import I18N from '@/I18N'
 import _ from 'lodash'
 import './style.scss'
 
 class C extends BaseComponent {
-
     ord_states() {
         return {
+            showLoginRegisterModal: false
         }
     }
 
@@ -77,6 +78,50 @@ class C extends BaseComponent {
                 </div>
             </span>
         )
+    }
+
+    renderLoginOrRegisterModal() {
+        if (this.props.is_login) {
+            return
+        }
+
+        return (
+            <Modal
+                className="project-detail-nobar"
+                visible={this.state.showLoginRegisterModal}
+                onOk={this.handleLoginRegisterModalOk}
+                onCancel={this.handleLoginRegisterModalCancel}
+                footer={null}
+                width="70%"
+            >
+                <LoginOrRegisterForm />
+            </Modal>
+        )
+    }
+
+    showLoginRegisterModal = () => {
+        sessionStorage.setItem('loginRedirect', `/project-detail/${this.props.taskId}`)
+        sessionStorage.setItem('registerRedirect', `/project-detail/${this.props.taskId}`)
+
+        this.setState({
+            showLoginRegisterModal: true
+        })
+    }
+
+    handleLoginRegisterModalOk = (e) => {
+        sessionStorage.removeItem('registerRedirect')
+
+        this.setState({
+            showLoginRegisterModal: false
+        })
+    }
+
+    handleLoginRegisterModalCancel = (e) => {
+        sessionStorage.removeItem('registerRedirect')
+
+        this.setState({
+            showLoginRegisterModal: false
+        })
     }
 
     subscribeToProject() {
@@ -339,18 +384,26 @@ class C extends BaseComponent {
     }
 
     getActions() {
+        const likeHandler = this.props.is_login
+            ? this.isUserSubscribed()
+                ? this.unsubscribeFromProject
+                : this.subscribeToProject
+            : this.showLoginRegisterModal
+
+        const applyHandler = this.props.is_login
+            ? this.applyToProject
+            : this.showLoginRegisterModal
+
         return (
             <div className="halign-wrapper valign-wrapper action-wrapper">
                 <div>
-                    <Button loading={this.props.loading} icon="like" onClick={this.isUserSubscribed()
-                            ? this.unsubscribeFromProject.bind(this)
-                            : this.subscribeToProject.bind(this)}>
+                    <Button loading={this.props.loading} icon="like" onClick={likeHandler.bind(this)}>
                         {this.isUserSubscribed()
                             ? 'Unlike'
                             : 'Like'
                         }
                     </Button>
-                    <Button loading={this.props.loading} icon="message" onClick={this.applyToProject.bind(this)}
+                    <Button loading={this.props.loading} icon="message" onClick={applyHandler.bind(this)}
                         disabled={this.isMemberByUserId(this.props.currentUserId)}>
                         Get Involved
                     </Button>
@@ -394,6 +447,7 @@ class C extends BaseComponent {
 
                     {this.getDescription()}
                     <Comments type="task" canPost={true} canSubscribe={!this.isTaskOwner()} model={this.props.detail}/>
+                    {this.renderLoginOrRegisterModal()}
                 </div>
             </div>
         )

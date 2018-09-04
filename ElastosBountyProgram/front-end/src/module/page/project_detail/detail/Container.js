@@ -23,6 +23,7 @@ export default createContainer(Component, (state) => {
         currentUserId: state.user.current_user_id,
         currentUserAvatar: state.user.profile.avatar,
         is_admin: state.user.is_admin,
+        is_login: state.user.is_login,
         loading: state.task.loading || state.team.loading
     }
 }, () => {
