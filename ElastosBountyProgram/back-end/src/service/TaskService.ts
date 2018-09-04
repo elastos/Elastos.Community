@@ -810,15 +810,6 @@ export default class extends Base {
         let doc = await db_tc.findById(taskCandidateId)
         await db_tc.db.populate(doc, ['team'])
 
-        if (!doc || doc.role === constant.TEAM_ROLE.OWNER) {
-            throw 'Invalid status'
-        }
-
-        if (doc.user.toString() !== this.currentUser._id.toString() ||
-            doc.team.owner.toString() !== this.currentUser._id.toString()) {
-            throw 'Access Denied'
-        }
-
         await db_tc.remove({
             _id: taskCandidateId
         })

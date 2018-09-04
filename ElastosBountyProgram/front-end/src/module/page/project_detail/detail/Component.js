@@ -21,6 +21,7 @@ import {
 } from 'antd'
 import {upload_file} from "@/util";
 import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS } from '@/constant'
+import Comments from '@/module/common/comments/Container'
 import I18N from '@/I18N'
 import _ from 'lodash'
 import './style.scss'
@@ -29,11 +30,6 @@ class C extends BaseComponent {
 
     ord_states() {
         return {
-            applying: false,
-            attachment_url: null,
-            attachment_loading: false,
-            attachment_filename: '',
-            attachment_type: ''
         }
     }
 
@@ -56,22 +52,9 @@ class C extends BaseComponent {
         return this.props.detail.createdBy && this.props.detail.createdBy._id === this.props.currentUserId
     }
 
-    handleSubmit(e) {
-        e.preventDefault()
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                const isSelf = (values.applicant === '$me')
-                const userId = isSelf && this.props.currentUserId
-                const teamId = !isSelf && values.applicant
-
-                this.props.applyToTask(this.props.taskId, userId, teamId, values.applyMsg,
-                    this.state.attachment_url, this.state.attachment_filename)
-                    .then(() => {
-                        this.setState({ applying: false })
-                        message.success('Application sent. Thank you!')
-                    })
-            }
-        })
+    async applyToProject() {
+        const ret = await this.props.applyToTask(this.props.taskId, this.props.currentUserId)
+        this.props.history.push(`/task-app/${this.props.taskId}/${this.props.currentUserId}`)
     }
 
     linkProfileInfo(userId) {
@@ -184,6 +167,10 @@ class C extends BaseComponent {
         this.props.withdrawCandidate(taskCandidateId)
     }
 
+    viewApplication(taskCandidateId) {
+        this.props.history.push(`/task-app/${this.props.taskId}/${this.props.currentUserId}`)
+    }
+
     removeUser(taskCandidateId) {
         this.props.rejectCandidate(taskCandidateId)
     }
@@ -237,16 +224,18 @@ class C extends BaseComponent {
                         )}
                         {this.isMember(candidate._id) && (
                             <span>
+                                <a onClick={this.viewApplication.bind(this, candidate._id)}>{I18N.get('project.detail.view')}</a>
+                                <Divider type="vertical"/>
                                 <a onClick={this.withdrawApplication.bind(this, candidate._id)}>{I18N.get('project.detail.withdraw_application')}</a>
-                                {this.isMember(candidate._id) && <Divider type="vertical"/>}
+                                {this.isTaskOwner() && <Divider type="vertical"/>}
                             </span>)
                         }
                         {this.isTaskOwner() &&
-                        <span className="inline-block">
-                            <a onClick={this.approveUser.bind(this, candidate._id)}>{I18N.get('project.detail.approve')}</a>
-                            <Divider type="vertical"/>
-                            <a onClick={this.disapproveUser.bind(this, candidate._id)}>{I18N.get('project.detail.disapprove')}</a>
-                        </span>
+                            <span className="inline-block">
+                                <a onClick={this.approveUser.bind(this, candidate._id)}>{I18N.get('project.detail.approve')}</a>
+                                <Divider type="vertical"/>
+                                <a onClick={this.disapproveUser.bind(this, candidate._id)}>{I18N.get('project.detail.disapprove')}</a>
+                            </span>
                         }
                     </div>
                 )
@@ -271,7 +260,7 @@ class C extends BaseComponent {
                 <Button icon="like">
                     Like
                 </Button>
-                <Button icon="message">
+                <Button icon="message" onClick={this.applyToProject.bind(this)}>
                     Get Involved
                 </Button>
             </div>
@@ -291,139 +280,26 @@ class C extends BaseComponent {
                             this.getActions()
                         }
 
-                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') && !this.state.applying &&
+                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
                             <Row className="contributors">
-                                { isMember &&
-                                    <Button onClick={this.removeUserByUserId.bind(this, this.props.currentUserId)} className="leave-button">{I18N.get('project.detail.leave')}</Button>
-                                }
                                 <h3 className="no-margin align-left">{I18N.get('project.detail.current_contributors')}</h3>
                                 {this.getCurrentContributors()}
                             </Row>
                         }
 
-                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') && !this.state.applying &&
+                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
                             <Row className="applications">
                                 <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
                                 {this.getCurrentApplicants()}
                             </Row>
                         }
                         {this.getDescription()}
-                        {this.state.applying && this.getApplicationForm()}
-                        {this.getFooter()}
+                        <Comments type="task" canPost={true} canSubscribe={!this.isTaskOwner()} model={this.props.detail}/>
                     </div>
                 )}
             </div>
         )
     }
-
-    getApplicationForm() {
-        const {getFieldDecorator} = this.props.form
-        const applyMsg_fn = getFieldDecorator('applyMsg', {
-            rules: [{required: true, message: 'Application is required'}],
-            initialValue: ''
-        })
-        const applyMsg_el = (
-            <Input.TextArea rows={8} className="team-application" disabled={this.props.loading}
-                placeholder="Tell us why you want to join."/>
-        )
-        const applyMsgPanel = applyMsg_fn(applyMsg_el)
-
-        const attachment_fn = getFieldDecorator('attachment', {
-            rules: []
-        });
-        const p_attachment = {
-            showUploadList: false,
-            customRequest: (info) => {
-                this.setState({
-                    attachment_loading: true
-                });
-                upload_file(info.file).then((d) => {
-                    const url = d.url;
-                    this.setState({
-                        attachment_loading: false,
-                        attachment_url: url,
-                        attachment_type: d.type,
-                        attachment_filename: d.filename,
-                        removeAttachment: false
-                    });
-                })
-            }
-        };
-        const attachment_el = (
-            <Upload name="attachment" {...p_attachment}>
-                {
-                    this.state.attachment_url ? (
-                        <a target="_blank" href={this.state.attachment_url}>
-                            {this.state.attachment_type === 'application/pdf' ?
-                                <Icon type="file-pdf"/> :
-                                <Icon type="file"/>
-                            } &nbsp;
-                            {this.state.attachment_filename}
-                        </a>
-                    ) : (
-                        <Button loading={this.state.attachment_loading}>
-                            <Icon type="upload" /> Click to upload
-                        </Button>
-                    )
-                }
-            </Upload>
-        );
-
-
-        const applicant_fn = getFieldDecorator('applicant', {
-            rules: [],
-            initialValue: '$me'
-        })
-        const applicant_el = (
-            <Select className="team-selector pull-right" disabled={this.props.loading}
-                // https://github.com/vazco/uniforms/issues/228
-                getPopupContainer={x => {
-                    while (x && x.tagName.toLowerCase() !== 'form') {
-                        x = x.parentElement;
-                    }
-
-                    return x;
-                }}>
-                <Select.Option value="$me" key="$me">
-                    Apply as myself
-                    <Avatar size="small" src={this.props.currentUserAvatar} className="pull-right"/>
-                </Select.Option>
-                {_.map(this.props.ownedTeams, (team) =>
-                    <Select.Option key={team._id} value={team._id}>
-                        Apply with {team.name}
-                        {!_.isEmpty(team.pictures)
-                            ? <Avatar size="small" src={team.pictures[0].thumbUrl} className="pull-right"/>
-                            : <Avatar size="small" type="user" className="pull-right"/>
-                        }
-                    </Select.Option>
-                )}
-            </Select>
-        )
-        const applicantPanel = applicant_fn(applicant_el)
-        const attachmentPanel = attachment_fn(attachment_el)
-
-        return (
-            <Form onSubmit={this.handleSubmit.bind(this)} className="application-form">
-                <Form.Item className="no-margin">
-                    {applyMsgPanel}
-                </Form.Item>
-                <Form.Item>
-                    Whitepaper: {attachmentPanel}
-                </Form.Item>
-                <Button disabled={this.props.loading} className="d_btn pull-left" onClick={() => this.setState({ applying: false })}>
-                    Cancel
-                </Button>
-                <Button disabled={this.props.loading} className="d_btn pull-right" type="primary" htmlType="submit">
-                    Apply
-                </Button>
-                <Form.Item className="pull-right">
-                    {applicantPanel}
-                </Form.Item>
-                <div class="clearfix"/>
-            </Form>
-        )
-    }
-
 
     getHeader() {
         const project = _.find(_.values(this.props.all_tasks), { _id: this.props.taskId })
@@ -437,18 +313,6 @@ class C extends BaseComponent {
                 <div className="clearfix"/>
             </div>
         )
-    }
-
-    getFooter() {
-        return !this.state.applying && !this.isTaskOwner() &&
-            <div className="halign-wrapper footer">
-                {this.props.currentUserId ?
-                    <Button className="submit-button" onClick={() => this.setState({applying: true})}>
-                        {I18N.get('developer.cr100.submit_whitepaper')}
-                    </Button> :
-                    <a onClick={() => this.props.history.push('/login')}>Please login/register to apply</a>
-                }
-            </div>
     }
 
     getDescription() {
