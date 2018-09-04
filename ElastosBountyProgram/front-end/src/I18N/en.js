@@ -97,7 +97,8 @@ export default {
 
     // RegisterFrom
     'register.title': 'Become a Contributor',
-    'register.description_1': 'As a member you can sign up for bounties on Cyber Republic.',
+    'register.description_1': 'This will only take a few seconds.',
+    'register.description_2': 'As a member you can sign up for bounties on Cyber Republic.',
     'register.required': 'Required Fields',
     'register.error.code': 'The code you entered does not match',
     'register.error.passwords': 'Two passwords you entered do not match',
@@ -129,7 +130,7 @@ export default {
     'register.form.hear': 'Where did you hear about us?',
     'register.code': 'We have sent a confirmation code to your email.',
     'register.submit': 'Register',
-    '3533': 'Optional Info',
+    '3533': 'More about you',
     '3534': 'Country',
 
     // Forgot / Reset Password Form

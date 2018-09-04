@@ -270,10 +270,10 @@ class C extends BaseComponent {
             return (
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
                     <FormItem>
-                        {p.userName}
+                        {p.email}
                     </FormItem>
                     <FormItem>
-                        {p.email}
+                        {p.userName}
                     </FormItem>
                     <FormItem>
                         {p.pwd}
@@ -281,21 +281,18 @@ class C extends BaseComponent {
                     <FormItem>
                         {p.pwdConfirm}
                     </FormItem>
-                    <h5>
-                        {I18N.get('register.form.about_section')}
-                    </h5>
-                    <FormItem>
-                        {p.firstName}
-                    </FormItem>
-                    <FormItem>
-                        {p.lastName}
-                    </FormItem>
-                    <FormItem>
-                        {p.country}
-                    </FormItem>
                     <FormItem>
                         <Collapse accordion={true} bordered={false}>
                             <Collapse.Panel header={I18N.get('3533')} key="1">
+                                <FormItem>
+                                    {p.firstName}
+                                </FormItem>
+                                <FormItem>
+                                    {p.lastName}
+                                </FormItem>
+                                <FormItem>
+                                    {p.country}
+                                </FormItem>
                                 <FormItem>
                                     {p.organizer}
                                 </FormItem>
@@ -333,12 +330,15 @@ class C extends BaseComponent {
             <div className="c_registerContainer">
                 <h2>
                     {I18N.get('register.title')}
-                    {/* Become a Contributor */}
                 </h2>
 
                 <h5>
-                    {I18N.get('register.description_1')}
-                    {/* As a member you can sign up for bounties on EBP,  */}
+                    <div>
+                        {I18N.get('register.description_1')}
+                    </div>
+                    <div>
+                        {I18N.get('register.description_2')}
+                    </div>
                 </h5>
 
                 {form}
