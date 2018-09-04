@@ -52,6 +52,10 @@ export default createContainer(Component, (state) => {
             return commentService.subscribe('task', taskId)
         },
 
+        async unsubscribeFromProject(taskId) {
+            return commentService.unsubscribe('task', taskId)
+        },
+
         resetAllTeams() {
             return teamService.resetAllTeams()
         },

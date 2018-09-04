@@ -17,7 +17,8 @@ import {
     Form,
     Divider,
     Modal,
-    Upload
+    Upload,
+    Badge
 } from 'antd'
 import {upload_file} from "@/util";
 import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS } from '@/constant'
@@ -80,6 +81,10 @@ class C extends BaseComponent {
 
     subscribeToProject() {
         this.props.subscribeToProject(this.props.taskId)
+    }
+
+    unsubscribeFromProject() {
+        this.props.unsubscribeFromProject(this.props.taskId)
     }
 
     linkProfileInfo(userId) {
@@ -208,6 +213,10 @@ class C extends BaseComponent {
         return this.removeUser(candidate._id)
     }
 
+    getNumberOfLikes() {
+        return _.size(this.props.detail.subscribers)
+    }
+
     getCurrentSubscribers() {
         const subscribers = this.props.detail.subscribers
         const columns = [{
@@ -312,16 +321,19 @@ class C extends BaseComponent {
     getActions() {
         return (
             <div className="halign-wrapper valign-wrapper action-wrapper">
-                <Button icon="like" onClick={this.subscribeToProject.bind(this)}
-                    disabled={this.isUserSubscribed()}>
-                    {this.isUserSubscribed()
-                        ? 'Liked'
-                        : 'Like'
-                    }
-                </Button>
-                <Button icon="message" onClick={this.applyToProject.bind(this)}>
-                    Get Involved
-                </Button>
+                <div>
+                    <Button icon="like" onClick={this.isUserSubscribed()
+                            ? this.unsubscribeFromProject.bind(this)
+                            : this.subscribeToProject.bind(this)}>
+                        {this.isUserSubscribed()
+                            ? 'Unlike'
+                            : 'Like'
+                        }
+                    </Button>
+                    <Button icon="message" onClick={this.applyToProject.bind(this)}>
+                        Get Involved
+                    </Button>
+                </div>
             </div>
         )
     }
