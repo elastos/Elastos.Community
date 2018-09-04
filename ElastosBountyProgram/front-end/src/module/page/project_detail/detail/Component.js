@@ -52,9 +52,34 @@ class C extends BaseComponent {
         return this.props.detail.createdBy && this.props.detail.createdBy._id === this.props.currentUserId
     }
 
+    isUserSubscribed() {
+        const curDetail = this.props.detail
+        const subscribers = curDetail.subscribers || []
+        return !!_.find(subscribers, (subscriber) => {
+            return subscriber.user && subscriber.user._id === this.props.currentUserId
+        })
+    }
+
     async applyToProject() {
-        const ret = await this.props.applyToTask(this.props.taskId, this.props.currentUserId)
-        this.props.history.push(`/task-app/${this.props.taskId}/${this.props.currentUserId}`)
+        await this.props.applyToTask(this.props.taskId, this.props.currentUserId)
+        const url = `/task-app/${this.props.taskId}/${this.props.currentUserId}`
+
+        message.success(
+            <span>
+                <div>
+                    Thanks for your interest.
+                </div>
+                <div>
+                    <span>View your application </span>
+                    <a href={url} target="_blank">here</a>
+                    <span> or later from the Applicants list.</span>
+                </div>
+            </span>
+        )
+    }
+
+    subscribeToProject() {
+        this.props.subscribeToProject(this.props.taskId)
     }
 
     linkProfileInfo(userId) {
@@ -257,8 +282,12 @@ class C extends BaseComponent {
     getActions() {
         return (
             <div className="halign-wrapper valign-wrapper action-wrapper">
-                <Button icon="like">
-                    Like
+                <Button icon="like" onClick={this.subscribeToProject.bind(this)}
+                    disabled={this.isUserSubscribed()}>
+                    {this.isUserSubscribed()
+                        ? 'Liked'
+                        : 'Like'
+                    }
                 </Button>
                 <Button icon="message" onClick={this.applyToProject.bind(this)}>
                     Get Involved

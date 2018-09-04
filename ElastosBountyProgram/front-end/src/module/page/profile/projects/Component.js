@@ -302,7 +302,7 @@ export default class extends StandardPage {
                                                 onClick={this.setAppliedFilter.bind(this)}>Applied</Button>
                                             <Button
                                                 className={(this.state.filter === FILTERS.SUBSCRIBED && 'selected') || ''}
-                                                onClick={this.setSubscribedFilter.bind(this)}>Subscribed</Button>
+                                                onClick={this.setSubscribedFilter.bind(this)}>Liked</Button>
                                             <Button
                                                 className={(this.state.filter === FILTERS.CR100 && 'selected') || ''}
                                                 onClick={this.setCr100Filter.bind(this)}>CR100</Button>

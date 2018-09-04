@@ -1,6 +1,7 @@
 import {createContainer} from '@/util'
 import TaskService from '@/service/TaskService'
 import TeamService from '@/service/TeamService'
+import CommentService from '@/service/CommentService'
 import Component from './Component'
 import _ from 'lodash'
 
@@ -27,6 +28,7 @@ export default createContainer(Component, (state) => {
 }, () => {
     const taskService = new TaskService()
     const teamService = new TeamService()
+    const commentService = new CommentService()
 
     return {
         async getTaskDetail(taskId) {
@@ -41,10 +43,13 @@ export default createContainer(Component, (state) => {
             return teamService.index(query)
         },
 
-        async applyToTask(taskId, userId, teamId, applyMsg, attachment,
-            attachmentFilename) {
+        async applyToTask(taskId, userId, teamId, applyMsg, attachment, attachmentFilename) {
             return taskService.pushCandidate(taskId, userId, teamId, applyMsg,
                 attachment, attachmentFilename)
+        },
+
+        async subscribeToProject(taskId) {
+            return commentService.subscribe('task', taskId)
         },
 
         resetAllTeams() {
