@@ -19,7 +19,8 @@ const FILTERS = {
     ACTIVE: 'active',
     APPLIED: 'applied',
     OWNED: 'owned',
-    SUBSCRIBED: 'subscribed'
+    SUBSCRIBED: 'subscribed',
+    CR100: 'cr100'
 }
 
 export default class extends StandardPage {
@@ -238,6 +239,7 @@ export default class extends StandardPage {
         const tasksPendingData = this.props.candidate_pending_tasks
         const tasksOwnedData = this.props.owned_tasks
         const tasksSubscribedData = this.props.subscribed_tasks
+        const tasksCr100Data = this.props.cr100_tasks
         const allTasks = this.props.all_tasks
 
         return (
@@ -301,6 +303,9 @@ export default class extends StandardPage {
                                             <Button
                                                 className={(this.state.filter === FILTERS.SUBSCRIBED && 'selected') || ''}
                                                 onClick={this.setSubscribedFilter.bind(this)}>Subscribed</Button>
+                                            <Button
+                                                className={(this.state.filter === FILTERS.CR100 && 'selected') || ''}
+                                                onClick={this.setCr100Filter.bind(this)}>CR100</Button>
                                         </Button.Group>
                                     </MediaQuery>
                                     {this.state.filter === FILTERS.ALL && this.getListComponent(allTasks)}
@@ -308,6 +313,7 @@ export default class extends StandardPage {
                                     {this.state.filter === FILTERS.APPLIED && this.getListComponent(tasksPendingData)}
                                     {this.state.filter === FILTERS.OWNED && this.getListComponent(tasksOwnedData)}
                                     {this.state.filter === FILTERS.SUBSCRIBED && this.getListComponent(tasksSubscribedData)}
+                                    {this.state.filter === FILTERS.CR100 && this.getListComponent(tasksCr100Data)}
                                 </Col>
                             </Row>
                             <Row>
@@ -361,6 +367,10 @@ export default class extends StandardPage {
 
     setSubscribedFilter() {
         this.setState({ filter: FILTERS.SUBSCRIBED })
+    }
+
+    setCr100Filter() {
+        this.setState({ filter: FILTERS.CR100 })
     }
 
     linkTaskDetail(taskId) {

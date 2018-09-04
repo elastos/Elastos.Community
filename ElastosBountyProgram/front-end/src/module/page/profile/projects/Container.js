@@ -40,6 +40,8 @@ export default createContainer(Component, (state) => {
     // tasks I am candidate of and approved
     taskState.candidate_active_tasks = []
 
+    taskState.cr100_tasks = []
+
     if (taskState.all_tasks.length) {
         for (let task of taskState.all_tasks) {
             if (_.find(task.subscribers, (subscriber) => {
@@ -71,6 +73,10 @@ export default createContainer(Component, (state) => {
                         taskState.candidate_pending_tasks.push(task)
                     }
                 }
+            }
+
+            if (task.category === TASK_CATEGORY.CR100) {
+                taskState.cr100_tasks.push(task)
             }
         }
     }
