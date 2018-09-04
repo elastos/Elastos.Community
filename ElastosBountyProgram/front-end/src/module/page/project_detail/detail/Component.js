@@ -175,6 +175,7 @@ class C extends BaseComponent {
 
         return (
             <Table
+                loading={this.props.loading}
                 className="no-borders headerless"
                 dataSource={applicants}
                 columns={columns}
@@ -237,6 +238,7 @@ class C extends BaseComponent {
 
         return (
             <Table
+                loading={this.props.loading}
                 className="no-borders headerless"
                 dataSource={subscribers}
                 columns={columns}
@@ -308,6 +310,7 @@ class C extends BaseComponent {
 
         return (
             <Table
+                loading={this.props.loading}
                 className="no-borders headerless"
                 dataSource={applicants}
                 columns={columns}
@@ -322,7 +325,7 @@ class C extends BaseComponent {
         return (
             <div className="halign-wrapper valign-wrapper action-wrapper">
                 <div>
-                    <Button icon="like" onClick={this.isUserSubscribed()
+                    <Button loading={this.props.loading} icon="like" onClick={this.isUserSubscribed()
                             ? this.unsubscribeFromProject.bind(this)
                             : this.subscribeToProject.bind(this)}>
                         {this.isUserSubscribed()
@@ -330,7 +333,8 @@ class C extends BaseComponent {
                             : 'Like'
                         }
                     </Button>
-                    <Button icon="message" onClick={this.applyToProject.bind(this)}>
+                    <Button loading={this.props.loading} icon="message" onClick={this.applyToProject.bind(this)}
+                        disabled={this.isMemberByUserId(this.props.currentUserId)}>
                         Get Involved
                     </Button>
                 </div>
@@ -343,39 +347,37 @@ class C extends BaseComponent {
 
         return (
             <div className="c_Project c_Detail">
-                { this.checkForLoading(() =>
-                    <div>
-                        {this.getHeader()}
+                <div>
+                    {this.getHeader()}
 
-                        {!this.isTaskOwner() && this.props.page === 'PUBLIC' &&
-                            this.getActions()
-                        }
+                    {!this.isTaskOwner() && this.props.page === 'PUBLIC' &&
+                        this.getActions()
+                    }
 
-                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
-                            <Row className="contributors">
-                                <h3 className="no-margin align-left">{I18N.get('project.detail.current_contributors')}</h3>
-                                {this.getCurrentContributors()}
-                            </Row>
-                        }
+                    {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
+                        <Row className="contributors">
+                            <h3 className="no-margin align-left">{I18N.get('project.detail.current_contributors')}</h3>
+                            {this.getCurrentContributors()}
+                        </Row>
+                    }
 
-                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
-                            <Row className="applications">
-                                <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
-                                {this.getCurrentApplicants()}
-                            </Row>
-                        }
+                    {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
+                        <Row className="applications">
+                            <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
+                            {this.getCurrentApplicants()}
+                        </Row>
+                    }
 
-                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
-                            <Row className="subscribers">
-                                <h3 className="no-margin">{I18N.get('project.detail.subscribers')}</h3>
-                                {this.getCurrentSubscribers()}
-                            </Row>
-                        }
+                    {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
+                        <Row className="subscribers">
+                            <h3 className="no-margin">{I18N.get('project.detail.subscribers')}</h3>
+                            {this.getCurrentSubscribers()}
+                        </Row>
+                    }
 
-                        {this.getDescription()}
-                        <Comments type="task" canPost={true} canSubscribe={!this.isTaskOwner()} model={this.props.detail}/>
-                    </div>
-                )}
+                    {this.getDescription()}
+                    <Comments type="task" canPost={true} canSubscribe={!this.isTaskOwner()} model={this.props.detail}/>
+                </div>
             </div>
         )
     }
