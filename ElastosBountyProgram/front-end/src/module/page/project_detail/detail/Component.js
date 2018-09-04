@@ -73,7 +73,7 @@ class C extends BaseComponent {
                 <div>
                     <span>View your application </span>
                     <a href={url} target="_blank">here</a>
-                    <span> or later from the Applicants list.</span>
+                    <span> or later from the Pending Applications list.</span>
                 </div>
             </span>
         )
@@ -122,6 +122,23 @@ class C extends BaseComponent {
         }
     }
 
+    getCandidateDisplayName(candidate) {
+        const fn = candidate.user.profile.firstName
+        const ln = candidate.user.profile.lastName
+        const un = candidate.user.username
+
+        return _.isEmpty(fn) && _.isEmpty(ln)
+            ? un
+            : [fn, ln].join(' ')
+    }
+
+    getCandidateAvatar(candidate) {
+        const avatar = candidate.user.profile.avatar
+        return _.isEmpty(avatar)
+            ? '/assets/images/Elastos_Logo.png'
+            : avatar
+    }
+
     getCurrentContributors() {
         const detail = this.props.detail
         const applicants = _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.APPROVED });
@@ -143,8 +160,8 @@ class C extends BaseComponent {
                         <div>
                             <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
                                 <Avatar className={'gap-right ' + (candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
-                                    src={candidate.user.profile.avatar}/>
-                                {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
+                                    src={this.getCandidateAvatar(candidate)}/>
+                                {this.getCandidateDisplayName(candidate)}
                             </a>
                         </div>
                         }
@@ -228,8 +245,8 @@ class C extends BaseComponent {
                     <div>
                         <div>
                             <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
-                                <Avatar className="gap-right" src={candidate.user.profile.avatar} />
-                                {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
+                                <Avatar className="gap-right" src={this.getCandidateAvatar(candidate)} />
+                                {this.getCandidateDisplayName(candidate)}
                             </a>
                         </div>
                     </div>)
@@ -261,8 +278,8 @@ class C extends BaseComponent {
                         {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
                         <div>
                             <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
-                                <Avatar className="gap-right" src={candidate.user.profile.avatar} />
-                                {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
+                                <Avatar className="gap-right" src={this.getCandidateAvatar(candidate)} />
+                                {this.getCandidateDisplayName(candidate)}
                             </a>
                         </div>
                         }
