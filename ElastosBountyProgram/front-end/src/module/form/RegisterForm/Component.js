@@ -101,7 +101,7 @@ class C extends BaseComponent {
         const {getFieldDecorator} = this.props.form
 
         const firstName_fn = getFieldDecorator('firstName', {
-            rules: [{required: true, message: I18N.get('register.form.label_first_name')}],
+            rules: [],
             initialValue: ''
         })
         const firstName_el = (
@@ -111,7 +111,7 @@ class C extends BaseComponent {
         )
 
         const lastName_fn = getFieldDecorator('lastName', {
-            rules: [{required: true, message: I18N.get('register.form.label_last_name')}],
+            rules: [],
             initialValue: ''
         })
         const lastName_el = (
@@ -173,7 +173,7 @@ class C extends BaseComponent {
         )
 
         const country_fn = getFieldDecorator('country', {
-            rules: [{required: true, message: I18N.get('register.form.label_country')}]
+            rules: []
         })
         const country_el = (
             <Select size="large"
