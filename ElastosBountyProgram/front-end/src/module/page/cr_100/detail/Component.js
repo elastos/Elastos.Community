@@ -309,15 +309,15 @@ class C extends BaseComponent {
         });
         const p_attachment = {
             showUploadList: false,
-            customRequest :(info)=>{
+            customRequest: (info) => {
                 this.setState({
                     attachment_loading: true
                 });
-                upload_file(info.file).then((d)=>{
+                upload_file(info.file).then((d) => {
                     const url = d.url;
                     this.setState({
                         attachment_loading: false,
-                        attachment_url : url,
+                        attachment_url: url,
                         attachment_type: d.type,
                         attachment_filename: d.filename,
                         removeAttachment: false
@@ -403,7 +403,7 @@ class C extends BaseComponent {
 
     getHeader() {
         const project = _.find(_.values(this.props.all_tasks), { _id: this.props.taskId })
-        const projectIndex = _.indexOf(_.values(this.props.all_tasks), project) + 1 // 1-indexed
+        const projectIndex = project.dAppId
 
         return (
             <div>
@@ -471,14 +471,14 @@ class C extends BaseComponent {
     format(contents) {
         let first = true;
         let elements = []
-        for(let char of contents) {
+        for (let char of contents) {
             if (char === '-') {
                 if (!first) {
                     elements.push(<br/>)
                 }
                 first = false
-           }
-           elements.push(char)
+            }
+            elements.push(char)
         }
         return elements
     }
