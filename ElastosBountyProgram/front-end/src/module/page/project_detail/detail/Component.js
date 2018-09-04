@@ -404,7 +404,7 @@ class C extends BaseComponent {
                         }
                     </Button>
                     <Button loading={this.props.loading} icon="message" onClick={applyHandler.bind(this)}
-                        disabled={this.isMemberByUserId(this.props.currentUserId)}>
+                        disabled={this.isTaskOwner() || this.isMemberByUserId(this.props.currentUserId)}>
                         Get Involved
                     </Button>
                 </div>
@@ -420,7 +420,7 @@ class C extends BaseComponent {
                 <div>
                     {this.getHeader()}
 
-                    {!this.isTaskOwner() && this.props.page === 'PUBLIC' &&
+                    {this.props.page === 'PUBLIC' &&
                         this.getActions()
                     }
 
