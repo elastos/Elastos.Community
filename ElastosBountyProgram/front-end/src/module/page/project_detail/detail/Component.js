@@ -116,6 +116,7 @@ class C extends BaseComponent {
     }
 
     showApplicationModal(taskCandidateId) {
+        taskCandidateId = taskCandidateId || this.getApplicant()._id
         this.setState({
             showApplicationModal: true,
             taskCandidateId
@@ -411,6 +412,13 @@ class C extends BaseComponent {
         )
     }
 
+    getApplicant () {
+        return (!_.isEmpty(this.props.detail.candidates) &&
+            this.props.detail.candidates.find((candidate) => {
+                return candidate.user && candidate.user._id === this.props.currentUserId
+            }))
+    }
+
     getActions() {
         const likeHandler = this.props.is_login
             ? this.isUserSubscribed()
@@ -419,7 +427,9 @@ class C extends BaseComponent {
             : this.showLoginRegisterModal
 
         const applyHandler = this.props.is_login
-            ? this.applyToProject
+            ? this.getApplicant()
+                ? this.showApplicationModal
+                : this.applyToProject
             : this.showLoginRegisterModal
 
         return (
@@ -433,7 +443,8 @@ class C extends BaseComponent {
                         }
                     </Button>
                     <Button loading={this.props.loading} icon="message" onClick={applyHandler.bind(this)}
-                        disabled={this.isTaskOwner() || this.isMemberByUserId(this.props.currentUserId)}>
+                        disabled={this.isTaskOwner() ||
+                            (this.isMemberByUserId(this.props.currentUserId) && !this.getApplicant())}>
                         Get Involved
                     </Button>
                 </div>
