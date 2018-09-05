@@ -408,7 +408,9 @@ class C extends BaseComponent {
             <div>
                 <div className="project-icon">
                     <div className="base-icon"/>
-                    <img className="overlay-icon" src={link + project.dAppId + '.png'}/>
+                    {this.props.detail &&
+                        <img className="overlay-icon" src={link + this.props.detail.dAppId + '.png'}/>
+                    }
                 </div>
                 <div className="project-description">
                     <div className="project-name komu-a">dApp #{projectIndex} - {this.props.detail.name}</div>
