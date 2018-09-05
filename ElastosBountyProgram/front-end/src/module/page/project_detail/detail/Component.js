@@ -397,7 +397,8 @@ class C extends BaseComponent {
         return (
             <div className="halign-wrapper valign-wrapper action-wrapper">
                 <div>
-                    <Button loading={this.props.loading} icon="like" onClick={likeHandler.bind(this)}>
+                    <Button loading={this.props.loading}
+                        icon={this.isUserSubscribed() ? 'dislike' : 'like'} onClick={likeHandler.bind(this)}>
                         {this.isUserSubscribed()
                             ? 'Unlike'
                             : 'Like'
