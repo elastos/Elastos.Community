@@ -44,8 +44,6 @@ class C extends BaseComponent {
     }
 
     componentWillUnmount() {
-        this.props.resetTaskDetail()
-        this.props.resetAllTeams()
     }
 
     isTaskOwner() {
