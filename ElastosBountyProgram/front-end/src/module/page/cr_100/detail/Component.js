@@ -400,17 +400,21 @@ class C extends BaseComponent {
         )
     }
 
-
     getHeader() {
         const project = _.find(_.values(this.props.all_tasks), { _id: this.props.taskId })
         const projectIndex = project.dAppId
-
+        const link = 'https://s3-us-west-1.amazonaws.com/ebp-staging-files/cr100/'
         return (
             <div>
-                <Avatar size={64} shape="square" className="pull-left" src={this.props.detail.thumbnail}/>
-                <div className="project-name komu-a">dApp #{projectIndex} - {this.props.detail.name}</div>
-                <div className="project-funding komu-a">Funding: 100k for 5% of the equity or coins/tokens</div>
-                <div className="clearfix"/>
+                <div className="project-icon">
+                    <div className="base-icon"/>
+                    <img className="overlay-icon" src={link + project.dAppId + '.png'}/>
+                </div>
+                <div className="project-description">
+                    <div className="project-name komu-a">dApp #{projectIndex} - {this.props.detail.name}</div>
+                    <div className="project-funding komu-a">Funding: 100k for 5% of the equity or coins/tokens</div>
+                    <div className="clearfix"/>
+                </div>
             </div>
         )
     }

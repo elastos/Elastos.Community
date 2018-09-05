@@ -7,11 +7,34 @@
         margin-top: $gap_2;
     }
 
+    .project-icon {
+        width: 96px;
+        height: 96px;
+        position: relative;
+        display: inline-block;
+        margin-right: $gap_3;
+    }
+
+    .base-icon, .overlay-icon {
+        width: 96px;
+        height: 96px;
+        position: absolute;
+        top: 0;
+    }
+
+    .base-icon {
+        background-image: url('/assets/images/IconBG.png');
+        background-size: contain;
+    }
+
+    .project-description {
+        display: inline-block;
+    }
+
     .project-name,
     .project-funding {
         height: 32px;
         line-height: 32px;
-        margin-left: 80px;
         font-size: 24px;
         font-weight: 500;
         text-transform: uppercase;
