@@ -66,21 +66,8 @@ class C extends BaseComponent {
     }
 
     async applyToProject() {
-        await this.props.applyToTask(this.props.taskId, this.props.currentUserId)
-        const url = `/task-app/${this.props.taskId}/${this.props.currentUserId}`
-
-        message.success(
-            <span>
-                <div>
-                    Thanks for your interest.
-                </div>
-                <div>
-                    <span>View your application </span>
-                    <a href={url} target="_blank">here</a>
-                    <span> or later from the Pending Applications list.</span>
-                </div>
-            </span>
-        )
+        const res = await this.props.applyToTask(this.props.taskId, this.props.currentUserId)
+        this.showApplicationModal(res._id)
     }
 
     renderLoginOrRegisterModal() {
