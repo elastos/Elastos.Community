@@ -161,6 +161,13 @@ class C extends BaseComponent {
     getHeader() {
         return (
             <div>
+                <Upload.Dragger name="file" multiple={false}>
+                    <p className="ant-upload-drag-icon">
+                        <Icon type="inbox" />
+                    </p>
+                    <p className="ant-upload-text">If you have a whitepaper ready, drag it or click here.</p>
+                    <p className="ant-upload-hint">Use the Comments below to speak to the Project Owner and find out more.</p>
+                </Upload.Dragger>
             </div>
         )
     }
