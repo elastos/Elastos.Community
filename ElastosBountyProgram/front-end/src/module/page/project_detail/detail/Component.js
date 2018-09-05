@@ -24,6 +24,7 @@ import {upload_file} from "@/util";
 import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS } from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
+import Application from '../application/Container'
 import I18N from '@/I18N'
 import _ from 'lodash'
 import './style.scss'
@@ -31,7 +32,9 @@ import './style.scss'
 class C extends BaseComponent {
     ord_states() {
         return {
-            showLoginRegisterModal: false
+            showLoginRegisterModal: false,
+            showApplicationModal: false,
+            taskCandidateId: null
         }
     }
 
@@ -99,12 +102,36 @@ class C extends BaseComponent {
         )
     }
 
+    renderApplicationModal() {
+        return (
+            <Modal
+                className="project-detail-nobar"
+                visible={this.state.showApplicationModal}
+                onOk={this.handleApplicationModalOk.bind(this)}
+                onCancel={this.handleApplicationModalCancel.bind(this)}
+                footer={null}
+                width="70%"
+            >
+                { this.state.taskCandidateId &&
+                    <Application taskId={this.props.taskId} taskCandidateId={this.state.taskCandidateId} />
+                }
+            </Modal>
+        )
+    }
+
     showLoginRegisterModal = () => {
         sessionStorage.setItem('loginRedirect', `/project-detail/${this.props.taskId}`)
         sessionStorage.setItem('registerRedirect', `/project-detail/${this.props.taskId}`)
 
         this.setState({
             showLoginRegisterModal: true
+        })
+    }
+
+    showApplicationModal(taskCandidateId) {
+        this.setState({
+            showApplicationModal: true,
+            taskCandidateId
         })
     }
 
@@ -116,11 +143,25 @@ class C extends BaseComponent {
         })
     }
 
+    handleApplicationModalOk = (e) => {
+        this.setState({
+            showApplicationModal: false,
+            taskCandidateId: null
+        })
+    }
+
     handleLoginRegisterModalCancel = (e) => {
         sessionStorage.removeItem('registerRedirect')
 
         this.setState({
             showLoginRegisterModal: false
+        })
+    }
+
+    handleApplicationModalCancel() {
+        this.setState({
+            showApplicationModal: false,
+            taskCandidateId: null
         })
     }
 
@@ -261,7 +302,7 @@ class C extends BaseComponent {
     }
 
     viewApplication(taskCandidateId) {
-        this.props.history.push(`/task-app/${this.props.taskId}/${this.props.currentUserId}`)
+        this.showApplicationModal(taskCandidateId)
     }
 
     removeUser(taskCandidateId) {
@@ -449,6 +490,7 @@ class C extends BaseComponent {
                     {this.getDescription()}
                     <Comments type="task" canPost={true} canSubscribe={!this.isTaskOwner()} model={this.props.detail}/>
                     {this.renderLoginOrRegisterModal()}
+                    {this.renderApplicationModal()}
                 </div>
             </div>
         )
