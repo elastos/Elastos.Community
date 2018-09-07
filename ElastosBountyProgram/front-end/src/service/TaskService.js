@@ -361,4 +361,9 @@ export default class extends BaseService {
 
         return res
     }
+
+    async saveFilter(filter) {
+        const taskRedux = this.store.getRedux('task')
+        this.dispatch(taskRedux.actions.filter_update(filter))
+    }
 }

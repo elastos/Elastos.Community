@@ -22,7 +22,10 @@ class SubmissionRedux extends BaseRedux {
             all_submissions: [],
 
             // if we select a detail
-            detail: {}
+            detail: {},
+
+            // filter - persistent filter
+            filter: {}
         };
     }
 }

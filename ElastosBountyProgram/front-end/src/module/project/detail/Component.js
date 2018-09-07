@@ -168,7 +168,7 @@ class C extends BaseComponent {
                     <span>{name}</span>
                 </div>
                 <a className="leader" onClick={this.linkProfileInfo.bind(this, detail.createdBy._id)}>
-                    <Avatar size="large" src={leaderImage} />
+                    <Avatar size="large" src={leaderImage} /> &nbsp;
                     <span className="ellipsis">{leaderName}</span>
                 </a>
                 <div className="content">
@@ -283,7 +283,7 @@ class C extends BaseComponent {
             render: candidate => {
                 return (
                     <div className="text-right">
-                        {this.props.page === 'LEADER' && (this.isTaskOwner() || this.isMember(candidate._id)) && (
+                        {(this.props.page === 'ADMIN' || this.isTaskOwner() || this.isMember(candidate._id)) && (
                             <span>
                                 <a onClick={this.showAppModal.bind(this, candidate._id)}>{I18N.get('project.detail.view')}</a>
                                 <Divider type="vertical"/>

@@ -229,6 +229,12 @@ class C extends BaseComponent {
             render: candidate => {
                 return (
                     <div className="text-right">
+                        {(this.props.page === 'ADMIN' || this.isTaskOwner() || this.isMember(candidate._id)) && (
+                            <span>
+                                <a onClick={this.showAppModal.bind(this, candidate._id)}>{I18N.get('project.detail.view')}</a>
+                                <Divider type="vertical"/>
+                            </span>
+                        )}
                         {this.isMember(candidate._id) && (
                             <span>
                                 <a onClick={this.withdrawApplication.bind(this, candidate._id)}>{I18N.get('project.detail.withdraw_application')}</a>

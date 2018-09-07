@@ -18,23 +18,26 @@ export default class extends AdminPage {
         super(props)
 
         this.state = {
-            textFilter: '',
-            campaign: '',
-            showArchived: false
+            textFilter: (this.props.filter && this.props.filter.textFilter) || '',
+            campaign: (this.props.filter && this.props.filter.campaign) || '',
+            showArchived: (this.props.filter && this.props.filter.showArchived) ? this.props.filter.showArchived : false,
         }
     }
 
     async componentDidMount() {
         await super.componentDidMount()
-        this.props.getSubmissions()
+        this.props.getSubmissions(this.state.showArchived)
+
     }
 
     componentWillUnmount() {
         this.props.resetSubmissions()
     }
 
-    handleSearch(value) {
-        this.setState({textFilter: value})
+    async handleSearch(value) {
+        await this.setState({textFilter: value})
+
+        this.saveFilter()
     }
 
     ord_renderContent () {
@@ -152,6 +155,7 @@ export default class extends AdminPage {
                                         allowClear
                                         style={{width: 200, marginLeft: 8}}
                                         placeholder="Select a campaign"
+                                        defaultValue={this.state.campaign || null}
                                         onChange={this.selectCampaign.bind(this)}
                                     >
                                         {_.map(config.dict.formCampaigns, (campaign, key) => {
@@ -163,6 +167,7 @@ export default class extends AdminPage {
                                 </div>
                                 <div className="pull-right">
                                     <Input.Search onSearch={this.handleSearch.bind(this)}
+                                                  defaultValue={this.state.textFilter || ''}
                                                   prefix={<Icon type="file-text" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                                   placeholder="search"/>
                                 </div>
@@ -189,7 +194,7 @@ export default class extends AdminPage {
     // TODO: all UI should be moved from container to component
     async archiveItem(submissionId) {
         try {
-            await this.props.archiveSubmission(submissionId)
+            await this.props.archiveSubmission(submissionId, this.state.showArchived)
             message.success('Item archived successfully')
 
         } catch (err) {
@@ -205,12 +210,20 @@ export default class extends AdminPage {
         })
 
         await this.props.showArchived(this.state.showArchived)
+
+        this.saveFilter()
     }
 
     async selectCampaign(value) {
         await this.setState({
-            campaign: value
+            campaign: value || ''
         })
+
+        this.saveFilter()
+    }
+
+    saveFilter() {
+        this.props.saveFilter(_.pick(this.state, ['textFilter', 'campaign', 'showArchived']))
     }
 
     linkSubmissionDetail(submissionId) {
