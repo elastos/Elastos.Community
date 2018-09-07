@@ -52,6 +52,7 @@ export default class extends BaseComponent {
     renderAdminHeader() {
 
         return <div className="l_banner">
+            {this.props.task.category !== 'CR100' ?
             <div className="pull-left">
                 Status: <span className="status">{this.props.task.status}</span>
                 {this.props.task.status === TASK_STATUS.CREATED &&
@@ -69,7 +70,12 @@ export default class extends BaseComponent {
                     <span className="help-text">&nbsp; - this task does not require ELA, no further action is needed</span>
                 )
                 }
+            </div> :
+            <div className="pull-left">
+                CR100 Project
             </div>
+            }
+            {this.props.task.category !== 'CR100' &&
             <div className="pull-right right-align">
                 {!this.state.editing && this.props.task.status === TASK_STATUS.PENDING &&
                 <Popconfirm title="Are you sure you want to approve this task?" placement="left" okText="Yes" onConfirm={this.approveTask.bind(this)}>
@@ -97,6 +103,7 @@ export default class extends BaseComponent {
                     {this.state.editing ? 'Cancel' : 'Edit'}
                 </Button>
             </div>
+            }
             <div className="clearfix"/>
         </div>
     }
@@ -106,30 +113,36 @@ export default class extends BaseComponent {
         const isTaskOwner = this.props.current_user_id === (this.props.task.createdBy && this.props.task.createdBy._id)
 
         return <div className="l_banner">
-            <div className="pull-left">
-                Status: <span className="status">{this.props.task.status}</span>
+            {this.props.task.category !== 'CR100' ?
+                <div className="pull-left">
+                    Status: <span className="status">{this.props.task.status}</span>
 
-                {this.props.task.status === TASK_STATUS.PENDING &&
-                <span className="help-text">&nbsp; - this task is awaiting approval by an admin</span>
-                }
-                {this.props.task.status === TASK_STATUS.APPROVED && !(this.props.task.category === TASK_CATEGORY.DEVELOPER && this.props.task.type === TASK_TYPE.EVENT) &&
-                <span className="help-text">&nbsp; - this task is waiting on applicants to be selected</span>
-                }
-                {this.props.task.status === TASK_STATUS.ASSIGNED &&
-                <span className="help-text">&nbsp; - this task is active</span>
-                }
-                {this.props.task.status === TASK_STATUS.SUBMITTED &&
+                    {this.props.task.status === TASK_STATUS.PENDING &&
+                    <span className="help-text">&nbsp; - this task is awaiting approval by an admin</span>
+                    }
+                    {this.props.task.status === TASK_STATUS.APPROVED && !(this.props.task.category === TASK_CATEGORY.DEVELOPER && this.props.task.type === TASK_TYPE.EVENT) &&
+                    <span className="help-text">&nbsp; - this task is waiting on applicants to be selected</span>
+                    }
+                    {this.props.task.status === TASK_STATUS.ASSIGNED &&
+                    <span className="help-text">&nbsp; - this task is active</span>
+                    }
+                    {this.props.task.status === TASK_STATUS.SUBMITTED &&
                     <span className="help-text">&nbsp; - this task is awaiting council sign off</span>
-                }
-                {this.props.task.status === TASK_STATUS.SUCCESS &&
-                <span className="help-text">&nbsp; - an admin will review and disburse the ELA reward if any</span>
-                }
-                {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) && isTaskOwner && !(this.props.task.category === TASK_CATEGORY.DEVELOPER && this.props.task.type === TASK_TYPE.EVENT) &&
-                <div className="help-text">&nbsp; -
-                    Please accept applicants up to the max accepted number
+                    }
+                    {this.props.task.status === TASK_STATUS.SUCCESS &&
+                    <span className="help-text">&nbsp; - an admin will review and disburse the ELA reward if any</span>
+                    }
+                    {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) && isTaskOwner && !(this.props.task.category === TASK_CATEGORY.DEVELOPER && this.props.task.type === TASK_TYPE.EVENT) &&
+                    <div className="help-text">&nbsp; -
+                        Please accept applicants up to the max accepted number
+                    </div>
+                    }
+                </div> :
+                <div className="pull-left">
+                    CR100 Project
                 </div>
-                }
-            </div>
+            }
+            {this.props.task.category !== 'CR100' &&
             <div className="pull-right right-align">
                 {/* Admin & Task Owner CAN Mark as Complete */}
                 {this.props.task.status === TASK_STATUS.ASSIGNED && isTaskOwner &&
@@ -148,6 +161,7 @@ export default class extends BaseComponent {
                 </Button>
                 }
             </div>
+            }
             <div className="clearfix"/>
         </div>
 
@@ -208,7 +222,13 @@ export default class extends BaseComponent {
     }
 
     switchEditMode() {
-        this.setState({editing: !this.state.editing})
+        if (!this.state.editing) {
+            this.setState({editing: true})
+        } else {
+            window.location.reload()
+        }
+        // temp hack above till we figure out why editing lifecycle has spinner
+        // this.setState({editing: !this.state.editing})
     }
 
 }

@@ -10,11 +10,11 @@ export default class extends TasksBaseAdmin {
 
     ord_getAllTasks() {
         return this.props.all_tasks.filter((task) => {
-            return task.category !== 'CR100'
+            return task.category === 'CR100'
         })
     }
 
     ord_getTaskPageName() {
-        return 'tasks'
+        return 'cr100'
     }
 }

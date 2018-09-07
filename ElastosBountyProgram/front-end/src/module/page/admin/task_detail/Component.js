@@ -7,7 +7,7 @@ import './style.scss'
 
 import Navigator from '../shared/Navigator/Component'
 
-import { Breadcrumb, Col, Icon, Row } from 'antd'
+import { Breadcrumb, Col, Icon, Row, Spin } from 'antd'
 
 import {TASK_STATUS} from '@/constant'
 
@@ -27,7 +27,14 @@ export default class extends AdminPage {
         this.props.resetTaskDetail()
     }
 
+
     ord_renderContent () {
+
+        // TODO: bug here, should wait for task.loading instead of checking category field
+        if (!this.props.task.category) {
+            return <div className="center"><Spin size="large"/></div>
+        }
+
         return (
             <div>
                 <div className="p_admin_index ebp-wrap">
@@ -46,7 +53,7 @@ export default class extends AdminPage {
                         <div className="p_admin_content">
                             <Row className="clearfix">
                                 <Col span={4} className="admin-left-column wrap-box-navigator">
-                                    <Navigator selectedItem={'tasks'}/>
+                                    <Navigator selectedItem={this.props.task.category === 'CR100' ? 'cr100' : 'tasks'}/>
                                 </Col>
                                 <Col span={20} className="admin-right-column wrap-box-user">
                                     <TaskDetail task={this.props.task}/>

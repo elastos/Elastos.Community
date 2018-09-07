@@ -113,4 +113,8 @@ export default class extends BaseService {
         this.dispatch(submissionRedux.actions.detail_reset())
     }
 
+    async saveFilter(filter) {
+        const submissionRedux = this.store.getRedux('submission')
+        this.dispatch(submissionRedux.actions.filter_update(filter))
+    }
 }

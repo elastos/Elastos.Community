@@ -29,9 +29,11 @@ export default class extends BaseComponent {
                 <Menu.Item key="submissions">
                     <Link to="/admin/submissions">{I18N.get('1304')}</Link>
                 </Menu.Item>
-
                 <Menu.Item key="forms">
                     <Link to="/admin/forms">{I18N.get('1305')}</Link>
+                </Menu.Item>
+                <Menu.Item key="cr100">
+                    <Link to="/admin/cr100">{I18N.get('0105')}</Link>
                 </Menu.Item>
             </Menu>
         )

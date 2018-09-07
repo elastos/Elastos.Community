@@ -9,11 +9,10 @@ export default createContainer(Component, (state) => {
 
     let submissionState = state.submission
 
+    // this fixes the issue with an array returning as a obj
     if (!_.isArray(state.submission.all_submissions)) {
         submissionState.all_submissions = _.values(state.submission.all_submissions)
     }
-
-    submissionState.filter = state.submission.filter || {}
 
     return submissionState
 
@@ -22,12 +21,13 @@ export default createContainer(Component, (state) => {
     const submissionService = new SubmissionService()
 
     return {
-        async getSubmissions () {
+        async getSubmissions(showArchived) {
             return submissionService.index({
                 admin: true,
                 type: JSON.stringify({
                     $in: [SUBMISSION_TYPE.FORM_EXT, SUBMISSION_TYPE.EMPOWER_35]
-                })
+                }),
+                showArchived: showArchived
             })
         },
 
@@ -39,14 +39,15 @@ export default createContainer(Component, (state) => {
 
         },
 
-        async archiveSubmission(submissionId) {
+        async archiveSubmission(submissionId, showArchived) {
             await submissionService.archive(submissionId)
 
             return submissionService.index({
                 admin: true,
                 type: JSON.stringify({
                     $in: [SUBMISSION_TYPE.FORM_EXT, SUBMISSION_TYPE.EMPOWER_35]
-                })
+                }),
+                showArchived: showArchived
             })
         },
 
@@ -58,6 +59,10 @@ export default createContainer(Component, (state) => {
                 }),
                 showArchived: showArchived
             })
+        },
+
+        saveFilter(filter) {
+            submissionService.saveFilter(filter)
         }
     }
 })
