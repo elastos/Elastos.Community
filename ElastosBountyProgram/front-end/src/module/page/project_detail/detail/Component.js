@@ -165,6 +165,10 @@ class C extends BaseComponent {
         this.props.history.push(`/member/${userId}`)
     }
 
+    linkTeamDetail(teamId) {
+        this.props.history.push(`/team-detail/${teamId}`)
+    }
+
     checkForLoading(followup) {
         return this.props.loading
             ? <div className="valign-wrapper halign-wrapper"><Spin size="large"/></div>
@@ -359,7 +363,7 @@ class C extends BaseComponent {
                         }
                         {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
                         <div>
-                            <a onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
+                            <a onClick={this.linkTeamDetail.bind(this, candidate.team._id)}>
                                 <Avatar className="gap-right" src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
                                 {candidate.team.name}
                             </a>
