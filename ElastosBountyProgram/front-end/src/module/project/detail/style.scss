@@ -41,7 +41,7 @@
 
   .top-section {
     border: 1px solid $border_gray;
-    border-radius: 5px 50px 5px 5px;
+    border-radius: 50px 50px 5px 5px;
     width: 752px;
     margin: 0 auto;
 
@@ -60,6 +60,7 @@
 
       .left-container {
         width: 100%;
+        padding: 4px;
 
         .pictures-container {
           width: 100%;
@@ -94,7 +95,7 @@
     .col-right {
       border-left: 1px solid $border_gray;
       padding: $gap_2 $gap_0 $gap_2 $gap_2;
-      height: 500px;
+      min-height: 500px;
 
       @media only screen and (max-width: $mobile-width) {
         height: auto;

@@ -54,7 +54,19 @@ export default class extends AdminPage {
         }
 
         if (this.state.campaign) {
-            submissionData = submissionData.filter((submission) => submission.campaign === this.state.campaign)
+            submissionData = submissionData.filter((submission) => {
+
+                // test exact match
+                if (submission.campaign === this.state.campaign) {
+                    return true
+                }
+
+                // empower 35
+                if (submission.type === 'EMPOWER_35') {
+                    return true
+                }
+
+            })
         }
 
         const columns = [
@@ -89,7 +101,7 @@ export default class extends AdminPage {
             dataIndex: 'campaign',
             className: 'fontWeight500 allow-wrap',
             render: (campaign, record) => {
-                return config.dict.formCampaigns[campaign] || campaign
+                return config.dict.formCampaigns[campaign] || _.capitalize(campaign)
             }
         }, {
             title: 'Created',
