@@ -8,6 +8,8 @@ import {validate, utilCrypto, mail} from '../utility';
 import CommunityService from "./CommunityService";
 import CommentService from "./CommentService";
 
+// RFC822 standard email regex.
+const EMAIL_REGEX = /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$/;
 let selectFields = '-salt -password -elaBudget -elaOwed -votePower -resetToken'
 
 const restrictedFields = {
@@ -75,13 +77,13 @@ export default class extends Base {
     }
 
     public async getUserSalt(username): Promise<String>{
-        username = username.toLowerCase();
         const db_user = this.getDBModel('User');
-        const user = await db_user.db.findOne({
-            username
-        });
+        const isEmail = validate.email(username);
+        const query = {[isEmail ? 'email' : 'username'] : username};
+        const user = await db_user.db.findOne(query);
+
         if(!user){
-            throw 'invalid username';
+            throw 'invalid username or email';
         }
         return user.salt;
     }
@@ -167,12 +169,29 @@ export default class extends Base {
         return user
     }
 
-    public async findUser(query): Promise<Document>{
+    public async findUserByEmail(query): Promise<Document>{
         const db_user = this.getDBModel('User');
         return await db_user.findOne({
-            username: query.username.toLowerCase(),
+            email: query.email,
             password: query.password
         });
+    }
+
+    public async findUser(query): Promise<Document>{
+        const db_user = this.getDBModel('User');
+        const isEmail = validate.email(query.username);
+
+        if (!isEmail) {
+            return await db_user.findOne({
+                username: query.username.toLowerCase(),
+                password: query.password
+            });
+        } else {
+            return await db_user.findOne({
+                email: query.username,
+                password: query.password
+            });
+        }
     }
 
     public async findUsers(query): Promise<Document[]>{
