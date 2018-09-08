@@ -167,14 +167,6 @@ export default class extends Base {
         return user
     }
 
-    public async findUserByEmail(query): Promise<Document>{
-        const db_user = this.getDBModel('User');
-        return await db_user.findOne({
-            email: query.email,
-            password: query.password
-        });
-    }
-
     public async findUser(query): Promise<Document>{
         const db_user = this.getDBModel('User');
         const isEmail = validate.email(query.username);
