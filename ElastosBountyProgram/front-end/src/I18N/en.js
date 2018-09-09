@@ -84,8 +84,8 @@ export default {
     'home.summary_2': 'formed to promote Elastos in our communities. Membership is open to everyone.',
 
     // LoginForm
-    'login.label_username': 'Please input your username',
-    'login.username': 'Username',
+    'login.label_username': 'Please input your email address or username',
+    'login.username': 'Email address or username',
     'login.label_password': 'Please input your password',
     'login.password': 'Password',
     'login.logged': 'Keep me logged in',
