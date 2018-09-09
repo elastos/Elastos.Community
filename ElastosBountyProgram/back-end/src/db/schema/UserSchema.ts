@@ -84,7 +84,12 @@ export const User = {
     },
 
     // let's keep this on the root object
-    email: String,
+    email: {
+        type : String,
+        required: true,
+        index : true,
+        unique : true
+    },
     profile : Profile,
     defaultLanguage: String,
     workAbout : WorkAbout,
