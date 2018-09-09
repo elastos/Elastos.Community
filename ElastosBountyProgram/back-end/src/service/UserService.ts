@@ -204,7 +204,10 @@ export default class extends Base {
      */
     public async findAll(query): Promise<Document[]>{
         const db_user = this.getDBModel('User');
-        selectFields += ' -email'
+
+        if (!query.admin) {
+            selectFields += ' -email'
+        }
 
         const finalQuery:any = {
             active: true,

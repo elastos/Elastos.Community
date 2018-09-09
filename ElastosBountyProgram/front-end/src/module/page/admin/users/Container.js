@@ -21,7 +21,7 @@ export default createContainer(Component, (state) => {
     return {
         async listUsers () {
             try {
-                return await userService.getAll()
+                return await userService.getAll({admin: true})
             } catch (err) {
                 console.error(err)
                 message.error(err.message)
