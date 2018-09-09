@@ -75,13 +75,13 @@ export default class extends Base {
     }
 
     public async getUserSalt(username): Promise<String>{
+        username = username.toLowerCase();
         const db_user = this.getDBModel('User');
-        const isEmail = validate.email(username);
-        const query = {[isEmail ? 'email' : 'username'] : username};
-        const user = await db_user.db.findOne(query);
-
+        const user = await db_user.db.findOne({
+            username
+        });
         if(!user){
-            throw 'invalid username or email';
+            throw 'invalid username';
         }
         return user.salt;
     }
@@ -169,19 +169,10 @@ export default class extends Base {
 
     public async findUser(query): Promise<Document>{
         const db_user = this.getDBModel('User');
-        const isEmail = validate.email(query.username);
-
-        if (!isEmail) {
-            return await db_user.findOne({
-                username: query.username.toLowerCase(),
-                password: query.password
-            });
-        } else {
-            return await db_user.findOne({
-                email: query.username,
-                password: query.password
-            });
-        }
+        return await db_user.findOne({
+            username: query.username.toLowerCase(),
+            password: query.password
+        });
     }
 
     public async findUsers(query): Promise<Document[]>{
