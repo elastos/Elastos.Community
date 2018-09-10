@@ -16,8 +16,17 @@
                 position: absolute;
                 width: 60px;
                 height: 60px;
-                top: 0;
+                top: 20px;
                 left: 0;
+            }
+
+            &.active {
+                .base-icon, .project-avatar {
+                    width: 100px;
+                    height: 100px;
+                    left: -20px;
+                    top: 0;
+                }
             }
 
             .base-icon {
@@ -36,7 +45,7 @@
         }
 
         .project-name {
-            padding-top: $gap_1;
+            padding-top: 20px + $gap_1;
             color: $text_dark_gray;
 
             &.active {
