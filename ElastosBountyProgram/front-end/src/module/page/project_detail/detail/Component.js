@@ -20,7 +20,7 @@ import {
     Upload,
     Badge
 } from 'antd'
-import {upload_file} from "@/util";
+import {upload_file} from '@/util';
 import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS } from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
@@ -63,6 +63,25 @@ class C extends BaseComponent {
     componentWillUnmount() {
         this.props.resetTaskDetail()
         this.props.resetAllTeams()
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.taskId !== this.props.taskId)
+        {
+            console.log('Reloading with id', this.props.taskId)
+            this.props.getTaskDetail(this.props.taskId);
+            this.setState({ all_tasks_loading: true })
+            this.props.getTasks().then(() => {
+                const allTasks = _.values(this.props.all_tasks)
+                const itemIndex = Math.max(_.indexOf(allTasks,
+                    _.find(allTasks, { _id: this.props.taskId })), 0)
+
+                this.setState({
+                    activeSliderItemIndex: itemIndex,
+                    all_tasks_loading: false
+                })
+            })
+        }
     }
 
     isTaskOwner() {
@@ -485,23 +504,23 @@ class C extends BaseComponent {
         )
     }
 
+    linkToProjectTask(id) {
+        this.props.history.push('/project-detail/' + id);
+    }
+
     getProjectSlider() {
         const projects = _.map(this.props.all_tasks, (task, id) => {
             const isActive = task._id === this.props.taskId
-            const avatarSize = isActive
-                ? 100
-                : 64
-
             return (
                 <div key={id} className='halign-wrapper full-width full-height'>
                     <div className='slider-project-icon'>
-                        <a href={`/project-detail/${task._id}`}>
-                            <div className={'project-icon ' + (isActive ? 'active' : '')}>
-                                <div className='base-icon'/>
-                                <img className='project-avatar' src={task.thumbnail}/>
-                            </div>
-                            <div className={'project-name ' + (isActive ? 'active' : '')}>{task.name}</div>
-                        </a>
+                        <div className={'project-icon ' + (isActive ? 'active' : '')}
+                            onClick={this.linkToProjectTask.bind(this, task._id)}>
+                            <div className='base-icon'/>
+                            <img className='project-avatar' src={task.thumbnail}/>
+                        </div>
+                        <div className={'project-name ' + (isActive ? 'active' : '')}
+                            onClick={this.linkToProjectTask.bind(this, task._id)}>{task.name}</div>
                     </div>
                 </div>
             )
@@ -511,13 +530,15 @@ class C extends BaseComponent {
             <ItemsCarousel
                 numberOfCards={7}
                 slidesToScroll={3}
+                firstAndLastGutter={true}
                 gutter={12}
                 requestToChangeActive={this.changeActiveSliderItem.bind(this)}
                 activeItemIndex={this.state.activeSliderItemIndex}
                 activePosition={'center'}
-                chevronWidth={48}
-                leftChevron={<Icon style={{ fontSize: '16px' }} type="left-circle"/>}
-                rightChevron={<Icon style={{ fontSize: '16px' }} type="right-circle"/>}
+                chevronWidth={12}
+                outsideChevron={true}
+                leftChevron={<img className="arrow mirror-image" src="/assets/images/arrow.svg"/>}
+                rightChevron={<img className="arrow" src="/assets/images/arrow.svg"/>}
             >
                 {projects}
             </ItemsCarousel>

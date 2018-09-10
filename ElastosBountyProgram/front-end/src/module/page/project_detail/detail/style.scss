@@ -11,6 +11,7 @@
             width: 60px;
             height: 60px;
             margin: 0 auto;
+            cursor: pointer;
 
             .base-icon, .project-avatar {
                 position: absolute;
@@ -21,10 +22,11 @@
             }
 
             &.active {
+                width: 100px;
+                height: 100px;
                 .base-icon, .project-avatar {
                     width: 100px;
                     height: 100px;
-                    left: -20px;
                     top: 0;
                 }
             }
@@ -47,10 +49,16 @@
         .project-name {
             padding-top: 20px + $gap_1;
             color: $text_dark_gray;
+            cursor: pointer;
 
             &.active {
                 visibility: hidden;
             }
+        }
+
+        .arrow {
+            width: 100%;
+            height: 100%;
         }
     }
     .c_Project.c_Detail {
