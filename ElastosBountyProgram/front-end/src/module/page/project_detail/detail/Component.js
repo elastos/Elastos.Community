@@ -210,11 +210,22 @@ class C extends BaseComponent {
             : [fn, ln].join(' ')
     }
 
-    getCandidateAvatar(candidate) {
-        const avatar = candidate.user.profile.avatar
+    getAvatarWithFallback(avatar) {
         return _.isEmpty(avatar)
             ? '/assets/images/Elastos_Logo.png'
             : avatar
+    }
+
+    getCandidateAvatar(candidate) {
+        const avatar = candidate.user.profile.avatar
+        return this.getAvatarWithFallback(avatar)
+    }
+
+    getTeamAvatar(candidate) {
+        const avatar = candidate.team &&
+            !_.isEmpty(candidate.team.pictures) &&
+            candidate.team.pictures[0].url
+        return this.getAvatarWithFallback(avatar)
     }
 
     getCurrentContributors() {
@@ -246,7 +257,7 @@ class C extends BaseComponent {
                         {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
                         <div>
                             <a onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
-                                <Avatar className="gap-right" src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
+                                <Avatar className="gap-right" src={this.getTeamAvatar(candidate)} />
                                 {candidate.team.name}
                             </a>
                         </div>
@@ -364,7 +375,7 @@ class C extends BaseComponent {
                         {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
                         <div>
                             <a onClick={this.linkTeamDetail.bind(this, candidate.team._id)}>
-                                <Avatar className="gap-right" src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
+                                <Avatar className="gap-right" src={this.getTeamAvatar(candidate)} />
                                 {candidate.team.name}
                             </a>
                         </div>
