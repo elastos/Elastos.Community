@@ -466,7 +466,7 @@ class C extends BaseComponent {
             : this.showLoginRegisterModal
 
         return (
-            <div className="halign-wrapper valign-wrapper action-wrapper">
+            <div className='halign-wrapper valign-wrapper action-wrapper'>
                 <div>
                     <Button loading={this.props.loading}
                         icon={this.isUserSubscribed() ? 'dislike' : 'like'} onClick={likeHandler.bind(this)}>
@@ -475,7 +475,7 @@ class C extends BaseComponent {
                             : 'Like'
                         }
                     </Button>
-                    <Button loading={this.props.loading} icon="message" onClick={applyHandler.bind(this)}
+                    <Button loading={this.props.loading} icon='message' onClick={applyHandler.bind(this)}
                         disabled={this.isTaskOwner() ||
                             (this.isMemberByUserId(this.props.currentUserId) && !this.getApplicant())}>
                         Get Involved
@@ -489,15 +489,16 @@ class C extends BaseComponent {
         const projects = _.map(this.props.all_tasks, (task, id) => {
             const isActive = task._id === this.props.taskId
             const avatarSize = isActive
-                ? 80
+                ? 100
                 : 64
 
             return (
-                <div key={id} className="valign-wrapper halign-wrapper full-width full-height">
-                    <div className="slider-project-icon">
+                <div key={id} className='valign-wrapper halign-wrapper full-width full-height'>
+                    <div className='slider-project-icon'>
                         <a href={`/project-detail/${task._id}`}>
-                            <Avatar size={avatarSize} shape="square"
-                                className="project-avatar {isActive ? 'active' : ''}" src={task.thumbnail}/>
+                            <Avatar size={avatarSize} shape='square'
+                                className={'project-avatar ' + (isActive ? 'active' : '')} src={task.thumbnail}/>
+                            <div className={'project-name ' + (isActive ? 'active' : '')}>{task.name}</div>
                         </a>
                     </div>
                 </div>
@@ -513,8 +514,8 @@ class C extends BaseComponent {
                 activeItemIndex={this.state.activeSliderItemIndex}
                 activePosition={'center'}
                 chevronWidth={48}
-                leftChevron={<Icon style={{ fontSize: '16px'}} type="left-circle"/>}
-                rightChevron={<Icon style={{ fontSize: '16px'}} type="right-circle"/>}
+                leftChevron={<Icon style={{ fontSize: '16px' }} type="left-circle"/>}
+                rightChevron={<Icon style={{ fontSize: '16px' }} type="right-circle"/>}
             >
                 {projects}
             </ItemsCarousel>
@@ -536,9 +537,10 @@ class C extends BaseComponent {
                     {this.getProjectSlider()}
                 </div>
                 <div className="c_Project c_Detail">
-                    <div>
+                    <div className="project-header">
                         {this.getHeader()}
-
+                    </div>
+                    <div>
                         {this.props.page === 'PUBLIC' &&
                             this.getActions()
                         }
@@ -580,13 +582,14 @@ class C extends BaseComponent {
 
         return (
             <div>
-                <div className="project-name komu-a">dApp #{projectIndex} - {this.props.detail.name}</div>
-                <div className="project-funding komu-a">Funding: 100k for 5% of the equity or coins/tokens</div>
-                <div className="project-likes pull-right">
-                    <Icon type="heart"/>
-                    <span> </span>{this.getNumberOfLikes()}
+                <div className="rect-container">
+                    <div className="rect"/>
                 </div>
-                <div className="clearfix"/>
+                <div className="project-name">#{projectIndex} - {this.props.detail.name}</div>
+                <div className="strike-text project-funding">
+                    <div className="strike-line"/>
+                    <p>Funding: 100k for 5% of the equity or coins/tokens</p>
+                </div>
             </div>
         )
     }
