@@ -30,6 +30,7 @@
     "react-google-maps": "^9.4.5",
     "react-google-recaptcha": "^0.11.1",
     "react-helmet": "^5.2.0",
+    "react-items-carousel": "^2.2.1",
     "react-motion": "^0.5.2",
     "react-redux": "^5.0.6",
     "react-responsive": "^5.0.0",

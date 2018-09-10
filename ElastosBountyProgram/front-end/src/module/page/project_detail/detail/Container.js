@@ -3,6 +3,7 @@ import TaskService from '@/service/TaskService'
 import TeamService from '@/service/TeamService'
 import CommentService from '@/service/CommentService'
 import Component from './Component'
+import {TASK_TYPE, TASK_CATEGORY} from '@/constant'
 import _ from 'lodash'
 
 export default createContainer(Component, (state) => {
@@ -42,6 +43,18 @@ export default createContainer(Component, (state) => {
 
         async getTeams(query) {
             return teamService.index(query)
+        },
+
+        async getTasks(filters) {
+            return taskService.index({
+                ...filters,
+                type: TASK_TYPE.PROJECT,
+                category: TASK_CATEGORY.CR100
+            })
+        },
+
+        resetTasks () {
+            return taskService.resetAllTasks()
         },
 
         async applyToTask(taskId, userId, teamId, applyMsg, attachment, attachmentFilename) {

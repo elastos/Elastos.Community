@@ -60,5 +60,16 @@ $mobile-padding: $gap_0 0px;
       }
     }
   }
+
+  .project-slider {
+      background: white;
+      padding-bottom: $gap_3;
+  }
+
+  .slider-project-icon {
+      .ant-avatar {
+          background: $bg_dark;
+      }
+  }
 }
 

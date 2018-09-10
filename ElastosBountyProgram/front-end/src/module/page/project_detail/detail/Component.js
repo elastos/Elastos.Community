@@ -26,6 +26,7 @@ import Comments from '@/module/common/comments/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
 import Application from '../application/Container'
 import I18N from '@/I18N'
+import ItemsCarousel from 'react-items-carousel'
 import _ from 'lodash'
 import './style.scss'
 
@@ -38,11 +39,22 @@ class C extends BaseComponent {
         }
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         const taskId = this.props.taskId
-        await this.props.getTaskDetail(taskId)
+        this.props.getTaskDetail(taskId)
+        this.setState({ all_tasks_loading: true })
+        this.props.getTasks().then(() => {
+            const allTasks = _.values(this.props.all_tasks)
+            const itemIndex = Math.max(_.indexOf(allTasks,
+                _.find(allTasks, { _id: this.props.taskId })), 0)
+
+            this.setState({
+                activeSliderItemIndex: itemIndex,
+                all_tasks_loading: false
+            })
+        })
         if (this.props.currentUserId) {
-            await this.props.getTeams({
+            this.props.getTeams({
                 owner: this.props.currentUserId
             })
         }
@@ -171,6 +183,12 @@ class C extends BaseComponent {
 
     checkForLoading(followup) {
         return this.props.loading
+            ? <div className="valign-wrapper halign-wrapper"><Spin size="large"/></div>
+            : _.isFunction(followup) && followup()
+    }
+
+    checkForAllTasksLoading(followup) {
+        return this.state.all_tasks_loading
             ? <div className="valign-wrapper halign-wrapper"><Spin size="large"/></div>
             : _.isFunction(followup) && followup()
     }
@@ -467,43 +485,90 @@ class C extends BaseComponent {
         )
     }
 
+    getProjectSlider() {
+        const projects = _.map(this.props.all_tasks, (task, id) => {
+            const isActive = task._id === this.props.taskId
+            const avatarSize = isActive
+                ? 80
+                : 64
+
+            return (
+                <div key={id} className="valign-wrapper halign-wrapper full-width full-height">
+                    <div className="slider-project-icon">
+                        <a href={`/project-detail/${task._id}`}>
+                            <Avatar size={avatarSize} shape="square"
+                                className="project-avatar {isActive ? 'active' : ''}" src={task.thumbnail}/>
+                        </a>
+                    </div>
+                </div>
+            )
+        })
+
+        return this.checkForAllTasksLoading(() =>
+            <ItemsCarousel
+                numberOfCards={7}
+                slidesToScroll={3}
+                gutter={12}
+                requestToChangeActive={this.changeActiveSliderItem.bind(this)}
+                activeItemIndex={this.state.activeSliderItemIndex}
+                activePosition={'center'}
+                chevronWidth={48}
+                leftChevron={<Icon style={{ fontSize: '16px'}} type="left-circle"/>}
+                rightChevron={<Icon style={{ fontSize: '16px'}} type="right-circle"/>}
+            >
+                {projects}
+            </ItemsCarousel>
+        )
+    }
+
+    changeActiveSliderItem(index) {
+        this.setState({
+            activeSliderItemIndex: index
+        })
+    }
+
     ord_render () {
         const isMember = this.isMemberByUserId(this.props.currentUserId)
 
         return (
-            <div className="c_Project c_Detail">
-                <div>
-                    {this.getHeader()}
+            <div>
+                <div className="project-slider">
+                    {this.getProjectSlider()}
+                </div>
+                <div className="c_Project c_Detail">
+                    <div>
+                        {this.getHeader()}
 
-                    {this.props.page === 'PUBLIC' &&
-                        this.getActions()
-                    }
+                        {this.props.page === 'PUBLIC' &&
+                            this.getActions()
+                        }
 
-                    {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
-                        <Row className="contributors">
-                            <h3 className="no-margin align-left">{I18N.get('project.detail.current_contributors')}</h3>
-                            {this.getCurrentContributors()}
-                        </Row>
-                    }
+                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
+                            <Row className="contributors">
+                                <h3 className="no-margin align-left">{I18N.get('project.detail.current_contributors')}</h3>
+                                {this.getCurrentContributors()}
+                            </Row>
+                        }
 
-                    {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
-                        <Row className="applications">
-                            <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
-                            {this.getCurrentApplicants()}
-                        </Row>
-                    }
+                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
+                            <Row className="applications">
+                                <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
+                                {this.getCurrentApplicants()}
+                            </Row>
+                        }
 
-                    {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
-                        <Row className="subscribers">
-                            <h3 className="no-margin">{I18N.get('project.detail.subscribers')}</h3>
-                            {this.getCurrentSubscribers()}
-                        </Row>
-                    }
+                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
+                            <Row className="subscribers">
+                                <h3 className="no-margin">{I18N.get('project.detail.subscribers')}</h3>
+                                {this.getCurrentSubscribers()}
+                            </Row>
+                        }
 
-                    {this.getDescription()}
-                    <Comments type="task" canPost={true} canSubscribe={!this.isTaskOwner()} model={this.props.detail}/>
-                    {this.renderLoginOrRegisterModal()}
-                    {this.renderApplicationModal()}
+                        {this.getDescription()}
+                        <Comments type="task" canPost={true} canSubscribe={!this.isTaskOwner()} model={this.props.detail}/>
+                        {this.renderLoginOrRegisterModal()}
+                        {this.renderApplicationModal()}
+                    </div>
                 </div>
             </div>
         )
@@ -515,7 +580,6 @@ class C extends BaseComponent {
 
         return (
             <div>
-                <Avatar size={164} shape="square" className="pull-left project-avatar" src={this.props.detail.thumbnail}/>
                 <div className="project-name komu-a">dApp #{projectIndex} - {this.props.detail.name}</div>
                 <div className="project-funding komu-a">Funding: 100k for 5% of the equity or coins/tokens</div>
                 <div className="project-likes pull-right">

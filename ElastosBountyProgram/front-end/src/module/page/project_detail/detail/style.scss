@@ -3,7 +3,6 @@
 @import '../../../../style/typography';
 
 .c_Project.c_Detail {
-    margin-top: $gap_3;
     text-align: justify;
 
     .application-form {
@@ -14,7 +13,6 @@
     .project-funding {
         height: 32px;
         line-height: 32px;
-        margin-left: 80px;
         font-size: 24px;
         font-weight: 500;
         text-transform: uppercase;
@@ -23,12 +21,6 @@
     .project-likes {
         margin-top: -64px;
         color: $primary_color;
-    }
-
-    .project-avatar {
-        margin-top: -64px;
-        margin-left: -64px;
-        margin-right: $gap_2;
     }
 
     .project-name {
