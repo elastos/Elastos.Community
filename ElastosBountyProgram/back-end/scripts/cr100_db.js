@@ -161,6 +161,7 @@ require('../dist/src/config');
             if(res.n !== 1 && res.n !== 0) {
                 console.log("Warning! More than 1 entries have been modified")
             }
+            console.log(await db_task.find({ name: x }))
         }
 
     } catch (err) {

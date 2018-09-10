@@ -6,10 +6,35 @@
     .project-slider {
         margin: $gap_4 $gap_5 0 $gap_5;
 
-        .project-avatar {
-            .active {
+        .project-icon {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto;
+
+            .base-icon, .project-avatar {
+                position: absolute;
+                width: 60px;
+                height: 60px;
+                top: 0;
+                left: 0;
+            }
+
+            .base-icon {
+                background-image: url('/assets/images/IconBG.png');
+                background-size: contain;
+            }
+
+            .project-avatar {
+                z-index: 1;
+
+                &:hover {
+                    background-image: url('/assets/images/IconBG_Hover.png');
+                    background-size: contain;
+                }
             }
         }
+
         .project-name {
             padding-top: $gap_1;
             color: $text_dark_gray;

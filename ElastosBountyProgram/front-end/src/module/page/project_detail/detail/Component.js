@@ -493,11 +493,13 @@ class C extends BaseComponent {
                 : 64
 
             return (
-                <div key={id} className='valign-wrapper halign-wrapper full-width full-height'>
+                <div key={id} className='halign-wrapper full-width full-height'>
                     <div className='slider-project-icon'>
                         <a href={`/project-detail/${task._id}`}>
-                            <Avatar size={avatarSize} shape='square'
-                                className={'project-avatar ' + (isActive ? 'active' : '')} src={task.thumbnail}/>
+                            <div className="project-icon">
+                                <div className="base-icon"/>
+                                <img className={'project-avatar ' + (isActive ? 'active' : '')} src={task.thumbnail}/>
+                            </div>
                             <div className={'project-name ' + (isActive ? 'active' : '')}>{task.name}</div>
                         </a>
                     </div>
