@@ -62,6 +62,9 @@ const Component = class extends BaseAdmin {
             {
                 title: 'Description',
                 dataIndex: 'profile.description',
+                render: (description, record)=>{
+                    return <div dangerouslySetInnerHTML={{__html: description}} />
+                }
                 // key: 'profile.description'
             },
             {

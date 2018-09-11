@@ -183,6 +183,9 @@
 
       .description-content {
         margin: $gap_0 $gap_2 $gap_0 0;
+        ul, ol {
+          margin-left: 16px;
+        }
       }
     }
   }
