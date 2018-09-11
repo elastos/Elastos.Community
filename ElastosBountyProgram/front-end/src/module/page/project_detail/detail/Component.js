@@ -42,9 +42,9 @@ class C extends BaseComponent {
     componentDidMount() {
         const taskId = this.props.taskId
         this.props.getTaskDetail(taskId)
-        this.setState({ all_tasks_loading: true })
 
         if (_.isEmpty(this.props.all_tasks)) {
+            this.setState({ all_tasks_loading: true })
             this.props.getTasks().then(() => {
                 const allTasks = _.values(this.props.all_tasks)
                 const itemIndex = Math.max(_.indexOf(allTasks,
