@@ -659,12 +659,17 @@ class C extends BaseComponent {
     }
 
     getApplication() {
+        const applyHandler = this.props.is_login
+            ? this.getApplicant()
+                ? this.showApplicationModal
+                : this.applyToProject
+            : this.showLoginRegisterModal
         return (
             <div className="ebp-wrap">
                 <div className="rect-container">
                     <div className="rect"/>
                 </div>
-                <Button className="apply-button">Apply</Button>
+                <Button className="apply-button" onClick={applyHandler.bind(this)}>Apply</Button>
             </div>
         )
     }
