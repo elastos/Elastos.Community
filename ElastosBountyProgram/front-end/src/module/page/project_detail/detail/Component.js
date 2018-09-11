@@ -562,39 +562,17 @@ class C extends BaseComponent {
                     <div className="project-header ebp-wrap">
                         {this.getHeader()}
                     </div>
-                    <div className="project-description">
-                        <div className="ebp-wrap">
-                            {this.props.page === 'PUBLIC' &&
-                                this.getActions()
-                            }
-
-                            {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
-                                <Row className="contributors">
-                                    <h3 className="no-margin align-left">{I18N.get('project.detail.owner')}</h3>
-                                    {this.getCurrentContributors()}
-                                </Row>
-                            }
-
-                            {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
-                                <Row className="applications">
-                                    <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
-                                    {this.getCurrentApplicants()}
-                                </Row>
-                            }
-
-                            {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
-                                <Row className="subscribers">
-                                    <h3 className="no-margin">{I18N.get('project.detail.subscribers')}</h3>
-                                    {this.getCurrentSubscribers()}
-                                </Row>
-                            }
-
-                            {this.getDescription()}
-                            <Comments type="task" canPost={true} canSubscribe={!this.isTaskOwner()} model={this.props.detail}/>
-                            {this.renderLoginOrRegisterModal()}
-                            {this.renderApplicationModal()}
-                        </div>
+                    <div className="project-description-1">
+                        {this.getDescription1()}
                     </div>
+                    <div className="project-description-2">
+                        {this.getDescription2()}
+                    </div>
+                    <div className="project-application">
+                        {this.getApplication()}
+                    </div>
+                    {this.renderLoginOrRegisterModal()}
+                    {this.renderApplicationModal()}
                 </div>
             </div>
         )
@@ -618,9 +596,9 @@ class C extends BaseComponent {
         )
     }
 
-    getDescription() {
+    getDescription1() {
         return (
-            <div className="description">
+            <div className="ebp-wrap">
                 <h3>
                     {I18N.get('developer.cr100.pitch.problem')}
                 </h3>
@@ -641,7 +619,13 @@ class C extends BaseComponent {
                 <div>
                     {this.props.detail.pitch && this.props.detail.pitch.useCase}
                 </div>
+            </div>
+        )
+    }
 
+    getDescription2() {
+        return (
+            <div className="ebp-wrap">
                 <h3>
                     {I18N.get('developer.cr100.pitch.beneficiaries')}
                 </h3>
@@ -655,6 +639,17 @@ class C extends BaseComponent {
                 <div>
                     {this.props.detail.pitch && this.format(this.props.detail.pitch.elaInfrastructure)}
                 </div>
+            </div>
+        )
+    }
+
+    getApplication() {
+        return (
+            <div className="ebp-wrap">
+                <div className="rect-container">
+                    <div className="rect"/>
+                </div>
+                <Button className="apply-button">Apply</Button>
             </div>
         )
     }
