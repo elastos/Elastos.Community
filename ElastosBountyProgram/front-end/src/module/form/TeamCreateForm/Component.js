@@ -21,8 +21,10 @@ import {
 } from 'antd'
 import I18N from '@/I18N'
 import InputTags from '@/module/shared/InputTags/Component'
+import ReactQuill from 'react-quill';
 import {TEAM_TASK_DOMAIN, SKILLSET_TYPE} from '@/constant'
 import {upload_file} from "@/util";
+import sanitizeHtml from 'sanitize-html';
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
@@ -62,6 +64,7 @@ class C extends BaseComponent {
             if (!err) {
                 let createParams = {
                     ...values,
+                    description: sanitizeHtml(values.description),
                     tags: tags.join(','),
                     logo: '',
                     metadata: '',
@@ -97,7 +100,15 @@ class C extends BaseComponent {
         )
 
         const textarea_el = (
-            <TextArea rows={4}/>
+            <ReactQuill
+                modules={{
+                    toolbar: [
+                        ['bold', 'italic', 'underline','strike'],
+                        [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+                        ['clean']
+                    ]
+                }}
+            />
         )
 
         const name_fn = getFieldDecorator('name', {

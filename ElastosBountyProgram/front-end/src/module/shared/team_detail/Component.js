@@ -62,7 +62,7 @@ export default class extends BaseComponent {
             {key : 'Name', value : data.name},
             {key : 'Type', value : data.type},
             {key : 'Recruiting', value : data.recruiting ? 'Yes' : 'No'},
-            {key : 'Description', value : data.profile.description},
+            {key : 'Description', value : <div dangerouslySetInnerHTML={{__html: data.profile.description}} />},
             {key : 'Member limit', value : data.memberLimit},
             {key : 'Tags', value : data.tags.join(', ')},
             {key : 'Create Time', value : data.createdAt},

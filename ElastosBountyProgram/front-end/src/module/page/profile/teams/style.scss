@@ -37,6 +37,12 @@
 
   .ant-list-item-content {
     max-height: 188px;
+
+    > .description-content {
+      ul, ol {
+        margin-left: 16px;
+      }
+    }
   }
 
   .carousel-wrapper {
