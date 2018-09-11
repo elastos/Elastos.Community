@@ -559,18 +559,33 @@ class C extends BaseComponent {
                     {this.getProjectSlider()}
                 </div>
                 <div className="c_Project c_Detail">
-                    <div className="project-header ebp-wrap">
+                    <div className="project-header-additions">
+                        <div className="left-box-container">
+                            <div className="box"/>
+                            <img src="/assets/images/training_circle.png"/>
+                        </div>
+                        <div className="right-box-container">
+                            <div className="small-box"/>
+                            <div className="box"/>
+                            <img src="/assets/images/oomph.png"/>
+                        </div>
+                    </div>
+                    <div className="ebp-wrap">
                         {this.getHeader()}
                     </div>
+                    <div className="rectangle"/>
                     <div className="project-description-1">
                         {this.getDescription1()}
                     </div>
+                    <div className="rectangle pull-right"/>
                     <div className="project-description-2">
                         {this.getDescription2()}
                     </div>
                     <div className="project-application">
                         {this.getApplication()}
                     </div>
+                    <div className="rectangle"/>
+                    <div className="rectangle rectangle-long"/>
                     {this.renderLoginOrRegisterModal()}
                     {this.renderApplicationModal()}
                 </div>
