@@ -187,7 +187,7 @@ export default {
     // Empower 35
     'emp35.header.title': 'We Will Build It Together',
     'emp35.header.content.1': 'We are democratically elected cross-functional group',
-    'emp35.header.content.2': 'of community evangelists empowered to spearhead',
+    'emp35.header.content.2': 'of community ambassadors empowered to spearhead',
     'emp35.header.content.3': 'projects in Elastos',
 
     'emp35.empower.title': 'Empower 35',
@@ -207,7 +207,7 @@ export default {
     'training.header.content.4': 'of the program will be given an ELA budget and be empowered to',
     'training.header.content.5': 'speak on behalf of Cyber Republic at events and meetups.',
     'training.evangelist.title': 'Ambassadors Training',
-    'training.evangelist.content': 'The goal of the program is for participants to not only learn the technology from the Elastos Team first hand, but to develop a presentation crafted with marketing and PR professionals that will allow evangelists to be professionally prepared to represent the project to the public. Cyber Republic plans to run this program several times per year. ',
+    'training.evangelist.content': 'The goal of the program is for participants to not only learn the technology from the Elastos Team first hand, but to develop a presentation crafted with marketing and PR professionals that will allow ambassadors to be professionally prepared to represent the project to the public. Cyber Republic plans to run this program several times per year. ',
     'training.thanksForApplying': 'Thank you for applying, we will be in touch shortly!',
     'training.applyError': 'An error has occured. Please contact us directly.',
 
