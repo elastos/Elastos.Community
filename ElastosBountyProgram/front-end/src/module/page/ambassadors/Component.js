@@ -247,7 +247,6 @@ export default class extends StandardPage {
     }
 
     handleApplyModalEmpowerApply() {
-
         const form = this.formEmpowerApply.props.form
 
         form.validateFields((err, values) => {
@@ -259,11 +258,11 @@ export default class extends StandardPage {
             this.setState({visibleModalEmpowerApply: false})
 
             this.props.empowerApply(values, this.state).then(() => {
-                message.success('Thank you for applying, we will be in touch shortly')
+                message.success(I18N.get('training.thanksForApplying'))
 
             }).catch((err) => {
                 console.error(err);
-                message.error('Error - Please email us')
+                message.error(I18N.get('training.applyError'))
             })
         })
     }
@@ -284,7 +283,7 @@ export default class extends StandardPage {
     * Login / Register Modal
     ************************************************************************************
      */
-    
+
     renderLoginOrRegisterModal() {
         if (this.props.is_login) {
             return

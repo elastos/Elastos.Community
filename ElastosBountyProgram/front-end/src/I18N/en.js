@@ -208,6 +208,8 @@ export default {
     'training.header.content.5': 'speak on behalf of Cyber Republic at events and meetups.',
     'training.evangelist.title': 'Ambassadors Training',
     'training.evangelist.content': 'The goal of the program is for participants to not only learn the technology from the Elastos Team first hand, but to develop a presentation crafted with marketing and PR professionals that will allow evangelists to be professionally prepared to represent the project to the public. Cyber Republic plans to run this program several times per year. ',
+    'training.thanksForApplying': 'Thank you for applying, we will be in touch shortly!',
+    'training.applyError': 'An error has occured. Please contact us directly.',
 
     // Itinerary
     'training.itinerary.title': 'Itinerary Example',
