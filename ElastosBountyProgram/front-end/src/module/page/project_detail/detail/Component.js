@@ -43,16 +43,20 @@ class C extends BaseComponent {
         const taskId = this.props.taskId
         this.props.getTaskDetail(taskId)
         this.setState({ all_tasks_loading: true })
-        this.props.getTasks().then(() => {
-            const allTasks = _.values(this.props.all_tasks)
-            const itemIndex = Math.max(_.indexOf(allTasks,
-                _.find(allTasks, { _id: this.props.taskId })), 0)
 
-            this.setState({
-                activeSliderItemIndex: itemIndex,
-                all_tasks_loading: false
+        if (_.isEmpty(this.props.all_tasks)) {
+            this.props.getTasks().then(() => {
+                const allTasks = _.values(this.props.all_tasks)
+                const itemIndex = Math.max(_.indexOf(allTasks,
+                    _.find(allTasks, { _id: this.props.taskId })), 0)
+
+                this.setState({
+                    activeSliderItemIndex: itemIndex,
+                    all_tasks_loading: false
+                })
             })
-        })
+        }
+
         if (this.props.currentUserId) {
             this.props.getTeams({
                 owner: this.props.currentUserId
@@ -68,18 +72,14 @@ class C extends BaseComponent {
     componentDidUpdate(prevProps) {
         if (prevProps.taskId !== this.props.taskId)
         {
-            console.log('Reloading with id', this.props.taskId)
             this.props.getTaskDetail(this.props.taskId);
-            this.setState({ all_tasks_loading: true })
-            this.props.getTasks().then(() => {
-                const allTasks = _.values(this.props.all_tasks)
-                const itemIndex = Math.max(_.indexOf(allTasks,
-                    _.find(allTasks, { _id: this.props.taskId })), 0)
 
-                this.setState({
-                    activeSliderItemIndex: itemIndex,
-                    all_tasks_loading: false
-                })
+            const allTasks = _.values(this.props.all_tasks)
+            const itemIndex = Math.max(_.indexOf(allTasks,
+                _.find(allTasks, { _id: this.props.taskId })), 0)
+
+            this.setState({
+                activeSliderItemIndex: itemIndex
             })
         }
     }
@@ -505,7 +505,7 @@ class C extends BaseComponent {
     }
 
     linkToProjectTask(id) {
-        this.props.history.push('/project-detail/' + id);
+        this.props.history.replace('/project-detail/' + id);
     }
 
     getProjectSlider() {
