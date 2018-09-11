@@ -32,7 +32,15 @@ require('../dist/src/config');
             "Travel DApp": "Travel",
             "Microblogging": "Micro-blogging",
             "Dating App": "Dating",
-            "Virtual Private Network (VPN)": "VPN/Cyber Security"
+            "Virtual Private Network (VPN)": "VPN/Cyber Security",
+            "Ownership": "Ownerships",
+            "Election": "Voting/Election",
+            "Crowdsource Analytics": "Crowd Source Analytics",
+            "Commodities Market": "Commodities",
+            "Security Tokenization": "Security Token",
+            "Gaming  (MMORPG)": "Gaming (MMORPG)",
+            "Mesh Networking": "Mesh Network",
+            "Asset-Backed Loans": "Asset-backed Loans",
         };
 
         let updated = 0
@@ -161,7 +169,7 @@ require('../dist/src/config');
             if(res.n !== 1 && res.n !== 0) {
                 console.log("Warning! More than 1 entries have been modified")
             }
-            console.log(await db_task.find({ name: x }))
+            //console.log(await db_task.find({ name: x }))
         }
 
     } catch (err) {
