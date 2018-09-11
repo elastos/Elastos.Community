@@ -523,7 +523,7 @@ class C extends BaseComponent {
                     </div>
                 </div>
             )
-        })
+        }).reverse()
 
         return this.checkForAllTasksLoading(() =>
             <ItemsCarousel
