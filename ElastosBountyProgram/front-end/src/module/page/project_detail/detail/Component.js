@@ -514,6 +514,7 @@ class C extends BaseComponent {
                     <div className='slider-project-icon'>
                         <div className={'project-icon ' + (isActive ? 'active' : '')}
                             onClick={this.linkToProjectTask.bind(this, task._id)}>
+                            <span className="project-number">{task.dAppId}</span>
                             <div className='base-icon'/>
                             <img className='project-avatar' src={task.thumbnail}/>
                         </div>
@@ -554,43 +555,45 @@ class C extends BaseComponent {
 
         return (
             <div>
-                <div className="project-slider">
+                <div className="ebp-wrap project-slider">
                     {this.getProjectSlider()}
                 </div>
                 <div className="c_Project c_Detail">
-                    <div className="project-header">
+                    <div className="project-header ebp-wrap">
                         {this.getHeader()}
                     </div>
-                    <div>
-                        {this.props.page === 'PUBLIC' &&
-                            this.getActions()
-                        }
+                    <div className="project-description">
+                        <div className="ebp-wrap">
+                            {this.props.page === 'PUBLIC' &&
+                                this.getActions()
+                            }
 
-                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
-                            <Row className="contributors">
-                                <h3 className="no-margin align-left">{I18N.get('project.detail.owner')}</h3>
-                                {this.getCurrentContributors()}
-                            </Row>
-                        }
+                            {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
+                                <Row className="contributors">
+                                    <h3 className="no-margin align-left">{I18N.get('project.detail.owner')}</h3>
+                                    {this.getCurrentContributors()}
+                                </Row>
+                            }
 
-                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
-                            <Row className="applications">
-                                <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
-                                {this.getCurrentApplicants()}
-                            </Row>
-                        }
+                            {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
+                                <Row className="applications">
+                                    <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
+                                    {this.getCurrentApplicants()}
+                                </Row>
+                            }
 
-                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
-                            <Row className="subscribers">
-                                <h3 className="no-margin">{I18N.get('project.detail.subscribers')}</h3>
-                                {this.getCurrentSubscribers()}
-                            </Row>
-                        }
+                            {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
+                                <Row className="subscribers">
+                                    <h3 className="no-margin">{I18N.get('project.detail.subscribers')}</h3>
+                                    {this.getCurrentSubscribers()}
+                                </Row>
+                            }
 
-                        {this.getDescription()}
-                        <Comments type="task" canPost={true} canSubscribe={!this.isTaskOwner()} model={this.props.detail}/>
-                        {this.renderLoginOrRegisterModal()}
-                        {this.renderApplicationModal()}
+                            {this.getDescription()}
+                            <Comments type="task" canPost={true} canSubscribe={!this.isTaskOwner()} model={this.props.detail}/>
+                            {this.renderLoginOrRegisterModal()}
+                            {this.renderApplicationModal()}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -602,7 +605,7 @@ class C extends BaseComponent {
         const projectIndex = _.indexOf(_.values(this.props.all_tasks), project) + 1 // 1-indexed
 
         return (
-            <div>
+            <div className="project-header">
                 <div className="rect-container">
                     <div className="rect"/>
                 </div>

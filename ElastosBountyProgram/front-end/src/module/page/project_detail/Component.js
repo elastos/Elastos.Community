@@ -27,7 +27,7 @@ export default class extends StandardPage {
                         </Breadcrumb>
                     </div>
                 </Row>
-                <div className="p_admin_index ebp-wrap">
+                <div>
                     <div className="d_box">
                         <div className="p_admin_content">
                             <ProjectDetail taskId={this.props.match.params.taskId}/>

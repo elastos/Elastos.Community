@@ -46,6 +46,12 @@ $mobile-padding: $gap_0 0px;
     position: relative;
   }
 
+  .project-number {
+    position: absolute;
+    top: 0;
+    left: -20px;
+  }
+
   .project-icon {
     width: 96px;
     height: 96px;

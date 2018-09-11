@@ -11,6 +11,13 @@
             margin: 0 auto;
             cursor: pointer;
 
+            .project-number {
+                position: absolute;
+                top: 0;
+                left: -20px;
+                font-weight: bold;
+            }
+
             .base-icon, .project-avatar {
                 position: absolute;
                 width: 60px;
@@ -22,6 +29,11 @@
             &.active {
                 width: 100px;
                 height: 100px;
+
+                .project-number {
+                    visibility: hidden;
+                }
+
                 .base-icon, .project-avatar {
                     width: 100px;
                     height: 100px;
@@ -142,6 +154,10 @@
                     padding-bottom: 0;
                 }
             }
+        }
+
+        .project-description {
+            background-color: $bg_dark;
         }
 
         .project-likes {
