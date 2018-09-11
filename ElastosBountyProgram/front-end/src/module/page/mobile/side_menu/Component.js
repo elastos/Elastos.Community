@@ -18,7 +18,7 @@ export default class extends BaseComponent {
         if (_.includes([
             'cr100',
             'empower35',
-            'evangelist-training',
+            'ambassadors',
             'login',
             'register',
             'signup',
@@ -75,7 +75,7 @@ export default class extends BaseComponent {
                         <Menu.Item key="empower35">
                             {I18N.get('0106')}
                         </Menu.Item>
-                        <Menu.Item key="evangelist-training">
+                        <Menu.Item key="ambassadors">
                             {I18N.get('0107')}
                         </Menu.Item>
                         <Menu.Item key="developer">

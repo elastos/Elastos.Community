@@ -437,13 +437,6 @@ export default class extends StandardPage {
                     </Row>
                 </div>
             </div>
-            <div className="emp35-teamDark" style={{paddingTop: '120px'}}>
-                <div className="container">
-                    <span className="blue-title">Regional Evangelist</span>
-
-                    {this.generatePositionCards(USER_EMPOWER_TYPE.REGIONAL_EVANGELIST, 10, COLOR_SCHEME.DARK)}
-                </div>
-            </div>
         </section>
     }
 
