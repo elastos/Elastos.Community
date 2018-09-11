@@ -21,7 +21,7 @@ export default {
     '0104': 'My Republic',
     '0105': 'CR100',
     '0106': 'Empower35',
-    '0107': 'Training',
+    '0107': 'Ambassadors',
     '0108': 'Council',
 
     '0200': 'Profile',
@@ -200,17 +200,17 @@ export default {
     'emp35.disclaimer.content': 'Roles described above are managerial level positions and the number of open positions are subject to change. The first group of Empower 35 candidates will be directly chosen by the council.',
 
     // Training
-    'training.header.title': 'Evangelist Training',
-    'training.header.content.1': 'Cyber Republic will offer an all expenses paid trip for evangelists',
+    'training.header.title': 'Ambassadors Training',
+    'training.header.content.1': 'Cyber Republic will offer an all expenses paid trip for ambassadors',
     'training.header.content.2': 'and guest speakers to spend one week training with the Elastos Team',
-    'training.header.content.3': 'in various regions to become an official Elastos Evangelist. Graduates',
+    'training.header.content.3': 'in various regions to become an official Elastos Ambassador. Graduates',
     'training.header.content.4': 'of the program will be given an ELA budget and be empowered to',
     'training.header.content.5': 'speak on behalf of Cyber Republic at events and meetups.',
-    'training.evangelist.title': 'Goals',
-    'training.evangelist.content': 'The goal of the program is for participants to not only learn the technology from the Elastos Team first hand, but to develop a presentation crafted with marketing and PR professionals that will allow evangelists to be professionally prepared to represent the project to the public. Cyber Republic plans to run this program several times per year and applications will be available soon. ',
+    'training.evangelist.title': 'Ambassadors Training',
+    'training.evangelist.content': 'The goal of the program is for participants to not only learn the technology from the Elastos Team first hand, but to develop a presentation crafted with marketing and PR professionals that will allow evangelists to be professionally prepared to represent the project to the public. Cyber Republic plans to run this program several times per year. ',
 
     // Itinerary
-    'training.itinerary.title': 'Itinerary',
+    'training.itinerary.title': 'Itinerary Example',
     'training.itinerary.content.venueLabel': 'Venue',
     'training.itinerary.content.venue': 'Houses in Silicon Valley',
     'training.itinerary.content.day13Label': 'Day 1-4',

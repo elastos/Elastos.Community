@@ -136,6 +136,14 @@ $landingPageWidth: 1152px;
             font-size: 18px;
             width: 100%;
           }
+
+          > .button {
+            margin-top: $gap_4;
+            width: 300px;
+            height: 60px;
+            font-size: 22px;
+            border-radius: unset;
+          }
         }
 
         /*

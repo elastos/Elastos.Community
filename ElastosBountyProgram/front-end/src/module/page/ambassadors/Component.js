@@ -2,8 +2,10 @@ import React from 'react'
 import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import I18N from '@/I18N'
+import ModalEmpowerForm from './modal_form/Component'
 import './style.scss'
-import { Col, Row, Spin, Button } from 'antd'
+import { Col, Row, Spin, Button, Modal, message } from 'antd'
+import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
 import _ from 'lodash'
 
 export default class extends StandardPage {
@@ -13,6 +15,7 @@ export default class extends StandardPage {
 
         this.state = {
             loading: false,
+            applyEmpowerType: 'AMBASSADORS'
         }
     }
 
@@ -38,7 +41,10 @@ export default class extends StandardPage {
     ord_states() {
         return {
             showDetailId: null,
-            loading: false
+            loading: false,
+            showLoginRegisterModal: false,
+            visibleModalEmpowerApply: false,
+            visibleModalEmpowerView: false
         }
     }
 
@@ -56,6 +62,15 @@ export default class extends StandardPage {
                         </div>
                     </div>
                 </div>
+                {this.renderLoginOrRegisterModal()}
+                <ModalEmpowerForm
+                    wrappedComponentRef={this.saveFormEmpowerApplyRef}
+                    empowerType={this.state.applyEmpowerType}
+                    isLogin={this.props.is_login}
+                    visible={this.state.visibleModalEmpowerApply}
+                    onCancel={this.handleCancelModalEmpowerApply.bind(this)}
+                    onApply={this.handleApplyModalEmpowerApply.bind(this)}
+                />
                 <Footer/>
             </div>
         )
@@ -108,6 +123,9 @@ export default class extends StandardPage {
                                 <div className="strike-line"/>
                                 <p>{I18N.get('training.header.content.5')}</p>
                             </div>
+                        </div>
+                        <div className="center">
+                            <Button onClick={this.onApplyModelEmpowerOpen} className="button" type="primary">Apply</Button>
                         </div>
                     </div>
                 </div>
@@ -216,5 +234,98 @@ export default class extends StandardPage {
                 </div>
             </div>
         )
+    }
+
+    saveFormEmpowerApplyRef = (formRef) => {
+        this.formEmpowerApply = formRef
+    }
+
+    handleCancelModalEmpowerApply() {
+        this.setState({
+            visibleModalEmpowerApply: false
+        })
+    }
+
+    handleApplyModalEmpowerApply() {
+
+        const form = this.formEmpowerApply.props.form
+
+        form.validateFields((err, values) => {
+            if (err) {
+                return
+            }
+
+            form.resetFields()
+            this.setState({visibleModalEmpowerApply: false})
+
+            this.props.empowerApply(values, this.state).then(() => {
+                message.success('Thank you for applying, we will be in touch shortly')
+
+            }).catch((err) => {
+                console.error(err);
+                message.error('Error - Please email us')
+            })
+        })
+    }
+
+    onApplyModelEmpowerOpen = () => {
+        if (!this.props.is_login) {
+            this.showLoginRegisterModal()
+            return
+        }
+
+        this.setState({
+            visibleModalEmpowerApply: true
+        })
+    }
+
+    /*
+    ************************************************************************************
+    * Login / Register Modal
+    ************************************************************************************
+     */
+    
+    renderLoginOrRegisterModal() {
+        if (this.props.is_login) {
+            return
+        }
+
+        return (
+            <Modal
+                className="project-detail-nobar"
+                visible={this.state.showLoginRegisterModal}
+                onOk={this.handleLoginRegisterModalOk}
+                onCancel={this.handleLoginRegisterModalCancel}
+                footer={null}
+                width="70%"
+            >
+                <LoginOrRegisterForm />
+            </Modal>
+        )
+    }
+
+    showLoginRegisterModal = () => {
+        sessionStorage.setItem('loginRedirect', '/ambassadors')
+        sessionStorage.setItem('registerRedirect', '/ambassadors')
+
+        this.setState({
+            showLoginRegisterModal: true
+        })
+    }
+
+    handleLoginRegisterModalOk = (e) => {
+        sessionStorage.removeItem('registerRedirect')
+
+        this.setState({
+            showLoginRegisterModal: false
+        })
+    }
+
+    handleLoginRegisterModalCancel = (e) => {
+        sessionStorage.removeItem('registerRedirect')
+
+        this.setState({
+            showLoginRegisterModal: false
+        })
     }
 }
