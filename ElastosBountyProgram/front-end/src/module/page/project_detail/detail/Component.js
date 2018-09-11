@@ -42,6 +42,7 @@ class C extends BaseComponent {
     componentDidMount() {
         const taskId = this.props.taskId
         this.props.getTaskDetail(taskId)
+
         this.setState({ all_tasks_loading: true })
         this.props.getTasks().then(() => {
             const allTasks = _.values(this.props.all_tasks)
@@ -53,6 +54,7 @@ class C extends BaseComponent {
                 all_tasks_loading: false
             })
         })
+
         if (this.props.currentUserId) {
             this.props.getTeams({
                 owner: this.props.currentUserId
@@ -68,18 +70,14 @@ class C extends BaseComponent {
     componentDidUpdate(prevProps) {
         if (prevProps.taskId !== this.props.taskId)
         {
-            console.log('Reloading with id', this.props.taskId)
             this.props.getTaskDetail(this.props.taskId);
-            this.setState({ all_tasks_loading: true })
-            this.props.getTasks().then(() => {
-                const allTasks = _.values(this.props.all_tasks)
-                const itemIndex = Math.max(_.indexOf(allTasks,
-                    _.find(allTasks, { _id: this.props.taskId })), 0)
 
-                this.setState({
-                    activeSliderItemIndex: itemIndex,
-                    all_tasks_loading: false
-                })
+            const allTasks = _.values(this.props.all_tasks)
+            const itemIndex = Math.max(_.indexOf(allTasks,
+                _.find(allTasks, { _id: this.props.taskId })), 0)
+
+            this.setState({
+                activeSliderItemIndex: itemIndex
             })
         }
     }
@@ -505,7 +503,7 @@ class C extends BaseComponent {
     }
 
     linkToProjectTask(id) {
-        this.props.history.push('/project-detail/' + id);
+        this.props.history.replace('/project-detail/' + id);
     }
 
     getProjectSlider() {
@@ -570,7 +568,7 @@ class C extends BaseComponent {
 
                         {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
                             <Row className="contributors">
-                                <h3 className="no-margin align-left">{I18N.get('project.detail.current_contributors')}</h3>
+                                <h3 className="no-margin align-left">{I18N.get('project.detail.owner')}</h3>
                                 {this.getCurrentContributors()}
                             </Row>
                         }
