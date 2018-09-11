@@ -43,19 +43,17 @@ class C extends BaseComponent {
         const taskId = this.props.taskId
         this.props.getTaskDetail(taskId)
 
-        if (_.isEmpty(this.props.all_tasks)) {
-            this.setState({ all_tasks_loading: true })
-            this.props.getTasks().then(() => {
-                const allTasks = _.values(this.props.all_tasks)
-                const itemIndex = Math.max(_.indexOf(allTasks,
-                    _.find(allTasks, { _id: this.props.taskId })), 0)
+        this.setState({ all_tasks_loading: true })
+        this.props.getTasks().then(() => {
+            const allTasks = _.values(this.props.all_tasks)
+            const itemIndex = Math.max(_.indexOf(allTasks,
+                _.find(allTasks, { _id: this.props.taskId })), 0)
 
-                this.setState({
-                    activeSliderItemIndex: itemIndex,
-                    all_tasks_loading: false
-                })
+            this.setState({
+                activeSliderItemIndex: itemIndex,
+                all_tasks_loading: false
             })
-        }
+        })
 
         if (this.props.currentUserId) {
             this.props.getTeams({
