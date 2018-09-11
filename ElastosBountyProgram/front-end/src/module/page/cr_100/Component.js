@@ -21,7 +21,7 @@ export default class extends StandardPage {
 
     checkForLoading(followup) {
         return this.state.loading
-            ? <Spin size="large"/>
+            ? <Spin className="spinner" size="large"/>
             : _.isFunction(followup) && followup()
     }
 
@@ -98,6 +98,7 @@ export default class extends StandardPage {
     buildList() {
         // Note, the project can be in multiple domains, but categorizing by the top one
         const categorizedList = _.groupBy(this.props.all_tasks, (task) => _.first(task.domain))
+        const link = 'https://s3-us-west-1.amazonaws.com/ebp-staging-files/cr100/'
 
         let list = _.map(categorizedList, (list, category) => {
             const sanitizedCategory = (category || 'uncategorized').toLowerCase()
@@ -109,9 +110,12 @@ export default class extends StandardPage {
                     <div className="c_projectList">
                         {_.map(list, (project, ind) => (
                             <div key={ind} className="c_project">
-                                <Avatar shape="square" size={96} src={project.thumbnail}
-                                    onClick={this.showDetailModal.bind(this, project._id)}/>
-                                <div>{project.name}</div>
+                                <div className="project-icon">
+                                    <div className="base-icon"/>
+                                    <img className="overlay-icon" src={link + project.dAppId + '.png'}
+                                        onClick={this.showDetailModal.bind(this, project._id)}/>
+                                </div>
+                                <div className="icon-caption">{project.name}</div>
                             </div>
                         ))}
                     </div>
