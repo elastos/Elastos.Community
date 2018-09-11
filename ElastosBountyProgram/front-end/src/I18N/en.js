@@ -232,6 +232,7 @@ export default {
     'project.detail.recruiting': 'Recruiting',
     'project.detail.not_recruiting': 'Recruitment Closed',
     'project.detail.current_contributors': 'Current Contributors',
+    'project.detail.owner': 'Project Owner',
     'project.detail.pending_applications': 'Pending Applications',
     'project.detail.subscribers': 'Liked By',
     'project.detail.current_members': 'Current Members',

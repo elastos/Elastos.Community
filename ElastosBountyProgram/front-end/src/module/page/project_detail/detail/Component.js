@@ -570,7 +570,7 @@ class C extends BaseComponent {
 
                         {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
                             <Row className="contributors">
-                                <h3 className="no-margin align-left">{I18N.get('project.detail.current_contributors')}</h3>
+                                <h3 className="no-margin align-left">{I18N.get('project.detail.owner')}</h3>
                                 {this.getCurrentContributors()}
                             </Row>
                         }
