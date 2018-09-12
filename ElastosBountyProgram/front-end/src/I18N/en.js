@@ -325,17 +325,33 @@ export default {
     '.edit': 'Edit',
 
     // Landing
+    'landing.elastos': 'Elastos',
     'landing.alpha': 'ALPHA',
+    'landing.header': 'Powering Cyber Republic.',
     'landing.playVideo': 'Play Video',
+    'landing.action.enter': 'Enter',
+    'landing.action.here': 'Here',
     'landing.stayUpdate': 'Stay up to date with Cyber Republic',
     'landing.whatIs': 'What is Elastos?',
 
-    'landing.elaSol': 'The Elastos Solution',
-    'landing.fourPillars': 'The Four Pillars',
     'landing.businessModal': 'The Elastos Business Model',
     'landing.applications': 'Applications',
     'landing.elaToken': 'Elastos Token (ELA)',
     'landing.contribute': 'Become a Contributor',
+
+    'landing.whatIs.content.1': 'Elastos is the first completely safe and decentralized environment on the internet. Built with blockchain, it provides a virtual ecosystem where decentralized applications are protected from direct access with the internet while allowing near infinite scalability to billions of users.',
+    'landing.whatIs.content.2': 'Elastos is a “Cyber Republic” that enables wealth generation through the ownership and exchange of data and digital assets.',
+
+    'landing.cr100.content.1': 'Welcome to the Internet of',
+    'landing.cr100.content.2': 'Everything, where security',
+    'landing.cr100.content.3': ' & freedom are by design',
+    'landing.cr100.content.4': 'Join Us in Building the First 100 Projects',
+
+    'landing.solution.explained.1': 'The main chain handles basic payments and hash storage. Everything else, including smart contracts, run on sidechains where applications have the ability to create additional sidechains.',
+    'landing.solution.explained.2': 'Elastos is merge mined with Bitcoin to reduce energy consumption and provide the Bitcoin network security to all applications. Sidechains are included thereby utilizing Bitcoin hashpower in multiple chains at once.',
+    'landing.solution.explained.3': 'Employing PoW+DPoS as a consensus model for the Elastos Blockchain, sidechains may choose POW merge mining with ELA or between consensus models such as PoS, DPoS, DBFT, and others.',
+
+    'landing.elaSol': 'The Elastos Solution',
     'landing.scalability': 'Scalability',
     'landing.mainSideChain': 'Main Chain + Sidechain Structure',
     'landing.security': 'Security',
@@ -343,21 +359,9 @@ export default {
     'landing.consensus': 'Consensus',
     'landing.consensusMulti': 'Multiple Consensus Methods',
 
-    'landing.0100': 'Elastos is a “Cyber Republic” that enables wealth',
-    'landing.0101': 'generation through the ownership and exchange',
-    'landing.0102': 'of data and digital assets.',
-
-    'landing.0110': 'Elastos is the first completely safe and decentralized environment on the internet. Built with blockchain, it provides a virtual ecosystem where decentralized applications are protected from direct access with the internet while allowing near infinite scalability to billions of users.',
-    'landing.0111': 'Elastos is a “Cyber Republic” that enables wealth generation through the ownership and exchange of data and digital assets.',
-
-    'landing.0120': 'Welcome to the Internet of',
-    'landing.0121': 'Everything, where security',
-    'landing.0122': ' & freedom are by design',
-    'landing.0123': 'Join Us in Building the First 100 Projects',
-
-    'landing.0200': 'The main chain handles basic payments and hash storage. Everything else, including smart contracts, run on sidechains where applications have the ability to create additional sidechains.',
-    'landing.0201': 'Elastos is merge mined with Bitcoin to reduce energy consumption and provide the Bitcoin network security to all applications. Sidechains are included thereby utilizing Bitcoin hashpower in multiple chains at once.',
-    'landing.0202': 'Employing PoW+DPoS as a consensus model for the Elastos Blockchain, sidechains may choose POW merge mining with ELA or between consensus models such as PoS, DPoS, DBFT, and others.',
+    'landing.fourPillars': 'The Four Pillars',
+    'landing.ofSmartWeb': 'of The Elastos Smart Web',
+    'landing.blockchain': 'Elastos Blockchain',
 
     'landing.0210': 'We are a diverse democratic group of',
     'landing.0211': 'leaders, developers, organizers and',
