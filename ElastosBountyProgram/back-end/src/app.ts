@@ -1,5 +1,4 @@
 import * as express from 'express';
-import * as Rollbar from 'rollbar';
 import * as bodyParser from 'body-parser';
 import * as helmet from 'helmet';
 import * as morgan from 'morgan';
@@ -14,12 +13,6 @@ import db from './db';
 import router, {middleware} from './router';
 
 import './config';
-
-let rollbar = null;
-
-if (process.env.NODE_ENV === 'production') {
-    rollbar = new Rollbar(process.env.ROLLBAR_TOKEN);
-}
 
 (async ()=>{
     const DB = await db.create();
@@ -66,14 +59,9 @@ if (process.env.NODE_ENV === 'production') {
     app.use(fileUpload());
     app.use('/api', router);
 
-    if (process.env.NODE_ENV === 'production') {
-        app.use(rollbar.errorHandler())
-    }
-
     const port = process.env.SERVER_PORT;
     app.listen(port, () => {
         console.log(`start server at port ${port}`);
     });
-
 })();
 
