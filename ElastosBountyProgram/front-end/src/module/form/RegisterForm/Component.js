@@ -54,7 +54,7 @@ class C extends BaseComponent {
         const form = this.props.form
 
         if (reqCode && reqCode.toString() !== value) {
-            callback(I18N.get('register.no_match.code')) // The code you entered does not match
+            callback(I18N.get('register.error.code')) // The code you entered does not match
         } else {
             callback()
         }
