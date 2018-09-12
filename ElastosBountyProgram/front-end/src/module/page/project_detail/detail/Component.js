@@ -425,14 +425,12 @@ class C extends BaseComponent {
                     <div className="text-right">
                         {(this.props.page === 'ADMIN' || this.isTaskOwner() || this.isMember(candidate._id)) && (
                             <span>
-                                <a onClick={this.showAppModal.bind(this, candidate._id)}>{I18N.get('project.detail.view')}</a>
+                                <a onClick={this.showApplicationModal.bind(this, candidate._id)}>{I18N.get('project.detail.view')}</a>
                                 <Divider type="vertical"/>
                             </span>
                         )}
                         {this.isMember(candidate._id) && (
                             <span>
-                                <a onClick={this.viewApplication.bind(this, candidate._id)}>{I18N.get('project.detail.view')}</a>
-                                <Divider type="vertical"/>
                                 <a onClick={this.withdrawApplication.bind(this, candidate._id)}>{I18N.get('project.detail.withdraw_application')}</a>
                                 {this.isTaskOwner() && <Divider type="vertical"/>}
                             </span>)
@@ -573,6 +571,26 @@ class C extends BaseComponent {
                     <div className="ebp-wrap">
                         {this.getHeader()}
                     </div>
+                    {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
+                        <Row className="contributors ebp-wrap">
+                            <h3 className="no-margin align-left">{I18N.get('project.detail.owner')}</h3>
+                            {this.getCurrentContributors()}
+                        </Row>
+                    }
+
+                    {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
+                        <Row className="applications ebp-wrap">
+                            <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
+                            {this.getCurrentApplicants()}
+                        </Row>
+                    }
+
+                    {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
+                        <Row className="subscribers ebp-wrap">
+                            <h3 className="no-margin">{I18N.get('project.detail.subscribers')}</h3>
+                            {this.getCurrentSubscribers()}
+                        </Row>
+                    }
                     <div className="rectangle"/>
                     <div className="project-description-1">
                         {this.getDescription1()}
@@ -607,6 +625,7 @@ class C extends BaseComponent {
                     <div className="strike-line"/>
                     <p>Funding: 100k for 5% of the equity or coins/tokens</p>
                 </div>
+                {this.getActions()}
             </div>
         )
     }
