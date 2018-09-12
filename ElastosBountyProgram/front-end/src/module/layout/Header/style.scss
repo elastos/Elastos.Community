@@ -8,4 +8,17 @@
             border-bottom: none;
         }
     }
+
+    .language-dropdown {
+        padding-top: 26px;
+
+        .ant-select-selection {
+            border: none;
+            box-shadow: none;
+        }
+
+        .ant-select-arrow {
+            display: none;
+        }
+    }
 }
