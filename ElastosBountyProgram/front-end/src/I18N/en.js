@@ -199,6 +199,14 @@ export default {
     'developer.search.hide': 'Hide',
     'developer.search.apply': 'Apply',
 
+    'myrepublic.teams': 'Teams',
+    'myrepublic.teams.all': 'All',
+    'myrepublic.teams.owned': 'Owned',
+    'myrepublic.teams.active': 'Active',
+    'myrepublic.teams.applied': 'Applied',
+    'myrepublic.teams.rejected': 'Rejected',
+    'myrepublic.teams.create': 'Create Team',
+
     // Empower 35
     'emp35.header.title': 'We Will Build It Together',
     'emp35.header.content.1': 'We are democratically elected cross-functional group',
