@@ -323,6 +323,12 @@ export default {
     'landing.0230': 'Applications on Elastos will run in a trustful runtime environment that utilizes blockchain technology. This creates real security by providing a “sandboxed” environment that will need verification from the blockchain before allowing access to the internet. This enables massive potential for the construction of any type of application with any use case or scenario.',
     'landing.0231': '',
 
+    // Project Detail
+    'pdetail.like': 'like',
+    'pdetail.unlike': 'unlike',
+    'pdetail.involve': 'Get Involved',
+    'pdetail.funding': 'Funding: 100k for 5% of the equity or coins/tokens',
+
     // Our Vision
     'vision.00': 'Our Vision',
     'vision.01': 'The vision for Cyber Republic starts with an ambitious idea: create a self-running and self-governed community of entrepreneurs and developers who can function independently of Elastos but with the unified goal to grow it into a global success.',

@@ -486,14 +486,14 @@ class C extends BaseComponent {
                     <Button loading={this.props.loading}
                         icon={this.isUserSubscribed() ? 'dislike' : 'like'} onClick={likeHandler.bind(this)}>
                         {this.isUserSubscribed()
-                            ? 'Unlike'
-                            : 'Like'
+                            ? I18N.get('pdetail.unlike')
+                            : I18N.get('pdetail.like')
                         }
                     </Button>
                     <Button loading={this.props.loading} icon='message' onClick={applyHandler.bind(this)}
                         disabled={this.isTaskOwner() ||
                             (this.isMemberByUserId(this.props.currentUserId) && !this.getApplicant())}>
-                        Get Involved
+                        {I18N.get('pdetail.involve')}
                     </Button>
                 </div>
             </div>
@@ -502,7 +502,6 @@ class C extends BaseComponent {
 
     linkToProjectTask(id) {
         this.props.history.replace('/project-detail/' + id)
-        console.log(id)
     }
 
     getProjectSlider() {
@@ -629,7 +628,7 @@ class C extends BaseComponent {
                 <div className="project-name">{dAppId} {this.props.detail.name}</div>
                 <div className="strike-text project-funding">
                     <div className="strike-line"/>
-                    <p>Funding: 100k for 5% of the equity or coins/tokens</p>
+                    <p>{I18N.get('pdetail.funding')}</p>
                 </div>
                 <div className="actions">
                     {this.getActions()}
