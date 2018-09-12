@@ -169,6 +169,10 @@ export default {
     'developer.components.info': '更多',
     'developer.cr100.projects': '项目',
     'developer.cr100.submit_whitepaper': '提交白皮书',
+    'developer.cr100.welcome.1': 'CR100是Elastos的旗舰项目，邀请企业家团队申请资金设计和建造下一代伟大的Elastos DApp生态系统，下面列出的这100个是具有能体现出弹性基础设施多样性和能力的模板项目。',
+    'developer.cr100.welcome.2': '每个项目代表了DApp能颠覆的当前传统模型下App的应用场景。申请的团队需要在这些应用场景下迸发出团队现有的或未来白皮书的灵感，并提交详细的提案，阐述项目计划。',
+    'developer.cr100.welcome.3': 'Cyber-Republic理事会将选择特别有前景的项目，并为选定的团队提供10万美金作为最初的启动资金。请注意：CR100虽然是为了创造生态多样性，但是每个类别并不只限于一个DApp。此外，如果你没有发现适合的项目类别，可以提交类别到Cyber-Republic。具体详情在本页底部查看。',
+    'developer.cr100.welcome.title': 'Cyber Republic 100',
     'developer.cr100.welcome':
         'CR100是Cyber Republic的重要基础项目，由100个不同的项目组成，展示了Elastos生态系统的一些功能。 它们包括但不限于基础架构，DApp和实用程序解决方案。',
     'developer.cr100.welcome.title': 'Cyber Republic 100',
