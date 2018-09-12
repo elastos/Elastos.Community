@@ -185,6 +185,20 @@ export default {
     'developer.cr100.pitch.beneficiaries': 'Beneficiaries',
     'developer.cr100.pitch.elaInfrastructure': 'Elastos Infrastructure',
 
+    'developer.search.team': 'Team',
+    'developer.search.project': 'Project',
+    'developer.search.category': 'Category',
+    'developer.search.category.social': 'Social',
+    'developer.search.category.iot': 'IoT',
+    'developer.search.category.media': 'Media',
+    'developer.search.category.finance': 'Finance',
+    'developer.search.lookingFor': 'Looking For',
+    'developer.search.search.placeholder': 'Search',
+    'developer.search.skillset': 'Skillset',
+    'developer.search.showMore': 'Show More…',
+    'developer.search.hide': 'Hide',
+    'developer.search.apply': 'Apply',
+
     // Empower 35
     'emp35.header.title': 'We Will Build It Together',
     'emp35.header.content.1': 'We are democratically elected cross-functional group',
