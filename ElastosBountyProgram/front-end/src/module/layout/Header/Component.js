@@ -162,6 +162,11 @@ export default class extends BaseComponent {
                     <Menu.Item className="c_MenuItem mobile" key="mobileMenu" onClick={this.props.toggleMobileMenu}>
                         <Icon type="menu-fold"/>
                     </Menu.Item>
+                    <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                        <div className="pull-right language-dropdown mobile" style={{marginTop: 17}}>
+                            {this.buildLanguageDropdown()}
+                        </div>
+                    </MediaQuery>
                 </Menu>
 
                 <MediaQuery minWidth={MIN_WIDTH_PC}>

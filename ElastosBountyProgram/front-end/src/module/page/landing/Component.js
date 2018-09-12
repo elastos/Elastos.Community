@@ -2,12 +2,12 @@ import React from 'react'
 import EmptyPage from '../EmptyPage'
 import _ from 'lodash'
 import I18N from '@/I18N'
-
 import './style.scss'
-
+import { MAX_WIDTH_MOBILE, MIN_WIDTH_PC } from '@/config/constant'
 import { Col, Row, List, Button, Select } from 'antd'
 import Footer from '@/module/layout/Footer/Container'
 import moment from 'moment/moment'
+import MediaQuery from 'react-responsive'
 import Flag from 'react-flags'
 
 export default class extends EmptyPage {
@@ -40,17 +40,19 @@ export default class extends EmptyPage {
                 </div>
             </div>
 
-
             <header id="globalHeader">
                 <div className="contentContainer">
-
-
                     <div className="logo sized">
                         <img src="assets/images/logo.svg" alt="Cyber Republic" className="dsk"/>
                         <img src="assets/images/logo-mark.svg" className="mob"/>
                         <div class="alpha-tag">{I18N.get('0000')}</div>
                     </div>
 
+                    <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                        <div className="pull-right" style={{marginTop: 20}}>
+                            {this.buildLanguageDropdown()}
+                        </div>
+                    </MediaQuery>
 
                     <nav className="toplinks">
                         <ul>
