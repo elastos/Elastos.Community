@@ -5,11 +5,30 @@ import I18N from '@/I18N'
 
 import './style.scss'
 
-import { Col, Row, List, Button } from 'antd'
+import { Col, Row, List, Button, Select } from 'antd'
 import Footer from '@/module/layout/Footer/Container'
 import moment from 'moment/moment'
+import Flag from 'react-flags'
 
 export default class extends EmptyPage {
+    buildLanguageDropdown() {
+        return (
+            <div className="language-dropdown">
+                <Select defaultValue={I18N.getLang()} style={{ width: 24+11+11 }} onChange={this.props.changeLanguage}>
+                    <Select.Option value="en">
+                        <Flag name="US" format="png"
+                            basePath="/assets/images/flags"
+                            pngSize={24} shiny={true} alt="English"/>
+                    </Select.Option>
+                    <Select.Option value="zh">
+                        <Flag name="CN" format="png"
+                            basePath="/assets/images/flags"
+                            pngSize={24} shiny={true} alt="Chinese"/>
+                    </Select.Option>
+                </Select>
+            </div>
+        )
+    }
 
     ord_renderContent () {
 
@@ -53,6 +72,10 @@ export default class extends EmptyPage {
                                 </div>
                                 <a href="#" className="video-btn"></a>
                             </li>
+
+                            <li>
+                                {this.buildLanguageDropdown()}
+                            </li>
                         </ul>
                     </nav>
 
@@ -82,6 +105,10 @@ export default class extends EmptyPage {
                                     <div className="arrow-border"></div>
                                 </div>
                                 <a href="#" className="video-btn"></a>
+                            </li>
+
+                            <li>
+                                {this.buildLanguageDropdown()}
                             </li>
                         </ul>
                     </nav>

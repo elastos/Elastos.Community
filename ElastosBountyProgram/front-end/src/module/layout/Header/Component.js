@@ -75,7 +75,7 @@ export default class extends BaseComponent {
 
     buildLanguageDropdown() {
         return (
-            <Select defaultValue={this.props.language.language} style={{ width: 24+11+11 }} onChange={this.props.changeLanguage}>
+            <Select defaultValue={I18N.getLang()} style={{ width: 24+11+11 }} onChange={this.props.changeLanguage}>
                 <Select.Option value="en">
                     <Flag name="US" format="png"
                         basePath="/assets/images/flags"
