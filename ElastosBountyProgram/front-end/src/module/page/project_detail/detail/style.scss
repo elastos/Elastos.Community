@@ -39,6 +39,10 @@
                     height: 100px;
                     top: 0;
                 }
+
+                .project-name {
+                    visibility: hidden;
+                }
             }
 
             .base-icon {
@@ -153,11 +157,20 @@
                     padding-bottom: 0;
                 }
             }
+
+            .actions {
+                margin: $gap_5 auto 0;
+            }
         }
 
         .project-header-additions {
             position: relative;
             padding-top: 95px;
+        }
+
+        .project-info {
+            min-height: 600px;
+            padding-bottom: $gap_4;
         }
 
         .project-description-1 {

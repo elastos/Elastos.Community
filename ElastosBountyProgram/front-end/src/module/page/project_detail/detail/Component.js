@@ -46,7 +46,7 @@ class C extends BaseComponent {
         this.setState({ all_tasks_loading: true })
         this.props.getTasks().then(() => {
             const allTasks = _.values(this.props.all_tasks)
-            const itemIndex = Math.max(_.indexOf(allTasks,
+            const itemIndex = _.size(this.props.all_tasks) - Math.max(_.indexOf(allTasks,
                 _.find(allTasks, { _id: this.props.taskId })), 0)
 
             this.setState({
@@ -73,7 +73,7 @@ class C extends BaseComponent {
             this.props.getTaskDetail(this.props.taskId);
 
             const allTasks = _.values(this.props.all_tasks)
-            const itemIndex = Math.max(_.indexOf(allTasks,
+            const itemIndex = _.size(this.props.all_tasks) - Math.max(_.indexOf(allTasks,
                 _.find(allTasks, { _id: this.props.taskId })), 0)
 
             this.setState({
@@ -501,14 +501,16 @@ class C extends BaseComponent {
     }
 
     linkToProjectTask(id) {
-        this.props.history.replace('/project-detail/' + id);
+        this.props.history.replace('/project-detail/' + id)
+        console.log(id)
     }
 
     getProjectSlider() {
-        const projects = _.map(this.props.all_tasks, (task, id) => {
+        console.log(this.props.all_tasks)
+        const projects = _.reverse(_.map(this.props.all_tasks, (task, id) => {
             const isActive = task._id === this.props.taskId
             return (
-                <div key={id} className='halign-wrapper full-width full-height'>
+                <div key={task.dAppId} className='halign-wrapper full-width full-height'>
                     <div className='slider-project-icon'>
                         <div className={'project-icon ' + (isActive ? 'active' : '')}
                             onClick={this.linkToProjectTask.bind(this, task._id)}>
@@ -517,11 +519,13 @@ class C extends BaseComponent {
                             <img className='project-avatar' src={task.thumbnail}/>
                         </div>
                         <div className={'project-name ' + (isActive ? 'active' : '')}
-                            onClick={this.linkToProjectTask.bind(this, task._id)}>{task.name}</div>
+                            onClick={this.linkToProjectTask.bind(this, task._id)}>
+                            {task.name}
+                        </div>
                     </div>
                 </div>
             )
-        }).reverse()
+        }))
 
         return this.checkForAllTasksLoading(() =>
             <ItemsCarousel
@@ -571,26 +575,28 @@ class C extends BaseComponent {
                     <div className="ebp-wrap">
                         {this.getHeader()}
                     </div>
-                    {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
-                        <Row className="contributors ebp-wrap">
-                            <h3 className="no-margin align-left">{I18N.get('project.detail.owner')}</h3>
-                            {this.getCurrentContributors()}
-                        </Row>
-                    }
+                    <div className="project-info">
+                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
+                            <Row className="contributors ebp-wrap">
+                                <h3 className="no-margin align-left">{I18N.get('project.detail.owner')}</h3>
+                                {this.getCurrentContributors()}
+                            </Row>
+                        }
 
-                    {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
-                        <Row className="applications ebp-wrap">
-                            <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
-                            {this.getCurrentApplicants()}
-                        </Row>
-                    }
+                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
+                            <Row className="applications ebp-wrap">
+                                <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
+                                {this.getCurrentApplicants()}
+                            </Row>
+                        }
 
-                    {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
-                        <Row className="subscribers ebp-wrap">
-                            <h3 className="no-margin">{I18N.get('project.detail.subscribers')}</h3>
-                            {this.getCurrentSubscribers()}
-                        </Row>
-                    }
+                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
+                            <Row className="subscribers ebp-wrap">
+                                <h3 className="no-margin">{I18N.get('project.detail.subscribers')}</h3>
+                                {this.getCurrentSubscribers()}
+                            </Row>
+                        }
+                    </div>
                     <div className="rectangle"/>
                     <div className="project-description-1">
                         {this.getDescription1()}
@@ -613,19 +619,21 @@ class C extends BaseComponent {
 
     getHeader() {
         const project = _.find(_.values(this.props.all_tasks), { _id: this.props.taskId })
-        const projectIndex = _.indexOf(_.values(this.props.all_tasks), project) + 1 // 1-indexed
+        const dAppId = project ? ('#' + project.dAppId + '-') : ''
 
         return (
             <div className="project-header">
                 <div className="rect-container">
                     <div className="rect"/>
                 </div>
-                <div className="project-name">#{projectIndex} - {this.props.detail.name}</div>
+                <div className="project-name">{dAppId} {this.props.detail.name}</div>
                 <div className="strike-text project-funding">
                     <div className="strike-line"/>
                     <p>Funding: 100k for 5% of the equity or coins/tokens</p>
                 </div>
-                {this.getActions()}
+                <div className="actions">
+                    {this.getActions()}
+                </div>
             </div>
         )
     }
