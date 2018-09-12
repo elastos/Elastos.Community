@@ -207,6 +207,15 @@ export default {
     'myrepublic.teams.rejected': 'Rejected',
     'myrepublic.teams.create': 'Create Team',
 
+    'myrepublic.projects': 'Projects',
+    'myrepublic.projects.all': 'All',
+    'myrepublic.projects.owned': 'Owned',
+    'myrepublic.projects.active': 'Active',
+    'myrepublic.projects.applied': 'Applied',
+    'myrepublic.projects.subscribed': 'Subscribed',
+    'myrepublic.projects.create': 'Create Project',
+    'myrepublic.projects.create.cr100': 'Create CR100',
+
     // Empower 35
     'emp35.header.title': 'We Will Build It Together',
     'emp35.header.content.1': 'We are democratically elected cross-functional group',
