@@ -10,7 +10,9 @@
     }
 
     .language-dropdown {
-        padding-top: 26px;
+        &:not(.mobile) {
+            padding-top: 26px;
+        }
 
         .ant-select-selection {
             border: none;
