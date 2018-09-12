@@ -229,7 +229,7 @@ export default class extends StandardPage {
                     cover={<img className="event-card-image" src={colorScheme === 'WHITE' ? image_white : image}/>}>
 
                     <Card.Meta
-                        description={'Position Open'}
+                        description={I18N.get('emp35.position.open')}
                     />
                 </Card>
             })}
@@ -258,14 +258,11 @@ export default class extends StandardPage {
                 <div className="container">
                     <Row>
                         <Col xs={{span: 24}} md={{span: 14}}>
-                            <span className="blue-title">Marketing</span>
-
+                            <span className="blue-title">{I18N.get('emp35.position.marketing')}</span>
                             {this.generatePositionCards(USER_EMPOWER_TYPE.MARKETING, 3, COLOR_SCHEME.DARK)}
                         </Col>
                         <Col xs={{span: 24}} md={{span: 10}}>
-
-                            <span className="blue-title">Product Manager</span>
-
+                            <span className="blue-title">{I18N.get('emp35.position.productManager')}</span>
                             {this.generatePositionCards(USER_EMPOWER_TYPE.PRODUCT_MANAGER, 2, COLOR_SCHEME.DARK)}
                         </Col>
                     </Row>
@@ -281,19 +278,19 @@ export default class extends StandardPage {
                 <div className="container">
                     <Row>
                         <Col xs={{span: 24}} md={{span: 5}}>
-                            <span className="blue-title">Legal</span>
+                            <span className="blue-title">{I18N.get('emp35.position.legal')}</span>
 
                             {this.generatePositionCards(USER_EMPOWER_TYPE.LEGAL, 1, COLOR_SCHEME.DARK)}
                         </Col>
                         <Col xs={{span: 24}} md={{span: 9}}>
 
-                            <span className="blue-title">Writer</span>
+                            <span className="blue-title">{I18N.get('emp35.position.writer')}</span>
 
                             {this.generatePositionCards(USER_EMPOWER_TYPE.WRITER, 2, COLOR_SCHEME.DARK)}
                         </Col>
                         <Col xs={{span: 24}} md={{span: 10}}>
 
-                            <span className="blue-title">Partnership</span>
+                            <span className="blue-title">{I18N.get('emp35.position.partnership')}</span>
 
                             {this.generatePositionCards(USER_EMPOWER_TYPE.PARTNERSHIP, 2, COLOR_SCHEME.DARK)}
                         </Col>
@@ -312,7 +309,7 @@ export default class extends StandardPage {
                     <img id="ela_logo_dark" src="/assets/images/emp35/ELA_logo_dark.png"/>
                     <img id="ela_logo_white" src="/assets/images/emp35/White.png"/>
 
-                    <span className="blue-title">Media Producer</span>
+                    <span className="blue-title">{I18N.get('emp35.position.mediaProducer')}</span>
 
                     {this.generatePositionCards(USER_EMPOWER_TYPE.MEDIA_PRODUCER, 1, COLOR_SCHEME.DARK)}
                 </div>
@@ -338,8 +335,7 @@ export default class extends StandardPage {
             <div className="emp35-teamDesigner">
                 <div className="container">
                     <div className="inner-container">
-                        <span className="dark-title">Investments</span>
-
+                        <span className="dark-title">{I18N.get('emp35.position.investments')}</span>
                         {this.generatePositionCards(USER_EMPOWER_TYPE.INVESTMENTS, 2, COLOR_SCHEME.WHITE)}
                     </div>
                 </div>
@@ -352,8 +348,7 @@ export default class extends StandardPage {
             <div className="emp35-teamDesigner">
                 <div className="container">
                     <div className="inner-container">
-                        <span className="dark-title">Lead Developer Support</span>
-
+                        <span className="dark-title">{I18N.get('emp35.position.leadDevSupport')}</span>
                         {this.generatePositionCards(USER_EMPOWER_TYPE.LEAD_DEVELOPER_SUPPORT, 2, COLOR_SCHEME.WHITE)}
                     </div>
                 </div>
@@ -367,11 +362,11 @@ export default class extends StandardPage {
                 <div className="container">
                     <Row className="innerContainer">
                         <Col xs={{span: 12}}>
-                            <span className="dark-title">dApp Analyst</span>
+                            <span className="dark-title">{I18N.get('emp35.position.dAppAnalyst')}</span>
                             {this.generatePositionCards(USER_EMPOWER_TYPE.DAPP_ANALYST, 1, COLOR_SCHEME.WHITE)}
                         </Col>
                         <Col xs={{span: 12}}>
-                            <span className="dark-title">dApp Consultant</span>
+                            <span className="dark-title">{I18N.get('emp35.position.dAppConsultant')}</span>
                             {this.generatePositionCards(USER_EMPOWER_TYPE.DAPP_CONSULTANT, 1, COLOR_SCHEME.WHITE)}
                         </Col>
                     </Row>
@@ -385,7 +380,7 @@ export default class extends StandardPage {
             <div className="emp35-teamMedia">
                 <div className="container">
                     <div className="inner-container" style={{textAlign: 'left'}}>
-                        <span className="dark-title">Business Development</span>
+                        <span className="dark-title">{I18N.get('emp35.position.businessDevelopment')}</span>
 
                         {this.generatePositionCards(USER_EMPOWER_TYPE.BUSINESS_DEVELOPMENT, 1, COLOR_SCHEME.WHITE)}
                     </div>
@@ -401,19 +396,19 @@ export default class extends StandardPage {
                 <div className="container">
                     <Row>
                         <Col xs={{span: 24}} md={{span: 10}}>
-                            <span className="blue-title">Lead Administrator</span>
+                            <span className="blue-title">{I18N.get('emp35.position.leadAdministrator')}</span>
 
                             {this.generatePositionCards(USER_EMPOWER_TYPE.ADMINISTRATOR, 1, COLOR_SCHEME.DARK)}
                         </Col>
                         <Col xs={{span: 24}} md={{span: 7}}>
 
-                            <span className="blue-title">Security</span>
+                            <span className="blue-title">{I18N.get('emp35.position.security')}</span>
 
                             {this.generatePositionCards(USER_EMPOWER_TYPE.SECURITY, 1, COLOR_SCHEME.DARK)}
                         </Col>
                         <Col xs={{span: 24}} md={{span: 7}}>
 
-                            <span className="blue-title">HR Director</span>
+                            <span className="blue-title">{I18N.get('emp35.position.hrDirector')}</span>
 
                             {this.generatePositionCards(USER_EMPOWER_TYPE.HR_DIRECTOR, 1, COLOR_SCHEME.DARK)}
                         </Col>
@@ -424,13 +419,13 @@ export default class extends StandardPage {
                 <div className="container">
                     <Row>
                         <Col xs={{span: 24}} md={{span: 10}}>
-                            <span className="blue-title">Lead Translator</span>
+                            <span className="blue-title">{I18N.get('emp35.position.leadTranslator')}</span>
 
                             {this.generatePositionCards(USER_EMPOWER_TYPE.LEAD_TRANSLATOR, 1, COLOR_SCHEME.DARK)}
                         </Col>
                         <Col xs={{span: 24}} md={{span: 14}}>
 
-                            <span className="blue-title">Open Titles</span>
+                            <span className="blue-title">{I18N.get('emp35.position.openTitles')}</span>
 
                             {this.generatePositionCards(USER_EMPOWER_TYPE.OPEN_TITLE, 3, COLOR_SCHEME.DARK)}
                         </Col>
@@ -493,11 +488,11 @@ export default class extends StandardPage {
             this.setState({visibleModalEmpowerApply: false})
 
             this.props.empowerApply(values, this.state).then(() => {
-                message.success('Thank you for applying, we will be in touch shortly')
+                message.success(I18N.get('emp35.apply.success'))
 
             }).catch((err) => {
                 console.error(err);
-                message.error('Error - Please email us')
+                message.error(I18N.get('emp35.apply.error'))
             })
         })
     }

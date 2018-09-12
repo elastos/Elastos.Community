@@ -199,6 +199,26 @@ export default {
 
     'emp35.disclaimer.title': 'Disclaimer',
     'emp35.disclaimer.content': 'Roles described above are managerial level positions and the number of open positions are subject to change. The first group of Empower 35 candidates will be directly chosen by the council.',
+    'emp35.position.open': 'Position Open',
+    'emp35.position.legal': 'Legal',
+    'emp35.position.writer': 'Writer',
+    'emp35.position.partnership': 'Partnership',
+    'emp35.position.marketing': 'Marketing',
+    'emp35.position.productManager': 'Product Manager',
+    'emp35.position.mediaProducer': 'Media Producer',
+    'emp35.position.investments': 'Investments',
+    'emp35.position.leadDevSupport': 'Lead Developer Support',
+    'emp35.position.dAppAnalyst': 'dApp Analyst',
+    'emp35.position.dAppConsultant': 'dApp Consultant',
+    'emp35.position.businessDevelopment': 'Business Development',
+    'emp35.position.leadAdministrator': 'Lead Administrator',
+    'emp35.position.security': 'Security',
+    'emp35.position.hrDirector': 'HR Director',
+    'emp35.position.leadTranslator': 'Lead Translator',
+    'emp35.position.openTitles': 'Open Titles',
+
+    'emp35.apply.success': 'Thank you for applying, we will be in touch shortly',
+    'emp35.apply.error': 'Error - Please email us',
 
     // Training
     'training.header.title': 'Evangelist Training',
