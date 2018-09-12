@@ -1,12 +1,13 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import {Affix, Layout, Menu, Icon, Badge, Avatar, Modal, Dropdown, Popover} from 'antd'
+import {Affix, Layout, Menu, Icon, Badge, Avatar, Modal, Dropdown, Popover, Select} from 'antd'
 import _ from 'lodash'
 import I18N from '@/I18N'
 import MediaQuery from 'react-responsive'
 import Flyout from './Flyout';
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
 import {USER_ROLE} from '@/constant'
+import Flag from 'react-flags'
 
 const {Header} = Layout
 const SubMenu = Menu.SubMenu
@@ -74,21 +75,22 @@ export default class extends BaseComponent {
 
     buildLanguageDropdown() {
         return (
-            <Menu onClick={this.clickItem.bind(this)}>
-                <Menu.Item key="en">
-                    {I18N.get('0301')}
-                    {/* english  */}
-                </Menu.Item>
-                <Menu.Item key="zh">
-                    {I18N.get('0302')}
-                    {/* chinese */}
-                </Menu.Item>
-            </Menu>
+            <Select defaultValue={this.props.language.language} style={{ width: 24+11+11 }} onChange={this.props.changeLanguage}>
+                <Select.Option value="en">
+                    <Flag name="US" format="png"
+                        basePath="/assets/images/flags"
+                        pngSize={24} shiny={true} alt="English"/>
+                </Select.Option>
+                <Select.Option value="zh">
+                    <Flag name="CN" format="png"
+                        basePath="/assets/images/flags"
+                        pngSize={24} shiny={true} alt="Chinese"/>
+                </Select.Option>
+            </Select>
         )
     }
 
     buildHelpDropdown() {
-        const langDropdown = this.buildLanguageDropdown()
         const hasAdminAccess = [USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(this.props.role)
 
         return (
@@ -118,15 +120,6 @@ export default class extends BaseComponent {
                     {I18N.get('0204')}
                 </Menu.Item>
                 }
-
-                <Menu.Item key="language">
-                    <Dropdown overlay={langDropdown} style="margin-top: 24px;">
-                        <a className="ant-dropdown-link" href="#">
-                            {I18N.get('0300')} <Icon type="down" />
-                        </a>
-                    </Dropdown>
-                </Menu.Item>
-
             </Menu>
         )
     }
@@ -170,6 +163,12 @@ export default class extends BaseComponent {
                         <Icon type="menu-fold"/>
                     </Menu.Item>
                 </Menu>
+
+                <MediaQuery minWidth={MIN_WIDTH_PC}>
+                    <div className="pull-right language-dropdown">
+                        {this.buildLanguageDropdown()}
+                    </div>
+                </MediaQuery>
 
                 {/*
                 <Menu.Item className="c_MenuItem overview">
