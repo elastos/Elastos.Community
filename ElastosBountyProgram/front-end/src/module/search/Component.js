@@ -571,7 +571,7 @@ export default class extends BaseComponent {
                                 <h5 class="no-margin">
                                     {item.description}
                                 </h5>
-                                <div dangerouslySetInnerHTML={{__html: item.content}}/>
+                                <div class="description-content" dangerouslySetInnerHTML={{__html: item.content}}/>
                                 <div className="ant-list-item-right-box">
                                     <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
                                         <Avatar size="large" className="pull-right" src={item.owner.profile.avatar}/>

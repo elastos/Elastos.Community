@@ -64,7 +64,9 @@ class C extends BaseComponent {
             if (!err) {
                 let createParams = {
                     ...values,
-                    description: sanitizeHtml(values.description),
+                    description: sanitizeHtml(values.description, {
+                        allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'u', 's' ])
+                    }),
                     tags: tags.join(','),
                     logo: '',
                     metadata: '',
@@ -104,8 +106,7 @@ class C extends BaseComponent {
                 modules={{
                     toolbar: [
                         ['bold', 'italic', 'underline','strike'],
-                        [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-                        ['clean']
+                        [{'list': 'ordered'}, {'list': 'bullet'}]
                     ]
                 }}
             />
