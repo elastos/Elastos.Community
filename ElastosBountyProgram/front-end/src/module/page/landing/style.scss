@@ -10,6 +10,17 @@
     padding: 0 $gap_2 $gap_2 0;
   }
 
+  .language-dropdown {
+      .ant-select-selection {
+          border: none;
+          box-shadow: none;
+      }
+
+      .ant-select-arrow {
+          display: none;
+      }
+  }
+
   section,
   .global {
     position: relative;

@@ -1,12 +1,18 @@
 import {createContainer} from '@/util'
 import Component from './Component'
-import TaskService from '@/service/TaskService'
+import LanguageService from '@/service/LanguageService';
 import _ from 'lodash'
-
-import {TASK_CATEGORY, TASK_TYPE} from '@/constant'
 
 export default createContainer(Component, (state) => {
     return {
-        is_login: state.user.is_login
+        is_login: state.user.is_login,
+        language: state.language
+    }
+}, () => {
+    const languageService = new LanguageService();
+    return {
+        changeLanguage(lang) {
+            languageService.changeLanguage(lang);
+        }
     }
 })

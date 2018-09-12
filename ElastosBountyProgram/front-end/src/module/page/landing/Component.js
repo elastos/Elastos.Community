@@ -2,14 +2,33 @@ import React from 'react'
 import EmptyPage from '../EmptyPage'
 import _ from 'lodash'
 import I18N from '@/I18N'
-
 import './style.scss'
-
-import { Col, Row, List, Button } from 'antd'
+import { MAX_WIDTH_MOBILE, MIN_WIDTH_PC } from '@/config/constant'
+import { Col, Row, List, Button, Select } from 'antd'
 import Footer from '@/module/layout/Footer/Container'
 import moment from 'moment/moment'
+import MediaQuery from 'react-responsive'
+import Flag from 'react-flags'
 
 export default class extends EmptyPage {
+    buildLanguageDropdown() {
+        return (
+            <div className="language-dropdown">
+                <Select defaultValue={I18N.getLang()} style={{ width: 24+11+11 }} onChange={this.props.changeLanguage}>
+                    <Select.Option value="en">
+                        <Flag name="US" format="png"
+                            basePath="/assets/images/flags"
+                            pngSize={24} shiny={true} alt="English"/>
+                    </Select.Option>
+                    <Select.Option value="zh">
+                        <Flag name="CN" format="png"
+                            basePath="/assets/images/flags"
+                            pngSize={24} shiny={true} alt="Chinese"/>
+                    </Select.Option>
+                </Select>
+            </div>
+        )
+    }
 
     ord_renderContent () {
 
@@ -21,17 +40,19 @@ export default class extends EmptyPage {
                 </div>
             </div>
 
-
             <header id="globalHeader">
                 <div className="contentContainer">
-
-
                     <div className="logo sized">
                         <img src="assets/images/logo.svg" alt="Cyber Republic" className="dsk"/>
                         <img src="assets/images/logo-mark.svg" className="mob"/>
                         <div class="alpha-tag">{I18N.get('0000')}</div>
                     </div>
 
+                    <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                        <div className="pull-right" style={{marginTop: 20}}>
+                            {this.buildLanguageDropdown()}
+                        </div>
+                    </MediaQuery>
 
                     <nav className="toplinks">
                         <ul>
@@ -52,6 +73,10 @@ export default class extends EmptyPage {
                                     <div className="arrow-border"></div>
                                 </div>
                                 <a href="#" className="video-btn"></a>
+                            </li>
+
+                            <li>
+                                {this.buildLanguageDropdown()}
                             </li>
                         </ul>
                     </nav>
@@ -82,6 +107,10 @@ export default class extends EmptyPage {
                                     <div className="arrow-border"></div>
                                 </div>
                                 <a href="#" className="video-btn"></a>
+                            </li>
+
+                            <li>
+                                {this.buildLanguageDropdown()}
                             </li>
                         </ul>
                     </nav>
