@@ -1223,14 +1223,14 @@ export default class extends EmptyPage {
 
                 <div className="contentContainer">
 
-                    <h2 className="hasStatic">{I18N.get('landing.become.header.1')}<br/> {I18N.get('landing.become.header.2')}</h2>
+                    <h2 className="hasStatic">{I18N.get('landing.footer.header.1')}<br/> {I18N.get('landing.footer.header.2')}</h2>
 
                     <div className="form-wrap">
-                        <p>{I18N.get('landing.become.note')}</p>
+                        <p>{I18N.get('landing.footer.note')}</p>
                         <form id="footer-form" className="signup-form" name="mailing-list" action="https://cyberrepublic.us19.list-manage.com/subscribe/post-json?u=acb5b0ce41bfe293d881da424&id=272f303492"
                             method="get">
                             <div className="email-wrap">
-                                <input type="email" name="EMAIL" data-type="req" placeholder="Enter Email"/>
+                                <input type="email" name="EMAIL" data-type="req" placeholder={I18N.get('landing.footer.email')}/>
                                 <button type="submit" className="arrow-submit">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 34">
                                         <polygon points="0 0 0 33.487 16.744 16.744 0 0" style={{fill: '#1de9b6'}}/>
@@ -1248,12 +1248,12 @@ export default class extends EmptyPage {
 
                         <div className="col" data-num="2">
                             <ul className="resources">
-                                <li className="title">Resources</li>
-                                <li><a href="https://wallet.elastos.org/" target="_blank">Wallet</a></li>
-                                <li><a href="https://blockchain.elastos.org/status" target="_blank">Block Explorer</a></li>
-                                <li><a href="https://github.com/elastos" target="_blank">GitHub</a></li>
-                                <li><a href="https://github.com/elastos/Elastos.Community/tree/master/CyberRepublicLogoAssets" target="_blank">Logo Assets</a></li>
-                                <li><a href="https://elanews.net/">ELA News</a></li>
+                                <li className="title">{I18N.get('landing.footer.resources')}</li>
+                                <li><a href="https://wallet.elastos.org/" target="_blank">{I18N.get('landing.footer.wallet')}</a></li>
+                                <li><a href="https://blockchain.elastos.org/status" target="_blank">{I18N.get('landing.footer.explorer')}</a></li>
+                                <li><a href="https://github.com/elastos" target="_blank">{I18N.get('landing.footer.github')}</a></li>
+                                <li><a href="https://github.com/elastos/Elastos.Community/tree/master/CyberRepublicLogoAssets" target="_blank">{I18N.get('landing.footer.assets')}</a></li>
+                                <li><a href="https://elanews.net/">{I18N.get('landing.footer.elaNews')}</a></li>
                             </ul>
                         </div>
 
@@ -1261,11 +1261,11 @@ export default class extends EmptyPage {
 
                         <div className="col contact" data-num="3">
                             <ul>
-                                <li className="title">Contact</li>
-                                <li>Cyber Republic: <a href="mailto:cyberrepublic@elastos.org">cyberrepublic@elastos.org</a></li>
-                                <li>Global Community: <a href="mailto:global-community@elastos.org">global-community@elastos.org</a></li>
-                                <li>Support: <a href="mailto:support@elastos.org">support@elastos.org</a></li>
-                                <li>Other Contacts: <a href="mailto:contact@elastos.org">contact@elastos.org</a></li>
+                                <li className="title">{I18N.get('landing.footer.contract')}</li>
+                                <li>{I18N.get('landing.cr')}: <a href="mailto:cyberrepublic@elastos.org">cyberrepublic@elastos.org</a></li>
+                                <li>{I18N.get('landing.footer.community')}: <a href="mailto:global-community@elastos.org">global-community@elastos.org</a></li>
+                                <li>{I18N.get('landing.footer.support')}: <a href="mailto:support@elastos.org">support@elastos.org</a></li>
+                                <li>{I18N.get('landing.footer.contracts')}: <a href="mailto:contact@elastos.org">contact@elastos.org</a></li>
                             </ul>
                         </div>
 
@@ -1273,7 +1273,7 @@ export default class extends EmptyPage {
 
                         <div className="col" data-num="4">
                             <ul className="social">
-                                <li className="title">Join Us On</li>
+                                <li className="title">{I18N.get('landing.footer.join')}</li>
                             </ul>
 
                             <div className="social-icons">
