@@ -93,7 +93,7 @@ export default class extends StandardPage {
                                     <img className="overlay-icon" src={project.thumbnail}
                                         onClick={this.showDetailModal.bind(this, project._id)}/>
                                 </div>
-                                <div className="icon-caption">{project.name}</div>
+                                <div className="caption">{project.name}</div>
                             </div>
                         ))}
                     </div>
