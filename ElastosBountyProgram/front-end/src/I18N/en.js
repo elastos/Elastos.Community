@@ -334,8 +334,8 @@ export default {
     'landing.0231': '',
 
     // Project Detail
-    'pdetail.like': 'like',
-    'pdetail.unlike': 'unlike',
+    'pdetail.like': 'Like',
+    'pdetail.unlike': 'Unlike',
     'pdetail.involve': 'Get Involved',
     'pdetail.funding': 'Funding: 100k for 5% of the equity or coins/tokens',
 
