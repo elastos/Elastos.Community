@@ -95,6 +95,11 @@ export default {
     'login.title': 'Login to Cyber Republic',
     'login.description_1': 'Input your credentials below.',
 
+    // ApplyForm
+    'apply.form.attachment': 'Supporting Attachment',
+    'apply.form.suited': 'What Makes You Most Suited?',
+    'apply.form.prompt': 'What Makes You Like To Apply?',
+
     // RegisterFrom
     'register.title': 'Become a Contributor',
     'register.description_1': 'As a member you can sign up for bounties on Cyber Republic.',
@@ -210,6 +215,7 @@ export default {
     'training.evangelist.content': 'The goal of the program is for participants to not only learn the technology from the Elastos Team first hand, but to develop a presentation crafted with marketing and PR professionals that will allow ambassadors to be professionally prepared to represent the project to the public. Cyber Republic plans to run this program several times per year. ',
     'training.thanksForApplying': 'Thank you for applying, we will be in touch shortly!',
     'training.applyError': 'An error has occured. Please contact us directly.',
+    'training.apply.title': 'Apply to be an ambassador?',
 
     // Itinerary
     'training.itinerary.title': 'Itinerary Example',
@@ -271,8 +277,10 @@ export default {
     // General
     'select.placeholder': 'Please select',
     '.ok': 'Ok',
+    '.apply': 'Apply',
     '.cancel': 'Cancel',
     '.edit': 'Edit',
+    '.upload': 'Click to Upload',
 
     // Landing
     'landing.alpha': 'ALPHA',
