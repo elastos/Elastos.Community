@@ -1,4 +1,3 @@
-
 @import "../../../style/variable";
 @import "../../../style/color";
 
@@ -29,15 +28,29 @@ $landingPageWidth: 1152px;
     min-height: 750px;
     position: relative;
 
+    @media only screen and (max-width: $mobile-width) {
+      min-height: 550px;
+    }
+
     .circle-container {
       position: absolute;
       bottom: 50%;
       left: $gap_5;
 
+      @media only screen and (max-width: $mobile-width) {
+        bottom: 68%;
+        left: $gap_5;
+      }
+
       .circle {
         display: block;
         width: 100px;
         height: 100px;
+
+        @media only screen and (max-width: $mobile-width) {
+          width: 25px;
+          height: 25px;
+        }
       }
     }
 
@@ -45,6 +58,11 @@ $landingPageWidth: 1152px;
       position: absolute;
       top: $gap_4;
       right: $gap_3;
+
+      @media only screen and (max-width: $mobile-width) {
+        top: 120px;
+        right: $gap_5;
+      }
 
       .small-box {
 
@@ -58,6 +76,12 @@ $landingPageWidth: 1152px;
         left: 62.5px;
         width: 75px;
         height: 75px;
+        @media only screen and (max-width: $mobile-width) {
+          top: 32.5px;
+          left: 57.5px;
+          width: 35px;
+          height: 35px;
+        }
       }
     }
 
@@ -78,6 +102,10 @@ $landingPageWidth: 1152px;
       height: 50px;
       background-color: #434D72;
       opacity: 0.4;
+      @media only screen and (max-width: $mobile-width) {
+        width: 25px;
+        height: 25px;
+      }
     }
 
     .box {
@@ -85,6 +113,12 @@ $landingPageWidth: 1152px;
       height: 100px;
       background-color: #434D72;
       opacity: 0.4;
+
+
+      @media only screen and (max-width: $mobile-width) {
+        width: 50px;
+        height: 50px;
+      }
     }
 
     .container {
@@ -110,6 +144,11 @@ $landingPageWidth: 1152px;
           width: 450px;
           height: 450px;
           opacity: 0.4;
+          @media only screen and (max-width: $mobile-width) {
+            border: 12px solid #434D72;
+            width: 75%;
+            height: 300px;
+          }
         }
       }
 
@@ -119,6 +158,10 @@ $landingPageWidth: 1152px;
         font-family: "komu-a",sans-serif;
         font-size: 75px;
         color: $cr100_green;
+        @media only screen and (max-width: $mobile-width) {
+          margin-top: 75px;
+          font-size: 50px;
+        }
       }
 
       .content {
@@ -128,13 +171,25 @@ $landingPageWidth: 1152px;
         font-size: 24px;
         color: white;
 
+        @media only screen and (max-width: $mobile-width) {
+          margin-top: 155px;
+        }
+
         > .center {
           margin-left: auto;
           margin-right: auto;
-          width: 850px;
+          width: 875px;
           @media only screen and (max-width: $mobile-width) {
-            font-size: 18px;
+            font-size: 12px;
             width: 100%;
+          }
+
+          > .button {
+            margin-top: $gap_5;
+            width: 85%;
+            height: 60px;
+            font-size: 22px;
+            border-radius: unset;
           }
         }
 
@@ -166,6 +221,11 @@ $landingPageWidth: 1152px;
             height: 12px;
             background-color: #434D72;
             z-index: 0;
+
+            @media only screen and (max-width: $mobile-width) {
+              left: -2px;
+              width: 2px;
+            }
           }
           .strike-line:after {
             content: '';
@@ -176,6 +236,11 @@ $landingPageWidth: 1152px;
             width: 14px;
             height: 12px;
             background-color: #434D72;
+
+            @media only screen and (max-width: $mobile-width) {
+              left: -2px;
+              width: 2px;
+            }
           }
           p {
             position: relative;
@@ -254,6 +319,10 @@ $landingPageWidth: 1152px;
       font-size: 24px;
       padding: 38px 80px 74px;
       text-align: center;
+
+      @media only screen and (max-width: $mobile-width) {
+        padding: 38px 40px 74px !important;
+      }
     }
   }
 
