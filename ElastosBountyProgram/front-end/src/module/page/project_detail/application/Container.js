@@ -38,6 +38,10 @@ export default createContainer(Component, (state) => {
                 attachment, attachmentFilename)
         },
 
+        async updateApplication(taskId, data) {
+            return taskService.updateApplication(taskId, data)
+        },
+
         async subscribeToProject(taskId) {
             return commentService.subscribe('task', taskId)
         },

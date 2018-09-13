@@ -136,6 +136,36 @@ export default class extends BaseService {
         return result
     }
 
+    async updateApplication(taskId, data) {
+        const taskRedux = this.store.getRedux('task')
+        this.dispatch(taskRedux.actions.loading_update(true))
+
+        const result = await api_request({
+            path: `/api/task/updateCandidate`,
+            method: 'post',
+            data
+        })
+
+        this.dispatch(taskRedux.actions.loading_update(false))
+
+        const curTaskDetail = this.store.getState().task.detail
+        _.remove(curTaskDetail.candidates, { _id: data.taskCandidateId })
+        curTaskDetail.candidates.push(result)
+
+        let all_tasks = this.store.getState().task.all_tasks
+        if (!_.isEmpty(all_tasks)) {
+            let task = _.find(all_tasks, {_id: taskId})
+            const ind = _.indexOf(_.values(all_tasks), task)
+
+            all_tasks[ind].candidates = curTaskDetail.candidates
+            this.dispatch(taskRedux.actions.all_tasks_update(all_tasks))
+        }
+
+        this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
+
+        return result
+    }
+
     async register(taskId, userId) {
         const taskRedux = this.store.getRedux('task')
         this.dispatch(taskRedux.actions.loading_update(true))
