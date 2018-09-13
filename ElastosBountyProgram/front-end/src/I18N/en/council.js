@@ -282,25 +282,23 @@ export default {
         <strong>6 Content</strong>
         The content of the proposals shall be defined by the end of the Interim Period.
         <strong>7 Proposal Procedure</strong>
-        The procedure for making proposals shall be defined by the end of the Interim Period.
-        <strong>8 Cyber Republic Council Members</strong>
-        The qualifications of Cyber Republic Council Members and Alternate Members shall be defined by the end of the Interim Period.
-
+        Proposals are to be raised by Cyber Republic Council and are published to the entire community.
+      
         <center>Chapter IV	Voting</center>
 
-        <strong>9 Voting Types </strong>
+        <strong>8 Voting Types </strong>
         <ol>
             <li>There are four different types of community voting. </li>
             <li>Selecting Cyber Republic Council Members;</li>
             <li>Impeachment;</li>
             <li>Ordinary proposal;</li>
-            <li>Amending Key Documents (Elastos Constitution, Cyber Republic Council Founding Document, Elastos Community Voting rules, Cyber Republic Council </li>
+            <li>Amending Key Documents (Elastos Constitution, Cyber Republic Council Founding Document, Elastos Community Voting rules, Cyber Republic Council Conflict of Interest</li>
         </ol>
 
-        <strong>10 Voting procedure</strong>
+        <strong>9 Voting procedure</strong>
         <ol>
-            <li>The election process for the re-election committee: Before the 30-day expiration of the current committee, the secretariat will initiate a general election notice.</li>
-            <li>Impeachment: Beginning with the election of the members of the Communist Party, the impeachment procedure is automatically initiated.</li>
+            <li>The election process for the re-election: Before the 30-day expiration of the current committee, the secretariat will initiate a general election notice.</li>
+            <li>Impeachment: Beginning with the election of CRC, the impeachment procedure is automatically initiated.</li>
             <li>
             The ordinary proposal and key document amendment voting procedures are as follows:
             <ul>
@@ -311,7 +309,7 @@ export default {
         </ol>
         
         
-        <strong>11 Voting principle</strong>
+        <strong>10 Voting principle</strong>
         <ol>
             <li>One ELA represents one vote.</li>
             <li>Voters may vote in favor of a proposal, against a proposal, or abstain.</li>
@@ -323,13 +321,9 @@ export default {
             <li>ELA participating in the locked-up plan (different from being locked-up during the community vote) is part of the ELA in circulation. </li>
         </ol>
         
-        <strong>12 Voting Thresholds</strong>
+        <strong>11 Voting Thresholds</strong>
         There will be different thresholds required for each type of vote. These thresholds shall be defined by the end of the Interim Period.
-        <strong>13 Voting Process</strong>
-        The process for voting shall be defined by the end of the Interim Period.
-        <center>Chapter  V Resolution</center>
-        <strong>14 Voting Thresholds</strong>
-
+  
         <ol>
             <li>
             The threshold for selecting Cyber Republic Council Members  is based on the following rules:
@@ -342,7 +336,7 @@ export default {
             <li>
             The threshold for vetoing a resolution of Cyber Republic Council is based on the following rules:
             <ul>
-                <li>(a) TThe ELA participating in the voting accounted for more than 20% of circulated ELA;</li>
+                <li>(a) The ELA participating in the voting accounted for more than 20% of circulated ELA;</li>
                 <li>(b) And participate in voting more than 50% against the ordinary proposal.</li>
             </ul>
             </li>
@@ -350,7 +344,7 @@ export default {
         </ol>
 
         <center>Chapter VI Supplementary Provisions</center>
-        <strong>15 Miscellaneous</strong>
+        <strong>14 Miscellaneous</strong>
         <ol>
             <li>Where these rules come into conflict with the values entrenched in the Constitution, the Constitution shall prevail.</li>
             <li>The first Election of the Cyber Republic Council shall take place by the end of the Interim Period. </li>
