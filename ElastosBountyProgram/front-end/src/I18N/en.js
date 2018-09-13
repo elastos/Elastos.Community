@@ -102,7 +102,8 @@ export default {
 
     // RegisterFrom
     'register.title': 'Become a Contributor',
-    'register.description_1': 'As a member you can sign up for bounties on Cyber Republic.',
+    'register.description_1': 'This will only take a few seconds.',
+    'register.description_2': 'As a member you can sign up for bounties on Cyber Republic.',
     'register.required': 'Required Fields',
     'register.error.code': 'The code you entered does not match',
     'register.error.passwords': 'Two passwords you entered do not match',
@@ -134,7 +135,7 @@ export default {
     'register.form.hear': 'Where did you hear about us?',
     'register.code': 'We have sent a confirmation code to your email.',
     'register.submit': 'Register',
-    '3533': 'Optional Info',
+    '3533': 'More about you',
     '3534': 'Country',
 
     // Forgot / Reset Password Form
@@ -239,7 +240,9 @@ export default {
     'project.detail.recruiting': 'Recruiting',
     'project.detail.not_recruiting': 'Recruitment Closed',
     'project.detail.current_contributors': 'Current Contributors',
+    'project.detail.owner': 'Project Owner',
     'project.detail.pending_applications': 'Pending Applications',
+    'project.detail.subscribers': 'Liked By',
     'project.detail.current_members': 'Current Members',
     'project.detail.leave': 'Leave',
     'project.detail.remove': 'Remove',
@@ -329,6 +332,12 @@ export default {
 
     'landing.0230': 'Applications on Elastos will run in a trustful runtime environment that utilizes blockchain technology. This creates real security by providing a “sandboxed” environment that will need verification from the blockchain before allowing access to the internet. This enables massive potential for the construction of any type of application with any use case or scenario.',
     'landing.0231': '',
+
+    // Project Detail
+    'pdetail.like': 'like',
+    'pdetail.unlike': 'unlike',
+    'pdetail.involve': 'Get Involved',
+    'pdetail.funding': 'Funding: 100k for 5% of the equity or coins/tokens',
 
     // Our Vision
     'vision.00': 'Our Vision',

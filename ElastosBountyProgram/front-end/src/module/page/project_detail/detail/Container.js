@@ -1,7 +1,9 @@
 import {createContainer} from '@/util'
 import TaskService from '@/service/TaskService'
 import TeamService from '@/service/TeamService'
+import CommentService from '@/service/CommentService'
 import Component from './Component'
+import {TASK_TYPE, TASK_CATEGORY} from '@/constant'
 import _ from 'lodash'
 
 export default createContainer(Component, (state) => {
@@ -11,6 +13,8 @@ export default createContainer(Component, (state) => {
         page = 'ADMIN'
     } else if (/^\/profile/.test(state.router.location.pathname)) {
         page = 'LEADER'
+    } else if (/^\/project-detail/.test(state.router.location.pathname)) {
+        page = 'PUBLIC'
     }
 
     return {
@@ -20,11 +24,13 @@ export default createContainer(Component, (state) => {
         currentUserId: state.user.current_user_id,
         currentUserAvatar: state.user.profile.avatar,
         is_admin: state.user.is_admin,
+        is_login: state.user.is_login,
         loading: state.task.loading || state.team.loading
     }
 }, () => {
     const taskService = new TaskService()
     const teamService = new TeamService()
+    const commentService = new CommentService()
 
     return {
         async getTaskDetail(taskId) {
@@ -39,10 +45,29 @@ export default createContainer(Component, (state) => {
             return teamService.index(query)
         },
 
-        async applyToTask(taskId, userId, teamId, applyMsg, attachment,
-            attachmentFilename) {
+        async getTasks(filters) {
+            return taskService.index({
+                ...filters,
+                type: TASK_TYPE.PROJECT,
+                category: TASK_CATEGORY.CR100
+            })
+        },
+
+        resetTasks () {
+            return taskService.resetAllTasks()
+        },
+
+        async applyToTask(taskId, userId, teamId, applyMsg, attachment, attachmentFilename) {
             return taskService.pushCandidate(taskId, userId, teamId, applyMsg,
                 attachment, attachmentFilename)
+        },
+
+        async subscribeToProject(taskId) {
+            return commentService.subscribe('task', taskId)
+        },
+
+        async unsubscribeFromProject(taskId) {
+            return commentService.unsubscribe('task', taskId)
         },
 
         resetAllTeams() {

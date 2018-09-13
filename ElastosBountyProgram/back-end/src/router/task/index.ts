@@ -16,6 +16,7 @@ import subscribe from './subscribe'
 import unsubscribe from './unsubscribe'
 import register from './register'
 import deregister from './deregister'
+import updateCandidate from './update_candidate'
 
 export default Base.setRouter([
 
@@ -73,6 +74,11 @@ export default Base.setRouter([
         path : '/withdrawCandidate',
         router : withdrawCandidate,
         method : 'post'
+    },
+    {
+        path: '/updateCandidate',
+        router: updateCandidate,
+        method: 'post'
     },
     {
         path: '/markTaskComplete',

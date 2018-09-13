@@ -1,0 +1,9 @@
+@import '../../../../style/variable';
+@import '../../../../style/color';
+@import '../../../../style/typography';
+
+.c_Project.c_Detail {
+    .team-selector {
+        margin-bottom: $gap_2;
+    }
+}

@@ -16,6 +16,8 @@ import TeamsPage from '@/module/page/teams/Container'
 import TasksPage from '@/module/page/tasks/Container'
 import TaskDetailPage from '@/module/page/task_detail/Container'
 import TaskApplicationPage from '@/module/page/task_application/Container'
+import ProjectDetailPage from '@/module/page/project_detail/Container'
+import TeamDetailPage from '@/module/page/team_detail/Container'
 
 import LoginPage from '@/module/page/login/Container'
 import RegisterPage from '@/module/page/register/Container'
@@ -75,7 +77,7 @@ import FormTraining1Page from '@/module/page/form_ext/training_1/Container'
 
 // admin team page
 import TeamListPage from '../module/page/admin/teams/TeamListPage';
-import TeamDetailPage from '../module/page/admin/teams/TeamDetailPage';
+import AdminTeamDetailPage from '../module/page/admin/teams/TeamDetailPage';
 
 import NotFound from '@/module/page/error/NotFound'
 
@@ -240,12 +242,20 @@ export default [
         page: ProfileProjectDetailPage
     },
     {
+        path: '/project-detail/:taskId',
+        page: ProjectDetailPage
+    },
+    {
         path: '/profile/teams',
         page: ProfileTeamsPage
     },
     {
-        path : '/profile/teams/create',
-        page : ProfileTeamCreatePage
+        path: '/profile/teams/create',
+        page: ProfileTeamCreatePage
+    },
+    {
+        path: '/team-detail/:teamId',
+        page: TeamDetailPage
     },
     {
         path: '/profile/submissions',
@@ -379,12 +389,12 @@ export default [
     ********************************************************************************
       */
     {
-        path : '/admin/teams',
-        page : TeamListPage
+        path: '/admin/teams',
+        page: TeamListPage
     },
     {
-        path : '/admin/teams/:teamId',
-        page : TeamDetailPage
+        path: '/admin/teams/:teamId',
+        page: AdminTeamDetailPage
     },
 
     {

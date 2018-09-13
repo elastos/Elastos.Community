@@ -4,7 +4,7 @@ import { Menu, SubMenu } from 'antd'
 import MediaQuery from "react-responsive"
 import I18N from '@/I18N'
 import { Link } from 'react-router-dom';
-import { Affix, Radio } from 'antd';
+import { Affix, Radio, Badge, Tooltip } from 'antd';
 import './style.scss'
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from "../../../../config/constant"
 
@@ -46,6 +46,18 @@ export default class extends BaseComponent {
         }
     }
 
+    isProfileIncomplete() {
+        const isEmptyChecks = [
+            'firstName',
+            'lastName',
+            'country',
+            'avatar'
+        ]
+
+        return !_.every(_.map(isEmptyChecks, (prop) =>
+            !_.isEmpty(this.props.user.profile[prop])))
+    }
+
     ord_render () {
         // TODO check why we can not use redirect use this.props.history
         return (
@@ -74,7 +86,10 @@ export default class extends BaseComponent {
                                 {I18N.get('2304')}
                             </Menu.Item>
                             <Menu.Item key="profileInfo">
-                                {I18N.get('2300')}
+                                { this.isProfileIncomplete()
+                                    ? <Badge status="processing" text={I18N.get('2300')}/>
+                                    : I18N.get('2300')
+                                }
                             </Menu.Item>
                         </Menu>
                     </Affix>

@@ -61,6 +61,13 @@ export default class extends Base {
                     path: 'team'
                 })
 
+                if (candidate.team) {
+                    await db_user.getDBInstance().populate(candidate.team, {
+                        path: 'owner',
+                        select: sanitize
+                    })
+                }
+
                 for (let comment of candidate.comments) {
                     for (let thread of comment) {
                         await db_task.getDBInstance().populate(thread, {
@@ -460,6 +467,38 @@ export default class extends Base {
         return rs;
     }
 
+    public async updateCandidate(param): Promise<boolean> {
+        const {taskCandidateId, user, team, attachment, attachmentFilename} = param
+        const candidateSelector = {
+            _id: param.taskCandidateId
+        }
+        const updateObj:any = {
+            user,
+            team,
+            attachment,
+            attachmentFilename
+        }
+
+        if (user || team) {
+            updateObj.type = user
+                ? constant.TASK_CANDIDATE_TYPE.USER
+                : constant.TASK_CANDIDATE_TYPE.TEAM
+        }
+
+        const db_tc = this.getDBModel('Task_Candidate')
+        if(!await db_tc.findOne(candidateSelector)) {
+            throw 'Candidate not found'
+        }
+
+        await db_tc.update(candidateSelector, updateObj)
+
+        const taskCandidate = await db_tc.getDBInstance().findOne(candidateSelector)
+            .populate('user', sanitize)
+            .populate('team', sanitize)
+
+        return taskCandidate
+    }
+
     /*
     * candidate could be user or team
     *
@@ -531,8 +570,15 @@ export default class extends Base {
 
         await task.save()
 
-        // populate the taskCandidate
-        await db_tc.db.populate(taskCandidate, ['user', 'team'])
+        await db_tc.db.populate(taskCandidate, {
+            path: 'user',
+            select: sanitize
+        })
+
+        await db_tc.db.populate(taskCandidate, {
+            path: 'team',
+            select: sanitize
+        })
 
         // send the email - first get the task owner
         if (!assignSelf) {
@@ -588,7 +634,15 @@ export default class extends Base {
         await task.save()
 
         // populate the taskCandidate
-        await db_tc.db.populate(taskCandidate, ['user', 'team'])
+        await db_tc.db.populate(taskCandidate, {
+            path: 'user',
+            select: sanitize
+        })
+
+        await db_tc.db.populate(taskCandidate, {
+            path: 'team',
+            select: sanitize
+        })
 
         const taskOwner = await db_user.findById(task.createdBy)
         await this.sendAddCandidateEmail(this.currentUser, taskOwner, task)
@@ -809,15 +863,6 @@ export default class extends Base {
 
         let doc = await db_tc.findById(taskCandidateId)
         await db_tc.db.populate(doc, ['team'])
-
-        if (!doc || doc.role === constant.TEAM_ROLE.OWNER) {
-            throw 'Invalid status'
-        }
-
-        if (doc.user.toString() !== this.currentUser._id.toString() ||
-            doc.team.owner.toString() !== this.currentUser._id.toString()) {
-            throw 'Access Denied'
-        }
 
         await db_tc.remove({
             _id: taskCandidateId

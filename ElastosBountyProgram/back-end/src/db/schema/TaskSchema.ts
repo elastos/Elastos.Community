@@ -234,7 +234,8 @@ export const Task = {
     lastCommentSeenByOwner: Date,
     domain: [String],
     recruitedSkillsets: [String],
-    pictures: [PictureSchema]
+    pictures: [PictureSchema],
+    dAppId: Number,
 };
 
 

@@ -156,3 +156,7 @@
   padding: 15px 31px 10px;
   height: 53px;
 }
+
+.mirror-image {
+  transform: scaleX(-1);
+}

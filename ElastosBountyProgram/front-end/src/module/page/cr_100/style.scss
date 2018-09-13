@@ -17,6 +17,11 @@ $mobile-padding: $gap_0 0px;
     margin-top: 0;
   }
 
+  .spinner {
+    display: block;
+    margin-bottom: $gap_3;
+  }
+
   h3 {
     @extend .komu-a;
     font-size: 32px;
@@ -38,7 +43,47 @@ $mobile-padding: $gap_0 0px;
     height: $projectBoxSize;
     width: $projectBoxSize;
     text-align: center;
-    padding: ($gap_2 / 2);
+    position: relative;
+  }
+
+  .project-number {
+    position: absolute;
+    top: 0;
+    left: -20px;
+  }
+
+  .project-icon {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto;
+  }
+
+  .base-icon, .overlay-icon {
+    width: 96px;
+    height: 96px;
+    position: absolute;
+    top: 0;
+    left: 30px;
+  }
+
+  .base-icon {
+    background-image: url('/assets/images/IconBG.png');
+    background-size: contain;
+  }
+
+  .overlay-icon {
+    z-index: 1;
+
+    &:hover {
+      background-image: url('/assets/images/IconBG_Hover.png');
+      background-size: contain;
+    }
+  }
+
+  .caption {
+    position: absolute;
+    top: 96px + $gap_0;
+    width: 100%;
   }
 
   .c_list_wrapper {

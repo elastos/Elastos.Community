@@ -138,7 +138,7 @@ class C extends BaseComponent {
             {
                 const thread = _.first(comment)
                 const createdByUsername = (thread.createdBy && thread.createdBy.username) || ''
-                const avatar = (thread.createdBy && thread.createdBy.profile.avatar) || ''
+                const avatar = (thread.createdBy && thread.createdBy.profile.avatar) || '/assets/images/Elastos_Logo.png'
                 const createdById = (thread.createdBy && thread.createdBy._id)
                 const dateFormatted = dateFormatter(thread.createdAt)
 

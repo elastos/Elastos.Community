@@ -1,7 +1,6 @@
 import React from 'react'
 import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
-import ProjectDetail from './detail/Container'
 import I18N from '@/I18N'
 import './style.scss'
 import { Col, Row, Card, Button, Breadcrumb, Icon, List, Spin, Avatar, Modal } from 'antd'
@@ -21,27 +20,18 @@ export default class extends StandardPage {
 
     checkForLoading(followup) {
         return this.state.loading
-            ? <Spin size="large"/>
+            ? <Spin className="spinner" size="large"/>
             : _.isFunction(followup) && followup()
     }
 
     ord_states() {
         return {
-            showDetailId: null,
             loading: false
         }
     }
 
     showDetailModal(id) {
-        this.setState({
-            showDetailId: id
-        })
-    }
-
-    handleDetailModalClose(e) {
-        this.setState({
-            showDetailId: null
-        })
+        this.props.history.push(`/project-detail/${id}`)
     }
 
     ord_renderContent () {
@@ -58,18 +48,6 @@ export default class extends StandardPage {
                         </div>
                     </div>
                 </div>
-                <Modal
-                    className="project-detail-nobar"
-                    visible={!!this.state.showDetailId}
-                    onOk={this.handleDetailModalClose.bind(this)}
-                    onCancel={this.handleDetailModalClose.bind(this)}
-                    footer={null}
-                    width="70%"
-                >
-                    { this.state.showDetailId &&
-                        <ProjectDetail taskId={this.state.showDetailId}/>
-                    }
-                </Modal>
                 <Footer/>
             </div>
         )
@@ -98,6 +76,7 @@ export default class extends StandardPage {
     buildList() {
         // Note, the project can be in multiple domains, but categorizing by the top one
         const categorizedList = _.groupBy(this.props.all_tasks, (task) => _.first(task.domain))
+        const link = 'https://s3-us-west-1.amazonaws.com/ebp-staging-files/cr100/'
 
         let list = _.map(categorizedList, (list, category) => {
             const sanitizedCategory = (category || 'uncategorized').toLowerCase()
@@ -109,9 +88,12 @@ export default class extends StandardPage {
                     <div className="c_projectList">
                         {_.map(list, (project, ind) => (
                             <div key={ind} className="c_project">
-                                <Avatar shape="square" size={96} src={project.thumbnail}
-                                    onClick={this.showDetailModal.bind(this, project._id)}/>
-                                <div>{project.name}</div>
+                                <div className="project-icon">
+                                    <div className="base-icon"/>
+                                    <img className="overlay-icon" src={project.thumbnail}
+                                        onClick={this.showDetailModal.bind(this, project._id)}/>
+                                </div>
+                                <div className="caption">{project.name}</div>
                             </div>
                         ))}
                     </div>
