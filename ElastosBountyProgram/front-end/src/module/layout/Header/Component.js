@@ -200,6 +200,10 @@ export default class extends BaseComponent {
                         {I18N.get('0106')}
                     </Menu.Item>
 
+                    <Menu.Item className="c_MenuItem link" key="council/list">
+                        {I18N.get('council.0001')}
+                    </Menu.Item>
+
                     <Menu.Item className="c_MenuItem link" key="evangelist-training">
                         {I18N.get('0107')}
                     </Menu.Item>
@@ -264,7 +268,8 @@ export default class extends BaseComponent {
             'about',
             'faq',
             'contact',
-            'slack'
+            'slack',
+            'council/list'
         ], key)) {
 
             if (key === 'landing') {

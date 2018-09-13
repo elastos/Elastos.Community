@@ -77,6 +77,10 @@ import FormTraining1Page from '@/module/page/form_ext/training_1/Container'
 import TeamListPage from '../module/page/admin/teams/TeamListPage';
 import TeamDetailPage from '../module/page/admin/teams/TeamDetailPage';
 
+// council
+import CouncilListPage from '../module/page/council/list/Container';
+import CouncilDetailPage from '../module/page/council/detail/Container';
+
 import NotFound from '@/module/page/error/NotFound'
 
 export default [
@@ -385,6 +389,16 @@ export default [
     {
         path : '/admin/teams/:teamId',
         page : TeamDetailPage
+    },
+
+    // council
+    {
+        path : '/council/list',
+        page : CouncilListPage
+    },
+    {
+        path : '/council/detail/:id',
+        page : CouncilDetailPage
     },
 
     {
