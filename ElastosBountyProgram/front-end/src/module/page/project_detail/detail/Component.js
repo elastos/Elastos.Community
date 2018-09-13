@@ -47,7 +47,7 @@ class C extends BaseComponent {
         this.props.getTasks().then(() => {
             const allTasks = _.values(this.props.all_tasks)
             const itemIndex = _.size(this.props.all_tasks) - Math.max(_.indexOf(allTasks,
-                _.find(allTasks, { _id: this.props.taskId })), 0)
+                _.find(allTasks, { _id: this.props.taskId })), 0) - 1
 
             this.setState({
                 activeSliderItemIndex: itemIndex,
@@ -74,7 +74,7 @@ class C extends BaseComponent {
 
             const allTasks = _.values(this.props.all_tasks)
             const itemIndex = _.size(this.props.all_tasks) - Math.max(_.indexOf(allTasks,
-                _.find(allTasks, { _id: this.props.taskId })), 0)
+                _.find(allTasks, { _id: this.props.taskId })), 0) - 1
 
             this.setState({
                 activeSliderItemIndex: itemIndex
