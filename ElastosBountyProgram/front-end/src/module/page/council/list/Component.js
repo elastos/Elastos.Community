@@ -35,13 +35,11 @@ export default class extends StandardPage {
 
         return (
             <div className="d_list">
-                {/* <h4>{I18N.get('council.0002')}</h4>
-                <hr /> */}
             
                 <List {...p_list} renderItem={item => (
                     <List.Item key={item.title} >
                         <List.Item.Meta
-                        title={<a href={`/council/detail/${item.id}`} className="f_h4">{item.title}</a>}
+                        title={<a href={`/council/detail/${item.id}`} className="f_h4">#{item.id} - {item.title}</a>}
                         description={item.description}
                          />
                         <div style={{position:'relative',top:20}}>{item.date}</div>
@@ -49,6 +47,7 @@ export default class extends StandardPage {
                     )}
                 /> 
 
+                <h4 style={{marginTop:24}}>Any suggestions, proposals can be sent to <a href="mailto:council@cyberrepublic.org">council@cyberrepublic.org</a></h4>
             </div>
         );
     }
@@ -67,21 +66,21 @@ export default class extends StandardPage {
                 date : '09/13/2018'
             },
             {
-                id : '1',
+                id : '3',
                 title : I18N.get('council.list.3'),
-                description : '',
+                description : I18N.get('council.desc.3'),
                 date : '09/13/2018'
             },
             {
-                id : '1',
+                id : '4',
                 title : I18N.get('council.list.4'),
-                description : '',
+                description : I18N.get('council.desc.4'),
                 date : '09/13/2018'
             },
             {
-                id : '1',
+                id : '5',
                 title : I18N.get('council.list.5'),
-                description : '',
+                description : I18N.get('council.desc.5'),
                 date : '09/13/2018'
             }
         ];
