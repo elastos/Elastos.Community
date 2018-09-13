@@ -1,10 +1,10 @@
 export default {
     '0001' : '委员会',
-    '0002' : 'Article List',
+    '0002' : '档案列表',
     '0003' : 'Alpha Version',
     
     list : {
-        '1' : 'Elastos Cyber Republic Constitution',
+        '1' : '亦来云社区章程',
         '2' : 'Elastos Cyber Republic Council Founding Document',
         '3' : 'Elastos Cyber Republic Voting Rules',
         '4' : 'Elastos Cyber Republic Council Conflict of Interest Policy',
