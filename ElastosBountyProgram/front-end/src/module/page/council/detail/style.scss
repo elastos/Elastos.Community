@@ -30,6 +30,19 @@
 
         ol{
             padding-left: 40px;
+
+            
+        }
+        ul{
+            list-style: none;
+        }
+
+        table{
+            margin: 8px 0 12px 40px;
+            td{
+                border: 1px solid #ccc;
+                padding: 8px 18px;
+            }
         }
     }
 }

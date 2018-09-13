@@ -18,6 +18,20 @@ export default {
         '2' : `
             This is an Alpha version of this document.
             The Constitution and other founding documents are intended to enshrine the rights and relationships of Cyber Republic community members. 
+        `,
+        '3' : `
+            This is an Alpha version of this document.
+            The Constitution and other founding documents are intended to enshrine the rights and relationships of Cyber Republic community members. 
+        `,
+        '4' : `
+            This is an Alpha version of this document.
+            The Constitution and other founding documents are intended to enshrine the rights and relationships of Cyber Republic community members. 
+        `,
+        '5' : `
+            This rules of proposals and voting are discussed and approved by the Cyber Republic Council(CRC) and supervised by the Secretariat.
+
+            Recommended language of CRC is English. In case there is a conflict between languages, English prevails.
+        
         `
     },
     article : {
@@ -229,6 +243,264 @@ export default {
             <li>Reflecting the will of the Elastos Community.</li>
         </ol>
     
+        `,
+
+        '3' : `
+        <center>Chapter I	 General Principles</center>
+
+        <strong>1 Interim Period</strong>
+        <ol>
+            <li>This is an Alpha version of this document.</li>
+            <li>The Constitution and other founding documents are intended to enshrine the rights and relationships of Cyber Republic community members. </li>
+            <li>During the “Interim Period” between the first anniversary of Elastos (25 August 2018) and the second anniversary of Elastos (25 August 2019), the terms of the Constitution and the other Founding Documents will be continuously revised. </li>
+            <li>Cyber Republic governance will be managed by representatives of the Elastos Foundation, and the Constitution and voting rules will be continuously developed to reflect the practical needs and experiences of Cyber Republic governance.</li>
+            <li>There will be a full transition to community governance of the Cyber Republic by the end of the Interim Period.</li>
+            <li>At the end of the Interim Period, amendment of this document will follow a community voting process that shall be defined within the Elastos Community Voting Rules document.</li>
+        </ol>
+
+        <strong>2 Purpose</strong>
+        The purpose of the Elastos Community Voting Rules (“the Rules”) are to
+        <ol>
+            <li>Standardize the governance of the Elastos community; </li>
+            <li>Fulfill the mandate of community participation as required by Article 5 of the Elastos Community Constitution (“Constitution”);</li>
+            <li>Ensure community voting is carried out in a logical and consistent way;</li>
+            <li>Ensure the governance of the community development funds benefits the overall Elastos Ecosystem.</li>
+        </ol>
+        
+        
+        <strong>3 Administration</strong>
+        The entire voting process takes places on Elastos Blockchain and is open to the community. 
+        
+        <center>Chapter II 	Community Proposals and Opinions</center>
+
+        <strong>4 Community Proposals</strong>
+        The process for making community members proposals shall be defined by the end of the Interim Period.
+
+        <center>Chapter III	Proposals</center>
+        <strong>5 Fee</strong>
+        There may be an ELA fee associated with making a proposal, however this is to be finalized by the end of the Interim Period.
+        <strong>6 Content</strong>
+        The content of the proposals shall be defined by the end of the Interim Period.
+        <strong>7 Proposal Procedure</strong>
+        The procedure for making proposals shall be defined by the end of the Interim Period.
+        <strong>8 Cyber Republic Council Members</strong>
+        The qualifications of Cyber Republic Council Members and Alternate Members shall be defined by the end of the Interim Period.
+
+        <center>Chapter IV	Voting</center>
+
+        <strong>9 Voting Types </strong>
+        <ol>
+            <li>There are four different types of community voting. </li>
+            <li>Selecting Cyber Republic Council Members;</li>
+            <li>Impeachment;</li>
+            <li>Ordinary proposal;</li>
+            <li>Amending Key Documents (Elastos Constitution, Cyber Republic Council Founding Document, Elastos Community Voting rules, Cyber Republic Council </li>
+        </ol>
+
+        <strong>10 Voting procedure</strong>
+        <ol>
+            <li>The election process for the re-election committee: Before the 30-day expiration of the current committee, the secretariat will initiate a general election notice.</li>
+            <li>Impeachment: Beginning with the election of the members of the Communist Party, the impeachment procedure is automatically initiated.</li>
+            <li>
+            The ordinary proposal and key document amendment voting procedures are as follows:
+            <ul>
+                <li>(a) The proposal is first voted by the CRC;</li>
+                <li>(b) After the CRC voting simple majority principle is passed, the community will vote in the publicity period.</li>
+            </ul>
+            </li>
+        </ol>
+        
+        
+        <strong>11 Voting principle</strong>
+        <ol>
+            <li>One ELA represents one vote.</li>
+            <li>Voters may vote in favor of a proposal, against a proposal, or abstain.</li>
+            <li>Voting shall be carried out through Elastos Wallet or other methods as notified by the Secretariat.</li>
+            <li>During the publicity period, if the community vote does not reach the threshold of negating the ordinary proposal, the ordinary proposal will take effect automatically.</li>
+            <li>Corresponding ELA participating in the voting shall remain locked-up until the deadline of the voting.</li>
+            <li>Cumulative voting is adopted in selecting the Cyber Republic Council Members. This process is described in Section 6(1) of this Document.</li>
+            <li>Uncirculated ELA represents no vote and shall not be calculated in the base. Uncirculated ELA are the unspent ELA for the purpose of ecosystem development, and the ELA account balance of the Elastos Foundation that have not been transferred to the accounts of cooperative parties or individuals for ecosystem development.</li>
+            <li>ELA participating in the locked-up plan (different from being locked-up during the community vote) is part of the ELA in circulation. </li>
+        </ol>
+        
+        <strong>12 Voting Thresholds</strong>
+        There will be different thresholds required for each type of vote. These thresholds shall be defined by the end of the Interim Period.
+        <strong>13 Voting Process</strong>
+        The process for voting shall be defined by the end of the Interim Period.
+        <center>Chapter  V Resolution</center>
+        <strong>14 Voting Thresholds</strong>
+
+        <ol>
+            <li>
+            The threshold for selecting Cyber Republic Council Members  is based on the following rules:
+            <ul>
+                <li>(a) The Selection of the Cyber Republic Council Members and Alternate Members for a new term shall use a cumulative voting process. In cumulative voting, the number of votes represented by 1 ELA participating in the vote shall be multiplied by the total number of Members and  Alternate Members positions being voted upon. The votes may then be distributed amongst the nominees according to the will of each voter, including assigning more than one vote to a single candidate.</li>
+                <li>(b) ELA participating in voting for the Cyber Republic Council Members shall account for more than 20% of circulated ELA by the deadline of the vote, and the Council Members and Alternative Members are appointed in sequence according to total votes gained by each.</li>
+            </ul>
+            </li>
+            <li>The threshold of Impeachment is 20% of circulated ELA.</li>
+            <li>
+            The threshold for vetoing a resolution of Cyber Republic Council is based on the following rules:
+            <ul>
+                <li>(a) TThe ELA participating in the voting accounted for more than 20% of circulated ELA;</li>
+                <li>(b) And participate in voting more than 50% against the ordinary proposal.</li>
+            </ul>
+            </li>
+            <li>The threshold for amending the Constitution can be found in Article 8 of the Constitution.</li>
+        </ol>
+
+        <center>Chapter VI Supplementary Provisions</center>
+        <strong>15 Miscellaneous</strong>
+        <ol>
+            <li>Where these rules come into conflict with the values entrenched in the Constitution, the Constitution shall prevail.</li>
+            <li>The first Election of the Cyber Republic Council shall take place by the end of the Interim Period. </li>
+        </ol>
+        
+        `,
+
+        '4' : `
+        <center>Chapter I	 General Principles</center>
+        <strong>1 Interim Period</strong>
+        <ol>
+            <li>This is an Alpha version of this document.</li>
+            <li>The Constitution and other founding documents are intended to enshrine the rights and relationships of Cyber Republic community members. </li>
+            <li>During the “Interim Period” between the first anniversary of Elastos (25 August 2018) and the second anniversary of Elastos (25 August 2019), the terms of the Constitution and the other Founding Documents will be continuously revised. </li>
+            <li>Cyber Republic governance will be managed by representatives of the Elastos Foundation, and the Constitution and voting rules will be continuously developed to reflect the practical needs and experiences of Cyber Republic governance.</li>
+            <li>There will be a full transition to community governance of the Cyber Republic by the end of the Interim Period.</li>
+            <li>At the end of the Interim Period, amendment of this document will follow a community voting process that shall be defined within the Elastos Community Voting Rules document.</li>
+        </ol>
+        
+        <strong>2 Purpose</strong>
+        The purpose of the Cyber Republic Council Conflict of Interest Policy is to
+        <ol>
+            <li>Establish clear conflict of interest rules for Cyber Republic Council Members;</li>
+            <li>Minimize the possibility of conflicts arising between the private interests and Elastos governance duties of Cyber Republic Council Members;</li>
+            <li>Provide Cyber Republic Council Members with a mechanism to publicly disclose their private interests;</li>
+            <li>Provide the Elastos community with a mechanism to lodge complaints against Cyber Republic Council Members in the case of inadequate disclosures or clear conflicts of interest;</li>
+            <li>Provide for the resolution of those conflicts by the Elastos Community should they arise; </li>
+            <li>Encourage experienced and competent persons to seek and accept Cyber Republic Council positions.</li>
+        </ol>
+        
+        <strong>3 Conflict of Interest </strong>
+        For the purposes of this Policy, a Cyber Republic Council Member is in a conflict of interest when he or she exercises an official power, duty or function that provides an opportunity to further their private interests or those of their relatives or friends or to improperly further another person’s private interests.
+
+        <center>Chapter II	 Duties of Cyber Republic Council Members</center>
+
+        <strong>4 General Duty</strong>
+        <ol>
+            <li>Every Cyber Republic Council Member shall make reasonable efforts to arrange their private affairs in a manner that will prevent the Cyber Republic Council Member from being in a conflict of interest.</li>
+            <li>Where conflicts arise, every Cyber Republic Council Member has a duty to disclose their personal interests that may conflict with the interests of the Cyber Republic and the wider Elastos community. This duty is described in detail in Section 12 of this Document.</li>
+            <li>It is expected, acceptable and reasonable that Cyber Republic Council Members may have conflicts of interests. What is important is that they disclose these conflicts. Hiding these conflicts is not acceptable.</li>
+            <li>If a Cyber Republic Council Member fails to disclose a conflict of interest, this shall be considered grounds for a complaint to be registered against that Cyber Republic Council Member, and the possibility of that Cyber Republic Council Member being removed from the Cyber Republic Council.</li>
+        </ol>
+        
+        
+        
+        
+        <strong>5 Decision Making</strong>
+        No Cyber Republic Council Member shall make a decision or participate in making a decision related to the exercise of an official power, duty or function if the Cyber Republic Council Member knows or reasonably should know that, in the making of the decision, he or she would be in a conflict of interest.
+        <strong>6 Preferential Treatment</strong> 
+        No Cyber Republic Council member shall, in the exercise of an official power, duty or function, give preferential treatment to any person or organization based on the identity of the person or organization that represents the first-mentioned person or organization.
+        <strong>7 Insider Information</strong>
+        No Cyber Republic Council member shall use information that is obtained in their position as a Cyber Republic Council member and that is not available to the public to further or seek to further the Cyber Republic Council Member’s private interests or those of the Cyber Republic Council Member’s relatives or friends, or to further another person’s private interests.
+        <strong>8 Influence</strong>
+        No Cyber Republic Council Member shall use their position as a Cyber Republic Council Member to seek to influence a decision of another person to further their own private interests or those of the Cyber Republic Council Member’s relatives or friends or to improperly further another person’s private interests.
+        <strong>9 Offers of Employment</strong>
+        No Cyber Republic Council Member shall allow himself or herself to be influenced in the exercise of an Cyber Republic Council power, duty or function by plans for, or offers of employment.
+        <strong>10 Gifts and other advantages</strong>
+        No Cyber Republic Council Member or member of their family shall accept any gift or other advantage, that might reasonably be seen to have been given to influence the Cyber Republic Council Member in the exercise of Cyber Republic Council power, duty or function.
+        <strong>11 Duty to Recuse</strong>
+        A Cyber Republic Council Member shall recuse himself or herself from any discussion, decision, debate or vote on any matter in respect of which he or she would be in a conflict of interest.
+        <strong>12 Duty to Disclose</strong>
+        Every Cyber Republic Council Member has a duty to disclose their personal interests that may conflict with the interests of the Cyber Republic and the wider Elastos community. These personal interests may include, but are not limited to:
+        <ol>
+        <li>Other Blockchain projects that a Cyber Republic Council Member has an interest in;</li>
+        <li>Other forms of employment or business activities that Cyber Republic Council Members engage in;</li>
+        <li>and Any other forms of income that a Cyber Republic Council Member receives.</li>
+        </ol>
+        <center>Chapter III Checks and Balances</center>
+       <strong> 13 Lodging a Complaint</strong>
+        In the event a community members believes a Cyber Republic Council Member may have an interest which conflicts with their responsibilities as a Cyber Republic Council Member, and where that community member feels there has either not been adequate disclosure or disclosure has failed to adequately mitigate the conflict, the community member may lodge a complaint against that Cyber Republic Council Member.
+        <strong>14 Complaint Reporting</strong>
+        In the event of a complaint, the Secretariat of the Cyber Republic Council shall file the complaint on the complaints reporting webpage. Once the complaint reaches a minimum amount of support from the community, a community member can initiate a resolution to remove a Cyber Republic Council Member from their position. The form and amount of support required will be determined by the end of the Interim Period.
+        <strong>15 Complaint Voting</strong>
+        A resolution to remove a Cyber Republic Council Member shall follow the community voting process contained within the Elastos Community Voting Rules, to be released by the end of the Interim Period.
+        <strong>16 Vacancy</strong>
+        Any vacancy resulting from the removal of a Cyber Republic Council Member shall be filled by an Alternate Member. In the event that there are no remaining Alternate Members, a new vote shall be initiated to replace these Alternative Members.
+        
+        `,
+
+        '5' : `
+
+        <p>
+        1. This rules of proposals and voting are discussed and approved by the Cyber Republic Council(CRC) and supervised by the Secretariat.
+        </p>
+
+        <p>
+        2. Recommended language of CRC is English. In case there is a conflict between languages, English prevails.
+        </p>
+
+        <b>3. CRC Meeting</b>
+        <table>
+            <tr>
+                <td>Meeting time: </td>
+                <td>GMT+8 every Thursday at 13:00.</td>
+            </tr>
+            <tr>
+                <td>Conference format: </td>
+                <td>Zoom, Zoom link in meeting invitation</td>
+            </tr>
+            <tr>
+                <td>During time: </td>
+                <td>I hour</td>
+            </tr>
+            <tr>
+                <td>Meeting agenda: </td>
+                <td>Submitted by the CRC in the form of a proposal. </td>
+            </tr>
+            <tr>
+                <td>Minutes: </td>
+                <td>Recorded by the Secretariat and posted on the Cyber Republic website.
+                </td>
+            </tr>
+        </table>
+
+        <b>4. Proposals</b>
+        <ul style="padding-left:40px;">
+            <li>a. All the proposals are open to the community and published in CR website
+            </li>
+            <li>b. Only CRC members and the Secretariat have the right to raise a proposal.
+            </li>
+            <li>c. Only CRC members are able to vote on a proposal.
+            </li>
+            <li>d. The life cycle of a proposal is as follows:
+            <img src="/assets/images/council/img_1.png" style="display:block;margin: 5px 0 30px 0;"/>
+            </li>
+            <li>e. A proposal changes from PROPOSED to ACTIVE automatically  when it gets 2 consents by the deadline of vote. 
+            </li>
+            <li>f. A proposal changes from PROPOSED to REJECTED automatically when it gets 2 oppositions by the deadline of vote. </li>
+            <li>g. A proposal changes from PROPOSED to DEFERRED automatically when it fails to get 2 consents or 2 oppositions by the deadline of vote. 
+            </li>
+            <li>h. A proposal is changed  from ACTIVE to FINAL by the Secretariat when the proposal is executed and completed.
+            </li>
+            <li>i. An ACTIVE proposal is published to the community for community vote for 72 hours. Refer to the Voting Rules documents in KEY DOCUMENT.
+            </li>
+            <li>j. The REJECTED proposal cannot be resubmitted within 1 week
+            </li>
+            <li>k. Anyone can turn a REJECTED proposal to PROPOSED after one week. So that it can be discussed again.
+            </li>
+        </ul>
+        <b>5. Voting rules</b>
+        <ul style="padding-left:40px;">
+            <li>a. Each CRC member has one and only vote</li>
+            <li>b. Voting options are divided into consent, opposition and abstention</li>
+            <li>c. There is no veto power. </li>
+            <li>d. Once a proposal is raised, voting period starts and lasts for 48 hours. During voting period, CRC member can change their votes. </li>
+            <li>e. If a CRC member fails to vote before deadline, his vote will be treated as abstention</li>
+            <li>f. If a CRC member abstains for multiple times (this is to be updated, not finalized yet), it will be deemed as an automatic resignation and the resignation process is initiated.</li>
+        </ul>
+
+        
         `
     }
     
