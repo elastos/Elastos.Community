@@ -1,4 +1,8 @@
+import council from './zh/council';
+
 export default {
+    council,
+
     // Header
     '0001': '奖励计划',
     '0002': '社区',
