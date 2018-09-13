@@ -1,4 +1,4 @@
-import council from './en/council';
+import council from './zh/council';
 
 export default {
     council,
