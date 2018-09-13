@@ -416,7 +416,7 @@ export default {
        <strong> 13 Lodging a Complaint</strong>
         In the event a community members believes a Cyber Republic Council Member may have an interest which conflicts with their responsibilities as a Cyber Republic Council Member, and where that community member feels there has either not been adequate disclosure or disclosure has failed to adequately mitigate the conflict, the community member may lodge a complaint against that Cyber Republic Council Member.
         <strong>14 Complaint Reporting</strong>
-        In the event of a complaint, the Secretariat of the Cyber Republic Council shall file the complaint on the complaints reporting webpage. Once the complaint reaches a minimum amount of support from the community, a community member can initiate a resolution to remove a Cyber Republic Council Member from their position. The form and amount of support required will be determined by the end of the Interim Period.
+        Beginning with the CRC Inauguration, the impeachment program is automatically activated and community members can support the impeachment process at any time.A resolution to remove a Cyber Republic Council Member shall follow the community voting process contained within the Elastos Community Voting Rules
         <strong>15 Complaint Voting</strong>
         A resolution to remove a Cyber Republic Council Member shall follow the community voting process contained within the Elastos Community Voting Rules, to be released by the end of the Interim Period.
         <strong>16 Vacancy</strong>
