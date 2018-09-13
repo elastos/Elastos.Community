@@ -1,6 +1,8 @@
-import React from 'react'
+import React from 'react';
+import council from './en/council';
 
 export default {
+    council,
     // Header
     '0000': 'ALPHA',
     '0001': 'Bounty Programs',
