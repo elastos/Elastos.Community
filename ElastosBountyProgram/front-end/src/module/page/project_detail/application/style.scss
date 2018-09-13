@@ -2,6 +2,8 @@
 @import '../../../../style/color';
 @import '../../../../style/typography';
 
-.c_ProjectApplication {
-
+.c_Project.c_Detail {
+    .team-selector {
+        margin-bottom: $gap_2;
+    }
 }

@@ -103,13 +103,6 @@ class C extends BaseComponent {
             : [fn, ln].join(' ')
     }
 
-    getCandidateAvatar(candidate) {
-        const avatar = candidate.user.profile.avatar
-        return _.isEmpty(avatar)
-            ? '/assets/images/Elastos_Logo.png'
-            : avatar
-    }
-
     approveUser(taskCandidateId) {
         this.props.acceptCandidate(taskCandidateId)
     }

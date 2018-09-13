@@ -146,6 +146,9 @@ class C extends BaseComponent {
 
     showApplicationModal(taskCandidateId) {
         taskCandidateId = taskCandidateId || this.getApplicant()._id
+        if (_.isObject(taskCandidateId)) {
+            taskCandidateId = this.getApplicant()._id
+        }
         this.setState({
             showApplicationModal: true,
             taskCandidateId
@@ -339,10 +342,6 @@ class C extends BaseComponent {
         this.props.withdrawCandidate(taskCandidateId)
     }
 
-    viewApplication(taskCandidateId) {
-        this.showApplicationModal(taskCandidateId)
-    }
-
     removeUser(taskCandidateId) {
         this.props.rejectCandidate(taskCandidateId)
     }
@@ -463,7 +462,8 @@ class C extends BaseComponent {
     getApplicant () {
         return (!_.isEmpty(this.props.detail.candidates) &&
             this.props.detail.candidates.find((candidate) => {
-                return candidate.user && candidate.user._id === this.props.currentUserId
+                return ((candidate.user && candidate.user._id === this.props.currentUserId) ||
+                    (candidate.team && candidate.team.owner._id === this.props.currentUserId))
             }))
     }
 
@@ -491,8 +491,7 @@ class C extends BaseComponent {
                         }
                     </Button>
                     <Button loading={this.props.loading} icon='message' onClick={applyHandler.bind(this)}
-                        disabled={this.isTaskOwner() ||
-                            (this.isMemberByUserId(this.props.currentUserId) && !this.getApplicant())}>
+                        disabled={this.isTaskOwner()}>
                         Get Involved
                     </Button>
                 </div>
@@ -502,11 +501,9 @@ class C extends BaseComponent {
 
     linkToProjectTask(id) {
         this.props.history.replace('/project-detail/' + id)
-        console.log(id)
     }
 
     getProjectSlider() {
-        console.log(this.props.all_tasks)
         const projects = _.reverse(_.map(this.props.all_tasks, (task, id) => {
             const isActive = task._id === this.props.taskId
             return (
