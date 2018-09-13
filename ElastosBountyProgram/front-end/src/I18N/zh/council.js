@@ -1,37 +1,34 @@
 export default {
     '0001' : '委员会',
     '0002' : '档案列表',
-    '0003' : 'Alpha Version',
+    '0003' : '草案',
     
     list : {
         '1' : '亦来云社区章程',
-        '2' : 'Elastos Cyber Republic Council Founding Document',
-        '3' : 'Elastos Cyber Republic Voting Rules',
-        '4' : 'Elastos Cyber Republic Council Conflict of Interest Policy',
-        '5' : 'Elastos Cyber Republic Council Proposal and Voting Rules'
+        '2' : '亦来云社区共治委员会成立文件',
+        '3' : '亦来云社区投票规则',
+        '4' : '亦来云社区共治委员会利益冲突政策',
+        '5' : '亦来云社区共治委员会提案投票规则'
     },
     desc : {
         '1' : `
-            This is an Alpha version of this document.
-            The Constitution and other founding documents are intended to enshrine the rights and relationships of Cyber Republic community members.         
+            这是本文档的草案版.
+            “章程”和其他创始文件旨在规定亦来云社区成员的权利和关系.         
         `,
         '2' : `
-            This is an Alpha version of this document.
-            The Constitution and other founding documents are intended to enshrine the rights and relationships of Cyber Republic community members. 
+            这是本文档的草案版.
+            “章程”和其他创始文件旨在规定亦来云社区成员的权利和关系. 
         `,
         '3' : `
-            This is an Alpha version of this document.
-            The Constitution and other founding documents are intended to enshrine the rights and relationships of Cyber Republic community members. 
-        `,
+            这是本文档的草案版.
+            “章程”和其他创始文件旨在规定亦来云社区成员的权利和关系.
         '4' : `
-            This is an Alpha version of this document.
-            The Constitution and other founding documents are intended to enshrine the rights and relationships of Cyber Republic community members. 
+            这是本文档的草案版.
+            “章程”和其他创始文件旨在规定亦来云社区成员的权利和关系. 
         `,
         '5' : `
-            This rules of proposals and voting are discussed and approved by the Cyber Republic Council(CRC) and supervised by the Secretariat.
-
-            Recommended language of CRC is English. In case there is a conflict between languages, English prevails.
-        
+            这是本文档的草案版.
+            此规则由社区共治委员会委员商讨并通过，由秘书处监督执行.
         `
     },
     article : {
