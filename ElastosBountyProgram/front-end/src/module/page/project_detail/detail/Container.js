@@ -31,6 +31,7 @@ export default createContainer(Component, (state) => {
     const taskService = new TaskService()
     const teamService = new TeamService()
     const commentService = new CommentService()
+    const sortedTasks = []
 
     return {
         async getTaskDetail(taskId) {

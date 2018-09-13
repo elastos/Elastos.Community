@@ -45,9 +45,9 @@ class C extends BaseComponent {
 
         this.setState({ all_tasks_loading: true })
         this.props.getTasks().then(() => {
-            const allTasks = _.values(this.props.all_tasks)
-            const itemIndex = _.size(this.props.all_tasks) - Math.max(_.indexOf(allTasks,
-                _.find(allTasks, { _id: this.props.taskId })), 0) - 1
+            const allTasks = this.getSortedTasks()
+            const itemIndex = Math.max(_.indexOf(allTasks,
+                _.find(allTasks, { _id: this.props.taskId })), 0)
 
             this.setState({
                 activeSliderItemIndex: itemIndex,
@@ -73,14 +73,18 @@ class C extends BaseComponent {
             this.props.resetTaskDetail()
             this.props.getTaskDetail(this.props.taskId)
 
-            const allTasks = _.values(this.props.all_tasks)
-            const itemIndex = _.size(this.props.all_tasks) - Math.max(_.indexOf(allTasks,
-                _.find(allTasks, { _id: this.props.taskId })), 0) - 1
+            const allTasks = this.getSortedTasks()
+            const itemIndex = Math.max(_.indexOf(allTasks,
+                _.find(allTasks, { _id: this.props.taskId })), 0)
 
             this.setState({
                 activeSliderItemIndex: itemIndex
             })
         }
+    }
+
+    getSortedTasks() {
+        return _.sortBy(_.values(this.props.all_tasks), [(task) => task.dAppId])
     }
 
     isTaskOwner() {
@@ -505,7 +509,8 @@ class C extends BaseComponent {
     }
 
     getProjectSlider() {
-        const projects = _.reverse(_.map(this.props.all_tasks, (task, id) => {
+        const all_tasks = this.getSortedTasks()
+        const projects = _.map(all_tasks, (task, id) => {
             const isActive = task._id === this.props.taskId
             return (
                 <div key={task.dAppId} className='halign-wrapper full-width full-height'>
@@ -523,7 +528,7 @@ class C extends BaseComponent {
                     </div>
                 </div>
             )
-        }))
+        })
 
         return this.checkForAllTasksLoading(() =>
             <ItemsCarousel
