@@ -70,7 +70,8 @@ class C extends BaseComponent {
     componentDidUpdate(prevProps) {
         if (prevProps.taskId !== this.props.taskId)
         {
-            this.props.getTaskDetail(this.props.taskId);
+            this.props.resetTaskDetail()
+            this.props.getTaskDetail(this.props.taskId)
 
             const allTasks = _.values(this.props.all_tasks)
             const itemIndex = _.size(this.props.all_tasks) - Math.max(_.indexOf(allTasks,
