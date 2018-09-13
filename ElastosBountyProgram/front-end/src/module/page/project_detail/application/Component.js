@@ -103,13 +103,6 @@ class C extends BaseComponent {
             : [fn, ln].join(' ')
     }
 
-    getCandidateAvatar(candidate) {
-        const avatar = candidate.user.profile.avatar
-        return _.isEmpty(avatar)
-            ? '/assets/images/Elastos_Logo.png'
-            : avatar
-    }
-
     approveUser(taskCandidateId) {
         this.props.acceptCandidate(taskCandidateId)
     }
@@ -158,9 +151,59 @@ class C extends BaseComponent {
         )
     }
 
+    handleApplyWithChange(teamId) {
+        const solo = teamId === '$me'
+
+        this.props.updateApplication(this.props.taskId, {
+            taskCandidateId: this.props.taskCandidateId,
+            user: solo ? this.props.currentUserId : null,
+            team: !solo ? teamId : null
+        })
+    }
+
+    getAvatarWithFallback(avatar) {
+        return _.isEmpty(avatar)
+            ? '/assets/images/Elastos_Logo.png'
+            : avatar
+    }
+
+    getApplyWithDropdown() {
+        const applicant = this.getApplicant()
+
+        const defaultValue = applicant && applicant.user
+            ? '$me'
+            : applicant && applicant.team && applicant.team._id
+
+        return (
+            <div className="full-width halign-wrapper valign-wrapper">
+                <Select className="team-selector" disabled={this.props.loading} defaultValue={defaultValue}
+                    onChange={(value) => this.handleApplyWithChange(value)}>
+                    <Select.Option value="$me">
+                        Apply as myself
+                        <Avatar size="small" src={this.getAvatarWithFallback(this.props.currentUserAvatar)}
+                            className="pull-right"/>
+                    </Select.Option>
+                    {_.map(this.props.ownedTeams, (team) =>
+                        <Select.Option key={team._id} value={team._id}>
+                            Apply with {team.name}
+                            {!_.isEmpty(team.pictures)
+                                ? <Avatar size="small" src={this.getAvatarWithFallback(team.pictures[0].thumbUrl)}
+                                    className="pull-right"/>
+                                : <Avatar size="small" src={this.getAvatarWithFallback()} className="pull-right"/>
+                            }
+                        </Select.Option>
+                    )}
+                </Select>
+            </div>
+        )
+    }
+
     getHeader() {
         return (
             <div>
+                <div>
+                    {this.getApplyWithDropdown()}
+                </div>
                 <Upload.Dragger name="file" multiple={false}>
                     <p className="ant-upload-drag-icon">
                         <Icon type="inbox" />
