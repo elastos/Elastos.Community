@@ -1,5 +1,5 @@
 export default {
-    '0001' : 'Council',
+    '0001' : '委员会',
     '0002' : 'Article List',
     '0003' : 'Alpha Version',
     
