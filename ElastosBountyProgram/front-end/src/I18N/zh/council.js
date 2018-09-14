@@ -30,7 +30,7 @@ export default {
     article : {
         '1' : `
          
-        <strong>ARTICLE 1 - 过渡期</strong>
+        <strong> 1 - 过渡期</strong>
          
         <ol>
             <li>这是本文档的草案版</li>
@@ -41,7 +41,7 @@ export default {
             <li>在过渡期末，本文件的修订将遵循社区投票程序，该程序应在Elastos社区投票规则文件中定义.</li>
         </ol>
         
-        <strong>ARTICLE 2 - 目的</strong>
+        <strong> 2 - 目的</strong>
         亦来云社区章程（“章程”）的目的是
         <ol>
             <li>为亦来云社区提供一份文件，概述亦来云的价值观和愿景</li>
@@ -49,10 +49,10 @@ export default {
             <li>确保亦来云社区治理系统的结构适合并响应亦来云社区的需求.</li>
         </ol>
          
-        <strong>ARTICLE 3 - 愿景</strong>
+        <strong> 3 - 愿景</strong>
          
         亦来云正在创造一个安全可靠的未来互联网。 这一财富互联网将迎来创新经济的新时代，其灵感来自智能网的安全性，数字资产和数据的所有权和交易，以及区块链技术和分散式应用的互操作性和可扩展性        
-        <strong>ARTICLE 4 - 价值观</strong>
+        <strong> 4 - 价值观</strong>
          
         亦来云社区的价值观是
  
@@ -63,7 +63,7 @@ export default {
             <li>透明度和共享.</li>
         </ol>
          
-        <strong>ARTICLE 5 - 社区治理</strong>
+        <strong> 5 - 社区治理</strong>
          
         <ol>
             <li>亦来云是由亦来云基金会创立的开源平台。随着项目的进展和社区的发展，亦来云基金会逐渐将社区运营转交社区共治委员会.</li>
@@ -72,17 +72,17 @@ export default {
             <li>由亦来云基金会管理的数字资产仅限于前期募集的代币，以及白皮书中分配给亦来云基金会的部分.</li>
         </ol>
          
-        <strong>ARTICLE 6 - 共治委员会</strong>
+        <strong> 6 - 共治委员会</strong>
         <ol>
             <li>共治委员会是决定如何管理用于亦来云生态系统发展的资金的组织. </li>
             <li>共治委员会由两个单独的文件管理：共治委员会成立文件和共治委员会利益冲突政策. </li>
             <li>社区投票将由一份单独的文件管理，即亦来云社区投票规则，将在过渡期结束时发布.</li>
         </ol>
         
-        <strong>ARTICLE 7 - 社区投票</strong>
+        <strong> 7 - 社区投票</strong>
          
         虽然共治筹委会目前由来自亦来云基金会推荐的3名代表组成，但社区共治委员会应由过渡期完成后由亦来云社区投票选出的委员组成。 将有具体规则规定社区共治委员会委员选举，章程修改以及对提案投票的要求         
-        <strong>ARTICLE 8 - 修改章程</strong>
+        <strong> 8 - 修改章程</strong>
         
         修改章程时，应遵循亦来云社区投票规则中的程序，同时满足以下标准：
         <ol>
@@ -90,7 +90,7 @@ export default {
             <li>及同意票数超过参与投票 ELA 的66.67％;</li>
         </ol>
 
-        <strong>ARTICLE 9 - 其他</strong>
+        <strong> 9 - 其他</strong>
         
         <b>共识</b> 亦来云使用混合POW / POS共识模型。 4％的年度通货膨胀分配如下：35％奖励POW矿工，35％奖励DPoS机制，30％奖励社区共治作为开发亦来云生态系统的资金。
 共治委员会，共治委员会由亦来云社区投票产生。
@@ -113,8 +113,8 @@ export default {
         `,
 
         '2' : `
-        <center>Chapter I	 总则</center>
-        <strong>ARTICLE 1 - 过渡期</strong>
+        <center>第一章	 总则</center>
+        <strong> 1 - 过渡期</strong>
          
         <ol>
             <li>这是本文档的草案版</li>
@@ -139,7 +139,7 @@ export default {
         <strong>3 选举</strong>
         Elastos社区共治委员会是通过社区投票选出的。投票过程将在Elastos社区投票规则中定义
         
-        <center>Chapter II 	结构和程序</center>
+        <center>第二章	结构和程序</center>
         
         <strong>4 结构</strong>
         <ol>
@@ -168,7 +168,7 @@ export default {
 
         共治委员会的空缺应由一名候补委员填补该任期的剩余时间。如果没有剩余的候补成员，则应启动新的投票
 
-        <center>Chapter III 资格和责任</center>
+        <center>第三章 资格和责任</center>
 
         <strong>8 资格</strong>
         共治委员会委员和候补委员的资格包括但不限于：
@@ -199,7 +199,7 @@ export default {
         
         <strong>11 报酬</strong>
         共治委员会成员的报酬在过渡期结束时确定
-        <center>Chapter IV 共治委员会秘书处</center>
+        <center>第四章 共治委员会秘书处</center>
 
         <strong>12 秘书处的职责</strong>
 
@@ -218,7 +218,7 @@ export default {
             <li>秘书处成员可以续聘.</li>
         </ol>
         
-        <center>Chapter V 管理准则</center>
+        <center>第五章 管理准则</center>
         <strong>14 价值观</strong>
 
         共治委员会和秘书处的成员应遵守以下价值观：
@@ -239,9 +239,9 @@ export default {
         `,
 
         '3' : `
-        <center>Chapter I	</center>
+        <center>第一章	</center>
 
-        <strong>ARTICLE 1 - 过渡期</strong>
+        <strong> 1 - 过渡期</strong>
         <ol>
             <li>这是本文档的草案版</li>
             <li>“章程”和其他创始文件旨在规定亦来云社区成员的权利和关系 </li>
@@ -263,12 +263,12 @@ export default {
         
         <strong>3 管理</strong>
         整个投票过程在Elastos Blockchain上进行，并向社区开放        
-        <center>Chapter II 	社区建议和意见</center>
+        <center>第二章 	社区建议和意见</center>
 
         <strong>4 社区建议</strong>
         制定社区成员建议和意见的过程应在过渡期间结束时确定
 
-        <center>Chapter III	 提案</center>
+        <center>第三章 提案</center>
         <strong>5 费用</strong>
         可能会有与提出提案相关的ELA费用，但这将在过渡期结束时最终确定。
         <strong>6 内容</strong>
@@ -276,7 +276,7 @@ export default {
         <strong>7 提案程序</strong>
         提案由共治委员会发起，同步公开、透明
       
-        <center>Chapter IV 投票	</center>
+        <center>第四章 投票	</center>
 
         <strong>9 投票类型 </strong>
         <ol>
@@ -314,7 +314,7 @@ export default {
         </ol>
         
 
-        <center>Chapter  V 决议 </center>
+        <center>第五章 决议 </center>
         <strong>11 投票门槛</strong>
 
         <ol>
@@ -336,7 +336,7 @@ export default {
             <li>修改章程的门槛见“章程”第8部分.</li>
         </ol>
 
-        <center>Chapter VI 附则</center>
+        <center>第六章 附则</center>
         <strong>15 其他</strong>
         <ol>
             <li>如果这些规则与社区“章程”所确立的价值观相冲突，则以“章程”为准。 共治委员会的首次选举将在过渡期结束时举行.</li>
@@ -345,8 +345,8 @@ export default {
         `,
 
         '4' : `
-        <center>Chapter I	 总则</center>
-        <strong>ARTICLE 1 - 过渡期</strong>
+        <center> 第一章	 总则</center>
+        <strong> 1 - 过渡期</strong>
          
         <ol>
             <li>这是本文档的草案版</li>
@@ -370,7 +370,7 @@ export default {
         
         <strong>3 利益冲突 </strong>
         就本政策而言，亦来云社区共治委员会成员在行使权力，职责或职能以提供机会进一步扩展其私人利益或其亲属朋友的利益进一步不当行为时，会产生利益冲突
-        <center>Chapter II	 亦来云社区共治委员会委员的职责</center>
+        <center>第二章	 亦来云社区共治委员会委员的职责</center>
 
         <strong>4 基本职责</strong>
         <ol>
@@ -401,7 +401,7 @@ export default {
         <li>亦来云社区共治委员会成员参与的其他形式的就业或商业活动;</li>
         <li>亦来云社区共治委员会成员收到的任何其他形式的收入.</li>
         </ol>
-        <center>Chapter III 检查和平衡</center>
+        <center>第三章 检查和平衡</center>
        <strong> 13 投诉</strong>
         如果社区成员认为亦来云社区共治委员会成员的利益与他们作为亦来云社区共治委员会成员的责任相冲突，并且该社区成员认为其未充分披露或披露未能充分缓解冲突，社区成员可以对该亦来云社区共治委员会成员提出投诉
         <strong>14 举报</strong>
