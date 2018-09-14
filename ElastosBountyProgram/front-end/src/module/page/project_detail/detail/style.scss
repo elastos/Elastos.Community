@@ -84,8 +84,9 @@
 
         .project-header {
             position: relative;
-            min-height: 600px;
+            min-height: 400px;
             text-align: center;
+            padding-bottom: $gap_4;
 
             // this floats behind the text
             .rect-container {
