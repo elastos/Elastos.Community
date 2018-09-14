@@ -60,7 +60,6 @@ class C extends BaseComponent {
     handleSubmit (e) {
         e.preventDefault()
 
-        const tags = this.props.form.getFieldInstance('tags').getValue()
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
                 let createParams = {
@@ -68,10 +67,10 @@ class C extends BaseComponent {
                     description: sanitizeHtml(values.description, {
                         allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'u', 's' ])
                     }),
-                    tags: tags.join(','),
+                    tags: values.tags.join(','),
                     logo: '',
                     metadata: '',
-                    pictures: this.state.fileList || [],
+                    pictures: this.state.fileList || []
                 }
 
                 _.each(createParams.pictures, (pictureFile) => {
@@ -265,40 +264,54 @@ class C extends BaseComponent {
             }
         }
 
+        const formContent = (
+            <div>
+                <FormItem label="Name" {...formItemLayout}>
+                    {p.name}
+                </FormItem>
+                <FormItem label="Type" {...formItemLayout}>
+                    {p.type}
+                </FormItem>
+                <FormItem label="Recruiting Skillsets" {...formItemLayout}>
+                    {p.skillset}
+                </FormItem>
+                <FormItem label="Description" {...formItemLayout}>
+                    {p.description}
+                </FormItem>
+                <FormItem label="Pictures" {...formItemLayout}>
+                    {p.pictures}
+                </FormItem>
+                <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
+                    <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
+                </Modal>
+                <FormItem label="Tags" {...formItemLayout}>
+                    {p.tags}
+                </FormItem>
+
+                { !this.props.embedded &&
+                    <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
+                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
+                            {this.state.editing ? 'Save' : 'Create'}
+                        </Button>
+                    </FormItem>
+                }
+            </div>
+        )
+
         return (
             <div className="c_userEditFormContainer">
 
-                <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
-                    <div>
-                        <FormItem label="Name" {...formItemLayout}>
-                            {p.name}
-                        </FormItem>
-                        <FormItem label="Type" {...formItemLayout}>
-                            {p.type}
-                        </FormItem>
-                        <FormItem label="Recruiting Skillsets" {...formItemLayout}>
-                            {p.skillset}
-                        </FormItem>
-                        <FormItem label="Description" {...formItemLayout}>
-                            {p.description}
-                        </FormItem>
-                        <FormItem label="Pictures" {...formItemLayout}>
-                            {p.pictures}
-                        </FormItem>
-                        <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
-                            <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
-                        </Modal>
-                        <FormItem label="Tags" {...formItemLayout}>
-                            {p.tags}
-                        </FormItem>
-
-                        <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
-                            <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
-                                {this.state.editing ? 'Save' : 'Create'}
-                            </Button>
-                        </FormItem>
-                    </div>
-                </Form>
+                { this.props.embedded
+                    ? (
+                        <div className="d_taskCreateForm">
+                            {formContent}
+                        </div>
+                    ) : (
+                        <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
+                            {formContent}
+                        </Form>
+                    )
+                }
             </div>
         )
     }

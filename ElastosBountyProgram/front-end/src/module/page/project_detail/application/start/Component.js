@@ -35,15 +35,34 @@ class C extends BaseComponent {
     componentWillUnmount() {
     }
 
+    handleSubmit (e) {
+        e.preventDefault()
+
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                if (this.state.mode === 'solo' ||
+                    (this.state.mode === 'team' && values.team === '$me')) {
+                    this.props.applyToTask(this.props.task._id, this.props.currentUserId, null, values.applyMsg)
+                } else if (this.state.mode === 'team') {
+                    this.props.applyToTask(this.props.task._id, null, values.team)
+                } else if (this.state.mode === 'newteam') {
+                    this.props.createTeam(_.omit(values, ['applyMsg', 'team'])).then((team) => {
+                        this.props.applyToTask(this.props.task._id, null, team._id)
+                    })
+                }
+            }
+        })
+    }
+
     ord_render () {
         return (
             <div className="c_ApplicationStart">
-                <div>
+                <Form onSubmit={this.handleSubmit.bind(this)}>
                     {this.getHeader()}
                     {this.getModeSelector()}
                     {this.getModePanel()}
                     {this.getActions()}
-                </div>
+                </Form>
             </div>
         )
     }
@@ -56,26 +75,24 @@ class C extends BaseComponent {
 
     getApplyWithDropdown() {
         return (
-            <div className="full-width halign-wrapper valign-wrapper">
-                <Select className="team-selector" disabled={this.props.loading} defaultValue="$me"
-                    onChange={(value) => this.handleApplyWithChange(value)}>
-                    <Select.Option value="$me">
-                        Apply as myself
-                        <Avatar size="small" src={this.getAvatarWithFallback(this.props.currentUserAvatar)}
-                            className="pull-right"/>
+            <Select className="team-selector" disabled={this.props.loading}
+                onChange={(value) => this.handleApplyWithChange(value)}>
+                <Select.Option value="$me">
+                    Apply as myself
+                    <Avatar size="small" src={this.getAvatarWithFallback(this.props.currentUserAvatar)}
+                        className="pull-right"/>
+                </Select.Option>
+                {_.map(this.props.ownedTeams, (team) =>
+                    <Select.Option key={team._id} value={team._id}>
+                        Apply with {team.name}
+                        {!_.isEmpty(team.pictures)
+                            ? <Avatar size="small" src={this.getAvatarWithFallback(team.pictures[0].thumbUrl)}
+                                className="pull-right"/>
+                            : <Avatar size="small" src={this.getAvatarWithFallback()} className="pull-right"/>
+                        }
                     </Select.Option>
-                    {_.map(this.props.ownedTeams, (team) =>
-                        <Select.Option key={team._id} value={team._id}>
-                            Apply with {team.name}
-                            {!_.isEmpty(team.pictures)
-                                ? <Avatar size="small" src={this.getAvatarWithFallback(team.pictures[0].thumbUrl)}
-                                    className="pull-right"/>
-                                : <Avatar size="small" src={this.getAvatarWithFallback()} className="pull-right"/>
-                            }
-                        </Select.Option>
-                    )}
-                </Select>
-            </div>
+                )}
+            </Select>
         )
     }
 
@@ -138,7 +155,7 @@ class C extends BaseComponent {
     getActions() {
         return (
             <div className="full-width halign-wrapper valign-wrapper">
-                <Button>
+                <Button htmlType="submit" loading={this.props.loading} disabled={!this.state.mode}>
                     Apply
                 </Button>
             </div>
@@ -150,27 +167,32 @@ class C extends BaseComponent {
             return
         }
 
+        const {getFieldDecorator} = this.props.form
         const compLookup = {
             solo: (
-                <div className="full-width halign-wrapper">
-                    <Input.TextArea rows={4} placeholder="Why do you want to join?"/>
-                </div>
+                <Input.TextArea rows={4} placeholder="Why do you want to join?"/>
             ),
-            team: (
-                <div className="full-width halign-wrapper">
-                    {this.getApplyWithDropdown()}
-                </div>
-            ),
+            team: this.getApplyWithDropdown(),
             newteam: (
-                <div>
-                    <TeamCreateForm/>
-                </div>
+                <TeamCreateForm embedded={true} form={this.props.form}/>
             )
         }
 
+        const decoratorLookup = {
+            solo: getFieldDecorator('applyMsg', {
+                rules: [],
+                initialValue: ''
+            }),
+            team: getFieldDecorator('team', {
+                rules: [],
+                initialValue: '$me'
+            }),
+            newteam: _.identity
+        }
+
         return (
-            <div className="full-width start-mode">
-                {compLookup[this.state.mode]}
+            <div className="full-width {this.state.mode !== 'newteam'? 'halign-wrapper' : ''} start-mode">
+                {decoratorLookup[this.state.mode](compLookup[this.state.mode])}
             </div>
         )
     }

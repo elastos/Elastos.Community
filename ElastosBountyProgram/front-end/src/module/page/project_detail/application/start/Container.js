@@ -1,6 +1,7 @@
 import {createContainer} from '@/util'
 import Component from './Component'
 import TeamService from '@/service/TeamService'
+import TaskService from '@/service/TaskService'
 import _ from 'lodash'
 
 export default createContainer(Component, (state) => {
@@ -13,6 +14,7 @@ export default createContainer(Component, (state) => {
     }
 }, () => {
     const teamService = new TeamService()
+    const taskService = new TeamService()
 
     return {
         async getTeams(query) {
@@ -21,6 +23,11 @@ export default createContainer(Component, (state) => {
 
         resetAllTeams() {
             return teamService.resetAllTeams()
+        },
+
+        async applyToTask(taskId, userId, teamId, applyMsg, attachment, attachmentFilename) {
+            return taskService.pushCandidate(taskId, userId, teamId, applyMsg,
+                attachment, attachmentFilename)
         }
     }
 })
