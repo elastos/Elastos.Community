@@ -35,85 +35,85 @@ export default {
     article : {
         '1' : `
          
-        <strong>ARTICLE 1 - INTERIM PERIOD</strong>
+        <strong>ARTICLE 1 - 过渡期</strong>
          
         <ol>
-            <li>This is an Alpha version of this document.</li>
-            <li>The Constitution and other founding documents are intended to enshrine the rights and relationships of Cyber Republic community members. </li>
-            <li>During the “Interim Period” between the first anniversary of Elastos (25 August 2018) and the second anniversary of Elastos (25 August 2019), the terms of the Constitution and the other Founding Documents will be continuously revised. </li>
-            <li>Cyber Republic governance will be managed by representatives of the Elastos Foundation, and the Constitution and voting rules will be continuously developed to reflect the practical needs and experiences of Cyber Republic governance.</li>
-            <li>There will be a full transition to community governance of the Cyber Republic by the end of the Interim Period.</li>
-            <li>At the end of the Interim Period, amendment of this document will follow a community voting process that shall be defined within the Elastos Community Voting Rules document.</li>
+            <li>这是本文档的草案版</li>
+            <li>“章程”和其他创始文件旨在规定亦来云社区成员的权利和关系 </li>
+            <li>在Elastos成立一周年（2018年8月25日）和Elastos成立两周年（2019年8月25日）的过渡期间，创始文件的条款将不断修订 </li>
+            <li>共治筹备委员会（“筹委会”）将由Elastos基金会推荐代表管理，并将不断制拟定、完善章程和投票规则，以反映共治委员会治理的实际需要和经验.</li>
+            <li>在过渡期结束时，将完全过渡到由共治委员会进行社区治理.</li>
+            <li>在过渡期末，本文件的修订将遵循社区投票程序，该程序应在Elastos社区投票规则文件中定义.</li>
         </ol>
         
-        <strong>ARTICLE 2 - PURPOSE</strong>
-        The purpose of the Elastos Community Constitution (“Constitution”) is to
+        <strong>ARTICLE 2 - 目的</strong>
+        亦来云社区章程（“章程”）的目的是
         <ol>
-            <li>Provide the Elastos community with a document that outlines the values and vision of Elastos;</li>
-            <li>Provide a foundation for community participation in the governance of the Elastos Ecosystem; </li>
-            <li>Ensure the structure of the Elastos Community Governance system is suitable for and responsive to the needs of the Elastos community.</li>
+            <li>为亦来云社区提供一份文件，概述亦来云的价值观和愿景</li>
+            <li>为社区参与亦来云生态系统治理提供基础; </li>
+            <li>确保亦来云社区治理系统的结构适合并响应亦来云社区的需求.</li>
         </ol>
          
-        <strong>ARTICLE 3 - VISION</strong>
+        <strong>ARTICLE 3 - 愿景</strong>
          
-        Elastos is creating a safe and reliable internet of the future. This internet of wealth will usher in a new era of innovative economy, fueled by the security of the Smart Web, the ownership and trade of digital assets and data, and the interoperability and scalability of blockchain technologies and decentralized applications.
+        亦来云正在创造一个安全可靠的未来互联网。 这一财富互联网将迎来创新经济的新时代，其灵感来自智能网的安全性，数字资产和数据的所有权和交易，以及区块链技术和分散式应用的互操作性和可扩展性        
+        <strong>ARTICLE 4 - 价值观</strong>
+         
+        亦来云社区的价值观是
+ 
+        <ol>
+            <li>创新经济;</li>
+            <li>创造数字财富;</li>
+            <li>社区治理; </li>
+            <li>透明度和共享.</li>
+        </ol>
+         
+        <strong>ARTICLE 5 - 社区治理</strong>
+         
+        <ol>
+            <li>亦来云是由亦来云基金会创立的开源平台。随着项目的进展和社区的发展，亦来云基金会逐渐将社区运营转交社区共治委员会.</li>
+            <li>在Elastos Genesis Block（亦来云创始区块） 创造的33,000,000枚ELA代币中，亦来云基金会选择投入16,500,000枚代币用于开发亦来云生态系统。这些代币将用作对亦来云生态系统捐款的奖励，其分配将由社区本身通过本章程第6条所述的社区共治委员会决定.</li>
+            <li>每年在最初的33,000,000枚ELA代币基础上增发4％，以确保代币供应通胀的健康率，激励网络支持，并为项目提供资金。在这些增发的代币中，30％将作为管理开发亦来云生态系统的额外资产提供给社区共治</li>
+            <li>由亦来云基金会管理的数字资产仅限于前期募集的代币，以及白皮书中分配给亦来云基金会的部分.</li>
+        </ol>
+         
+        <strong>ARTICLE 6 - 共治委员会</strong>
+        <ol>
+            <li>共治委员会是决定如何管理用于亦来云生态系统发展的资金的组织. </li>
+            <li>共治委员会由两个单独的文件管理：共治委员会成立文件和共治委员会利益冲突政策. </li>
+            <li>社区投票将由一份单独的文件管理，即亦来云社区投票规则，将在过渡期结束时发布.</li>
+        </ol>
         
-        <strong>ARTICLE 4 - VALUES</strong>
+        <strong>ARTICLE 7 - 社区投票</strong>
          
-        The values of the Elastos community are 
-        <ol>
-            <li>Innovative Economy;</li>
-            <li>Digital Wealth Generation;</li>
-            <li>Community Governance; </li>
-            <li>Transparency and Sharing.</li>
-        </ol>
-         
-        <strong>ARTICLE 5 - COMMUNITY GOVERNANCE</strong>
-         
-        <ol>
-            <li> Elastos is an open-sourced platform founded by the Elastos Foundation. As the project progresses and the community develops, the Elastos Foundation gradually brings community operations to community members and committees.</li>
-            <li>Of the 33,000,000 ELA coins created in the Elastos Genesis Block, the Elastos Foundation chose to commit 16,500,000 coins towards development of the Elastos Ecosystem. These coins will be used as rewards for contributions made to the Elastos ecosystem, and their allocation will be decided by the community itself through the Cyber Republic Council, described in Article 6 of this Constitution.</li>
-            <li>Every year, an additional 4% of the initial 33,000,000 ELA coins will be created, to ensure a healthy rate of coin supply inflation, incentivize network support, and to fund Cyber Republic projects. Of these additional coins, 30% will be given to the Cyber Republic Council as additional assets to manage in developing the Elastos Ecosystem.</li>
-            <li>The digital assets managed by the Elastos Foundation are limited to those NEO/ETH tokens raised during token sales, and the ELA allocated to the Elastos Foundation as described in the White Paper.</li>
-        </ol>
-         
-        <strong>ARTICLE 6 - CYBER REPUBLIC COUNCIL</strong>
-        <ol>
-            <li>The Cyber Republic Council is the vehicle through which the Elastos community decides how to manage the funds intended for the development the Elastos ecosystem. </li>
-            <li>The Cyber Republic Council is governed by two separate documents: the Cyber Republic Council Founding Document and the Cyber Republic Council Conflict of Interest Policy. </li>
-            <li>Community voting will be governed by a separate document, the Elastos Community Voting Rules, to be released by the end of the Interim Period.</li>
-        </ol>
+        虽然共治筹委会目前由来自亦来云基金会推荐的3名代表组成，但社区共治委员会应由过渡期完成后由亦来云社区投票选出的委员组成。 将有具体规则规定社区共治委员会委员选举，章程修改以及对提案投票的要求         
+        <strong>ARTICLE 8 - 修改章程</strong>
         
-        <strong>ARTICLE 7 - COMMUNITY VOTING</strong>
-         
-        While the Cyber Republic Council is presently composed of 3 representatives from the Elastos Foundation, the Cyber Republic Council shall consist of members elected by the Elastos community once the Interim Period is complete. There will be specific rules that specify the requirements for electing Cyber Republic Council members, amending the Constitution, and voting on projects to be funded by the Cyber Republic.
-         
-        <strong>ARTICLE 8 - AMENDING THE CONSTITUTION</strong>
-        
-        In the case of voting to amend the Constitution, voting shall follow the process as outlined in the Elastos Community Voting Rules, with the following exception. Amending the Constitution requires the following threshold:
+        修改章程时，应遵循亦来云社区投票规则中的程序，同时满足以下标准：
         <ol>
-            <li>ELA participating in voting accounting for more than 30% of circulated ELA by the deadline of such voting;</li>
-            <li>Support of 66.67% of the votes represented by ELA participating in voting.;</li>
+            <li>ELA在投票截止日期时参与投票的 ELA 占流通ELA的30％以上;</li>
+            <li>及同意票数超过参与投票 ELA 的66.67％;</li>
         </ol>
 
-        <strong>ARTICLE 9 - MISCELLANEOUS</strong>
+        <strong>ARTICLE 9 - 其他</strong>
         
-        <b>Consensus.</b> Elastos uses a hybrid POW / POS consensus model. The 4% annual inflation is allocated as follows: 35% to reward POW miners, 35% to reward DPoS stakers, and 30% to the Cyber Republic as funds for developing the Elastos Ecosystem.
+        <b>共识</b> 亦来云使用混合POW / POS共识模型。 4％的年度通货膨胀分配如下：35％奖励POW矿工，35％奖励DPoS机制，30％奖励社区共治作为开发亦来云生态系统的资金。
+共治委员会，共治委员会由亦来云社区投票产生。
         <br/>
         
-        <b>Cyber Republic.</b> The Cyber Republic is the engaged community of Elastos enthusiasts who help develop the Elastos Ecosystem.
+        <b>共治委员会</b> 共治委员会由亦来云社区投票产生.
         <br/>
         
-        <b>Founding Documents.</b> Other Founding Documents include the Elastos Community Voting Rules, the Cyber Republic Council Founding Document and the Cyber Republic Council Conflict of Interest Policy.
+        <b>创始文件</b> 其他创始文件包括亦来云社区投票规则，共治委员会成立文件和共治委员会利益冲突政策.
         <br/>
         
-        <b>Innovative Economy.</b> Elastos’ Innovative Economy refers to the concept of empowering individuals to own their own data and code through blockchain authentication to allow for the creation of new wealth - the internet of wealth.
+        <b>创新经济</b> 亦来云的创新经济指的是通过区块链认证授权个人拥有自己的数据和代码以允许创造新财富 - 财富互联网的概念
         <br/>
         
-        <b>Interim Period.</b> The period of time between the first and second anniversaries of Elastos (25 August 2018 and 25 August 2019, respectively), during which Cyber Republic governance will be slowly and carefully transitioned to the community.
+        <b>过渡期</b> 亦来云的第一个和第二个周年纪念日（2018年8月25日和2019年8月25日）之间的时间段，在此期间，社区共治筹委会的治理权将缓慢而谨慎地过渡到社区投票选出的共治委员会
         <br/>
         
-        <b>Smart Web.</b> The Smart Web is a safer, more secure internet where applications do not have direct access to the internet and all communications are controlled by the Elastos Operating System and the Elastos Carrier.
+        <b>智能万维网</b> 智能万维网是一种更安全，更安全的互联网，应用程序无法直接访问互联网，所有通信都由Elastos操作系统和Elastos Carrier控制。
         <br/>
         `,
 
