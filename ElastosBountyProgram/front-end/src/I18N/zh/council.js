@@ -420,71 +420,71 @@ export default {
         '5' : `
 
         <p>
-        1. This rules of proposals and voting are discussed and approved by the Cyber Republic Council(CRC) and supervised by the Secretariat.
+        1. 该提案和表决规则由社区共治委员会（以下简称CRC）讨论和批准，并由秘书处监督.
         </p>
 
         <p>
-        2. Recommended language of CRC is English. In case there is a conflict between languages, English prevails.
+        2. CRC的推荐语言是英语，如果语言之间存在冲突，则以英语为准.
         </p>
 
-        <b>3. CRC Meeting</b>
+        <b>3. CRC 会议</b>
         <table>
             <tr>
-                <td>Meeting time: </td>
-                <td>GMT+8 every Thursday at 13:00.</td>
+                <td>会议时间: </td>
+                <td>每周四13:00 GMT + 8.</td>
             </tr>
             <tr>
-                <td>Conference format: </td>
-                <td>Zoom, Zoom link in meeting invitation</td>
+                <td>会议形式: </td>
+                <td>Zoom，zoom会议邀请链接</td>
             </tr>
             <tr>
-                <td>During time: </td>
-                <td>I hour</td>
+                <td>会议时间: </td>
+                <td>1 小时 </td>
             </tr>
             <tr>
-                <td>Meeting agenda: </td>
-                <td>Submitted by the CRC in the form of a proposal. </td>
+                <td>会议议程: </td>
+                <td>CRC以提案的形式提交. </td>
             </tr>
             <tr>
-                <td>Minutes: </td>
-                <td>Recorded by the Secretariat and posted on the Cyber Republic website.
+                <td>会议纪要: </td>
+                <td>由秘书处记录并发布在社区共治委员会网站上
                 </td>
             </tr>
         </table>
 
-        <b>4. Proposals</b>
+        <b>4. 提案</b>
         <ul style="padding-left:40px;">
-            <li>a. All the proposals are open to the community and published in CR website
+            <li>a. 所有提案均向社群开放，并在CRC网站上发布
             </li>
-            <li>b. Only CRC members and the Secretariat have the right to raise a proposal.
+            <li>b. 只有CRC成员和秘书处才有权提出提案
             </li>
-            <li>c. Only CRC members are able to vote on a proposal.
+            <li>c. 只有CRC成员才能对提案进行投票.
             </li>
-            <li>d. The life cycle of a proposal is as follows:
+            <li>d. 提案的生命周期如下:
             <img src="/assets/images/council/img_1.png" style="display:block;margin: 5px 0 30px 0;"/>
             </li>
-            <li>e. A proposal changes from PROPOSED to ACTIVE automatically  when it gets 2 consents by the deadline of vote. 
+            <li>e. 在投票截止日期前获得2个“同意”时，提案自动从“建议”更改为“自动激活”. 
             </li>
-            <li>f. A proposal changes from PROPOSED to REJECTED automatically when it gets 2 oppositions by the deadline of vote. </li>
-            <li>g. A proposal changes from PROPOSED to DEFERRED automatically when it fails to get 2 consents or 2 oppositions by the deadline of vote. 
+            <li>f. 在投票截止日期前获得2个“异议”时，提案将自动从“建议”更改为“被拒绝” 
             </li>
-            <li>h. A proposal is changed  from ACTIVE to FINAL by the Secretariat when the proposal is executed and completed.
+            <li>g. 在提案截止日期前未能获得2个“同意”或2个“异议”时，提案将自动从“建议”更改为“推迟”. 
             </li>
-            <li>i. An ACTIVE proposal is published to the community for community vote for 72 hours. Refer to the Voting Rules documents in KEY DOCUMENT.
+            <li>h. 当提案执行并完成时，秘书处将提案从“自动激活”更改为“结束”.
             </li>
-            <li>j. The REJECTED proposal cannot be resubmitted within 1 week
+            <li>i. 一个“自动激活”提案发布到社区，社区投票72小时.
             </li>
-            <li>k. Anyone can turn a REJECTED proposal to PROPOSED after one week. So that it can be discussed again.
+            <li>j. “被拒绝”提案不能在1周内重新提交
             </li>
+        
         </ul>
-        <b>5. Voting rules</b>
+        <b>5. 投票规则</b>
         <ul style="padding-left:40px;">
-            <li>a. Each CRC member has one and only vote</li>
-            <li>b. Voting options are divided into consent, opposition and abstention</li>
-            <li>c. There is no veto power. </li>
-            <li>d. Once a proposal is raised, voting period starts and lasts for 48 hours. During voting period, CRC member can change their votes. </li>
-            <li>e. If a CRC member fails to vote before deadline, his vote will be treated as abstention</li>
-            <li>f. If a CRC member abstains for multiple times (this is to be updated, not finalized yet), it will be deemed as an automatic resignation and the resignation process is initiated.</li>
+            <li>a. 每个CRC成员都有1票且只有1票</li>
+            <li>b. 投票选项分为同意，反对和弃权</li>
+            <li>c. 没有否决权 </li>
+            <li>d. 提出提案后，投票期开始并持续96小时。 在投票期间，CRC成员可以改变他们的投票. </li>
+            <li>e. 如果CRC成员未能在截止日期前投票，他的投票将被视为弃权</li>
+            <li>f. 如果CRC成员未能在截止日期前投票，他的投票将被视为弃权.</li>
         </ul>
 
         
