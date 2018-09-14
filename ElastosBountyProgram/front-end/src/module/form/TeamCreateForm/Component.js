@@ -278,9 +278,11 @@ class C extends BaseComponent {
                 <FormItem label="Description" {...formItemLayout}>
                     {p.description}
                 </FormItem>
-                <FormItem label="Pictures" {...formItemLayout}>
-                    {p.pictures}
-                </FormItem>
+                { !this.props.embedded &&
+                    <FormItem label="Pictures" {...formItemLayout}>
+                        {p.pictures}
+                    </FormItem>
+                }
                 <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
                     <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
                 </Modal>
