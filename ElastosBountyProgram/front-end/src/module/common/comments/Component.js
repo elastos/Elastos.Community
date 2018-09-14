@@ -135,27 +135,26 @@ class C extends BaseComponent {
         const footer = this.getFooter()
 
         const commentItems = _.map(comments, (comment, ind) =>
-            {
-                const thread = _.first(comment)
-                const createdByUsername = (thread.createdBy && thread.createdBy.username) || ''
-                const avatar = (thread.createdBy && thread.createdBy.profile.avatar) || '/assets/images/Elastos_Logo.png'
-                const createdById = (thread.createdBy && thread.createdBy._id)
-                const dateFormatted = dateFormatter(thread.createdAt)
+        {
+            const thread = _.first(comment)
+            const createdByUsername = (thread.createdBy && thread.createdBy.username) || ''
+            const avatar = (thread.createdBy && thread.createdBy.profile && thread.createdBy.profile.avatar) || '/assets/images/Elastos_Logo.png'
+            const createdById = (thread.createdBy && thread.createdBy._id)
+            const dateFormatted = dateFormatter(thread.createdAt)
 
-                return {
-                    title: thread.comment,
-                    description: (
-                        <div>
-                            <a onClick={() => {createdById && this.props.history.push(`/member/${createdById}`)}}>
-                                {createdByUsername}
-                            </a>
-                            {dateFormatted && <span>, {dateFormatted}</span>}
-                        </div>
-                    ),
-                    avatar,
-                }
+            return {
+                title: thread.comment,
+                description: (
+                    <div>
+                        <a onClick={() => {createdById && this.props.history.push(`/member/${createdById}`)}}>
+                            {createdByUsername}
+                        </a>
+                        {dateFormatted && <span>, {dateFormatted}</span>}
+                    </div>
+                ),
+                avatar
             }
-        )
+        })
 
         // Show in reverse chronological order
         commentItems && commentItems.reverse();
