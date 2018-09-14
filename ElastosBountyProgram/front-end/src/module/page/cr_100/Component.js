@@ -79,6 +79,7 @@ export default class extends StandardPage {
         const link = 'https://s3-us-west-1.amazonaws.com/ebp-staging-files/cr100/'
 
         let list = _.map(categorizedList, (list, category) => {
+            list = _.sortBy(_.values(list), ['dAppId'])
             const sanitizedCategory = (category || 'uncategorized').toLowerCase()
             return (
                 <div key={sanitizedCategory}>
