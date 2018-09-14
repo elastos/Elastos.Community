@@ -8,7 +8,7 @@ export default class extends BaseService {
         I18N.setLang(lang);
 
         const languageRedux = this.store.getRedux('language')
-        localStorage.setItem('lang', lang)
+        console.log(this.store.getState().language, lang);
         this.dispatch(languageRedux.actions.language_update(lang))
     }
 }

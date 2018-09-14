@@ -39,7 +39,7 @@ export default class extends StandardPage {
                 <List {...p_list} renderItem={item => (
                     <List.Item key={item.title} >
                         <List.Item.Meta
-                        title={<a href={`/council/detail/${item.id}`} className="f_h4">#{item.id} - {item.title}</a>}
+                        title={<a href="javascript:void(0)" onClick={this.toDetail.bind(this, `/council/detail/${item.id}`)} className="f_h4">#{item.id} - {item.title}</a>}
                         description={item.description}
                          />
                         <div style={{position:'relative',top:20}}>{item.date}</div>
@@ -84,5 +84,9 @@ export default class extends StandardPage {
                 date : '09/13/2018'
             }
         ];
+    }
+
+    toDetail(path){
+        this.props.history.push(path);
     }
 }

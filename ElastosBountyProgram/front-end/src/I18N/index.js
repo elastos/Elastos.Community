@@ -8,7 +8,7 @@ const all = _.extend({}, {
 	en
 });
 
-let lang = 'en';
+let lang = localStorage.getItem('lang') || 'en';
 export default {
 	setLang(str){
 		if(_.includes(['zh', 'en'], str)){

@@ -11,7 +11,14 @@ import {api_request, upload_file} from './request';
  * @param mapDispatch - map dispatch to props
  */
 export const createContainer = (component, mapState, mapDispatch=_.noop())=>{
-    return withRouter(connect(mapState, mapDispatch)(component));
+    const tmp_mapState = (state, ownProps)=>{
+        const s = {
+            lang : state.language.language
+        };
+
+        return _.merge(s, mapState(state, ownProps));
+    };
+    return withRouter(connect(tmp_mapState, mapDispatch)(component));
 };
 
 export const constant = (moduleName, detailArray)=>{
