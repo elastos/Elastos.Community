@@ -82,7 +82,16 @@ class C extends BaseComponent {
 
     getApplyWithDropdown() {
         return (
-            <Select className="team-selector" disabled={this.props.loading}>
+            <Select className="team-selector" disabled={this.props.loading}
+                // Fix select dropdowns in modals
+                // https://github.com/vazco/uniforms/issues/228
+                getPopupContainer={x => {
+                    while (x && x.tagName.toLowerCase() !== 'form') {
+                        x = x.parentElement;
+                    }
+
+                    return x;
+                }}>
                 <Select.Option value="$me">
                     Apply as myself
                     <Avatar size="small" src={this.getAvatarWithFallback(this.props.currentUserAvatar)}
