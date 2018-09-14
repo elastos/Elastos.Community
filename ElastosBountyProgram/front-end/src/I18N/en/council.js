@@ -491,7 +491,6 @@ export default {
             <li>c. There is no veto power. </li>
             <li>d. Once a proposal is raised, voting period starts and lasts for 48 hours. During voting period, CRC member can change their votes. </li>
             <li>e. If a CRC member fails to vote before deadline, his vote will be treated as abstention</li>
-            <li>f. If a CRC member abstains for multiple times (this is to be updated, not finalized yet), it will be deemed as an automatic resignation and the resignation process is initiated.</li>
         </ul>
 
         
