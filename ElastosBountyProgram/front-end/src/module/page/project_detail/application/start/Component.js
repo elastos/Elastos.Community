@@ -198,8 +198,9 @@ class C extends BaseComponent {
             newteam: _.identity
         }
 
+        const className = `full-width start-mode ${this.state.mode !== 'newteam'? 'halign-wrapper' : ''}`
         return (
-            <div className="full-width {this.state.mode !== 'newteam'? 'halign-wrapper' : ''} start-mode">
+            <div className={className}>
                 {decoratorLookup[this.state.mode](compLookup[this.state.mode])}
             </div>
         )
