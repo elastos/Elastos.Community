@@ -25,6 +25,7 @@ import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS } from '@/
 import Comments from '@/module/common/comments/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
 import Application from '../application/Container'
+import ApplicationStart from '../application/start/Container'
 import I18N from '@/I18N'
 import ItemsCarousel from 'react-items-carousel'
 import _ from 'lodash'
@@ -35,6 +36,7 @@ class C extends BaseComponent {
         return {
             showLoginRegisterModal: false,
             showApplicationModal: false,
+            showApplicationStartModal: false,
             taskCandidateId: null
         }
     }
@@ -102,6 +104,7 @@ class C extends BaseComponent {
     async applyToProject() {
         const res = await this.props.applyToTask(this.props.taskId, this.props.currentUserId)
         this.showApplicationModal(res._id)
+        return res
     }
 
     renderLoginOrRegisterModal() {
@@ -140,6 +143,23 @@ class C extends BaseComponent {
         )
     }
 
+    renderApplicationStartModal() {
+        return (
+            <Modal
+                className="project-detail-nobar"
+                visible={this.state.showApplicationStartModal}
+                onOk={this.handleApplicationStartModalOk.bind(this)}
+                onCancel={this.handleApplicationStartModalCancel.bind(this)}
+                footer={null}
+                width="70%"
+            >
+                {this.state.showApplicationStartModal &&
+                    <ApplicationStart task={this.props.detail} />
+                }
+            </Modal>
+        )
+    }
+
     showLoginRegisterModal = () => {
         sessionStorage.setItem('loginRedirect', `/project-detail/${this.props.taskId}`)
         sessionStorage.setItem('registerRedirect', `/project-detail/${this.props.taskId}`)
@@ -160,6 +180,12 @@ class C extends BaseComponent {
         })
     }
 
+    showApplicationStartModal() {
+        this.setState({
+            showApplicationStartModal: true
+        })
+    }
+
     handleLoginRegisterModalOk = (e) => {
         sessionStorage.removeItem('registerRedirect')
 
@@ -175,6 +201,14 @@ class C extends BaseComponent {
         })
     }
 
+    handleApplicationStartModalOk = (e) => {
+        this.applyToProject().then(() => {
+            this.setState({
+                showApplicationStartModal: false
+            })
+        })
+    }
+
     handleLoginRegisterModalCancel = (e) => {
         sessionStorage.removeItem('registerRedirect')
 
@@ -187,6 +221,12 @@ class C extends BaseComponent {
         this.setState({
             showApplicationModal: false,
             taskCandidateId: null
+        })
+    }
+
+    handleApplicationStartModalCancel() {
+        this.setState({
+            showApplicationStartModal: false
         })
     }
 
@@ -482,7 +522,7 @@ class C extends BaseComponent {
         const applyHandler = this.props.is_login
             ? this.getApplicant()
                 ? this.showApplicationModal
-                : this.applyToProject
+                : this.showApplicationStartModal
             : this.showLoginRegisterModal
 
         return (
@@ -615,6 +655,7 @@ class C extends BaseComponent {
                     <div className="rectangle rectangle-long"/>
                     {this.renderLoginOrRegisterModal()}
                     {this.renderApplicationModal()}
+                    {this.renderApplicationStartModal()}
                 </div>
             </div>
         )
@@ -692,7 +733,7 @@ class C extends BaseComponent {
         const applyHandler = this.props.is_login
             ? this.getApplicant()
                 ? this.showApplicationModal
-                : this.applyToProject
+                : this.showApplicationStartModal
             : this.showLoginRegisterModal
         return (
             <div className="ebp-wrap">
