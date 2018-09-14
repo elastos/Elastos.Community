@@ -517,7 +517,7 @@ class C extends BaseComponent {
                     <div className='slider-project-icon'>
                         <div className={'project-icon ' + (isActive ? 'active' : '')}
                             onClick={this.linkToProjectTask.bind(this, task._id)}>
-                            <span className="project-number">{task.dAppId}</span>
+                            <span className="project-number komu-a">{task.dAppId}</span>
                             <div className='base-icon'/>
                             <img className='project-avatar' src={task.thumbnail}/>
                         </div>
@@ -629,7 +629,7 @@ class C extends BaseComponent {
                 <div className="rect-container">
                     <div className="rect"/>
                 </div>
-                <div className="project-name">{dAppId} {this.props.detail.name}</div>
+                <div className="project-name komu-a">{dAppId} {this.props.detail.name}</div>
                 <div className="strike-text project-funding">
                     <div className="strike-line"/>
                     <p>Funding: 100k for 5% of the equity or coins/tokens</p>

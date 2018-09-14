@@ -105,17 +105,18 @@
             }
             .project-name {
                 position: relative;
-                padding-top: $gap_4;
-                margin-bottom: $gap_4;
+                padding-top: $gap_2;
+                margin-bottom: $gap_2;
                 z-index: 2;
-                font-size: 80px;
-                font-weight: bold;
+                font-size: 100px;
                 text-transform: uppercase;
             }
             .project-funding {
                 font-size: 24px;
                 font-weight: bold;
-                text-transform: uppercase;
+                p {
+                    font-family: "Synthese", sans-serif;
+                }
             }
             .strike-text {
                 position: relative;
