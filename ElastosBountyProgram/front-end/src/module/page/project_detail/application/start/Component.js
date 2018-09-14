@@ -48,7 +48,9 @@ class C extends BaseComponent {
                 } else if (this.state.mode === 'newteam') {
                     const sanitized = _.omit(values, [ 'team', 'applyMsg' ])
                     this.props.createTeam(sanitized).then((team) => {
-                        this.props.applyToTask(this.props.task._id, null, team._id)
+                        this.props.applyToTask(this.props.task._id, null, team._id).then(() => {
+                            this.props.finisher()
+                        })
                     })
                 }
             }

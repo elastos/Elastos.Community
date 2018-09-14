@@ -156,6 +156,10 @@ export default class extends Base {
 
         await db_ut.db.populate(teamCandidate, ['team', 'user'])
 
+        if (teamCandidate.team) {
+            await db_ut.db.populate(teamCandidate.team, ['owner'])
+        }
+
         const teamOwner = await db_user.findById(team.owner)
         await this.sendAddCandidateEmail(this.currentUser, teamOwner, team)
 

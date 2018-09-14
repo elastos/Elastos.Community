@@ -154,7 +154,8 @@ class C extends BaseComponent {
                 width="70%"
             >
                 {this.state.showApplicationStartModal &&
-                    <ApplicationStart task={this.props.detail} />
+                    <ApplicationStart task={this.props.detail}
+                        finisher={this.handleApplicationStartModalOk.bind(this)} />
                 }
             </Modal>
         )
