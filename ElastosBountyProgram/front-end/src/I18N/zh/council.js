@@ -244,114 +244,107 @@ export default {
         `,
 
         '3' : `
-        <center>Chapter I	 General Principles</center>
+        <center>Chapter I	</center>
 
-        <strong>1 Interim Period</strong>
+        <strong>ARTICLE 1 - 过渡期</strong>
         <ol>
-            <li>This is an Alpha version of this document.</li>
-            <li>The Constitution and other founding documents are intended to enshrine the rights and relationships of Cyber Republic community members. </li>
-            <li>During the “Interim Period” between the first anniversary of Elastos (25 August 2018) and the second anniversary of Elastos (25 August 2019), the terms of the Constitution and the other Founding Documents will be continuously revised. </li>
-            <li>Cyber Republic governance will be managed by representatives of the Elastos Foundation, and the Constitution and voting rules will be continuously developed to reflect the practical needs and experiences of Cyber Republic governance.</li>
-            <li>There will be a full transition to community governance of the Cyber Republic by the end of the Interim Period.</li>
-            <li>At the end of the Interim Period, amendment of this document will follow a community voting process that shall be defined within the Elastos Community Voting Rules document.</li>
+            <li>这是本文档的草案版</li>
+            <li>“章程”和其他创始文件旨在规定亦来云社区成员的权利和关系 </li>
+            <li>在Elastos成立一周年（2018年8月25日）和Elastos成立两周年（2019年8月25日）的过渡期间，创始文件的条款将不断修订 </li>
+            <li>共治筹备委员会（“筹委会”）将由Elastos基金会推荐代表管理，并将不断制拟定、完善章程和投票规则，以反映共治委员会治理的实际需要和经验.</li>
+            <li>在过渡期结束时，将完全过渡到由共治委员会进行社区治理.</li>
+            <li>在过渡期末，本文件的修订将遵循社区投票程序，该程序应在Elastos社区投票规则文件中定义.</li>
         </ol>
 
-        <strong>2 Purpose</strong>
-        The purpose of the Elastos Community Voting Rules (“the Rules”) are to
+        <strong>2 目标</strong>
+        Elastos社区投票规则（“规则”）的目的是
         <ol>
-            <li>Standardize the governance of the Elastos community; </li>
-            <li>Fulfill the mandate of community participation as required by Article 5 of the Elastos Community Constitution (“Constitution”);</li>
-            <li>Ensure community voting is carried out in a logical and consistent way;</li>
-            <li>Ensure the governance of the community development funds benefits the overall Elastos Ecosystem.</li>
+            <li>规范Elastos社区的治理; </li>
+            <li>按照“Elastos社区章程”（“章程”）第5条的要求，履行社区参与的任务;</li>
+            <li>确保以合理和一致的方式进行社区投票;</li>
+            <li>确保社区管理资产的治理有益于整个Elastos生态系统.</li>
         </ol>
         
         
-        <strong>3 Administration</strong>
-        The entire voting process takes places on Elastos Blockchain and is open to the community. 
-        
-        <center>Chapter II 	Community Proposals and Opinions</center>
+        <strong>3 管理</strong>
+        整个投票过程在Elastos Blockchain上进行，并向社区开放        
+        <center>Chapter II 	社区建议和意见</center>
 
-        <strong>4 Community Proposals</strong>
-        The process for making community members proposals shall be defined by the end of the Interim Period.
+        <strong>4 社区建议</strong>
+        制定社区成员建议和意见的过程应在过渡期间结束时确定
 
-        <center>Chapter III	Proposals</center>
-        <strong>5 Fee</strong>
-        There may be an ELA fee associated with making a proposal, however this is to be finalized by the end of the Interim Period.
-        <strong>6 Content</strong>
-        The content of the proposals shall be defined by the end of the Interim Period.
-        <strong>7 Proposal Procedure</strong>
-        The procedure for making proposals shall be defined by the end of the Interim Period.
-        <strong>8 Cyber Republic Council Members</strong>
-        The qualifications of Cyber Republic Council Members and Alternate Members shall be defined by the end of the Interim Period.
+        <center>Chapter III	 提案</center>
+        <strong>5 费用</strong>
+        可能会有与提出提案相关的ELA费用，但这将在过渡期结束时最终确定。
+        <strong>6 内容</strong>
+        提案的内容应在过渡期结束时确定。
+        <strong>7 提案程序</strong>
+        提案由共治委员会发起，同步公开、透明
+      
+        <center>Chapter IV 投票	</center>
 
-        <center>Chapter IV	Voting</center>
-
-        <strong>9 Voting Types </strong>
+        <strong>9 投票类型 </strong>
         <ol>
-            <li>There are four different types of community voting. </li>
-            <li>Selecting Cyber Republic Council Members;</li>
-            <li>Impeachment;</li>
-            <li>Ordinary proposal;</li>
-            <li>Amending Key Documents (Elastos Constitution, Cyber Republic Council Founding Document, Elastos Community Voting rules, Cyber Republic Council </li>
+            <li>有四种不同类型的社区投票 </li>
+            <li>选举共治委员会委员;</li>
+            <li>弹劾;</li>
+            <li>普通提案;</li>
+            <li>修改创始文件（社区章程、共治委员会成立文件、社区投票规则、共治委员会利益冲突政策） </li>
         </ol>
 
-        <strong>10 Voting procedure</strong>
+        <strong>10 投票程序</strong>
         <ol>
-            <li>The election process for the re-election committee: Before the 30-day expiration of the current committee, the secretariat will initiate a general election notice.</li>
-            <li>Impeachment: Beginning with the election of the members of the Communist Party, the impeachment procedure is automatically initiated.</li>
+            <li>共治委员会的选举程序：在现任委员会届满30天之前，秘书处将发起选举通知.</li>
+            <li>弹劾：从社区投票产生共治委员会委员开始，弹劾程序自动启动.</li>
             <li>
-            The ordinary proposal and key document amendment voting procedures are as follows:
+            普通提案和创始文件修正案表决程序如下:
             <ul>
-                <li>(a) The proposal is first voted by the CRC;</li>
-                <li>(b) After the CRC voting simple majority principle is passed, the community will vote in the publicity period.</li>
+                <li>(a) 提案首先由共治委员会投票;</li>
+                <li>(b) 在共治委员会投票简单多数原则通过后，社区将在公示期内投票.</li>
             </ul>
             </li>
         </ol>
         
         
-        <strong>11 Voting principle</strong>
+        <strong>11 投票原则</strong>
         <ol>
-            <li>One ELA represents one vote.</li>
-            <li>Voters may vote in favor of a proposal, against a proposal, or abstain.</li>
-            <li>Voting shall be carried out through Elastos Wallet or other methods as notified by the Secretariat.</li>
-            <li>During the publicity period, if the community vote does not reach the threshold of negating the ordinary proposal, the ordinary proposal will take effect automatically.</li>
-            <li>Corresponding ELA participating in the voting shall remain locked-up until the deadline of the voting.</li>
-            <li>Cumulative voting is adopted in selecting the Cyber Republic Council Members. This process is described in Section 6(1) of this Document.</li>
-            <li>Uncirculated ELA represents no vote and shall not be calculated in the base. Uncirculated ELA are the unspent ELA for the purpose of ecosystem development, and the ELA account balance of the Elastos Foundation that have not been transferred to the accounts of cooperative parties or individuals for ecosystem development.</li>
-            <li>ELA participating in the locked-up plan (different from being locked-up during the community vote) is part of the ELA in circulation. </li>
+            <li>一个ELA代表一票.</li>
+            <li>社区成员可以投票支持提案，反对提案或弃权</li>
+            <li>表决应通过Elastos钱包或秘书处通知的其他方式进行.</li>
+            <li>在公示期间，如果社区投票没有达到否定普通提案的标准，普通提案将自动生效.</li>
+            <li>参与表决的相应ELA应保持锁定状态，直至投票截止日期为止.</li>
+            <li>选举共治委员会委员时采用累计投票制。该过程在本文件的第11（1）节中描述.</li>
+            <li>未流通 ELA 不具有表决权，也不计入表决基数。未流通 ELA 指生态建设未投出部分、亦来云( Elastos )基金会 ELA 帐户余额等未转至生态合作项目方帐户或自然人帐户的 ELA.</li>
+            <li>参与锁定计划的ELA（不同于在社区投票期间被锁定）是ELA流通的一部分. </li>
         </ol>
         
-        <strong>12 Voting Thresholds</strong>
-        There will be different thresholds required for each type of vote. These thresholds shall be defined by the end of the Interim Period.
-        <strong>13 Voting Process</strong>
-        The process for voting shall be defined by the end of the Interim Period.
-        <center>Chapter  V Resolution</center>
-        <strong>14 Voting Thresholds</strong>
+
+        <center>Chapter  V 决议 </center>
+        <strong>11 投票门槛</strong>
 
         <ol>
             <li>
-            The threshold for selecting Cyber Republic Council Members  is based on the following rules:
+            选举共治委员会委员基于以下规则
             <ul>
-                <li>(a) The Selection of the Cyber Republic Council Members and Alternate Members for a new term shall use a cumulative voting process. In cumulative voting, the number of votes represented by 1 ELA participating in the vote shall be multiplied by the total number of Members and  Alternate Members positions being voted upon. The votes may then be distributed amongst the nominees according to the will of each voter, including assigning more than one vote to a single candidate.</li>
-                <li>(b) ELA participating in voting for the Cyber Republic Council Members shall account for more than 20% of circulated ELA by the deadline of the vote, and the Council Members and Alternative Members are appointed in sequence according to total votes gained by each.</li>
+                <li>(a) 新一届共治委员会委员和候补委员的选举使用累积投票制。在累积投票中，参加投票的1 ELA所代表的投票数应乘以应选共治委员会委员、候选委员人数之和。然后可以根据每个社区成员的意愿在被提名者中分配投票，包括为单个候选人分配多于一票.</li>
+                <li>(b) 参加投票的ELA数应在投票截止日期时占流通ELA的20％以上，并且按照每个人获得的总票数从高到低当选.</li>
             </ul>
             </li>
-            <li>The threshold of Impeachment is 20% of circulated ELA.</li>
+            <li>弹劾的门槛是流通ELA的20％以上.</li>
             <li>
-            The threshold for vetoing a resolution of Cyber Republic Council is based on the following rules:
+            否决共治委员会决议的门槛基于以下规则:
             <ul>
-                <li>(a) TThe ELA participating in the voting accounted for more than 20% of circulated ELA;</li>
-                <li>(b) And participate in voting more than 50% against the ordinary proposal.</li>
+                <li>(a) 参与投票的ELA占流通ELA的20％以上;</li>
+                <li>(b) 普通提案的反对票超过50％.</li>
             </ul>
             </li>
-            <li>The threshold for amending the Constitution can be found in Article 8 of the Constitution.</li>
+            <li>修改章程的门槛见“章程”第8部分.</li>
         </ol>
 
-        <center>Chapter VI Supplementary Provisions</center>
-        <strong>15 Miscellaneous</strong>
+        <center>Chapter VI 附则</center>
+        <strong>15 其他</strong>
         <ol>
-            <li>Where these rules come into conflict with the values entrenched in the Constitution, the Constitution shall prevail.</li>
-            <li>The first Election of the Cyber Republic Council shall take place by the end of the Interim Period. </li>
+            <li>如果这些规则与社区“章程”所确立的价值观相冲突，则以“章程”为准。 共治委员会的首次选举将在过渡期结束时举行.</li>
         </ol>
         
         `,
