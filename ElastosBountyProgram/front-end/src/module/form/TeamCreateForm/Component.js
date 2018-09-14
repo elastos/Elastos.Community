@@ -23,7 +23,7 @@ import I18N from '@/I18N'
 import InputTags from '@/module/shared/InputTags/Component'
 import ReactQuill from 'react-quill';
 import {TEAM_TASK_DOMAIN, SKILLSET_TYPE} from '@/constant'
-import {upload_file} from "@/util";
+import {upload_file} from '@/util';
 import sanitizeHtml from 'sanitize-html';
 
 const FormItem = Form.Item
@@ -37,7 +37,8 @@ class C extends BaseComponent {
     }
 
     componentWillUnmount() {
-        this.props.resetTeamDetail()
+        const teamId = this.props.match.params.teamId
+        teamId && this.props.resetTeamDetail()
     }
 
     constructor (props) {

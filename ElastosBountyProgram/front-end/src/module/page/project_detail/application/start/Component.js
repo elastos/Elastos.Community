@@ -152,12 +152,12 @@ class C extends BaseComponent {
 
         const compLookup = {
             solo: (
-                <div>
+                <div className="full-width halign-wrapper">
                     <Input.TextArea rows={4} placeholder="Why do you want to join?"/>
                 </div>
             ),
             team: (
-                <div>
+                <div className="full-width halign-wrapper">
                     {this.getApplyWithDropdown()}
                 </div>
             ),
