@@ -42,9 +42,13 @@ class C extends BaseComponent {
             if (!err) {
                 if (this.state.mode === 'solo' ||
                     (this.state.mode === 'team' && values.team === '$me')) {
-                    this.props.applyToTask(this.props.task._id, this.props.currentUserId, null, values.applyMsg)
+                    this.props.applyToTask(this.props.task._id, this.props.currentUserId, null, values.applyMsg).then(() => {
+                        this.props.finisher()
+                    })
                 } else if (this.state.mode === 'team') {
-                    this.props.applyToTask(this.props.task._id, null, values.team)
+                    this.props.applyToTask(this.props.task._id, null, values.team).then(() => {
+                        this.props.finisher()
+                    })
                 } else if (this.state.mode === 'newteam') {
                     const sanitized = _.omit(values, [ 'team', 'applyMsg' ])
                     this.props.createTeam(sanitized).then((team) => {
