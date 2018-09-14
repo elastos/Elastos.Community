@@ -29,7 +29,6 @@ export default createContainer(Component, (state) => {
         taskState.all_tasks = _.values(taskState.all_tasks)
     }
 
-
     taskState.filter = state.task.filter || {}
     taskState.owned_tasks = []
     taskState.subscribed_tasks = []
