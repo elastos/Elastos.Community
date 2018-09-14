@@ -12,7 +12,7 @@ import MediaQuery from 'react-responsive'
 import moment from 'moment/moment'
 import Footer from '@/module/layout/Footer/Container'
 import I18N from '@/I18N'
-import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from "../../../../config/constant"
+import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '../../../../config/constant'
 
 const FormItem = Form.Item;
 
@@ -21,7 +21,7 @@ const FILTERS = {
     OWNED: 'owned',
     ACTIVE: 'active',
     APPLIED: 'applied',
-    REJECTED: 'rejected',
+    REJECTED: 'rejected'
 }
 
 export default class extends StandardPage {

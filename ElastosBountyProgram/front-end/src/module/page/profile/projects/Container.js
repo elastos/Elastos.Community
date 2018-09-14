@@ -13,7 +13,7 @@ export default createContainer(Component, (state) => {
 
     if (/^\/admin/.test(state.router.location.pathname)) {
         page = 'ADMIN'
-    } else if (/^\/profile/.test(state.router.location.pathname)){
+    } else if (/^\/profile/.test(state.router.location.pathname)) {
         page = 'LEADER'
     }
 
