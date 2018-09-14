@@ -1,0 +1,39 @@
+@import '@/style/variable';
+@import '@/style/color';
+
+.c_ApplicationStart {
+    .start-header,
+    .start-selector,
+    .start-mode {
+        margin-bottom: $gap_3;
+    }
+
+    .ant-card {
+        cursor: pointer;
+
+        &.selected {
+            background-color: $bg_blue;
+        }
+    }
+
+    .ant-card-head-title {
+        text-align: center;
+
+        .ant-avatar {
+            background-color: $primary_color;
+        }
+    }
+
+    .ant-list-split .ant-list-item:last-child {
+        border-bottom: none;
+    }
+
+    .team-selector,
+    textarea {
+        width: 332px;
+    }
+
+    .ant-select-selection-selected-value .ant-avatar {
+        display: none;
+    }
+}

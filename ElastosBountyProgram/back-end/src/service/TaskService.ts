@@ -580,6 +580,10 @@ export default class extends Base {
             select: sanitize
         })
 
+        if (taskCandidate.team) {
+            await db_user.db.populate(taskCandidate.team, ['owner'])
+        }
+
         // send the email - first get the task owner
         if (!assignSelf) {
             const taskOwner = await db_user.findById(task.createdBy)

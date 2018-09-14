@@ -336,7 +336,7 @@ export default {
     // Project Detail
     'pdetail.like': 'Like',
     'pdetail.unlike': 'Unlike',
-    'pdetail.involve': 'Get Involved',
+    'pdetail.involve': 'Apply',
     'pdetail.funding': 'Funding: 100k for 5% of the equity or coins/tokens',
 
     // Our Vision

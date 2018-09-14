@@ -103,7 +103,10 @@ export default class extends BaseService {
             data: param
         });
 
+        const allTeams = this.store.getState().team.all_teams || []
+        allTeams[_.size(_.values(allTeams))] = result
         this.dispatch(teamRedux.actions.loading_update(false))
+        this.dispatch(teamRedux.actions.all_teams_update(allTeams))
 
         return result;
     }
