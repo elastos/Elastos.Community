@@ -46,7 +46,8 @@ class C extends BaseComponent {
                 } else if (this.state.mode === 'team') {
                     this.props.applyToTask(this.props.task._id, null, values.team)
                 } else if (this.state.mode === 'newteam') {
-                    this.props.createTeam(_.omit(values, ['applyMsg', 'team'])).then((team) => {
+                    const sanitized = _.omit(values, [ 'team', 'applyMsg' ])
+                    this.props.createTeam(sanitized).then((team) => {
                         this.props.applyToTask(this.props.task._id, null, team._id)
                     })
                 }
@@ -119,7 +120,7 @@ class C extends BaseComponent {
             },
             {
                 iconCls: 'team',
-                description: 'I would like to join the project with my Team',
+                description: 'I registered a Team and would like to work on this the project',
                 mode: 'team'
             },
             {
@@ -155,7 +156,8 @@ class C extends BaseComponent {
     getActions() {
         return (
             <div className="full-width halign-wrapper valign-wrapper">
-                <Button htmlType="submit" loading={this.props.loading} disabled={!this.state.mode}>
+                <Button htmlType="submit" type="ebp" className="d_btn"
+                    loading={this.props.loading} disabled={!this.state.mode}>
                     Apply
                 </Button>
             </div>

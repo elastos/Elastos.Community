@@ -202,10 +202,8 @@ class C extends BaseComponent {
     }
 
     handleApplicationStartModalOk = (e) => {
-        this.applyToProject().then(() => {
-            this.setState({
-                showApplicationStartModal: false
-            })
+        this.setState({
+            showApplicationStartModal: false
         })
     }
 

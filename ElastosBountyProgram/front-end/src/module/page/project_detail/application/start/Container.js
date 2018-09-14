@@ -10,11 +10,12 @@ export default createContainer(Component, (state) => {
         currentUserAvatar: state.user.profile.avatar,
         is_admin: state.user.is_admin,
         is_login: state.user.is_login,
-        ownedTeams: state.team.all_teams
+        ownedTeams: state.team.all_teams,
+        loading: state.task.loading || state.team.loading
     }
 }, () => {
     const teamService = new TeamService()
-    const taskService = new TeamService()
+    const taskService = new TaskService()
 
     return {
         async getTeams(query) {
@@ -28,6 +29,10 @@ export default createContainer(Component, (state) => {
         async applyToTask(taskId, userId, teamId, applyMsg, attachment, attachmentFilename) {
             return taskService.pushCandidate(taskId, userId, teamId, applyMsg,
                 attachment, attachmentFilename)
+        },
+
+        async createTeam(param) {
+            return teamService.create(param)
         }
     }
 })
