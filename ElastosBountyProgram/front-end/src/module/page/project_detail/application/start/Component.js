@@ -82,8 +82,7 @@ class C extends BaseComponent {
 
     getApplyWithDropdown() {
         return (
-            <Select className="team-selector" disabled={this.props.loading}
-                onChange={(value) => this.handleApplyWithChange(value)}>
+            <Select className="team-selector" disabled={this.props.loading}>
                 <Select.Option value="$me">
                     Apply as myself
                     <Avatar size="small" src={this.getAvatarWithFallback(this.props.currentUserAvatar)}
