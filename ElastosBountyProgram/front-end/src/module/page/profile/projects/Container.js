@@ -19,6 +19,7 @@ export default createContainer(Component, (state) => {
 
     const taskState = {
         ...state.task,
+        ...state.team,
         page,
         currentUserId,
         is_leader: state.user.role === USER_ROLE.LEADER,
