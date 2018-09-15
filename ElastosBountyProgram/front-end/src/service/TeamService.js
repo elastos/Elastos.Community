@@ -48,10 +48,10 @@ export default class extends BaseService {
         });
 
         this.dispatch(userRedux.actions.loading_update(false))
-        this.dispatch(userRedux.actions.teams_update(result.list))
+        this.dispatch(userRedux.actions.teams_update(result))
         this.dispatch(teamRedux.actions.loading_update(false))
         this.dispatch(teamRedux.actions.all_teams_reset())
-        this.dispatch(teamRedux.actions.all_teams_update(result.list))
+        this.dispatch(teamRedux.actions.all_teams_update(result))
 
         return result
     }

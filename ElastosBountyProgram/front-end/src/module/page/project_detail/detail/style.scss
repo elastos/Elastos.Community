@@ -39,10 +39,6 @@
                     height: 100px;
                     top: 0;
                 }
-
-                .project-name {
-                    visibility: hidden;
-                }
             }
 
             .base-icon {
@@ -62,8 +58,9 @@
 
         .project-name {
             padding-top: 20px + $gap_1;
-            color: $text_dark_gray;
             cursor: pointer;
+            font-size: 12px;
+            color: $text_dark_gray;
 
             &.active {
                 visibility: hidden;
@@ -72,7 +69,8 @@
 
         .arrow {
             width: 100%;
-            height: 100%;
+            position: absolute;
+            top: 37px;
         }
     }
     .c_Project.c_Detail {
@@ -84,8 +82,9 @@
 
         .project-header {
             position: relative;
-            min-height: 600px;
+            min-height: 400px;
             text-align: center;
+            padding-bottom: $gap_4;
 
             // this floats behind the text
             .rect-container {

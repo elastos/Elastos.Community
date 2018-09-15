@@ -13,7 +13,7 @@ export default createContainer(Component, (state) => {
 
     if (/^\/admin/.test(state.router.location.pathname)) {
         page = 'ADMIN'
-    } else if (/^\/profile/.test(state.router.location.pathname)){
+    } else if (/^\/profile/.test(state.router.location.pathname)) {
         page = 'LEADER'
     }
 
@@ -28,7 +28,6 @@ export default createContainer(Component, (state) => {
     if (!_.isArray(taskState.all_tasks)) {
         taskState.all_tasks = _.values(taskState.all_tasks)
     }
-
 
     taskState.filter = state.task.filter || {}
     taskState.owned_tasks = []

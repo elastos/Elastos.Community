@@ -10,7 +10,7 @@ import { Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button,
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
 import I18N from '@/I18N'
-import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from "../../../../config/constant"
+import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '../../../../config/constant'
 
 const FormItem = Form.Item;
 

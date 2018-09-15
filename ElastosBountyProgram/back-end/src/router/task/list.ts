@@ -86,7 +86,7 @@ export default class extends Base{
                 query.$or.push({candidates: {$in: _.map(taskCandidatesForUser, '_id')}})
             }
 
-            query.$or.push({subscribers: {$in: [currentUserId]}})
+            query.$or.push({subscribers: {$all: [{"$elemMatch": {user: currentUserId}}] }})
 
             // TODO: how about teams? Probably needs to be done too
 
