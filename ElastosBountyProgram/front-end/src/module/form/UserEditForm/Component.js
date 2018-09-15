@@ -127,7 +127,7 @@ class C extends BaseComponent {
 
         const password_fn = getFieldDecorator('password', {
             rules: [{
-                required: true, message: I18N.get('register.form.label_password')
+                required: false, message: I18N.get('register.form.label_password')
             }, {
                 validator: this.validateToNextPassword.bind(this)
             }]
@@ -139,7 +139,7 @@ class C extends BaseComponent {
 
         const passwordConfirm_fn = getFieldDecorator('passwordConfirm', {
             rules: [{
-                required: true, message: I18N.get('register.form.label_password_confirm')
+                required: false, message: I18N.get('register.form.label_password_confirm')
             }, {
                 validator: this.compareToFirstPassword.bind(this)
             }]
