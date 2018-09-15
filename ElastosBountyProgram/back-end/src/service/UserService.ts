@@ -148,6 +148,13 @@ export default class extends Base {
             updateObj.email = param.email
         }
 
+        if (param.password) {
+            const salt = uuid.v4();
+            updateObj.password = this.getPassword(param.password, salt)
+            updateObj.salt = salt
+        }
+        console.log(updateObj)
+
         if (param.removeAttachment) {
             updateObj.avatar = null
             updateObj.avatarFileType = ''

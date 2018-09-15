@@ -35,6 +35,7 @@ export default createContainer(Component, (state)=>{
                 const rs = await userService.update(userId, {
                     email: formData.email,
                     username: formData.username,
+                    password: formData.password,
                     profile: {
                         // General
                         firstName: formData.firstName,
