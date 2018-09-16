@@ -476,16 +476,6 @@ class C extends BaseComponent {
 
         const specs = [
             {
-                title: I18N.get('team.spec.media'),
-                value: TEAM_TASK_DOMAIN.MEDIA,
-                key: TEAM_TASK_DOMAIN.MEDIA
-            },
-            {
-                title: I18N.get('team.spec.iot'),
-                value: TEAM_TASK_DOMAIN.IOT,
-                key: TEAM_TASK_DOMAIN.IOT
-            },
-            {
                 title: I18N.get('team.spec.authenticity'),
                 value: TEAM_TASK_DOMAIN.AUTHENTICITY,
                 key: TEAM_TASK_DOMAIN.AUTHENTICITY
@@ -496,9 +486,9 @@ class C extends BaseComponent {
                 key: TEAM_TASK_DOMAIN.CURRENCY
             },
             {
-                title: I18N.get('team.spec.gaming'),
-                value: TEAM_TASK_DOMAIN.GAMING,
-                key: TEAM_TASK_DOMAIN.GAMING
+                title: I18N.get('team.spec.exchange'),
+                value: TEAM_TASK_DOMAIN.EXCHANGE,
+                key: TEAM_TASK_DOMAIN.EXCHANGE
             },
             {
                 title: I18N.get('team.spec.finance'),
@@ -506,9 +496,19 @@ class C extends BaseComponent {
                 key: TEAM_TASK_DOMAIN.FINANCE
             },
             {
-                title: I18N.get('team.spec.sovereignty'),
-                value: TEAM_TASK_DOMAIN.SOVEREIGNTY,
-                key: TEAM_TASK_DOMAIN.SOVEREIGNTY
+                title: I18N.get('team.spec.gaming'),
+                value: TEAM_TASK_DOMAIN.GAMING,
+                key: TEAM_TASK_DOMAIN.GAMING
+            },
+            {
+                title: I18N.get('team.spec.iot'),
+                value: TEAM_TASK_DOMAIN.IOT,
+                key: TEAM_TASK_DOMAIN.IOT
+            },
+            {
+                title: I18N.get('team.spec.media'),
+                value: TEAM_TASK_DOMAIN.MEDIA,
+                key: TEAM_TASK_DOMAIN.MEDIA
             },
             {
                 title: I18N.get('team.spec.social'),
@@ -516,9 +516,9 @@ class C extends BaseComponent {
                 key: TEAM_TASK_DOMAIN.SOCIAL
             },
             {
-                title: I18N.get('team.spec.exchange'),
-                value: TEAM_TASK_DOMAIN.EXCHANGE,
-                key: TEAM_TASK_DOMAIN.EXCHANGE
+                title: I18N.get('team.spec.sovereignty'),
+                value: TEAM_TASK_DOMAIN.SOVEREIGNTY,
+                key: TEAM_TASK_DOMAIN.SOVEREIGNTY
             }
         ]
 

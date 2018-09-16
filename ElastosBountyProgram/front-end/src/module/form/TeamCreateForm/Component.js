@@ -114,14 +114,34 @@ class C extends BaseComponent {
 
         const name_fn = getFieldDecorator('name', {
             rules: [{required: true, message: 'team name is required'}],
-            initialValue: existingTeam && existingTeam.name || ''
+            initialValue: (existingTeam && existingTeam.name) || ''
         })
 
         const specs = [
             {
-                title: I18N.get('team.spec.social'),
-                value: TEAM_TASK_DOMAIN.SOCIAL,
-                key: TEAM_TASK_DOMAIN.SOCIAL
+                title: I18N.get('team.spec.authenticity'),
+                value: TEAM_TASK_DOMAIN.AUTHENTICITY,
+                key: TEAM_TASK_DOMAIN.AUTHENTICITY
+            },
+            {
+                title: I18N.get('team.spec.currency'),
+                value: TEAM_TASK_DOMAIN.CURRENCY,
+                key: TEAM_TASK_DOMAIN.CURRENCY
+            },
+            {
+                title: I18N.get('team.spec.exchange'),
+                value: TEAM_TASK_DOMAIN.EXCHANGE,
+                key: TEAM_TASK_DOMAIN.EXCHANGE
+            },
+            {
+                title: I18N.get('team.spec.finance'),
+                value: TEAM_TASK_DOMAIN.FINANCE,
+                key: TEAM_TASK_DOMAIN.FINANCE
+            },
+            {
+                title: I18N.get('team.spec.gaming'),
+                value: TEAM_TASK_DOMAIN.GAMING,
+                key: TEAM_TASK_DOMAIN.GAMING
             },
             {
                 title: I18N.get('team.spec.iot'),
@@ -134,9 +154,14 @@ class C extends BaseComponent {
                 key: TEAM_TASK_DOMAIN.MEDIA
             },
             {
-                title: I18N.get('team.spec.finance'),
-                value: TEAM_TASK_DOMAIN.FINANCE,
-                key: TEAM_TASK_DOMAIN.FINANCE
+                title: I18N.get('team.spec.social'),
+                value: TEAM_TASK_DOMAIN.SOCIAL,
+                key: TEAM_TASK_DOMAIN.SOCIAL
+            },
+            {
+                title: I18N.get('team.spec.sovereignty'),
+                value: TEAM_TASK_DOMAIN.SOVEREIGNTY,
+                key: TEAM_TASK_DOMAIN.SOVEREIGNTY
             }
         ]
 
