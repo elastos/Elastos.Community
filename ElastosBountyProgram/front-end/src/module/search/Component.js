@@ -280,11 +280,11 @@ export default class extends BaseComponent {
     getLookingForOptions() {
         return [
             {
-                label: 'Team',
+                label: I18N.get('developer.search.team'),
                 value: 'TEAM'
             },
             {
-                label: 'Project',
+                label: I18N.get('developer.search.project'),
                 value: 'PROJECT'
             }
         ]
@@ -322,19 +322,19 @@ export default class extends BaseComponent {
     getCategoryOptions() {
         return [
             {
-                label: 'Social',
+                label: I18N.get('developer.search.category.social'),
                 value: TEAM_TASK_DOMAIN.SOCIAL
             },
             {
-                label: 'IoT',
+                label: I18N.get('developer.search.category.iot'),
                 value: TEAM_TASK_DOMAIN.IOT
             },
             {
-                label: 'Media',
+                label: I18N.get('developer.search.category.media'),
                 value: TEAM_TASK_DOMAIN.MEDIA
             },
             {
-                label: 'Finance',
+                label: I18N.get('developer.search.category.finance'),
                 value: TEAM_TASK_DOMAIN.FINANCE
             }
         ]
@@ -353,36 +353,36 @@ export default class extends BaseComponent {
             <div>
                 <MediaQuery minWidth={MIN_WIDTH_PC}>
                     <Affix offsetTop={15}>
-                        <Input.Search placeholder="Search"/>
+                        <Input.Search placeholder={I18N.get('developer.search.search.placeholder')}/>
                         <div className="group">
-                            <div className="title">Looking For</div>
+                            <div className="title">{I18N.get('developer.search.lookingFor')}</div>
                             <div className="content">
                                 {lookingForElement}
                             </div>
                         </div>
                         <div className="group">
-                            <div className="title">Skillset</div>
+                            <div className="title">{I18N.get('developer.search.skillset')}</div>
                             <div className="content">
                                 {skillsetElement}
                                 {skillsetOptions.length > this.state.entryCount &&
                                 <div className="showMore" onClick={this.enableSkillsetEntries.bind(this)}>
                                     {
-                                        !this.state.skillsetShowAllEntries ? (<span>Show More…</span>)
-                                            : (<span>Hide</span>)
+                                        !this.state.skillsetShowAllEntries ? (<span>{I18N.get('developer.search.showMore')}</span>)
+                                            : (<span>{I18N.get('developer.search.hide')}</span>)
                                     }
                                 </div>
                                 }
                             </div>
                         </div>
                         <div className="group">
-                            <div className="title">Category</div>
+                            <div className="title">{I18N.get('developer.search.category')}</div>
                             <div className="content">
                                 {categoryElement}
                                 { categoryOptions.length > this.state.entryCount &&
                                 <div className="showMore" onClick={this.enableCategoryEntries.bind(this)}>
                                     {
-                                        !this.state.categoryShowAllEntries ? (<span>Show More…</span>)
-                                            : (<span>Hide</span>)
+                                        !this.state.categoryShowAllEntries ? (<span>{I18N.get('developer.search.showMore')}</span>)
+                                            : (<span>{I18N.get('developer.search.hide')}</span>)
                                     }
                                 </div>
                                 }
@@ -581,7 +581,7 @@ export default class extends BaseComponent {
                                         <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
                                     </a>
                                     <Button onClick={clickHandler.bind(this, item.id)}
-                                        type="primary" className="pull-down">Apply</Button>
+                                        type="primary" className="pull-down">{I18N.get('developer.search.apply')}</Button>
                                 </div>
                             </List.Item>
                         </MediaQuery>
@@ -603,7 +603,7 @@ export default class extends BaseComponent {
                                         <Avatar size="large" src={item.owner.profile.avatar}/>
                                     </a>
                                     <Button onClick={clickHandler.bind(this, item.id)}
-                                        type="primary" className="pull-right">Apply</Button>
+                                        type="primary" className="pull-right">{I18N.get('developer.search.apply')}</Button>
                                 </div>
                             </List.Item>
                         </MediaQuery>

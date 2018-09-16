@@ -92,7 +92,7 @@ export default class extends StandardPage {
                                 <Breadcrumb.Item href="/">
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
-                                <Breadcrumb.Item>Teams</Breadcrumb.Item>
+                                <Breadcrumb.Item>{I18N.get('myrepublic.teams')}</Breadcrumb.Item>
                             </Breadcrumb>
                         </div>
                         <div className="p_admin_content">
@@ -102,7 +102,7 @@ export default class extends StandardPage {
                                 </Col>
                                 <Col sm={24} md={20} className="c_ProfileContainer admin-right-column wrap-box-user">
                                     <div className="pull-right filter-group">
-                                        <Button onClick={this.goCreatepage.bind(this)}>Create Team</Button>
+                                        <Button onClick={this.goCreatepage.bind(this)}>{I18N.get('myrepublic.teams.create')}</Button>
                                     </div>
                                     <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
                                         <Select
@@ -121,19 +121,19 @@ export default class extends StandardPage {
                                         <Button.Group className="filter-group">
                                             <Button
                                                 className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
-                                                onClick={this.clearFilters.bind(this)}>All</Button>
+                                                onClick={this.clearFilters.bind(this)}>{I18N.get('myrepublic.teams.all')}</Button>
                                             <Button
                                                 className={(this.state.filter === FILTERS.OWNED && 'selected') || ''}
-                                                onClick={this.setOwnedFilter.bind(this)}>Owned</Button>
+                                                onClick={this.setOwnedFilter.bind(this)}>{I18N.get('myrepublic.teams.owned')}</Button>
                                             <Button
                                                 className={(this.state.filter === FILTERS.ACTIVE && 'selected') || ''}
-                                                onClick={this.setActiveFilter.bind(this)}>Active</Button>
+                                                onClick={this.setActiveFilter.bind(this)}>{I18N.get('myrepublic.teams.active')}</Button>
                                             <Button
                                                 className={(this.state.filter === FILTERS.APPLIED && 'selected') || ''}
-                                                onClick={this.setAppliedFilter.bind(this)}>Applied</Button>
+                                                onClick={this.setAppliedFilter.bind(this)}>{I18N.get('myrepublic.teams.applied')}</Button>
                                             <Button
                                                 className={(this.state.filter === FILTERS.REJECTED && 'selected') || ''}
-                                                onClick={this.setRejectedFilter.bind(this)}>Rejected</Button>
+                                                onClick={this.setRejectedFilter.bind(this)}>{I18N.get('myrepublic.teams.rejected')}</Button>
                                         </Button.Group>
                                     </MediaQuery>
                                     <div className="clearfix"/>
