@@ -23,7 +23,8 @@ export default createContainer(Component, (state) => {
         page,
         currentUserId,
         is_leader: state.user.role === USER_ROLE.LEADER,
-        is_admin: state.user.role === USER_ROLE.ADMIN
+        is_admin: state.user.role === USER_ROLE.ADMIN,
+        loading: state.task.loading || state.team.loading
     }
 
     if (!_.isArray(taskState.all_tasks)) {
