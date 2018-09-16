@@ -65,7 +65,12 @@ export default class extends Base {
         team.members = [ res1._id ]
         await team.save()
 
-        return team;
+        await db_team.getDBInstance().populate(team, {
+            path: 'owner',
+            select: sanitize
+        })
+
+        return team
     }
 
     public async update(param): Promise<Document>{
