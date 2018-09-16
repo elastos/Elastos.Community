@@ -2,6 +2,7 @@
 // MAKE SURE YOU RUN BUILD BEFORE THIS
 
 // this is what sets the process.env
+const _ = require('lodash')
 require('../dist/src/config');
 
 (async () => {
@@ -159,17 +160,61 @@ require('../dist/src/config');
             "Governance": 100
         }
 
+        const fixTypos = [
+            {
+                name: "Search & Rescue",
+                problem: "A Search & Rescue DApp on Elastos would provide governments and humanitarian foundations a useful and effective tool for search and rescue operations in times of disasters by using swarm robotics technology. Using blockchain, swarm robots can achieve security, distributed decision making and interoperability of multiple swarms. Using blockchain’s inherent encryption features and consensus mechanisms, security and distributed decision making can be achieved. To solve interoperability of multiple swarms, Elastos side chain feature could be used – multiple side chains can be used to cater to multiple swarms, with each side chain having its own consensus mechanism, smart contracts and rules. This way swarm robots can perform multiple behaviours and actions depending on the side chain they are on, for example, scanning, excavating, guiding, delivery of supplies. Elastos ID can be used to identify each robot in a swarm giving additional security in terms of authentication for communication between robots. Elastos Runtime and Carrier can be used to boost security to a whole new level and prevent any malicious interference, effectively protecting the entire swarm of robots. The DApp could be designed in partnership with governments, humanitarian foundations, and experts and research teams related to disaster rescue."
+            },
+            {
+                name: "Music",
+                infrastructure: "- Use of Elastos ID for user identification, music files and proof of ownership- Use of Runtime and Carrier for protecting music files on devices- Using Elastos side chain feature to build DApp / smart contracts without scalability issue- Porting of existing smart contract VMs to Elastos- Create new development frameworks of elastos services"
+            },
+            {
+                name: "Mobile Payment",
+                infrastructure: "- Use of Elastos ID for identity verification and in app wallet- Use of Runtime and Carrier for protecting user data and secure communications- Using Elastos side chain feature to build DApp / smart contracts without scalability issue- Porting of existing smart contract VMs to Elastos- Create new development frameworks of elastos services- Support for multiple languages such as python, golang, rust, etc"
+            },
+            {
+                name: "Smart home",
+                infrastructure: "- Use of Elastos ID for identity verification, device registration, home profile creation-Use of Runtime and Carrier for protecting user data and secure communications-Using Elastos side chain feature to build DApp / smart contracts without scalability issue-Porting of existing smart contract VMs to Elastos-Create new development frameworks of elastos services-Support for multiple languages such as python, golang, rust, etc"
+            },
+            {
+                name: "Autonomous Car",
+                problem: "Traffic accidents globally account for the death of 1.3 million people, with another 20-50 million people injured or disabled every year. Road crashes also cause USD$518 billion in losses through insurance pay-outs or damage of infrastructure worldwide. Majority of these incidents can be attributed to human error due to recklessness, misplaced attention as well as fatigue from long hours behind the wheel. Rush hour driving is taxing on drivers and causes increased stress levels. Additionally, while affording a car has gotten easier over the years, independent travel by car remains off-limits for children, the elderly and the disabled due to inability to drive safely and the corresponding denial of driving license. These are some of the prevalent problems in the automotive industry."
+            }
+        ]
+
         for (const x in ids) {
-            const res = await db_task.update({ name: x },
-                {
-                    dAppId: ids[x],
-                    thumbnail: "https://s3-us-west-1.amazonaws.com/ebp-staging-files/cr100/" +  ids[x] + ".png"
+            let objectToUpdate = {
+                dAppId: ids[x],
+                thumbnail: "https://s3-us-west-1.amazonaws.com/ebp-staging-files/cr100/" +  ids[x] + ".png"
+            }
+            const fix = fixTypos.find((i) => i.name === x)
+            if (fix != null) {
+                const res = await db_task.findOne({ name: x })
+                if (fix.problem) {
+                    objectToUpdate.pitch = {
+                        problem: fix.problem,
+                        valueProposition: res.pitch.valueProposition,
+                        useCase: res.pitch.useCase,
+                        beneficiaries: res.pitch.beneficiaries,
+                        elaInfrastructure: res.pitch.infrastructure
+                    }
                 }
-            )
+                if (fix.infrastructure) {
+                    objectToUpdate.pitch = {
+                        problem: res.pitch.problem,
+                        valueProposition: res.pitch.valueProposition,
+                        useCase: res.pitch.useCase,
+                        beneficiaries: res.pitch.beneficiaries,
+                        elaInfrastructure: fix.infrastructure
+                    }
+                }
+            }
+            const res = await db_task.update({ name: x }, objectToUpdate)
             if(res.n !== 1 && res.n !== 0) {
                 console.log("Warning! More than 1 entries have been modified")
             }
-            //console.log(await db_task.find({ name: x }))
+            console.log("Modified", (await db_task.findOne({ name: x })).name, "(" + _.size(objectToUpdate), "fields)")
         }
 
     } catch (err) {

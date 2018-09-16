@@ -153,7 +153,6 @@ export default class extends Base {
             updateObj.password = this.getPassword(param.password, salt)
             updateObj.salt = salt
         }
-        console.log(updateObj)
 
         if (param.removeAttachment) {
             updateObj.avatar = null

@@ -322,20 +322,40 @@ export default class extends BaseComponent {
     getCategoryOptions() {
         return [
             {
-                label: 'Social',
-                value: TEAM_TASK_DOMAIN.SOCIAL
+                label: I18N.get('team.spec.authenticity'),
+                value: TEAM_TASK_DOMAIN.AUTHENTICITY
             },
             {
-                label: 'IoT',
+                label: I18N.get('team.spec.currency'),
+                value: TEAM_TASK_DOMAIN.CURRENCY
+            },
+            {
+                label: I18N.get('team.spec.exchange'),
+                value: TEAM_TASK_DOMAIN.EXCHANGE
+            },
+            {
+                label: I18N.get('team.spec.finance'),
+                value: TEAM_TASK_DOMAIN.FINANCE
+            },
+            {
+                label: I18N.get('team.spec.gaming'),
+                value: TEAM_TASK_DOMAIN.GAMING
+            },
+            {
+                label: I18N.get('team.spec.iot'),
                 value: TEAM_TASK_DOMAIN.IOT
             },
             {
-                label: 'Media',
+                label: I18N.get('team.spec.media'),
                 value: TEAM_TASK_DOMAIN.MEDIA
             },
             {
-                label: 'Finance',
-                value: TEAM_TASK_DOMAIN.FINANCE
+                label: I18N.get('team.spec.social'),
+                value: TEAM_TASK_DOMAIN.SOCIAL
+            },
+            {
+                label: I18N.get('team.spec.sovereignty'),
+                value: TEAM_TASK_DOMAIN.SOVEREIGNTY
             }
         ]
     }

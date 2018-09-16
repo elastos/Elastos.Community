@@ -910,12 +910,24 @@ export default class extends Base {
         // TODO check current user has enough votePower or not.
     }
 
+    /**
+     * Returns all task candidates that match the user id
+     *
+     * @param userId
+     */
     public async getCandidatesForUser(userId) {
-
         const db_task_candidate = this.getDBModel('Task_Candidate');
-
         return db_task_candidate.list({user: userId})
+    }
 
+    /**
+     * Returns all task candidates that match the team id
+     *
+     * @param teamId
+     */
+    public async getCandidatesForTeam(teamId) {
+        const db_task_candidate = this.getDBModel('Task_Candidate');
+        return db_task_candidate.list({team: teamId})
     }
 
     /**

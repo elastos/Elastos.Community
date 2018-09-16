@@ -158,14 +158,14 @@ export const SUBMISSION_CAMPAIGN = {
 
 export const SKILLSET_TYPE = create(['CPP', 'JAVASCRIPT', 'GO', 'PYTHON', 'JAVA', 'SWIFT']);
 export const TEAM_TASK_DOMAIN = create([
-    'MEDIA',
-    'IOT',
     'AUTHENTICITY',
     'CURRENCY',
-    'GAMING',
+    'EXCHANGE',
     'FINANCE',
-    'SOVEREIGNTY',
+    'GAMING',
+    'IOT',
+    'MEDIA',
     'SOCIAL',
-    'EXCHANGE'
+    'SOVEREIGNTY'
 ])
 export const TEAM_USER_STATUS = create(['NORMAL', 'PENDING', 'REJECT']);
