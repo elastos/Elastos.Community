@@ -60,6 +60,7 @@ class C extends BaseComponent {
     handleSubmit (e) {
         e.preventDefault()
 
+        const tags = this.props.form.getFieldInstance('tags').getValue()
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
                 let createParams = {
@@ -67,7 +68,7 @@ class C extends BaseComponent {
                     description: sanitizeHtml(values.description, {
                         allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'u', 's' ])
                     }),
-                    tags: values.tags.join(','),
+                    tags: tags.join(','),
                     logo: '',
                     metadata: '',
                     pictures: this.state.fileList || []
