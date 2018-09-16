@@ -29,8 +29,6 @@ export default class extends Base{
             delete query.archived
         }
 
-        console.log(param)
-
         // for now the admin separates FORM_EXT to another menu item
         // however this is not the case for users
         if (param.admin) {
