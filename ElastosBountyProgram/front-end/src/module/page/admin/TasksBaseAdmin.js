@@ -5,8 +5,8 @@ import moment from 'moment'
 import './admin.scss'
 
 import Navigator from './shared/Navigator/Component'
-
-import { Breadcrumb, Col, Icon, Row, Input, Table } from 'antd'
+import I18N from '@/I18N'
+import { Breadcrumb, Col, Icon, Row, Input, Table, Dropdown, Menu } from 'antd'
 
 import {TASK_STATUS} from '@/constant'
 
@@ -40,6 +40,22 @@ export default class extends AdminPage {
         await this.setState({taskNameFilter: value})
 
         this.saveFilter()
+    }
+
+    buildStatusDropdown() {
+        return (
+            <Menu onClick={this.clickTaskStatusFilter.bind(this)}>
+                {_.keys(TASK_STATUS).map((taskStatus) => {
+                    return <Menu.Item key={taskStatus}>
+                        {I18N.get(`taskStatus.${taskStatus}`)}
+                    </Menu.Item>
+                })}
+            </Menu>
+        )
+    }
+
+    clickTaskStatusFilter(key) {
+        debugger
     }
 
     ord_getAllTasks() {
@@ -137,6 +153,8 @@ export default class extends AdminPage {
             }
         }]
 
+        const statusDropdown = this.buildStatusDropdown()
+
         return (
             <div className="p_admin_index ebp-wrap">
                 <div className="ebp-header-divider" />
@@ -161,6 +179,12 @@ export default class extends AdminPage {
                                                   defaultValue={this.state.taskNameFilter || ''}
                                                   prefix={<Icon type="solution" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                                   placeholder="search task"/>
+
+                                    <Dropdown overlay={statusDropdown}>
+                                        <a className="ant-dropdown-link" href="#">
+                                            {I18N.get('admin.tasks.status')} <Icon type="down" />
+                                        </a>
+                                    </Dropdown>
                                 </div>
                                 <div className="clearfix vert-gap-sm"/>
                                 <Table

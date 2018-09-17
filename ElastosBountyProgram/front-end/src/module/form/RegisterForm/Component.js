@@ -22,14 +22,20 @@ class C extends BaseComponent {
     handleSubmit(e) {
         e.preventDefault()
 
-        this.props.form.validateFields((err, values) => {
+        this.props.form.validateFields(async (err, values) => {
             if (!err) {
                 console.log('Register - received values of form: ', values)
 
+                // step 2 - there is already a code generated
                 if (this.state.requestedCode) {
-                    this.props.register(this.state.savedValues.username,
-                        this.state.savedValues.password, _.omit(this.state.savedValues, ['username', 'password']))
+                    this.props.register(
+                        this.state.savedValues.username,
+                        this.state.savedValues.password,
+                        _.omit(this.state.savedValues, ['username', 'password'])
+                    )
                 } else {
+
+                    // step 1 - check username, if valid send registration code
                     const code = this.generateRegCode()
                     this.props.sendRegistrationCode(values.email, code)
                     this.setState({
