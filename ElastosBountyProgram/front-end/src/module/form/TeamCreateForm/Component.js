@@ -222,7 +222,7 @@ class C extends BaseComponent {
 
         const tags_fn = getFieldDecorator('tags', {
             rules: [],
-            initialValue: existingTeam && existingTeam.tags || ''
+            initialValue: existingTeam && existingTeam.tags || []
         })
         const tags_el = <InputTags />
 
