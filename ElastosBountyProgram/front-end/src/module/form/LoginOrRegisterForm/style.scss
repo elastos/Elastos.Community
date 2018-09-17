@@ -1,0 +1,11 @@
+@import '@/style/variable';
+@import '@/style/color';
+
+.c_LoginOrRegister {
+    $imageWidth: 382px;
+
+    .main-form {
+        margin-left: $imageWidth + $gap_3;
+        padding-top: $gap_4;
+    }
+}

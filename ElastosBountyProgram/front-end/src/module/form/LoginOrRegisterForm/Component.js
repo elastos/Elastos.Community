@@ -39,14 +39,21 @@ export default class extends BaseComponent {
         }
 
         return (
-            <Tabs activeKey={this.state.activeKey} onChange={this.handleChangeTab()}>
-                <TabPane tab="Register" key="register">
-                    <RegisterForm />
-                </TabPane>
-                <TabPane tab="Login" key="login">
-                    <LoginForm />
-                </TabPane>
-            </Tabs>
+            <div className="c_LoginOrRegister">
+                <div className="pull-left">
+                    <img src="/assets/images/login-left.png"/>
+                </div>
+                <div className="main-form">
+                    <Tabs activeKey={this.state.activeKey} onChange={this.handleChangeTab()}>
+                        <TabPane tab="Register" key="register">
+                            <RegisterForm />
+                        </TabPane>
+                        <TabPane tab="Login" key="login">
+                            <LoginForm />
+                        </TabPane>
+                    </Tabs>
+                </div>
+            </div>
         )
     }
 }

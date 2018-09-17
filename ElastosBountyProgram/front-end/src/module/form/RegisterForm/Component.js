@@ -319,32 +319,13 @@ class C extends BaseComponent {
     }
 
     ord_render() {
-        const {getFieldDecorator} = this.props.form
         const form = this.getForm()
-
-        // TODO: terms of service checkbox
-
-        // TODO: react-motion animate slide left
 
         return (
             <div className="c_registerContainer">
-                <h2>
-                    {I18N.get('register.title')}
-                </h2>
-
-                <h5>
-                    <div>
-                        {I18N.get('register.description_1')}
-                    </div>
-                    <div>
-                        {I18N.get('register.description_2')}
-                    </div>
-                </h5>
-
                 {form}
             </div>
         )
-
     }
 }
 

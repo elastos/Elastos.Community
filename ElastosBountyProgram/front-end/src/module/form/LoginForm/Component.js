@@ -70,14 +70,6 @@ class C extends BaseComponent {
         const p = this.getInputProps()
         return (
             <Form onSubmit={this.handleSubmit.bind(this)} className="c_loginForm">
-                <h2>
-                    {I18N.get('login.title')}
-                </h2>
-
-                <h5>
-                    {I18N.get('login.description_1')}
-                </h5>
-
                 <FormItem>
                     {p.userName}
                 </FormItem>
