@@ -20,7 +20,8 @@ import './style.scss'
 class C extends BaseComponent {
     ord_states() {
         return {
-            mode: null // solo, team, newteam
+            mode: null, // solo, team, newteam
+            confirmation: false
         }
     }
 
@@ -43,17 +44,17 @@ class C extends BaseComponent {
                 if (this.state.mode === 'solo' ||
                     (this.state.mode === 'team' && values.team === '$me')) {
                     this.props.applyToTask(this.props.task._id, this.props.currentUserId, null, values.applyMsg).then(() => {
-                        this.props.finisher()
+                        this.setState({ confirmation: true })
                     })
                 } else if (this.state.mode === 'team') {
                     this.props.applyToTask(this.props.task._id, null, values.team).then(() => {
-                        this.props.finisher()
+                        this.setState({ confirmation: true })
                     })
                 } else if (this.state.mode === 'newteam') {
                     const sanitized = _.omit(values, [ 'team', 'applyMsg' ])
                     this.props.createTeam(sanitized).then((team) => {
                         this.props.applyToTask(this.props.task._id, null, team._id).then(() => {
-                            this.props.finisher()
+                            this.setState({ confirmation: true })
                         })
                     })
                 }
@@ -64,12 +65,31 @@ class C extends BaseComponent {
     ord_render () {
         return (
             <div className="c_ApplicationStart">
-                <Form onSubmit={this.handleSubmit.bind(this)}>
-                    {this.getHeader()}
-                    {this.getModeSelector()}
-                    {this.getModePanel()}
-                    {this.getActions()}
-                </Form>
+                { this.state.confirmation
+                    ? (
+                        <div className="c_ApplicationConfirm">
+                            <div className="confirm-picture halign-wrapper">
+                                <img src="/assets/images/AUTHTH.png"/>
+                            </div>
+                            <h2 className="confirm-message halign-wrapper">
+                                {I18N.get('developer.cr100.application.success')}
+                            </h2>
+                            <div className="confirm-actions halign-wrapper">
+                                <Button onClick={() => this.props.finisher()}>
+                                    {I18N.get('developer.cr100.application.close')}
+                                </Button>
+                            </div>
+                        </div>
+                    )
+                    : (
+                        <Form onSubmit={this.handleSubmit.bind(this)}>
+                            {this.getHeader()}
+                            {this.getModeSelector()}
+                            {this.getModePanel()}
+                            {this.getActions()}
+                        </Form>
+                    )
+                }
             </div>
         )
     }
