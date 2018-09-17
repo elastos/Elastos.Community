@@ -8,6 +8,12 @@
         margin-bottom: $gap_3;
     }
 
+    .c_ApplicationConfirm {
+        .confirm-message {
+            padding: $gap_4 0;
+        }
+    }
+
     .ant-card {
         cursor: pointer;
 
