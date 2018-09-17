@@ -78,18 +78,11 @@ class C extends BaseComponent {
                 </FormItem>
                 <FormItem>
                     {p.persist}
-                </FormItem>
-                <FormItem className="d_item">
-                    <a className="login-form-forgot" onClick={() => this.props.history.push('/forgot-password')}>{I18N.get('login.forget')}</a>
+                    <a className="login-form-forgot pull-right" onClick={() => this.props.history.push('/forgot-password')}>{I18N.get('login.forget')}</a>
                 </FormItem>
                 <FormItem>
                     <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
                         {I18N.get('login.submit')}
-                    </Button>
-                </FormItem>
-                <FormItem>
-                    <Button onClick={() => this.props.history.push('/register')} type="ebp" htmlType="button" className="d_btn">
-                        Don't have an account? Click here to register.
                     </Button>
                 </FormItem>
             </Form>

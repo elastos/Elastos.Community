@@ -85,7 +85,7 @@ export default {
 
     // LoginForm
     'login.label_username': 'Please input your email address or username',
-    'login.username': 'Email address or username',
+    'login.username': 'Email',
     'login.label_password': 'Please input your password',
     'login.password': 'Password',
     'login.logged': 'Keep me logged in',

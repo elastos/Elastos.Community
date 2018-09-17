@@ -273,37 +273,10 @@ class C extends BaseComponent {
                         {p.email}
                     </FormItem>
                     <FormItem>
-                        {p.userName}
-                    </FormItem>
-                    <FormItem>
                         {p.pwd}
                     </FormItem>
                     <FormItem>
                         {p.pwdConfirm}
-                    </FormItem>
-                    <FormItem>
-                        <Collapse accordion={true} bordered={false}>
-                            <Collapse.Panel header={I18N.get('3533')} key="1">
-                                <FormItem>
-                                    {p.firstName}
-                                </FormItem>
-                                <FormItem>
-                                    {p.lastName}
-                                </FormItem>
-                                <FormItem>
-                                    {p.country}
-                                </FormItem>
-                                <FormItem>
-                                    {p.organizer}
-                                </FormItem>
-                                <FormItem>
-                                    {p.developer}
-                                </FormItem>
-                                <FormItem>
-                                    {p.source}
-                                </FormItem>
-                            </Collapse.Panel>
-                        </Collapse>
                     </FormItem>
                     {/*<FormItem>
                         {p.recaptcha}
