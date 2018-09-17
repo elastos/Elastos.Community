@@ -175,7 +175,7 @@ export default {
     'developer.components.docs': 'Docs',
     'developer.components.info': 'More Info',
     'developer.cr100.application.success': 'Application Successful',
-    'developer.cr100.application.close': 'Close',
+    'developer.cr100.application.view': 'View',
     'developer.cr100.projects': 'Projects',
     'developer.cr100.submit_whitepaper': 'Submit Whitepaper',
     'developer.cr100.welcome.1': 'CR100 is our flagship project, inviting teams of entrepreneurs to apply for funding to design and build the next great Elastos Ecosystem DApp. The 100 projects listed are templates that exemplify the diversity and abilities of the Elastos infrastructure. ',

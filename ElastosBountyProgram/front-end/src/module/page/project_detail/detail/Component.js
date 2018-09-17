@@ -206,6 +206,7 @@ class C extends BaseComponent {
         this.setState({
             showApplicationStartModal: false
         })
+        this.showApplicationModal()
     }
 
     handleLoginRegisterModalCancel = (e) => {

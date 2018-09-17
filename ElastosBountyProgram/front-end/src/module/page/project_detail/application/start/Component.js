@@ -76,7 +76,7 @@ class C extends BaseComponent {
                             </h2>
                             <div className="confirm-actions halign-wrapper">
                                 <Button onClick={() => this.props.finisher()}>
-                                    {I18N.get('developer.cr100.application.close')}
+                                    {I18N.get('developer.cr100.application.view')}
                                 </Button>
                             </div>
                         </div>
