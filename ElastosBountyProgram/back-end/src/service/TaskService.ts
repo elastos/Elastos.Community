@@ -496,6 +496,14 @@ export default class extends Base {
             .populate('user', sanitize)
             .populate('team', sanitize)
 
+        if (taskCandidate.team) {
+            const db_team = this.getDBModel('Team');
+            await db_team.db.populate(taskCandidate.team, {
+                path: 'owner',
+                select: sanitize
+            })
+        }
+
         return taskCandidate
     }
 
@@ -581,7 +589,10 @@ export default class extends Base {
         })
 
         if (taskCandidate.team) {
-            await db_user.db.populate(taskCandidate.team, ['owner'])
+            await db_user.db.populate(taskCandidate.team, {
+                path: 'owner',
+                select: sanitize
+            })
         }
 
         // send the email - first get the task owner
