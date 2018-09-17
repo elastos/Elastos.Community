@@ -262,13 +262,13 @@ class C extends BaseComponent {
         const candidate = _.find(this.props.detail.candidates, (candidate) => {
             if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
                 return candidate.user._id === userId
+            } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
+                return candidate.team.owner._id === userId
             }
             return false
         })
-        if (!candidate) {
-            return false
-        }
-        return this.isMember(candidate._id)
+
+        return !!candidate
     }
 
     isMember(taskCandidateId) {
@@ -520,7 +520,7 @@ class C extends BaseComponent {
             : this.showLoginRegisterModal
 
         const applyHandler = this.props.is_login
-            ? this.getApplicant()
+            ? this.isMemberByUserId(this.props.currentUserId)
                 ? this.showApplicationModal
                 : this.showApplicationStartModal
             : this.showLoginRegisterModal
