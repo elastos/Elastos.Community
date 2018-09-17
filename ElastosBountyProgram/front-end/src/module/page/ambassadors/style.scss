@@ -161,7 +161,7 @@ $landingPageWidth: 1152px;
         color: $cr100_green;
         @media only screen and (max-width: $mobile-width) {
           margin-top: 75px;
-          font-size: 50px;
+          font-size: 40px;
         }
       }
 
@@ -182,15 +182,20 @@ $landingPageWidth: 1152px;
           width: 875px;
           @media only screen and (max-width: $mobile-width) {
             font-size: 12px;
-            width: 100%;
+            width: 80%;
           }
 
           > .button {
             margin-top: $gap_5;
-            width: 85%;
+            width: 250px;
             height: 60px;
             font-size: 22px;
             border-radius: unset;
+
+            @media only screen and (max-width: $mobile-width) {
+              margin-top: $gap_3;
+              width: 85%;
+            }
           }
         }
 
