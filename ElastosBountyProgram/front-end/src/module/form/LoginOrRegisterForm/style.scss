@@ -4,8 +4,10 @@
 .c_LoginOrRegister {
     $imageWidth: 382px;
     $imageHeight: 501px;
+    margin-left: -36px;
+    padding-top: $gap_3;
 
-    height: $imageHeight - 36px;
+    height: $imageHeight - 36px + $gap_3;
 
     .main-form {
         margin-left: $imageWidth + $gap_3;
