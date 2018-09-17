@@ -166,6 +166,57 @@ export default class extends StandardPage {
         )
     }
 
+    getListItem(item) {
+        const profile = item.owner.profile || {};
+        return (
+            <div className="list-item">
+                <MediaQuery minWidth={MIN_WIDTH_PC}>
+                    <List.Item
+                        key={item.id}
+                        extra={this.getCarousel(item)}
+                    >
+                        <h3 class="no-margin no-padding one-line brand-color">
+                            <a onClick={this.linkTeamDetail.bind(this, item.id)}>{item.title}</a>
+                        </h3>
+                        <h5 class="no-margin">
+                            {item.description}
+                        </h5>
+                        <div className="description-content" dangerouslySetInnerHTML={{__html: item.content}} />
+                        <div className="ant-list-item-right-box">
+                            <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                <Avatar size="large" icon="user" className="pull-right" src={profile.avatar}/>
+                                <div class="clearfix"/>
+                                <div>{profile.firstName} {profile.lastName}</div>
+                            </a>
+                            <Button type="primary" className="pull-down" onClick={this.linkTeamDetail.bind(this, item.id)}>View</Button>
+                        </div>
+                    </List.Item>
+                </MediaQuery>
+                <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                    <List.Item
+                        key={item.id}
+                        className="ignore-right-box"
+                    >
+                        <h3 class="no-margin no-padding one-line brand-color">
+                            <a onClick={this.linkTeamDetail.bind(this, item.id)}>{item.title}</a>
+                        </h3>
+                        <h5 className="no-margin">
+                            {item.description}
+                        </h5>
+                        <div>
+                            <a onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                <span>{profile.firstName} {profile.lastName}</span>
+                                <Divider type="vertical"/>
+                                <Avatar size="large" icon="user" src={profile.avatar}/>
+                            </a>
+                            <Button type="primary" className="pull-right" onClick={this.linkTeamDetail.bind(this, item.id)}>View</Button>
+                        </div>
+                    </List.Item>
+                </MediaQuery>
+            </div>
+        );
+    }
+
     getListComponent() {
         const teams = this.props.all_teams
         const description_fn = (entity) => {
@@ -195,53 +246,7 @@ export default class extends StandardPage {
         return (
             <List itemLayout='vertical' size='large' loading={this.props.loading}
                 className="with-right-box" dataSource={data}
-                renderItem={item => (
-                    <div className="list-item">
-                        <MediaQuery minWidth={MIN_WIDTH_PC}>
-                            <List.Item
-                                key={item.id}
-                                extra={this.getCarousel(item)}
-                            >
-                                <h3 class="no-margin no-padding one-line brand-color">
-                                    <a onClick={this.linkTeamDetail.bind(this, item.id)}>{item.title}</a>
-                                </h3>
-                                <h5 class="no-margin">
-                                    {item.description}
-                                </h5>
-                                <div className="description-content" dangerouslySetInnerHTML={{__html: item.content}} />
-                                <div className="ant-list-item-right-box">
-                                    <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
-                                        <Avatar size="large" icon="user" className="pull-right" src={item.owner.profile.avatar}/>
-                                        <div class="clearfix"/>
-                                        <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
-                                    </a>
-                                    <Button type="primary" className="pull-down" onClick={this.linkTeamDetail.bind(this, item.id)}>View</Button>
-                                </div>
-                            </List.Item>
-                        </MediaQuery>
-                        <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
-                            <List.Item
-                                key={item.id}
-                                className="ignore-right-box"
-                            >
-                                <h3 class="no-margin no-padding one-line brand-color">
-                                    <a onClick={this.linkTeamDetail.bind(this, item.id)}>{item.title}</a>
-                                </h3>
-                                <h5 className="no-margin">
-                                    {item.description}
-                                </h5>
-                                <div>
-                                    <a onClick={this.linkUserDetail.bind(this, item.owner)}>
-                                        <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
-                                        <Divider type="vertical"/>
-                                        <Avatar size="large" icon="user" src={item.owner.profile.avatar}/>
-                                    </a>
-                                    <Button type="primary" className="pull-right" onClick={this.linkTeamDetail.bind(this, item.id)}>View</Button>
-                                </div>
-                            </List.Item>
-                        </MediaQuery>
-                    </div>
-                )}
+                renderItem={item => this.getListItem(item)}
             />
         )
     }
