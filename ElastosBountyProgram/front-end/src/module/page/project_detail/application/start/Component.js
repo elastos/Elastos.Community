@@ -134,32 +134,38 @@ class C extends BaseComponent {
     getHeader() {
         return (
             <div className="full-width halign-wrapper start-header">
-                <h3 className="start-project-title">
+                <h3 className="start-project-title komu-a">
                     #{this.props.task.dAppId} - {this.props.task.name}
                 </h3>
-                <div className="start-welcome">
-                    Thanks for your interest.<br/>
-                    Please select below the option which describes you best.
+                <div className="strike-text start-welcome">
+                    <div className="strike-line"/>
+                    <p>Thanks for your interest.</p>
+                </div>
+                <br/>
+                <div className="strike-text start-welcome">
+                    <div className="strike-line"/>
+                    <p>Please select below the option which describes you best.</p>
                 </div>
             </div>
         )
     }
 
     getModeSelector() {
+        // TODO: Change place holder user images with team
         const data = [
             {
-                iconCls: 'user',
+                img: '/assets/images/user_blurred.png',
                 description: 'I would like to contribute to this project',
                 mode: 'solo'
             },
             {
-                iconCls: 'team',
-                description: 'I registered a Team and would like to work on this the project',
+                img: '/assets/images/user_blurred.png',
+                description: 'I registered a team and would like to work on this the project',
                 mode: 'team'
             },
             {
-                iconCls: 'usergroup-add',
-                description: 'I would like to create a Team and work on this project',
+                img: '/assets/images/user_blurred.png',
+                description: 'I would like to create a team and work on this project',
                 mode: 'newteam'
             }
         ]
@@ -170,12 +176,14 @@ class C extends BaseComponent {
                     grid={{gutter: 16, column: 3}}
                     dataSource={data}
                     renderItem={item => (
-                        <List.Item>
-                            <Card title={<Avatar size={128} icon={item.iconCls} shape="square"/>}
-                                onClick={() => this.changeMode(item.mode)}
-                                className={this.state.mode === item.mode ? 'selected' : ''}>
-                                {item.description}
-                            </Card>
+                        <List.Item className="selector-item">
+                            <div className={this.state.mode === item.mode ? 'selected' : ''}>
+                                <div className="selector-image"
+                                    onClick={() => this.changeMode(item.mode)}>
+                                    <img src={item.img}/>
+                                </div>
+                            </div>
+                            <div className="selector-description">{item.description}</div>
                         </List.Item>
                     )}
                 />
@@ -206,7 +214,10 @@ class C extends BaseComponent {
         const {getFieldDecorator} = this.props.form
         const compLookup = {
             solo: (
-                <Input.TextArea rows={4} placeholder="Why do you want to join?"/>
+                <div className="mode-panel">
+                    <div className="label komu-a">Tell us why do you want to join?</div>
+                    <Input.TextArea rows={4} className="input-field"/>
+                </div>
             ),
             team: this.getApplyWithDropdown(),
             newteam: (
