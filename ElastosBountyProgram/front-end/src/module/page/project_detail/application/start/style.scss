@@ -3,8 +3,7 @@
 
 .c_ApplicationStart {
     .start-header,
-    .start-selector,
-    .start-mode {
+    .start-selector {
         margin-bottom: $gap_3;
     }
 
@@ -92,16 +91,33 @@
         }
     }
 
-    .mode-panel {
+    .start-mode {
+        margin-bottom: 0;
         text-align: left;
-        margin: 0 $gap_4;
-        .label {
+
+        .mode-panel {
+            margin: 0 $gap_4;
+        }
+        .label, .ant-form-item-label {
             text-transform: uppercase;
             font-size: 36px;
             color: black;
         }
         .input-field {
             width: 100%;
+            margin-bottom: $gap_3;
+        }
+        .d_taskCreateForm {
+            margin: 0 $gap_4;
+            .ant-form-item-label, .ant-form-item-control-wrapper {
+                width: 100%;
+                text-align: left;
+            }
+            .ant-form-item-label {
+                font-family: "komu-a", sans-serif;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+            }
         }
     }
 

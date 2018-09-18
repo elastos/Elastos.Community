@@ -219,7 +219,14 @@ class C extends BaseComponent {
                     <Input.TextArea rows={4} className="input-field"/>
                 </div>
             ),
-            team: this.getApplyWithDropdown(),
+            team: (
+                <div className="mode-panel">
+                    <div className="label komu-a">Choose your team</div>
+                    <Input.TextArea rows={1} className="input-field"/>
+                    <div className="label komu-a">Tell us why do you want to join?</div>
+                    <Input.TextArea rows={4} className="input-field"/>
+                </div>
+            ),
             newteam: (
                 <TeamCreateForm embedded={true} form={this.props.form}/>
             )
