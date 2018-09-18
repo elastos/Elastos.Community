@@ -10,13 +10,10 @@ import './style.scss'
 const TabPane = Tabs.TabPane
 
 export default class extends BaseComponent {
-
-    constructor(props) {
-        super(props)
-
-        this.state = {
+    ord_states() {
+        return {
             persist: true,
-            activeKey: 'register'
+            activeKey: 'login' // login, register
         }
     }
 
@@ -45,11 +42,11 @@ export default class extends BaseComponent {
                 </div>
                 <div className="main-form">
                     <Tabs activeKey={this.state.activeKey} onChange={this.handleChangeTab()}>
-                        <TabPane tab="Register" key="register">
-                            <RegisterForm />
-                        </TabPane>
                         <TabPane tab="Login" key="login">
                             <LoginForm />
+                        </TabPane>
+                        <TabPane tab="Register" key="register">
+                            <RegisterForm />
                         </TabPane>
                     </Tabs>
                 </div>
