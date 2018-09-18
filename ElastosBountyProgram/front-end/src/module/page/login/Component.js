@@ -1,6 +1,6 @@
 import React from 'react';
 import StandardPage from '../StandardPage';
-import LoginForm from '@/module/form/LoginForm/Container';
+import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container';
 
 import './style.scss'
 
@@ -9,7 +9,7 @@ export default class extends StandardPage {
         return (
             <div className="p_login ebp-wrap">
                 <div className="d_box">
-                    <LoginForm />
+                    <LoginOrRegisterForm />
                 </div>
             </div>
         );

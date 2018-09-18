@@ -1,0 +1,60 @@
+@import '@/style/variable';
+@import '@/style/color';
+@import "@/style/typography";
+
+.c_LoginOrRegister {
+    $imageWidth: 382px;
+    $imageHeight: 501px;
+    margin-left: -36px;
+    padding-top: $gap_2;
+
+    height: $imageHeight - 36px + $gap_2;
+
+    .main-form {
+        margin-left: $imageWidth + $gap_3;
+        padding-top: $gap_3;
+    }
+
+    .c_registerContainer, .c_loginForm {
+        margin-top: $gap_3;
+    }
+
+    .ant-tabs-ink-bar {
+        display: none !important;
+    }
+
+    .ant-tabs-bar {
+        border: none;
+    }
+
+    .ant-tabs-nav {
+        width: 100%;
+        text-align: center;
+
+        .ant-tabs-tab {
+            @extend .komu-a;
+            padding: 0;
+            margin: 0;
+            font-size: 54px;
+            font-weight: 500;
+            color: $bg_light_gray;
+            text-transform: uppercase;
+
+            &:first-child {
+                border-right: 1px solid $bg_navy;
+            }
+
+            &:not(:first-child) {
+                padding-left: 32px;
+            }
+
+            &:not(:last-child) {
+                padding-right: 32px;
+            }
+
+            &.ant-tabs-tab-active {
+                color: $bg_navy;
+            }
+        }
+    }
+}

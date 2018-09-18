@@ -281,30 +281,6 @@ class C extends BaseComponent {
                     <FormItem>
                         {p.pwdConfirm}
                     </FormItem>
-                    <FormItem>
-                        <Collapse accordion={true} bordered={false}>
-                            <Collapse.Panel header={I18N.get('3533')} key="1">
-                                <FormItem>
-                                    {p.firstName}
-                                </FormItem>
-                                <FormItem>
-                                    {p.lastName}
-                                </FormItem>
-                                <FormItem>
-                                    {p.country}
-                                </FormItem>
-                                <FormItem>
-                                    {p.organizer}
-                                </FormItem>
-                                <FormItem>
-                                    {p.developer}
-                                </FormItem>
-                                <FormItem>
-                                    {p.source}
-                                </FormItem>
-                            </Collapse.Panel>
-                        </Collapse>
-                    </FormItem>
                     {/*<FormItem>
                         {p.recaptcha}
                     </FormItem>*/}
@@ -319,32 +295,13 @@ class C extends BaseComponent {
     }
 
     ord_render() {
-        const {getFieldDecorator} = this.props.form
         const form = this.getForm()
-
-        // TODO: terms of service checkbox
-
-        // TODO: react-motion animate slide left
 
         return (
             <div className="c_registerContainer">
-                <h2>
-                    {I18N.get('register.title')}
-                </h2>
-
-                <h5>
-                    <div>
-                        {I18N.get('register.description_1')}
-                    </div>
-                    <div>
-                        {I18N.get('register.description_2')}
-                    </div>
-                </h5>
-
                 {form}
             </div>
         )
-
     }
 }
 
