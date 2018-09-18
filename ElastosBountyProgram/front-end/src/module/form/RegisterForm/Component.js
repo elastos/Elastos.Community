@@ -273,6 +273,9 @@ class C extends BaseComponent {
                         {p.email}
                     </FormItem>
                     <FormItem>
+                        {p.userName}
+                    </FormItem>
+                    <FormItem>
                         {p.pwd}
                     </FormItem>
                     <FormItem>
