@@ -36,6 +36,7 @@ export default class extends Base {
         const doc = {
             name: param.name,
             domain: param.domain,
+            type: param.type || constant.TEAM_TYPE.TEAM,
             metadata: this.param_metadata(param.metadata),
             tags: this.param_tags(param.tags),
             profile: {
@@ -93,6 +94,7 @@ export default class extends Base {
         const doc = {
             name: param.name,
             domain: param.domain,
+            type: param.type,
             metadata: this.param_metadata(param.metadata),
             tags: this.param_tags(param.tags),
             profile: {
