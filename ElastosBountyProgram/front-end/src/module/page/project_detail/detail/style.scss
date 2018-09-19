@@ -303,5 +303,11 @@
             color: $cr100_green;
             margin-top: $gap_3;
         }
+
+        .project-detail-nobar {
+            .ant-modal-close {
+
+            }
+        }
     }
 }

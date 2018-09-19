@@ -68,16 +68,27 @@ class C extends BaseComponent {
                 { this.state.confirmation
                     ? (
                         <div className="c_ApplicationConfirm">
+                            <div className="left-box-container">
+                                <img src="/assets/images/rm-connector4-gray.svg"/>
+                            </div>
+                            <div className="right-box-container">
+                                <div className="box"/>
+                                <div className="small-box"/>
+                                <img src="/assets/images/oomph.png"/>
+                            </div>
                             <div className="confirm-picture halign-wrapper">
                                 <img src="/assets/images/AUTHTH.png"/>
                             </div>
-                            <h2 className="confirm-message halign-wrapper">
+                            <h2 className="confirm-message halign-wrapper komu-a">
                                 {I18N.get('developer.cr100.application.success')}
                             </h2>
                             <div className="confirm-actions halign-wrapper">
                                 <Button onClick={() => this.props.finisher()}>
                                     {I18N.get('developer.cr100.application.view')}
                                 </Button>
+                            </div>
+                            <div className="lower-box-container">
+                                <img src="/assets/images/training_green_slashed_box.png"/>
                             </div>
                         </div>
                     )

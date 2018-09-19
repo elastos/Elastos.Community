@@ -113,17 +113,109 @@
                 width: 100%;
                 text-align: left;
             }
-            .ant-form-item-label {
-                font-family: "komu-a", sans-serif;
-                text-transform: uppercase;
+            .ant-form-item-required:before {
+                display: none;
+            }
+            .ant-form-item-label label {
+                line-height: 54px;
+                font-size: 36px;
                 letter-spacing: 0.1em;
+                text-transform: uppercase;
+                font-family: "komu-a", sans-serif;
+                color: black;
+            }
+            .ant-select-selection__rendered {
+                height: 40px;
+            }
+            .select-arrow {
+                position: absolute;
+                top: 11.5px;
+                right: $gap_3;
+                transform: rotate(90deg);
+                width: 17px;
+                height: 33px;
+                background-size: contain;
+                background: url("/assets/images/arrow.svg") no-repeat;
+            }
+            .form-item-tags {
+                display: none;
             }
         }
     }
 
     .c_ApplicationConfirm {
+        position: relative;
+        padding-bottom: $gap_5;
+
+        .left-box-container {
+            position: absolute;
+            left: -36px;
+            top: 40%;
+
+            img {
+                position: absolute;
+                top: 50%;
+                display: block;
+            }
+        }
+
+        .right-box-container {
+            position: absolute;
+            z-index: 0;
+            top: $gap_4;
+            right: $gap_2;
+
+            .box {
+                margin-left: 50px;
+            }
+            img {
+                position: absolute;
+                z-index: 1;
+                top: 12.5px;
+                left: 62.5px;
+                width: 75px;
+                height: 75px;
+            }
+        }
+
+        .lower-box-container {
+            position: absolute;
+            left: $gap_3;
+            bottom: $gap_4;
+
+            img {
+                position: absolute;
+                top: 50%;
+                display: block;
+            }
+        }
+
+        .small-box {
+            width: 50px;
+            height: 50px;
+            background-color: #f1f4f7;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: #f1f4f7;
+        }
         .confirm-message {
             padding: $gap_4 0;
+            font-size: 50px;
+        }
+        .confirm-actions {
+            button {
+                width: 40%;
+                height: 50px;
+                color: black;
+                font-family: "komu-a", sans-serif;
+                letter-spacing: 0.1em;
+                font-weight: bold;
+                font-size: 16px;
+                text-transform: uppercase;
+            }
         }
     }
 
