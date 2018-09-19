@@ -121,7 +121,6 @@ export default class extends Base {
             user: userId,
             apply_reason: applyMsg,
             role: constant.TEAM_ROLE.MEMBER,
-            status: constant.TEAM_USER_STATUS.PENDING,
             level: ''
         }
         const db_user = this.getDBModel('User')
@@ -146,6 +145,11 @@ export default class extends Base {
         if (!user) {
             throw 'invalid user id'
         }
+
+        // Accept CRcle applications automatically
+        doc.status = team.type === constant.TEAM_TYPE.CRCLE
+            ? constant.TEAM_USER_STATUS.NORMAL
+            : constant.TEAM_USER_STATUS.PENDING
 
         const db_ut = this.getDBModel('User_Team')
         if (await db_ut.findOne(doc)) {
