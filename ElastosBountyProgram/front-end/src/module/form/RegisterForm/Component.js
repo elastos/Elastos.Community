@@ -8,6 +8,7 @@ import {
 } from '@/config/constant'
 import config from '@/config'
 import I18N from '@/I18N'
+import _ from 'lodash'
 
 import './style.scss'
 

@@ -59,7 +59,7 @@ export default class extends BaseService {
             })
         });
 
-        return true
+        return this.login(username, password)
     }
 
     async forgotPassword(email) {
