@@ -211,7 +211,7 @@ class C extends BaseComponent {
             <div className="full-width halign-wrapper valign-wrapper">
                 <Button htmlType="submit" type="ebp" className="d_btn"
                     loading={this.props.loading} disabled={!this.state.mode}>
-                    Apply
+                    <span className="komu-a">Apply</span>
                 </Button>
             </div>
         )
