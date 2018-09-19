@@ -204,7 +204,10 @@ class C extends BaseComponent {
             initialValue: existingTeam && existingTeam.domain || []
         })
         const type_el = (
-            <TreeSelect treeData={specs} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
+            <div>
+                <TreeSelect treeData={specs} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
+                <div className='select-arrow'/>
+            </div>
         )
 
         const skillset_fn = getFieldDecorator('recruitedSkillsets', {
@@ -212,7 +215,10 @@ class C extends BaseComponent {
             initialValue: existingTeam && existingTeam.recruitedSkillsets || []
         })
         const skillset_el = (
-            <TreeSelect treeData={skillsets} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
+            <div>
+                <TreeSelect treeData={skillsets} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
+                <div className='select-arrow'/>
+            </div>
         )
 
         const description_fn = getFieldDecorator('description', {
@@ -292,7 +298,7 @@ class C extends BaseComponent {
 
         const formContent = (
             <div>
-                <FormItem label="Name" {...formItemLayout}>
+                <FormItem label="Team Name" {...formItemLayout}>
                     {p.name}
                 </FormItem>
                 <FormItem label="Type" {...formItemLayout}>
@@ -312,7 +318,7 @@ class C extends BaseComponent {
                 <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
                     <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
                 </Modal>
-                <FormItem label="Tags" {...formItemLayout}>
+                <FormItem className="form-item-tags" label="Tags" {...formItemLayout}>
                     {p.tags}
                 </FormItem>
 

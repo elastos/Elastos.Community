@@ -20,7 +20,7 @@ import {
     Upload,
     Badge
 } from 'antd'
-import {upload_file} from "@/util";
+import {upload_file} from '@/util';
 import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS } from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import I18N from '@/I18N'
