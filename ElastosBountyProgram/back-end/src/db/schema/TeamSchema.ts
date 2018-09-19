@@ -16,6 +16,10 @@ export const Team = {
         type: Map,
         of: String
     },
+    type : {
+        type : String,
+        required : true
+    },
     tags: [String],
     profile: TeamProfile,
     domain: [String],

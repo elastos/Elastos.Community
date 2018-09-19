@@ -14,7 +14,7 @@ export const USER_ROLE = {
     LEADER : 'LEADER',
     ADMIN : 'ADMIN',
     COUNCIL: 'COUNCIL'
-};
+}
 
 export const USER_LANGUAGE = {
     en: 'en',
@@ -85,7 +85,7 @@ export const TRANS_STATUS = {
 // log
 export const LOG_TYPE = {
     'APPLY_TEAM' : 'apply_team'
-};
+}
 
 export const SUBMISSION_TYPE = {
     BUG: 'BUG',
@@ -95,16 +95,16 @@ export const SUBMISSION_TYPE = {
     OTHER: 'OTHER',
     FORM_EXT: 'FORM_EXT',
     EMPOWER_35: 'EMPOWER_35'
-};
+}
 
 export const SUBMISSION_CAMPAIGN = {
     COMMUNITY_ORGANIZER: 'COMMUNITY_ORGANIZER',
     ANNI_2008: 'ANNI_2008',
     ANNI_VIDEO_2008: 'ANNI_VIDEO_2008',
     EMPOWER_35: 'EMPOWER_35'
-};
+}
 
-export const SKILLSET_TYPE = create(['CPP', 'JAVASCRIPT', 'GO', 'PYTHON', 'JAVA', 'SWIFT']);
+export const SKILLSET_TYPE = create(['CPP', 'JAVASCRIPT', 'GO', 'PYTHON', 'JAVA', 'SWIFT'])
 export const TEAM_TASK_DOMAIN = create([
     'MEDIA',
     'IOT',
@@ -117,10 +117,9 @@ export const TEAM_TASK_DOMAIN = create([
     'EXCHANGE'
 ])
 
-export const TEAM_ROLE = create(['MEMBER', 'LEADER']);
-export const TEAM_USER_STATUS = create(['NORMAL', 'PENDING', 'REJECT']);
-export const TEAM_TYPE = create(['DEVELOP', 'MARKET', 'DESIGN', 'PROJECT', 'OTHER']);
-
+export const TEAM_ROLE = create(['MEMBER', 'LEADER'])
+export const TEAM_USER_STATUS = create(['NORMAL', 'PENDING', 'REJECT'])
+export const TEAM_TYPE = create(['TEAM', 'CRCLE'])
 export const TASK_CANDIDATE_CATEGORY = {
     RSVP: 'RSVP'
 }
