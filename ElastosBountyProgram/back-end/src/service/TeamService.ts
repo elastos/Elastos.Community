@@ -393,6 +393,10 @@ export default class extends Base {
             query.owner = param.owner
         }
 
+        if (param.type) {
+            query.type = param.type
+        }
+
         if (param.teamHasUser) {
             const db_user_team = this.getDBModel('User_Team')
             let listObj:any = {
