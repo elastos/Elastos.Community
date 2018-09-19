@@ -146,15 +146,23 @@ export default class extends Base {
             throw 'invalid user id'
         }
 
-        // Accept CRcle applications automatically
-        doc.status = team.type === constant.TEAM_TYPE.CRCLE
-            ? constant.TEAM_USER_STATUS.NORMAL
-            : constant.TEAM_USER_STATUS.PENDING
-
         const db_ut = this.getDBModel('User_Team')
         if (await db_ut.findOne(doc)) {
             throw 'candidate already exists'
         }
+
+        const userTeams = await db_ut.find({ user: userId })
+        const userCrcles = _.filter(userTeams, { type: constant.TEAM_TYPE.CRCLE })
+        const MAX_USER_CIRCLES = 2
+
+        if (_.size(userCrcles) >= MAX_USER_CIRCLES) {
+            throw 'maximum number of circles reached'
+        }
+
+        // Accept CRcle applications automatically
+        doc.status = team.type === constant.TEAM_TYPE.CRCLE
+            ? constant.TEAM_USER_STATUS.NORMAL
+            : constant.TEAM_USER_STATUS.PENDING
 
         console.log('add team candidate =>', doc);
         const teamCandidate = await db_ut.save(doc);
