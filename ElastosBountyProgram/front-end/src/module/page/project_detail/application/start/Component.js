@@ -167,16 +167,19 @@ class C extends BaseComponent {
             {
                 img: '/assets/images/user_blurred.png',
                 description: 'I would like to contribute to this project',
+                text: 'Solo',
                 mode: 'solo'
             },
             {
                 img: '/assets/images/user_blurred.png',
                 description: 'I registered a team and would like to work on this the project',
+                text: 'Existing Team',
                 mode: 'team'
             },
             {
                 img: '/assets/images/user_blurred.png',
                 description: 'I would like to create a team and work on this project',
+                text: 'Create Team',
                 mode: 'newteam'
             }
         ]
@@ -191,7 +194,10 @@ class C extends BaseComponent {
                             <div className={this.state.mode === item.mode ? 'selected' : ''}>
                                 <div className="selector-image"
                                     onClick={() => this.changeMode(item.mode)}>
-                                    <img src={item.img}/>
+                                    <div className="selector-combo">
+                                        <img src={item.img}/>
+                                        <span className="overlay-text">{item.text}</span>
+                                    </div>
                                 </div>
                             </div>
                             <div className="selector-description">{item.description}</div>
@@ -233,7 +239,7 @@ class C extends BaseComponent {
             team: (
                 <div className="mode-panel">
                     <div className="label komu-a">Choose your team</div>
-                    <Input.TextArea rows={1} className="input-field"/>
+                    {this.getApplyWithDropdown()}
                     <div className="label komu-a">Tell us why do you want to join?</div>
                     <Input.TextArea rows={4} className="input-field"/>
                 </div>

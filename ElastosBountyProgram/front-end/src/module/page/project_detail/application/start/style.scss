@@ -68,25 +68,46 @@
     .start-selector {
         .selector-item {
             text-align: center;
-
-            .selected .selector-image img {
-                margin-top: 0;
-                width: 230px;
-                height: 230px;
+            .selector-combo {
+                position: relative;
             }
             .selector-image {
-                margin-bottom: $gap_2;
+                margin: 0 auto;
                 cursor: pointer;
+                width: 190px;
+                height: auto;
 
-                img {
+                .selector-combo img {
                     margin-top: 20px;
-                    width: 190px;
-                    height: 190px;
+                    margin-left: 0;
                 }
             }
-            .selector-description {
+            .overlay-text {
+                position: absolute;
+                top: 20px;
+                left: 0;
+                right: 0;
+                width: 100%;
                 margin: 0 auto;
+                color: white;
+                font-size: 24px;
+                line-height: 190px;
+                word-break: break-word;
+            }
+            .selector-description {
+                margin: 20px auto;
                 width: 220px;
+            }
+            .selected .selector-image .selector-combo {
+                img {
+                    margin-top: 0;
+                    margin-left: -20px;
+                    width: 230px;
+                    height: 230px;
+                }
+                .overlay-text {
+                    color: $primary_color;
+                }
             }
         }
     }
@@ -106,6 +127,26 @@
         .input-field {
             width: 100%;
             margin-bottom: $gap_3;
+        }
+        .team-selector {
+            width: 100%;
+            margin-bottom: $gap_2;
+            .ant-select-selection {
+                height: 40px;
+
+                .ant-select-arrow::before {
+                    content: '';
+                }
+                .ant-select-arrow {
+                    top: calc(50% - 7px);
+                    width: 14px;
+                    height: 27px;
+                    margin-right: 4px;
+                    transform: rotate(90deg);
+                    background-size: contain;
+                    background: url("/assets/images/arrow.svg") no-repeat;
+                }
+            }
         }
         .d_taskCreateForm {
             margin: 0 $gap_4;
@@ -130,10 +171,10 @@
             .select-arrow {
                 position: absolute;
                 top: 11.5px;
-                right: $gap_3;
+                right: $gap_1;
                 transform: rotate(90deg);
-                width: 17px;
-                height: 33px;
+                width: 14px;
+                height: 27px;
                 background-size: contain;
                 background: url("/assets/images/arrow.svg") no-repeat;
             }
