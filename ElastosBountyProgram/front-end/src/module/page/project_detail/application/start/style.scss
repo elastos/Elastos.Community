@@ -200,6 +200,9 @@
                 }
             }
         }
+        .ant-select-selection-selected-value {
+            line-height: 40px;
+        }
         .d_taskCreateForm {
             margin: 0 $gap_4;
             .ant-form-item-label, .ant-form-item-control-wrapper {
@@ -236,6 +239,13 @@
             #description {
                 z-index: 1;
                 margin-bottom: $gap_2;
+            }
+            li.ant-select-selection__choice {
+                height: 100%;
+                line-height: 40px;
+            }
+            li.ant-select-search {
+                height: 100%;
             }
         }
     }
