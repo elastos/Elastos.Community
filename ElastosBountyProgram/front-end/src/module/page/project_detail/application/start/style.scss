@@ -2,6 +2,54 @@
 @import '@/style/color';
 
 .c_ApplicationStart {
+
+    .left-box-container {
+        position: absolute;
+        left: -36px;
+        top: 40%;
+
+        img {
+            position: absolute;
+            top: 50%;
+            display: block;
+        }
+    }
+
+    .upper-corner {
+        top: $gap_2;
+        left: $gap_2;
+    }
+
+    .right-box-container {
+        position: absolute;
+        top: $gap_5 * 2;
+        right: 157px - 36px;
+
+        img {
+            position: absolute;
+            top: 50%;
+            display: block;
+        }
+    }
+
+    .lower-box-container {
+        position: absolute;
+        left: $gap_3;
+        bottom: 0;
+        z-index: 0;
+
+        .box {
+            margin-left: 50px;
+        }
+        img {
+            position: absolute;
+            z-index: 1;
+            bottom: 12.5px;
+            left: 62.5px;
+            width: 75px;
+            height: 75px;
+        }
+    }
     .start-header,
     .start-selector {
         margin-bottom: $gap_3;
@@ -9,6 +57,7 @@
 
     .start-header {
         position: relative;
+        padding-top: $gap_3;
         padding-bottom: $gap_3;
 
         .start-project-title {
@@ -124,6 +173,9 @@
             font-size: 36px;
             color: black;
         }
+        .ant-input.input-field {
+            z-index: 1;
+        }
         .input-field {
             width: 100%;
             margin-bottom: $gap_3;
@@ -181,12 +233,17 @@
             .form-item-tags {
                 display: none;
             }
+            #description {
+                z-index: 1;
+                margin-bottom: $gap_2;
+            }
         }
     }
 
     .c_ApplicationConfirm {
         position: relative;
         padding-bottom: $gap_5;
+
 
         .left-box-container {
             position: absolute;
@@ -199,7 +256,6 @@
                 display: block;
             }
         }
-
         .right-box-container {
             position: absolute;
             z-index: 0;
@@ -218,7 +274,6 @@
                 height: 75px;
             }
         }
-
         .lower-box-container {
             position: absolute;
             left: $gap_3;
@@ -229,18 +284,6 @@
                 top: 50%;
                 display: block;
             }
-        }
-
-        .small-box {
-            width: 50px;
-            height: 50px;
-            background-color: #f1f4f7;
-        }
-
-        .box {
-            width: 100px;
-            height: 100px;
-            background-color: #f1f4f7;
         }
         .confirm-message {
             padding: $gap_4 0;
@@ -260,6 +303,22 @@
         }
     }
 
+    .ant-form {
+        position: relative;
+    }
+
+    .small-box {
+        width: 50px;
+        height: 50px;
+        background-color: #f1f4f7;
+    }
+
+    .box {
+        width: 100px;
+        height: 100px;
+        background-color: #f1f4f7;
+    }
+
     .d_btn {
         border-radius: 0;
         border-color: black;
@@ -267,6 +326,7 @@
         font-size: 24px;
         width: 140px;
         height: 50px;
+        margin-bottom: $gap_2;
     }
 
     .ant-card {

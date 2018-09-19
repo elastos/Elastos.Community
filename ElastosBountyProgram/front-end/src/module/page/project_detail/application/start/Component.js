@@ -98,6 +98,17 @@ class C extends BaseComponent {
                             {this.getModeSelector()}
                             {this.getModePanel()}
                             {this.getActions()}
+                            <div className="left-box-container upper-corner">
+                                <img src="/assets/images/training_green_slashed_box.png"/>
+                            </div>
+                            <div className="lower-box-container">
+                                <div className="small-box"/>
+                                <div className="box"/>
+                                <img src="/assets/images/oomph.png"/>
+                            </div>
+                            <div className="right-box-container">
+                                <img src="/assets/images/rm-connector4-green.svg"/>
+                            </div>
                         </Form>
                     )
                 }
@@ -171,13 +182,13 @@ class C extends BaseComponent {
                 mode: 'solo'
             },
             {
-                img: '/assets/images/user_blurred.png',
+                img: '/assets/images/team_blurred.svg',
                 description: 'I registered a team and would like to work on this the project',
                 text: 'Existing Team',
                 mode: 'team'
             },
             {
-                img: '/assets/images/user_blurred.png',
+                img: '/assets/images/team_blurred.svg',
                 description: 'I would like to create a team and work on this project',
                 text: 'Create Team',
                 mode: 'newteam'
