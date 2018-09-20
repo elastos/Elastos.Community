@@ -45,7 +45,7 @@ export default createContainer(Component, (state) => {
                 }
             } catch (err) {
                 console.error(err)
-                message.error('Registration Failed - Please Contact Our Support')
+                message.error(err && err.message ? err.message : 'Registration Failed - Please Contact Our Support')
             }
         },
 

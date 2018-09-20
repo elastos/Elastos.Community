@@ -39,11 +39,11 @@ export default class extends Base {
         this.validate_email(param.email);
 
         // check username and email unique
-        if(await db_user.findOne({username})){
-            throw 'username already exists';
+        if (await db_user.findOne({ username })) {
+            throw 'This username is already taken'
         }
-        if(await db_user.findOne({email : param.email})){
-            throw 'email already exists';
+        if (await db_user.findOne({ email: param.email })) {
+            throw 'This email is already taken'
         }
 
         const salt = uuid.v4();
