@@ -232,13 +232,17 @@ class C extends BaseComponent {
             }
         ]
 
+        const showUploadList = {
+            showPreviewIcon: true
+        }
+
         return (
             <div>
                 <div>
                     {this.getApplyWithDropdown()}
                 </div>
                 <Upload.Dragger name="file" multiple={false} customRequest={customRequest.bind(this)}
-                    defaultFileList={defaultFileList}>
+                    defaultFileList={defaultFileList} showUploadList={showUploadList}>
                     <p className="ant-upload-drag-icon">
                         <Icon type="inbox" />
                     </p>
