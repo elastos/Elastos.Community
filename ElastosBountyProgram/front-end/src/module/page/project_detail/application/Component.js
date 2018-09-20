@@ -28,8 +28,11 @@ import _ from 'lodash'
 import './style.scss'
 
 class C extends BaseComponent {
-    ord_states() {
-        return {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            attachment_loading: false
         }
     }
 
@@ -199,12 +202,43 @@ class C extends BaseComponent {
     }
 
     getHeader() {
+        const customRequest = (info) => {
+            this.setState({
+                attachment_loading: true
+            });
+            upload_file(info.file).then((d) => {
+                this.props.updateApplication(this.props.taskId, {
+                    taskCandidateId: this.props.taskCandidateId,
+                    attachment: d.url,
+                    attachmentType: d.type,
+                    attachmentFilename: d.filename
+                })
+
+                this.setState({
+                    attachment_loading: false
+                });
+
+                info.onSuccess(null, info.file)
+            })
+        }
+
+        const applicant = this.getApplicant()
+        const defaultFileList = applicant && applicant.attachment && [
+            {
+                uid: '1',
+                name: applicant.attachmentFilename,
+                url: applicant.attachment,
+                status: 'done'
+            }
+        ]
+
         return (
             <div>
                 <div>
                     {this.getApplyWithDropdown()}
                 </div>
-                <Upload.Dragger name="file" multiple={false}>
+                <Upload.Dragger name="file" multiple={false} customRequest={customRequest.bind(this)}
+                    defaultFileList={defaultFileList}>
                     <p className="ant-upload-drag-icon">
                         <Icon type="inbox" />
                     </p>
