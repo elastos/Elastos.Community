@@ -40,10 +40,10 @@ export default class extends Base {
 
         // check username and email unique
         if(await db_user.findOne({username})){
-            throw 'username already exists';
+            throw 'this username has been registered, please log in directly';
         }
         if(await db_user.findOne({email : param.email})){
-            throw 'email already exists';
+            throw 'this email has been registered, please log in directly';
         }
 
         const salt = uuid.v4();
