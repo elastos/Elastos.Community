@@ -472,11 +472,22 @@ export default class extends Base {
         const candidateSelector = {
             _id: param.taskCandidateId
         }
-        const updateObj:any = {
-            user,
-            team,
-            attachment,
-            attachmentFilename
+        const updateObj:any = {}
+
+        if (user) {
+            updateObj.user = user
+        }
+
+        if (team) {
+            updateObj.team = team
+        }
+
+        if (attachment) {
+            updateObj.attachment = attachment
+        }
+
+        if (attachmentFilename) {
+            updateObj.attachmentFilename = attachmentFilename
         }
 
         if (user || team) {
