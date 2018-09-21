@@ -35,9 +35,10 @@ export default createContainer(Component, (state) => {
                     const registerRedirect = sessionStorage.getItem('registerRedirect')
 
                     if (registerRedirect) {
-                        sessionStorage.removeItem('registerRedirect')
-                        sessionStorage.setItem('registered', true)
-                        this.history.push(registerRedirect)
+                        sessionStorage.setItem('registerWelcome', '1')
+                        sessionStorage.setItem('registered', '1')
+                        this.props.handleChangeTab('post')
+                        console.log('registerWelcome')
                     } else {
                         this.history.push('/empower35')
                     }
