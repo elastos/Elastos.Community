@@ -413,6 +413,10 @@ export default class extends Base {
             ]
         }
 
+        if (param.type) {
+            query.type = param.type;
+        }
+
         const teams = await db_team.list(query, {
             updatedAt: -1
         });

@@ -30,7 +30,10 @@ export default createContainer(Component, (state) => {
         },
 
         async getTeams(filters) {
-            return teamService.index(filters)
+            return teamService.index({
+                ...filters,
+                type: 'TEAM'
+            })
         },
 
         resetTeams () {

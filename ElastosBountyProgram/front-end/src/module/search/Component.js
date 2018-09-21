@@ -571,10 +571,10 @@ export default class extends BaseComponent {
 
         const clickHandler = !this.props.is_login
             ? this.showLoginRegisterModal
-            : this.isLookingForTeam()
-            ? this.showTeamModal
+            : this.isLookingForTeam() ? this.showTeamModal
             : this.showProjectModal
 
+        console.log(entities)
         return (
             <List loading={this.props.loading} itemLayout='vertical' size='large'
                 className="with-right-box" dataSource={data}
