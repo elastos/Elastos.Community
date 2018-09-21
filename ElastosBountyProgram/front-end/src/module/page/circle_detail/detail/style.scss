@@ -1,0 +1,55 @@
+@import '../../../../style/variable';
+@import '../../../../style/color';
+@import '../../../../style/typography';
+
+.c_Circle.c_Detail {
+    margin-top: $gap_3;
+    text-align: justify;
+
+    .header {
+        min-height: 400px;
+        padding-bottom: $gap_5;
+        text-align: center;
+        .circle-name {
+            font-size: 100px;
+        }
+        .circle-contributor-number, .circle-members-number {
+            font-size: 42px;
+            line-height: 42px;
+            color: $primary_color;
+        }
+        .join-button {
+            background: white;
+        }
+        .circle-down-arrow {
+            margin-top: $gap_2;
+        }
+    }
+    .content-section {
+        width: 100%;
+        background: black;
+        color: white;
+        padding: $gap_5 0;
+
+        .content-paragraphs {
+            width: 60%;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 17px;
+        }
+    }
+    .members-section {
+        width: 100%;
+        padding: $gap_5 $gap_5;
+        text-align: center;
+
+        .member-header {
+            margin-bottom: $gap_2;
+            font-size: 60px;
+        }
+
+        .members-list {
+
+        }
+    }
+}

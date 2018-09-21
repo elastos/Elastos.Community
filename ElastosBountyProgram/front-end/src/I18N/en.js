@@ -211,6 +211,9 @@ export default {
     'emp35.circles.statement.3': 'equivalently it is the curve traced out by a point that moves so that its distance from a given point is constant.',
     'emp35.circles.statement.4': 'The distance betwen any of the points and the center is called the radius.',
 
+    // Circle Detail
+    'circle.header.join': 'Join',
+
     // Training
     'training.header.title': 'Ambassadors Training',
     'training.header.content.1': 'Cyber Republic will offer an all expenses paid trip for ambassadors',

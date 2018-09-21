@@ -29,7 +29,7 @@ export default class extends BaseComponent {
             (this.props.team.owner && this.props.team.owner._id)
 
         return (
-            <div className="c_TeamDetail">
+            <div className="c_CircleDetail">
                 {isTeamOwner && this.renderHeader()}
                 {this.state.editing ? this.renderEditForm() : this.renderDetail()}
             </div>
