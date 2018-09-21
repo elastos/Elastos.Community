@@ -376,8 +376,8 @@ export default {
         other: 'Other',
     },
     mappingRoleToName: {
-        ADMIN: 'Admin',
         MEMBER: 'Member',
         LEADER: 'Organizer',
+        ADMIN: 'Admin'
     }
 }
