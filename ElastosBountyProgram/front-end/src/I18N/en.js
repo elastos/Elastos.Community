@@ -137,6 +137,9 @@ export default {
     'register.form.hear': 'Where did you hear about us?',
     'register.code': 'We have sent a confirmation code to your email.',
     'register.submit': 'Register',
+    'register.welcome': 'Welcome to the cyber republic!',
+    'register.join_circle': 'Join a Circle and earn ELA',
+    'register.join': 'Join',
     '3533': 'More about you',
     '3534': 'Country',
 
