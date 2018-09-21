@@ -132,14 +132,21 @@ export default class extends Base {
 
         let user = await db_user.findById(userId)
         let countryChanged = false
+        let is_admin = this.currentUser.role === constant.USER_ROLE.ADMIN ? true : false
 
-        if (!this.currentUser || (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
-            this.currentUser._id.toString() !== userId)) {
+        if (!this.currentUser || (!is_admin && this.currentUser._id.toString() !== userId)) {
             throw 'Access Denied'
         }
 
         if (!user) {
             throw `userId: ${userId} not found`
+        }
+
+        if(is_admin){
+            if(Object.keys(constant.USER_ROLE).indexOf(param.role) === -1){
+                throw 'invalid role'
+            }
+            updateObj.role = param.role
         }
 
         if (param.profile && param.profile.country && param.profile.country !== user.profile.country) {
