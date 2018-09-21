@@ -573,6 +573,7 @@ export default class extends BaseComponent {
             : this.isLookingForTeam() ? this.showTeamModal
             : this.showProjectModal
 
+        console.log(entities)
         return (
             <List loading={this.props.loading} itemLayout='vertical' size='large'
                 className="with-right-box" dataSource={data}
