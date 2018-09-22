@@ -2,6 +2,7 @@ import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import { TEAM_USER_STATUS } from '@/constant'
 import {Avatar, Button, Col, Form, Icon, Popconfirm, Row, Spin, Table, Input} from 'antd'
+import Comments from '@/module/common/comments/Container'
 import './style.scss'
 import _ from 'lodash'
 import I18N from '@/I18N'
@@ -152,7 +153,7 @@ class C extends BaseComponent {
                 </div>
                 <div className="members-list">
                     <Table
-                        className="no-borders headerless cr-scroll"
+                        className="no-borders headerless cr-table-scroll"
                         dataSource={members}
                         columns={columns}
                         bordered={false}
@@ -165,55 +166,17 @@ class C extends BaseComponent {
         )
     }
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                console.log('Received values of form: ', values);
-            }
-        });
-    }
-
-    renderCreatePost() {
-        const { getFieldDecorator } = this.props.form;
-        return (
-            <div>
-                <div className="form-wrap">
-                    <div className="form-header komu-a">Create Post</div>
-                    <Form>
-                        <FormItem>
-                            {getFieldDecorator('headline', {
-                                rules: [{ required: true, message: 'Please input a headline!' }]
-                            })(
-                                <Input className="headline-input" placeholder="Headline" />
-                            )}
-                        </FormItem>
-                        <FormItem>
-                            {getFieldDecorator('message', {
-                                rules: [{ required: true, message: 'Please input a message!' }]
-                            })(
-                                <TextArea rows={4} placeholder="Message" />
-                            )}
-                        </FormItem>
-                        <FormItem>
-                            <Button
-                                className="cr-btn pull-right"
-                                type="primary"
-                                htmlType="submit"
-                                onClick={this.handleSubmit.bind(this)}>
-                                Submit
-                            </Button>
-                        </FormItem>
-                    </Form>
-                </div>
-            </div>
-        )
-    }
-
     renderComments() {
         return (
             <div>
-                <div>Comments</div>
+                <div className="form-header-wrap">
+                    <div className="form-header komu-a">Create Post</div>
+                </div>
+                <Comments
+                    headlines={true}
+                    type="team"
+                    canPost={true}
+                    model={this.props.match.params.circleId}/>
             </div>
         )
     }
@@ -233,13 +196,11 @@ class C extends BaseComponent {
                 <div className="members-section">
                     {this.renderMembers()}
                 </div>
-                <div className="right-rectangle"/>
-                <div className="create-post-section">
-                    {this.renderCreatePost()}
-                </div>
-                <div className="comments-section">
-                    {this.renderComments()}
-                </div>
+                <div className="rectangle double-size pull-right"/>
+                <div className="clearfix"/>
+                {this.renderComments()}
+                <div className="rectangle"/>
+                <div className="rectangle double-size"/>
             </div>)
         )
     }

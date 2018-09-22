@@ -67,43 +67,83 @@
             margin: $gap_4 auto $gap_2 auto;
         }
     }
-    .right-rectangle {
-        width: 70%;
+    .rectangle {
+        width: 33%;
         height: 30px;
-        margin-left: 30%;
         background: $bg_dark;
     }
-    .create-post-section {
-        min-height: 400px;
-        padding: $gap_4 0;
-        background: $bg_dark;
+    .double-size {
+        width: 67%;
+    }
+    .form-header-wrap {
+        padding-top: $gap_4;
+        background-color: $bg_dark;
+    }
+    .form-header {
+        width: 70%;
+        margin: 0 auto;
+        text-transform: uppercase;
+        letter-spacing: normal;
+        font-size: 60px;
+        color: $cr100_green;
+    }
+    .c_Comments {
+        h3.no-margin {
+            display: none;
+        }
+        .ant-list-header {
+            min-height: 400px;
+            padding: $gap_3 0;
+            background: $bg_dark;
 
-        .form-wrap {
-            max-width: 70%;
-            margin: 0 auto;
+            .c_commentForm {
+                max-width: 70%;
+                margin: 0 auto;
 
-            .form-header {
-                margin-bottom: $gap_2;
-                text-transform: uppercase;
-                letter-spacing: normal;
-                font-size: 60px;
-                color: $cr100_green;
-            }
-            .ant-input {
-                border-radius: 0;
-            }
-            .headline-input {
-                height: 40px;
-            }
-            .ant-form-explain {
-                visibility: hidden;
-            }
-            .cr-btn {
-                background: $cr100_green;
+                .ant-input {
+                    border-radius: 0;
+                }
+                .headline-input {
+                    height: 40px;
+                }
+                .ant-form-explain {
+                    visibility: hidden;
+                }
+                button {
+                    height: 53px;
+                    padding: 15px 31px 10px;
+                    border-radius: 0;
+                    border: 1px solid #0F2631;
+                    background-color: $cr100_green;
+
+                    > span {
+                        color: #000;
+                        font-family: "komu-a", sans-serif;
+                        font-size: 28px;
+                        line-height: 33px;
+                        letter-spacing: 0.1em;
+                    }
+                }
             }
         }
-    }
-    .comments-section {
-        min-height: 400px;
+        .ant-spin-container {
+            width: 70%;
+            margin: $gap_5 auto;
+            max-height: 400px;
+            overflow-y: scroll;
+
+            &::-webkit-scrollbar {
+                width: 10px;
+                background: white;
+            }
+            &::-webkit-scrollbar-track {
+                background: $bg_obsidian_transparent;
+                border: 4px solid white;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: $bg_obsidian;
+                border-radius: 10px;
+            }
+        }
     }
 }
