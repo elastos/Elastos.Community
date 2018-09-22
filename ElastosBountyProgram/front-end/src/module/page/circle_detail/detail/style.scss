@@ -10,13 +10,19 @@
         min-height: 400px;
         padding-bottom: $gap_5;
         text-align: center;
+
         .circle-name {
             font-size: 100px;
         }
         .circle-contributor-number, .circle-members-number {
-            font-size: 42px;
-            line-height: 42px;
-            color: $primary_color;
+            font-size: 80px;
+            line-height: 80px;
+            letter-spacing: normal;
+            color: $cr100_green;
+        }
+        .circle-contributor-label, .circle-members-label {
+            font-size: 20px;
+            line-height: 20px;
         }
         .join-button {
             background: white;
@@ -27,7 +33,7 @@
     }
     .content-section {
         width: 100%;
-        background: black;
+        background: $bg_dark;
         color: white;
         padding: $gap_5 0;
 
@@ -44,12 +50,60 @@
         text-align: center;
 
         .member-header {
-            margin-bottom: $gap_2;
-            font-size: 60px;
-        }
+            display: inline-block;
 
+            .member-header-icon {
+                width: 12px;
+                height: 12px;
+                margin-bottom: $gap_2;
+            }
+            .member-header-label {
+                font-size: 60px;
+                line-height: 60px;
+            }
+        }
         .members-list {
-
+            max-width: 800px;
+            margin: $gap_4 auto $gap_2 auto;
         }
+    }
+    .right-rectangle {
+        width: 70%;
+        height: 30px;
+        margin-left: 30%;
+        background: $bg_dark;
+    }
+    .create-post-section {
+        min-height: 400px;
+        padding: $gap_4 0;
+        background: $bg_dark;
+
+        .form-wrap {
+            max-width: 70%;
+            margin: 0 auto;
+
+            .form-header {
+                margin-bottom: $gap_2;
+                text-transform: uppercase;
+                letter-spacing: normal;
+                font-size: 60px;
+                color: $cr100_green;
+            }
+            .ant-input {
+                border-radius: 0;
+            }
+            .headline-input {
+                height: 40px;
+            }
+            .ant-form-explain {
+                visibility: hidden;
+            }
+            .cr-btn {
+                background: $cr100_green;
+            }
+        }
+    }
+    .comments-section {
+        min-height: 400px;
     }
 }

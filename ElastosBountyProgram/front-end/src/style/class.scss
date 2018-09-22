@@ -160,3 +160,21 @@
 .mirror-image {
   transform: scaleX(-1);
 }
+
+.cr-scroll {
+  .ant-table-scroll {
+    .ant-table-body::-webkit-scrollbar {
+      width: 10px;
+      background: white;
+    }
+    .ant-table-body::-webkit-scrollbar-track {
+      background: $bg_obsidian_transparent;
+      border: 4px solid white;
+    }
+    .ant-table-body::-webkit-scrollbar-thumb {
+      height: 40px;
+      background: $bg_obsidian;
+      border-radius: 10px;
+    }
+  }
+}

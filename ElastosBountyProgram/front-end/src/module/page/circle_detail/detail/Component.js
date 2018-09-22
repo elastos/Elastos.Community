@@ -1,10 +1,13 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import { TEAM_USER_STATUS } from '@/constant'
-import {Avatar, Button, Col, Form, Popconfirm, Row, Spin, Table} from 'antd'
+import {Avatar, Button, Col, Form, Icon, Popconfirm, Row, Spin, Table, Input} from 'antd'
 import './style.scss'
 import _ from 'lodash'
 import I18N from '@/I18N'
+
+const FormItem = Form.Item;
+const { TextArea } = Input;
 
 class C extends BaseComponent {
 
@@ -90,17 +93,17 @@ class C extends BaseComponent {
             <div>
                 <span className="circle-name komu-a">{this.props.detail.name}</span>
                 <Row>
-                    <Col span={8}>
-                        <div className="circle-contributor-number">413</div>
-                        <span className="circle-contributor-label">Contributors</span>
+                    <Col span={10}>
+                        <div className="circle-contributor-number komu-a">413</div>
+                        <span className="circle-contributor-label synthese">Contributors</span>
                     </Col>
-                    <Col span={8}>
+                    <Col span={4}>
                         {this.getMainActions()}
                         <img className="circle-down-arrow" src="/assets/images/emp35/down_arrow.png"/>
                     </Col>
-                    <Col span={8}>
-                        <div className="circle-members-number">85</div>
-                        <span className="circle-members-label">Members</span>
+                    <Col span={10}>
+                        <div className="circle-members-number komu-a">85</div>
+                        <span className="circle-members-label synthese">Members</span>
                     </Col>
                 </Row>
             </div>
@@ -143,18 +146,74 @@ class C extends BaseComponent {
         }]
         return (
             <div>
-                <img src=""/>
-                <span className="member-header komu-a">Member</span>
+                <div className="member-header">
+                    <div className="member-header-icon"><img src="/assets/images/tri-square-dark.svg"/></div>
+                    <div className="member-header-label komu-a">Member</div>
+                </div>
                 <div className="members-list">
                     <Table
-                        className="no-borders headerless"
+                        className="no-borders headerless cr-scroll"
                         dataSource={members}
                         columns={columns}
                         bordered={false}
                         rowKey="_id"
-                        pagination={false}>
+                        pagination={false}
+                        scroll={{ y: 400 }}>
                     </Table>
                 </div>
+            </div>
+        )
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log('Received values of form: ', values);
+            }
+        });
+    }
+
+    renderCreatePost() {
+        const { getFieldDecorator } = this.props.form;
+        return (
+            <div>
+                <div className="form-wrap">
+                    <div className="form-header komu-a">Create Post</div>
+                    <Form>
+                        <FormItem>
+                            {getFieldDecorator('headline', {
+                                rules: [{ required: true, message: 'Please input a headline!' }]
+                            })(
+                                <Input className="headline-input" placeholder="Headline" />
+                            )}
+                        </FormItem>
+                        <FormItem>
+                            {getFieldDecorator('message', {
+                                rules: [{ required: true, message: 'Please input a message!' }]
+                            })(
+                                <TextArea rows={4} placeholder="Message" />
+                            )}
+                        </FormItem>
+                        <FormItem>
+                            <Button
+                                className="cr-btn pull-right"
+                                type="primary"
+                                htmlType="submit"
+                                onClick={this.handleSubmit.bind(this)}>
+                                Submit
+                            </Button>
+                        </FormItem>
+                    </Form>
+                </div>
+            </div>
+        )
+    }
+
+    renderComments() {
+        return (
+            <div>
+                <div>Comments</div>
             </div>
         )
     }
@@ -173,6 +232,13 @@ class C extends BaseComponent {
                 </div>
                 <div className="members-section">
                     {this.renderMembers()}
+                </div>
+                <div className="right-rectangle"/>
+                <div className="create-post-section">
+                    {this.renderCreatePost()}
+                </div>
+                <div className="comments-section">
+                    {this.renderComments()}
                 </div>
             </div>)
         )
