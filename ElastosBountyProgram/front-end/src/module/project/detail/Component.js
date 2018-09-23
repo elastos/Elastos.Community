@@ -151,16 +151,16 @@ class C extends BaseComponent {
         const description = detail.descBreakdown || detail.description || ''
         const leaderImage = detail.createdBy.profile.avatar || ''
 
-        const recruiting_el = _.isEmpty(detail.recruitedSkillsets)
-            ? I18N.get('project.detail.not_recruiting')
-            : (
-                <div>
-                    <span className="gap-right">{I18N.get('project.detail.recruiting')}: </span>
-                    <span>
-                        {_.map(detail.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>)}
-                    </span>
-                </div>
-            )
+        const recruiting_el = (
+            <div>
+                <span className="gap-right">{I18N.get('project.detail.recruiting')}: </span>
+                <span>
+                    {_.isEmpty(detail.recruitedSkillsets) ? (
+                        <span>{I18N.get('project.detail.recruiting_skills_unknown')}</span>) : (
+                        _.map(detail.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>))}
+                </span>
+            </div>
+        )
 
         return (
             <div>
