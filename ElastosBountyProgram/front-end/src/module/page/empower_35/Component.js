@@ -60,14 +60,18 @@ export default class extends StandardPage {
         const titleClassName = `title ${member ? 'member' : ''} ${myCircles ? 'my-circles' : ''}`;
         return (
             <div className="emp35-circle-item">
-                <span className={titleClassName}
-                    onClick={() => this.props.history.push(`/circle-detail/${circle._id}`)}>{circle.name}</span>
+                <img
+                    className="ellipsis-img"
+                    src='/assets/images/emp35/circle_ellipse.svg'
+                />
                 <img
                     className="circle-img"
-                    src={member ? '/assets/images/emp35/circles_member_placeholder.jpg'
-                        : '/assets/images/emp35/circles_placeholder.jpg'
+                    src={member ? 'TODO'
+                        : '/assets/images/emp35/circle_group.svg'
                     }
                 />
+                <span className={titleClassName}
+                    onClick={() => this.props.history.push(`/circle-detail/${circle._id}`)}>{circle.name}</span>
                 <div className={`indicator-container ${myCircles ? 'my-circles' : ''}`}>
                     <Icon type="message" style={{ fontSize: 11 }}/>
                     <div className="indicator">{circle.comments.length}</div>
@@ -82,7 +86,7 @@ export default class extends StandardPage {
         return (
             <Row className="d_Row">
                 {_.map(circles, (circle) => (
-                    <Col key={circle._id} xs={12} sm={12} md={8}>
+                    <Col key={circle._id} xs={12} sm={12} md={6}>
                         {this.buildCircle(circle)}
                     </Col>
                 ))}

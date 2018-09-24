@@ -77,7 +77,7 @@ class C extends BaseComponent {
                 <Popconfirm title={I18N.get('project.detail.popup.leave_question')} okText="Yes" cancelText="No"
                     onConfirm={this.leaveTeam.bind(this)}>
                     <Button className="cr-btn" type="primary" loading={this.props.loading}>
-                        {I18N.get('project.detail.popup.leave_team')}
+                        {I18N.get('circle.header.leave')}
                     </Button>
                 </Popconfirm>
             )

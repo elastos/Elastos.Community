@@ -6,17 +6,35 @@ $mobile-padding: $gap_0 0px;
 $landingPageWidth: 1152px;
 
 .emp35-circle-item {
+  height: 200px;
+  .circle-img {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    width: 150px;
+    height: 150px;
+    margin-right: $gap_2;
+  }
+
+  .ellipsis-img {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+  }
+
   margin: $gap_2;
   .title {
     position: absolute;
+    top: 24px;
+    left: 24px;
     cursor: pointer;
     font-family: "komu-a",sans-serif;
     font-size: 24px;
     color: #fff;
     word-spacing: 9999px;
     text-align: center;
-    width: 175px;
-    height: 175px;
+    width: 150px;
+    height: 150px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,8 +49,8 @@ $landingPageWidth: 1152px;
   }
   .indicator-container {
     position: absolute;
-    top: 155px;
-    left: 75px;
+    top: 140px;
+    left: 62px;
     &.my-circles {
       top: 92px;
       left: 38px;
@@ -222,14 +240,6 @@ $landingPageWidth: 1152px;
                 color: #fff;
               }
             }
-            .content {
-              .circle-img {
-                width: 100px;
-                height: 100px;
-                margin-right: $gap_2;
-              }
-            }
-
           }
         }
       }
