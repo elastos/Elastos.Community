@@ -31,8 +31,6 @@ export default createContainer(Component, (state) => {
 
                 if (rs) {
                     userService.sendConfirmationEmail(profile.email)
-                    message.success('Successfully Registered - Please Login')
-
                     const registerRedirect = sessionStorage.getItem('registerRedirect')
 
                     if (registerRedirect) {

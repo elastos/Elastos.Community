@@ -1,0 +1,162 @@
+@import '../../../../style/variable';
+@import '../../../../style/color';
+@import '../../../../style/typography';
+
+.c_Circle.c_Detail {
+    margin-top: $gap_3;
+    text-align: justify;
+
+    .circle-rectangle {
+        position: absolute;
+        top: 52px;
+        left: calc(50% - 331px);
+    }
+
+    .header-container {
+        position: relative;
+    }
+
+    .header {
+        min-height: 400px;
+        padding-bottom: $gap_5;
+        text-align: center;
+        color: $bg_obsidian;
+
+        .circle-name {
+            position: relative;
+            font-size: 100px;
+        }
+        .circle-contributor-number, .circle-members-number {
+            font-size: 80px;
+            line-height: 80px;
+            letter-spacing: normal;
+            color: $cr100_green;
+        }
+        .circle-contributor-label, .circle-members-label {
+            font-size: 20px;
+            line-height: 20px;
+        }
+        .join-button {
+            background: white;
+        }
+        .circle-down-arrow {
+            margin-top: $gap_2;
+        }
+    }
+    .content-section {
+        width: 100%;
+        background: $bg_dark;
+        color: white;
+        padding: $gap_5 0;
+
+        .content-paragraphs {
+            width: 60%;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 17px;
+        }
+    }
+    .members-section {
+        width: 100%;
+        padding: $gap_5 $gap_5;
+        text-align: center;
+
+        .member-header {
+            display: inline-block;
+
+            .member-header-icon {
+                width: 12px;
+                height: 12px;
+                margin-bottom: $gap_2;
+            }
+            .member-header-label {
+                font-size: 60px;
+                line-height: 60px;
+            }
+        }
+        .members-list {
+            max-width: 800px;
+            margin: $gap_4 auto $gap_2 auto;
+        }
+    }
+    .rectangle {
+        width: 33%;
+        height: 30px;
+        background: $bg_dark;
+    }
+    .double-size {
+        width: 67%;
+    }
+    .form-header-wrap {
+        padding-top: $gap_4;
+        background-color: $bg_dark;
+    }
+    .form-header {
+        max-width: 800px;
+        margin: 0 auto;
+        text-transform: uppercase;
+        letter-spacing: normal;
+        font-size: 60px;
+        color: $cr100_green;
+    }
+    .c_Comments {
+        h3.no-margin {
+            display: none;
+        }
+        .ant-list-header {
+            max-width: 800px;
+            margin: $gap_3 auto;
+            background: $bg_dark;
+            border-bottom: none;
+
+            .c_commentForm {
+                .ant-input {
+                    border-radius: 0;
+                }
+                .headline-input {
+                    height: 40px;
+                }
+                .ant-form-explain {
+                    visibility: hidden;
+                }
+                button {
+                    height: 53px;
+                    padding: 15px 31px 10px;
+                    border-radius: 0;
+                    border: 1px solid #0F2631;
+                    background-color: $cr100_green;
+
+                    > span {
+                        color: #000;
+                        font-family: "komu-a", sans-serif;
+                        font-size: 28px;
+                        line-height: 33px;
+                        letter-spacing: 0.1em;
+                    }
+                }
+            }
+        }
+        .ant-spin-container {
+            max-height: 400px;
+            background: white;
+            padding: $gap_3 0 $gap_5 0;
+
+            .ant-list-item {
+                max-width: 800px;
+                margin: 0 auto;
+                background: $bg_blue;
+                border: none;
+                padding: $gap_2;
+
+                &:not(:last-child) {
+                    border-bottom: 1px solid $bg_gray;
+                }
+            }
+
+            overflow-y: auto;
+        }
+        .ant-list-pagination {
+            display: none;
+        }
+    }
+}
