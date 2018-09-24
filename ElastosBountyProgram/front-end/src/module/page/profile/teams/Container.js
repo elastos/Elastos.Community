@@ -1,6 +1,7 @@
 import {createContainer} from '@/util'
 import Component from './Component'
 import TeamService from '@/service/TeamService'
+import {TEAM_TYPE} from '@/constant'
 import _ from 'lodash'
 
 export default createContainer(Component, (state) => {
@@ -13,7 +14,10 @@ export default createContainer(Component, (state) => {
 
     return {
         async getTeams(query) {
-            return teamService.index(query)
+            return teamService.index({
+                ...query,
+                type: TEAM_TYPE.TEAM
+            })
         },
 
         resetTeams() {
