@@ -1,6 +1,7 @@
 import BaseService from '../model/BaseService'
 import _ from 'lodash'
 import {api_request} from '@/util'
+import {TEAM_TYPE} from '@/constant'
 
 export default class extends BaseService {
 
@@ -139,6 +140,15 @@ export default class extends BaseService {
 
         const curTeamDetail = this.store.getState().team.detail
         curTeamDetail.members.push(result)
+
+        if (curTeamDetail.type === TEAM_TYPE.CRCLE) {
+            const userRedux = this.store.getRedux('user')
+            const curUserDetail = this.store.getState().user
+            curUserDetail.circles = _.values(curUserDetail.circles) || []
+            curUserDetail.circles.push(curTeamDetail)
+
+            this.dispatch(userRedux.actions.circles_update(curUserDetail.circles))
+        }
 
         this.dispatch(teamRedux.actions.detail_update(curTeamDetail))
 

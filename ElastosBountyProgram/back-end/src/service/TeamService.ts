@@ -173,6 +173,11 @@ export default class extends Base {
 
         await team.save()
 
+        user.circles = user.circles || []
+        user.circles.push(team._id)
+
+        await user.save()
+
         await db_ut.db.populate(teamCandidate, ['team', 'user'])
 
         if (teamCandidate.team) {

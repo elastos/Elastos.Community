@@ -82,11 +82,11 @@ export default class extends StandardPage {
         );
     }
 
-    buildCirclesWorker(circles) {
+    buildCirclesWorker(circles, grid) {
         return (
             <Row className="d_Row">
                 {_.map(circles, (circle) => (
-                    <Col key={circle._id} xs={12} sm={12} md={6}>
+                    <Col key={circle._id} xs={12} sm={12} md={grid}>
                         {this.buildCircle(circle)}
                     </Col>
                 ))}
@@ -96,13 +96,13 @@ export default class extends StandardPage {
 
     buildMyCircles() {
         const myCircles = this.props.myCircles
-        return this.buildCirclesWorker(myCircles)
+        return this.buildCirclesWorker(myCircles, 12)
     }
 
     buildCircles(query) {
         const circles = this.props.all_teams || {};
         const queriedCircles = _.filter(_.values(circles), query)
-        return this.buildCirclesWorker(queriedCircles)
+        return this.buildCirclesWorker(queriedCircles, 6)
     }
 
     ord_renderContent () {

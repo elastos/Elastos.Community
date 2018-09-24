@@ -10,9 +10,7 @@ import {SUBMISSION_TYPE, USER_EMPOWER_TYPE} from '@/constant'
 
 export default createContainer(Component, (state) => {
     const allCircles = state.team.all_teams
-    const myCircles = _.filter(_.values(allCircles), (circle) => {
-        return _.find(circle.members, { _id: state.user.current_user_id })
-    })
+    const myCircles = state.user.circles
 
     return {
         ...state.team,
