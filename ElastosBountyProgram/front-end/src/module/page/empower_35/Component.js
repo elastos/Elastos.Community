@@ -173,7 +173,7 @@ export default class extends StandardPage {
                                     <div className="inner-container">
                                         <span className="title">{I18N.get('emp35.mycircles.title')}</span>
                                     </div>
-                                    {this.buildMyCircles()}
+                                    {this.props.is_login && this.buildMyCircles()}
                                 </div>
                             </div>
                         </div>
