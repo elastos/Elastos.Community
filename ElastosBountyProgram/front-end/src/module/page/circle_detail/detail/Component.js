@@ -72,6 +72,7 @@ class C extends BaseComponent {
     getMainActions() {
         const isTeamMember = this.isTeamMember()
         const hasApplied = this.hasApplied()
+        const maxReached = _.size(this.props.myCircles) >= 2
         const mainActionButton = isTeamMember
             ? (
                 <Popconfirm title={I18N.get('project.detail.popup.leave_question')} okText="Yes" cancelText="No"
@@ -82,11 +83,13 @@ class C extends BaseComponent {
                 </Popconfirm>
             )
             : (
-                <Button className="join-button cr-btn" disabled={hasApplied} onClick={() => this.applyToCircle()}
+                <Button className="join-button cr-btn" disabled={hasApplied || maxReached} onClick={() => this.applyToCircle()}
                     loading={this.props.loading}>
                     { hasApplied
                         ? I18N.get('project.detail.popup.applied')
-                        : I18N.get('circle.header.join')
+                        : maxReached
+                            ? I18N.get('circle.header.maxReached')
+                            : I18N.get('circle.header.join')
                     }
                 </Button>
             )
@@ -100,18 +103,19 @@ class C extends BaseComponent {
 
     renderHeader() {
         return (
-            <div>
+            <div className="header-container">
+                <img className="circle-rectangle" src="/assets/images/emp35/circle_rectangle.png"/>
                 <span className="circle-name komu-a">{this.props.detail.name}</span>
                 <Row>
-                    <Col span={10}>
+                    <Col span={8}>
                         <div className="circle-contributor-number komu-a">{_.size(this.props.detail.comments)}</div>
                         <span className="circle-contributor-label synthese">Posts</span>
                     </Col>
-                    <Col span={4}>
+                    <Col span={8}>
                         {this.getMainActions()}
                         <img className="circle-down-arrow" src="/assets/images/emp35/down_arrow.png"/>
                     </Col>
-                    <Col span={10}>
+                    <Col span={8}>
                         <div className="circle-members-number komu-a">{_.size(this.props.detail.members)}</div>
                         <span className="circle-members-label synthese">Members</span>
                     </Col>

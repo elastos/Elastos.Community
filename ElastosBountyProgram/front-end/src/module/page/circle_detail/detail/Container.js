@@ -6,7 +6,8 @@ export default createContainer(Component, (state) => {
     return {
         ...state.team,
         currentUserId: state.user.current_user_id,
-        is_login: state.user.is_login
+        is_login: state.user.is_login,
+        myCircles: state.user.circles
     }
 }, () => {
     const teamService = new TeamService()

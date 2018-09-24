@@ -6,6 +6,16 @@
     margin-top: $gap_3;
     text-align: justify;
 
+    .circle-rectangle {
+        position: absolute;
+        top: 52px;
+        left: calc(50% - 331px);
+    }
+
+    .header-container {
+        position: relative;
+    }
+
     .header {
         min-height: 400px;
         padding-bottom: $gap_5;
@@ -13,6 +23,7 @@
         color: $bg_obsidian;
 
         .circle-name {
+            position: relative;
             font-size: 100px;
         }
         .circle-contributor-number, .circle-members-number {

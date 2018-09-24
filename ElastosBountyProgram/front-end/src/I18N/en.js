@@ -216,6 +216,7 @@ export default {
     // Circle Detail
     'circle.header.join': 'Join',
     'circle.header.leave': 'Leave',
+    'circle.header.maxReached': 'Limit reached',
 
     // Training
     'training.header.title': 'Ambassadors Training',
