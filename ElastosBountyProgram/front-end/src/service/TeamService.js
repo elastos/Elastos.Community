@@ -211,12 +211,23 @@ export default class extends BaseService {
             }
         })
 
-        this.dispatch(teamRedux.actions.loading_update(false))
-
         const curTeamDetail = this.store.getState().team.detail
+
+        if (curTeamDetail.type === TEAM_TYPE.CRCLE) {
+            const userRedux = this.store.getRedux('user')
+            const curUserDetail = this.store.getState().user
+            curUserDetail.circles = _.values(curUserDetail.circles) || []
+            curUserDetail.circles = _.filter(curUserDetail.circles, (circle) => {
+                return circle._id !== curTeamDetail._id
+            })
+
+            this.dispatch(userRedux.actions.circles_update(curUserDetail.circles))
+        }
+
         const member = _.find(curTeamDetail.members, { _id: teamCandidateId })
         curTeamDetail.members = _.without(curTeamDetail.members, member)
         this.dispatch(teamRedux.actions.detail_update(curTeamDetail))
+        this.dispatch(teamRedux.actions.loading_update(false))
 
         return result
     }

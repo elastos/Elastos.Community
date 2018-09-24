@@ -6,7 +6,6 @@ export default createContainer(Component, (state) => {
     return {
         ...state.team,
         currentUserId: state.user.current_user_id,
-        loading: state.team.loading,
         is_login: state.user.is_login
     }
 }, () => {

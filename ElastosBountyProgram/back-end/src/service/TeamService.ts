@@ -316,6 +316,18 @@ export default class extends Base {
         })
 
         const team = await db_team.getDBInstance().findOne({_id: doc.team})
+
+        if (team.type === constant.TEAM_TYPE.CRCLE) {
+            const db_user = this.getDBModel('User')
+            await db_user.db.update({
+                _id: doc.user
+            }, {
+                $pull: {
+                    circles: new ObjectId(team._id)
+                }
+            })
+        }
+
         const result = await db_team.db.update({
             _id: team._id
         }, {
