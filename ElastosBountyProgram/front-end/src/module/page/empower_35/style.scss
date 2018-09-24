@@ -5,6 +5,54 @@
 $mobile-padding: $gap_0 0px;
 $landingPageWidth: 1152px;
 
+.emp35-circle-item {
+  margin: $gap_2;
+  .title {
+    position: absolute;
+    font-family: "komu-a",sans-serif;
+    font-size: 24px;
+    color: #fff;
+    word-spacing: 9999px;
+    text-align: center;
+    width: 175px;
+    height: 175px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    &.member {
+      color: $cr100_green;
+    }
+    &.my-circles {
+      width: 100px;
+      height: 100px;
+      font-size: 14px;
+    }
+  }
+  .indicator-container {
+    position: absolute;
+    top: 155px;
+    left: 75px;
+    &.my-circles {
+      top: 92px;
+      left: 38px;
+    }
+    .placeholder-icon {
+      display: inline-block;
+      height: 10px;
+      width: 10px;
+      background-color: red;
+    }
+    .indicator {
+      display: inline-block;
+      font-family: "synthese",sans-serif;
+      font-size: 10px;
+      color: #fff;
+      margin-left: $gap_0;
+      margin-right: $gap_2;
+    }
+  }
+}
+
 .emp35-apply-modal {
 
   .ant-modal-content {
@@ -62,36 +110,147 @@ $landingPageWidth: 1152px;
   ************************************************************************
    */
   .p_content {
-
-    .emp35-empower > .container {
+    
+    .emp35-empower {
       position: relative;
 
-      #emp35_logo {
-        position: absolute;
-        left: -38px;
-        top: -50px;
-        @media only screen and (max-width: $mobile-width) {
-          left: -$gap_0;
-          width: 150px;
-        }
-      }
+      .d_Row {
+        margin-left: 15%;
+        margin-right: 15%;
 
-      #emp35_greenDiag {
-        position: absolute;
-        right: -30px;
-        bottom: 30px;
+        .container-circles {
+          background-color: $bg_obsidian;
+          height: 200px;
+
+          .content {
+            .inner-container {
+              .title {
+                font-family: "synthese",sans-serif;
+                font-size: 24px;
+                color: #fff;
+                padding-top: 102px;
+                text-align: center;
+                font-size: 36px;
+              }
+            }
+          }
+      
+        }
       }
     }
 
-    .emp35-header .content {
+    .emp35-statement-container {
+      .header-bar {
+        width: 60%;
+        margin-left: 40%;
+        height: 44px;
+        background-color: $bg_obsidian;
+      }
 
-      #emp35_down_arrow {
-        margin-top: 35px;
+      .emp35-statement {
+        position: relative;
+        margin-top: $gap_5 * 2;
+        margin-bottom: $gap_5 * 2;  
+        margin-left: 20%;
+        margin-right: 20%;
+
+        .emp35-statement-image {
+          display: inline-grid;
+          #emp35_statement {
+            width: 465px;
+            height: 452px;
+          }
+        }
+
+        .emp35-statement-message {
+          display: inline-block;
+          width: 465px;
+          height: 452px;
+          background-color: $bg_blue;
+
+          .message-container {
+            margin: $gap_3;
+            .container {
+              margin-top: $gap_3;
+              .content {
+                font-size: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .emp35-my-circles-container {
+      padding-top: $gap_5 * 2;
+      padding-bottom: $gap_5 * 2;  
+      background-color: $bg_blue;
+
+      .emp35-my-circles {
+        position: relative;
+        margin-left: 10%;
+        margin-right: 10%;
+        
+
+        .emp35-my-circles-message {
+          display: inline-block;
+          background-color: #fff;
+          width: 50%;
+
+          @media only screen and (max-width: $mobile-width) {
+            width: 100%;
+          }
+
+          .container {
+            margin: $gap_5;
+            .content {
+              font-size: 24px;
+            }
+          }
+        }
+
+        .emp35-my-circles-list {
+          background-color: $bg_obsidian;
+          display: inline-block;
+          width: 50%;
+          min-height: 370px;
+          
+          @media only screen and (max-width: $mobile-width) {
+            width: 100%;
+          }
+
+          .container {
+            margin: $gap_3;
+
+            .inner-container {
+              margin: $gap_1 0 $gap_3 0;
+              .title {
+                font-family: "synthese",sans-serif;
+                font-size: 24px;
+                color: #fff;
+              }
+            }
+            .content {
+              #circle {
+                width: 100px;
+                height: 100px;
+                margin-right: $gap_2;
+              }
+            }
+
+          }
+        }
       }
     }
 
     .emp35-teamHeader .container {
       position: relative;
+
+      .circle-container {
+        position: absolute;
+        left: 50%;
+        top: 50px;
+      }
 
       #emp35_darkBlock {
         position: absolute;
@@ -105,11 +264,11 @@ $landingPageWidth: 1152px;
       #emp35_lock {
         position: absolute;
 
-        top: -62px;
-        right: 20px;
+        top: -100px;
+        right: 0px;
 
-        width: 252px;
-        height: 301px;
+        width: 261px;
+        height: 185px;
       }
 
       #emp35_square {
@@ -117,17 +276,6 @@ $landingPageWidth: 1152px;
 
         left: 66px;
         top: 60px;
-      }
-    }
-
-    .emp35-teamMedia .container {
-
-      text-align: center;
-
-      #emp35_seal {
-        margin-top: 33%;
-        width: 372px;
-        height: 372px;
       }
     }
   }
@@ -193,10 +341,104 @@ $landingPageWidth: 1152px;
   Header
   ************************************************************************
    */
-  .emp35-header {
+   .emp35-header {
 
-    min-height: 600px;
-    margin-bottom: 120px;
+    background-color: #031E28;
+    min-height: 750px;
+    position: relative;
+
+    @media only screen and (max-width: $mobile-width) {
+      min-height: 550px;
+    }
+
+    .circle-container {
+      position: absolute;
+      bottom: 50%;
+      left: $gap_5;
+
+      @media only screen and (max-width: $mobile-width) {
+        bottom: 68%;
+        left: $gap_5;
+      }
+
+      .circle {
+        display: block;
+        width: 100px;
+        height: 100px;
+
+        @media only screen and (max-width: $mobile-width) {
+          width: 25px;
+          height: 25px;
+        }
+      }
+    }
+
+    .right-box-container {
+      position: absolute;
+      top: $gap_4;
+      right: $gap_3;
+
+      @media only screen and (max-width: $mobile-width) {
+        top: 120px;
+        right: $gap_5;
+      }
+
+      .small-box {
+
+      }
+      .box {
+        margin-left: 50px;
+      }
+      img {
+        position: absolute;
+        top: 62.5px;
+        left: 62.5px;
+        width: 75px;
+        height: 75px;
+        @media only screen and (max-width: $mobile-width) {
+          top: 32.5px;
+          left: 57.5px;
+          width: 35px;
+          height: 35px;
+        }
+      }
+    }
+
+    .bottom-box-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    .connector-container {
+      position: absolute;
+      bottom: 50px;
+      right: 0%;
+    }
+
+    .small-box {
+      width: 50px;
+      height: 50px;
+      background-color: #434D72;
+      opacity: 0.4;
+      @media only screen and (max-width: $mobile-width) {
+        width: 25px;
+        height: 25px;
+      }
+    }
+
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: #434D72;
+      opacity: 0.4;
+
+
+      @media only screen and (max-width: $mobile-width) {
+        width: 50px;
+        height: 50px;
+      }
+    }
 
     .container {
 
@@ -204,28 +446,6 @@ $landingPageWidth: 1152px;
 
       position: relative;
       text-align: center;
-
-      #box_top_right_1 {
-        position: absolute;
-        right: 49px;
-        top: 40px;
-        z-index: 5;
-      }
-
-      #box_top_right_rect_sm {
-        position: absolute;
-        z-index: 3;
-
-        right: 129px;
-        top: -30px;
-      }
-
-      #box_top_right_rect_lg {
-        position: absolute;
-        right: 30px;
-        top: 20px;
-        z-index: 4;
-      }
 
       // this floats behind the text
       .rect-container {
@@ -239,12 +459,16 @@ $landingPageWidth: 1152px;
           display: block;
           margin-left: auto;
           margin-right: auto;
-          border: 38px solid $bg_blue;
+          border: 38px solid #434D72;
           width: 450px;
           height: 450px;
+          opacity: 0.4;
+          @media only screen and (max-width: $mobile-width) {
+            border: 12px solid #434D72;
+            width: 75%;
+            height: 300px;
+          }
         }
-
-        //
       }
 
       .title {
@@ -252,14 +476,110 @@ $landingPageWidth: 1152px;
 
         font-family: "komu-a",sans-serif;
         font-size: 75px;
+        color: $cr100_green;
+        @media only screen and (max-width: $mobile-width) {
+          margin-top: 75px;
+          font-size: 40px;
+        }
       }
 
       .content {
         margin-top: 240px;
 
-        p {
-          font-family: "synthese", sans-serif;
-          font-size: 24px;
+        font-family: "synthese",sans-serif;
+        font-size: 24px;
+        color: white;
+
+        @media only screen and (max-width: $mobile-width) {
+          margin-top: 155px;
+        }
+
+        > .center {
+          margin-left: auto;
+          margin-right: auto;
+          width: 875px;
+          @media only screen and (max-width: $mobile-width) {
+            font-size: 12px;
+            width: 80%;
+          }
+
+          > .button {
+            margin-top: $gap_5;
+            width: 250px;
+            height: 60px;
+            font-size: 22px;
+            border-radius: unset;
+
+            @media only screen and (max-width: $mobile-width) {
+              margin-top: $gap_3;
+              width: 85%;
+            }
+          }
+        }
+
+        /*
+        ************************************************************************
+        Strike Text Green
+        ************************************************************************
+        */
+        .strike-text {
+          position: relative;
+          display: inline-block;
+
+          .strike-line {
+            position: absolute;
+            left: 0;
+            top: 24px;
+            width: 100%;
+            height: 12px;
+            background-color: #434D72;
+            opacity: 0.4;
+            z-index: 0;
+          }
+          .strike-line:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -14px;
+            width: 14px;
+            height: 12px;
+            background-color: #434D72;
+            z-index: 0;
+
+            @media only screen and (max-width: $mobile-width) {
+              left: -2px;
+              width: 2px;
+            }
+          }
+          .strike-line:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: auto;
+            right: -14px;
+            width: 14px;
+            height: 12px;
+            background-color: #434D72;
+
+            @media only screen and (max-width: $mobile-width) {
+              left: -2px;
+              width: 2px;
+            }
+          }
+          p {
+            position: relative;
+            z-index: 1;
+            padding-bottom: 0;
+          }
+
+          &.filler {
+            width: 100%;
+            height: 0;
+          }
+
+          &.mob {
+            display: none;
+          }
         }
       }
 
@@ -277,133 +597,27 @@ $landingPageWidth: 1152px;
   Empower Text
   ************************************************************************
    */
-  .emp35-empower {
-
-    min-height: 900px;
-
-    background-color: $bg_blue;
-    padding-top: 100px;
-
-    .container {
-      margin-left: auto;
-      margin-right: auto;
-
-      max-width: 915px;
-      background-color: #fff;
-    }
-
-    .title {
-      font-family: "synthese",sans-serif;
-      font-size: 36px;
-      padding-top: 102px;
-      text-align: center;
-      font-size: 36px;
-    }
-
-    .content {
-
-      padding-bottom: 38px;
-
-      p {
-        font-family: "synthese", sans-serif;
-        font-weight: 200;
-        font-size: 18px;
-        padding: 0 74px;
-        margin: 38px 0;
-        text-align: center;
-      }
-    }
-  }
 
   // this is only the gap between empower and team
-  .emp35-teamHeader {
-
-    @extend %team-dark;
-
-    .container .inner-container {
-      padding-top: 92px;
+  .emp35-teamHeader-container {
+    background-color: $bg_blue;
+    .header-bar {
+      width: 60%;
+      height: 44px;
+      background-color: $bg_obsidian;
     }
 
-    .title {
-      font-family: "synthese",sans-serif;
-      font-size: 48px;
-    }
-  }
-
-  .emp35-teamBusiness {
-    @extend %team-dark;
-
-    .container .inner-container {
-      padding-top: 72px;
-    }
-  }
-
-  .emp35-teamMarketing {
-    @extend %team-dark;
-
-    .container .inner-container {
-      padding-top: 50px;
-    }
-
-    padding-left: 237px;
-  }
-
-  .emp35-teamLegal {
-    @extend %team-dark;
-
-    padding-bottom: 70px;
-
-    .container {
-
-      position: relative;
-
-      #ela_logo_dark {
-        position: absolute;
-        right: 30px;
-        top: 60px;
+    .emp35-teamHeader {
+      @extend %team-dark;
+  
+      .container .inner-container {
+        padding-top: 92px;
       }
-
-      #ela_logo_white {
-        position: absolute;
-        right: 110px;
-        top: 45px;
+  
+      .title {
+        font-family: "synthese",sans-serif;
+        font-size: 48px;
       }
-
-      .inner-container {
-        padding-top: 50px;
-      }
-    }
-  }
-
-  .emp35-teamDesigner {
-
-    .container {
-      @extend %container;
-
-      .inner-container {
-        margin: 0;
-        margin-left: 66px;
-      }
-    }
-
-    .row-positions {
-      margin-top: 24px;
-    }
-  }
-
-  .emp35-teamMedia {
-
-    .container {
-      @extend %container;
-
-      .inner-container {
-        margin: 0;
-        margin-left: 66px;
-      }
-    }
-
-    .row-positions {
-      margin-top: 24px;
     }
   }
 
@@ -420,40 +634,6 @@ $landingPageWidth: 1152px;
     margin-left: auto;
     margin-right: auto;
     padding-bottom: 40px;
-  }
-
-  /*
-  ************************************************************************
-  Card
-  ************************************************************************
-   */
-  .card-emp35-position {
-    max-width: 150px;
-    background-color: $bg_obsidian;
-    display: inline-block;
-    margin-right: 40px;
-
-    &.white {
-      background-color: transparent;
-
-      .ant-card-cover {
-        background-color: transparent;
-      }
-    }
-
-    .ant-card-cover {
-      height: 150px;
-      background-color: #1B2E3C;
-    }
-
-    .ant-card-meta-description {
-      font-family: "komu-a",sans-serif;
-      font-size: 30px;
-      line-height: 36px;
-      letter-spacing: 0.1em;
-      color: $cr100_green;
-      text-transform: uppercase;
-    }
   }
 
   /*
