@@ -6,7 +6,6 @@ import I18N from '@/I18N'
 import './style.scss'
 import { Col, Row, Card, Button, message, Spin, Avatar, Modal, Icon } from 'antd'
 import _ from 'lodash'
-import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
 
 export default class extends StandardPage {
     ord_props() {
