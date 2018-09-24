@@ -1,8 +1,9 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import { TEAM_USER_STATUS } from '@/constant'
-import {Avatar, Button, Col, Form, Icon, Popconfirm, Row, Spin, Table, Input} from 'antd'
+import {Avatar, Button, Col, Form, Icon, Popconfirm, Row, Spin, Table, Input, Modal} from 'antd'
 import Comments from '@/module/common/comments/Container'
+import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
 import './style.scss'
 import _ from 'lodash'
 import I18N from '@/I18N'
@@ -11,9 +12,9 @@ const FormItem = Form.Item;
 const { TextArea } = Input;
 
 class C extends BaseComponent {
-
     ord_states() {
         return {
+            showLoginRegisterModal: false
         }
     }
 
@@ -27,7 +28,6 @@ class C extends BaseComponent {
     }
 
     renderMain() {
-
         return (
             <div className="c_CircleDetail">
                 {this.renderDetail()}
@@ -65,7 +65,7 @@ class C extends BaseComponent {
             this.props.applyToTeam(this.props.match.params.circleId,
                 this.props.currentUserId)
         } else {
-            // pop login or register
+            this.showLoginRegisterModal()
         }
     }
 
@@ -189,11 +189,18 @@ class C extends BaseComponent {
         return (
             <div>
                 <div className="form-header-wrap">
-                    <div className="form-header komu-a">Create Post</div>
+                    <div className="form-header komu-a">
+                        {this.props.is_login
+                            ? this.hasApplied()
+                                ? 'Create Post'
+                                : 'Join the Circle to post'
+                            : 'Register to join the Circle and post'
+                        }
+                    </div>
                     <Comments
                         headlines={true}
                         type="team"
-                        canPost={true}
+                        canPost={this.hasApplied()}
                         model={this.props.detail}/>
                 </div>
             </div>
@@ -220,8 +227,53 @@ class C extends BaseComponent {
                 {this.renderComments()}
                 <div className="rectangle"/>
                 <div className="rectangle double-size"/>
+                {this.renderLoginOrRegisterModal()}
             </div>)
         )
+    }
+
+    renderLoginOrRegisterModal() {
+        if (this.props.is_login) {
+            return
+        }
+
+        return (
+            <Modal
+                className="project-detail-nobar"
+                visible={this.state.showLoginRegisterModal}
+                onOk={this.handleLoginRegisterModalOk}
+                onCancel={this.handleLoginRegisterModalCancel}
+                footer={null}
+                width="70%"
+            >
+                <LoginOrRegisterForm />
+            </Modal>
+        )
+    }
+
+    showLoginRegisterModal = () => {
+        sessionStorage.setItem('loginRedirect', `/circle-detail/${this.props.match.params.circleId}`)
+        sessionStorage.setItem('registerRedirect', `/circle-detail/${this.props.match.params.circleId}`)
+
+        this.setState({
+            showLoginRegisterModal: true
+        })
+    }
+
+    handleLoginRegisterModalOk = (e) => {
+        sessionStorage.removeItem('registerRedirect')
+
+        this.setState({
+            showLoginRegisterModal: false
+        })
+    }
+
+    handleLoginRegisterModalCancel = (e) => {
+        sessionStorage.removeItem('registerRedirect')
+
+        this.setState({
+            showLoginRegisterModal: false
+        })
     }
 }
 

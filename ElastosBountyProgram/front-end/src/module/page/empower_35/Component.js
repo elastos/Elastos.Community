@@ -6,27 +6,15 @@ import I18N from '@/I18N'
 import './style.scss'
 import { Col, Row, Card, Button, message, Spin, Avatar, Modal, Icon } from 'antd'
 import _ from 'lodash'
-import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
-
-import ModalEmpowerForm from './modal_form/Component'
 
 export default class extends StandardPage {
-
-    constructor(props) {
-        super(props)
-
-        this.formEmpowerApply = null
-
-        this.state = {
-            showLoginRegisterModal: false,
-            visibleModalEmpowerApply: false,
-            visibleModalEmpowerView: false
+    ord_props() {
+        return {
         }
     }
 
     async componentDidMount() {
         await this.props.getTeams({ type: TEAM_TYPE.CRCLE })
-        await this.props.getEmpowerUsers()
     }
 
     checkForLoading(followup) {
@@ -35,25 +23,6 @@ export default class extends StandardPage {
                 <Spin size="large"/>
             </div>
             : _.isFunction(followup) && followup()
-    }
-
-    ord_states() {
-        return {
-            showDetailId: null,
-            loading: false
-        }
-    }
-
-    showDetailModal(id) {
-        this.setState({
-            showDetailId: id
-        })
-    }
-
-    handleDetailModalClose(e) {
-        this.setState({
-            showDetailId: null
-        })
     }
 
     buildCircle(circle = {}) {
@@ -128,16 +97,6 @@ export default class extends StandardPage {
                     </div>
                 </div>
 
-                {this.renderLoginOrRegisterModal()}
-
-                <ModalEmpowerForm
-                    wrappedComponentRef={this.saveFormEmpowerApplyRef}
-                    empowerType={this.state.applyEmpowerType}
-                    isLogin={this.state.is_login}
-                    visible={this.state.visibleModalEmpowerApply}
-                    onCancel={this.handleCancelModalEmpowerApply.bind(this)}
-                    onApply={this.handleApplyModalEmpowerApply.bind(this)}
-                />
                 <Footer/>
             </div>
         )
@@ -203,8 +162,6 @@ export default class extends StandardPage {
                                 </p>
                             </div>
                         </div>
-
-
                     </div>
                     <div className="emp35-my-circles-list">
                         <div className="message-container">
@@ -214,7 +171,7 @@ export default class extends StandardPage {
                                     <div className="inner-container">
                                         <span className="title">{I18N.get('emp35.mycircles.title')}</span>
                                     </div>
-                                    {this.buildMyCircles()}
+                                    {this.props.is_login && this.buildMyCircles()}
                                 </div>
                             </div>
                         </div>
@@ -320,86 +277,5 @@ export default class extends StandardPage {
                 </div>
             </div>
         )
-    }
-
-    saveFormEmpowerApplyRef = (formRef) => {
-        this.formEmpowerApply = formRef
-    }
-
-    handleCancelModalEmpowerApply() {
-        this.setState({
-            visibleModalEmpowerApply: false
-        })
-    }
-
-    handleApplyModalEmpowerApply() {
-
-        const form = this.formEmpowerApply.props.form
-
-        form.validateFields((err, values) => {
-            if (err) {
-                return
-            }
-
-            form.resetFields()
-            this.setState({visibleModalEmpowerApply: false})
-
-            this.props.empowerApply(values, this.state).then(() => {
-                message.success('Thank you for applying, we will be in touch shortly')
-
-            }).catch((err) => {
-                console.error(err);
-                message.error('Error - Please email us')
-            })
-        })
-    }
-
-    /*
-    ************************************************************************************
-    * Login / Register Modal
-    ************************************************************************************
-     */
-    renderLoginOrRegisterModal() {
-        if (this.props.is_login) {
-            return
-        }
-
-        return (
-            <Modal
-                className="project-detail-nobar"
-                visible={this.state.showLoginRegisterModal}
-                onOk={this.handleLoginRegisterModalOk}
-                onCancel={this.handleLoginRegisterModalCancel}
-                footer={null}
-                width="70%"
-            >
-                <LoginOrRegisterForm />
-            </Modal>
-        )
-    }
-
-    showLoginRegisterModal = () => {
-        sessionStorage.setItem('loginRedirect', '/empower35')
-        sessionStorage.setItem('registerRedirect', '/empower35')
-
-        this.setState({
-            showLoginRegisterModal: true
-        })
-    }
-
-    handleLoginRegisterModalOk = (e) => {
-        sessionStorage.removeItem('registerRedirect')
-
-        this.setState({
-            showLoginRegisterModal: false
-        })
-    }
-
-    handleLoginRegisterModalCancel = (e) => {
-        sessionStorage.removeItem('registerRedirect')
-
-        this.setState({
-            showLoginRegisterModal: false
-        })
     }
 }
