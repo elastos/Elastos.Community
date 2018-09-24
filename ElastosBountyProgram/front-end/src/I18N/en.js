@@ -65,6 +65,8 @@ export default {
     '2304': 'My Communities',
     '2305': 'My Projects',
 
+    'comments.noComments': 'No comments yet. Be the first to post!',
+
     // Home
     'home.title': 'Elastos - Cyber Republic',
     'home.developers': 'Developers',

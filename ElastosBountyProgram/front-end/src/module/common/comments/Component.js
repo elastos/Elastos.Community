@@ -5,6 +5,7 @@ import config from '@/config'
 import './style.scss'
 import moment from 'moment'
 import _ from 'lodash'
+import I18N from '@/I18N'
 
 const TextArea = Input.TextArea
 const FormItem = Form.Item
@@ -174,13 +175,14 @@ class C extends BaseComponent {
         // Show in reverse chronological order
         commentItems && commentItems.reverse();
 
-        return  <div>
-            {commentItems && commentItems.length ?
-                <List
+        return <List
                     size="large"
                     itemLayout="horizontal"
                     pagination={{
                         pageSize: 5,
+                    }}
+                    locale={{
+                        emptyText: I18N.get('comments.noComments')
                     }}
                     dataSource={commentItems}
                     header={footer}
@@ -201,15 +203,7 @@ class C extends BaseComponent {
                             </div>
                         </List.Item>
                     )}
-                /> :
-                <div>
-                    {footer}
-                    <div className="center no-info">
-                        no comments
-                    </div>
-                </div>
-            }
-        </div>
+                />
     }
 
     handleSubmit(e) {
