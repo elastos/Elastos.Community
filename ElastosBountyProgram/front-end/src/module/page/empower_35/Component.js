@@ -18,7 +18,6 @@ export default class extends StandardPage {
         this.formEmpowerApply = null
 
         this.state = {
-            loading: false,
             showLoginRegisterModal: false,
             visibleModalEmpowerApply: false,
             visibleModalEmpowerView: false
@@ -26,14 +25,15 @@ export default class extends StandardPage {
     }
 
     async componentDidMount() {
-        this.setState({ loading: false })
         await this.props.getTeams({ type: TEAM_TYPE.CRCLE })
         await this.props.getEmpowerUsers()
     }
 
     checkForLoading(followup) {
-        return this.state.loading
-            ? <Spin size="large"/>
+        return this.props.loading
+            ? <div className="full-width halign-wrapper">
+                <Spin size="large"/>
+            </div>
             : _.isFunction(followup) && followup()
     }
 
@@ -70,14 +70,14 @@ export default class extends StandardPage {
                         : '/assets/images/emp35/circle_group.svg'
                     }
                 />
-                <span className={titleClassName}
-                    onClick={() => this.props.history.push(`/circle-detail/${circle._id}`)}>{circle.name}</span>
                 <div className={`indicator-container ${myCircles ? 'my-circles' : ''}`}>
                     <Icon type="message" style={{ fontSize: 11 }}/>
                     <div className="indicator">{circle.comments.length}</div>
                     <Icon type="team" style={{ fontSize: 11 }}/>
                     <div className="indicator">{circle.members.length}</div>
                 </div>
+                <span className={titleClassName}
+                    onClick={() => this.props.history.push(`/circle-detail/${circle._id}`)}>{circle.name}</span>
             </div>
         );
     }
@@ -273,7 +273,9 @@ export default class extends StandardPage {
                     <Row>
                         <Col xs={{span: 24}} md={{span: 24}}>
                             <span className="blue-title">Essential</span>
-                            {this.buildCircles({ subcategory: TEAM_SUBCATEGORY.ESSENTIAL })}
+                            {this.checkForLoading(() => {
+                                return this.buildCircles({ subcategory: TEAM_SUBCATEGORY.ESSENTIAL })
+                            })}
                         </Col>
                     </Row>
                 </div>
@@ -288,7 +290,9 @@ export default class extends StandardPage {
                     <Row>
                         <Col xs={{span: 24}} md={{span: 24}}>
                             <span className="blue-title">Advanced</span>
-                            {this.buildCircles({ subcategory: TEAM_SUBCATEGORY.ADVANCED })}
+                            {this.checkForLoading(() => {
+                                return this.buildCircles({ subcategory: TEAM_SUBCATEGORY.ADVANCED })
+                            })}
                         </Col>
                     </Row>
                 </div>
@@ -303,7 +307,9 @@ export default class extends StandardPage {
                     <Row>
                         <Col xs={{span: 24}} md={{span: 24}}>
                             <span className="blue-title">Services</span>
-                            {this.buildCircles({ subcategory: TEAM_SUBCATEGORY.SERVICES })}
+                            {this.checkForLoading(() => {
+                                return this.buildCircles({ subcategory: TEAM_SUBCATEGORY.SERVICES })
+                            })}
                         </Col>
                     </Row>
                 </div>
