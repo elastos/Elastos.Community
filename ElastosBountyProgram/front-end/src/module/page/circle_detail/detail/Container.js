@@ -6,7 +6,8 @@ export default createContainer(Component, (state) => {
     return {
         ...state.team,
         currentUserId: state.user.current_user_id,
-        loading: state.team.loading
+        loading: state.team.loading,
+        is_login: state.user.is_login
     }
 }, () => {
     const teamService = new TeamService()
@@ -17,6 +18,12 @@ export default createContainer(Component, (state) => {
         },
         resetTeamDetail() {
             return teamService.resetTeamDetail()
+        },
+        async applyToTeam(teamId, userId, applyMsg = 'I am interested in this circle.') {
+            return teamService.pushCandidate(teamId, userId, applyMsg)
+        },
+        async withdrawCandidate(teamCandidateId) {
+            return teamService.withdrawCandidate(teamCandidateId)
         }
     }
 })

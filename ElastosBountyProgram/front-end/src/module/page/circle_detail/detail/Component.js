@@ -56,8 +56,16 @@ class C extends BaseComponent {
         })
 
         if (member) {
-            await this.props.withdrawCandidate(member._id)
-            this.props.history.push('/profile/teams')
+            this.props.withdrawCandidate(member._id)
+        }
+    }
+
+    applyToCircle() {
+        if (this.props.is_login) {
+            this.props.applyToTeam(this.props.match.params.circleId,
+                this.props.currentUserId)
+        } else {
+            // pop login or register
         }
     }
 
@@ -74,7 +82,8 @@ class C extends BaseComponent {
                 </Popconfirm>
             )
             : (
-                <Button className="join-button cr-btn" disabled={hasApplied} onClick={() => this.setState({ applying: true })}>
+                <Button className="join-button cr-btn" disabled={hasApplied} onClick={() => this.applyToCircle()}
+                    loading={this.props.loading}>
                     { hasApplied
                         ? I18N.get('project.detail.popup.applied')
                         : I18N.get('circle.header.join')

@@ -180,7 +180,10 @@ export default class extends Base {
         }
 
         const teamOwner = await db_user.findById(team.owner)
-        await this.sendAddCandidateEmail(this.currentUser, teamOwner, team)
+
+        if (team.type !== constant.TEAM_TYPE.CRCLE) {
+            await this.sendAddCandidateEmail(this.currentUser, teamOwner, team)
+        }
 
         return teamCandidate
     }
