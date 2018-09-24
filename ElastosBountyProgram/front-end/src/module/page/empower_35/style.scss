@@ -141,19 +141,10 @@ $landingPageWidth: 1152px;
     }
 
     .emp35-statement-container {
-      .header-bar {
-        width: 60%;
-        margin-left: 40%;
-        height: 44px;
-        background-color: $bg_obsidian;
-      }
-
+      max-width: 950px;
+      margin: $gap_3 auto;
       .emp35-statement {
         position: relative;
-        margin-top: $gap_5 * 2;
-        margin-bottom: $gap_5 * 2;
-        margin-left: 20%;
-        margin-right: 20%;
 
         .emp35-statement-image {
           display: inline-grid;
@@ -232,7 +223,7 @@ $landingPageWidth: 1152px;
               }
             }
             .content {
-              #circle {
+              .circle-img {
                 width: 100px;
                 height: 100px;
                 margin-right: $gap_2;
@@ -610,6 +601,7 @@ $landingPageWidth: 1152px;
 
     .emp35-teamHeader {
       @extend %team-dark;
+      padding-bottom: $gap_5;
 
       .container .inner-container {
         padding-top: 92px;
@@ -624,6 +616,7 @@ $landingPageWidth: 1152px;
 
   .emp35-teamDark {
     @extend %team-dark;
+    padding-bottom: $gap_5;
 
     .container {
       padding-left: 66px;

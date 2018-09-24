@@ -170,3 +170,4 @@ export const TEAM_TASK_DOMAIN = create([
 ])
 export const TEAM_USER_STATUS = create(['NORMAL', 'PENDING', 'REJECT'])
 export const TEAM_TYPE = create(['TEAM', 'CRCLE'])
+export const TEAM_SUBCATEGORY = create(['ESSENTIAL', 'ADVANCED', 'SERVICES'])

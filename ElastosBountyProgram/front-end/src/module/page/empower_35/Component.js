@@ -1,7 +1,7 @@
 import React from 'react'
 import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
-import {TEAM_TYPE} from '@/constant'
+import {TEAM_TYPE, TEAM_SUBCATEGORY} from '@/constant'
 import I18N from '@/I18N'
 import './style.scss'
 import { Col, Row, Card, Button, message, Spin, Avatar, Modal, Icon } from 'antd'
@@ -59,11 +59,11 @@ export default class extends StandardPage {
     buildCircle(circle = {}, member, myCircles) {
         const titleClassName = `title ${member ? 'member' : ''} ${myCircles ? 'my-circles' : ''}`;
         return (
-            <div className={'emp35-circle-item'}>
+            <div className="emp35-circle-item">
                 <span className={titleClassName}
                     onClick={() => this.props.history.push(`/circle-detail/${circle._id}`)}>{circle.name}</span>
                 <img
-                    id="circle"
+                    className="circle-img"
                     src={member ? '/assets/images/emp35/circles_member_placeholder.jpg'
                         : '/assets/images/emp35/circles_placeholder.jpg'
                     }
@@ -78,32 +78,27 @@ export default class extends StandardPage {
         );
     }
 
-    buildCircles(member, myCircles) {
-        const { currentUserId } = this.props;
-        const circles = this.props.all_teams || {};
-        const currentUserCircles = [];
-        const nonUserCircles = Object.values(circles).map(circle => {
-            if (circle.members.indexOf(currentUserId) !== -1) {
-                currentUserCircles.push(
-                    <Col key={circle.eid} xs={12} sm={12} md={myCircles ? 8 : 6}>
-                        {this.buildCircle(circle, true, myCircles)}
-                    </Col>
-                )
-            } else if (!member && !myCircles) {
-                return (
-                    <Col key={circle.eid} xs={12} sm={12} md={myCircles ? 8 : 6}>
-                        {this.buildCircle(circle)}
-                    </Col>
-                );
-            }
-        });
-
+    buildCirclesWorker(circles) {
         return (
             <Row className="d_Row">
-                {currentUserCircles}
-                {nonUserCircles}
+                {_.map(circles, (circle) => (
+                    <Col key={circle._id} xs={12} sm={12} md={8}>
+                        {this.buildCircle(circle)}
+                    </Col>
+                ))}
             </Row>
-        );
+        )
+    }
+
+    buildMyCircles() {
+        const myCircles = this.props.myCircles
+        return this.buildCirclesWorker(myCircles)
+    }
+
+    buildCircles(query) {
+        const circles = this.props.all_teams || {};
+        const queriedCircles = _.filter(_.values(circles), query)
+        return this.buildCirclesWorker(queriedCircles)
     }
 
     ord_renderContent () {
@@ -114,7 +109,7 @@ export default class extends StandardPage {
                     <div className="d_box">
                         <div className="p_content">
                             {this.buildHeader()}
-                            {this.buildMyCircles()}
+                            {this.buildMyCirclesContainer()}
                             {this.buildTeamHeader()}
                             {this.buildEssentialCircles()}
                             {this.buildAdvancedCircles()}
@@ -184,7 +179,7 @@ export default class extends StandardPage {
         )
     }
 
-    buildMyCircles() {
+    buildMyCirclesContainer() {
         return (
             <div className="emp35-my-circles-container">
                 <div className="emp35-my-circles">
@@ -210,7 +205,7 @@ export default class extends StandardPage {
                                     <div className="inner-container">
                                         <span className="title">{I18N.get('emp35.mycircles.title')}</span>
                                     </div>
-                                    {this.buildCircles(true, true)}
+                                    {this.buildMyCircles()}
                                 </div>
                             </div>
                         </div>
@@ -223,7 +218,6 @@ export default class extends StandardPage {
     buildCircleStatement() {
         return (
             <div className="emp35-statement-container">
-                <div className="header-bar" />
                 <div className="emp35-statement">
                     <div className="emp35-statement-image">
                         <img id="emp35_statement" src="/assets/images/what@2x.jpg"/>
@@ -270,12 +264,12 @@ export default class extends StandardPage {
 
     buildEssentialCircles() {
         return (
-            <div className="emp35-teamDark" style={{paddingTop: '120px'}}>
+            <div className="emp35-teamDark">
                 <div className="container">
                     <Row>
                         <Col xs={{span: 24}} md={{span: 24}}>
                             <span className="blue-title">Essential</span>
-                            {this.buildCircles()}
+                            {this.buildCircles({ subcategory: TEAM_SUBCATEGORY.ESSENTIAL })}
                         </Col>
                     </Row>
                 </div>
@@ -285,11 +279,12 @@ export default class extends StandardPage {
 
     buildAdvancedCircles() {
         return (
-            <div className="emp35-teamDark" style={{paddingTop: '120px'}}>
+            <div className="emp35-teamDark">
                 <div className="container">
                     <Row>
                         <Col xs={{span: 24}} md={{span: 24}}>
                             <span className="blue-title">Advanced</span>
+                            {this.buildCircles({ subcategory: TEAM_SUBCATEGORY.ADVANCED })}
                         </Col>
                     </Row>
                 </div>
@@ -299,11 +294,12 @@ export default class extends StandardPage {
 
     buildServicesCircles() {
         return (
-            <div className="emp35-teamDark" style={{paddingTop: '120px'}}>
+            <div className="emp35-teamDark">
                 <div className="container">
                     <Row>
                         <Col xs={{span: 24}} md={{span: 24}}>
                             <span className="blue-title">Services</span>
+                            {this.buildCircles({ subcategory: TEAM_SUBCATEGORY.SERVICES })}
                         </Col>
                     </Row>
                 </div>

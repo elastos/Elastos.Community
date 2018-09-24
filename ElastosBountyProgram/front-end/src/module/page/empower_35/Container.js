@@ -9,8 +9,14 @@ import _ from 'lodash'
 import {SUBMISSION_TYPE, USER_EMPOWER_TYPE} from '@/constant'
 
 export default createContainer(Component, (state) => {
+    const allCircles = state.team.all_teams
+    const myCircles = _.filter(_.values(allCircles), (circle) => {
+        return _.find(circle.members, { _id: state.user.current_user_id })
+    })
+
     return {
         ...state.team,
+        myCircles,
         user: state.user,
         is_login: state.user.is_login,
         currentUserId: state.user.current_user_id
@@ -24,7 +30,7 @@ export default createContainer(Component, (state) => {
         async getTeams(query) {
             return teamService.index(query)
         },
-        
+
         async getEmpowerUsers() {
             /*
             return userService.getAll({
