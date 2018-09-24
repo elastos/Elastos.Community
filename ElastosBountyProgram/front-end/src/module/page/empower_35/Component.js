@@ -4,7 +4,7 @@ import Footer from '@/module/layout/Footer/Container'
 import {TEAM_TYPE} from '@/constant'
 import I18N from '@/I18N'
 import './style.scss'
-import { Col, Row, Card, Button, message, Spin, Avatar, Modal } from 'antd'
+import { Col, Row, Card, Button, message, Spin, Avatar, Modal, Icon } from 'antd'
 import _ from 'lodash'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
 
@@ -69,10 +69,10 @@ export default class extends StandardPage {
                     }
                 />
                 <div className={`indicator-container ${myCircles ? 'my-circles' : ''}`}>
-                    <div className="placeholder-icon" />
+                    <Icon type="message" style={{ fontSize: 11 }}/>
                     <div className="indicator">{circle.comments.length}</div>
-                    <div className="placeholder-icon" />
-                    <div className="indicator">74</div>
+                    <Icon type="team" style={{ fontSize: 11 }}/>
+                    <div className="indicator">{circle.members.length}</div>
                 </div>
             </div>
         );
