@@ -149,7 +149,7 @@ class C extends BaseComponent {
             <div>
                 <div className="member-header">
                     <div className="member-header-icon"><img src="/assets/images/tri-square-dark.svg"/></div>
-                    <div className="member-header-label komu-a">Member</div>
+                    <div className="member-header-label komu-a">Members</div>
                 </div>
                 <div className="members-list">
                     <Table

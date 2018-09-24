@@ -9,6 +9,7 @@ $landingPageWidth: 1152px;
   margin: $gap_2;
   .title {
     position: absolute;
+    cursor: pointer;
     font-family: "komu-a",sans-serif;
     font-size: 24px;
     color: #fff;
@@ -110,7 +111,7 @@ $landingPageWidth: 1152px;
   ************************************************************************
    */
   .p_content {
-    
+
     .emp35-empower {
       position: relative;
 
@@ -134,7 +135,7 @@ $landingPageWidth: 1152px;
               }
             }
           }
-      
+
         }
       }
     }
@@ -150,7 +151,7 @@ $landingPageWidth: 1152px;
       .emp35-statement {
         position: relative;
         margin-top: $gap_5 * 2;
-        margin-bottom: $gap_5 * 2;  
+        margin-bottom: $gap_5 * 2;
         margin-left: 20%;
         margin-right: 20%;
 
@@ -183,14 +184,14 @@ $landingPageWidth: 1152px;
 
     .emp35-my-circles-container {
       padding-top: $gap_5 * 2;
-      padding-bottom: $gap_5 * 2;  
+      padding-bottom: $gap_5 * 2;
       background-color: $bg_blue;
 
       .emp35-my-circles {
         position: relative;
         margin-left: 10%;
         margin-right: 10%;
-        
+
 
         .emp35-my-circles-message {
           display: inline-block;
@@ -214,7 +215,7 @@ $landingPageWidth: 1152px;
           display: inline-block;
           width: 50%;
           min-height: 370px;
-          
+
           @media only screen and (max-width: $mobile-width) {
             width: 100%;
           }
@@ -609,11 +610,11 @@ $landingPageWidth: 1152px;
 
     .emp35-teamHeader {
       @extend %team-dark;
-  
+
       .container .inner-container {
         padding-top: 92px;
       }
-  
+
       .title {
         font-family: "synthese",sans-serif;
         font-size: 48px;

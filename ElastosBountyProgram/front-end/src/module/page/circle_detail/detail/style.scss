@@ -81,7 +81,7 @@
         background-color: $bg_dark;
     }
     .form-header {
-        width: 70%;
+        max-width: 800px;
         margin: 0 auto;
         text-transform: uppercase;
         letter-spacing: normal;
@@ -89,6 +89,8 @@
         color: $cr100_green;
     }
     .c_Comments {
+        max-width: 800px;
+        margin: $gap_3 auto;
         h3.no-margin {
             display: none;
         }
@@ -98,9 +100,6 @@
             background: $bg_dark;
 
             .c_commentForm {
-                max-width: 70%;
-                margin: 0 auto;
-
                 .ant-input {
                     border-radius: 0;
                 }
@@ -128,7 +127,7 @@
             }
         }
         .ant-spin-container {
-            width: 70%;
+            width: 800px;
             margin: $gap_5 auto;
             max-height: 400px;
             overflow-y: scroll;

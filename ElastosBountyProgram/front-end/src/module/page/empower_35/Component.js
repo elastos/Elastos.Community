@@ -60,7 +60,8 @@ export default class extends StandardPage {
         const titleClassName = `title ${member ? 'member' : ''} ${myCircles ? 'my-circles' : ''}`;
         return (
             <div className={'emp35-circle-item'}>
-                <span className={titleClassName}>{circle.name}</span>
+                <span className={titleClassName}
+                    onClick={() => this.props.history.push(`/circle-detail/${circle._id}`)}>{circle.name}</span>
                 <img
                     id="circle"
                     src={member ? '/assets/images/emp35/circles_member_placeholder.jpg'
@@ -122,7 +123,7 @@ export default class extends StandardPage {
                         </div>
                     </div>
                 </div>
-                
+
                 {this.renderLoginOrRegisterModal()}
 
                 <ModalEmpowerForm
