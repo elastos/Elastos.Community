@@ -104,15 +104,15 @@ class C extends BaseComponent {
                 <span className="circle-name komu-a">{this.props.detail.name}</span>
                 <Row>
                     <Col span={10}>
-                        <div className="circle-contributor-number komu-a">413</div>
-                        <span className="circle-contributor-label synthese">Contributors</span>
+                        <div className="circle-contributor-number komu-a">{_.size(this.props.detail.comments)}</div>
+                        <span className="circle-contributor-label synthese">Posts</span>
                     </Col>
                     <Col span={4}>
                         {this.getMainActions()}
                         <img className="circle-down-arrow" src="/assets/images/emp35/down_arrow.png"/>
                     </Col>
                     <Col span={10}>
-                        <div className="circle-members-number komu-a">85</div>
+                        <div className="circle-members-number komu-a">{_.size(this.props.detail.members)}</div>
                         <span className="circle-members-label synthese">Members</span>
                     </Col>
                 </Row>
