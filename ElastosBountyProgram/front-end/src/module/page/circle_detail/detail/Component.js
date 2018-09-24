@@ -171,12 +171,12 @@ class C extends BaseComponent {
             <div>
                 <div className="form-header-wrap">
                     <div className="form-header komu-a">Create Post</div>
+                    <Comments
+                        headlines={true}
+                        type="team"
+                        canPost={true}
+                        model={this.props.detail}/>
                 </div>
-                <Comments
-                    headlines={true}
-                    type="team"
-                    canPost={true}
-                    model={this.props.match.params.circleId}/>
             </div>
         )
     }

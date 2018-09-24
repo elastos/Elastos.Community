@@ -89,15 +89,14 @@
         color: $cr100_green;
     }
     .c_Comments {
-        max-width: 800px;
-        margin: $gap_3 auto;
         h3.no-margin {
             display: none;
         }
         .ant-list-header {
-            min-height: 400px;
-            padding: $gap_3 0;
+            max-width: 800px;
+            margin: $gap_3 auto;
             background: $bg_dark;
+            border-bottom: none;
 
             .c_commentForm {
                 .ant-input {
@@ -127,9 +126,18 @@
             }
         }
         .ant-spin-container {
-            width: 800px;
-            margin: $gap_5 auto;
             max-height: 400px;
+            background: white;
+            padding: $gap_3 0 $gap_5 0;
+
+            .ant-list-item {
+                max-width: 800px;
+                margin: 0 auto;
+                background: $bg_blue;
+                border: none;
+                padding: $gap_2;
+            }
+
             overflow-y: scroll;
 
             &::-webkit-scrollbar {
