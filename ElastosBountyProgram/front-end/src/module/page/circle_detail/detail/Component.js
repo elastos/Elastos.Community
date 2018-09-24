@@ -189,11 +189,18 @@ class C extends BaseComponent {
         return (
             <div>
                 <div className="form-header-wrap">
-                    <div className="form-header komu-a">Create Post</div>
+                    <div className="form-header komu-a">
+                        {this.props.is_login
+                            ? this.hasApplied()
+                                ? 'Create Post'
+                                : 'Join the Circle to post'
+                            : 'Register to join the Circle and post'
+                        }
+                    </div>
                     <Comments
                         headlines={true}
                         type="team"
-                        canPost={true}
+                        canPost={this.hasApplied()}
                         model={this.props.detail}/>
                 </div>
             </div>
