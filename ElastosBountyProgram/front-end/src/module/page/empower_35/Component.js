@@ -56,27 +56,32 @@ export default class extends StandardPage {
         })
     }
 
-    buildCircle(circle = {}, member, myCircles) {
-        const titleClassName = `title ${member ? 'member' : ''} ${myCircles ? 'my-circles' : ''}`;
+    buildCircle(circle = {}) {
+        const member = !!_.find(this.props.myCircles, { _id: circle._id })
+        const mainClassName = 'emp35-circle-item ' + (member
+            ? 'member'
+            : '')
+
         return (
-            <div className="emp35-circle-item">
+            <div className={mainClassName}>
                 <img
                     className="ellipsis-img"
-                    src='/assets/images/emp35/circle_ellipse.svg'
+                    src={ member
+                        ? '/assets/images/emp35/circle_ellipse_active.svg'
+                        : '/assets/images/emp35/circle_ellipse.svg'
+                    }
                 />
                 <img
                     className="circle-img"
-                    src={member ? 'TODO'
-                        : '/assets/images/emp35/circle_group.svg'
-                    }
+                    src="/assets/images/emp35/circle_group.svg"
                 />
-                <div className={`indicator-container ${myCircles ? 'my-circles' : ''}`}>
+                <div className="indicator-container">
                     <Icon type="message" style={{ fontSize: 11 }}/>
                     <div className="indicator">{circle.comments.length}</div>
                     <Icon type="team" style={{ fontSize: 11 }}/>
                     <div className="indicator">{circle.members.length}</div>
                 </div>
-                <span className={titleClassName}
+                <span className="title"
                     onClick={() => this.props.history.push(`/circle-detail/${circle._id}`)}>{circle.name}</span>
             </div>
         );

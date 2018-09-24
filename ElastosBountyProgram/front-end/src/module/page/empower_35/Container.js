@@ -10,7 +10,7 @@ import {SUBMISSION_TYPE, USER_EMPOWER_TYPE} from '@/constant'
 
 export default createContainer(Component, (state) => {
     const allCircles = state.team.all_teams
-    const myCircles = state.user.circles
+    const myCircles = _.values(state.user.circles)
 
     return {
         ...state.team,

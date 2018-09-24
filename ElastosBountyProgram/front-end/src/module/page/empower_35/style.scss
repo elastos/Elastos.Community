@@ -16,6 +16,11 @@ $landingPageWidth: 1152px;
     margin-right: $gap_2;
   }
 
+  color: white;
+  &.member {
+    color: $cr100_green;
+  }
+
   .ellipsis-img {
     position: absolute;
     top: 12px;
@@ -30,7 +35,6 @@ $landingPageWidth: 1152px;
     cursor: pointer;
     font-family: "komu-a",sans-serif;
     font-size: 24px;
-    color: #fff;
     word-spacing: 9999px;
     text-align: center;
     width: 150px;
@@ -55,14 +59,10 @@ $landingPageWidth: 1152px;
       top: 92px;
       left: 38px;
     }
-    .anticon {
-      color: white;
-    }
     .indicator {
       display: inline-block;
       font-family: "synthese",sans-serif;
       font-size: 10px;
-      color: #fff;
       margin-left: $gap_0;
       margin-right: $gap_2;
     }
@@ -143,7 +143,6 @@ $landingPageWidth: 1152px;
               .title {
                 font-family: "synthese",sans-serif;
                 font-size: 24px;
-                color: #fff;
                 padding-top: 102px;
                 text-align: center;
                 font-size: 36px;
@@ -234,7 +233,6 @@ $landingPageWidth: 1152px;
               .title {
                 font-family: "synthese",sans-serif;
                 font-size: 24px;
-                color: #fff;
               }
             }
           }
@@ -292,7 +290,6 @@ $landingPageWidth: 1152px;
 
   %team-dark {
     background-color: $bg_dark;
-    color: #fff;
 
     .container {
       @extend %container;
@@ -487,7 +484,6 @@ $landingPageWidth: 1152px;
 
         font-family: "synthese",sans-serif;
         font-size: 24px;
-        color: white;
 
         @media only screen and (max-width: $mobile-width) {
           margin-top: 155px;
