@@ -136,22 +136,13 @@
                 background: $bg_blue;
                 border: none;
                 padding: $gap_2;
+
+                &:not(:last-child) {
+                    border-bottom: 1px solid $bg_gray;
+                }
             }
 
-            overflow-y: scroll;
-
-            &::-webkit-scrollbar {
-                width: 10px;
-                background: white;
-            }
-            &::-webkit-scrollbar-track {
-                background: $bg_obsidian_transparent;
-                border: 4px solid white;
-            }
-            &::-webkit-scrollbar-thumb {
-                background: $bg_obsidian;
-                border-radius: 10px;
-            }
+            overflow-y: auto;
         }
         .ant-list-pagination {
             display: none;
