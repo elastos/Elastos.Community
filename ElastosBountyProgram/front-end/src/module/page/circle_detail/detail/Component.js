@@ -138,6 +138,12 @@ class C extends BaseComponent {
         )
     }
 
+    getAvatarWithFallback(avatar) {
+        return _.isEmpty(avatar)
+            ? '/assets/images/Elastos_Logo.png'
+            : avatar
+    }
+
     renderMembers() {
         const members = _.filter(this.props.detail.members, { status: TEAM_USER_STATUS.NORMAL })
         const columns = [{
@@ -147,7 +153,7 @@ class C extends BaseComponent {
                 return (
                     <div key={candidate._id}>
                         <Avatar className={'gap-right ' + (candidate.role === 'LEADER' ? 'avatar-leader' : 'avatar-member')}
-                            src={candidate.user.profile.avatar}/>
+                            src={this.getAvatarWithFallback(candidate.user.profile.avatar)}/>
                         <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
                             {`${candidate.user.profile.firstName} ${candidate.user.profile.lastName}`}</a>
                     </div>
@@ -162,7 +168,7 @@ class C extends BaseComponent {
                 </div>
                 <div className="members-list">
                     <Table
-                        className="no-borders headerless cr-table-scroll"
+                        className="no-borders headerless"
                         dataSource={members}
                         columns={columns}
                         bordered={false}
