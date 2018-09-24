@@ -162,8 +162,6 @@ export default class extends StandardPage {
                                 </p>
                             </div>
                         </div>
-
-
                     </div>
                     <div className="emp35-my-circles-list">
                         <div className="message-container">
