@@ -7,7 +7,8 @@ import _ from 'lodash'
 export default createContainer(Component, (state) => {
     return {
         ...state.team,
-        currentUserId: state.user.current_user_id
+        currentUserId: state.user.current_user_id,
+        all_teams: _.filter(state.team.all_teams, { type: TEAM_TYPE.TEAM })
     }
 }, () => {
     const teamService = new TeamService()
