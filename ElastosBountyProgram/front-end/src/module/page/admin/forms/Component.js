@@ -19,7 +19,7 @@ export default class extends AdminPage {
 
         this.state = {
             textFilter: (this.props.filter && this.props.filter.textFilter) || '',
-            campaign: (this.props.filter && this.props.filter.campaign) || '',
+            campaign: (this.props.filter && this.props.filter.campaign) || null,
             showArchived: (this.props.filter && this.props.filter.showArchived) ? this.props.filter.showArchived : false,
         }
     }

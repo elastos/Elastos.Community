@@ -3,7 +3,7 @@ import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import I18N from '@/I18N'
 import './style.scss'
-import { Col, Row, Spin, Button } from 'antd'
+import { Col, Row, Spin, message } from 'antd'
 import _ from 'lodash'
 
 export default class extends StandardPage {
@@ -183,8 +183,9 @@ export default class extends StandardPage {
                         <Row className="d_Row subscribe" justify="center">
                             <div className="form-wrap">
                                 <p>Stay updated by subscribing below with your E-Mail</p>
+                                <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"/>
                                 <form id="footer-form" className="signup-form" name="mailing-list" action="https://cyberrepublic.us19.list-manage.com/subscribe/post-json?u=acb5b0ce41bfe293d881da424&id=e6afbb4dba"
-                                      method="get">
+                                      method="post" target="dummyframe" onSubmit={this.evangelistSubmit}>
                                     <div className="email-wrap">
                                         <input type="email" name="EMAIL" data-type="req" placeholder="Enter Email"/>
                                         <button type="submit" className="arrow-submit">
@@ -216,5 +217,11 @@ export default class extends StandardPage {
                 </div>
             </div>
         )
+    }
+
+    evangelistSubmit(ev) {
+
+        message.success('Email subscription received successfully')
+
     }
 }

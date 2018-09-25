@@ -1,7 +1,9 @@
-import React from 'react';
+import React from 'react'
+import {TASK_STATUS} from '@/constant'
 import council from './en/council';
 
-export default {
+const en = {
+
     council,
     // Header
     '0000': 'ALPHA',
@@ -65,6 +67,9 @@ export default {
     '2303': 'My Issues',
     '2304': 'My Communities',
     '2305': 'My Projects',
+
+    // Admin tasks
+    'admin.tasks.status': 'Status',
 
     // Home
     'home.title': 'Elastos - Cyber Republic',
@@ -496,3 +501,19 @@ export default {
     'vision.07': 'We look forward to building an international haven for entrepreneurship  and innovation for the new internet.'
 
 };
+
+// lang mappings
+
+// TASK_STATUS
+en[`taskStatus.${TASK_STATUS.CREATED}`] = 'Created'
+en[`taskStatus.${TASK_STATUS.PENDING}`] = 'Pending'
+en[`taskStatus.${TASK_STATUS.APPROVED}`] = 'Approved'
+en[`taskStatus.${TASK_STATUS.ASSIGNED}`] = 'Assigned'
+en[`taskStatus.${TASK_STATUS.SUBMITTED}`] = 'Submitted'
+en[`taskStatus.${TASK_STATUS.SUCCESS}`] = 'Success'
+en[`taskStatus.${TASK_STATUS.DISTRIBUTED}`] = 'Distributed'
+en[`taskStatus.${TASK_STATUS.CANCELED}`] = 'Canceled'
+en[`taskStatus.${TASK_STATUS.EXPIRED}`] = 'Expired'
+
+
+export default en
