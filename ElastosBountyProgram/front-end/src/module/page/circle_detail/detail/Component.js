@@ -75,7 +75,8 @@ class C extends BaseComponent {
         const maxReached = _.size(this.props.myCircles) >= 2
         const mainActionButton = isTeamMember
             ? (
-                <Popconfirm title={I18N.get('project.detail.popup.leave_question')} okText="Yes" cancelText="No"
+                <Popconfirm title={I18N.get('project.detail.popup.leave_question')}
+                    okText={I18N.get('.yes')} cancelText={I18N.get('.no')}
                     onConfirm={this.leaveTeam.bind(this)}>
                     <Button className="cr-btn" type="primary" loading={this.props.loading}>
                         {I18N.get('circle.header.leave')}
@@ -109,7 +110,7 @@ class C extends BaseComponent {
                 <Row>
                     <Col span={8}>
                         <div className="circle-contributor-number komu-a">{_.size(this.props.detail.comments)}</div>
-                        <span className="circle-contributor-label synthese">Posts</span>
+                        <span className="circle-contributor-label synthese">{I18N.get('circle.posts')}</span>
                     </Col>
                     <Col span={8}>
                         {this.getMainActions()}
@@ -117,7 +118,7 @@ class C extends BaseComponent {
                     </Col>
                     <Col span={8}>
                         <div className="circle-members-number komu-a">{_.size(this.props.detail.members)}</div>
-                        <span className="circle-members-label synthese">Members</span>
+                        <span className="circle-members-label synthese">{I18N.get('circle.members')}</span>
                     </Col>
                 </Row>
             </div>
@@ -168,7 +169,7 @@ class C extends BaseComponent {
             <div>
                 <div className="member-header">
                     <div className="member-header-icon"><img src="/assets/images/tri-square-dark.svg"/></div>
-                    <div className="member-header-label komu-a">Members</div>
+                    <div className="member-header-label komu-a">{I18N.get('circle.members')}</div>
                 </div>
                 <div className="members-list">
                     <Table
@@ -192,9 +193,15 @@ class C extends BaseComponent {
                     <div className="form-header komu-a">
                         {this.props.is_login
                             ? this.isTeamMember()
-                                ? 'Create Post'
-                                : 'Join the Circle to post'
-                            : 'Register to join the Circle and post'
+                                ? I18N.get('circle.createPost')
+                                : I18N.get('circle.joinToPost')
+                            : (
+                                <div>
+                                    <a className="form-header komu-a" onClick={() => this.showLoginRegisterModal()}>
+                                        {I18N.get('circle.registerToPost')}
+                                    </a>
+                                </div>
+                            )
                         }
                     </div>
                     <Comments

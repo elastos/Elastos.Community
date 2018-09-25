@@ -218,6 +218,11 @@ export default {
     'circle.header.join': 'Join',
     'circle.header.leave': 'Leave',
     'circle.header.maxReached': 'Limit reached',
+    'circle.createPost': 'Create Post',
+    'circle.joinToPost': 'Join the Circle to post',
+    'circle.registerToPost': 'Register to join the Circle and post',
+    'circle.members': 'Members',
+    'circle.posts': 'Posts',
 
     // Training
     'training.header.title': 'Ambassadors Training',
@@ -298,6 +303,8 @@ export default {
     '.cancel': 'Cancel',
     '.edit': 'Edit',
     '.upload': 'Click to Upload',
+    '.yes': 'Yes',
+    '.no': 'No',
 
     // Landing
     'landing.alpha': 'ALPHA',
