@@ -182,15 +182,15 @@ export default class extends Base {
         const db_user = this.getDBModel('User');
         const isEmail = validate.email(query.username);
          if (!isEmail) {
-            return await db_user.findOne({
+            return await db_user.getDBInstance().findOne({
                 username: query.username.toLowerCase(),
                 password: query.password
-            });
+            }).populate('circles');
         } else {
-            return await db_user.findOne({
+            return await db_user.getDBInstance().findOne({
                 email: query.username,
                 password: query.password
-            });
+            }).populate('circles');
         }
     }
 
