@@ -53,6 +53,8 @@ class C extends BaseComponent {
                 } else if (this.state.mode === 'newteam') {
                     const sanitized = _.omit(values, [ 'team', 'applyMsg' ])
                     sanitized.domain = this.props.task.domain
+                    sanitized.tags = sanitized.tags.join(',')
+
                     this.props.createTeam(sanitized).then((team) => {
                         this.props.applyToTask(this.props.task._id, null, team._id).then(() => {
                             this.setState({ confirmation: true })

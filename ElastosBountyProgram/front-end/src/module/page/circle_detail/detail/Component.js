@@ -191,7 +191,7 @@ class C extends BaseComponent {
                 <div className="form-header-wrap">
                     <div className="form-header komu-a">
                         {this.props.is_login
-                            ? this.hasApplied()
+                            ? this.isTeamMember()
                                 ? 'Create Post'
                                 : 'Join the Circle to post'
                             : 'Register to join the Circle and post'
@@ -200,7 +200,7 @@ class C extends BaseComponent {
                     <Comments
                         headlines={true}
                         type="team"
-                        canPost={this.hasApplied()}
+                        canPost={this.isTeamMember()}
                         model={this.props.detail}/>
                 </div>
             </div>
