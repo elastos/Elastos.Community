@@ -233,6 +233,7 @@ $landingPageWidth: 1152px;
               .title {
                 font-family: "synthese",sans-serif;
                 font-size: 24px;
+                color: white;
               }
             }
           }
@@ -247,6 +248,10 @@ $landingPageWidth: 1152px;
         position: absolute;
         left: 50%;
         top: 50px;
+      }
+
+      .title {
+        color: white;
       }
 
       #emp35_darkBlock {
@@ -518,6 +523,7 @@ $landingPageWidth: 1152px;
         ************************************************************************
         */
         .strike-text {
+          color: white;
           position: relative;
           display: inline-block;
 

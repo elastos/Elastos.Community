@@ -7,6 +7,7 @@ import _ from 'lodash'
 import './style.scss'
 import { Col, Row, Icon, Form, Input, Button, Breadcrumb } from 'antd'
 import moment from 'moment/moment'
+import I18N from '@/I18N'
 
 export default class extends StandardPage {
     ord_renderContent () {
@@ -23,10 +24,10 @@ export default class extends StandardPage {
                                     <Icon type="home"/>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item href="/developer">
-                                    Developers
+                                    {I18N.get('developer.breadcrumb.developers')}
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    Search
+                                    {I18N.get('developer.breadcrumb.search')}
                                 </Breadcrumb.Item>
                             </Breadcrumb>
                         </div>
