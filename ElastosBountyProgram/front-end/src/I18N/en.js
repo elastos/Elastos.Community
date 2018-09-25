@@ -150,7 +150,8 @@ export default {
     'forgot.success': 'Password changed successfully',
 
     // Developer
-    'developer.breadcrumb.developers': 'Developers',
+    'developer.breadcrumb.developers': 'Community',
+    'developer.breadcrumb.search': 'Search',
     'developer.learn': 'Learn',
     'developer.learn.basics': 'Elastos Basics',
     'developer.learn.concepts': 'Key Concepts',
