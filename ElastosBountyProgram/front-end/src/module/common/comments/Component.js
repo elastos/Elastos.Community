@@ -52,7 +52,7 @@ class C extends BaseComponent {
         )
 
         const headline_fn = getFieldDecorator('headline', {
-            rules: [{required: true, message: 'Please input your headline!'}],
+            rules: [],
             initialValue: ''
         })
         const headline_el = (
