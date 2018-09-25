@@ -140,6 +140,10 @@ export default {
     'forgot.new_password': '请输入新密码',
     'forgot.success': '修改密码成功',
 
+    // UserEditForm
+    'user.edit.form.label_role': '请选择一名角色',
+    'user.edit.form.role': '角色',
+
     // Developer
     'developer.breadcrumb.developers': '开发者',
     'developer.learn': '学习',
@@ -271,5 +275,10 @@ export default {
     'select.placeholder': '请选择',
     '.ok': '确定',
     '.cancel': '取消',
-    '.edit': '编辑'
+    '.edit': '编辑',
+
+    // Role
+    'role.member': '普通用户',
+    'role.organizer': '组织者',
+    'role.admin': '管理员'
 }

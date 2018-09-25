@@ -118,7 +118,7 @@ class C extends BaseComponent {
         )
         
         const role_fn = getFieldDecorator('role', {
-            rules: [{required: true, message: 'Please select your role'}],
+            rules: [{required: true, message: I18N.get('user.edit.form.label_role')}],
             initialValue: user.role
         })
         const role_el = (
@@ -128,7 +128,7 @@ class C extends BaseComponent {
                     placeholder="Role">
                 {_.entries(config.data.mappingRoleToName).map(([key, val]) => {
                     return <Select.Option key={key} value={key}>
-                        {val}
+                        {I18N.get(val)}
                     </Select.Option>
                 })}
             </Select>
@@ -417,8 +417,8 @@ class C extends BaseComponent {
                             {p.username}
                         </FormItem>
                         {this.props.is_admin && 
-                        <FormItem label="Role" {...formItemLayout}>{
-                            p.role}
+                        <FormItem label={I18N.get('user.edit.form.role')} {...formItemLayout}>
+                            {p.role}
                         </FormItem>
                         }
                         <FormItem label="Email" {...formItemLayout}>
