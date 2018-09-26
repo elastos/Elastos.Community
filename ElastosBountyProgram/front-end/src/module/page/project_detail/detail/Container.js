@@ -3,7 +3,7 @@ import TaskService from '@/service/TaskService'
 import TeamService from '@/service/TeamService'
 import CommentService from '@/service/CommentService'
 import Component from './Component'
-import {TASK_TYPE, TASK_CATEGORY} from '@/constant'
+import {TASK_TYPE, TASK_CATEGORY, TEAM_TYPE} from '@/constant'
 import _ from 'lodash'
 
 export default createContainer(Component, (state) => {
@@ -43,7 +43,10 @@ export default createContainer(Component, (state) => {
         },
 
         async getTeams(query) {
-            return teamService.index(query)
+            return teamService.index({
+                ...query,
+                type: TEAM_TYPE.TEAM
+            })
         },
 
         async getTasks(filters) {
