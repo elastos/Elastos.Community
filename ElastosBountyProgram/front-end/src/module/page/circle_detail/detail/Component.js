@@ -247,8 +247,8 @@ class C extends BaseComponent {
     }
 
     renderLoginOrRegisterModal() {
-        if (this.props.is_login) {
-            return
+        if (!this.shouldShowLoginRegisterModal()) {
+            return;
         }
 
         return (
@@ -265,6 +265,20 @@ class C extends BaseComponent {
         )
     }
 
+    shouldShowLoginRegisterModal() {
+        if (this.props.is_login) {
+            if (sessionStorage.getItem('registerUser') || sessionStorage.getItem('registerWelcome')) {
+                return true;
+            } else if (sessionStorage.getItem('registerJoined')) {
+                sessionStorage.removeItem('registerJoined');
+                return false;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
     showLoginRegisterModal = () => {
         sessionStorage.setItem('loginRedirect', `/empower35-detail/${this.props.match.params.circleId}`)
         sessionStorage.setItem('registerRedirect', `/empower35-detail/${this.props.match.params.circleId}`)
@@ -272,6 +286,8 @@ class C extends BaseComponent {
         this.setState({
             showLoginRegisterModal: true
         })
+
+        console.log(sessionStorage.getItem('registerRedirect'))
     }
 
     handleLoginRegisterModalOk = (e) => {
@@ -280,6 +296,8 @@ class C extends BaseComponent {
         this.setState({
             showLoginRegisterModal: false
         })
+
+        console.log(sessionStorage.getItem('registerRedirect'))
     }
 
     handleLoginRegisterModalCancel = (e) => {
@@ -288,6 +306,8 @@ class C extends BaseComponent {
         this.setState({
             showLoginRegisterModal: false
         })
+
+        console.log(sessionStorage.getItem('registerRedirect'))
     }
 }
 

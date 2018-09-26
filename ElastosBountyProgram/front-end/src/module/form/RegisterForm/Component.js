@@ -260,7 +260,7 @@ class C extends BaseComponent {
                         {p.regCode}
                     </FormItem>
                     <FormItem>
-                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn" onClick={this.handleSubmit.bind(this)}>
+                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn d_btn_join" onClick={this.handleSubmit.bind(this)}>
                             {I18N.get('register.submit')}
                         </Button>
                     </FormItem>
@@ -286,7 +286,7 @@ class C extends BaseComponent {
                         {p.recaptcha}
                     </FormItem>*/}
                     <FormItem>
-                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn" onClick={this.handleSubmit.bind(this)}>
+                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn d_btn_join" onClick={this.handleSubmit.bind(this)}>
                             {I18N.get('register.submit')}
                         </Button>
                     </FormItem>

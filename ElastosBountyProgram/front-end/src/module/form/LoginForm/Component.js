@@ -81,7 +81,7 @@ class C extends BaseComponent {
                     <a className="login-form-forgot pull-right" onClick={() => this.props.history.push('/forgot-password')}>{I18N.get('login.forget')}</a>
                 </FormItem>
                 <FormItem>
-                    <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
+                    <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn d_btn_join">
                         {I18N.get('login.submit')}
                     </Button>
                 </FormItem>

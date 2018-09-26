@@ -285,8 +285,8 @@ export default class extends StandardPage {
      */
 
     renderLoginOrRegisterModal() {
-        if (this.props.is_login) {
-            return
+        if (!this.shouldShowLoginRegisterModal()) {
+            return;
         }
 
         return (
@@ -301,6 +301,20 @@ export default class extends StandardPage {
                 <LoginOrRegisterForm />
             </Modal>
         )
+    }
+
+    shouldShowLoginRegisterModal() {
+        if (this.props.is_login) {
+            if (sessionStorage.getItem('registerUser') || sessionStorage.getItem('registerWelcome')) {
+                return true;
+            } else if (sessionStorage.getItem('registerJoined')) {
+                sessionStorage.removeItem('registerJoined');
+                return false;
+            } else {
+                return false;
+            }
+        }
+        return true;
     }
 
     showLoginRegisterModal = () => {
