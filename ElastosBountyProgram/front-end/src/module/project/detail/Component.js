@@ -463,7 +463,7 @@ class C extends BaseComponent {
                                 </Col>
                             </Row>
 
-                            {this.props.page !== 'LEADER' && !isTaskOwner &&
+                            {this.props.page !== 'LEADER' && !isTaskOwner && !isMember &&
                                 <Row className="actions">
                                     <Button type="primary" onClick={() => this.setState({ applying: true })}>
                                         {I18N.get('project.detail.popup.join_project')}
