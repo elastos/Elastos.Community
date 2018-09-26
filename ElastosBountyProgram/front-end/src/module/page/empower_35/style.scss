@@ -297,9 +297,22 @@ $landingPageWidth: 1152px;
 
       #emp35_square {
         position: absolute;
-
         left: 66px;
         top: 60px;
+
+        @media only screen and (max-width: $mobile-width) {
+          position: static;
+          top: 0;
+          left: 0;
+        }
+      }
+
+      .inner-container {
+        @media only screen and (max-width: $mobile-width) {
+          margin: 0;
+          padding-top: 0;
+          text-align: center;
+        }
       }
     }
   }
@@ -641,6 +654,21 @@ $landingPageWidth: 1152px;
       .title {
         font-family: "synthese",sans-serif;
         font-size: 48px;
+      }
+    }
+  }
+
+  .emp35-teamDesigner, .emp35-teamMedia {
+    .container {
+      .inner-container {
+        text-align: center;
+        margin-left: 0;
+
+        @media only screen and (max-width: $mobile-width) {
+          > div {
+            text-align: center;
+          }
+        }
       }
     }
   }

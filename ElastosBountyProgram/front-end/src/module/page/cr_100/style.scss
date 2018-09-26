@@ -20,6 +20,7 @@ $mobile-padding: $gap_0 0px;
   .spinner {
     display: block;
     margin-bottom: $gap_3;
+    padding-bottom: $gap_3;
   }
 
   h3 {
@@ -30,6 +31,12 @@ $mobile-padding: $gap_0 0px;
 
   .ebp-wrap {
     padding: 0;
+  }
+
+  .category-title {
+    @media only screen and (max-width: $mobile-width) {
+      text-align: center;
+    }
   }
 
   .c_projectList {
@@ -44,6 +51,10 @@ $mobile-padding: $gap_0 0px;
     width: $projectBoxSize;
     text-align: center;
     position: relative;
+
+    @media only screen and (max-width: $mobile-width) {
+      margin: 0 auto;
+    }
   }
 
   .project-number {
@@ -94,10 +105,20 @@ $mobile-padding: $gap_0 0px;
 
   .cr100-header {
     margin-bottom: 180px;
+
+    @media only screen and (max-width: $mobile-width) {
+      margin-bottom: $gap_1;
+    }
   }
 
   .project-title {
     margin-bottom: $gap_2;
+
+    @media only screen and (max-width: $mobile-width) {
+      margin-bottom: 0;
+      text-align: center;
+      font-size: 40px;
+    }
   }
 
   .disclaimer-box {
@@ -124,10 +145,12 @@ $mobile-padding: $gap_0 0px;
     }
   }
 
-  .cr100_logo_text {
-    position: absolute;
-    top: 0;
-    right: 0;
+  .cr100-logo-text {
+    float: right;
+
+    @media only screen and (max-width: $mobile-width) {
+      float: none;
+    }
   }
 
   .welcomeBox {
@@ -138,6 +161,10 @@ $mobile-padding: $gap_0 0px;
     text-align: center;
     background: $bg_blue;
     position: relative;
+
+    @media only screen and (max-width: $mobile-width) {
+      margin-bottom: 0;
+    }
 
     .cr100_logo {
       position: absolute;
@@ -153,6 +180,10 @@ $mobile-padding: $gap_0 0px;
       position: absolute;
       bottom: -$gap_2;
       right: -$gap_3;
+
+      @media only screen and (max-width: $mobile-width) {
+        left: -$gap_3;
+      }
     }
 
     .title {
@@ -172,6 +203,14 @@ $mobile-padding: $gap_0 0px;
         font-size: 18px;
         margin: 38px 0;
         text-align: center;
+      }
+
+      .submit-idea-button {
+        @media only screen and (max-width: $mobile-width) {
+          width: 100%;
+          white-space: normal;
+          height: auto;
+        }
       }
     }
   }

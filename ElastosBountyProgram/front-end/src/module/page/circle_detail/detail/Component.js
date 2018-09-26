@@ -106,9 +106,9 @@ class C extends BaseComponent {
         return (
             <div className="header-container">
                 <img className="circle-rectangle" src="/assets/images/emp35/circle_rectangle.png"/>
-                <span className="circle-name komu-a">{this.props.detail.name}</span>
+                <div className="circle-name komu-a">{this.props.detail.name}</div>
                 <Row>
-                    <Col span={8}>
+                    <Col span={8} className="left-col">
                         <div className="circle-contributor-number komu-a">{_.size(this.props.detail.comments)}</div>
                         <span className="circle-contributor-label synthese">{I18N.get('circle.posts')}</span>
                     </Col>
@@ -116,7 +116,7 @@ class C extends BaseComponent {
                         {this.getMainActions()}
                         <img className="circle-down-arrow" src="/assets/images/emp35/down_arrow.png"/>
                     </Col>
-                    <Col span={8}>
+                    <Col span={8} className="right-col">
                         <div className="circle-members-number komu-a">{_.size(this.props.detail.members)}</div>
                         <span className="circle-members-label synthese">{I18N.get('circle.members')}</span>
                     </Col>
@@ -130,15 +130,14 @@ class C extends BaseComponent {
     }
 
     renderContent() {
+        const description = this.props.detail.profile.description ||
+            'A circle is a simple closed curve that divides the plane into two regions: an interior and an exterior.\n' +
+            'In everyday use, the term "circle" may be used interchangeably to refer to either the boundary of the figure,\n' +
+            'or to the whole figure including its interior; in strict technical usage, the circle is only the boundary and\n' +
+            'the whole figure is called a disc.';
         return (
             <div className="content-paragraphs">
-                <p className="synthese">A circle is a simple closed curve that divides the plane into two regions: an interior and an exterior.
-                    In everyday use, the term "circle" may be used interchangeably to refer to either the boundary of the figure,
-                    or to the whole figure including its interior; in strict technical usage, the circle is only the boundary and
-                    the whole figure is called a disc.</p>
-                <p className="synthese">A circle may also be defined as a special kind of ellipse in which the
-                    two foci are coincident and the eccentricity is 0, or the two-dimensional shape enclosing the most area per
-                    unit perimeter squared, using calculus of variations.</p>
+                <p className="synthese">{description}</p>
             </div>
         )
     }
@@ -221,6 +220,17 @@ class C extends BaseComponent {
             </div>) : (
             <div className="c_Circle c_Detail">
                 <div className="header">
+                    <div className="left-box-container">
+                        <div className="box"/>
+                    </div>
+                    <div className="upper-box-container">
+                        <img src="/assets/images/training_green_slashed_box.png"/>
+                    </div>
+                    <div className="right-box-container">
+                        <div className="small-box"/>
+                        <div className="box"/>
+                        <img src="/assets/images/oomph.png"/>
+                    </div>
                     {this.renderHeader()}
                 </div>
                 <div className="content-section">

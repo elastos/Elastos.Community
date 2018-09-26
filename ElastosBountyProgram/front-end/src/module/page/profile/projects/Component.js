@@ -85,16 +85,16 @@ export default class extends StandardPage {
 
     getListComponent(tasks) {
         const description_fn = (entity) => {
-            return _.isEmpty(entity.recruitedSkillsets)
-                ? I18N.get('project.detail.not_recruiting')
-                : (
-                    <div className="valign-wrapper">
-                        <div className="gap-right pull-left">{I18N.get('project.detail.recruiting')}: </div>
-                        <div className="pull-left">
-                            {_.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>)}
-                        </div>
+            return (
+                <div className="valign-wrapper">
+                    <div className="gap-right pull-left">{I18N.get('project.detail.recruiting')}: </div>
+                    <div className="pull-left">
+                        {_.isEmpty(entity.recruitedSkillsets) ? (
+                            <span>{I18N.get('project.detail.recruiting_skills_unknown')}</span>) : (
+                            _.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>))}
                     </div>
-                )
+                </div>
+            )
         }
 
         const data = _.map(tasks, (task, id) => {

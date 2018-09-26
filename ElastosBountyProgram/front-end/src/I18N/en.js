@@ -258,6 +258,7 @@ export default {
     'project.detail.team_size': 'Team Size',
     'project.detail.recruiting': 'Recruiting',
     'project.detail.not_recruiting': 'Recruitment Closed',
+    'project.detail.recruiting_skills_unknown': 'Not Specified',
     'project.detail.current_contributors': 'Current Contributors',
     'project.detail.owner': 'Project Owner',
     'project.detail.pending_applications': 'Pending Applications',

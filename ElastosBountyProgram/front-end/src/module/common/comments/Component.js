@@ -161,11 +161,15 @@ class C extends BaseComponent {
                 comment: thread.comment,
                 headline: thread.headline,
                 description: (
-                    <div>
+                    <div className="commenter-info">
                         <a onClick={() => {createdById && this.props.history.push(`/member/${createdById}`)}}>
                             {createdByUsername}
                         </a>
-                        {dateFormatted && <span>, {dateFormatted}</span>}
+                        {dateFormatted &&
+                        <span>
+                            <span className="date-colon">, </span>
+                            <span className="date">{dateFormatted}</span>
+                        </span>}
                     </div>
                 ),
                 avatar
