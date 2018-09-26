@@ -21,10 +21,10 @@ import {
 } from 'antd'
 import I18N from '@/I18N'
 import InputTags from '@/module/shared/InputTags/Component'
-import ReactQuill from 'react-quill';
-import {TEAM_TASK_DOMAIN, SKILLSET_TYPE} from '@/constant'
-import {upload_file} from '@/util';
-import sanitizeHtml from 'sanitize-html';
+import { TEAM_TASK_DOMAIN, SKILLSET_TYPE, TEAM_STATUS } from '@/constant'
+import { upload_file } from "@/util";
+
+import './style.scss'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
@@ -37,18 +37,18 @@ class C extends BaseComponent {
     }
 
     componentWillUnmount() {
-        const teamId = this.props.match.params.teamId
-        teamId && this.props.resetTeamDetail()
+        this.props.resetTeamDetail()
     }
 
-    constructor (props) {
+    constructor(props) {
         super(props)
 
         this.state = {
             editing: !!props.existingTeam,
             fileList: (props.existingTeam && props.existingTeam.pictures) || [],
             previewVisible: false,
-            previewImage: ''
+            previewImage: '',
+            status: TEAM_STATUS.ACTIVE
         }
 
         this.pictureUrlLookups = []
@@ -57,21 +57,18 @@ class C extends BaseComponent {
         })
     }
 
-    handleSubmit (e) {
+    handleSubmit(e) {
         e.preventDefault()
-
         const tags = this.props.form.getFieldInstance('tags').getValue()
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
                 let createParams = {
                     ...values,
-                    description: sanitizeHtml(values.description, {
-                        allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'u', 's' ])
-                    }),
                     tags: tags.join(','),
                     logo: '',
                     metadata: '',
-                    pictures: this.state.fileList || []
+                    pictures: this.state.fileList || [],
+                    status: this.state.editing ? TEAM_STATUS.ACTIVE : this.state.status
                 }
 
                 _.each(createParams.pictures, (pictureFile) => {
@@ -94,55 +91,28 @@ class C extends BaseComponent {
         })
     }
 
-    getInputProps () {
-        const {getFieldDecorator} = this.props.form
+    getInputProps() {
+        const { getFieldDecorator } = this.props.form
         const existingTeam = this.props.existingTeam
 
         const input_el = (
-            <Input size="large"/>
+            <Input size="large" />
         )
 
         const textarea_el = (
-            <ReactQuill
-                modules={{
-                    toolbar: [
-                        ['bold', 'italic', 'underline','strike'],
-                        [{'list': 'ordered'}, {'list': 'bullet'}]
-                    ]
-                }}
-            />
+            <TextArea rows={4} />
         )
 
         const name_fn = getFieldDecorator('name', {
-            rules: [{required: true, message: 'team name is required'}],
-            initialValue: (existingTeam && existingTeam.name) || ''
+            rules: [{ required: true, message: 'team name is required' }],
+            initialValue: existingTeam && existingTeam.name || ''
         })
 
         const specs = [
             {
-                title: I18N.get('team.spec.authenticity'),
-                value: TEAM_TASK_DOMAIN.AUTHENTICITY,
-                key: TEAM_TASK_DOMAIN.AUTHENTICITY
-            },
-            {
-                title: I18N.get('team.spec.currency'),
-                value: TEAM_TASK_DOMAIN.CURRENCY,
-                key: TEAM_TASK_DOMAIN.CURRENCY
-            },
-            {
-                title: I18N.get('team.spec.exchange'),
-                value: TEAM_TASK_DOMAIN.EXCHANGE,
-                key: TEAM_TASK_DOMAIN.EXCHANGE
-            },
-            {
-                title: I18N.get('team.spec.finance'),
-                value: TEAM_TASK_DOMAIN.FINANCE,
-                key: TEAM_TASK_DOMAIN.FINANCE
-            },
-            {
-                title: I18N.get('team.spec.gaming'),
-                value: TEAM_TASK_DOMAIN.GAMING,
-                key: TEAM_TASK_DOMAIN.GAMING
+                title: I18N.get('team.spec.social'),
+                value: TEAM_TASK_DOMAIN.SOCIAL,
+                key: TEAM_TASK_DOMAIN.SOCIAL
             },
             {
                 title: I18N.get('team.spec.iot'),
@@ -155,14 +125,9 @@ class C extends BaseComponent {
                 key: TEAM_TASK_DOMAIN.MEDIA
             },
             {
-                title: I18N.get('team.spec.social'),
-                value: TEAM_TASK_DOMAIN.SOCIAL,
-                key: TEAM_TASK_DOMAIN.SOCIAL
-            },
-            {
-                title: I18N.get('team.spec.sovereignty'),
-                value: TEAM_TASK_DOMAIN.SOVEREIGNTY,
-                key: TEAM_TASK_DOMAIN.SOVEREIGNTY
+                title: I18N.get('team.spec.finance'),
+                value: TEAM_TASK_DOMAIN.FINANCE,
+                key: TEAM_TASK_DOMAIN.FINANCE
             }
         ]
 
@@ -204,10 +169,7 @@ class C extends BaseComponent {
             initialValue: existingTeam && existingTeam.domain || []
         })
         const type_el = (
-            <div>
-                <TreeSelect treeData={specs} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
-                <div className='select-arrow'/>
-            </div>
+            <TreeSelect treeData={specs} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')} />
         )
 
         const skillset_fn = getFieldDecorator('recruitedSkillsets', {
@@ -215,10 +177,7 @@ class C extends BaseComponent {
             initialValue: existingTeam && existingTeam.recruitedSkillsets || []
         })
         const skillset_el = (
-            <div>
-                <TreeSelect treeData={skillsets} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
-                <div className='select-arrow'/>
-            </div>
+            <TreeSelect treeData={skillsets} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')} />
         )
 
         const description_fn = getFieldDecorator('description', {
@@ -228,7 +187,7 @@ class C extends BaseComponent {
 
         const tags_fn = getFieldDecorator('tags', {
             rules: [],
-            initialValue: existingTeam && existingTeam.tags || []
+            initialValue: existingTeam && existingTeam.tags || ''
         })
         const tags_el = <InputTags />
 
@@ -282,72 +241,74 @@ class C extends BaseComponent {
 
     handleFileListChange = ({ fileList }) => this.setState({ fileList })
 
-    ord_render () {
+    ord_render() {
         const p = this.getInputProps()
 
         const formItemLayout = {
             labelCol: {
-                xs: {span: 24},
-                sm: {span: 8}
+                xs: { span: 24 },
+                sm: { span: 8 }
             },
             wrapperCol: {
-                xs: {span: 24},
-                sm: {span: 12}
+                xs: { span: 24 },
+                sm: { span: 12 }
             }
         }
-
-        const formContent = (
-            <div>
-                <FormItem label="Team Name" {...formItemLayout}>
-                    {p.name}
-                </FormItem>
-                <FormItem label="Type" {...formItemLayout}>
-                    {p.type}
-                </FormItem>
-                <FormItem label="Recruiting Skillsets" {...formItemLayout}>
-                    {p.skillset}
-                </FormItem>
-                <FormItem label="Description" {...formItemLayout}>
-                    {p.description}
-                </FormItem>
-                { !this.props.embedded &&
-                    <FormItem label="Pictures" {...formItemLayout}>
-                        {p.pictures}
-                    </FormItem>
-                }
-                <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
-                    <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
-                </Modal>
-                <FormItem className="form-item-tags" label="Tags" {...formItemLayout}>
-                    {p.tags}
-                </FormItem>
-
-                { !this.props.embedded &&
-                    <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
-                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
-                            {this.state.editing ? 'Save' : 'Create'}
-                        </Button>
-                    </FormItem>
-                }
-            </div>
-        )
 
         return (
             <div className="c_userEditFormContainer">
 
-                { this.props.embedded
-                    ? (
-                        <div className="d_taskCreateForm">
-                            {formContent}
-                        </div>
-                    ) : (
-                        <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
-                            {formContent}
-                        </Form>
-                    )
-                }
+                <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
+                    <div>
+                        <FormItem label="Name" {...formItemLayout}>
+                            {p.name}
+                        </FormItem>
+                        <FormItem label="Type" {...formItemLayout}>
+                            {p.type}
+                        </FormItem>
+                        <FormItem label="Recruiting Skillsets" {...formItemLayout}>
+                            {p.skillset}
+                        </FormItem>
+                        <FormItem label="Description" {...formItemLayout}>
+                            {p.description}
+                        </FormItem>
+                        <FormItem label="Pictures" {...formItemLayout}>
+                            {p.pictures}
+                        </FormItem>
+                        <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
+                            <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
+                        </Modal>
+                        <FormItem label="Tags" {...formItemLayout}>
+                            {p.tags}
+                        </FormItem>
+
+                        <FormItem wrapperCol={{ xs: { span: 24, offset: 0 }, sm: { span: 12, offset: 8 } }}>
+                            {!this.state.editing && <Button loading={this.props.loading} onClick={this.changeStatusActive.bind(this)} htmlType="submit" className="d_btn pull-left create-btn">
+                                Create & Open
+                            </Button>}
+
+                            <Button loading={this.props.loading} onClick={this.changeStatusDraft.bind(this)} type="ebp" htmlType="submit" className="d_btn pull-left">
+                                {this.state.editing ? 'Save' : 'Save as Draft'}
+                            </Button>
+                        </FormItem>
+                    </div>
+                </Form>
             </div>
         )
+    }
+
+    changeStatusActive() {
+        this.setState({
+            status: TEAM_STATUS.ACTIVE
+        })
+    }
+
+    changeStatusDraft() {
+        if(!this.state.editing){
+            this.setState({
+                status: TEAM_STATUS.DRAFT
+            })
+        }
     }
 
 }

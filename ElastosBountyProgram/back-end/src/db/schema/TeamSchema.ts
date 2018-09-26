@@ -16,19 +16,15 @@ export const Team = {
         type: Map,
         of: String
     },
-    type : {
-        type : String,
-        required : true
-    },
     tags: [String],
     profile: TeamProfile,
     domain: [String],
     recruitedSkillsets: [String],
-    subcategory: String,
     owner: {type: Schema.Types.ObjectId, ref: 'users'},
     members: [{type: Schema.Types.ObjectId, ref: 'user_team'}],
     pictures: [PictureSchema],
-    comments: [[CommentSchema]]
+    comments: [[CommentSchema]],
+    status: String
 };
 
 export const User_Team = {

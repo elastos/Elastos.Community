@@ -6,7 +6,7 @@ import {
 } from 'antd'
 import _ from 'lodash'
 import './style.scss'
-import {SKILLSET_TYPE, TEAM_TASK_DOMAIN} from '@/constant'
+import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TEAM_STATUS} from '@/constant'
 import ProjectDetail from '@/module/project/detail/Container'
 import TeamDetail from '@/module/team/detail/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
@@ -56,6 +56,13 @@ export default class extends BaseComponent {
 
         if (!_.isEmpty(this.state.domain)) {
             query.domain = this.state.domain
+        }
+
+        if (this.isLookingForTeam()) {
+            let status = [];
+            status.push(TEAM_STATUS.ACTIVE);
+            status.push(TEAM_STATUS.CLOSED);
+            query.status = status
         }
 
         return query
@@ -279,11 +286,11 @@ export default class extends BaseComponent {
     getLookingForOptions() {
         return [
             {
-                label: 'Team',
+                label: I18N.get('developer.search.team'),
                 value: 'TEAM'
             },
             {
-                label: 'Project',
+                label: I18N.get('developer.search.project'),
                 value: 'PROJECT'
             }
         ]
@@ -321,40 +328,20 @@ export default class extends BaseComponent {
     getCategoryOptions() {
         return [
             {
-                label: I18N.get('team.spec.authenticity'),
-                value: TEAM_TASK_DOMAIN.AUTHENTICITY
-            },
-            {
-                label: I18N.get('team.spec.currency'),
-                value: TEAM_TASK_DOMAIN.CURRENCY
-            },
-            {
-                label: I18N.get('team.spec.exchange'),
-                value: TEAM_TASK_DOMAIN.EXCHANGE
-            },
-            {
-                label: I18N.get('team.spec.finance'),
-                value: TEAM_TASK_DOMAIN.FINANCE
-            },
-            {
-                label: I18N.get('team.spec.gaming'),
-                value: TEAM_TASK_DOMAIN.GAMING
-            },
-            {
-                label: I18N.get('team.spec.iot'),
-                value: TEAM_TASK_DOMAIN.IOT
-            },
-            {
-                label: I18N.get('team.spec.media'),
-                value: TEAM_TASK_DOMAIN.MEDIA
-            },
-            {
-                label: I18N.get('team.spec.social'),
+                label: I18N.get('developer.search.category.social'),
                 value: TEAM_TASK_DOMAIN.SOCIAL
             },
             {
-                label: I18N.get('team.spec.sovereignty'),
-                value: TEAM_TASK_DOMAIN.SOVEREIGNTY
+                label: I18N.get('developer.search.category.iot'),
+                value: TEAM_TASK_DOMAIN.IOT
+            },
+            {
+                label: I18N.get('developer.search.category.media'),
+                value: TEAM_TASK_DOMAIN.MEDIA
+            },
+            {
+                label: I18N.get('developer.search.category.finance'),
+                value: TEAM_TASK_DOMAIN.FINANCE
             }
         ]
     }
@@ -372,36 +359,36 @@ export default class extends BaseComponent {
             <div>
                 <MediaQuery minWidth={MIN_WIDTH_PC}>
                     <Affix offsetTop={15}>
-                        <Input.Search placeholder="Search"/>
+                        <Input.Search placeholder={I18N.get('developer.search.search.placeholder')}/>
                         <div className="group">
-                            <div className="title">Looking For</div>
+                            <div className="title">{I18N.get('developer.search.lookingFor')}</div>
                             <div className="content">
                                 {lookingForElement}
                             </div>
                         </div>
                         <div className="group">
-                            <div className="title">Skillset</div>
+                            <div className="title">{I18N.get('developer.search.skillset')}</div>
                             <div className="content">
                                 {skillsetElement}
                                 {skillsetOptions.length > this.state.entryCount &&
                                 <div className="showMore" onClick={this.enableSkillsetEntries.bind(this)}>
                                     {
-                                        !this.state.skillsetShowAllEntries ? (<span>Show More…</span>)
-                                            : (<span>Hide</span>)
+                                        !this.state.skillsetShowAllEntries ? (<span>{I18N.get('developer.search.showMore')}</span>)
+                                            : (<span>{I18N.get('developer.search.hide')}</span>)
                                     }
                                 </div>
                                 }
                             </div>
                         </div>
                         <div className="group">
-                            <div className="title">Category</div>
+                            <div className="title">{I18N.get('developer.search.category')}</div>
                             <div className="content">
                                 {categoryElement}
                                 { categoryOptions.length > this.state.entryCount &&
                                 <div className="showMore" onClick={this.enableCategoryEntries.bind(this)}>
                                     {
-                                        !this.state.categoryShowAllEntries ? (<span>Show More…</span>)
-                                            : (<span>Hide</span>)
+                                        !this.state.categoryShowAllEntries ? (<span>{I18N.get('developer.search.showMore')}</span>)
+                                            : (<span>{I18N.get('developer.search.hide')}</span>)
                                     }
                                 </div>
                                 }
@@ -553,7 +540,9 @@ export default class extends BaseComponent {
                     description: description_fn(team),
                     content: team.profile.description,
                     owner: team.owner,
-                    id: team._id
+                    id: team._id,
+                    status: team.status,
+                    isTeamOwner: this.props.current_user_id === team.owner._id
                 }
             })
             : _.map(entities, (task, id) => {
@@ -570,8 +559,12 @@ export default class extends BaseComponent {
 
         const clickHandler = !this.props.is_login
             ? this.showLoginRegisterModal
-            : this.isLookingForTeam() ? this.showTeamModal
+            : this.isLookingForTeam()
+            ? this.showTeamModal
             : this.showProjectModal
+
+        console.log(data)
+        console.log(this.props)
 
         return (
             <List loading={this.props.loading} itemLayout='vertical' size='large'
@@ -585,19 +578,24 @@ export default class extends BaseComponent {
                             >
                                 <h3 class="no-margin no-padding one-line brand-color">
                                     <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
+                                    <span className={item.status == TEAM_STATUS.ACTIVE ? 'team-status-active' : 'team-status-close'}>{item.status == TEAM_STATUS.ACTIVE ? I18N.get('team.detail.recuriting') : I18N.get('team.detail.not_recruiting')}</span>
                                 </h3>
                                 <h5 class="no-margin">
                                     {item.description}
                                 </h5>
-                                <div class="description-content" dangerouslySetInnerHTML={{__html: item.content}}/>
+                                <div>
+                                    {item.content}
+                                </div>
                                 <div className="ant-list-item-right-box">
                                     <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
                                         <Avatar size="large" className="pull-right" src={item.owner.profile.avatar}/>
                                         <div class="clearfix"/>
                                         <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
                                     </a>
-                                    <Button onClick={clickHandler.bind(this, item.id)}
-                                        type="primary" className="pull-down">Apply</Button>
+                                    {!item.isTeamOwner && item.status == TEAM_STATUS.ACTIVE && <Button onClick={clickHandler.bind(this, item.id)}
+                                        type="primary" className="pull-down">{I18N.get('developer.search.apply')}</Button>}
+                                    {(item.isTeamOwner || (item.status == TEAM_STATUS.CLOSED || item.status == TEAM_STATUS.DRAFT)) && <Button onClick={clickHandler.bind(this, item.id)}
+                                        type="primary" className="pull-down">{I18N.get('developer.search.view')}</Button>}
                                 </div>
                             </List.Item>
                         </MediaQuery>
@@ -608,6 +606,7 @@ export default class extends BaseComponent {
                             >
                                 <h3 class="no-margin no-padding one-line brand-color">
                                     <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
+                                    <span className={item.status == TEAM_STATUS.ACTIVE ? 'team-status-active' : 'team-status-close'}>{item.status == TEAM_STATUS.ACTIVE ? I18N.get('team.detail.recuriting') : I18N.get('team.detail.not_recruiting')}</span>
                                 </h3>
                                 <h5 class="no-margin">
                                     {item.description}
@@ -618,8 +617,10 @@ export default class extends BaseComponent {
                                         <Divider type="vertical"/>
                                         <Avatar size="large" src={item.owner.profile.avatar}/>
                                     </a>
-                                    <Button onClick={clickHandler.bind(this, item.id)}
-                                        type="primary" className="pull-right">Apply</Button>
+                                    {!item.isTeamOwner && item.status == TEAM_STATUS.ACTIVE && <Button onClick={clickHandler.bind(this, item.id)}
+                                        type="primary" className="pull-down">{I18N.get('developer.search.apply')}</Button>}
+                                    {(item.isTeamOwner || (item.status == TEAM_STATUS.CLOSED || item.status == TEAM_STATUS.DRAFT)) && <Button onClick={clickHandler.bind(this, item.id)}
+                                        type="primary" className="pull-down">{I18N.get('developer.search.view')}</Button>}
                                 </div>
                             </List.Item>
                         </MediaQuery>

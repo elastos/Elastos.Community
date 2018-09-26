@@ -7,11 +7,11 @@ import './style.scss'
 import I18N from '@/I18N'
 import Comments from '@/module/common/comments/Container'
 import TeamApplication from '@/module/team/application/Container'
-import { TEAM_USER_STATUS } from '@/constant'
+import { TEAM_USER_STATUS, TEAM_STATUS } from '@/constant'
 
 class C extends BaseComponent {
     ord_states() {
-        return {
+        return { 
             showAppModal: false,
             teamCandidateId: null
         }
@@ -93,11 +93,14 @@ class C extends BaseComponent {
                     </span>
                 </div>
             )
+        const status = detail.status
 
-        return (
+        return ((status == TEAM_STATUS.ACTIVE || status == TEAM_STATUS.CLOSED) || (this.isTeamOwner && status == TEAM_STATUS.DRAFT)) && (
             <div>
                 <div className="title">
                     <span>{name}</span>
+                    <br></br>
+                    <span className={status == TEAM_STATUS.ACTIVE ? 'team-status-active' : 'team-status-close'}>{status == TEAM_STATUS.ACTIVE ? I18N.get('team.detail.recuriting') : I18N.get('team.detail.not_recruiting')}</span>
                 </div>
                 <a className="leader" onClick={this.linkUserDetail.bind(this, detail.owner)}>
                     <Avatar size="large" src={leaderImage} />
@@ -113,7 +116,7 @@ class C extends BaseComponent {
                     <hr className="divider"/>
                     <div className="description-title">{recruiting_el}</div>
                     <hr className="divider"/>
-                    <div className="description-content" dangerouslySetInnerHTML={{__html: description}} />
+                    <div className="description-content">{description}</div>
                 </div>
             </div>
         )
@@ -286,6 +289,7 @@ class C extends BaseComponent {
     getMainActions() {
         const isTeamMember = this.isTeamMember()
         const hasApplied = this.hasApplied()
+        const status = this.props.detail.status;
         const mainActionButton = isTeamMember
             ? (
                 <Popconfirm title={I18N.get('project.detail.popup.leave_question')} okText="Yes" cancelText="No"
@@ -295,7 +299,7 @@ class C extends BaseComponent {
                     </Button>
                 </Popconfirm>
             )
-            : (
+            : (status == TEAM_STATUS.ACTIVE) && (
                 <Button disabled={hasApplied} type="primary" onClick={() => this.setState({ applying: true })}>
                     {hasApplied
                         ? I18N.get('project.detail.popup.applied')
