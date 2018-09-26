@@ -60,7 +60,7 @@ export default class extends StandardPage {
         return (
             <Row className="d_Row">
                 {_.map(circles, (circle) => (
-                    <Col key={circle._id} xs={12} sm={12} md={grid}>
+                    <Col key={circle._id} xs={24} sm={24} md={grid}>
                         {this.buildCircle(circle)}
                     </Col>
                 ))}
@@ -167,9 +167,11 @@ export default class extends StandardPage {
                         <div className="message-container">
                             <div className="container">
                                 <div className="content">
-                                    <img id="emp35_square" src="/assets/images/emp35/square.png"/>
-                                    <div className="inner-container">
-                                        <span className="title">{I18N.get('emp35.mycircles.title')}</span>
+                                    <div className="header">
+                                        <img id="emp35_square" src="/assets/images/emp35/square.png"/>
+                                        <div className="inner-container">
+                                            <span className="title">{I18N.get('emp35.mycircles.title')}</span>
+                                        </div>
                                     </div>
                                     {this.props.is_login && this.buildMyCircles()}
                                 </div>
