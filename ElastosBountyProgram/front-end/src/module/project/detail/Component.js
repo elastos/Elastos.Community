@@ -16,7 +16,8 @@ import {
     Input,
     Form,
     Divider,
-    Modal
+    Modal,
+    InputNumber
 } from 'antd'
 import I18N from '@/I18N'
 import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS } from '@/constant'
@@ -147,7 +148,9 @@ class C extends BaseComponent {
         const deadline = detail.date || ''
         const progress = detail.progress || ''
         const teamSize = detail.candidateCompleted.length || ''
-        const reward = detail.reward.isUsd ? detail.reward.usd + ' USD' : (detail.reward.ela / 1000) + ' ELA'
+        const reward = detail.bidding
+            ? I18N.get('project.detail.bidding')
+            : detail.reward.isUsd ? detail.reward.usd + ' USD' : (detail.reward.ela / 1000) + ' ELA'
         const description = detail.descBreakdown || detail.description || ''
         const leaderImage = detail.createdBy.profile.avatar || ''
 
@@ -327,7 +330,7 @@ class C extends BaseComponent {
                 const userId = isSelf && this.props.currentUserId
                 const teamId = !isSelf && values.applicant
 
-                this.props.applyToTask(this.props.taskId, userId, teamId, values.applyMsg)
+                this.props.applyToTask(this.props.taskId, userId, teamId, values.applyMsg, null, null, values.bid)
                     .then(() => {
                         this.setState({ applying: false })
                         message.success('Application sent. Thank you!')
@@ -347,6 +350,16 @@ class C extends BaseComponent {
                 placeholder="Tell us why you want to join."/>
         )
         const applyMsgPanel = applyMsg_fn(applyMsg_el)
+
+        const bid_fn = getFieldDecorator('bid', {
+            rules: [{required: true, message: 'Bid is required'}],
+            initialValue: 0
+        })
+
+        const bid_el = (
+            <InputNumber disabled={this.props.loading}/>
+        )
+        const bid = bid_fn(bid_el)
 
         const applicant_fn = getFieldDecorator('applicant', {
             rules: [],
@@ -384,6 +397,17 @@ class C extends BaseComponent {
                 <Form.Item className="no-margin">
                     {applyMsgPanel}
                 </Form.Item>
+                { this.props.detail.bidding &&
+                    <div>
+                        <Form.Item className="no-margin pull-right">
+                            <div>
+                                <span>Bid (ELA): </span>
+                                {bid}
+                            </div>
+                        </Form.Item>
+                        <div className="clearfix"/>
+                    </div>
+                }
                 <Button disabled={this.props.loading} className="d_btn pull-left" onClick={() => this.setState({ applying: false })}>
                     Cancel
                 </Button>
@@ -439,7 +463,7 @@ class C extends BaseComponent {
                                 </Col>
                             </Row>
 
-                            {this.props.page !== 'LEADER' && !isTaskOwner &&
+                            {this.props.page !== 'LEADER' && !isTaskOwner && !isMember &&
                                 <Row className="actions">
                                     <Button type="primary" onClick={() => this.setState({ applying: true })}>
                                         {I18N.get('project.detail.popup.join_project')}
@@ -459,7 +483,7 @@ class C extends BaseComponent {
                                 </Row>
                             }
 
-                            {!this.state.applying &&
+                            {!this.state.applying && this.props.page === 'LEADER' &&
                                 <Row className="applications">
                                     <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
                                     {this.getCurrentApplicants()}

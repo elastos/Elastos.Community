@@ -38,19 +38,8 @@ class C extends BaseComponent {
                 placeholder={I18N.get('forgot.form.email')}/>
         )
 
-        const recaptcha_fn = getFieldDecorator('recaptcha', {
-            rules: [{required: true}]
-        })
-        const recaptcha_el = (
-            <ReCAPTCHA
-                ref={(el) => { this.captcha = el }}
-                sitekey={RECAPTCHA_KEY}
-            />
-        )
-
         return {
-            email: email_fn(email_el),
-            recaptcha: recaptcha_fn(recaptcha_el)
+            email: email_fn(email_el)
         }
     }
 
@@ -61,9 +50,6 @@ class C extends BaseComponent {
             <Form onSubmit={this.handleSubmit.bind(this)} className="c_loginForm">
                 <FormItem>
                     {p.email}
-                </FormItem>
-                <FormItem>
-                    {p.recaptcha}
                 </FormItem>
                 <FormItem>
                     <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">

@@ -17,7 +17,8 @@ import {
     Divider,
     Popconfirm,
     TreeSelect,
-    Modal
+    Modal,
+    Switch
 } from 'antd'
 
 import I18N from '@/I18N'
@@ -84,6 +85,9 @@ class C extends BaseComponent {
                     }
                 })
 
+                values.bidding = this.state.isBidding
+                values.assignSelf = true
+
                 if (this.props.is_project) {
                     values.type = TASK_TYPE.PROJECT
                 }
@@ -114,7 +118,6 @@ class C extends BaseComponent {
             communityTrees: [],
             taskType: this.props.taskType || TASK_TYPE.EVENT,
             taskCategory: this.props.taskCategory || TASK_TYPE.SOCIAL,
-            assignSelf: (props.existingTask && props.existingTask.assignSelf) || false,
             eventDateRange: (props.existingTask && props.existingTask.eventDateRange) || false,
 
             thumbnail_url : (props.existingTask && props.existingTask.thumbnail) || null,
@@ -132,7 +135,8 @@ class C extends BaseComponent {
             isUsd: (props.existingTask && props.existingTask.reward.isUsd) || false,
             fileList: (props.existingTask && props.existingTask.pictures) || [],
             previewVisible: false,
-            previewImage: ''
+            previewImage: '',
+            isBidding: (props.existingTask && props.existingTask.bidding) || false,
         }
 
         this.pictureUrlLookups = []
@@ -151,15 +155,6 @@ class C extends BaseComponent {
         // unless it's just CREATED/PENDING
         const hasLeaderEditRestrictions = this.props.page === 'LEADER' &&
             ![TASK_STATUS.CREATED, TASK_STATUS.PENDING].includes(existingTask.status)
-
-        const assignSelf_fn = getFieldDecorator('assignSelf')
-        const assignSelf_el = (
-            <Checkbox
-                checked={this.state.assignSelf}
-                disabled={!!existingTask}
-                onClick={() => this.setState({assignSelf: !this.state.assignSelf})}
-            />
-        )
 
         const taskName_fn = getFieldDecorator('taskName', {
             rules: [
@@ -659,8 +654,6 @@ class C extends BaseComponent {
             pictures: pictures_el,
             domain: domain_fn(domain_el),
 
-            assignSelf: assignSelf_fn(assignSelf_el),
-
             taskName: taskName_fn(taskName_el),
             taskCategory: taskCategory_fn(taskCategory_el),
             taskType: taskType_fn(taskType_el),
@@ -778,10 +771,6 @@ class C extends BaseComponent {
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
                     <div>
                         <h3 class="no-margin">General Info</h3>
-                        {(!existingTask || existingTask.assignSelf) &&
-                        <FormItem label="Assign to Self" {...formItemLayout}>
-                            {p.assignSelf} - assigns you to the task and submits to an admin for approval
-                        </FormItem>}
                         <FormItem label="Name" {...formItemLayout}>
                             {p.taskName}
                         </FormItem>
@@ -936,65 +925,68 @@ class C extends BaseComponent {
                             </Popover>
                         </h3>
 
-                        {!this.state.assignSelf &&
                         <Row>
                             <Col span={12}>
-                                <FormItem label="Max Applicants" {...formItemLayoutAdjLeft}>
-                                    {p.taskCandLimit}
+                                <FormItem label="Reward Type" {...formItemLayoutAdjLeft}>
+                                    <Switch
+                                        onChange={() => this.setState({ isBidding: !this.state.isBidding })}
+                                        unCheckedChildren="Define budget"
+                                        checkedChildren="Open for bidding"
+                                        defaultChecked={this.state.isBidding}
+                                    />
                                 </FormItem>
                             </Col>
-                            <Col span={12}>
-                                <FormItem label="Applicants Accepted" {...formItemLayoutAdjRight}>
-                                    {p.taskCandSltLimit}
-                                </FormItem>
-                            </Col>
-                        </Row>}
+                        </Row>
 
-                        <FormItem label="Fiat ($USD)" {...formItemLayout}>
-                            <Checkbox name="isUsd" checked={this.state.isUsd} onChange={() => {this.setState({isUsd: !this.state.isUsd})}}/>
-                            &nbsp; - for larger events/tasks/projects only - payment is always in ELA equivalent
-                        </FormItem>
-
-                        {this.state.isUsd ?
+                        { !this.state.isBidding &&
                             <div>
-                                {/*TODO: lock Budget/Reward after approval*/}
-                                <Row>
-                                    <Col span={12}>
-                                        <FormItem label="USD Budget" {...formItemLayoutAdjLeft}>
-                                            {p.taskRewardUpfrontUsd}
-                                        </FormItem>
-                                    </Col>
-                                    <Col span={12}>
-                                        <FormItem label="ELA/USD" {...formItemLayoutAdjRight}>
-                                            {p.taskRewardUpfrontElaPerUsd}
-                                        </FormItem>
+                                <FormItem label="Fiat ($USD)" {...formItemLayout}>
+                                    <Checkbox name="isUsd" checked={this.state.isUsd} onChange={() => {this.setState({isUsd: !this.state.isUsd})}}/>
+                                    &nbsp; - for larger events/tasks/projects only - payment is always in ELA equivalent
+                                </FormItem>
 
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col span={12}>
-                                        <FormItem label="USD Reward" {...formItemLayoutAdjLeft}>
-                                            {p.taskRewardUsd}
-                                        </FormItem>
-                                    </Col>
-                                    <Col span={12}>
-                                        <FormItem label="ELA/USD" {...formItemLayoutAdjRight}>
-                                            {p.taskRewardElaPerUsd}
-                                        </FormItem>
-                                    </Col>
-                                </Row>
-                            </div> :
-                            <Row>
-                                <Col>
-                                    <FormItem label="ELA Budget" {...formItemLayout}>
-                                        {p.taskRewardUpfront}
-                                    </FormItem>
-                                    <FormItem label="ELA Reward" {...formItemLayout}>
-                                        {p.taskReward}
-                                    </FormItem>
-                                </Col>
-                            </Row>
+                                {this.state.isUsd ?
+                                    <div>
+                                        {/*TODO: lock Budget/Reward after approval*/}
+                                        <Row>
+                                            <Col span={12}>
+                                                <FormItem label="USD Budget" {...formItemLayoutAdjLeft}>
+                                                    {p.taskRewardUpfrontUsd}
+                                                </FormItem>
+                                            </Col>
+                                            <Col span={12}>
+                                                <FormItem label="ELA/USD" {...formItemLayoutAdjRight}>
+                                                    {p.taskRewardUpfrontElaPerUsd}
+                                                </FormItem>
 
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col span={12}>
+                                                <FormItem label="USD Reward" {...formItemLayoutAdjLeft}>
+                                                    {p.taskRewardUsd}
+                                                </FormItem>
+                                            </Col>
+                                            <Col span={12}>
+                                                <FormItem label="ELA/USD" {...formItemLayoutAdjRight}>
+                                                    {p.taskRewardElaPerUsd}
+                                                </FormItem>
+                                            </Col>
+                                        </Row>
+                                    </div> :
+                                    <Row>
+                                        <Col>
+                                            <FormItem label="ELA Budget" {...formItemLayout}>
+                                                {p.taskRewardUpfront}
+                                            </FormItem>
+                                            <FormItem label="ELA Reward" {...formItemLayout}>
+                                                {p.taskReward}
+                                            </FormItem>
+                                        </Col>
+                                    </Row>
+
+                                }
+                            </div>
                         }
 
 
