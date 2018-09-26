@@ -483,7 +483,7 @@ class C extends BaseComponent {
                                 </Row>
                             }
 
-                            {!this.state.applying &&
+                            {!this.state.applying && this.props.page === 'LEADER' &&
                                 <Row className="applications">
                                     <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
                                     {this.getCurrentApplicants()}
