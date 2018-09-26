@@ -27,6 +27,7 @@ export default createContainer(Component, (state) => {
                     name: formData.taskName,
                     category: formData.taskCategory,
                     type: formData.taskType,
+                    bidding: formData.bidding,
 
                     applicationDeadline: formData.taskApplicationDeadline,
                     completionDeadline: formData.taskCompletionDeadline,
@@ -103,6 +104,7 @@ export default createContainer(Component, (state) => {
                     name: formData.taskName,
                     category: formData.taskCategory,
                     type: formData.taskType,
+                    bidding: formData.bidding,
 
                     applicationDeadline: formData.taskApplicationDeadline,
                     completionDeadline: formData.taskCompletionDeadline,
