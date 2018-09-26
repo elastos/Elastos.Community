@@ -282,6 +282,9 @@ export default {
 
     'team.detail.team_active': 'Your team is currently active',
 
+    'team.create.error.nameRequired': 'Team name is required',
+    'team.create.error.nameTooShort': 'Team name is too short',
+
     // Team specializations
     'team.spec.media': 'Media',
     'team.spec.iot': 'IoT',
