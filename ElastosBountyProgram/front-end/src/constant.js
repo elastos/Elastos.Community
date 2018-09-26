@@ -2,14 +2,14 @@ import * as _ from 'lodash'
 
 const create = (list) => {
     return _.zipObject(list, list)
-};
+}
 
 export const USER_ROLE = {
     MEMBER : 'MEMBER',
     LEADER : 'LEADER',
     ADMIN : 'ADMIN',
     COUNCIL: 'COUNCIL'
-};
+}
 
 export const USER_EMPOWER_TYPE = {
     MARKETING: 'MARKETING',
@@ -135,9 +135,9 @@ export const CONTRIB_CATEGORY = {
 }
 
 export const DEFAULT_IMAGE = {
-    TASK : '/assets/images/task_thumbs/12.jpg',
+    TASK: '/assets/images/task_thumbs/12.jpg',
     UNSET_LEADER: '/assets/images/User_Avatar_Other.png'
-};
+}
 
 export const SUBMISSION_TYPE = {
     BUG: 'BUG',
@@ -147,16 +147,16 @@ export const SUBMISSION_TYPE = {
     OTHER: 'OTHER',
     FORM_EXT: 'FORM_EXT',
     EMPOWER_35: 'EMPOWER_35'
-};
+}
 
 export const SUBMISSION_CAMPAIGN = {
     COMMUNITY_ORGANIZER: 'COMMUNITY_ORGANIZER',
     ANNI_2008: 'ANNI_2008',
     ANNI_VIDEO_2008: 'ANNI_VIDEO_2008',
     EMPOWER_35: 'EMPOWER_35'
-};
+}
 
-export const SKILLSET_TYPE = create(['CPP', 'JAVASCRIPT', 'GO', 'PYTHON', 'JAVA', 'SWIFT']);
+export const SKILLSET_TYPE = create(['CPP', 'JAVASCRIPT', 'GO', 'PYTHON', 'JAVA', 'SWIFT'])
 export const TEAM_TASK_DOMAIN = create([
     'AUTHENTICITY',
     'CURRENCY',
@@ -168,4 +168,6 @@ export const TEAM_TASK_DOMAIN = create([
     'SOCIAL',
     'SOVEREIGNTY'
 ])
-export const TEAM_USER_STATUS = create(['NORMAL', 'PENDING', 'REJECT']);
+export const TEAM_USER_STATUS = create(['NORMAL', 'PENDING', 'REJECT'])
+export const TEAM_TYPE = create(['TEAM', 'CRCLE'])
+export const TEAM_SUBCATEGORY = create(['ESSENTIAL', 'ADVANCED', 'SERVICES'])

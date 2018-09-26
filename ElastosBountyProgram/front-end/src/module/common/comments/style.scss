@@ -9,6 +9,24 @@
     white-space: pre-line;
   }
 
+  .ant-list-item-content {
+    h5 {
+      padding-top: 0;
+    }
+
+    .ant-list-item-meta-avatar {
+      margin-right: $gap_0;
+    }
+
+    h4 {
+      padding-top: 0;
+    }
+  }
+
+  .comment-content {
+    margin-left: $gap_2;
+  }
+
   .gridCol {
     padding: 0 $gap_2;
     margin: $gap_0 0;

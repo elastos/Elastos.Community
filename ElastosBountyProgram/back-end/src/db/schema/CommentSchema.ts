@@ -10,5 +10,6 @@ export const CommentSchema = {
         type: String,
         required: true
     },
+    headline: String,
     createdAt: Date
 }

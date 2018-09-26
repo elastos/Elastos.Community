@@ -102,18 +102,16 @@ export default class extends Base {
         const {userId} = param
 
         const db_user = this.getDBModel('User');
+        const db_team = this.getDBModel('Team')
 
         if (param.admin && (!this.currentUser || (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
             this.currentUser._id !== userId))) {
             throw 'Access Denied'
         }
 
-        if (!param.admin) {
-            selectFields += ' -email'
-        }
-
         const user = db_user.getDBInstance().findOne({_id: userId})
             .select(selectFields)
+            .populate('circles')
 
         if (!user) {
             throw `userId: ${userId} not found`
@@ -174,7 +172,8 @@ export default class extends Base {
 
         await db_user.update({_id: userId}, updateObj)
 
-        user = await db_user.findById(userId)
+        user = db_user.getDBInstance().findOne({_id: userId})
+            .populate('circles')
 
         // if we change the country, we add the new country as a community if not already
         // keep the old one too - TODO: think through this logic, maybe we only keep the old one if the new one already exists
@@ -189,15 +188,15 @@ export default class extends Base {
         const db_user = this.getDBModel('User');
         const isEmail = validate.email(query.username);
          if (!isEmail) {
-            return await db_user.findOne({
+            return await db_user.getDBInstance().findOne({
                 username: query.username.toLowerCase(),
                 password: query.password
-            });
+            }).populate('circles');
         } else {
-            return await db_user.findOne({
+            return await db_user.getDBInstance().findOne({
                 email: query.username,
                 password: query.password
-            });
+            }).populate('circles');
         }
     }
 
@@ -257,7 +256,7 @@ export default class extends Base {
             throw 'Access Denied'
         }
 
-        const user = await db_user.findOne({username}, {reject: false});
+        let user = await db_user.findOne({username}, {reject: false});
         if(!user){
             throw 'user does not exist';
         }
@@ -266,11 +265,16 @@ export default class extends Base {
             throw 'old password is incorrect';
         }
 
-        return await db_user.update({username}, {
+        const res = await db_user.update({username}, {
             $set : {
                 password : this.getPassword(password, user.salt)
             }
         });
+
+        user = db_user.getDBInstance().findOne({username})
+            .populate('circles')
+
+        return user
     }
 
     /*
@@ -313,7 +317,7 @@ export default class extends Base {
             body: `For your convenience your username is ${userEmailMatch.username}
                 <br/>
                 <br/>
-                Please click this link to reset your password: 
+                Please click this link to reset your password:
                 <a href="${process.env.SERVER_URL}/reset-password?token=${resetToken}">${process.env.SERVER_URL}/reset-password?token=${resetToken}</a>`
         })
 

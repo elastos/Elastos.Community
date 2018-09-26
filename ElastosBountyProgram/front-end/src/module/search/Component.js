@@ -269,7 +269,6 @@ export default class extends BaseComponent {
                 domain.push(found.value)
             }
         }
-        console.log(this.state)
         this.setState({
             filtersTree: e,
             skillset: skillset,
@@ -571,8 +570,7 @@ export default class extends BaseComponent {
 
         const clickHandler = !this.props.is_login
             ? this.showLoginRegisterModal
-            : this.isLookingForTeam()
-            ? this.showTeamModal
+            : this.isLookingForTeam() ? this.showTeamModal
             : this.showProjectModal
 
         return (

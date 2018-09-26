@@ -5,6 +5,7 @@ import config from '@/config'
 import './style.scss'
 import moment from 'moment'
 import _ from 'lodash'
+import I18N from '@/I18N'
 
 const TextArea = Input.TextArea
 const FormItem = Form.Item
@@ -50,8 +51,17 @@ class C extends BaseComponent {
             <TextArea rows={4} placeholder="Comments or updates"/>
         )
 
+        const headline_fn = getFieldDecorator('headline', {
+            rules: [],
+            initialValue: ''
+        })
+        const headline_el = (
+            <Input placeholder="Headline"/>
+        )
+
         return {
-            comment: comment_fn(comment_el)
+            comment: comment_fn(comment_el),
+            headline: headline_fn(headline_el)
         }
     }
 
@@ -95,6 +105,11 @@ class C extends BaseComponent {
         // TODO - canSubscribe requires canPost here, could be improved
         return this.props.canPost ?
             (<Form onSubmit={this.handleSubmit.bind(this)} className="c_commentForm">
+                { this.props.headlines &&
+                    <FormItem>
+                        {p.headline}
+                    </FormItem>
+                }
                 <FormItem>
                     {p.comment}
                 </FormItem>
@@ -143,7 +158,8 @@ class C extends BaseComponent {
             const dateFormatted = dateFormatter(thread.createdAt)
 
             return {
-                title: thread.comment,
+                comment: thread.comment,
+                headline: thread.headline,
                 description: (
                     <div>
                         <a onClick={() => {createdById && this.props.history.push(`/member/${createdById}`)}}>
@@ -159,34 +175,35 @@ class C extends BaseComponent {
         // Show in reverse chronological order
         commentItems && commentItems.reverse();
 
-        return  <div>
-            {commentItems && commentItems.length ?
-                <List
+        return <List
                     size="large"
                     itemLayout="horizontal"
                     pagination={{
                         pageSize: 5,
                     }}
+                    locale={{
+                        emptyText: I18N.get('comments.noComments')
+                    }}
                     dataSource={commentItems}
                     header={footer}
                     renderItem={(item, ind) => (
                         <List.Item key={ind}>
-                            <List.Item.Meta
-                                avatar={<Avatar src={item.avatar}/>}
-                                title={item.title}
-                                description={item.description}
-                            />
+                            <Avatar className="comment-avatar pull-left" src={item.avatar} shape="circle" size={64}/>
+                            <div className="comment-content pull-left">
+                                { item.headline &&
+                                    <h4>
+                                        {item.headline}
+                                    </h4>
+                                }
+                                <h5>
+                                    {item.comment}
+                                </h5>
+                                <hr/>
+                                {item.description}
+                            </div>
                         </List.Item>
                     )}
-                /> :
-                <div>
-                    {footer}
-                    <div className="center no-info">
-                        no comments
-                    </div>
-                </div>
-            }
-        </div>
+                />
     }
 
     handleSubmit(e) {
@@ -197,7 +214,8 @@ class C extends BaseComponent {
                     this.props.reduxType,
                     this.props.detailReducer,
                     this.getModelId(),
-                    values.comment).then(() => {
+                    values.comment,
+                    values.headline).then(() => {
                         this.props.form.resetFields()
                     })
             }

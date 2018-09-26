@@ -18,6 +18,7 @@ import TaskDetailPage from '@/module/page/task_detail/Container'
 import TaskApplicationPage from '@/module/page/task_application/Container'
 import ProjectDetailPage from '@/module/page/project_detail/Container'
 import TeamDetailPage from '@/module/page/team_detail/Container'
+import CircleDetailPage from '@/module/page/circle_detail/Container'
 
 import LoginPage from '@/module/page/login/Container'
 import RegisterPage from '@/module/page/register/Container'
@@ -272,6 +273,10 @@ export default [
     {
         path: '/profile/submission-detail/:submissionId',
         page: ProfileSubmissionDetailPage
+    },
+    {
+        path: '/circle-detail/:circleId',
+        page: CircleDetailPage
     },
     /*
     ********************************************************************************

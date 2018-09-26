@@ -17,6 +17,7 @@ class UserRedux extends BaseRedux {
             username: '',
 
             role: '',
+            circles: [],
 
             login_form: {
                 username: '',
