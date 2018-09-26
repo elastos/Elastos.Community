@@ -189,7 +189,7 @@ export default class extends Base {
 
             attachment, attachmentType, attachmentFilename, isUsd,
 
-            domain, recruitedSkillsets, pictures, pitch
+            domain, recruitedSkillsets, pictures, pitch, bidding
         } = param;
         this.validate_name(name);
         this.validate_description(description);
@@ -220,6 +220,7 @@ export default class extends Base {
 
             eventDateRange, eventDateRangeStart, eventDateRangeEnd, eventDateStatus,
             location,
+            bidding,
 
             attachment, attachmentType, attachmentFilename,
             candidateLimit,
