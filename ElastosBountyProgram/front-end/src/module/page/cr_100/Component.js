@@ -78,7 +78,7 @@ export default class extends StandardPage {
         let elements = []
         for (let i = 0; i < texts.length; i++) {
             elements.push(
-                <span>
+                <span key={i}>
                     {texts[i]}
                     { i < texts.length - 1 && ' / ' }
                     <wbr/>
