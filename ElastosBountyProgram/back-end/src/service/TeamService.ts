@@ -36,7 +36,6 @@ export default class extends Base {
         const doc = {
             name: param.name,
             domain: param.domain,
-            type: param.type || constant.TEAM_TYPE.TEAM,
             metadata: this.param_metadata(param.metadata),
             tags: this.param_tags(param.tags),
             profile: {
@@ -45,7 +44,8 @@ export default class extends Base {
             },
             recruitedSkillsets: param.recruitedSkillsets,
             owner: this.currentUser,
-            pictures: param.pictures
+            pictures: param.pictures,
+            status: param.status
         };
 
         console.log('create team => ', doc);
@@ -66,12 +66,7 @@ export default class extends Base {
         team.members = [ res1._id ]
         await team.save()
 
-        await db_team.getDBInstance().populate(team, {
-            path: 'owner',
-            select: sanitize
-        })
-
-        return team
+        return team;
     }
 
     public async update(param): Promise<Document>{
@@ -94,7 +89,6 @@ export default class extends Base {
         const doc = {
             name: param.name,
             domain: param.domain,
-            type: param.type,
             metadata: this.param_metadata(param.metadata),
             tags: this.param_tags(param.tags),
             profile: {
@@ -102,10 +96,59 @@ export default class extends Base {
                 description: param.description
             },
             recruitedSkillsets: param.recruitedSkillsets,
-            pictures: param.pictures
+            pictures: param.pictures,
+            status: param.status
         };
 
         this.validate_name(doc.name);
+
+        await db_team.update({_id: teamId}, doc)
+
+        return db_team.findById(teamId)
+    }
+
+    public async activeTeam(param): Promise<boolean>{
+        const {teamId} = param
+        const doc: any = {
+            teamId,
+            team: teamId,
+            status: constant.TEAM_STATUS.ACTIVE
+        }
+        const db_team = this.getDBModel('Team')
+
+        if (!teamId) {
+            throw 'no team id'
+        }
+
+        doc.team = teamId
+        const team = await db_team.findOne({_id: teamId})
+        if (!team) {
+            throw 'invalid team id'
+        }
+
+        await db_team.update({_id: teamId}, doc)
+
+        return db_team.findById(teamId)
+    }
+
+    public async closeTeam(param): Promise<boolean>{
+        const {teamId} = param
+        const doc: any = {
+            teamId,
+            team: teamId,
+            status: constant.TEAM_STATUS.CLOSED
+        }
+        const db_team = this.getDBModel('Team')
+
+        if (!teamId) {
+            throw 'no team id'
+        }
+
+        doc.team = teamId
+        const team = await db_team.findOne({_id: teamId})
+        if (!team) {
+            throw 'invalid team id'
+        }
 
         await db_team.update({_id: teamId}, doc)
 
@@ -121,6 +164,7 @@ export default class extends Base {
             user: userId,
             apply_reason: applyMsg,
             role: constant.TEAM_ROLE.MEMBER,
+            status: constant.TEAM_USER_STATUS.PENDING,
             level: ''
         }
         const db_user = this.getDBModel('User')
@@ -151,19 +195,6 @@ export default class extends Base {
             throw 'candidate already exists'
         }
 
-        const userTeams = await db_ut.find({ user: userId })
-        const userCrcles = _.filter(userTeams, { type: constant.TEAM_TYPE.CRCLE })
-        const MAX_USER_CIRCLES = 2
-
-        if (_.size(userCrcles) >= MAX_USER_CIRCLES) {
-            throw 'maximum number of circles reached'
-        }
-
-        // Accept CRcle applications automatically
-        doc.status = team.type === constant.TEAM_TYPE.CRCLE
-            ? constant.TEAM_USER_STATUS.NORMAL
-            : constant.TEAM_USER_STATUS.PENDING
-
         console.log('add team candidate =>', doc);
         const teamCandidate = await db_ut.save(doc);
 
@@ -173,22 +204,10 @@ export default class extends Base {
 
         await team.save()
 
-        user.circles = user.circles || []
-        user.circles.push(team._id)
-
-        await user.save()
-
         await db_ut.db.populate(teamCandidate, ['team', 'user'])
 
-        if (teamCandidate.team) {
-            await db_ut.db.populate(teamCandidate.team, ['owner'])
-        }
-
         const teamOwner = await db_user.findById(team.owner)
-
-        if (team.type !== constant.TEAM_TYPE.CRCLE) {
-            await this.sendAddCandidateEmail(this.currentUser, teamOwner, team)
-        }
+        await this.sendAddCandidateEmail(this.currentUser, teamOwner, team)
 
         return teamCandidate
     }
@@ -316,18 +335,6 @@ export default class extends Base {
         })
 
         const team = await db_team.getDBInstance().findOne({_id: doc.team})
-
-        if (team.type === constant.TEAM_TYPE.CRCLE) {
-            const db_user = this.getDBModel('User')
-            await db_user.db.update({
-                _id: doc.user
-            }, {
-                $pull: {
-                    circles: new ObjectId(team._id)
-                }
-            })
-        }
-
         const result = await db_team.db.update({
             _id: team._id
         }, {
@@ -409,12 +416,12 @@ export default class extends Base {
             query.recruitedSkillsets = { $in: param.skillset.split(',') }
         }
 
-        if (param.owner) {
-            query.owner = param.owner
+        if (param.status) {
+            query.status = { $in: param.status.split(',') }
         }
 
-        if (param.type) {
-            query.type = param.type
+        if (param.owner) {
+            query.owner = param.owner
         }
 
         if (param.teamHasUser) {
@@ -431,10 +438,6 @@ export default class extends Base {
             query.$or = [
                 { _id: {$in: _.map(userTeams, 'team')} }
             ]
-        }
-
-        if (param.type) {
-            query.type = param.type;
         }
 
         const teams = await db_team.list(query, {

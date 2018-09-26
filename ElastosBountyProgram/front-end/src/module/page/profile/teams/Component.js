@@ -7,12 +7,12 @@ import './style.scss'
 import '../../admin/admin.scss'
 import { Col, Row, Icon, Form, Input, Breadcrumb, Button,
     Divider, Select, Table, List, Carousel, Avatar, Tag } from 'antd'
-import { TEAM_USER_STATUS } from '@/constant'
+import { TEAM_USER_STATUS, TEAM_STATUS } from '@/constant'
 import MediaQuery from 'react-responsive'
 import moment from 'moment/moment'
 import Footer from '@/module/layout/Footer/Container'
 import I18N from '@/I18N'
-import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '../../../../config/constant'
+import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from "../../../../config/constant"
 
 const FormItem = Form.Item;
 
@@ -21,7 +21,7 @@ const FILTERS = {
     OWNED: 'owned',
     ACTIVE: 'active',
     APPLIED: 'applied',
-    REJECTED: 'rejected'
+    REJECTED: 'rejected',
 }
 
 export default class extends StandardPage {
@@ -50,6 +50,8 @@ export default class extends StandardPage {
 
         if (this.state.filter === FILTERS.ACTIVE) {
             query.teamHasUserStatus = TEAM_USER_STATUS.NORMAL
+            query.status = TEAM_STATUS.ACTIVE
+            console.log(query)
         }
 
         if (this.state.filter === FILTERS.APPLIED) {
@@ -92,7 +94,7 @@ export default class extends StandardPage {
                                 <Breadcrumb.Item href="/">
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
-                                <Breadcrumb.Item>Teams</Breadcrumb.Item>
+                                <Breadcrumb.Item>{I18N.get('myrepublic.teams')}</Breadcrumb.Item>
                             </Breadcrumb>
                         </div>
                         <div className="p_admin_content">
@@ -102,7 +104,7 @@ export default class extends StandardPage {
                                 </Col>
                                 <Col sm={24} md={20} className="c_ProfileContainer admin-right-column wrap-box-user">
                                     <div className="pull-right filter-group">
-                                        <Button onClick={this.goCreatepage.bind(this)}>Create Team</Button>
+                                        <Button onClick={this.goCreatepage.bind(this)}>{I18N.get('myrepublic.teams.create')}</Button>
                                     </div>
                                     <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
                                         <Select
@@ -121,19 +123,19 @@ export default class extends StandardPage {
                                         <Button.Group className="filter-group">
                                             <Button
                                                 className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
-                                                onClick={this.clearFilters.bind(this)}>All</Button>
+                                                onClick={this.clearFilters.bind(this)}>{I18N.get('myrepublic.teams.all')}</Button>
                                             <Button
                                                 className={(this.state.filter === FILTERS.OWNED && 'selected') || ''}
-                                                onClick={this.setOwnedFilter.bind(this)}>Owned</Button>
+                                                onClick={this.setOwnedFilter.bind(this)}>{I18N.get('myrepublic.teams.owned')}</Button>
                                             <Button
                                                 className={(this.state.filter === FILTERS.ACTIVE && 'selected') || ''}
-                                                onClick={this.setActiveFilter.bind(this)}>Active</Button>
+                                                onClick={this.setActiveFilter.bind(this)}>{I18N.get('myrepublic.teams.active')}</Button>
                                             <Button
                                                 className={(this.state.filter === FILTERS.APPLIED && 'selected') || ''}
-                                                onClick={this.setAppliedFilter.bind(this)}>Applied</Button>
+                                                onClick={this.setAppliedFilter.bind(this)}>{I18N.get('myrepublic.teams.applied')}</Button>
                                             <Button
                                                 className={(this.state.filter === FILTERS.REJECTED && 'selected') || ''}
-                                                onClick={this.setRejectedFilter.bind(this)}>Rejected</Button>
+                                                onClick={this.setRejectedFilter.bind(this)}>{I18N.get('myrepublic.teams.rejected')}</Button>
                                         </Button.Group>
                                     </MediaQuery>
                                     <div className="clearfix"/>
@@ -166,57 +168,6 @@ export default class extends StandardPage {
         )
     }
 
-    getListItem(item) {
-        const profile = item.owner.profile || {};
-        return (
-            <div className="list-item">
-                <MediaQuery minWidth={MIN_WIDTH_PC}>
-                    <List.Item
-                        key={item.id}
-                        extra={this.getCarousel(item)}
-                    >
-                        <h3 class="no-margin no-padding one-line brand-color">
-                            <a onClick={this.linkTeamDetail.bind(this, item.id)}>{item.title}</a>
-                        </h3>
-                        <h5 class="no-margin">
-                            {item.description}
-                        </h5>
-                        <div className="description-content" dangerouslySetInnerHTML={{__html: item.content}} />
-                        <div className="ant-list-item-right-box">
-                            <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
-                                <Avatar size="large" icon="user" className="pull-right" src={profile.avatar}/>
-                                <div class="clearfix"/>
-                                <div>{profile.firstName} {profile.lastName}</div>
-                            </a>
-                            <Button type="primary" className="pull-down" onClick={this.linkTeamDetail.bind(this, item.id)}>View</Button>
-                        </div>
-                    </List.Item>
-                </MediaQuery>
-                <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
-                    <List.Item
-                        key={item.id}
-                        className="ignore-right-box"
-                    >
-                        <h3 class="no-margin no-padding one-line brand-color">
-                            <a onClick={this.linkTeamDetail.bind(this, item.id)}>{item.title}</a>
-                        </h3>
-                        <h5 className="no-margin">
-                            {item.description}
-                        </h5>
-                        <div>
-                            <a onClick={this.linkUserDetail.bind(this, item.owner)}>
-                                <span>{profile.firstName} {profile.lastName}</span>
-                                <Divider type="vertical"/>
-                                <Avatar size="large" icon="user" src={profile.avatar}/>
-                            </a>
-                            <Button type="primary" className="pull-right" onClick={this.linkTeamDetail.bind(this, item.id)}>View</Button>
-                        </div>
-                    </List.Item>
-                </MediaQuery>
-            </div>
-        );
-    }
-
     getListComponent() {
         const teams = this.props.all_teams
         const description_fn = (entity) => {
@@ -239,14 +190,65 @@ export default class extends StandardPage {
                 description: description_fn(team),
                 content: team.profile.description,
                 owner: team.owner,
-                id: team._id
+                id: team._id,
+                status: team.status
             }
         })
 
         return (
             <List itemLayout='vertical' size='large' loading={this.props.loading}
                 className="with-right-box" dataSource={data}
-                renderItem={item => this.getListItem(item)}
+                renderItem={item => (
+                    <div className="list-item">
+                        <MediaQuery minWidth={MIN_WIDTH_PC}>
+                            <List.Item
+                                key={item.id}
+                                extra={this.getCarousel(item)}
+                            >
+                                <h3 class="no-margin no-padding one-line brand-color">
+                                    <a onClick={this.linkTeamDetail.bind(this, item.id)}>{item.title}</a>
+                                    <span className={item.status == TEAM_STATUS.ACTIVE ? 'team-status-active' : 'team-status-close'}>{item.status == TEAM_STATUS.ACTIVE ? I18N.get('team.detail.recuriting') : I18N.get('team.detail.not_recruiting')}</span>
+                                </h3>
+                                <h5 class="no-margin">
+                                    {item.description}
+                                </h5>
+                                <div>
+                                    {item.content}
+                                </div>
+                                <div className="ant-list-item-right-box">
+                                    <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                        <Avatar size="large" icon="user" className="pull-right" src={item.owner.profile.avatar}/>
+                                        <div class="clearfix"/>
+                                        <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
+                                    </a>
+                                    <Button type="primary" className="pull-down" onClick={this.linkTeamDetail.bind(this, item.id)}>View</Button>
+                                </div>
+                            </List.Item>
+                        </MediaQuery>
+                        <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                            <List.Item
+                                key={item.id}
+                                className="ignore-right-box"
+                            >
+                                <h3 class="no-margin no-padding one-line brand-color">
+                                    <a onClick={this.linkTeamDetail.bind(this, item.id)}>{item.title}</a>
+                                    <span className={item.status == TEAM_STATUS.ACTIVE ? 'team-status-active' : 'team-status-close'}>{item.status == TEAM_STATUS.ACTIVE ? I18N.get('team.detail.recuriting') : I18N.get('team.detail.not_recruiting')}</span>
+                                </h3>
+                                <h5 className="no-margin">
+                                    {item.description}
+                                </h5>
+                                <div>
+                                    <a onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                        <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
+                                        <Divider type="vertical"/>
+                                        <Avatar size="large" icon="user" src={item.owner.profile.avatar}/>
+                                    </a>
+                                    <Button type="primary" className="pull-right" onClick={this.linkTeamDetail.bind(this, item.id)}>View</Button>
+                                </div>
+                            </List.Item>
+                        </MediaQuery>
+                    </div>
+                )}
             />
         )
     }
