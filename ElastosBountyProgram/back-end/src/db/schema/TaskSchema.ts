@@ -75,6 +75,7 @@ export const TaskCandidate = {
         type : String
     },
 
+    bid: Number,
     applyMsg: String,
 
     complete: Boolean,
@@ -134,6 +135,8 @@ export const Task = {
     attachment: {
         type : String
     },
+
+    bidding: Boolean,
 
     attachmentType: String,
     attachmentFilename: String,
