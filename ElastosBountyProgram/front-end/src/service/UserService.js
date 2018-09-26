@@ -24,9 +24,13 @@ export default class extends BaseService {
 
         if ([USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(res.user.role)) {
             await this.dispatch(userRedux.actions.is_admin_update(true))
+        }else{
+            await this.dispatch(userRedux.actions.is_admin_update(false))
         }
         if ([USER_ROLE.LEADER].includes(res.user.role)) {
             await this.dispatch(userRedux.actions.is_leader_update(true))
+        }else {
+            await this.dispatch(userRedux.actions.is_leader_update(false))
         }
 
         await this.dispatch(userRedux.actions.email_update(res.user.email))
@@ -96,9 +100,13 @@ export default class extends BaseService {
         this.dispatch(userRedux.actions.is_login_update(true));
         if ([USER_ROLE.LEADER].includes(data.role)) {
             this.dispatch(userRedux.actions.is_leader_update(true))
+        }else{
+            this.dispatch(userRedux.actions.is_leader_update(false))
         }
         if ([USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(data.role)) {
             this.dispatch(userRedux.actions.is_admin_update(true))
+        }else{
+            this.dispatch(userRedux.actions.is_admin_update(false))
         }
         this.dispatch(userRedux.actions.email_update(data.email))
         this.dispatch(userRedux.actions.username_update(data.username))

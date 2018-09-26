@@ -30,37 +30,42 @@ export default createContainer(Component, (state)=>{
             // TODO: refactor this, if it's current user it's current_user_id and otherwise it's _id
             // should always be _id
             const userId = this.user.current_user_id || this.user._id
+            const doc = {
+                email: formData.email,
+                username: formData.username,
+                password: formData.password,
+                profile: {
+                    // General
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    gender: formData.gender,
+                    country: formData.country,
+                    avatar: state.avatar_url,
+                    avatarFilename: state.avatar_filename,
+                    avatarFileType: state.avatar_type,
+                    walletAddress: formData.walletAddress,
+
+                    // Social Media
+                    telegram: formData.telegram,
+                    reddit: formData.reddit,
+                    wechat: formData.wechat,
+                    twitter: formData.twitter,
+                    facebook: formData.facebook,
+
+                    // Questions
+                    beOrganizer: formData.beOrganizer === 'yes',
+                    isDeveloper: formData.isDeveloper === 'yes',
+                },
+
+                removeAttachment: state.removeAttachment
+            }
+
+            if(this.is_admin){
+                doc.role = formData.role
+            }
 
             try {
-                const rs = await userService.update(userId, {
-                    email: formData.email,
-                    username: formData.username,
-                    password: formData.password,
-                    profile: {
-                        // General
-                        firstName: formData.firstName,
-                        lastName: formData.lastName,
-                        gender: formData.gender,
-                        country: formData.country,
-                        avatar: state.avatar_url,
-                        avatarFilename: state.avatar_filename,
-                        avatarFileType: state.avatar_type,
-                        walletAddress: formData.walletAddress,
-
-                        // Social Media
-                        telegram: formData.telegram,
-                        reddit: formData.reddit,
-                        wechat: formData.wechat,
-                        twitter: formData.twitter,
-                        facebook: formData.facebook,
-
-                        // Questions
-                        beOrganizer: formData.beOrganizer === 'yes',
-                        isDeveloper: formData.isDeveloper === 'yes',
-                    },
-
-                    removeAttachment: state.removeAttachment
-                });
+                const rs = await userService.update(userId, doc);
 
                 if (rs) {
                     message.success('User updated successfully');

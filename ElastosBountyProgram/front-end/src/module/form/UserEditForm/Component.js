@@ -116,6 +116,23 @@ class C extends BaseComponent {
         const username_el = (
             <Input size="large" disabled/>
         )
+        
+        const role_fn = getFieldDecorator('role', {
+            rules: [{required: true, message: I18N.get('user.edit.form.label_role')}],
+            initialValue: user.role
+        })
+        const role_el = (
+            <Select size="large"
+                    showSearch
+                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    placeholder="Role">
+                {_.entries(config.data.mappingRoleToName).map(([key, val]) => {
+                    return <Select.Option key={key} value={key}>
+                        {I18N.get(val)}
+                    </Select.Option>
+                })}
+            </Select>
+        )
 
         const email_fn = getFieldDecorator('email', {
             rules: [{required: true, message: 'Email is required'}],
@@ -330,6 +347,7 @@ class C extends BaseComponent {
         return {
             // General
             username: username_fn(username_el),
+            role: role_fn(role_el),
             email: email_fn(email_el),
             password: password_fn(password_el),
             passwordConfirm: passwordConfirm_fn(passwordConfirm_el),
@@ -380,7 +398,7 @@ class C extends BaseComponent {
                 sm: {span: 12}
             }
         }
-
+        
         // const existingTask = this.props.existingTask
 
         // TODO: terms of service checkbox
@@ -398,6 +416,11 @@ class C extends BaseComponent {
                         <FormItem label="Username" {...formItemLayout}>
                             {p.username}
                         </FormItem>
+                        {this.props.is_admin && 
+                        <FormItem label={I18N.get('user.edit.form.role')} {...formItemLayout}>
+                            {p.role}
+                        </FormItem>
+                        }
                         <FormItem label="Email" {...formItemLayout}>
                             {p.email}
                         </FormItem>

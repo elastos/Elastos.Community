@@ -149,6 +149,10 @@ export default {
     'forgot.new_password': 'Please enter a new password',
     'forgot.success': 'Password changed successfully',
 
+    // UserEditForm
+    'user.edit.form.label_role': 'Please select a role',
+    'user.edit.form.role': 'Role',
+
     // Developer
     'developer.breadcrumb.developers': 'Community',
     'developer.breadcrumb.search': 'Search',
@@ -369,6 +373,10 @@ export default {
     'vision.04': 'In the meantime, we have assembled a Cyber Republic Council to make the important decisions as this project moves in the direction of full democratic decentralization. This Council, made up of members Fay Li, Kevin Zhang, and Yipeng Su, will utilize community input and make strategic decisions to grow the project. In time, the members of the Empower35 project along with other leaders in Cyber Republic will form a government and become self-running. Our Constitution is currently in progress.',
     'vision.05': 'The Elastos vision to change the internet runs parallel to Cyber Republic’s vision to change the way people organize and build a global project. This Alpha version is the template and the framework for our goal to move towards a completely modern and unique online republic. Your input and active participation are necessary for this vision to continue to take shape.',
     'vision.06': 'More information and more specifics on how to apply for individual projects are to come.',
-    'vision.07': 'We look forward to building an international haven for entrepreneurship  and innovation for the new internet.'
+    'vision.07': 'We look forward to building an international haven for entrepreneurship  and innovation for the new internet.',
 
+    // Role
+    'role.member': 'Member',
+    'role.organizer': 'Organizer',
+    'role.admin': 'Admin'
 };
