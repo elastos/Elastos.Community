@@ -469,7 +469,7 @@ export default class extends Base {
     }
 
     public async updateCandidate(param): Promise<boolean> {
-        const {taskCandidateId, user, team, attachment, attachmentFilename} = param
+        const {taskCandidateId, user, team, attachment, attachmentFilename, bid} = param
         const candidateSelector = {
             _id: param.taskCandidateId
         }
@@ -489,6 +489,10 @@ export default class extends Base {
 
         if (attachmentFilename) {
             updateObj.attachmentFilename = attachmentFilename
+        }
+
+        if (bid || bid === 0) {
+            updateObj.bid = bid
         }
 
         if (user || team) {
