@@ -51,7 +51,7 @@ export default class extends StandardPage {
                     <div className="indicator">{circle.members.length}</div>
                 </div>
                 <span className="title"
-                    onClick={() => this.props.history.push(`/circle-detail/${circle._id}`)}>{circle.name}</span>
+                    onClick={() => this.props.history.push(`/empower35-detail/${circle._id}`)}>{circle.name}</span>
             </div>
         );
     }

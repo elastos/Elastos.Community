@@ -269,8 +269,8 @@ class C extends BaseComponent {
     }
 
     showLoginRegisterModal = () => {
-        sessionStorage.setItem('loginRedirect', `/circle-detail/${this.props.match.params.circleId}`)
-        sessionStorage.setItem('registerRedirect', `/circle-detail/${this.props.match.params.circleId}`)
+        sessionStorage.setItem('loginRedirect', `/empower35-detail/${this.props.match.params.circleId}`)
+        sessionStorage.setItem('registerRedirect', `/empower35-detail/${this.props.match.params.circleId}`)
 
         this.setState({
             showLoginRegisterModal: true
