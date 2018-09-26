@@ -6,14 +6,15 @@ $mobile-padding: $gap_0 0px;
 $landingPageWidth: 1152px;
 
 .emp35-circle-item {
-  height: 200px;
+
+  height: 174px;
+  width: 174px;
   .circle-img {
     position: absolute;
-    top: 29px;
-    left: 29px;
+    top: 41px;
+    left: 41px;
     width: 140px;
     height: 140px;
-    margin-right: $gap_2;
   }
 
   color: white;
@@ -23,15 +24,14 @@ $landingPageWidth: 1152px;
 
   .ellipsis-img {
     position: absolute;
-    top: 12px;
-    left: 12px;
   }
 
   margin: $gap_2;
+
   .title {
     position: absolute;
-    top: 24px;
-    left: 24px;
+    top: 36px;
+    left: 36px;
     cursor: pointer;
     font-family: "komu-a",sans-serif;
     font-size: 24px;
@@ -53,8 +53,8 @@ $landingPageWidth: 1152px;
   }
   .indicator-container {
     position: absolute;
-    top: 140px;
-    left: 62px;
+    top: 152px;
+    left: 74px;
     &.my-circles {
       top: 92px;
       left: 38px;
@@ -165,6 +165,10 @@ $landingPageWidth: 1152px;
           #emp35_statement {
             width: 465px;
             height: 452px;
+            @media only screen and (max-width: $mobile-width) {
+              width: 100%;
+              height: inherit;
+             }
           }
         }
 
@@ -172,6 +176,10 @@ $landingPageWidth: 1152px;
           display: inline-block;
           width: 465px;
           height: 452px;
+          @media only screen and (max-width: $mobile-width) {
+            width: 100%;
+            height: 100%;
+           }
           background-color: $bg_blue;
 
           .message-container {
@@ -209,6 +217,10 @@ $landingPageWidth: 1152px;
 
           .container {
             margin: $gap_5;
+
+            @media only screen and (max-width: $mobile-width) {
+              margin: $gap_3;
+            }
             .content {
               font-size: 24px;
             }
@@ -226,14 +238,24 @@ $landingPageWidth: 1152px;
           }
 
           .container {
-            margin: $gap_3;
-
+            .header {
+              margin: $gap_3;
+            }
             .inner-container {
               margin: $gap_1 0 $gap_3 0;
               .title {
                 font-family: "synthese",sans-serif;
                 font-size: 24px;
                 color: white;
+              }
+            }
+            .content {
+              .d_Row {
+                margin: $gap_3;
+                @media only screen and (max-width: $mobile-width) {
+                  margin: 0 auto;
+                  width: 225px;
+                }
               }
             }
           }
@@ -629,6 +651,16 @@ $landingPageWidth: 1152px;
 
     .container {
       padding-left: 66px;
+      @media only screen and (max-width: $mobile-width) {
+        padding-left: unset;
+        .blue-title {
+          padding-left: 33px;
+        }
+        .d_Row {
+          margin: 0 auto;
+          width: 225px;
+        }
+      }
     }
   }
 
