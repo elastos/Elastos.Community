@@ -154,7 +154,8 @@ export default class extends BaseComponent {
                         <Menu.Item className="c_MenuItem help pull-right no-margin" key="help">
                             <Dropdown overlay={helpDropdown} style="margin-top: 24px;">
                                 <a className="ant-dropdown-link">
-                                    <Icon className="no-margin" type="question-circle-o" />
+                                    {/* <Icon className="no-margin" type="question-circle-o" /> */}
+                                    <img src="/assets/images/union.svg" className="no-margin" />
                                 </a>
                             </Dropdown>
                         </Menu.Item>
