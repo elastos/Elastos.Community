@@ -279,6 +279,7 @@ export default {
     'project.detail.popup.applied': 'Applied',
     'project.detail.popup.join_team': 'Join Team',
     'project.detail.popup.join_project': 'Join Project',
+    'project.detail.bidding': 'Bidding Open',
 
     'team.detail.team_active': 'Your team is currently active',
 

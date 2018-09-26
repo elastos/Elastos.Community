@@ -51,6 +51,11 @@ export default class extends BaseComponent {
                                     <h5>
                                         {applicant.applyMsg}
                                     </h5>
+                                    { this.props.detail.bidding &&
+                                        <h5>
+                                            Bid: {applicant.bid} ELA
+                                        </h5>
+                                    }
                                     {
                                         this.showAttachment()
                                     }

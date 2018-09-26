@@ -524,12 +524,13 @@ export default class extends Base {
     *
     * */
     public async addCandidate(param): Promise<boolean> {
-        const {teamId, userId, taskId, applyMsg, assignSelf, attachment, attachmentFilename} = param;
+        const {teamId, userId, taskId, applyMsg, assignSelf, attachment, attachmentFilename, bid} = param;
         const doc: any = {
             task: taskId,
             applyMsg,
             attachment,
-            attachmentFilename
+            attachmentFilename,
+            bid
         };
         const db_user = this.getDBModel('User');
 
