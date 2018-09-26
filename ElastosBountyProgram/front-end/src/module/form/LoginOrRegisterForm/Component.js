@@ -33,6 +33,7 @@ export default class extends BaseComponent {
                 activeKey: 'login'
             })
             sessionStorage.removeItem('registered')
+            console.log("removed registered")
         }
 
         return (

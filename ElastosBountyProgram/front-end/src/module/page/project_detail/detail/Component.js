@@ -107,9 +107,23 @@ class C extends BaseComponent {
         return res
     }
 
-    renderLoginOrRegisterModal() {
+    shouldShowLoginRegisterModal() {
         if (this.props.is_login) {
-            return
+            if (sessionStorage.getItem('registerUser') || sessionStorage.getItem('registerWelcome')) {
+                return true;
+            } else if (sessionStorage.getItem('registerJoined')) {
+                sessionStorage.removeItem('registerJoined');
+                return false;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    renderLoginOrRegisterModal() {
+        if (!this.shouldShowLoginRegisterModal()) {
+            return;
         }
 
         return (

@@ -27,6 +27,7 @@ export default createContainer(Component, (state) => {
 
         async register(username, password, profile) {
             try {
+                sessionStorage.setItem('registerUser', true)
                 const rs = await userService.register(username, password, profile)
 
                 if (rs) {
@@ -38,8 +39,9 @@ export default createContainer(Component, (state) => {
                         sessionStorage.setItem('registered', true)
                         this.history.push(registerRedirect)
                     } else {
-                        this.history.replace('/login')
+                        this.history.push('/empower35')
                     }
+                    sessionStorage.removeItem('registerUser')
                 }
             } catch (err) {
                 console.error(err)
