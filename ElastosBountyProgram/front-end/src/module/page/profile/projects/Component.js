@@ -268,11 +268,6 @@ export default class extends StandardPage {
                                         <Button onClick={() => this.props.history.push('/task-create?type=PROJECT&category=DEVELOPER')}>Create Project</Button>
                                     </div>
                                     }
-                                    {this.props.is_admin &&
-                                    <div className="pull-right filter-group gap-right">
-                                        <Button onClick={() => this.props.history.push('/task-create?type=PROJECT&category=CR100')}>Create CR100</Button>
-                                    </div>
-                                    }
                                     <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
                                         <Select
                                             name="type"

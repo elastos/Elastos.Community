@@ -203,9 +203,9 @@ export default class extends Base {
             status = constant.TASK_STATUS.PENDING;
         } else {
             // if there is no ELA and you are assigning yourself,
-            // it'll automatically go to ASSIGNED
+            // it'll automatically go to APPROVED
             if (assignSelf) {
-                status = constant.TASK_STATUS.ASSIGNED
+                status = constant.TASK_STATUS.APPROVED
             }
         }
 
@@ -306,6 +306,10 @@ export default class extends Base {
             throw 'Access Denied'
         }
 
+        if (param.status === constant.TASK_STATUS.ASSIGNED) {
+            throw 'Assigned Status is Deprecated'
+        }
+
         // organizer cannot change task to these statuses
         if (this.currentUser.role === constant.USER_ROLE.LEADER) {
 
@@ -348,11 +352,6 @@ export default class extends Base {
                     updateObj.status = constant.TASK_STATUS.APPROVED
                     updateObj.approvedBy = this.currentUser._id
 
-                    // if assignSelf = true, then we push the status to ASSIGNED
-                    if (task.assignSelf) {
-                        updateObj.status = constant.TASK_STATUS.ASSIGNED
-                    }
-
                     // TODO: move this to agenda/queue
                     await this.sendTaskApproveEmail(this.currentUser, taskOwner, task)
 
@@ -379,40 +378,34 @@ export default class extends Base {
         // if you're the owner - applies for admins and organizers
         if (this.currentUser._id.toString() === task.createdBy.toString()) {
 
-            // shortcut with error for these
-            if (task.status !== constant.TASK_STATUS.ASSIGNED &&
+            // shortcut with error for these - only allow status change from APPROVED -> SUBMITTED
+            if (task.status !== constant.TASK_STATUS.APPROVED &&
                 param.status === constant.TASK_STATUS.SUBMITTED
             ) {
                 throw 'Invalid Action'
             }
 
+            // these status changes are only allowed if we are changing to APPROVED/SUBMITTED status
             if (task.status !== constant.TASK_STATUS.PENDING &&
                 (
                     param.status === constant.TASK_STATUS.SUBMITTED ||
-                    param.status === constant.TASK_STATUS.ASSIGNED
+                    param.status === constant.TASK_STATUS.APPROVED
                 )
             ) {
                 updateObj.status = param.status
 
+                if (param.status === constant.TASK_STATUS.SUBMITTED) {
+                    await this.sendTaskSuccessEmail(taskOwner, task)
+                }
+
+                /*
                 if (param.status === constant.TASK_STATUS.ASSIGNED) {
                     await this.sendTaskAssignedEmail(taskOwner, task)
 
-                } else if (param.status === constant.TASK_STATUS.SUBMITTED) {
-                    await this.sendTaskSuccessEmail(taskOwner, task)
-                }
+                } else
+                */
             }
         }
-
-        if (param.status === constant.TASK_STATUS.SUBMITTED) {
-
-        }
-
-        // TODO: check if candidate is the owner, then we auto .... ?
-        /*
-        if (param.status === constant.TASK_STATUS.ASSIGNED) {
-
-        }
-        */
 
         // TODO: check if user is approved candidate
         // TODO: accept as complete should not be allowed unless at least one candidate has submitted

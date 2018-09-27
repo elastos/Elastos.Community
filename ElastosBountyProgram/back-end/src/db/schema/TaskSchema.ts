@@ -223,7 +223,10 @@ export const Task = {
 
     assignSelf: Boolean,
 
+    approved: Boolean,
     approvedBy: {type: Schema.Types.ObjectId, ref: 'users'},
+
+    disbursed: Boolean,
 
     candidates: [{type: Schema.Types.ObjectId, ref: 'task_candidate'}],
 

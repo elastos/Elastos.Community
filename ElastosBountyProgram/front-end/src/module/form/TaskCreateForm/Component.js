@@ -14,11 +14,13 @@ import {
     Col,
     Upload,
     Cascader,
-    Divider,
+    message,
     Popconfirm,
     TreeSelect,
     Modal,
-    Switch
+    Switch,
+    Divider,
+    Card
 } from 'antd'
 
 import I18N from '@/I18N'
@@ -44,6 +46,7 @@ const Option = Select.Option
  * - Events (online) anywhere - Social or Developer
  *
  * TODO: in the future we should developer leaders
+ * TODO: this form is getting long, maybe it should be a 2-3 step form?
  *
  * Community Leaders - each community has a leader
  * - a leader can create events in their own local community or online community
@@ -75,6 +78,14 @@ class C extends BaseComponent {
                     } else {
                         values.communityParent = null
                         values.community = values.taskCommunity[0]
+                    }
+                }
+
+                if (values.taskReward || values.taskRewardUsd || values.taskRewardUpfront || values.taskRewardUpfrontUsd) {
+                    if (!this.state.readDisclaimer) {
+                        message.error('You must confirm you have read the payment rules and disclaimer')
+                        document.getElementById('disclaimerLink').focus()
+                        return
                     }
                 }
 
@@ -118,6 +129,7 @@ class C extends BaseComponent {
             communityTrees: [],
             taskType: this.props.taskType || TASK_TYPE.EVENT,
             taskCategory: this.props.taskCategory || TASK_TYPE.SOCIAL,
+            assignSelf: (props.existingTask && props.existingTask.assignSelf) || true,
             eventDateRange: (props.existingTask && props.existingTask.eventDateRange) || false,
 
             thumbnail_url : (props.existingTask && props.existingTask.thumbnail) || null,
@@ -137,6 +149,10 @@ class C extends BaseComponent {
             previewVisible: false,
             previewImage: '',
             isBidding: (props.existingTask && props.existingTask.bidding) || false,
+
+            // only show this on create
+            readDisclaimer: false,
+            showDisclaimer: false
         }
 
         this.pictureUrlLookups = []
@@ -182,9 +198,6 @@ class C extends BaseComponent {
                 <Option value={TASK_CATEGORY.SOCIAL}>Social</Option>
                 {this.props.is_admin &&
                     <Option value={TASK_CATEGORY.DEVELOPER}>Developer</Option>
-                }
-                {this.props.is_admin &&
-                    <Option value={TASK_CATEGORY.CR100}>CR100</Option>
                 }
             </Select>
         )
@@ -361,14 +374,6 @@ class C extends BaseComponent {
             <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
         )
 
-        const taskRewardUpfrontElaPerUsd_fn = getFieldDecorator('taskRewardUpfrontElaPerUsd', {
-            rules: [{required: this.props.form.getFieldValue('taskRewardUpfrontUsd') > 0 && this.props.form.getFieldValue('isUsd'), message: 'Required for USD'}],
-            initialValue: this.state.editing && existingTask.rewardUpfront.elaPerUsd ? existingTask.rewardUpfront.elaPerUsd : null
-        })
-        const taskRewardUpfrontElaPerUsd_el = (
-            <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
-        )
-
         const taskRewardUsd_fn = getFieldDecorator('taskRewardUsd', {
             initialValue: this.state.editing && existingTask.reward.usd ? existingTask.reward.usd / 100 : null
         })
@@ -380,14 +385,6 @@ class C extends BaseComponent {
             initialValue: this.state.editing && existingTask.reward.ela ? existingTask.reward.ela / 1000 : null
         })
         const taskReward_el = (
-            <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
-        )
-
-        const taskRewardElaPerUsd_fn = getFieldDecorator('taskRewardElaPerUsd', {
-            rules: [{required: this.props.form.getFieldValue('taskRewardUsd') > 0 && this.props.form.getFieldValue('isUsd'), message: 'Required for USD'}],
-            initialValue: this.state.editing && existingTask.reward.elaPerUsd ? existingTask.reward.elaPerUsd : null
-        })
-        const taskRewardElaPerUsd_el = (
             <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
         )
 
@@ -461,7 +458,7 @@ class C extends BaseComponent {
                             {this.state.attachment_filename}
                         </a>
                     ) : (
-                        <Button loading={this.state.attachment_loading}>
+                        <Button loading={this.state.attachment_loading} style={{width: '100%'}}>
                             <Icon type="upload" /> Click to upload
                         </Button>
                     )
@@ -679,11 +676,9 @@ class C extends BaseComponent {
 
             taskRewardUpfront: taskRewardUpfront_fn(taskRewardUpfront_el),
             taskRewardUpfrontUsd: taskRewardUpfrontUsd_fn(taskRewardUpfrontUsd_el),
-            taskRewardUpfrontElaPerUsd: taskRewardUpfrontElaPerUsd_fn(taskRewardUpfrontElaPerUsd_el),
 
             taskReward: taskReward_fn(taskReward_el),
             taskRewardUsd: taskRewardUsd_fn(taskRewardUsd_el),
-            taskRewardElaPerUsd: taskRewardElaPerUsd_fn(taskRewardElaPerUsd_el),
 
             thumbnail: thumbnail_fn(thumbnail_el),
 
@@ -755,6 +750,13 @@ class C extends BaseComponent {
             wrapperCol: {
                 xs: {span: 24},
                 sm: {offset: 8, span: 12},
+            },
+        }
+
+        const formItemCenterLayout = {
+            wrapperCol: {
+                xs: {span: 24},
+                sm: {offset: 6, span: 12},
             },
         }
 
@@ -875,6 +877,8 @@ class C extends BaseComponent {
                             </div>
                         }
 
+                        <Divider/>
+
                         {/*
                         ********************************************************************************
                         * Event Info
@@ -912,14 +916,52 @@ class C extends BaseComponent {
                         </div>
                         }
 
+                        <Divider/>
 
                         {/*
                         ********************************************************************************
                         * Budget / Reward
                         ********************************************************************************
                         */}
+                        <h3 className="no-margin">
+                            Payment & Assignment&nbsp;
+                            <Popover content="Budget is for expenses/costs, reward is for labor and time">
+                                <Icon className="help-icon" type="question-circle-o"/>
+                            </Popover>
+                        </h3>
+                        {this.props.is_admin &&
+                        <Row>
+                            <Col span={12}>
+                                <Card hoverable className={'feature-box' + (this.state.assignSelf ? ' selected' : '')} onClick={() => {this.setState({assignSelf: true})}}>
+                                    <div className="title">
+                                        <span>Private</span>
+                                    </div>
+                                    <hr className="feature-box-divider"/>
+                                    <div className="content">
+                                        <div>- You wish to do this task yourself</div>
+                                        <div>- You are proposing a budget/reward for approval</div>
+                                        <div>- This is not visible to others</div>
+                                    </div>
+                                </Card>
+                            </Col>
+                            <Col span={12}>
+                                <Card hoverable className={'feature-box' + (!this.state.assignSelf ? ' selected' : '')} onClick={() => {this.setState({assignSelf: false})}}>
+                                    <div className="title">
+                                        <span>Public</span>
+                                    </div>
+                                    <hr className="feature-box-divider"/>
+                                    <div className="content">
+                                        <div>- This is a task for others to do</div>
+                                        <div>- This is listed publicly on the site</div>
+                                        <div>- Set a reward or allow bidding</div>
+                                    </div>
+                                </Card>
+                            </Col>
+                        </Row>
+                        }
+                        {/*
                         <h3 class="no-margin">
-                            Budget / Reward&nbsp;
+                            Payment & Assignment&nbsp;
                             <Popover content="Budget is for expenses/costs, reward is for labor and time">
                                 <Icon className="help-icon" type="question-circle-o"/>
                             </Popover>
@@ -937,43 +979,25 @@ class C extends BaseComponent {
                                 </FormItem>
                             </Col>
                         </Row>
-
-                        { !this.state.isBidding &&
+                        */}
+                        { (this.state.assignSelf || !this.state.isBidding) &&
                             <div>
+                                <br/>
                                 <FormItem label="Fiat ($USD)" {...formItemLayout}>
                                     <Checkbox name="isUsd" checked={this.state.isUsd} onChange={() => {this.setState({isUsd: !this.state.isUsd})}}/>
-                                    &nbsp; - for larger events/tasks/projects only - payment is always in ELA equivalent
                                 </FormItem>
 
                                 {this.state.isUsd ?
-                                    <div>
-                                        {/*TODO: lock Budget/Reward after approval*/}
-                                        <Row>
-                                            <Col span={12}>
-                                                <FormItem label="USD Budget" {...formItemLayoutAdjLeft}>
-                                                    {p.taskRewardUpfrontUsd}
-                                                </FormItem>
-                                            </Col>
-                                            <Col span={12}>
-                                                <FormItem label="ELA/USD" {...formItemLayoutAdjRight}>
-                                                    {p.taskRewardUpfrontElaPerUsd}
-                                                </FormItem>
-
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col span={12}>
-                                                <FormItem label="USD Reward" {...formItemLayoutAdjLeft}>
-                                                    {p.taskRewardUsd}
-                                                </FormItem>
-                                            </Col>
-                                            <Col span={12}>
-                                                <FormItem label="ELA/USD" {...formItemLayoutAdjRight}>
-                                                    {p.taskRewardElaPerUsd}
-                                                </FormItem>
-                                            </Col>
-                                        </Row>
-                                    </div> :
+                                    <Row>
+                                        <Col>
+                                            <FormItem label="USD Budget" {...formItemLayout}>
+                                                {p.taskRewardUpfrontUsd}
+                                            </FormItem>
+                                            <FormItem label="USD Reward" {...formItemLayout}>
+                                                {p.taskRewardUsd}
+                                            </FormItem>
+                                        </Col>
+                                    </Row> :
                                     <Row>
                                         <Col>
                                             <FormItem label="ELA Budget" {...formItemLayout}>
@@ -986,9 +1010,18 @@ class C extends BaseComponent {
                                     </Row>
 
                                 }
+
+                                {!this.props.existingTask &&
+                                <FormItem {...formItemNoLabelLayout}>
+                                    <Checkbox name="readDisclaimer" checked={this.state.readDisclaimer} onChange={() => {this.setState({readDisclaimer: !this.state.readDisclaimer})}}/>
+
+                                    <span id="disclaimerLink" className="disclaimerLink" onClick={this.showDisclaimer.bind(this)}>I have read the payment rules and disclaimer</span>
+                                </FormItem>
+                                }
                             </div>
                         }
 
+                        <Divider/>
 
                         {/*
                         ********************************************************************************
@@ -996,8 +1029,9 @@ class C extends BaseComponent {
                         ********************************************************************************
                         */}
                         <h3 className="no-margin">Attachment</h3>
+                        <br/>
                         {!this.state.attachment_url ?
-                            <FormItem {...formItemNoLabelLayout}>
+                            <FormItem {...formItemCenterLayout} className="attachmentUpload">
                                 {p.attachment}
                             </FormItem> :
                             <Row>
@@ -1016,14 +1050,48 @@ class C extends BaseComponent {
                                 </Col>
                             </Row>
                         }
+
+                        <Divider/>
+
                         <br/>
-                        <FormItem {...formItemNoLabelLayout}>
-                            <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
-                                {this.state.editing ? 'Save Changes' : (this.props.is_admin ? 'Create Task' : 'Submit Proposal')}
-                            </Button>
-                        </FormItem>
+                        <Row style={{'margin': '50px 0 100px 0'}}>
+                            <Col offset={4} span={16}>
+                                <Button loading={this.props.loading} type="primary" htmlType="submit" className="d_btn" style={{width: '100%'}}>
+                                    {this.state.editing ? 'Save Changes' : (this.props.is_admin ? 'Create Task' : 'Submit Proposal')}
+                                </Button>
+                            </Col>
+                        </Row>
+
+                        <br/>
                     </div>
                 </Form>
+
+                <Modal
+                    title="Payment Rules and Disclaimer"
+                    visible={this.state.showDisclaimer}
+                    onCancel={this.hideDisclaimer.bind(this)}
+                    footer={[
+                        <Button key="cancel" onClick={this.hideDisclaimer.bind(this)}>Close</Button>
+                    ]}
+                >
+                    <ol className="paymentRulesModal">
+                        <li>
+                            Any billable work that goes beyond the original task description must be approved first
+                        </li>
+                        <li>
+                            Upon completion of the task/event, a full report is required to receive the reward payment
+                        </li>
+                        <li>
+                            If payment figures are in USD, the exchange rate at the time of disbursement from <a target="_blank" href="https://coinmarketcap.com/currencies/elastos">CMC</a> will be used
+                        </li>
+                        <li>
+                            All expenses require invoices or receipts
+                        </li>
+                        <li>
+                            This agreement is only required if the the task is billable
+                        </li>
+                    </ol>
+                </Modal>
             </div>
         )
     }
@@ -1047,6 +1115,18 @@ class C extends BaseComponent {
             thumbnail_filename: '',
 
             removeThumbnail: true
+        })
+    }
+
+    showDisclaimer() {
+        this.setState({
+            showDisclaimer: true
+        })
+    }
+
+    hideDisclaimer() {
+        this.setState({
+            showDisclaimer: false
         })
     }
 }
