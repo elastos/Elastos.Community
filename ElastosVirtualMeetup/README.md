@@ -2,10 +2,11 @@
 ## Overview
 We will regularly schedule virtual meetups where the community members can directly interact with the developers on the status of the project and ask any questions they need clarification on. Each meetup will have a different agenda.
 
-## Upcoming Meetups
-### TBD
-
 ## Past Meetups
+### Thurlsday, Sep 27th, 2018 at 13:00 Eastern Daylight Time: Current Progress and Status
+- [Link to powerpoint slides](https://docs.google.com/presentation/d/1dMiiEV8HIceAQW89OQCgGkMkh8ghtnXVhRoQux_J-uY/edit?usp=sharing)
+- [Link to youtube recording](https://www.youtube.com/watch?v=5WjeXjHkvio&feature=youtu.be)
+
 ### Elastos Anniversary Recap and AMA 
 - [Virtual Meetup 1: Aug 25th 2018](https://www.youtube.com/watch?v=AVJ-qiJmwH0)
 - [Virtual Meetup 2: Aug 26th 2018](https://www.youtube.com/watch?v=E7Zn-ASQfPo)
