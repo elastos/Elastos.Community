@@ -206,17 +206,11 @@ export default {
     'emp35.header.content.3': 'gradually to manage and lead each team.',
 
     'emp35.empower.title': 'Empower 35',
-    'emp35.empower.content.1': 'Join up to two circles you are good at. A ',
-    'emp35.empower.content.2': 'circle is a simple closed shape. It is the set ',
-    'emp35.empower.content.3': 'of all points in a plane that are at a given ',
-    'emp35.empower.content.4': 'distance from a given point',
+    'emp35.empower.content': 'You can join up to two Circles. Once inside, form even smaller teams, create tasks for approval and begin showcasing your talents. Circles are smart networks within the larger smart network of Cyber Republic. As each Circle expands, the entire network expands with it.',
     'emp35.teamHeader.title': 'Circles',
 
     'emp35.mycircles.title': 'My Circles',
-    'emp35.circles.statement.1': 'A circle is a simple closed shape.',
-    'emp35.circles.statement.2': 'It is the set of all points in a plane that are at a given distance from a given point, the centre;',
-    'emp35.circles.statement.3': 'equivalently it is the curve traced out by a point that moves so that its distance from a given point is constant.',
-    'emp35.circles.statement.4': 'The distance betwen any of the points and the center is called the radius.',
+    'emp35.circles.statement': 'A circle is a shape where all points are equal distance from the center. CR circles are teams of decentralized citizens who all revolve around a single area of expertise. Circles are designed to group people by their talent and allow them to begin creating and completing talent specific tasks. In time, leaders will be elected to manage each circle.',
 
     // Circle Detail
     'circle.header.join': 'Join',
@@ -279,6 +273,7 @@ export default {
     'project.detail.popup.applied': 'Applied',
     'project.detail.popup.join_team': 'Join Team',
     'project.detail.popup.join_project': 'Join Project',
+    'project.detail.bidding': 'Bidding Open',
 
     'team.detail.title.status.active': 'Your team is currently active',
     'team.detail.title.status.closed': 'Your team is closed now',
@@ -288,6 +283,9 @@ export default {
     'team.detail.status.active': 'Open',
     'team.detail.status.closed': 'Close',
     'team.detail.status.reopen': 'Reopen',
+
+    'team.create.error.nameRequired': 'Team name is required',
+    'team.create.error.nameTooShort': 'Team name is too short',
 
     // Team specializations
     'team.spec.media': 'Media',

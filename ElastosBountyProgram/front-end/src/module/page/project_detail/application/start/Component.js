@@ -47,7 +47,7 @@ class C extends BaseComponent {
                         this.setState({ confirmation: true })
                     })
                 } else if (this.state.mode === 'team') {
-                    this.props.applyToTask(this.props.task._id, null, values.team).then(() => {
+                    this.props.applyToTask(this.props.task._id, null, values.team, values.applyMsg).then(() => {
                         this.setState({ confirmation: true })
                     })
                 } else if (this.state.mode === 'newteam') {
@@ -250,14 +250,7 @@ class C extends BaseComponent {
                     <Input.TextArea rows={4} className="input-field"/>
                 </div>
             ),
-            team: (
-                <div className="mode-panel">
-                    <div className="label komu-a">Choose your team</div>
-                    {this.getApplyWithDropdown()}
-                    <div className="label komu-a">Tell us why do you want to join?</div>
-                    <Input.TextArea rows={4} className="input-field"/>
-                </div>
-            ),
+            team: this.getApplyWithDropdown(),
             newteam: (
                 <TeamCreateForm embedded={true} form={this.props.form}/>
             )
@@ -275,10 +268,22 @@ class C extends BaseComponent {
             newteam: _.identity
         }
 
+        const formLookup = {
+            solo: decoratorLookup.solo(compLookup.solo),
+            team: (
+                <div className="mode-panel">
+                    <div className="label komu-a">Choose your team</div>
+                    {decoratorLookup.team(compLookup.team)}
+                    {decoratorLookup.solo(compLookup.solo)}
+                </div>
+            ),
+            newteam: compLookup.newteam
+        }
+
         const className = `full-width start-mode ${this.state.mode !== 'newteam'? 'halign-wrapper' : ''}`
         return (
             <div className={className}>
-                {decoratorLookup[this.state.mode](compLookup[this.state.mode])}
+                {formLookup[this.state.mode]}
             </div>
         )
     }

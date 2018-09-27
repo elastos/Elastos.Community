@@ -118,7 +118,10 @@ class C extends BaseComponent {
         )
 
         const name_fn = getFieldDecorator('name', {
-            rules: [{required: true, message: 'team name is required'}],
+            rules: [
+                {required: true, message: I18N.get('team.create.error.nameRequired')},
+                {min: 4, message: I18N.get('team.create.error.nameTooShort')}
+            ],
             initialValue: (existingTeam && existingTeam.name) || ''
         })
 

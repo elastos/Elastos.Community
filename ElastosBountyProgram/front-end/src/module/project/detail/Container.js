@@ -40,9 +40,9 @@ export default createContainer(Component, (state) => {
         },
 
         async applyToTask(taskId, userId, teamId, applyMsg, attachment,
-            attachmentFilename) {
+            attachmentFilename, bid) {
             return taskService.pushCandidate(taskId, userId, teamId, applyMsg,
-                attachment, attachmentFilename)
+                attachment, attachmentFilename, bid)
         },
 
         resetAllTeams() {

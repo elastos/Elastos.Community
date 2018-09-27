@@ -189,7 +189,7 @@ export default class extends Base {
 
             attachment, attachmentType, attachmentFilename, isUsd,
 
-            domain, recruitedSkillsets, pictures, pitch
+            domain, recruitedSkillsets, pictures, pitch, bidding
         } = param;
         this.validate_name(name);
         this.validate_description(description);
@@ -220,6 +220,7 @@ export default class extends Base {
 
             eventDateRange, eventDateRangeStart, eventDateRangeEnd, eventDateStatus,
             location,
+            bidding,
 
             attachment, attachmentType, attachmentFilename,
             candidateLimit,
@@ -468,7 +469,7 @@ export default class extends Base {
     }
 
     public async updateCandidate(param): Promise<boolean> {
-        const {taskCandidateId, user, team, attachment, attachmentFilename} = param
+        const {taskCandidateId, user, team, attachment, attachmentFilename, bid} = param
         const candidateSelector = {
             _id: param.taskCandidateId
         }
@@ -488,6 +489,10 @@ export default class extends Base {
 
         if (attachmentFilename) {
             updateObj.attachmentFilename = attachmentFilename
+        }
+
+        if (bid || bid === 0) {
+            updateObj.bid = bid
         }
 
         if (user || team) {
@@ -523,12 +528,13 @@ export default class extends Base {
     *
     * */
     public async addCandidate(param): Promise<boolean> {
-        const {teamId, userId, taskId, applyMsg, assignSelf, attachment, attachmentFilename} = param;
+        const {teamId, userId, taskId, applyMsg, assignSelf, attachment, attachmentFilename, bid} = param;
         const doc: any = {
             task: taskId,
             applyMsg,
             attachment,
-            attachmentFilename
+            attachmentFilename,
+            bid
         };
         const db_user = this.getDBModel('User');
 
