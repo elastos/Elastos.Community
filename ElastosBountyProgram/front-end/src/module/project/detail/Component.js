@@ -52,22 +52,28 @@ class C extends BaseComponent {
         return this.props.detail.createdBy._id === this.props.currentUserId
     }
 
+    // TODO: Refactor all these, lots of redundancy with the REJECTED flag
     isMember(taskCandidateId) {
-        const candidate = _.find(this.props.detail.candidates, { _id: taskCandidateId })
+        const candidate = _.find(this.props.detail.candidates, (candidate) => {
+            if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
+                return candidate._id === taskCandidateId && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED
+            }
+            return false
+        })
         if (!candidate) {
             return false
         }
         if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
-            return candidate.user._id === this.props.currentUserId
+            return candidate.user._id === this.props.currentUserId && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED
         } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
-            return _.find(this.props.ownedTeams, (item) => item._id === candidate.team._id)
+            return _.find(this.props.ownedTeams, (item) => item._id === candidate.team._id && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED)
         }
     }
 
     isMemberByUserId(userId) {
         const candidate = _.find(this.props.detail.candidates, (candidate) => {
             if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
-                return candidate.user._id === userId
+                return candidate.user._id === userId && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED
             }
             return false
         })
@@ -80,7 +86,7 @@ class C extends BaseComponent {
     getMemberBid(userId) {
         const candidate = _.find(this.props.detail.candidates, (candidate) => {
             if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
-                return candidate.user._id === userId
+                return candidate.user._id === userId && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED
             }
             return false
         })
@@ -111,7 +117,7 @@ class C extends BaseComponent {
     }
 
     removeUserByUserId(userId) {
-        const candidate = _.find(this.props.detail.candidates, (candidate) => candidate.user._id === userId)
+        const candidate = _.find(this.props.detail.candidates, (candidate) => candidate.user._id === userId && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED)
         if (!candidate) {
             return false
         }
@@ -249,7 +255,7 @@ class C extends BaseComponent {
             render: candidate => {
                 return (
                     <div>
-                        {this.isTaskOwner() && candidate._id !== 'such_fake_id' &&
+                        {this.isTaskOwner() && !this.props.detail.bidding &&
                         <div className="text-right">
                             <a onClick={this.removeUser.bind(this, candidate._id)}>{I18N.get('project.detail.remove')}</a>
                         </div>
@@ -476,7 +482,7 @@ class C extends BaseComponent {
                         </div>
                     )
                     : (
-                        <div>
+                        <div style={{paddingBottom: '150px'}}>
                             <Row className="top-section">
                                 <Col xs={24} sm={24} md={8} className="col-left">
                                     {this.getUpperLeftBox()}
@@ -500,7 +506,7 @@ class C extends BaseComponent {
                             {!this.state.applying &&
                                 <Row className="contributors">
                                     {/* For a bidding task you cannot leave after the task is APPROVED */}
-                                    { isMember && (this.props.detail.bidding && (this.props.detail.status === TASK_STATUS.CREATED || this.props.detail.status === TASK_STATUS.PENDING)) &&
+                                    {isMember && (this.props.detail.bidding && (this.props.detail.status === TASK_STATUS.CREATED || this.props.detail.status === TASK_STATUS.PENDING)) &&
                                         <Button onClick={this.removeUserByUserId.bind(this, this.props.currentUserId)} className="leave-button">
                                             {this.props.detail.bidding ?
                                                 `${I18N.get('project.detail.you_bid')} ${this.getMemberBid(this.props.currentUserId)} ELA - ${I18N.get('project.detail.leave_bid')}` :
@@ -512,14 +518,14 @@ class C extends BaseComponent {
                                 </Row>
                             }
 
-                            {!this.state.applying && this.props.page === 'LEADER' &&
+                            {!this.state.applying && (this.props.page === 'LEADER' || this.props.page === 'ADMIN') &&
                                 <Row className="applications">
                                     <h3 className="no-margin">{this.props.detail.bidding ? I18N.get('project.detail.pending_bids') : I18N.get('project.detail.pending_applications')}</h3>
                                     {this.getCurrentApplicants()}
                                 </Row>
                             }
 
-                            {this.props.page === 'LEADER' && this.canComment() &&
+                            {(this.props.page === 'LEADER' || this.props.page === 'ADMIN') && this.canComment() &&
                                 <Row>
                                     <Comments type="task" canPost={true} canSubscribe={!isTaskOwner} model={this.props.taskId}/>
                                 </Row>

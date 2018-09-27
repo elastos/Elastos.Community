@@ -136,7 +136,7 @@ class C extends BaseComponent {
             communityTrees: [],
             taskType: this.props.taskType || TASK_TYPE.EVENT,
             taskCategory: this.props.taskCategory || TASK_TYPE.SOCIAL,
-            assignSelf: (props.existingTask && props.existingTask.assignSelf) || true,
+            assignSelf: props.existingTask ? props.existingTask.assignSelf : true,
             eventDateRange: (props.existingTask && props.existingTask.eventDateRange) || false,
 
             thumbnail_url : (props.existingTask && props.existingTask.thumbnail) || null,

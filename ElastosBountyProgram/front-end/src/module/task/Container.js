@@ -93,6 +93,7 @@ export default createContainer(Component, (state) => {
                 })
 
                 message.success('Task archived');
+                window.history.back()
             } catch (err) {
                 message.error(err.message)
             }
