@@ -30,6 +30,15 @@ class C extends BaseComponent {
                 if (this.state.requestedCode) {
                     this.props.register(this.state.savedValues.username,
                         this.state.savedValues.password, _.omit(this.state.savedValues, ['username', 'password']))
+                        .then((shouldShowWelcome) => {
+                            if (shouldShowWelcome) {
+                                this.props.onChangeActiveKey('post')
+                                console.log('post')
+                            } else {
+                                this.props.onChangeActiveKey('login')
+                                console.log('login')
+                            }
+                        })
                 } else {
                     const code = this.generateRegCode()
                     this.props.sendRegistrationCode(values.email, code)
