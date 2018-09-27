@@ -264,7 +264,7 @@ export default class extends Base {
 
         const db_task = this.getDBModel('Task');
 
-        console.log('create task => ', doc);
+        // console.log('create task => ', doc);
         const task = await db_task.save(doc);
 
         this.sendCreateEmail(this.currentUser, task)
@@ -838,11 +838,11 @@ export default class extends Base {
             }
         }
 
-        if (acceptedCnt >= task.candidateSltLimit) {
+        if (task.bidding || acceptedCnt >= task.candidateSltLimit) {
             await db_task.update({
                 _id: task._id
             }, {
-                status: constant.TASK_STATUS.ASSIGNED
+                status: constant.TASK_STATUS.APPROVED
             })
         }
 

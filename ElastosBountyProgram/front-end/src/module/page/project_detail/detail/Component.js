@@ -628,7 +628,7 @@ class C extends BaseComponent {
 
                         {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
                             <Row className="applications ebp-wrap">
-                                <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
+                                <h3 className="no-margin">{this.props.detail.bidding ? I18N.get('project.detail.pending_bids') : I18N.get('project.detail.pending_applications')}</h3>
                                 {this.getCurrentApplicants()}
                             </Row>
                         }

@@ -260,6 +260,7 @@ export default {
     'project.detail.current_contributors': 'Current Contributors',
     'project.detail.owner': 'Project Owner',
     'project.detail.pending_applications': 'Pending Applications',
+    'project.detail.pending_bids': 'Pending Bids',
     'project.detail.subscribers': 'Liked By',
     'project.detail.current_members': 'Current Members',
     'project.detail.leave': 'Leave',
@@ -273,7 +274,11 @@ export default {
     'project.detail.popup.applied': 'Applied',
     'project.detail.popup.join_team': 'Join Team',
     'project.detail.popup.join_project': 'Join Project',
+    'project.detail.popup.bid_project': 'Bid on Project',
     'project.detail.bidding': 'Bidding Open',
+    'project.detail.bidding_closed': 'Bidding Closed',
+    'project.detail.tell_us_why_join': 'Tell us why you want to join.',
+    'project.detail.tell_us_why_bid': 'Tell us why you want to bid.',
 
     'team.detail.team_active': 'Your team is currently active',
 

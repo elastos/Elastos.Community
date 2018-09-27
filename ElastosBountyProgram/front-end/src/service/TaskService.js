@@ -277,11 +277,9 @@ export default class extends BaseService {
 
         acceptedCandidate.status = TASK_CANDIDATE_STATUS.APPROVED
 
-        if (task.status === TASK_STATUS.ASSIGNED) {
-            curTaskDetail.status = TASK_STATUS.ASSIGNED
+        if (task.status === TASK_STATUS.APPROVED) {
+            curTaskDetail.status = TASK_STATUS.APPROVED
         }
-
-        debugger
 
         this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
         this.dispatch(taskRedux.actions.loading_update(false))

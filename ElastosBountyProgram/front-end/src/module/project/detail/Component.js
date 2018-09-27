@@ -20,7 +20,7 @@ import {
     InputNumber
 } from 'antd'
 import I18N from '@/I18N'
-import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS } from '@/constant'
+import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS, TASK_STATUS } from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import ProjectApplication from '@/module/project/application/Container'
 import _ from 'lodash'
@@ -150,7 +150,7 @@ class C extends BaseComponent {
         const progress = detail.progress || ''
         const teamSize = detail.candidateCompleted.length || ''
         const reward = detail.bidding
-            ? I18N.get('project.detail.bidding')
+            ? (detail.status === TASK_STATUS.APPROVED ? I18N.get('project.detail.bidding_closed') : I18N.get('project.detail.bidding'))
             : detail.reward.isUsd ? detail.reward.usd + ' USD' : (detail.reward.ela / 1000) + ' ELA'
         const description = detail.descBreakdown || detail.description || ''
         const leaderImage = detail.createdBy.profile.avatar || ''
@@ -194,6 +194,8 @@ class C extends BaseComponent {
     getCurrentContributors() {
         const detail = this.props.detail
         const applicants = _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.APPROVED });
+        /*
+        // TODO: can we document why we add the task owner as a contributor?
         if (this.isTaskOwner()) {
             applicants.unshift({
                 _id: 'such_fake_id',
@@ -201,6 +203,7 @@ class C extends BaseComponent {
                 type: TASK_CANDIDATE_TYPE.USER
             })
         }
+        */
         const columns = [{
             title: 'Name',
             key: 'name',
@@ -284,9 +287,13 @@ class C extends BaseComponent {
         }, {
             title: 'Action',
             key: 'action',
-            render: candidate => {
+            render: (candidate) => {
                 return (
                     <div className="text-right">
+                        {this.props.detail.bidding && <span>
+                            Bid: {candidate.bid} ELA
+                            <Divider type="vertical"/>
+                        </span>}
                         {(this.props.page === 'ADMIN' || this.isTaskOwner() || this.isMember(candidate._id)) && (
                             <span>
                                 <a onClick={this.showAppModal.bind(this, candidate._id)}>{I18N.get('project.detail.view')}</a>
@@ -340,7 +347,9 @@ class C extends BaseComponent {
         })
     }
 
+    // break from convention, this.props.detail is the task
     getApplicationForm() {
+
         const {getFieldDecorator} = this.props.form
         const applyMsg_fn = getFieldDecorator('applyMsg', {
             rules: [{required: true, message: 'Application is required'}],
@@ -348,7 +357,7 @@ class C extends BaseComponent {
         })
         const applyMsg_el = (
             <Input.TextArea rows={8} className="team-application" disabled={this.props.loading}
-                placeholder="Tell us why you want to join."/>
+                placeholder={this.props.detail.bidding ? I18N.get('project.detail.tell_us_why_bid') : I18N.get('project.detail.tell_us_why_join')}/>
         )
         const applyMsgPanel = applyMsg_fn(applyMsg_el)
 
@@ -467,7 +476,7 @@ class C extends BaseComponent {
                             {this.props.page !== 'LEADER' && !isTaskOwner && !isMember &&
                                 <Row className="actions">
                                     <Button type="primary" onClick={() => this.setState({ applying: true })}>
-                                        {I18N.get('project.detail.popup.join_project')}
+                                        {this.props.detail.bidding ? I18N.get('project.detail.popup.bid_project') : I18N.get('project.detail.popup.join_project')}
                                     </Button>
                                 </Row>
                             }
@@ -486,7 +495,7 @@ class C extends BaseComponent {
 
                             {!this.state.applying && this.props.page === 'LEADER' &&
                                 <Row className="applications">
-                                    <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
+                                    <h3 className="no-margin">{this.props.detail.bidding ? I18N.get('project.detail.pending_bids') : I18N.get('project.detail.pending_applications')}</h3>
                                     {this.getCurrentApplicants()}
                                 </Row>
                             }

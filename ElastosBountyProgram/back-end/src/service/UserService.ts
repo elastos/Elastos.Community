@@ -477,7 +477,7 @@ export default class extends Base {
         const db_community = this.getDBModel('Community');
         const communityService = this.getService(CommunityService);
 
-        if (_.isEmpty(user.profile.country)) {
+        if (!user.profile || _.isEmpty(user.profile.country)) {
             return;
         }
 

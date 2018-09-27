@@ -59,7 +59,7 @@ class C extends BaseComponent {
 
     async componentDidMount() {
         const taskId = this.props.match.params.taskId
-        await this.props.getTaskDetail(taskId)
+        taskId && await this.props.getTaskDetail(taskId)
         // await this.getCommunityTrees()
     }
 
@@ -1100,7 +1100,6 @@ class C extends BaseComponent {
     }
 
     removeAttachment() {
-        debugger
         this.setState({
             attachment_loading: false,
             attachment_url : null,
