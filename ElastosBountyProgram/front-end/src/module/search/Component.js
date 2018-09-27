@@ -6,7 +6,7 @@ import {
 } from 'antd'
 import _ from 'lodash'
 import './style.scss'
-import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TEAM_STATUS} from '@/constant'
+import {SKILLSET_TYPE, TEAM_TASK_DOMAIN} from '@/constant'
 import ProjectDetail from '@/module/project/detail/Container'
 import TeamDetail from '@/module/team/detail/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
@@ -56,13 +56,6 @@ export default class extends BaseComponent {
 
         if (!_.isEmpty(this.state.domain)) {
             query.domain = this.state.domain
-        }
-
-        if (this.isLookingForTeam()) {
-            let status = [];
-            status.push(TEAM_STATUS.ACTIVE);
-            status.push(TEAM_STATUS.CLOSED);
-            query.status = status
         }
 
         return query
@@ -560,9 +553,7 @@ export default class extends BaseComponent {
                     description: description_fn(team),
                     content: team.profile.description,
                     owner: team.owner,
-                    id: team._id,
-                    status: team.status,
-                    isTeamOwner: this.props.current_user_id === team.owner._id
+                    id: team._id
                 }
             })
             : _.map(entities, (task, id) => {
@@ -594,7 +585,6 @@ export default class extends BaseComponent {
                             >
                                 <h3 class="no-margin no-padding one-line brand-color">
                                     <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
-                                    <span className={item.status == TEAM_STATUS.ACTIVE ? 'team-status-active' : 'team-status-close'}>{item.status == TEAM_STATUS.ACTIVE ? I18N.get('team.detail.recuriting') : I18N.get('team.detail.not_recruiting')}</span>
                                 </h3>
                                 <h5 class="no-margin">
                                     {item.description}
@@ -606,10 +596,8 @@ export default class extends BaseComponent {
                                         <div class="clearfix"/>
                                         <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
                                     </a>
-                                    {!item.isTeamOwner && item.status == TEAM_STATUS.ACTIVE && <Button onClick={clickHandler.bind(this, item.id)}
-                                        type="primary" className="pull-down">{I18N.get('.apply')}</Button>}
-                                    {(item.isTeamOwner || (item.status == TEAM_STATUS.CLOSED || item.status == TEAM_STATUS.DRAFT)) && <Button onClick={clickHandler.bind(this, item.id)}
-                                        type="primary" className="pull-down">{I18N.get('.view')}</Button>}
+                                    <Button onClick={clickHandler.bind(this, item.id)}
+                                        type="primary" className="pull-down">Apply</Button>
                                 </div>
                             </List.Item>
                         </MediaQuery>
@@ -620,7 +608,6 @@ export default class extends BaseComponent {
                             >
                                 <h3 class="no-margin no-padding one-line brand-color">
                                     <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
-                                    <span className={item.status == TEAM_STATUS.ACTIVE ? 'team-status-active' : 'team-status-close'}>{item.status == TEAM_STATUS.ACTIVE ? I18N.get('team.detail.recuriting') : I18N.get('team.detail.not_recruiting')}</span>
                                 </h3>
                                 <h5 class="no-margin">
                                     {item.description}
@@ -631,10 +618,8 @@ export default class extends BaseComponent {
                                         <Divider type="vertical"/>
                                         <Avatar size="large" src={item.owner.profile.avatar}/>
                                     </a>
-                                    {!item.isTeamOwner && item.status == TEAM_STATUS.ACTIVE && <Button onClick={clickHandler.bind(this, item.id)}
-                                        type="primary" className="pull-down">{I18N.get('.apply')}</Button>}
-                                    {(item.isTeamOwner || (item.status == TEAM_STATUS.CLOSED || item.status == TEAM_STATUS.DRAFT)) && <Button onClick={clickHandler.bind(this, item.id)}
-                                        type="primary" className="pull-down">{I18N.get('.view')}</Button>}
+                                    <Button onClick={clickHandler.bind(this, item.id)}
+                                        type="primary" className="pull-right">Apply</Button>
                                 </div>
                             </List.Item>
                         </MediaQuery>

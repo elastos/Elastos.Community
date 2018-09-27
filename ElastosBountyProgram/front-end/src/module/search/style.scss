@@ -43,26 +43,3 @@
   background-color: white;
   padding: $gap_2;
 }
-
-.align-middle{
-  line-height: 30px;
-  vertical-align: middle;
-}
-
-.team-status-active, .team-status-close{
-  font-size: 10px;
-  margin-left: $gap_0;
-  padding: 5px;
-  border-radius: 3px;
-  vertical-align: middle;
-}
-
-.team-status-active{
-  background-color: #67779d;
-  color: white;
-}
-
-.team-status-close{
-  background-color: #d8d8d8;
-  color: #434e71;
-}

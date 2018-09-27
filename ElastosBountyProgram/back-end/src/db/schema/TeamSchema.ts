@@ -28,8 +28,7 @@ export const Team = {
     owner: {type: Schema.Types.ObjectId, ref: 'users'},
     members: [{type: Schema.Types.ObjectId, ref: 'user_team'}],
     pictures: [PictureSchema],
-    comments: [[CommentSchema]],
-    status: String
+    comments: [[CommentSchema]]
 };
 
 export const User_Team = {

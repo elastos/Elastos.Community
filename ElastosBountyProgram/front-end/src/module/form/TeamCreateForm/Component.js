@@ -22,11 +22,9 @@ import {
 import I18N from '@/I18N'
 import InputTags from '@/module/shared/InputTags/Component'
 import ReactQuill from 'react-quill';
-import {TEAM_TASK_DOMAIN, SKILLSET_TYPE, TEAM_STATUS} from '@/constant'
+import {TEAM_TASK_DOMAIN, SKILLSET_TYPE} from '@/constant'
 import {upload_file} from '@/util';
 import sanitizeHtml from 'sanitize-html';
-
-import './style.scss'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
@@ -50,8 +48,7 @@ class C extends BaseComponent {
             editing: !!props.existingTeam,
             fileList: (props.existingTeam && props.existingTeam.pictures) || [],
             previewVisible: false,
-            previewImage: '',
-            status: TEAM_STATUS.ACTIVE
+            previewImage: ''
         }
 
         this.pictureUrlLookups = []
@@ -74,8 +71,7 @@ class C extends BaseComponent {
                     tags: tags.join(','),
                     logo: '',
                     metadata: '',
-                    pictures: this.state.fileList || [],
-                    status: this.state.editing ? TEAM_STATUS.ACTIVE : this.state.status
+                    pictures: this.state.fileList || []
                 }
 
                 _.each(createParams.pictures, (pictureFile) => {
@@ -330,12 +326,9 @@ class C extends BaseComponent {
                 </FormItem>
 
                 { !this.props.embedded &&
-                    <FormItem wrapperCol={{ xs: { span: 24, offset: 0 }, sm: { span: 12, offset: 8 } }}>
-                        {!this.state.editing && <Button loading={this.props.loading} onClick={this.changeStatusActive.bind(this)} htmlType="submit" className="d_btn pull-left create-btn">
-                            Create & Open
-                        </Button>}
-                        <Button loading={this.props.loading} onClick={this.changeStatusDraft.bind(this)} type="ebp" htmlType="submit" className="d_btn pull-left">
-                            {this.state.editing ? 'Save' : 'Save as Draft'}
+                    <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
+                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
+                            {this.state.editing ? 'Save' : 'Create'}
                         </Button>
                     </FormItem>
                 }
@@ -358,20 +351,6 @@ class C extends BaseComponent {
                 }
             </div>
         )
-    }
-
-    changeStatusActive() {
-        this.setState({
-            status: TEAM_STATUS.ACTIVE
-        })
-    }
-
-    changeStatusDraft() {
-        if(!this.state.editing){
-            this.setState({
-                status: TEAM_STATUS.DRAFT
-            })
-        }
     }
 
 }

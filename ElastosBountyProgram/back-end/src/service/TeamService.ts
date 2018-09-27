@@ -45,8 +45,7 @@ export default class extends Base {
             },
             recruitedSkillsets: param.recruitedSkillsets,
             owner: this.currentUser,
-            pictures: param.pictures,
-            status: param.status
+            pictures: param.pictures
         };
 
         console.log('create team => ', doc);
@@ -103,59 +102,10 @@ export default class extends Base {
                 description: param.description
             },
             recruitedSkillsets: param.recruitedSkillsets,
-            pictures: param.pictures,
-            status: param.status
+            pictures: param.pictures
         };
 
         this.validate_name(doc.name);
-
-        await db_team.update({_id: teamId}, doc)
-
-        return db_team.findById(teamId)
-    }
-
-    public async activeTeam(param): Promise<boolean>{
-        const {teamId} = param
-        const doc: any = {
-            teamId,
-            team: teamId,
-            status: constant.TEAM_STATUS.ACTIVE
-        }
-        const db_team = this.getDBModel('Team')
-
-        if (!teamId) {
-            throw 'no team id'
-        }
-
-        doc.team = teamId
-        const team = await db_team.findOne({_id: teamId})
-        if (!team) {
-            throw 'invalid team id'
-        }
-
-        await db_team.update({_id: teamId}, doc)
-
-        return db_team.findById(teamId)
-    }
-
-    public async closeTeam(param): Promise<boolean>{
-        const {teamId} = param
-        const doc: any = {
-            teamId,
-            team: teamId,
-            status: constant.TEAM_STATUS.CLOSED
-        }
-        const db_team = this.getDBModel('Team')
-
-        if (!teamId) {
-            throw 'no team id'
-        }
-
-        doc.team = teamId
-        const team = await db_team.findOne({_id: teamId})
-        if (!team) {
-            throw 'invalid team id'
-        }
 
         await db_team.update({_id: teamId}, doc)
 
@@ -458,10 +408,6 @@ export default class extends Base {
 
         if (param.skillset) {
             query.recruitedSkillsets = { $in: param.skillset.split(',') }
-        }
-
-        if (param.status) {
-            query.status = { $in: param.status.split(',') }
         }
 
         if (param.owner) {
