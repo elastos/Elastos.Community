@@ -57,4 +57,76 @@
             }
         }
     }
+    .post-state {
+        width: 75%;
+        margin: 0 auto;
+        text-align: center;
+
+        .welcome-header {
+            font-size: 80px;
+            line-height: 80px;
+            color: #0F2631;
+        }
+        .welcome-text {
+            margin-top: $gap_0;
+            padding-bottom: 0;
+            text-align: center;
+            color: black;
+            font-size: 16px;
+        }
+        .arrow-down {
+            display: block;
+            margin: $gap_1 auto 0;
+        }
+        .d_btn {
+            margin-top: $gap_3;
+            font-size: 24px;
+            border-radius: 0;
+            border-color: black;
+            color: black;
+        }
+        .d_btn_join {
+            width: 150px;
+            height: 50px;
+        }
+        .strike-text {
+            position: relative;
+            display: inline-block;
+
+            .strike-line {
+                position: absolute;
+                left: 0;
+                top: 24px;
+                width: 100%;
+                height: 12px;
+                background-color: #1DE9B6;
+                z-index: 0;
+            }
+            .strike-line:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -14px;
+                width: 14px;
+                height: 12px;
+                background-color: #1DE9B6;
+                z-index: 0;
+            }
+            .strike-line:after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: auto;
+                right: -14px;
+                width: 14px;
+                height: 12px;
+                background-color: #1DE9B6;
+            }
+            p {
+                position: relative;
+                z-index: 1;
+                padding-bottom: 0;
+            }
+        }
+    }
 }
