@@ -30,7 +30,7 @@ export default class extends BaseComponent {
         sessionStorage.removeItem('registerRedirect')
         sessionStorage.removeItem('registerWelcome')
         this.props.onHideModal()
-        this.props.history.push(registerRedirect)
+        this.props.history.push('/empower35')
     }
 
     showPostRegLogScreen() {
