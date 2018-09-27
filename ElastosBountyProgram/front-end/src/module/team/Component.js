@@ -1,4 +1,4 @@
-import {TASK_STATUS, TASK_CATEGORY, TASK_TYPE} from '@/constant'
+import {TASK_STATUS, TASK_CATEGORY, TASK_TYPE, TEAM_STATUS} from '@/constant'
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import TeamCreateForm from '@/module/form/TeamCreateForm/Container'
@@ -39,12 +39,25 @@ export default class extends BaseComponent {
     renderHeader() {
         return <div className="l_banner">
             <div className="pull-left">
-                {I18N.get('team.detail.team_active')}.
+                {this.props.team.status == TEAM_STATUS.ACTIVE && I18N.get('team.detail.title.status.active')}
+                {this.props.team.status == TEAM_STATUS.CLOSED && I18N.get('team.detail.title.status.closed')}
+                {this.props.team.status == TEAM_STATUS.DRAFT && I18N.get('team.detail.title.status.draft')}
             </div>
             <div className="pull-right right-align">
                 <Button onClick={this.switchEditMode.bind(this)}>
                     {this.state.editing ? I18N.get('.cancel') : I18N.get('.edit')}
                 </Button>
+            </div>
+            <div className="pull-right right-align status-btn">
+                {this.props.team.status == TEAM_STATUS.ACTIVE && <Button loading={this.props.loading} onClick={this.closeTeam.bind(this)}>
+                    {I18N.get('team.detail.status.closed')}
+                </Button>}
+                {this.props.team.status == TEAM_STATUS.CLOSED && <Button loading={this.props.loading} onClick={this.activeTeam.bind(this)}>
+                    {I18N.get('team.detail.status.active')}
+                </Button>}
+                {this.props.team.status == TEAM_STATUS.DRAFT && <Button loading={this.props.loading} onClick={this.activeTeam.bind(this)}>
+                    {I18N.get('team.detail.status.active')}
+                </Button>}
             </div>
             <div className="clearfix"/>
         </div>
@@ -70,5 +83,15 @@ export default class extends BaseComponent {
 
     switchEditMode() {
         this.setState({editing: !this.state.editing})
+    }
+
+    async closeTeam() {
+        const teamId = this.props.team._id
+        await this.props.closeTeam(teamId)
+    }
+
+    async activeTeam() {
+        const teamId = this.props.team._id
+        await this.props.activeTeam(teamId)
     }
 }
