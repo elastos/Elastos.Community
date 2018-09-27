@@ -43,6 +43,7 @@ class C extends BaseComponent {
     }
 
     componentWillUnmount() {
+        // this may cause issues if a parent is checking the loading field
         this.props.resetTaskDetail()
         this.props.resetAllTeams()
     }

@@ -57,10 +57,10 @@ const Option = Select.Option
  */
 class C extends BaseComponent {
 
-    componentDidMount() {
+    async componentDidMount() {
         const taskId = this.props.match.params.taskId
-        taskId && this.props.getTaskDetail(taskId)
-        this.getCommunityTrees()
+        await this.props.getTaskDetail(taskId)
+        // await this.getCommunityTrees()
     }
 
     componentWillUnmount() {
@@ -81,11 +81,18 @@ class C extends BaseComponent {
                     }
                 }
 
-                if (values.taskReward || values.taskRewardUsd || values.taskRewardUpfront || values.taskRewardUpfrontUsd) {
-                    if (!this.state.readDisclaimer) {
-                        message.error('You must confirm you have read the payment rules and disclaimer')
-                        document.getElementById('disclaimerLink').focus()
-                        return
+                // admin does not need to agree to disclaimer
+                if (!this.props.is_admin) {
+                    if (values.taskReward || values.taskRewardUsd || values.taskRewardUpfront || values.taskRewardUpfrontUsd) {
+                        if (!this.state.readDisclaimer) {
+                            message.error('You must confirm you have read the payment rules and disclaimer')
+                            document.getElementById('disclaimerLink').focus()
+                            return
+                        }
+
+                        values.readDisclaimer = true
+                    } else {
+                        values.readDisclaimer = false
                     }
                 }
 
@@ -97,7 +104,7 @@ class C extends BaseComponent {
                 })
 
                 values.bidding = this.state.isBidding
-                values.assignSelf = true
+                values.assignSelf = this.state.assignSelf
 
                 if (this.props.is_project) {
                     values.type = TASK_TYPE.PROJECT
@@ -151,7 +158,7 @@ class C extends BaseComponent {
             isBidding: (props.existingTask && props.existingTask.bidding) || false,
 
             // only show this on create
-            readDisclaimer: false,
+            readDisclaimer: (props.existingTask && props.existingTask.readDisclaimer) || false,
             showDisclaimer: false
         }
 
@@ -687,11 +694,11 @@ class C extends BaseComponent {
         }
     }
 
-    getCommunityTrees() {
-        this.props.getAllCommunities().then((communityTrees) => {
-            this.setState({
-                communityTrees
-            })
+    async getCommunityTrees() {
+        let communityTrees = await this.props.getAllCommunities()
+
+        await this.setState({
+            communityTrees
         })
     }
 
@@ -759,6 +766,8 @@ class C extends BaseComponent {
                 sm: {offset: 6, span: 12},
             },
         }
+
+
 
         // const existingTask = this.props.existingTask
 
@@ -929,7 +938,7 @@ class C extends BaseComponent {
                                 <Icon className="help-icon" type="question-circle-o"/>
                             </Popover>
                         </h3>
-                        {this.props.is_admin &&
+                        {this.props.is_admin && !this.props.existingTask &&
                         <Row>
                             <Col span={12}>
                                 <Card hoverable className={'feature-box' + (this.state.assignSelf ? ' selected' : '')} onClick={() => {this.setState({assignSelf: true})}}>
@@ -959,30 +968,24 @@ class C extends BaseComponent {
                             </Col>
                         </Row>
                         }
-                        {/*
-                        <h3 class="no-margin">
-                            Payment & Assignment&nbsp;
-                            <Popover content="Budget is for expenses/costs, reward is for labor and time">
-                                <Icon className="help-icon" type="question-circle-o"/>
-                            </Popover>
-                        </h3>
 
-                        <Row>
-                            <Col span={12}>
-                                <FormItem label="Reward Type" {...formItemLayoutAdjLeft}>
-                                    <Switch
-                                        onChange={() => this.setState({ isBidding: !this.state.isBidding })}
-                                        unCheckedChildren="Define budget"
-                                        checkedChildren="Open for bidding"
-                                        defaultChecked={this.state.isBidding}
-                                    />
-                                </FormItem>
-                            </Col>
-                        </Row>
-                        */}
+                        {!this.state.assignSelf &&
+                        <div>
+                            <br/>
+                            <FormItem label="Reward Type" {...formItemLayout}>
+                                <Switch
+                                    onChange={() => this.setState({isBidding: !this.state.isBidding})}
+                                    unCheckedChildren="Define budget"
+                                    checkedChildren="Open for bidding"
+                                    defaultChecked={this.state.isBidding}
+                                />
+                            </FormItem>
+                        </div>
+                        }
                         { (this.state.assignSelf || !this.state.isBidding) &&
                             <div>
-                                <br/>
+                                {this.state.assignSelf && <br/>}
+
                                 <FormItem label="Fiat ($USD)" {...formItemLayout}>
                                     <Checkbox name="isUsd" checked={this.state.isUsd} onChange={() => {this.setState({isUsd: !this.state.isUsd})}}/>
                                 </FormItem>
@@ -1011,7 +1014,7 @@ class C extends BaseComponent {
 
                                 }
 
-                                {!this.props.existingTask &&
+                                {!this.props.is_admin && (!this.props.existingTask || this.props.existingTask.status === TASK_STATUS.PENDING) &&
                                 <FormItem {...formItemNoLabelLayout}>
                                     <Checkbox name="readDisclaimer" checked={this.state.readDisclaimer} onChange={() => {this.setState({readDisclaimer: !this.state.readDisclaimer})}}/>
 
@@ -1097,6 +1100,7 @@ class C extends BaseComponent {
     }
 
     removeAttachment() {
+        debugger
         this.setState({
             attachment_loading: false,
             attachment_url : null,

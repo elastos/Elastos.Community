@@ -32,8 +32,7 @@ export default class extends Base{
         if (param.category && _.values(constant.TASK_CATEGORY).includes(param.category)) {
             query.category = param.category;
         } else {
-            query.category = {$in: [constant.TASK_CATEGORY.DEVELOPER, constant.TASK_CATEGORY.SOCIAL,
-                constant.TASK_CATEGORY.CR100]}
+            query.category = {$in: [constant.TASK_CATEGORY.DEVELOPER, constant.TASK_CATEGORY.SOCIAL]}
         }
 
         if (param.domain) {

@@ -42,6 +42,10 @@ export default createContainer(Component, (state) => {
 
         },
 
+        resetTaskDetail() {
+            return taskService.resetTaskDetail()
+        },
+
         /**
          * Although taskId can be determined by taskCandidateId, the API
          * prefers skip the query for the taskCandidate object

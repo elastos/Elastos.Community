@@ -49,6 +49,11 @@ export default class extends BaseComponent {
         })
     }
 
+    componentWillUnmount() {
+        // this may cause issues if a parent is checking the loading field
+        this.props.resetTaskDetail()
+    }
+
     ord_render () {
         const isTaskOwner = (this.props.task && this.props.task.createdBy &&
             this.props.task.createdBy._id) === this.props.userId

@@ -226,7 +226,10 @@ export const Task = {
     approved: Boolean,
     approvedBy: {type: Schema.Types.ObjectId, ref: 'users'},
 
-    disbursed: Boolean,
+    budgetDisbursed: Boolean,
+    budgetDisburseMemo: String,
+
+    readDisclaimer: Boolean,
 
     candidates: [{type: Schema.Types.ObjectId, ref: 'task_candidate'}],
 
@@ -242,6 +245,8 @@ export const Task = {
     recruitedSkillsets: [String],
     pictures: [PictureSchema],
     dAppId: Number,
+
+    archived: Boolean
 };
 
 

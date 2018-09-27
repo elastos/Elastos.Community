@@ -60,7 +60,7 @@
   .feature-box {
     margin: 5px;
     border: 1px solid $border_gray;
-    height: 100%;
+    min-height: 200px;
     cursor: pointer;
 
     &.selected {

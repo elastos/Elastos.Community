@@ -6,6 +6,8 @@ import _ from 'lodash'
 import {TASK_CATEGORY, TASK_TYPE, TEAM_TYPE} from '@/constant'
 
 export default createContainer(Component, (state) => {
+
+    // TODO: not sure this should be all one struct
     return {
         ...state.task,
         ...state.team,
