@@ -1,5 +1,8 @@
-.p_login {
+@import '@/style/variable';
+@import '@/style/color';
+@import "@/style/typography";
 
+.p_login.ebp-wrap {
   text-align: center;
 
   .d_box {
@@ -7,5 +10,23 @@
     width: 80vw;
     margin: 80px auto 0;
     background: #ffffff;
+
+    @media only screen and (max-width: $mobile-width) {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+
+      .c_LoginOrRegister {
+        width: 100%;
+        margin: 0;
+        .main-form {
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: $mobile-width) {
+    padding: 0;
   }
 }

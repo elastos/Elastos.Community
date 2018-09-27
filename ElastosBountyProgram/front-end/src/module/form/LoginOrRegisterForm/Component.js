@@ -3,7 +3,7 @@ import BaseComponent from '@/model/BaseComponent'
 import LoginForm from '@/module/form/LoginForm/Container'
 import RegisterForm from '@/module/form/RegisterForm/Container'
 import I18N from '@/I18N'
-import {Tabs, Button} from 'antd'
+import {Tabs, Row, Col} from 'antd'
 
 import './style.scss'
 
@@ -50,11 +50,11 @@ export default class extends BaseComponent {
 
     ord_render() {
         return (
-            <div className="c_LoginOrRegister">
-                <div className="pull-left">
+            <Row className="c_LoginOrRegister" type="flex">
+                <Col className="side-image">
                     <img src="/assets/images/login-left.png"/>
-                </div>
-                <div className="main-form">
+                </Col>
+                <Col className="main-form">
                     {this.state.activeKey === 'post' ? this.showPostRegLogScreen() : (
                         <Tabs activeKey={this.state.activeKey} onChange={this.handleChangeTab()}>
                             <TabPane tab="Login" key="login">
@@ -64,8 +64,8 @@ export default class extends BaseComponent {
                                 <RegisterForm onChangeActiveKey={this.handleChangeTab()}/>
                             </TabPane>
                         </Tabs>)}
-                </div>
-            </div>
+                </Col>
+            </Row>
         )
     }
 }
