@@ -77,6 +77,19 @@ class C extends BaseComponent {
         return this.isMember(candidate._id)
     }
 
+    getMemberBid(userId) {
+        const candidate = _.find(this.props.detail.candidates, (candidate) => {
+            if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
+                return candidate.user._id === userId
+            }
+            return false
+        })
+
+        if (candidate) {
+            return candidate.bid
+        }
+    }
+
     linkProfileInfo(userId) {
         this.props.history.push(`/member/${userId}`)
     }
@@ -94,14 +107,15 @@ class C extends BaseComponent {
     }
 
     removeUser(taskCandidateId) {
+        this.props.rejectCandidate(taskCandidateId)
     }
 
     removeUserByUserId(userId) {
-        const candidate = _.find(this.props.candidates, (candidate) => candidate.user._id === userId)
+        const candidate = _.find(this.props.detail.candidates, (candidate) => candidate.user._id === userId)
         if (!candidate) {
             return false
         }
-        return this.removeUser(candidate._id)
+        return this.withdrawApplication(candidate._id)
     }
 
     getUpperLeftBox() {
@@ -485,8 +499,13 @@ class C extends BaseComponent {
 
                             {!this.state.applying &&
                                 <Row className="contributors">
-                                    { isMember &&
-                                        <Button onClick={this.removeUserByUserId.bind(this, this.props.currentUserId)} className="leave-button">{I18N.get('project.detail.leave')}</Button>
+                                    {/* For a bidding task you cannot leave after the task is APPROVED */}
+                                    { isMember && (this.props.detail.bidding && (this.props.detail.status === TASK_STATUS.CREATED || this.props.detail.status === TASK_STATUS.PENDING)) &&
+                                        <Button onClick={this.removeUserByUserId.bind(this, this.props.currentUserId)} className="leave-button">
+                                            {this.props.detail.bidding ?
+                                                `${I18N.get('project.detail.you_bid')} ${this.getMemberBid(this.props.currentUserId)} ELA - ${I18N.get('project.detail.leave_bid')}` :
+                                                I18N.get('project.detail.leave')}
+                                        </Button>
                                     }
                                     <h3 className="no-margin align-left">{I18N.get('project.detail.current_contributors')}</h3>
                                     {this.getCurrentContributors()}
