@@ -107,11 +107,15 @@ class C extends BaseComponent {
         return res
     }
 
-    renderLoginOrRegisterModal() {
-        if (this.props.is_login) {
-            return
+    hideShowModal() {
+        return () => {
+            this.setState({
+                showLoginRegisterModal: false
+            })
         }
+    }
 
+    renderLoginOrRegisterModal() {
         return (
             <Modal
                 className="project-detail-nobar"
@@ -121,7 +125,7 @@ class C extends BaseComponent {
                 footer={null}
                 width="70%"
             >
-                <LoginOrRegisterForm />
+                <LoginOrRegisterForm onHideModal={this.hideShowModal()}/>
             </Modal>
         )
     }

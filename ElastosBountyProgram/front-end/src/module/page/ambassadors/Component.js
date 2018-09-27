@@ -284,11 +284,15 @@ export default class extends StandardPage {
     ************************************************************************************
      */
 
-    renderLoginOrRegisterModal() {
-        if (this.props.is_login) {
-            return
+    hideShowModal() {
+        return () => {
+            this.setState({
+                showLoginRegisterModal: false
+            })
         }
+    }
 
+    renderLoginOrRegisterModal() {
         return (
             <Modal
                 className="project-detail-nobar"
@@ -298,7 +302,7 @@ export default class extends StandardPage {
                 footer={null}
                 width="70%"
             >
-                <LoginOrRegisterForm />
+                <LoginOrRegisterForm onHideModal={this.hideShowModal()}/>
             </Modal>
         )
     }

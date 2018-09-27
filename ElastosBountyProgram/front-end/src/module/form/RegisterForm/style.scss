@@ -1,4 +1,9 @@
+@import '@/style/variable';
+@import '@/style/color';
+
+
 .c_registerContainer {
+  margin-top: 0 !important;
   text-align: left;
 
   .d_item {
@@ -10,5 +15,22 @@
 
   .d_btn {
     width: 100%;
+    border-radius: 0;
+    border-color: black;
+    color: black;
+    font-size: 24px;
+  }
+
+  .d_registerFormWelcome {
+    margin: 0 auto;
+    width: 50%;
+  }
+
+  .ant-form-item {
+    text-align: center;
+    .d_btn_join {
+      width: 150px;
+      height: 50px;
+    }
   }
 }

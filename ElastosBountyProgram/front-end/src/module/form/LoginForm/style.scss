@@ -1,13 +1,24 @@
-.c_loginForm{
+.c_loginForm {
   text-align: left;
+
   .d_item{
     .ant-form-item-children{
       display: flex;
       justify-content: space-between;
     }
   }
-
-  .d_btn{
+  .d_btn {
     width: 100%;
+    border-radius: 0;
+    border-color: black;
+    color: black;
+    font-size: 24px;
+  }
+  .ant-form-item {
+    text-align: center;
+    .d_btn_join {
+      width: 150px;
+      height: 50px;
+    }
   }
 }

@@ -26,6 +26,7 @@ export default createContainer(Component, (state) => {
 
                     const loginRedirect = sessionStorage.getItem('loginRedirect')
                     if (loginRedirect) {
+                        console.log('login redirect')
                         this.history.push(loginRedirect)
                         sessionStorage.setItem('loginDirect', null)
 
@@ -39,7 +40,6 @@ export default createContainer(Component, (state) => {
                 }
 
             } catch (err) {
-                console.error(err)
                 message.error(err.message)
             }
         }

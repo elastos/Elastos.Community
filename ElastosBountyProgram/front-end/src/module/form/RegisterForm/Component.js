@@ -25,11 +25,16 @@ class C extends BaseComponent {
 
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Register - received values of form: ', values)
-
                 if (this.state.requestedCode) {
                     this.props.register(this.state.savedValues.username,
                         this.state.savedValues.password, _.omit(this.state.savedValues, ['username', 'password']))
+                        .then((shouldShowWelcome) => {
+                            if (shouldShowWelcome) {
+                                this.props.onChangeActiveKey('post')
+                            } else {
+                                this.props.onChangeActiveKey('login')
+                            }
+                        })
                 } else {
                     const code = this.generateRegCode()
                     this.props.sendRegistrationCode(values.email, code)
@@ -260,7 +265,7 @@ class C extends BaseComponent {
                         {p.regCode}
                     </FormItem>
                     <FormItem>
-                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn" onClick={this.handleSubmit.bind(this)}>
+                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn d_btn_join" onClick={this.handleSubmit.bind(this)}>
                             {I18N.get('register.submit')}
                         </Button>
                     </FormItem>
@@ -282,11 +287,11 @@ class C extends BaseComponent {
                     <FormItem>
                         {p.pwdConfirm}
                     </FormItem>
-                    {/*<FormItem>
+                    {/* <FormItem>
                         {p.recaptcha}
-                    </FormItem>*/}
+                    </FormItem> */}
                     <FormItem>
-                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn" onClick={this.handleSubmit.bind(this)}>
+                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn d_btn_join" onClick={this.handleSubmit.bind(this)}>
                             {I18N.get('register.submit')}
                         </Button>
                     </FormItem>

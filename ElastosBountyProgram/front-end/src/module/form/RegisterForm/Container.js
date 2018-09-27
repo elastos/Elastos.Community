@@ -34,11 +34,9 @@ export default createContainer(Component, (state) => {
                     const registerRedirect = sessionStorage.getItem('registerRedirect')
 
                     if (registerRedirect) {
-                        sessionStorage.removeItem('registerRedirect')
-                        sessionStorage.setItem('registered', true)
-                        this.history.push(registerRedirect)
+                        return true;
                     } else {
-                        this.history.replace('/login')
+                        this.history.push('/empower35')
                     }
                 }
             } catch (err) {

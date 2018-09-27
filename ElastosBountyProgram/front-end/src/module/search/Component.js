@@ -154,6 +154,14 @@ export default class extends BaseComponent {
         })
     }
 
+    hideShowModal() {
+        return () => {
+            this.setState({
+                showLoginRegisterModal: false
+            })
+        }
+    }
+
     handleLoginRegisterModalCancel = (e) => {
         sessionStorage.removeItem('registerRedirect')
 
@@ -219,10 +227,6 @@ export default class extends BaseComponent {
     }
 
     renderLoginOrRegisterModal() {
-        if (this.props.is_login) {
-            return
-        }
-
         return (
             <Modal
                 className="project-detail-nobar"
@@ -232,7 +236,7 @@ export default class extends BaseComponent {
                 footer={null}
                 width="70%"
             >
-                <LoginOrRegisterForm />
+                <LoginOrRegisterForm onHideModal={this.hideShowModal()}/>
             </Modal>
         )
     }

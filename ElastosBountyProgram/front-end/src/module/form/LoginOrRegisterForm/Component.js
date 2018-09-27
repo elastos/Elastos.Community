@@ -3,7 +3,7 @@ import BaseComponent from '@/model/BaseComponent'
 import LoginForm from '@/module/form/LoginForm/Container'
 import RegisterForm from '@/module/form/RegisterForm/Container'
 import I18N from '@/I18N'
-import { Tabs } from 'antd'
+import {Tabs, Button} from 'antd'
 
 import './style.scss'
 
@@ -13,7 +13,7 @@ export default class extends BaseComponent {
     ord_states() {
         return {
             persist: true,
-            activeKey: 'login' // login, register
+            activeKey: 'login' // login, register, post
         }
     }
 
@@ -25,30 +25,45 @@ export default class extends BaseComponent {
         }
     }
 
+    handleSubmit() {
+        const registerRedirect = sessionStorage.getItem('registerRedirect')
+        sessionStorage.removeItem('registerRedirect')
+        sessionStorage.removeItem('registerWelcome')
+        this.props.onHideModal()
+        this.props.history.push('/empower35')
+    }
+
+    showPostRegLogScreen() {
+        return (
+            <div className="post-state">
+                <h3 className="welcome-header komu-a">{I18N.get('register.welcome')}</h3>
+                <div className="strike-text">
+                    <div className="strike-line"/>
+                    <p className="welcome-text synthese" onClick={this.handleSubmit.bind(this)}>
+                        {I18N.get('register.join_circle')}
+                    </p>
+                </div>
+                <img className="arrow-down" src="/assets/images/emp35/down_arrow.png" />
+            </div>
+        )
+    }
+
     ord_render() {
-        const registered = sessionStorage.getItem('registered')
-
-        if (registered) {
-            this.setState({
-                activeKey: 'login'
-            })
-            sessionStorage.removeItem('registered')
-        }
-
         return (
             <div className="c_LoginOrRegister">
                 <div className="pull-left">
                     <img src="/assets/images/login-left.png"/>
                 </div>
                 <div className="main-form">
-                    <Tabs activeKey={this.state.activeKey} onChange={this.handleChangeTab()}>
-                        <TabPane tab="Login" key="login">
-                            <LoginForm />
-                        </TabPane>
-                        <TabPane tab="Register" key="register">
-                            <RegisterForm />
-                        </TabPane>
-                    </Tabs>
+                    {this.state.activeKey === 'post' ? this.showPostRegLogScreen() : (
+                        <Tabs activeKey={this.state.activeKey} onChange={this.handleChangeTab()}>
+                            <TabPane tab="Login" key="login">
+                                <LoginForm />
+                            </TabPane>
+                            <TabPane tab="Register" key="register">
+                                <RegisterForm onChangeActiveKey={this.handleChangeTab()}/>
+                            </TabPane>
+                        </Tabs>)}
                 </div>
             </div>
         )
