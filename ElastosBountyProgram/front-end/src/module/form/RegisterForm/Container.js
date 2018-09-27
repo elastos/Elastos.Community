@@ -27,7 +27,7 @@ export default createContainer(Component, (state) => {
 
         async register(username, password, profile) {
             try {
-                sessionStorage.setItem('registerUser', true)
+                sessionStorage.setItem('registerUser', '1')
                 const rs = await userService.register(username, password, profile)
 
                 if (rs) {
