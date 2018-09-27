@@ -15,7 +15,8 @@ export default createContainer(Component, (state) => {
         is_admin: state.user.is_admin,
         is_login: state.user.is_login,
         current_user_id: state.user.current_user_id,
-        page: page
+        page: page,
+        loading: state.team.loading
     }
 }, () => {
 
@@ -28,6 +29,24 @@ export default createContainer(Component, (state) => {
 
         resetTeamDetail() {
             return teamService.resetTeamDetail()
+        },
+        
+        async closeTeam(teamId) {
+            try {
+                await teamService.closeTeam(teamId)
+                message.success('Your team is closed now.');
+            } catch (err) {
+                message.error(err.message)
+            }
+        },
+    
+        async activeTeam(teamId) {
+            try {
+                await teamService.activeTeam(teamId)
+                message.success('Your team is open now.');
+            } catch (err) {
+                message.error(err.message)
+            }
         }
     }
 })

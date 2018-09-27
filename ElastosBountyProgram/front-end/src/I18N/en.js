@@ -275,7 +275,14 @@ export default {
     'project.detail.popup.join_project': 'Join Project',
     'project.detail.bidding': 'Bidding Open',
 
-    'team.detail.team_active': 'Your team is currently active',
+    'team.detail.title.status.active': 'Your team is currently active',
+    'team.detail.title.status.closed': 'Your team is closed now',
+    'team.detail.title.status.draft': 'Your team is not open yet',
+    'team.detail.recuriting': 'Recruitment In Progress',
+    'team.detail.not_recruiting': 'Recruitment Closed',
+    'team.detail.status.active': 'Open',
+    'team.detail.status.closed': 'Close',
+    'team.detail.status.reopen': 'Reopen',
 
     'team.create.error.nameRequired': 'Team name is required',
     'team.create.error.nameTooShort': 'Team name is too short',
@@ -308,6 +315,7 @@ export default {
     '.upload': 'Click to Upload',
     '.yes': 'Yes',
     '.no': 'No',
+    '.view': 'View',
 
     // Landing
     'landing.alpha': 'ALPHA',

@@ -250,7 +250,14 @@ export default {
     'project.detail.popup.join_team': '加入团队',
     'project.detail.popup.join_project': '加入项目',
 
-    'team.detail.team_active': '你的团队已经激活',
+    'team.detail.title.status.open': '你的团队招募已经开启',
+    'team.detail.title.status.closed': '你的团队招募已经关闭',
+    'team.detail.title.status.draft': '你的团队招募草稿',
+    'team.detail.recuriting': '正在招募',
+    'team.detail.not_recruiting': '招募取消',
+    'team.detail.status.active': '开启',
+    'team.detail.status.closed': '关闭',
+    'team.detail.status.reopen': '重新开启',
 
     // Team specializations
     'team.spec.media': '媒体',
@@ -276,6 +283,7 @@ export default {
     '.ok': '确定',
     '.cancel': '取消',
     '.edit': '编辑',
+    '.view': '查看',
 
     // Role
     'role.member': '普通用户',
