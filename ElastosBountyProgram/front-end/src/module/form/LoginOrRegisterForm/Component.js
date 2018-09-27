@@ -39,12 +39,11 @@ export default class extends BaseComponent {
                 <h3 className="welcome-header komu-a">{I18N.get('register.welcome')}</h3>
                 <div className="strike-text">
                     <div className="strike-line"/>
-                    <p className="welcome-text synthese">{I18N.get('register.join_circle')}</p>
+                    <p className="welcome-text synthese" onClick={this.handleSubmit.bind(this)}>
+                        {I18N.get('register.join_circle')}
+                    </p>
                 </div>
                 <img className="arrow-down" src="/assets/images/emp35/down_arrow.png" />
-                <Button type="ebp" htmlType="submit" className="d_btn d_btn_join" onClick={this.handleSubmit.bind(this)}>
-                    {I18N.get('register.join')}
-                </Button>
             </div>
         )
     }
