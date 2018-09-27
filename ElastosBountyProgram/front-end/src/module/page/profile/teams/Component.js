@@ -7,7 +7,7 @@ import './style.scss'
 import '../../admin/admin.scss'
 import { Col, Row, Icon, Form, Input, Breadcrumb, Button,
     Divider, Select, Table, List, Carousel, Avatar, Tag } from 'antd'
-import { TEAM_USER_STATUS } from '@/constant'
+import { TEAM_USER_STATUS, TEAM_STATUS } from '@/constant'
 import MediaQuery from 'react-responsive'
 import moment from 'moment/moment'
 import Footer from '@/module/layout/Footer/Container'
@@ -50,6 +50,7 @@ export default class extends StandardPage {
 
         if (this.state.filter === FILTERS.ACTIVE) {
             query.teamHasUserStatus = TEAM_USER_STATUS.NORMAL
+            query.status = TEAM_STATUS.ACTIVE
         }
 
         if (this.state.filter === FILTERS.APPLIED) {
@@ -177,6 +178,7 @@ export default class extends StandardPage {
                     >
                         <h3 class="no-margin no-padding one-line brand-color">
                             <a onClick={this.linkTeamDetail.bind(this, item.id)}>{item.title}</a>
+                            <span className={item.status == TEAM_STATUS.ACTIVE ? 'team-status-active' : 'team-status-close'}>{item.status == TEAM_STATUS.ACTIVE ? I18N.get('team.detail.recuriting') : I18N.get('team.detail.not_recruiting')}</span>
                         </h3>
                         <h5 class="no-margin">
                             {item.description}
@@ -199,6 +201,7 @@ export default class extends StandardPage {
                     >
                         <h3 class="no-margin no-padding one-line brand-color">
                             <a onClick={this.linkTeamDetail.bind(this, item.id)}>{item.title}</a>
+                            <span className={item.status == TEAM_STATUS.ACTIVE ? 'team-status-active' : 'team-status-close'}>{item.status == TEAM_STATUS.ACTIVE ? I18N.get('team.detail.recuriting') : I18N.get('team.detail.not_recruiting')}</span>
                         </h3>
                         <h5 className="no-margin">
                             {item.description}
@@ -239,7 +242,8 @@ export default class extends StandardPage {
                 description: description_fn(team),
                 content: team.profile.description,
                 owner: team.owner,
-                id: team._id
+                id: team._id,
+                status: team.status
             }
         })
 

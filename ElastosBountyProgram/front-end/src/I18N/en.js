@@ -280,7 +280,14 @@ export default {
     'project.detail.popup.join_team': 'Join Team',
     'project.detail.popup.join_project': 'Join Project',
 
-    'team.detail.team_active': 'Your team is currently active',
+    'team.detail.title.status.active': 'Your team is currently active',
+    'team.detail.title.status.closed': 'Your team is closed now',
+    'team.detail.title.status.draft': 'Your team is not open yet',
+    'team.detail.recuriting': 'Recruitment In Progress',
+    'team.detail.not_recruiting': 'Recruitment Closed',
+    'team.detail.status.active': 'Open',
+    'team.detail.status.closed': 'Close',
+    'team.detail.status.reopen': 'Reopen',
 
     // Team specializations
     'team.spec.media': 'Media',
@@ -310,6 +317,7 @@ export default {
     '.upload': 'Click to Upload',
     '.yes': 'Yes',
     '.no': 'No',
+    '.view': 'View',
 
     // Landing
     'landing.alpha': 'ALPHA',
