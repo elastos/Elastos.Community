@@ -33,16 +33,17 @@ export default class extends Base {
         const db_user = this.getDBModel('User');
 
         const username = param.username.toLowerCase();
+        const email = param.email.toLowerCase();
 
         this.validate_username(username);
         this.validate_password(param.password);
-        this.validate_email(param.email);
+        this.validate_email(email);
 
         // check username and email unique
         if (await db_user.findOne({ username })) {
             throw 'This username is already taken'
         }
-        if (await db_user.findOne({ email: param.email })) {
+        if (await db_user.findOne({ email: email })) {
             throw 'This email is already taken'
         }
 
@@ -51,7 +52,7 @@ export default class extends Base {
         const doc = {
             username,
             password : this.getPassword(param.password, salt),
-            email : param.email,
+            email,
             salt,
             profile : {
                 firstName : param.firstName,
@@ -76,10 +77,7 @@ export default class extends Base {
 
     public async getUserSalt(username): Promise<String>{
         const isEmail = validate.email(username);
-
-        if (!isEmail) {
-            username = username.toLowerCase();
-        }
+        username = username.toLowerCase();
 
         const query = {[isEmail ? 'email' : 'username'] : username};
 
@@ -187,17 +185,10 @@ export default class extends Base {
     public async findUser(query): Promise<Document>{
         const db_user = this.getDBModel('User');
         const isEmail = validate.email(query.username);
-         if (!isEmail) {
-            return await db_user.getDBInstance().findOne({
-                username: query.username.toLowerCase(),
-                password: query.password
-            }).populate('circles');
-        } else {
-            return await db_user.getDBInstance().findOne({
-                email: query.username,
-                password: query.password
-            }).populate('circles');
-        }
+        return await db_user.getDBInstance().findOne({
+            [isEmail ? 'email' : 'username']: query.username.toLowerCase(),
+            password: query.password
+        }).populate('circles');
     }
 
     public async findUsers(query): Promise<Document[]>{
@@ -477,7 +468,7 @@ export default class extends Base {
         const db_community = this.getDBModel('Community');
         const communityService = this.getService(CommunityService);
 
-        if (_.isEmpty(user.profile.country)) {
+        if (!user.profile || _.isEmpty(user.profile.country)) {
             return;
         }
 

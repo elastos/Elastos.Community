@@ -131,10 +131,7 @@ class C extends BaseComponent {
 
     renderContent() {
         const description = this.props.detail.profile.description ||
-            'A circle is a simple closed curve that divides the plane into two regions: an interior and an exterior.\n' +
-            'In everyday use, the term "circle" may be used interchangeably to refer to either the boundary of the figure,\n' +
-            'or to the whole figure including its interior; in strict technical usage, the circle is only the boundary and\n' +
-            'the whole figure is called a disc.';
+            I18N.get('emp35.circles.statement')
         return (
             <div className="content-paragraphs">
                 <p className="synthese">{description}</p>
@@ -283,8 +280,8 @@ class C extends BaseComponent {
     }
 
     showLoginRegisterModal = () => {
-        sessionStorage.setItem('loginRedirect', `/circle-detail/${this.props.match.params.circleId}`)
-        sessionStorage.setItem('registerRedirect', `/circle-detail/${this.props.match.params.circleId}`)
+        sessionStorage.setItem('loginRedirect', `/empower35-detail/${this.props.match.params.circleId}`)
+        sessionStorage.setItem('registerRedirect', `/empower35-detail/${this.props.match.params.circleId}`)
 
         this.setState({
             showLoginRegisterModal: true

@@ -30,14 +30,10 @@ export default class extends AdminPage {
 
     ord_renderContent () {
 
-        // TODO: bug here, should wait for task.loading instead of checking category field
-        if (!this.props.task.category) {
-            return <div className="center"><Spin size="large"/></div>
-        }
-
         return (
             <div>
-                <div className="p_admin_index ebp-wrap">
+                {this.props.task.loading && <div className="center"><Spin size="large"/></div>}
+                <div className="p_admin_index ebp-wrap" style={{display: this.props.task.loading ? 'none' : 'block'}}>
                     <div className="ebp-header-divider" />
                     <div className="d_box">
                         <div className="p_admin_breadcrumb">

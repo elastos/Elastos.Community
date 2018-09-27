@@ -16,10 +16,11 @@ import {
     Input,
     Form,
     Divider,
-    Modal
+    Modal,
+    InputNumber
 } from 'antd'
 import I18N from '@/I18N'
-import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS } from '@/constant'
+import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS, TASK_STATUS } from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import ProjectApplication from '@/module/project/application/Container'
 import _ from 'lodash'
@@ -42,6 +43,7 @@ class C extends BaseComponent {
     }
 
     componentWillUnmount() {
+        // this may cause issues if a parent is checking the loading field
         this.props.resetTaskDetail()
         this.props.resetAllTeams()
     }
@@ -50,22 +52,28 @@ class C extends BaseComponent {
         return this.props.detail.createdBy._id === this.props.currentUserId
     }
 
+    // TODO: Refactor all these, lots of redundancy with the REJECTED flag
     isMember(taskCandidateId) {
-        const candidate = _.find(this.props.detail.candidates, { _id: taskCandidateId })
+        const candidate = _.find(this.props.detail.candidates, (candidate) => {
+            if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
+                return candidate._id === taskCandidateId && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED
+            }
+            return false
+        })
         if (!candidate) {
             return false
         }
         if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
-            return candidate.user._id === this.props.currentUserId
+            return candidate.user._id === this.props.currentUserId && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED
         } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
-            return _.find(this.props.ownedTeams, (item) => item._id === candidate.team._id)
+            return _.find(this.props.ownedTeams, (item) => item._id === candidate.team._id && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED)
         }
     }
 
     isMemberByUserId(userId) {
         const candidate = _.find(this.props.detail.candidates, (candidate) => {
             if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
-                return candidate.user._id === userId
+                return candidate.user._id === userId && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED
             }
             return false
         })
@@ -73,6 +81,19 @@ class C extends BaseComponent {
             return false
         }
         return this.isMember(candidate._id)
+    }
+
+    getMemberBid(userId) {
+        const candidate = _.find(this.props.detail.candidates, (candidate) => {
+            if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
+                return candidate.user._id === userId && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED
+            }
+            return false
+        })
+
+        if (candidate) {
+            return candidate.bid
+        }
     }
 
     linkProfileInfo(userId) {
@@ -92,14 +113,15 @@ class C extends BaseComponent {
     }
 
     removeUser(taskCandidateId) {
+        this.props.rejectCandidate(taskCandidateId)
     }
 
     removeUserByUserId(userId) {
-        const candidate = _.find(this.props.candidates, (candidate) => candidate.user._id === userId)
+        const candidate = _.find(this.props.detail.candidates, (candidate) => candidate.user._id === userId && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED)
         if (!candidate) {
             return false
         }
-        return this.removeUser(candidate._id)
+        return this.withdrawApplication(candidate._id)
     }
 
     getUpperLeftBox() {
@@ -147,7 +169,9 @@ class C extends BaseComponent {
         const deadline = detail.date || ''
         const progress = detail.progress || ''
         const teamSize = detail.candidateCompleted.length || ''
-        const reward = detail.reward.isUsd ? detail.reward.usd + ' USD' : (detail.reward.ela / 1000) + ' ELA'
+        const reward = detail.bidding
+            ? (detail.status === TASK_STATUS.APPROVED ? I18N.get('project.detail.bidding_closed') : I18N.get('project.detail.bidding'))
+            : detail.reward.isUsd ? detail.reward.usd + ' USD' : (detail.reward.ela / 1000) + ' ELA'
         const description = detail.descBreakdown || detail.description || ''
         const leaderImage = detail.createdBy.profile.avatar || ''
 
@@ -190,6 +214,8 @@ class C extends BaseComponent {
     getCurrentContributors() {
         const detail = this.props.detail
         const applicants = _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.APPROVED });
+        /*
+        // TODO: can we document why we add the task owner as a contributor?
         if (this.isTaskOwner()) {
             applicants.unshift({
                 _id: 'such_fake_id',
@@ -197,6 +223,7 @@ class C extends BaseComponent {
                 type: TASK_CANDIDATE_TYPE.USER
             })
         }
+        */
         const columns = [{
             title: 'Name',
             key: 'name',
@@ -228,7 +255,7 @@ class C extends BaseComponent {
             render: candidate => {
                 return (
                     <div>
-                        {this.isTaskOwner() && candidate._id !== 'such_fake_id' &&
+                        {this.isTaskOwner() && !this.props.detail.bidding &&
                         <div className="text-right">
                             <a onClick={this.removeUser.bind(this, candidate._id)}>{I18N.get('project.detail.remove')}</a>
                         </div>
@@ -280,9 +307,13 @@ class C extends BaseComponent {
         }, {
             title: 'Action',
             key: 'action',
-            render: candidate => {
+            render: (candidate) => {
                 return (
                     <div className="text-right">
+                        {this.props.detail.bidding && <span>
+                            Bid: {candidate.bid} ELA
+                            <Divider type="vertical"/>
+                        </span>}
                         {(this.props.page === 'ADMIN' || this.isTaskOwner() || this.isMember(candidate._id)) && (
                             <span>
                                 <a onClick={this.showAppModal.bind(this, candidate._id)}>{I18N.get('project.detail.view')}</a>
@@ -327,7 +358,7 @@ class C extends BaseComponent {
                 const userId = isSelf && this.props.currentUserId
                 const teamId = !isSelf && values.applicant
 
-                this.props.applyToTask(this.props.taskId, userId, teamId, values.applyMsg)
+                this.props.applyToTask(this.props.taskId, userId, teamId, values.applyMsg, null, null, values.bid)
                     .then(() => {
                         this.setState({ applying: false })
                         message.success('Application sent. Thank you!')
@@ -336,7 +367,9 @@ class C extends BaseComponent {
         })
     }
 
+    // break from convention, this.props.detail is the task
     getApplicationForm() {
+
         const {getFieldDecorator} = this.props.form
         const applyMsg_fn = getFieldDecorator('applyMsg', {
             rules: [{required: true, message: 'Application is required'}],
@@ -344,9 +377,19 @@ class C extends BaseComponent {
         })
         const applyMsg_el = (
             <Input.TextArea rows={8} className="team-application" disabled={this.props.loading}
-                placeholder="Tell us why you want to join."/>
+                placeholder={this.props.detail.bidding ? I18N.get('project.detail.tell_us_why_bid') : I18N.get('project.detail.tell_us_why_join')}/>
         )
         const applyMsgPanel = applyMsg_fn(applyMsg_el)
+
+        const bid_fn = getFieldDecorator('bid', {
+            rules: [{required: true, message: 'Bid is required'}],
+            initialValue: 0
+        })
+
+        const bid_el = (
+            <InputNumber disabled={this.props.loading}/>
+        )
+        const bid = bid_fn(bid_el)
 
         const applicant_fn = getFieldDecorator('applicant', {
             rules: [],
@@ -384,6 +427,17 @@ class C extends BaseComponent {
                 <Form.Item className="no-margin">
                     {applyMsgPanel}
                 </Form.Item>
+                { this.props.detail.bidding &&
+                    <div>
+                        <Form.Item className="no-margin pull-right">
+                            <div>
+                                <span>Bid (ELA): </span>
+                                {bid}
+                            </div>
+                        </Form.Item>
+                        <div className="clearfix"/>
+                    </div>
+                }
                 <Button disabled={this.props.loading} className="d_btn pull-left" onClick={() => this.setState({ applying: false })}>
                     Cancel
                 </Button>
@@ -428,7 +482,7 @@ class C extends BaseComponent {
                         </div>
                     )
                     : (
-                        <div>
+                        <div style={{paddingBottom: '150px'}}>
                             <Row className="top-section">
                                 <Col xs={24} sm={24} md={8} className="col-left">
                                     {this.getUpperLeftBox()}
@@ -439,10 +493,10 @@ class C extends BaseComponent {
                                 </Col>
                             </Row>
 
-                            {this.props.page !== 'LEADER' && !isTaskOwner &&
+                            {this.props.page !== 'LEADER' && !isTaskOwner && !isMember &&
                                 <Row className="actions">
                                     <Button type="primary" onClick={() => this.setState({ applying: true })}>
-                                        {I18N.get('project.detail.popup.join_project')}
+                                        {this.props.detail.bidding ? I18N.get('project.detail.popup.bid_project') : I18N.get('project.detail.popup.join_project')}
                                     </Button>
                                 </Row>
                             }
@@ -451,22 +505,27 @@ class C extends BaseComponent {
 
                             {!this.state.applying &&
                                 <Row className="contributors">
-                                    { isMember &&
-                                        <Button onClick={this.removeUserByUserId.bind(this, this.props.currentUserId)} className="leave-button">{I18N.get('project.detail.leave')}</Button>
+                                    {/* For a bidding task you cannot leave after the task is APPROVED */}
+                                    {isMember && (this.props.detail.bidding && (this.props.detail.status === TASK_STATUS.CREATED || this.props.detail.status === TASK_STATUS.PENDING)) &&
+                                        <Button onClick={this.removeUserByUserId.bind(this, this.props.currentUserId)} className="leave-button">
+                                            {this.props.detail.bidding ?
+                                                `${I18N.get('project.detail.you_bid')} ${this.getMemberBid(this.props.currentUserId)} ELA - ${I18N.get('project.detail.leave_bid')}` :
+                                                I18N.get('project.detail.leave')}
+                                        </Button>
                                     }
                                     <h3 className="no-margin align-left">{I18N.get('project.detail.current_contributors')}</h3>
                                     {this.getCurrentContributors()}
                                 </Row>
                             }
 
-                            {!this.state.applying &&
+                            {!this.state.applying && (this.props.page === 'LEADER' || this.props.page === 'ADMIN') &&
                                 <Row className="applications">
-                                    <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
+                                    <h3 className="no-margin">{this.props.detail.bidding ? I18N.get('project.detail.pending_bids') : I18N.get('project.detail.pending_applications')}</h3>
                                     {this.getCurrentApplicants()}
                                 </Row>
                             }
 
-                            {this.props.page === 'LEADER' && this.canComment() &&
+                            {(this.props.page === 'LEADER' || this.props.page === 'ADMIN') && this.canComment() &&
                                 <Row>
                                     <Comments type="task" canPost={true} canSubscribe={!isTaskOwner} model={this.props.taskId}/>
                                 </Row>

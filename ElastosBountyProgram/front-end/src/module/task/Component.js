@@ -3,7 +3,7 @@ import {TASK_STATUS, TASK_CATEGORY, TASK_TYPE} from '@/constant'
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import TaskCreateForm from '@/module/form/TaskCreateForm/Container'
-import { Col, Row, Popconfirm, Divider, Button, Spin, Icon } from 'antd'
+import { Col, Icon, Popconfirm, Menu, Button, Spin, Dropdown } from 'antd'
 import Comments from '@/module/common/comments/Container'
 
 // TODO: admin detail should also be in a new component too to be consistent
@@ -23,9 +23,18 @@ import moment from 'moment/moment'
  */
 export default class extends BaseComponent {
 
-    componentDidMount() {
+    constructor(props) {
+
+        super(props)
+
+        this.state = {
+            editing: false
+        }
+    }
+
+    async componentDidMount() {
         const taskId = this.props.match.params.taskId
-        taskId && this.props.getTaskDetail(taskId)
+        await this.props.getTaskDetail(taskId)
     }
 
     renderMain() {
@@ -51,6 +60,8 @@ export default class extends BaseComponent {
 
     renderAdminHeader() {
 
+        const adminDropdown = this.buildAdminDropdown()
+
         return <div className="l_banner">
             {this.props.task.category !== 'CR100' ?
             <div className="pull-left">
@@ -65,7 +76,7 @@ export default class extends BaseComponent {
                 <span className="help-text">&nbsp; - this task is approved by {this.props.task.approvedBy.username}</span>
                 }
                 {this.props.task.status === TASK_STATUS.SUCCESS &&
-                ((this.props.task.reward.ela > 0 || this.props.task.rewardUpfront.ela > 0) ?
+                ((this.props.task.reward.ela > 0 || this.props.task.reward.usd > 0) ?
                     <span className="help-text">&nbsp; - this task is awaiting ELA disbursement</span> :
                     <span className="help-text">&nbsp; - this task does not require ELA, no further action is needed</span>
                 )
@@ -83,7 +94,7 @@ export default class extends BaseComponent {
                 </Popconfirm>
                 }
                 {/* Admin & Task Owner CAN Mark as Complete */}
-                {this.props.task.status === TASK_STATUS.ASSIGNED &&
+                {this.props.task.status === TASK_STATUS.APPROVED &&
                 <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsSubmitted.bind(this)}>
                     <Button>Mark as Complete</Button>
                 </Popconfirm>
@@ -93,7 +104,7 @@ export default class extends BaseComponent {
                     <Button>Accept as Complete</Button>
                 </Popconfirm>
                 }
-                {!this.state.editing && this.props.task.status === TASK_STATUS.SUCCESS && (this.props.task.reward.ela > 0 || this.props.task.rewardUpfront.ela > 0) &&
+                {!this.state.editing && this.props.task.status === TASK_STATUS.SUCCESS && (this.props.task.reward.ela > 0 || this.props.task.reward.usd > 0) &&
                 <Popconfirm title="Are you sure you want to mark the ELA as disbursed?" placement="left" okText="Yes" onConfirm={this.markAsDisbursed.bind(this)}>
                     <Button type="primary">Mark as Disbursed</Button>
                 </Popconfirm>
@@ -102,6 +113,11 @@ export default class extends BaseComponent {
                 <Button onClick={this.switchEditMode.bind(this)}>
                     {this.state.editing ? 'Cancel' : 'Edit'}
                 </Button>
+                <Dropdown overlay={adminDropdown}>
+                    <a className="ant-dropdown-link">
+                        <Icon type="bars" theme="outlined" style={{color: 'white', fontSize: '24px', verticalAlign: 'middle'}}/>
+                    </a>
+                </Dropdown>
             </div>
             }
             <div className="clearfix"/>
@@ -120,22 +136,11 @@ export default class extends BaseComponent {
                     {this.props.task.status === TASK_STATUS.PENDING &&
                     <span className="help-text">&nbsp; - this task is awaiting approval by an admin</span>
                     }
-                    {this.props.task.status === TASK_STATUS.APPROVED && !(this.props.task.category === TASK_CATEGORY.DEVELOPER && this.props.task.type === TASK_TYPE.EVENT) &&
-                    <span className="help-text">&nbsp; - this task is waiting on applicants to be selected</span>
-                    }
-                    {this.props.task.status === TASK_STATUS.ASSIGNED &&
-                    <span className="help-text">&nbsp; - this task is active</span>
-                    }
                     {this.props.task.status === TASK_STATUS.SUBMITTED &&
                     <span className="help-text">&nbsp; - this task is awaiting council sign off</span>
                     }
                     {this.props.task.status === TASK_STATUS.SUCCESS &&
                     <span className="help-text">&nbsp; - an admin will review and disburse the ELA reward if any</span>
-                    }
-                    {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) && isTaskOwner && !(this.props.task.category === TASK_CATEGORY.DEVELOPER && this.props.task.type === TASK_TYPE.EVENT) &&
-                    <div className="help-text">&nbsp; -
-                        Please accept applicants up to the max accepted number
-                    </div>
                     }
                 </div> :
                 <div className="pull-left">
@@ -145,14 +150,9 @@ export default class extends BaseComponent {
             {this.props.task.category !== 'CR100' &&
             <div className="pull-right right-align">
                 {/* Admin & Task Owner CAN Mark as Complete */}
-                {this.props.task.status === TASK_STATUS.ASSIGNED && isTaskOwner &&
+                {this.props.task.status === TASK_STATUS.APPROVED && isTaskOwner &&
                 <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsSubmitted.bind(this)}>
                     <Button>Mark as Complete</Button>
-                </Popconfirm>
-                }
-                {[TASK_STATUS.APPROVED, TASK_STATUS.CREATED].includes(this.props.task.status) && isTaskOwner && !(this.props.task.category === TASK_CATEGORY.DEVELOPER && this.props.task.type === TASK_TYPE.EVENT) &&
-                <Popconfirm title="Are you sure you want to start this task with the current applicants?" placement="left" okText="Yes" onConfirm={this.forceStart.bind(this)}>
-                    <Button>Force Start</Button>
                 </Popconfirm>
                 }
                 {this.props.task.status !== TASK_STATUS.SUCCESS && isTaskOwner &&
@@ -217,17 +217,42 @@ export default class extends BaseComponent {
 
     }
 
-    async resetEdit() {
+    async clickAdminAction(o) {
 
+        const taskId = this.props.task._id
+
+        switch (o.key) {
+            case 'archive':
+                await this.props.archive(taskId)
+                break;
+        }
     }
 
-    switchEditMode() {
+    buildAdminDropdown() {
+        return (
+            <Menu onClick={this.clickAdminAction.bind(this)} className="help-menu">
+                <Menu.Item key="text" disabled={true}>
+                    Admin Only
+                </Menu.Item>
+                <Menu.Divider/>
+                <Menu.Item key="markBudgetPaid">
+                    Mark upfront budget as paid
+                </Menu.Item>
+                <Menu.Item key="archive">
+                    Archive Task
+                </Menu.Item>
+            </Menu>
+        )
+    }
+
+    async switchEditMode() {
         if (!this.state.editing) {
             this.setState({editing: true})
         } else {
             window.location.reload()
         }
         // temp hack above till we figure out why editing lifecycle has spinner
+        // might be the community loader call
         // this.setState({editing: !this.state.editing})
     }
 

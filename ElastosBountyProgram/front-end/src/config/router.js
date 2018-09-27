@@ -275,7 +275,7 @@ export default [
         page: ProfileSubmissionDetailPage
     },
     {
-        path: '/circle-detail/:circleId',
+        path: '/empower35-detail/:circleId',
         page: CircleDetailPage
     },
     /*

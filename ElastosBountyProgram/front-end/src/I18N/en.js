@@ -209,17 +209,11 @@ export default {
     'emp35.header.content.3': 'gradually to manage and lead each team.',
 
     'emp35.empower.title': 'Empower 35',
-    'emp35.empower.content.1': 'Join up to two circles you are good at. A ',
-    'emp35.empower.content.2': 'circle is a simple closed shape. It is the set ',
-    'emp35.empower.content.3': 'of all points in a plane that are at a given ',
-    'emp35.empower.content.4': 'distance from a given point',
+    'emp35.empower.content': 'You can join up to two Circles. Once inside, form even smaller teams, create tasks for approval and begin showcasing your talents. Circles are smart networks within the larger smart network of Cyber Republic. As each Circle expands, the entire network expands with it.',
     'emp35.teamHeader.title': 'Circles',
 
     'emp35.mycircles.title': 'My Circles',
-    'emp35.circles.statement.1': 'A circle is a simple closed shape.',
-    'emp35.circles.statement.2': 'It is the set of all points in a plane that are at a given distance from a given point, the centre;',
-    'emp35.circles.statement.3': 'equivalently it is the curve traced out by a point that moves so that its distance from a given point is constant.',
-    'emp35.circles.statement.4': 'The distance betwen any of the points and the center is called the radius.',
+    'emp35.circles.statement': 'A circle is a shape where all points are equal distance from the center. CR circles are teams of decentralized citizens who all revolve around a single area of expertise. Circles are designed to group people by their talent and allow them to begin creating and completing talent specific tasks. In time, leaders will be elected to manage each circle.',
 
     // Circle Detail
     'circle.header.join': 'Join',
@@ -269,9 +263,12 @@ export default {
     'project.detail.current_contributors': 'Current Contributors',
     'project.detail.owner': 'Project Owner',
     'project.detail.pending_applications': 'Pending Applications',
+    'project.detail.pending_bids': 'Pending Bids',
     'project.detail.subscribers': 'Liked By',
     'project.detail.current_members': 'Current Members',
-    'project.detail.leave': 'Leave',
+    'project.detail.leave': 'Withdraw Application',
+    'project.detail.you_bid': 'You bid',
+    'project.detail.leave_bid': 'Withdraw Bid',
     'project.detail.remove': 'Remove',
     'project.detail.view': 'View',
     'project.detail.approve': 'Approve',
@@ -282,6 +279,11 @@ export default {
     'project.detail.popup.applied': 'Applied',
     'project.detail.popup.join_team': 'Join Team',
     'project.detail.popup.join_project': 'Join Project',
+    'project.detail.popup.bid_project': 'Bid on Project',
+    'project.detail.bidding': 'Bidding Open',
+    'project.detail.bidding_closed': 'Bidding Closed',
+    'project.detail.tell_us_why_join': 'Tell us why you want to join.',
+    'project.detail.tell_us_why_bid': 'Tell us why you want to bid.',
 
     'team.detail.team_active': 'Your team is currently active',
 

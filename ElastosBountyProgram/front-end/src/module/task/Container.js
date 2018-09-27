@@ -86,6 +86,19 @@ export default createContainer(Component, (state) => {
             }
         },
 
+        async archive(taskId) {
+            try {
+                await taskService.update(taskId, {
+                    archived: true
+                })
+
+                message.success('Task archived');
+                window.history.back()
+            } catch (err) {
+                message.error(err.message)
+            }
+        },
+
         async forceStart(taskId) {
 
             try {

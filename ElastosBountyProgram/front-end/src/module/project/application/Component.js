@@ -2,7 +2,7 @@ import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
 import _ from 'lodash'
-import { Col, Row, Button, Spin, Divider, message, List, Icon, Tooltip, Popconfirm, Card, Avatar } from 'antd'
+import { Col, Row, Button, Spin, Divider, message, List, Icon, Tooltip, Popconfirm, Card, Avatar, InputNumber } from 'antd'
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_TYPE, TASK_CANDIDATE_STATUS} from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import './style.scss'
@@ -19,7 +19,7 @@ export default class extends BaseComponent {
         return this.renderMain()
     }
 
-    isTeamOwner() {
+    isTaskOwner() {
         return this.props.detail.createdBy._id === this.props.userId
     }
 
@@ -51,6 +51,23 @@ export default class extends BaseComponent {
                                     <h5>
                                         {applicant.applyMsg}
                                     </h5>
+                                    { this.props.detail.bidding &&
+                                        <div>
+                                            { !this.isTaskOwner()
+                                                ? <div>
+                                                    <span>Your Bid: </span>
+                                                    <InputNumber onChange={_.debounce((value) => this.changeBid(value), 200)}
+                                                        defaultValue={applicant.bid}/>
+                                                    <span> ELA</span>
+                                                </div>
+                                                : <div>
+                                                    <h5>
+                                                        Bid: {applicant.bid} ELA
+                                                    </h5>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
                                     {
                                         this.showAttachment()
                                     }
@@ -65,6 +82,13 @@ export default class extends BaseComponent {
                 </Row>
             </div>
         )
+    }
+
+    changeBid(bid) {
+        this.props.updateApplication(this.props.detail._id, {
+            taskCandidateId: this.props.applicantId,
+            bid
+        })
     }
 
     showAttachment() {

@@ -150,24 +150,25 @@ export default class extends BaseComponent {
                 </Menu>
 
                 <Menu className="c_Header_Menu c_Side_Menu pull-right">
-                    <MediaQuery minWidth={MIN_WIDTH_PC}>
-                        <Menu.Item className="c_MenuItem help pull-right no-margin" key="help">
+                    <Menu.Item className="c_MenuItem help pull-right no-margin" key="help">
+                        <MediaQuery minWidth={MIN_WIDTH_PC}>
                             <Dropdown overlay={helpDropdown} style="margin-top: 24px;">
                                 <a className="ant-dropdown-link">
                                     <img src="/assets/images/union.svg" className="no-margin" />
                                 </a>
                             </Dropdown>
-                        </Menu.Item>
-                    </MediaQuery>
+                        </MediaQuery>
+                    </Menu.Item>
                     <Menu.Item className="c_MenuItem mobile" key="mobileMenu" onClick={this.props.toggleMobileMenu}>
                         <Icon type="menu-fold"/>
                     </Menu.Item>
-                    <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
-                        <div className="pull-right language-dropdown mobile" style={{marginTop: 17}}>
-                            {this.buildLanguageDropdown()}
-                        </div>
-                    </MediaQuery>
                 </Menu>
+
+                <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                    <div className="pull-right language-dropdown mobile" style={{marginTop: 17}}>
+                        {this.buildLanguageDropdown()}
+                    </div>
+                </MediaQuery>
 
                 <MediaQuery minWidth={MIN_WIDTH_PC}>
                     <div className="pull-right language-dropdown">

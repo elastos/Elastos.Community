@@ -75,6 +75,7 @@ export const TaskCandidate = {
         type : String
     },
 
+    bid: Number,
     applyMsg: String,
 
     complete: Boolean,
@@ -134,6 +135,8 @@ export const Task = {
     attachment: {
         type : String
     },
+
+    bidding: Boolean,
 
     attachmentType: String,
     attachmentFilename: String,
@@ -220,7 +223,13 @@ export const Task = {
 
     assignSelf: Boolean,
 
+    approved: Boolean,
     approvedBy: {type: Schema.Types.ObjectId, ref: 'users'},
+
+    budgetDisbursed: Boolean,
+    budgetDisburseMemo: String,
+
+    readDisclaimer: Boolean,
 
     candidates: [{type: Schema.Types.ObjectId, ref: 'task_candidate'}],
 
@@ -236,6 +245,8 @@ export const Task = {
     recruitedSkillsets: [String],
     pictures: [PictureSchema],
     dAppId: Number,
+
+    archived: Boolean
 };
 
 

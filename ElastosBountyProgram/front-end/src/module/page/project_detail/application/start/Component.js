@@ -246,7 +246,7 @@ class C extends BaseComponent {
         const compLookup = {
             solo: (
                 <div className="mode-panel">
-                    <div className="label komu-a">Tell us why do you want to join?</div>
+                    <div className="label komu-a">Tell us why do you want to join</div>
                     <Input.TextArea rows={4} className="input-field"/>
                 </div>
             ),

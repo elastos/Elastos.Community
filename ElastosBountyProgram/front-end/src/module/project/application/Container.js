@@ -1,5 +1,7 @@
 import {createContainer} from '@/util'
 import Component from './Component'
+import TaskService from '@/service/TaskService'
+
 
 export default createContainer(Component, (state) => {
     return {
@@ -9,6 +11,11 @@ export default createContainer(Component, (state) => {
         is_admin: state.user.is_admin
     }
 }, () => {
+    const taskService = new TaskService()
+
     return {
+        async updateApplication(taskId, data) {
+            return taskService.updateApplication(taskId, data)
+        }
     }
 })
