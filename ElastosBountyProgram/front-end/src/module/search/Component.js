@@ -590,14 +590,6 @@ export default class extends BaseComponent {
                             >
                                 <h3 class="no-margin no-padding one-line brand-color">
                                     <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
-                                    {this.isLookingForTeam() &&
-                                    <span className={item.status == TEAM_STATUS.ACTIVE ? 'team-status-active' : 'team-status-close'}>
-                                        {item.status == TEAM_STATUS.ACTIVE ?
-                                            I18N.get('team.detail.recuriting') :
-                                            I18N.get('team.detail.not_recruiting')
-                                        }
-                                    </span>
-                                    }
                                 </h3>
                                 <h5 class="no-margin">
                                     {item.description}

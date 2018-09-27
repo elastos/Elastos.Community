@@ -25,18 +25,14 @@ class C extends BaseComponent {
 
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Register - received values of form: ', values)
-
                 if (this.state.requestedCode) {
                     this.props.register(this.state.savedValues.username,
                         this.state.savedValues.password, _.omit(this.state.savedValues, ['username', 'password']))
                         .then((shouldShowWelcome) => {
                             if (shouldShowWelcome) {
                                 this.props.onChangeActiveKey('post')
-                                console.log('post')
                             } else {
                                 this.props.onChangeActiveKey('login')
-                                console.log('login')
                             }
                         })
                 } else {
