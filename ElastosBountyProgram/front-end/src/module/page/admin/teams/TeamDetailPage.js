@@ -14,7 +14,7 @@ const Component = class extends BaseAdmin {
         data: {}
     }
 
-    ord_renderContent(){
+    ord_renderContent() {
         return (
             <div className="p_admin_index ebp-wrap">
                 <div className="ebp-header-divider" />
@@ -44,40 +44,38 @@ const Component = class extends BaseAdmin {
         );
     }
 
-    renderDetail(){
-        if(this.state.loading){
+    renderDetail() {
+        if (this.state.loading) {
             return (
                 <Spin size="large" />
             );
         }
 
         return (
-            <TeamDetail canEdit={true} data={this.state.data} />
+            <TeamDetail data={this.state.data} canEdit={true} />
         )
     }
 
-    async componentDidMount(){
-        await super.componentDidMount();
+    async componentDidMount() {
+        await super.componentDidMount()
 
-        const teamId = this.$getParam('teamId');
-
-        const d = await this.props.detail(teamId);
-        console.log(d);
+        const teamId = this.$getParam('teamId')
+        const d = await this.props.detail(teamId)
         this.setState({
-            data : d,
-            loading : false
+            data: d,
+            loading: false
         });
     }
 };
 
-export default createContainer(Component, ()=>{
+export default createContainer(Component, () => {
     return {};
-}, ()=>{
-    const teamService = new TeamService();
+}, () => {
+    const teamService = new TeamService()
 
     return {
-        async detail(teamId){
-            return await teamService.get(teamId);
+        async detail(teamId) {
+            return teamService.get(teamId)
         }
-    };
-});
+    }
+})
