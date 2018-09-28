@@ -173,6 +173,17 @@ export default class extends BaseService {
         return new Promise((resolve) => {
             this.dispatch(userRedux.actions.is_login_update(false))
             this.dispatch(userRedux.actions.profile_reset())
+
+            this.dispatch(userRedux.actions.is_admin_reset())
+            this.dispatch(userRedux.actions.is_leader_reset())
+
+            this.dispatch(userRedux.actions.email_reset())
+            this.dispatch(userRedux.actions.username_reset())
+            this.dispatch(userRedux.actions.profile_reset())
+            this.dispatch(userRedux.actions.role_reset())
+            this.dispatch(userRedux.actions.circles_reset())
+            this.dispatch(userRedux.actions.current_user_id_reset())
+
             this.dispatch(tasksRedux.actions.all_tasks_reset())
             sessionStorage.clear()
             localStorage.removeItem('api-token', '')
