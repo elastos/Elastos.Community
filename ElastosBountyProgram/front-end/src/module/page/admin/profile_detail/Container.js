@@ -13,6 +13,10 @@ export default createContainer(Component, (state) => {
     return {
         async getMember(userId) {
             return userService.getMember(userId, {admin: true})
+        },
+
+        resetMemberDetail() {
+            return userService.resetMemberDetail()
         }
     }
 })

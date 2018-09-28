@@ -148,6 +148,11 @@ export default class extends BaseService {
         return result
     }
 
+    resetMemberDetail() {
+        const taskRedux = this.store.getRedux('member')
+        this.dispatch(taskRedux.actions.focus_user_reset())
+    }
+
     async update(userId, doc) {
 
         const memberRedux = this.store.getRedux('member')
