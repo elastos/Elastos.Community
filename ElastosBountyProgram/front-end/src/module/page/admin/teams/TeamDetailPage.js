@@ -25,8 +25,8 @@ const Component = class extends BaseAdmin {
                                 <Icon type="home" />
                             </Breadcrumb.Item>
                             <Breadcrumb.Item>Admin</Breadcrumb.Item>
-                            <Breadcrumb.Item>teams</Breadcrumb.Item>
-                            <Breadcrumb.Item>teamid</Breadcrumb.Item>
+                            <Breadcrumb.Item>Teams</Breadcrumb.Item>
+                            <Breadcrumb.Item>{this.state.data && this.state.data.name}</Breadcrumb.Item>
                         </Breadcrumb>
                     </div>
                     <div className="p_admin_content">
