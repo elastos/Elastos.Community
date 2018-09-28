@@ -9,11 +9,9 @@ import TeamService from '@/service/TeamService';
 import TeamDetail from '@/module/shared/team_detail/Component';
 
 const Component = class extends BaseAdmin {
-    ord_states(){
-        return {
-            loading : true,
-            data : {}
-        };
+    state = {
+        loading: true,
+        data: {}
     }
 
     ord_renderContent(){
@@ -79,7 +77,7 @@ export default createContainer(Component, ()=>{
 
     return {
         async detail(teamId){
-            return await teamService.getDetail(teamId);
+            return await teamService.get(teamId);
         }
     };
 });

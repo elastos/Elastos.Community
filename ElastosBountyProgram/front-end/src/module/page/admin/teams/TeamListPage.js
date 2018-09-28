@@ -9,6 +9,7 @@ import TeamService from '@/service/TeamService';
 import moment from "moment/moment";
 import config from '@/config';
 import _ from 'lodash'
+import {TEAM_TYPE} from '@/constant'
 
 const Component = class extends BaseAdmin {
 
@@ -92,7 +93,7 @@ const Component = class extends BaseAdmin {
 
     async componentDidMount(){
         await super.componentDidMount();
-        this.props.list();
+        this.props.index({ type: TEAM_TYPE.TEAM })
     }
 };
 
@@ -108,8 +109,8 @@ export default createContainer(Component, (state)=>{
     const teamService = new TeamService();
 
     return {
-        async list(){
-            return await teamService.list();
+        async index(query) {
+            return await teamService.index(query);
         }
     };
 });

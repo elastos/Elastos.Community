@@ -399,7 +399,7 @@ export default [
     },
     {
         path: '/admin/teams/:teamId',
-        page: TeamDetailPage
+        page: AdminTeamDetailPage
     },
 
     {
