@@ -17,7 +17,10 @@ export default class extends AdminPage {
         await super.componentDidMount()
         const userId = this.props.match.params.userId
         this.props.getMember(userId)
+    }
 
+    componentWillUnmount() {
+        this.props.resetMemberDetail()
     }
 
     ord_renderContent () {
