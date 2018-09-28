@@ -35,7 +35,11 @@ export default class {
             this.reducers[update_key] = (state, param)=>{
                 return {
                     ...state,
-                    [key]: _.isObject(param) ? _.merge({}, state[key], param||{}) : param
+                    [key]: _.isArray(param)
+                        ? param
+                        : _.isObject(param)
+                            ? _.merge({}, state[key], param||{})
+                            : param
                 };
             };
             this.actions[update_key] = (param)=>{
