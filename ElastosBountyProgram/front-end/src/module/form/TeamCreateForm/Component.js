@@ -71,7 +71,8 @@ class C extends BaseComponent {
                     tags: tags.join(','),
                     logo: '',
                     metadata: '',
-                    pictures: this.state.fileList || []
+                    pictures: this.state.fileList || [],
+                    type: this.props.existingTeam && this.props.existingTeam.type
                 }
 
                 _.each(createParams.pictures, (pictureFile) => {
