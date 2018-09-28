@@ -6,12 +6,20 @@ import {TEAM_TYPE} from '@/constant'
 export default class extends BaseService {
 
     async list(filter = {}) {
+        const teamRedux = this.store.getRedux('team')
+
+        this.dispatch(teamRedux.actions.loading_update(true))
+
         const result = await api_request({
             path: '/api/team/list',
             method: 'get',
             data: filter
         });
 
+        this.dispatch(teamRedux.actions.loading_update(false))
+        this.dispatch(teamRedux.actions.all_teams_reset())
+        this.dispatch(teamRedux.actions.all_teams_update(result))
+        
         return result
     }
 

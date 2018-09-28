@@ -8,15 +8,11 @@ import { Breadcrumb, Col, Icon, Row, Menu, Select, Table } from 'antd';
 import TeamService from '@/service/TeamService';
 import moment from "moment/moment";
 import config from '@/config';
+import _ from 'lodash'
+import {TEAM_TYPE} from '@/constant'
 
 const Component = class extends BaseAdmin {
-    ord_states(){
-        return {
-            loading : true,
-            total : 0,
-            list : []
-        };
-    }
+
     ord_renderContent(){
         return (
             <div className="p_admin_index ebp-wrap">
@@ -81,13 +77,12 @@ const Component = class extends BaseAdmin {
             }
         ];
 
-
         return (
             <Table
                 columns={columns}
                 rowKey={(item) => item._id}
-                dataSource={this.state.list}
-                loading={this.state.loading}
+                dataSource={this.props.all_teams}
+                loading={this.props.loading}
             />
         );
     }
@@ -98,23 +93,24 @@ const Component = class extends BaseAdmin {
 
     async componentDidMount(){
         await super.componentDidMount();
-
-        const d = await this.props.list();
-        this.setState({
-            list: d,
-            loading: false
-        });
+        this.props.index({ type: TEAM_TYPE.TEAM })
     }
 };
 
-export default createContainer(Component, ()=>{
-    return {};
+export default createContainer(Component, (state)=>{
+    let teamState = state.team
+
+    if (!_.isArray(state.team.all_teams)) {
+        teamState.all_teams = _.values(state.team.all_teams)
+    }
+
+    return teamState
 }, ()=>{
     const teamService = new TeamService();
 
     return {
-        async list(){
-            return await teamService.list();
+        async index(query) {
+            return await teamService.index(query);
         }
     };
 });

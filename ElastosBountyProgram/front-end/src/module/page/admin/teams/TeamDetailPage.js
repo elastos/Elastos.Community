@@ -9,14 +9,12 @@ import TeamService from '@/service/TeamService';
 import TeamDetail from '@/module/shared/team_detail/Component';
 
 const Component = class extends BaseAdmin {
-    ord_states(){
-        return {
-            loading : true,
-            data : {}
-        };
+    state = {
+        loading: true,
+        data: {}
     }
 
-    ord_renderContent(){
+    ord_renderContent() {
         return (
             <div className="p_admin_index ebp-wrap">
                 <div className="ebp-header-divider" />
@@ -27,8 +25,8 @@ const Component = class extends BaseAdmin {
                                 <Icon type="home" />
                             </Breadcrumb.Item>
                             <Breadcrumb.Item>Admin</Breadcrumb.Item>
-                            <Breadcrumb.Item>teams</Breadcrumb.Item>
-                            <Breadcrumb.Item>teamid</Breadcrumb.Item>
+                            <Breadcrumb.Item>Teams</Breadcrumb.Item>
+                            <Breadcrumb.Item>{this.state.data && this.state.data.name}</Breadcrumb.Item>
                         </Breadcrumb>
                     </div>
                     <div className="p_admin_content">
@@ -46,40 +44,38 @@ const Component = class extends BaseAdmin {
         );
     }
 
-    renderDetail(){
-        if(this.state.loading){
+    renderDetail() {
+        if (this.state.loading) {
             return (
                 <Spin size="large" />
             );
         }
 
         return (
-            <TeamDetail canEdit={true} data={this.state.data} />
+            <TeamDetail data={this.state.data} canEdit={true} />
         )
     }
 
-    async componentDidMount(){
-        await super.componentDidMount();
+    async componentDidMount() {
+        await super.componentDidMount()
 
-        const teamId = this.$getParam('teamId');
-
-        const d = await this.props.detail(teamId);
-        console.log(d);
+        const teamId = this.$getParam('teamId')
+        const d = await this.props.detail(teamId)
         this.setState({
-            data : d,
-            loading : false
+            data: d,
+            loading: false
         });
     }
 };
 
-export default createContainer(Component, ()=>{
+export default createContainer(Component, () => {
     return {};
-}, ()=>{
-    const teamService = new TeamService();
+}, () => {
+    const teamService = new TeamService()
 
     return {
-        async detail(teamId){
-            return await teamService.getDetail(teamId);
+        async detail(teamId) {
+            return teamService.get(teamId)
         }
-    };
-});
+    }
+})

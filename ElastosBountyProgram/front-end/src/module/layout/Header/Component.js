@@ -154,7 +154,9 @@ export default class extends BaseComponent {
                         <MediaQuery minWidth={MIN_WIDTH_PC}>
                             <Dropdown overlay={helpDropdown} style="margin-top: 24px;">
                                 <a className="ant-dropdown-link">
-                                    <img src="/assets/images/union.svg" className="no-margin" />
+                                    <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fillRule="evenodd" clipRule="evenodd" d="M0 0H14V1H0V0ZM0 5H14V6H0V5ZM14 10H0V11H14V10Z" fill="black"/>
+                                    </svg>
                                 </a>
                             </Dropdown>
                         </MediaQuery>
