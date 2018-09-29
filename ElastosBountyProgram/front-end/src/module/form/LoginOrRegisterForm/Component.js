@@ -17,14 +17,6 @@ export default class extends BaseComponent {
         }
     }
 
-    handleChangeTab() {
-        return (key) => {
-            this.setState({
-                activeKey: key
-            })
-        }
-    }
-
     handleSubmit() {
         const registerRedirect = sessionStorage.getItem('registerRedirect')
         sessionStorage.removeItem('registerRedirect')
@@ -59,12 +51,12 @@ export default class extends BaseComponent {
                 </div>
                 <div className="main-form">
                     {this.state.activeKey === 'post' ? this.showPostRegLogScreen() : (
-                        <Tabs activeKey={this.state.activeKey} onChange={this.handleChangeTab()}>
+                        <Tabs activeKey={this.state.activeKey} onChange={(key) => { this.setState({activeKey: key}) }}>
                             <TabPane tab="Login" key="login">
-                                <LoginForm onChangeActiveKey={this.handleChangeTab()}/>
+                                <LoginForm onChangeActiveKey={(key) => { this.setState({activeKey: key}) }}/>
                             </TabPane>
                             <TabPane tab="Register" key="register">
-                                <RegisterForm onChangeActiveKey={this.handleChangeTab()}/>
+                                <RegisterForm onChangeActiveKey={(key) => { this.setState({activeKey: key}) }}/>
                             </TabPane>
                         </Tabs>)}
                 </div>
