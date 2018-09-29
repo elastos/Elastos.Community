@@ -110,18 +110,18 @@ export default class extends BaseService {
         const userRedux = this.store.getRedux('user')
 
         const data = await api_request({
-            path : '/api/user/current_user',
+            path: '/api/user/current_user'
         })
 
         this.dispatch(userRedux.actions.is_login_update(true));
         if ([USER_ROLE.LEADER].includes(data.role)) {
             this.dispatch(userRedux.actions.is_leader_update(true))
-        }else{
+        } else {
             this.dispatch(userRedux.actions.is_leader_update(false))
         }
         if ([USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(data.role)) {
             this.dispatch(userRedux.actions.is_admin_update(true))
-        }else{
+        } else {
             this.dispatch(userRedux.actions.is_admin_update(false))
         }
         this.dispatch(userRedux.actions.email_update(data.email))
@@ -133,7 +133,7 @@ export default class extends BaseService {
         this.dispatch(userRedux.actions.circles_update(_.values(data.circles)))
         this.dispatch(userRedux.actions.loading_update(false))
 
-        return result
+        return data
     }
 
     // restrictive getter - public profile should never return email / private info
