@@ -114,6 +114,7 @@ export default {
     'register.form.username': '用户名',
     'register.form.label_email': '请输入您的邮箱',
     'register.error.email': '无效邮箱',
+    'register.error.duplicate_email': '邮箱已被注册',
     'register.form.email': '邮箱',
     'register.form.label_password': '请输入密码',
     'register.form.password': '密码',

@@ -264,4 +264,14 @@ export default class extends BaseService {
             }
         })
     }
+
+    async checkEmail(email) {
+        return await api_request({
+            path: '/api/user/check-email',
+            method: 'post',
+            data: {
+                email
+            }
+        })
+    }
 }
