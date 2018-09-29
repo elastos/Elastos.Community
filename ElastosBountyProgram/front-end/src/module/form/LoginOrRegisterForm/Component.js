@@ -13,15 +13,7 @@ export default class extends BaseComponent {
     ord_states() {
         return {
             persist: true,
-            activeKey: 'login' // login, register, post
-        }
-    }
-
-    handleChangeTab() {
-        return (key) => {
-            this.setState({
-                activeKey: key
-            })
+            activeKey: 'login' // login, register, post, login-end
         }
     }
 
@@ -49,23 +41,26 @@ export default class extends BaseComponent {
     }
 
     ord_render() {
+        if (this.state.activeKey === 'login-end') {
+            this.props.onHideModal()
+        }
         return (
-            <Row className="c_LoginOrRegister" type="flex">
-                <Col className="side-image">
+            <div className="c_LoginOrRegister">
+                <div className="side-image">
                     <img src="/assets/images/login-left.png"/>
-                </Col>
-                <Col className="main-form">
+                </div>
+                <div className="main-form">
                     {this.state.activeKey === 'post' ? this.showPostRegLogScreen() : (
-                        <Tabs activeKey={this.state.activeKey} onChange={this.handleChangeTab()}>
+                        <Tabs activeKey={this.state.activeKey} onChange={(key) => { this.setState({activeKey: key}) }}>
                             <TabPane tab="Login" key="login">
-                                <LoginForm />
+                                <LoginForm onChangeActiveKey={(key) => { this.setState({activeKey: key}) }}/>
                             </TabPane>
                             <TabPane tab="Register" key="register">
-                                <RegisterForm onChangeActiveKey={this.handleChangeTab()}/>
+                                <RegisterForm onChangeActiveKey={(key) => { this.setState({activeKey: key}) }}/>
                             </TabPane>
                         </Tabs>)}
-                </Col>
-            </Row>
+                </div>
+            </div>
         )
     }
 }

@@ -293,6 +293,10 @@ export default class extends StandardPage {
     }
 
     renderLoginOrRegisterModal() {
+        if (this.props.is_login && !this.state.showLoginRegisterModal) {
+            return
+        }
+
         return (
             <Modal
                 className="project-detail-nobar"
