@@ -55,6 +55,22 @@ class C extends BaseComponent {
         return Math.round(Math.random() * (max - min) + min);
     }
 
+    checkEmail(rule, value, callback, source, options) {
+        const emailRegex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+
+        if (value && emailRegex.test(value)) {
+            this.props.checkEmail(value).then((isExist) => {
+                if (isExist) {
+                    callback(I18N.get('register.error.duplicate_email'))
+                } else {
+                    callback()
+                }
+            })
+        } else {
+            callback()
+        }
+    }
+
     validateRegCode(rule, value, callback) {
         const reqCode = this.state.requestedCode
         const form = this.props.form
@@ -143,7 +159,9 @@ class C extends BaseComponent {
             rules: [{
                 required: true, message: I18N.get('register.form.label_email')
             }, {
-                type: 'email', message: I18N.get('register.error.email')
+                type: 'email', message: I18N.get('register.error.email'),
+            }, {
+                validator: this.checkEmail.bind(this)
             }]
         })
         const email_el = (

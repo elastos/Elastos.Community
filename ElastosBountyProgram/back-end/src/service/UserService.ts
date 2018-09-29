@@ -495,4 +495,18 @@ export default class extends Base {
             communityId: countryCommunity._id
         })
     }
+
+    public async checkEmail(param) {
+        const db_user = this.getDBModel('User');
+
+        const email = param.email.toLowerCase();
+
+        this.validate_email(email);
+
+        if (await db_user.findOne({ email: email })) {
+            throw 'This email is already taken'
+        }
+
+        return true
+    }
 }

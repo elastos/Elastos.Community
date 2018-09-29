@@ -51,6 +51,15 @@ export default createContainer(Component, (state) => {
 
         async sendRegistrationCode(email, code) {
             return userService.sendRegistrationCode(email, code)
+        },
+
+        async checkEmail(email) {
+            try {
+                await userService.checkEmail(email)
+                return false
+            } catch (err) {
+                return true
+            }
         }
     }
 })

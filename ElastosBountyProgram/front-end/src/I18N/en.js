@@ -122,6 +122,7 @@ export default {
     'register.form.username': 'Username',
     'register.form.label_email': 'Please input your email',
     'register.error.email': 'Invalid email',
+    'register.error.duplicate_email': 'This email is already taken',
     'register.form.email': 'Email',
     'register.form.label_password': 'Please input a Password',
     'register.form.password': 'Password',
