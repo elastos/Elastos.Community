@@ -41,9 +41,6 @@ export default class extends BaseComponent {
     }
 
     ord_render() {
-        if (this.state.activeKey === 'login-end') {
-            this.props.onHideModal()
-        }
         return (
             <div className="c_LoginOrRegister">
                 <div className="side-image">
@@ -53,7 +50,7 @@ export default class extends BaseComponent {
                     {this.state.activeKey === 'post' ? this.showPostRegLogScreen() : (
                         <Tabs activeKey={this.state.activeKey} onChange={(key) => { this.setState({activeKey: key}) }}>
                             <TabPane tab="Login" key="login">
-                                <LoginForm onChangeActiveKey={(key) => { this.setState({activeKey: key}) }}/>
+                                <LoginForm />
                             </TabPane>
                             <TabPane tab="Register" key="register">
                                 <RegisterForm onChangeActiveKey={(key) => { this.setState({activeKey: key}) }}/>
