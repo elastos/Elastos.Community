@@ -254,7 +254,7 @@ export default class extends StandardPage {
                                 <Breadcrumb.Item href="/">
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
-                                <Breadcrumb.Item>Projects</Breadcrumb.Item>
+                                <Breadcrumb.Item>{I18N.get('myrepublic.projects')}</Breadcrumb.Item>
                             </Breadcrumb>
                         </div>
                         <div className="p_admin_content">
@@ -265,7 +265,7 @@ export default class extends StandardPage {
                                 <Col sm={24} md={20} className="c_ProfileContainer admin-right-column wrap-box-user">
                                     {(this.props.is_leader || this.props.is_admin) &&
                                     <div className="pull-right filter-group">
-                                        <Button onClick={() => this.props.history.push('/task-create?type=PROJECT&category=DEVELOPER')}>Create Project</Button>
+                                        <Button onClick={() => this.props.history.push('/task-create?type=PROJECT&category=DEVELOPER')}>{I18N.get('myrepublic.projects.create')}</Button>
                                     </div>
                                     }
                                     <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
@@ -285,16 +285,16 @@ export default class extends StandardPage {
                                         <Button.Group className="filter-group">
                                             <Button
                                                 className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
-                                                onClick={this.clearFilters.bind(this)}>All</Button>
+                                                onClick={this.clearFilters.bind(this)}>{I18N.get('myrepublic.projects.all')}</Button>
                                             <Button
                                                 className={(this.state.filter === FILTERS.OWNED && 'selected') || ''}
-                                                onClick={this.setOwnedFilter.bind(this)}>Owned</Button>
+                                                onClick={this.setOwnedFilter.bind(this)}>{I18N.get('myrepublic.projects.owned')}</Button>
                                             <Button
                                                 className={(this.state.filter === FILTERS.ACTIVE && 'selected') || ''}
-                                                onClick={this.setActiveFilter.bind(this)}>Active</Button>
+                                                onClick={this.setActiveFilter.bind(this)}>{I18N.get('myrepublic.projects.active')}</Button>
                                             <Button
                                                 className={(this.state.filter === FILTERS.APPLIED && 'selected') || ''}
-                                                onClick={this.setAppliedFilter.bind(this)}>Applied</Button>
+                                                onClick={this.setAppliedFilter.bind(this)}>{I18N.get('myrepublic.projects.applied')}</Button>
                                             <Button
                                                 className={(this.state.filter === FILTERS.SUBSCRIBED && 'selected') || ''}
                                                 onClick={this.setSubscribedFilter.bind(this)}>Liked</Button>

@@ -53,6 +53,22 @@ export default class extends BaseService {
         }
     }
 
+    /**
+     * Check if username already exists
+     *
+     * @param username
+     * @returns {Promise<void>}
+     */
+    async checkUsername(username) {
+        return await api_request({
+            path: '/api/user/check-username',
+            method: 'post',
+            data: {
+                username
+            }
+        });
+    }
+
     async register(username, password, profile) {
 
         const res = await api_request({
@@ -194,16 +210,6 @@ export default class extends BaseService {
             localStorage.removeItem('api-token', '')
             resolve(true)
         })
-    }
-
-    async changeStep(step) {
-        const userRedux = this.store.getRedux('user')
-
-        await this.dispatch(userRedux.actions.register_form_update({
-            step: 2
-        }))
-
-        return true
     }
 
     async getByIds(ids) {

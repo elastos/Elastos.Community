@@ -23,7 +23,7 @@ class C extends BaseComponent {
     handleSubmit(e) {
         e.preventDefault()
 
-        this.props.form.validateFields((err, values) => {
+        this.props.form.validateFields(async (err, values) => {
             if (!err) {
                 if (this.state.requestedCode) {
                     this.props.register(this.state.savedValues.username,
@@ -36,6 +36,8 @@ class C extends BaseComponent {
                             }
                         })
                 } else {
+
+                    // step 1 - check username, if valid send registration code
                     const code = this.generateRegCode()
                     this.props.sendRegistrationCode(values.email, code)
                     this.setState({

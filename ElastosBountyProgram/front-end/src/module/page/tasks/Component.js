@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 import './style.scss'
 
-import { Col, Row, Icon, Form, Input, Button, Dropdown, Spin } from 'antd'
+import { Col, Row, Icon, Form, Input, Button, Spin } from 'antd'
 const FormItem = Form.Item;
 
 export default class extends StandardPage {

@@ -164,13 +164,12 @@ export default class extends BaseComponent {
                     <Menu.Item className="c_MenuItem mobile" key="mobileMenu" onClick={this.props.toggleMobileMenu}>
                         <Icon type="menu-fold"/>
                     </Menu.Item>
+                    <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                        <div className="pull-right language-dropdown mobile" style={{marginTop: 17}}>
+                            {this.buildLanguageDropdown()}
+                        </div>
+                    </MediaQuery>
                 </Menu>
-
-                <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
-                    <div className="pull-right language-dropdown mobile" style={{marginTop: 17}}>
-                        {this.buildLanguageDropdown()}
-                    </div>
-                </MediaQuery>
 
                 <MediaQuery minWidth={MIN_WIDTH_PC}>
                     <div className="pull-right language-dropdown">
@@ -201,6 +200,10 @@ export default class extends BaseComponent {
 
                     <Menu.Item className="c_MenuItem link" key="empower35">
                         {I18N.get('0106')}
+                    </Menu.Item>
+
+                    <Menu.Item className="c_MenuItem link" key="council/list">
+                        {I18N.get('council.0001')}
                     </Menu.Item>
 
                     <Menu.Item className="c_MenuItem link" key="ambassadors">
@@ -268,7 +271,8 @@ export default class extends BaseComponent {
             'about',
             'faq',
             'contact',
-            'slack'
+            'slack',
+            'council/list'
         ], key)) {
 
             if (key === 'landing') {

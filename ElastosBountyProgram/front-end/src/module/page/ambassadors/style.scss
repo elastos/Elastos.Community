@@ -1,4 +1,3 @@
-
 @import "../../../style/variable";
 @import "../../../style/color";
 
@@ -197,6 +196,14 @@ $landingPageWidth: 1152px;
               width: 85%;
             }
           }
+
+          > .button {
+            margin-top: $gap_5;
+            width: 85%;
+            height: 60px;
+            font-size: 22px;
+            border-radius: unset;
+          }
         }
 
         /*
@@ -304,7 +311,7 @@ $landingPageWidth: 1152px;
           width: 150px;
         }
       }
-      
+
       .right-box-container {
         position: absolute;
         bottom: $gap_1;
