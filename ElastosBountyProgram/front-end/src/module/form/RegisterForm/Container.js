@@ -54,12 +54,11 @@ export default createContainer(Component, (state) => {
         },
 
         async checkEmail(email) {
-            const isExist = true
             try {
                 await userService.checkEmail(email)
-                return !isExist
+                return false
             } catch (err) {
-                return isExist
+                return true
             }
         }
     }
