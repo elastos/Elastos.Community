@@ -133,7 +133,7 @@ export default class extends BaseService {
         this.dispatch(userRedux.actions.circles_update(_.values(data.circles)))
         this.dispatch(userRedux.actions.loading_update(false))
 
-        return result
+        return data
     }
 
     // restrictive getter - public profile should never return email / private info
