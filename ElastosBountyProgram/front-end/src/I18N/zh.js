@@ -343,7 +343,7 @@ export default {
     // Role
     'role.member': '普通用户',
     'role.organizer': '组织者',
-    'role.admin': '管理员'
+    'role.admin': '管理员',
 
      // Landing
      'landing.elastos': 'Elastos',
