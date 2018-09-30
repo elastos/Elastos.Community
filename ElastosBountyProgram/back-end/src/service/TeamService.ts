@@ -432,6 +432,8 @@ export default class extends Base {
             query.$or = [
                 { _id: {$in: _.map(userTeams, 'team')} }
             ]
+
+            query.type = constant.TEAM_TYPE.TEAM
         }
 
         if (param.type) {

@@ -304,6 +304,7 @@ const en = {
     'project.detail.pending_applications': 'Pending Applications',
     'project.detail.pending_bids': 'Pending Bids',
     'project.detail.your_bids': 'Your Bids',
+    'project.detail.your_bid': 'Your Bid',
     'project.detail.total_bids': 'Total Bids',
     'project.detail.subscribers': 'Liked By',
     'project.detail.current_members': 'Current Members',
@@ -325,6 +326,8 @@ const en = {
     'project.detail.bidding_closed': 'Bidding Closed',
     'project.detail.tell_us_why_join': 'Tell us why you want to join.',
     'project.detail.tell_us_why_bid': 'Tell us why you want to bid.',
+    'project.detail.no_attachments': 'No attachments',
+    'project.detail.bid_updated': 'Bid updated',
 
     'team.detail.team_active': 'Your team is currently active',
 

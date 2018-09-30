@@ -254,81 +254,6 @@ class C extends BaseComponent {
         return _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.PENDING });
     }
 
-    /*
-    getCurrentApplicants() {
-        const detail = this.props.detail
-        const applicants = _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.PENDING });
-        const columns = [{
-            title: 'Name',
-            key: 'user',
-            render: candidate => {
-                return (
-                    <div>
-                        {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
-                        <div>
-                            <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
-                                <Avatar className="gap-right" src={candidate.user.profile.avatar} />
-                                {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
-                            </a>
-                        </div>
-                        }
-                        {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
-                        <div>
-                            <a onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
-                                <Avatar className="gap-right" src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
-                                {candidate.team.name}
-                            </a>
-                        </div>
-                        }
-                    </div>)
-            }
-        }, {
-            title: 'Action',
-            key: 'action',
-            render: (candidate) => {
-                return (
-                    <div className="text-right">
-                        {this.props.detail.bidding && <span>
-                            Bid: {candidate.bid} ELA
-                            <Divider type="vertical"/>
-                        </span>}
-                        {(this.props.page === 'ADMIN' || this.isTaskOwner() || this.isMember(candidate._id)) && (
-                            <span>
-                                <a onClick={this.showAppModal.bind(this, candidate._id)}>{I18N.get('project.detail.view')}</a>
-                                <Divider type="vertical"/>
-                            </span>
-                        )}
-                        {this.isMember(candidate._id) && (
-                            <span>
-                                <a onClick={this.withdrawApplication.bind(this, candidate._id)}>{I18N.get('project.detail.withdraw_application')}</a>
-                                {this.isMember(candidate._id) && <Divider type="vertical"/>}
-                            </span>)
-                        }
-                        {this.isTaskOwner() &&
-                        <span className="inline-block">
-                            <a onClick={this.approveUser.bind(this, candidate._id)}>{I18N.get('project.detail.approve')}</a>
-                            <Divider type="vertical"/>
-                            <a onClick={this.disapproveUser.bind(this, candidate._id)}>{I18N.get('project.detail.disapprove')}</a>
-                        </span>
-                        }
-                    </div>
-                )
-            }
-        }]
-
-        return (
-            <Table
-                className="no-borders headerless"
-                dataSource={applicants}
-                columns={columns}
-                bordered={false}
-                pagination={false}
-                rowKey="_id">
-            </Table>
-        )
-    }
-    */
-
     /**
      * This is the application submit
      */
@@ -339,6 +264,11 @@ class C extends BaseComponent {
                 const isSelf = (values.applicant === '$me')
                 const userId = isSelf && this.props.currentUserId
                 const teamId = !isSelf && values.applicant
+
+                if (!values.bid) {
+                    message.error('bid is required')
+                    return
+                }
 
                 this.props.applyToTask(this.props.taskId, userId, teamId, values.applyMsg, null, null, values.bid)
                     .then(() => {
@@ -363,23 +293,22 @@ class C extends BaseComponent {
         )
         const applyMsgPanel = applyMsg_fn(applyMsg_el)
 
-        const bid_fn = getFieldDecorator('bid', {
-            rules: [{required: true, message: 'Bid is required'}],
-            initialValue: 0
-        })
-
+        const bid_fn = getFieldDecorator('bid')
         const bid_el = (
-            <InputNumber disabled={this.props.loading}/>
+            <InputNumber min={1} disabled={this.props.loading}/>
         )
         const bid = bid_fn(bid_el)
 
         // generate select options
+        let applicantOpts = {}
         const applicantSltOpts = []
+
         if (!this.hasAppliedBySelf()) {
-            applicantSltOpts.push(<Select.Option value="$me">
+            applicantSltOpts.push(<Select.Option key="$me "value="$me">
                 Apply as myself
                 <Avatar size="small" src={this.props.currentUserAvatar} className="pull-right"/>
             </Select.Option>)
+            applicantOpts.initialValue = '$me'
         }
 
         for (let team of this.props.ownedTeams) {
@@ -406,10 +335,7 @@ class C extends BaseComponent {
             </div>
         }
 
-        const applicant_fn = getFieldDecorator('applicant', {
-            rules: [],
-            initialValue: '$me'
-        })
+        const applicant_fn = getFieldDecorator('applicant', applicantOpts)
         const applicant_el = (
             <Select className="team-selector pull-right" disabled={this.props.loading}
                 // https://github.com/vazco/uniforms/issues/228
@@ -524,27 +450,14 @@ class C extends BaseComponent {
                             * Approved Applicants (might not be necessary except for admin/leader)
                             *******************************************************************************************************************
                             */}
-                            {(!this.state.applying && this.getCurrentContributorsData().length) ?
-                                <Row className="contributors">
-                                    {/* For a bidding task you cannot leave after the task is APPROVED */}
-                                    {(this.props.detail.bidding && (this.props.detail.status === TASK_STATUS.CREATED || this.props.detail.status === TASK_STATUS.PENDING)) &&
-                                    <Button onClick={this.removeUserByUserId.bind(this, this.props.currentUserId)} className="leave-button">
-                                        {this.props.detail.bidding ?
-                                            `${I18N.get('project.detail.you_bid')} ${this.getMemberBid(this.props.currentUserId)} ELA - ${I18N.get('project.detail.leave_bid')}` :
-                                            I18N.get('project.detail.leave')}
-                                    </Button>
-                                    }
-                                    <h3 className="no-margin align-left">{I18N.get('project.detail.current_contributors')}</h3>
-                                    {this.getCurrentContributors()}
-                                </Row> : ''
-                            }
+                            {(!this.state.applying && this.getCurrentContributorsData().length) && this.renderContributors()}
 
                             {/*
                             *******************************************************************************************************************
-                            * Pending Bids / Applications
+                            * Pending Bids / Applications - only show if CREATED/PENDING
                             *******************************************************************************************************************
                             */}
-                            {!this.state.applying && this.renderPendingCandidates()}
+                            {!this.state.applying && _.indexOf(['CREATED', 'PENDING'], this.props.detail.status) >= 0 && this.renderPendingCandidates()}
 
                             {/*
                             *******************************************************************************************************************
@@ -629,7 +542,10 @@ class C extends BaseComponent {
                 {title}
             </h3>
 
-            {pendingCandidates.length ? this.renderCandidates(pendingCandidates) : `There are currently ${pendingCandidatesCnt} bids`}
+            {pendingCandidates.length && this.renderCandidates(pendingCandidates)}
+
+            {/* this works because we filtered pendingCandidates after we saved the count */}
+            {!this.props.is_admin && `There are currently ${pendingCandidatesCnt - pendingCandidates.length} other bids`}
         </Row>
     }
 
@@ -721,6 +637,76 @@ class C extends BaseComponent {
         )
     }
 
+    /**
+     * For bidding tasks, contributors are the actual assigned user
+     */
+    renderContributors() {
+
+        let currentContributors = this.getCurrentContributorsData()
+
+        const columns = [{
+            title: 'Name',
+            key: 'name',
+            render: (candidate) => {
+                return (
+                    <div>
+                        {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
+                        <div>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                                <Avatar className={'gap-right ' + (candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
+                                        src={candidate.user.profile.avatar}/>
+                                {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
+                            </a>
+                        </div>
+                        }
+                        {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
+                        <div>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
+                                <Avatar className="gap-right" src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
+                                {candidate.team.name}
+                            </a>
+                        </div>
+                        }
+                    </div>)
+            }
+        }, {
+            title: 'Action',
+            key: 'action',
+            render: (candidate) => {
+                return (
+                    <div className="text-right">
+                        {this.isTaskOwner() && !this.props.detail.bidding &&
+                        <a onClick={this.removeUser.bind(this, candidate._id)}>{I18N.get('project.detail.remove')}</a>
+                        }
+                        {this.isTaskOwner() && this.props.detail.bidding &&
+                        <span>
+                            Bid: {candidate.bid} ELA
+                        </span>}
+                        {(this.props.page === 'ADMIN' || this.isTaskOwner() || this.loggedInUserBelongsToCandidate(candidate)) && (
+                            <span>
+                                <Divider type="vertical"/>
+                                <a onClick={this.showAppModal.bind(this, candidate._id)}>{I18N.get('project.detail.view')}</a>
+                            </span>
+                        )}
+                    </div>
+                )
+            }
+        }]
+
+        return <Row className="contributors">
+            <h3 className="no-margin align-left">{this.props.detail.bidding ? I18N.get('project.detail.current_contributors') : I18N.get('project.detail.current_contributors')}</h3>
+
+            <Table
+                className="no-borders headerless"
+                dataSource={currentContributors}
+                columns={columns}
+                bordered={false}
+                pagination={false}
+                rowKey="_id"
+            />
+        </Row>
+    }
+
     /*
     ****************************************************************************************************************
     * Helpers
@@ -768,13 +754,9 @@ class C extends BaseComponent {
 
     // check if logged in user has applied by the passed in team
     hasAppliedByTeam(team) {
-        const loggedInUserId = this.props.currentUserId
         const pendingCandidates = this.getPendingCandidates()
         return !!_.find(pendingCandidates, (candidate) => {
-            if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
-                debugger
-                return candidate.team._id === team._id
-            }
+            return (candidate.type === TASK_CANDIDATE_TYPE.TEAM && candidate.team._id === team._id)
         })
     }
 
