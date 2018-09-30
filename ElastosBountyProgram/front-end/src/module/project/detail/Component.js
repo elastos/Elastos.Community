@@ -124,6 +124,8 @@ class C extends BaseComponent {
     }
     */
 
+
+
     linkProfileInfo(userId) {
         this.props.history.push(`/member/${userId}`)
     }
@@ -241,6 +243,7 @@ class C extends BaseComponent {
         )
     }
 
+    // maybe rename
     getCurrentContributorsData() {
         const detail = this.props.detail
         return _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.APPROVED });
@@ -370,6 +373,39 @@ class C extends BaseComponent {
         )
         const bid = bid_fn(bid_el)
 
+        // generate select options
+        const applicantSltOpts = []
+        if (!this.hasAppliedBySelf()) {
+            applicantSltOpts.push(<Select.Option value="$me">
+                Apply as myself
+                <Avatar size="small" src={this.props.currentUserAvatar} className="pull-right"/>
+            </Select.Option>)
+        }
+
+        for (let team of this.props.ownedTeams) {
+            if (!this.hasAppliedByTeam(team)) {
+                applicantSltOpts.push(<Select.Option key={team._id} value={team._id}>
+                    Apply with {team.name}
+                    {!_.isEmpty(team.pictures)
+                        ? <Avatar size="small" src={team.pictures[0].thumbUrl} className="pull-right"/>
+                        : <Avatar size="small" type="user" className="pull-right"/>
+                    }
+                </Select.Option>)
+            }
+        }
+
+        // shortcut here if user has exhaused all application options
+        if (!applicantSltOpts.length) {
+            return <div className="no-teams">
+                You have already applied with yourself and any possible teams
+                <br/>
+                <br/>
+                <Button disabled={this.props.loading} className="d_btn pull-left" onClick={() => this.setState({ applying: false })}>
+                    Cancel
+                </Button>
+            </div>
+        }
+
         const applicant_fn = getFieldDecorator('applicant', {
             rules: [],
             initialValue: '$me'
@@ -384,19 +420,7 @@ class C extends BaseComponent {
 
                         return x;
                     }}>
-                <Select.Option value="$me">
-                    Apply as myself
-                    <Avatar size="small" src={this.props.currentUserAvatar} className="pull-right"/>
-                </Select.Option>
-                {_.map(this.props.ownedTeams, (team) =>
-                    <Select.Option key={team._id} value={team._id}>
-                        Apply with {team.name}
-                        {!_.isEmpty(team.pictures)
-                            ? <Avatar size="small" src={team.pictures[0].thumbUrl} className="pull-right"/>
-                            : <Avatar size="small" type="user" className="pull-right"/>
-                        }
-                    </Select.Option>
-                )}
+                {_.map(applicantSltOpts, (applicantOpt) => applicantOpt)}
             </Select>
         )
         const applicantPanel = applicant_fn(applicant_el)
@@ -480,7 +504,7 @@ class C extends BaseComponent {
                             * unless you've exhausted all the teams, but even then we can inform the user of this in a better way than hiding
                             *******************************************************************************************************************
                             */}
-                            {this.props.page !== 'LEADER' && !isTaskOwner &&
+                            {!this.state.applying && this.props.page !== 'LEADER' && !isTaskOwner &&
                             <Row className="actions">
                                 <Button type="primary" onClick={() => this.setState({ applying: true })}>
                                     {this.props.detail.bidding ? I18N.get('project.detail.popup.bid_project') : I18N.get('project.detail.popup.join_project')}
@@ -589,7 +613,7 @@ class C extends BaseComponent {
         }
 
         let title = ''
-        if (this.props.detail.bidding) {
+        if (detail.bidding) {
             if (this.props.is_admin) {
                 title = I18N.get('project.detail.pending_bids')
             } else {
@@ -631,6 +655,10 @@ class C extends BaseComponent {
                             <a onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
                                 <Avatar className="gap-right" src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
                                 {candidate.team.name}
+                                {this.loggedInUserOwnerOfCandidate(candidate) ?
+                                    <span className="no-info"> (team owner)</span> :
+                                    <span className="no-info"> (team member)</span>
+                                }
                             </a>
                         </div>
                         }
@@ -729,6 +757,25 @@ class C extends BaseComponent {
         if (candidate.type === TASK_CANDIDATE_TYPE.TEAM && candidate.team.owner._id === loggedInUserId){
             return true
         }
+    }
+
+    // check if logged in user has applied by themselves
+    hasAppliedBySelf() {
+        const loggedInUserId = this.props.currentUserId
+        const pendingCandidates = this.getPendingCandidates()
+        return !!_.find(pendingCandidates, (candidate) => candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === loggedInUserId)
+    }
+
+    // check if logged in user has applied by the passed in team
+    hasAppliedByTeam(team) {
+        const loggedInUserId = this.props.currentUserId
+        const pendingCandidates = this.getPendingCandidates()
+        return !!_.find(pendingCandidates, (candidate) => {
+            if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
+                debugger
+                return candidate.team._id === team._id
+            }
+        })
     }
 
     /*
