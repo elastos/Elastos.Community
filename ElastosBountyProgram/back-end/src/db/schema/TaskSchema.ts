@@ -137,6 +137,7 @@ export const Task = {
     },
 
     bidding: Boolean,
+    referenceBid: Number,
 
     attachmentType: String,
     attachmentFilename: String,

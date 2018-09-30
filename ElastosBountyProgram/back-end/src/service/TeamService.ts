@@ -448,6 +448,8 @@ export default class extends Base {
                 select: sanitize,
             })
 
+            await db_team.getDBInstance().populate(team, ['members'])
+
             for (let comment of team.comments) {
                 for (let thread of comment) {
                     await db_user.getDBInstance().populate(thread, {

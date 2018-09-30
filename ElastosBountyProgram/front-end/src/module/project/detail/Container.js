@@ -35,14 +35,18 @@ export default createContainer(Component, (state) => {
             return taskService.resetTaskDetail()
         },
 
+        // TODO: we need to get all the users's teams and all teams that applied for the task
         async getTeams(query) {
             return teamService.index(query)
         },
 
-        async applyToTask(taskId, userId, teamId, applyMsg, attachment,
-            attachmentFilename, bid) {
-            return taskService.pushCandidate(taskId, userId, teamId, applyMsg,
-                attachment, attachmentFilename, bid)
+        async getUserTeams(userId) {
+            return teamService.getUserTeams(userId)
+        },
+
+        async applyToTask(taskId, userId, teamId, applyMsg, attachment, attachmentFilename, bid) {
+
+            return taskService.pushCandidate(taskId, userId, teamId, applyMsg, attachment, attachmentFilename, bid)
         },
 
         resetAllTeams() {
