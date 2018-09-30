@@ -9,7 +9,12 @@ export default class extends StandardPage {
         return (
             <div className="p_login ebp-wrap">
                 <div className="d_box">
-                    <LoginOrRegisterForm />
+                    <div className="side-image">
+                        <img src="/assets/images/login-left-extended.svg"/>
+                    </div>
+                    <div className="side-form">
+                        <LoginOrRegisterForm />
+                    </div>
                 </div>
             </div>
         );

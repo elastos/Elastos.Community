@@ -4,33 +4,48 @@
 
 .c_registerContainer {
   margin-top: 0 !important;
-  text-align: left;
+  text-align: center;
 
+  .d_registerForm {
+    .code-sent-text {
+      color: $text_light_gray;
+
+      .code-email {
+        font-weight: bold;
+        display: block;
+      }
+    }
+  }
   .d_item {
     .ant-form-item-children {
       display: flex;
       justify-content: space-between;
     }
   }
-
+  .citizen-title {
+    font-size: 3vw;
+    line-height: 3vw;
+    text-transform: uppercase;
+  }
   .d_btn {
     width: 100%;
     border-radius: 0;
     border-color: black;
-    color: black;
     font-size: 24px;
+    color: white;
+    background-color: $bg_obsidian;
   }
-
-  .d_registerFormWelcome {
-    margin: 0 auto;
-    width: 50%;
-  }
-
   .ant-form-item {
-    text-align: left;
+    text-align: center;
     .d_btn_join {
       width: 150px;
       height: 50px;
+    }
+  }
+
+  @media only screen and (max-width: $mobile-width) {
+    .citizen-title {
+      font-size: 10vw;
     }
   }
 }

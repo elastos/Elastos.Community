@@ -43,20 +43,16 @@ export default class extends BaseComponent {
     ord_render() {
         return (
             <div className="c_LoginOrRegister">
-                <div className="side-image">
-                    <img src="/assets/images/login-left.png"/>
-                </div>
-                <div className="main-form">
-                    {this.state.activeKey === 'post' ? this.showPostRegLogScreen() : (
-                        <Tabs activeKey={this.state.activeKey} onChange={(key) => { this.setState({activeKey: key}) }}>
-                            <TabPane tab="Login" key="login">
-                                <LoginForm />
-                            </TabPane>
-                            <TabPane tab="Register" key="register">
-                                <RegisterForm onChangeActiveKey={(key) => { this.setState({activeKey: key}) }}/>
-                            </TabPane>
-                        </Tabs>)}
-                </div>
+                {this.state.activeKey === 'post' ? this.showPostRegLogScreen() : (
+                    <Tabs activeKey={this.state.activeKey} onChange={(key) => { this.setState({activeKey: key}) }}>
+                        <TabPane tab="Login" key="login">
+                            <LoginForm />
+                        </TabPane>
+                        <TabPane tab="Register" key="register">
+                            <RegisterForm onChangeActiveKey={(key) => { this.setState({activeKey: key}) }}/>
+                        </TabPane>
+                    </Tabs>)
+                }
             </div>
         )
     }
