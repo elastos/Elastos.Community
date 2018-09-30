@@ -45,7 +45,7 @@ db.submissions.find({type: 'EMPOWER_35'}).forEach(function (submission) {
          
         db.teams.update({ _id: circle._id }, { $push: { members: userTeam._id } })
         print('[' + user.username + '] ' + submission.campaign + '-->' + circle.name + '-->' + userTeam._id)
-	  	print('----------------------------------------')		
+	print('----------------------------------------')		
       })
    }
  })
