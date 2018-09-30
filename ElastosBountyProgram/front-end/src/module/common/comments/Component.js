@@ -44,7 +44,10 @@ class C extends BaseComponent {
     getInputProps() {
         const {getFieldDecorator} = this.props.form
         const comment_fn = getFieldDecorator('comment', {
-            rules: [{required: true, message: 'Please input your comment!'}],
+            rules: [
+                {required: true, message: 'Please input your comment'},
+                {max: 500, message: 'Comment is too long'}
+            ],
             initialValue: ''
         })
         const comment_el = (
@@ -52,7 +55,9 @@ class C extends BaseComponent {
         )
 
         const headline_fn = getFieldDecorator('headline', {
-            rules: [],
+            rules: [{
+                max: 100, message: 'Headline is too long'
+            }],
             initialValue: ''
         })
         const headline_el = (

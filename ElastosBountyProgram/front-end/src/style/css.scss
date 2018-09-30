@@ -127,3 +127,8 @@ table {
 .clearfix {
   clear: both;
 }
+
+.no-data {
+  color: $text_dark_gray;
+  margin-left: $gap_1;
+}
