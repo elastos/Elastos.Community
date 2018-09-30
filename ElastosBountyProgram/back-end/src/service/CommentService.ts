@@ -33,7 +33,14 @@ export default class extends Base {
                 createdAt
             })
 
-            this.sendSubscriberEmails(type, param, createdBy, commentable.subscribers)
+            const mentions = comment.match(/@\w+/g)
+            if (mentions) {
+                this.sendMentionEmails(type, param, createdBy, mentions)
+            }
+
+            if (commentable.subscribers) {
+                this.sendSubscriberEmails(type, param, createdBy, commentable.subscribers)
+            }
 
             if (commentable.createdBy) {
                 this.sendNotificationEmail(type, param, createdBy, commentable.createdBy, null)
@@ -158,6 +165,47 @@ export default class extends Base {
             subject: ownerSubject,
             body: ownerBody
         })
+    }
+
+    public async sendMentionEmails(type, param, curUser, mentions) {
+        const {
+            comment
+        } = param
+
+        let ownerSubject = `Someone has mentioned you in a post on a ${type}`
+        let ownerBody = `
+            ${curUser.profile.firstName} ${curUser.profile.lastName} says:<br/>${comment}
+        `
+
+        // hack for now, don't send more than 1 email to an individual subscriber
+        const seenEmails = {}
+
+        for (let mention of mentions) {
+            const username = mention.replace('@', '')
+            const db_user = this.getDBModel('User')
+            const user = await db_user.findOne({username});
+
+            if (curUser.current_user_id === user._id) {
+                return; // Dont notify about own comments
+            }
+
+            let ownerTo = user.email
+            let ownerToName = `${user.profile.firstName} ${user.profile.lastName}`
+
+            if (seenEmails[ownerTo]) {
+                continue
+            }
+
+            await mail.send({
+                to: ownerTo,
+                toName: ownerToName,
+                subject: ownerSubject,
+                body: ownerBody
+            })
+
+            seenEmails[ownerTo] = true
+        }
+
     }
 
     public async sendSubscriberEmails(type, param, curUser, subscribers) {
