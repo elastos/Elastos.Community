@@ -232,7 +232,14 @@ export default class extends Base {
         let status = constant.TASK_STATUS.CREATED;
 
         if (rewardUpfront.ela > 0 || reward.ela > 0 || rewardUpfront.usd > 0 || reward.usd > 0) {
-            status = constant.TASK_STATUS.PENDING;
+
+            // there is ELA / USD involved so we start in PENDING unless we are an admin
+            if (this.currentUser.role === constant.USER_ROLE.ADMIN) {
+                status = constant.TASK_STATUS.PENDING
+            } else {
+                status = constant.TASK_STATUS.APPROVED
+            }
+
         } else {
             // if there is no ELA and you are assigning yourself,
             // it'll automatically go to APPROVED

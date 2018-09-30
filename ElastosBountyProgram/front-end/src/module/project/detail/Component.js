@@ -197,10 +197,13 @@ class C extends BaseComponent {
             ? (detail.createdBy.profile.firstName + ' ' + detail.createdBy.profile.lastName)
             : ''
         const deadline = detail.applicationDeadline ? moment(detail.applicationDeadline).format('MMM D') : <span className="no-data">no deadline</span>
+        const completionDeadline = detail.completionDeadline ? moment(detail.completionDeadline).format('MMM D') : <span className="no-data">no completion deadline</span>
 
         const reward = detail.bidding
             ? (detail.status === TASK_STATUS.APPROVED ? I18N.get('project.detail.bidding_closed') : I18N.get('project.detail.bidding'))
-            : detail.reward.isUsd ? detail.reward.usd + ' USD' : (detail.reward.ela / 1000) + ' ELA'
+            : detail.reward.isUsd ? (detail.reward.usd / 100) + ' USD' : (detail.reward.ela / 1000) + ' ELA'
+
+        const budget = detail.rewardUpfront.isUsd ? (detail.rewardUpfront.usd / 100) + ' USD' : (detail.rewardUpfront.ela / 1000) + ' ELA'
 
         const leaderImage = detail.createdBy.profile.avatar || ''
 
@@ -227,9 +230,15 @@ class C extends BaseComponent {
                 <div className="content">
                     {/* Application Deadline */}
                     <div className="entry">{I18N.get('project.detail.deadline')}: {deadline}</div>
+                    {detail.completionDeadline &&
+                    <div className="entry">{I18N.get('project.detail.completion_deadline')}: {completionDeadline}</div>}
 
-                    <div className="reward">
-                        {reward}
+                    {(detail.rewardUpfront.usd > 0 || detail.rewardUpfront.ela > 0) &&
+                    <div className="pull-right">
+                        <span className="light-grey-text">Budget:</span> {budget}
+                    </div>}
+                    <div className="pull-right clearfix">
+                        <span className="light-grey-text">Reward:</span> {reward}
                     </div>
                 </div>
                 <div class="description-box">
@@ -265,7 +274,7 @@ class C extends BaseComponent {
                 const userId = isSelf && this.props.currentUserId
                 const teamId = !isSelf && values.applicant
 
-                if (!values.bid) {
+                if (this.props.detail.bidding && !values.bid) {
                     message.error('bid is required')
                     return
                 }
@@ -399,7 +408,8 @@ class C extends BaseComponent {
     }
 
     ord_render() {
-        const loading = _.isEmpty(this.props.detail)
+        const detail = this.props.detail
+        const loading = _.isEmpty(detail)
         const isTaskOwner = this.props.detail.createdBy && (this.props.detail.createdBy._id === this.props.currentUserId)
         // const isMember = this.isMemberByUserId(this.props.currentUserId)
 
@@ -430,13 +440,7 @@ class C extends BaseComponent {
                             * unless you've exhausted all the teams, but even then we can inform the user of this in a better way than hiding
                             *******************************************************************************************************************
                             */}
-                            {!this.state.applying && this.props.page !== 'LEADER' && !isTaskOwner &&
-                            <Row className="actions">
-                                <Button type="primary" onClick={() => this.setState({ applying: true })}>
-                                    {this.props.detail.bidding ? I18N.get('project.detail.popup.bid_project') : I18N.get('project.detail.popup.join_project')}
-                                </Button>
-                            </Row>
-                            }
+                            {!this.state.applying && this.props.page !== 'LEADER' && !isTaskOwner && this.renderApplyButton()}
 
                             {/*
                             *******************************************************************************************************************
@@ -450,14 +454,14 @@ class C extends BaseComponent {
                             * Approved Applicants (might not be necessary except for admin/leader)
                             *******************************************************************************************************************
                             */}
-                            {(!this.state.applying && this.getCurrentContributorsData().length) && this.renderContributors()}
+                            {(!this.state.applying && this.getCurrentContributorsData().length) ? this.renderContributors() : ''}
 
                             {/*
                             *******************************************************************************************************************
                             * Pending Bids / Applications - only show if CREATED/PENDING
                             *******************************************************************************************************************
                             */}
-                            {!this.state.applying && _.indexOf(['CREATED', 'PENDING'], this.props.detail.status) >= 0 && this.renderPendingCandidates()}
+                            {!this.state.applying && this.renderPendingCandidates()}
 
                             {/*
                             *******************************************************************************************************************
@@ -467,6 +471,7 @@ class C extends BaseComponent {
                             */}
                             {!this.props.detail.bidding && (this.props.page === 'LEADER' || this.props.page === 'ADMIN') && this.canComment() &&
                             <Row>
+                                <br/>
                                 <Comments type="task" canPost={true} canSubscribe={!isTaskOwner} model={this.props.taskId}/>
                             </Row>
                             }
@@ -487,10 +492,31 @@ class C extends BaseComponent {
         )
     }
 
+    renderApplyButton() {
+
+        const detail = this.props.detail
+
+        // if not bidding check if there is already an approved
+        if (!detail.bidding && _.find(detail.candidates, (candidate) => candidate.status === TASK_CANDIDATE_STATUS.APPROVED)) {
+            return ''
+        }
+
+        if (detail.bidding && _.indexOf([TASK_STATUS.CREATED, TASK_STATUS.PENDING], detail.status) < 0) {
+            return ''
+        }
+
+        return <Row className="actions">
+            <Button type="primary" onClick={() => this.setState({ applying: true })}>
+                {detail.bidding ? I18N.get('project.detail.popup.bid_project') : I18N.get('project.detail.popup.join_project')}
+            </Button>
+        </Row>
+    }
+
+
     /**
      * Render pending bids or applications
      *
-     * BIDDING
+     * BIDDING - we show for CREATED/PENDING status only
      *
      * For Admins - only admins can create tasks/projects for bidding
      * - they can see all applications (user/team), we assume they are never a bidder
@@ -498,7 +524,7 @@ class C extends BaseComponent {
      * For everyone else they can only see their own bids and the total number of bids
      *
      *
-     * PROJECT
+     * PROJECT - we show if APPROVED, but no one is selected yet
      *
      * We can see other people who applied
      */
@@ -506,6 +532,17 @@ class C extends BaseComponent {
 
         const currentUserId = this.props.currentUserId
         const detail = this.props.detail
+
+
+        // status checks
+        if (detail.bidding && _.indexOf([TASK_STATUS.CREATED, TASK_STATUS.PENDING], detail.status) < 0) {
+            return ''
+        }
+
+        if (!detail.bidding && _.indexOf([TASK_STATUS.APPROVED], detail.status) >= 0) {
+            return ''
+        }
+
 
         let pendingCandidates = this.getPendingCandidates()
         let pendingCandidatesCnt = pendingCandidates.length
@@ -545,7 +582,11 @@ class C extends BaseComponent {
             {pendingCandidates.length && this.renderCandidates(pendingCandidates)}
 
             {/* this works because we filtered pendingCandidates after we saved the count */}
-            {!this.props.is_admin && `There are currently ${pendingCandidatesCnt - pendingCandidates.length} other bids`}
+            {(this.props.page !== 'ADMIN' || !this.props.is_admin) && detail.bidding &&
+            `${I18N.get('project.detail.bidding_cur_1')} ${pendingCandidatesCnt - pendingCandidates.length} ${I18N.get('project.detail.bidding_cur_2')}`
+            }
+
+            {!detail.bidding && pendingCandidates.length === 0 && <div className="no-data no-info">There are no applications yet</div>}
         </Row>
     }
 
@@ -694,7 +735,7 @@ class C extends BaseComponent {
         }]
 
         return <Row className="contributors">
-            <h3 className="no-margin align-left">{this.props.detail.bidding ? I18N.get('project.detail.current_contributors') : I18N.get('project.detail.current_contributors')}</h3>
+            <h3 className="no-margin align-left">{this.props.detail.bidding ? I18N.get('project.detail.bidding_winner') : I18N.get('project.detail.current_contributors')}</h3>
 
             <Table
                 className="no-borders headerless"

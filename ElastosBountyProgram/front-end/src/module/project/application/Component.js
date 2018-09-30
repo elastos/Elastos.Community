@@ -57,7 +57,7 @@ export default class extends BaseComponent {
                                     </h5>
                                     { this.props.detail.bidding &&
                                         <div>
-                                            { !this.isTaskOwner() && (applicant.type !== TASK_CANDIDATE_TYPE.TEAM || applicant.team.owner._id === this.props.userId)
+                                            { !this.isTaskOwner() && _.indexOf(['PENDING', 'CREATED'], this.props.detail.status) >= 0 && (applicant.type !== TASK_CANDIDATE_TYPE.TEAM || applicant.team.owner._id === this.props.userId)
                                                 ? <div>
                                                     <span>{I18N.get('project.detail.your_bid')}: </span>
                                                     <InputNumber onChange={_.debounce((value) => this.changeBid(value), 2000)}

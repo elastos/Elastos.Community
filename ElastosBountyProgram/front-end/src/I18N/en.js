@@ -294,12 +294,13 @@ const en = {
 
     // Project/Team detail
     'project.detail.deadline': 'Application Deadline',
+    'project.detail.completion_deadline': 'Completion Deadline',
     'project.detail.progress': 'Progress',
     'project.detail.team_size': 'Team Size',
     'project.detail.recruiting': 'Desired Skills',
     'project.detail.not_recruiting': 'Recruitment Closed',
     'project.detail.recruiting_skills_unknown': 'Not Specified',
-    'project.detail.current_contributors': 'Current Contributors',
+    'project.detail.current_contributors': 'Current Assignee',
     'project.detail.owner': 'Project Owner',
     'project.detail.pending_applications': 'Pending Applications',
     'project.detail.pending_bids': 'Pending Bids',
@@ -320,7 +321,7 @@ const en = {
     'project.detail.popup.leave_team': 'Leave Team',
     'project.detail.popup.applied': 'Applied',
     'project.detail.popup.join_team': 'Join Team',
-    'project.detail.popup.join_project': 'Join Project',
+    'project.detail.popup.join_project': 'Apply for Project',
     'project.detail.popup.bid_project': 'Bid on Project',
     'project.detail.bidding': 'Bidding Open',
     'project.detail.bidding_closed': 'Bidding Closed',
@@ -328,6 +329,9 @@ const en = {
     'project.detail.tell_us_why_bid': 'Tell us why you want to bid.',
     'project.detail.no_attachments': 'No attachments',
     'project.detail.bid_updated': 'Bid updated',
+    'project.detail.bidding_winner': 'Bidding Winner',
+    'project.detail.bidding_cur_1': 'There are currently',
+    'project.detail.bidding_cur_2': 'other bids',
 
     'team.detail.team_active': 'Your team is currently active',
 
