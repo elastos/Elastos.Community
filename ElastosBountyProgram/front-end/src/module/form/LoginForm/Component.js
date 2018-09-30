@@ -23,7 +23,9 @@ class C extends BaseComponent {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.props.login(values.username, values.password, this.state.persist)
+                this.props.login(values.username, values.password, this.state.persist).then(() => {
+                    this.props.onHideModal()
+                })
             }
         })
     }
@@ -36,7 +38,6 @@ class C extends BaseComponent {
         })
         const userName_el = (
             <Input size="large"
-                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 placeholder={I18N.get('login.username')}/>
         )
 
@@ -45,13 +46,12 @@ class C extends BaseComponent {
         })
         const pwd_el = (
             <Input size="large"
-                prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 type="password" placeholder={I18N.get('login.password')}/>
         )
 
         const persist_fn = getFieldDecorator('persist')
         const persist_el = (
-            <Checkbox onClick={this.togglePersist.bind(this)} checked={this.state.persist}>{I18N.get('login.logged')}</Checkbox>
+            <Checkbox className="checkbox pull-left" onClick={this.togglePersist.bind(this)} checked={this.state.persist}>{I18N.get('login.logged')}</Checkbox>
         )
 
         return {

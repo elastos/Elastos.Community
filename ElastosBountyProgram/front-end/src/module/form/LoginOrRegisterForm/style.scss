@@ -3,13 +3,14 @@
 @import "@/style/typography";
 
 .c_LoginOrRegister {
-    $imageWidth: 382px;
-    $imageHeight: 501px;
     display: flex;
-    margin-left: -36px;
-    padding-top: $gap_2;
-    height: $imageHeight - 36px + $gap_2;
+    max-width: 400px;
 
+    .hide-tabbar {
+        .ant-tabs-bar {
+            display: none;
+        }
+    }
     .side-image {
         display: inline;
     }
@@ -45,11 +46,11 @@
             }
 
             &:not(:first-child) {
-                padding-left: 32px;
+                padding-left: $gap_1;
             }
 
             &:not(:last-child) {
-                padding-right: 32px;
+                padding-right: $gap_1;
             }
 
             &.ant-tabs-tab-active {
@@ -58,17 +59,15 @@
         }
     }
     .post-state {
-        width: 75%;
-        margin: 0 auto;
         text-align: center;
+        margin-top: $gap_3;
 
         .welcome-header {
-            font-size: 5vw;
-            line-height: 5vw;
+            font-size: 3vw;
+            line-height: 3vw;
             color: #0F2631;
         }
         .welcome-text {
-            margin-top: $gap_0;
             padding-bottom: 0;
             text-align: center;
             color: black;
@@ -81,6 +80,7 @@
         .strike-text {
             position: relative;
             display: inline-block;
+            margin-top: $gap_3;
 
             .strike-line {
                 position: absolute;
@@ -122,31 +122,34 @@
         }
     }
     @media only screen and (max-width: $mobile-width) {
+        width: 100%;
         height: auto;
         margin-left: 0;
 
-        .side-image {
-            display: none;
+        .post-state {
+            margin-top: 0;
+            .welcome-header {
+                font-size: 12vw;
+                line-height: 12vw;
+            }
+            .strike-text {
+                margin-top: $gap_1;
+            }
+            .arrow-down {
+                margin-bottom: $gap_3;
+            }
         }
-
-        .main-form {
-            width: 100%;
-
-            .post-state {
-                .welcome-header {
-                    font-size: 10vw;
-                    line-height: 10vw;
-                }
-            }
-            .ant-divider-inner-text {
-                padding: 0;
-            }
-            .ant-divider-horizontal {
-                white-space: normal;
-            }
-            .ant-divider-horizontal::before, .ant-divider-horizontal::after {
-                display: none;
-            }
+      .ant-tabs {
+        margin: 0 auto;
+      }
+        .ant-divider-inner-text {
+            padding: 0;
+        }
+        .ant-divider-horizontal {
+            white-space: normal;
+        }
+        .ant-divider-horizontal::before, .ant-divider-horizontal::after {
+            display: none;
         }
     }
 }

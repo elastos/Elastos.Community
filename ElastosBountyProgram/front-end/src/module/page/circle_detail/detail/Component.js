@@ -264,7 +264,14 @@ class C extends BaseComponent {
                 footer={null}
                 width="70%"
             >
-                <LoginOrRegisterForm onHideModal={this.hideShowModal()}/>
+                <div className="login-register-modal">
+                    <div className="side-image">
+                        <img src="/assets/images/login-left.png"/>
+                    </div>
+                    <div className="side-form">
+                        <LoginOrRegisterForm onHideModal={this.hideShowModal()}/>
+                    </div>
+                </div>
             </Modal>
         )
     }

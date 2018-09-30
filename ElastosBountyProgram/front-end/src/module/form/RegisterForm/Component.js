@@ -44,6 +44,7 @@ class C extends BaseComponent {
                         requestedCode: code,
                         savedValues: values
                     })
+                    this.props.onHideTabBar()
                 }
             }
         })
@@ -130,7 +131,6 @@ class C extends BaseComponent {
         })
         const firstName_el = (
             <Input size="large"
-                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 placeholder={I18N.get('register.form.first_name')}/>
         )
 
@@ -140,7 +140,6 @@ class C extends BaseComponent {
         })
         const lastName_el = (
             <Input size="large"
-                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 placeholder={I18N.get('register.form.last_name')}/>
         )
 
@@ -153,7 +152,6 @@ class C extends BaseComponent {
         })
         const username_el = (
             <Input size="large"
-                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 placeholder={I18N.get('register.form.username')}/>
         )
 
@@ -168,7 +166,6 @@ class C extends BaseComponent {
         })
         const email_el = (
             <Input size="large"
-                prefix={<Icon type="mail" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 placeholder={I18N.get('register.form.email')}/>
         )
 
@@ -181,7 +178,6 @@ class C extends BaseComponent {
         })
         const pwd_el = (
             <Input size="large"
-                prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 type="password" placeholder={I18N.get('register.form.password')}/>
         )
 
@@ -194,7 +190,6 @@ class C extends BaseComponent {
         })
         const pwdConfirm_el = (
             <Input size="large"
-                prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 type="password" placeholder={I18N.get('register.form.password_confirm')}/>
         )
 
@@ -279,17 +274,23 @@ class C extends BaseComponent {
         if (this.state.requestedCode) {
             const p = this.getConfirmInputProps()
             return (
-                <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
-                    <Divider>{I18N.get('register.code')}</Divider>
-                    <FormItem>
-                        {p.regCode}
-                    </FormItem>
-                    <FormItem>
-                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn d_btn_join" onClick={this.handleSubmit.bind(this)}>
-                            {I18N.get('register.submit')}
-                        </Button>
-                    </FormItem>
-                </Form>
+                <div>
+                    <h3 className="citizen-title komu-a">{I18N.get('register.code.title')}</h3>
+                    <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
+                        <FormItem>
+                            {p.regCode}
+                        </FormItem>
+                        <FormItem>
+                            <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn d_btn_join" onClick={this.handleSubmit.bind(this)}>
+                                {I18N.get('register.submit')}
+                            </Button>
+                        </FormItem>
+                        <Divider className="code-sent-text">
+                            {I18N.get('register.code')}
+                            <span className="code-email">{this.state.savedValues.email}</span>
+                        </Divider>
+                    </Form>
+                </div>
             )
         } else {
             const p = this.getInputProps()
