@@ -21,6 +21,14 @@ const sanitize = '-password -salt -email -resetToken'
 // TODO: we need some sort of status -> status permitted map
 
 export default class extends Base {
+
+    /**
+     * TODO: We must ensure that bids are secret, and unless you are an admin we don't return the
+     * bids on the task
+     *
+     * @param param
+     * @returns {Promise<"mongoose".Document>}
+     */
     public async show(param): Promise<Document> {
         const db_task = this.getDBModel('Task')
         const db_task_candidate = this.getDBModel('Task_Candidate')
@@ -66,6 +74,22 @@ export default class extends Base {
                         path: 'owner',
                         select: sanitize
                     })
+
+                    await db_team.getDBInstance().populate(candidate.team, ['members'])
+
+                    /* // should be user_team populate
+                    for (let member of candidate.team.members) {
+                        await db_team.getDBInstance().populate(member, {
+                            path: 'team',
+                            select: sanitize
+                        })
+
+                        await db_user.getDBInstance().populate(member, {
+                            path: 'user',
+                            select: sanitize
+                        })
+                    }
+                    */
                 }
 
                 for (let comment of candidate.comments) {
@@ -112,6 +136,8 @@ export default class extends Base {
         const db_task = this.getDBModel('Task');
         const db_task_candidate = this.getDBModel('Task_Candidate');
         const db_user = this.getDBModel('User');
+        const db_team = this.getDBModel('Team');
+        const db_user_team = this.getDBModel('User_Team');
 
         const tasks = await db_task.list(param, {
             updatedAt: -1
@@ -160,7 +186,13 @@ export default class extends Base {
                         path: 'user',
                         select: sanitize
                     })
+
                     await db_task_candidate.getDBInstance().populate(candidate, ['team'])
+
+                    if (candidate.team) {
+                        await db_team.getDBInstance().populate(candidate.team, ['members'])
+                    }
+
                 }
             }
         }
@@ -189,7 +221,7 @@ export default class extends Base {
 
             attachment, attachmentType, attachmentFilename, isUsd,
 
-            domain, recruitedSkillsets, pictures, pitch, bidding
+            domain, recruitedSkillsets, pictures, pitch, bidding, referenceBid
         } = param;
         this.validate_name(name);
         this.validate_description(description);
@@ -200,7 +232,14 @@ export default class extends Base {
         let status = constant.TASK_STATUS.CREATED;
 
         if (rewardUpfront.ela > 0 || reward.ela > 0 || rewardUpfront.usd > 0 || reward.usd > 0) {
-            status = constant.TASK_STATUS.PENDING;
+
+            // there is ELA / USD involved so we start in PENDING unless we are an admin
+            if (this.currentUser.role === constant.USER_ROLE.ADMIN) {
+                status = constant.TASK_STATUS.PENDING
+            } else {
+                status = constant.TASK_STATUS.APPROVED
+            }
+
         } else {
             // if there is no ELA and you are assigning yourself,
             // it'll automatically go to APPROVED
@@ -221,6 +260,7 @@ export default class extends Base {
             eventDateRange, eventDateRangeStart, eventDateRangeEnd, eventDateStatus,
             location,
             bidding,
+            referenceBid,
 
             attachment, attachmentType, attachmentFilename,
             candidateLimit,
@@ -568,12 +608,6 @@ export default class extends Base {
         const task = await db_task.findOne({_id: taskId});
         if(!task){
             throw 'invalid task id';
-        }
-
-        // check limit
-        const total = await db_tc.count({taskId});
-        if(total >= task.candidateLimit){
-            throw 'candidate amount is up to limit';
         }
 
         console.log('add task candidate =>', doc);

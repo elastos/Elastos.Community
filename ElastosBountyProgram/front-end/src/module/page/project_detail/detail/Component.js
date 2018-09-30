@@ -445,9 +445,13 @@ class C extends BaseComponent {
         )
     }
 
-    getCurrentApplicants() {
+    getCurrentApplicantsData() {
         const detail = this.props.detail
-        const applicants = _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.PENDING });
+        return  _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.PENDING });
+    }
+
+    getCurrentApplicants() {
+        const applicants = this.getCurrentApplicantsData()
         const columns = [{
             title: 'Name',
             key: 'user',
@@ -631,16 +635,12 @@ class C extends BaseComponent {
                     </div>
                     <div className="project-info">
                         {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
-                            <Row className="contributors ebp-wrap">
-                                <h3 className="no-margin align-left">{I18N.get('project.detail.owner')}</h3>
-                                {this.getCurrentContributors()}
-                            </Row>
-                        }
-
-                        {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
                             <Row className="applications ebp-wrap">
                                 <h3 className="no-margin">{this.props.detail.bidding ? I18N.get('project.detail.pending_bids') : I18N.get('project.detail.pending_applications')}</h3>
-                                {this.getCurrentApplicants()}
+                                {this.getCurrentApplicantsData().length ?
+                                    this.getCurrentApplicants() :
+                                    <div className="no-data">No applications yet</div>
+                                }
                             </Row>
                         }
 

@@ -132,6 +132,8 @@ class C extends BaseComponent {
                             src={candidate.user.profile.avatar}/>
                         <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
                             {`${candidate.user.profile.firstName} ${candidate.user.profile.lastName}`}</a>
+
+                        {candidate.role === 'LEADER' && ' - Team Leader'}
                     </div>)
             }
         }]

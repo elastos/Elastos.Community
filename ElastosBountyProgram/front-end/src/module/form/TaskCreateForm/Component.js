@@ -395,6 +395,27 @@ class C extends BaseComponent {
             <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
         )
 
+        let referenceBidOpts = {
+            rules: [
+                {validator: (rule, value, cb) => {
+                    if (value && value !== '' && (isNaN(parseFloat(value)) || parseFloat(value) <= 0)) {
+                        cb('must be a number greater than 0')
+                        return
+                    }
+
+                    cb()
+                }}
+            ]
+        }
+        if (this.state.editing) {
+            referenceBidOpts.initialValue = existingTask.referenceBid
+        }
+
+        const referenceBid_fn = getFieldDecorator('referenceBid', referenceBidOpts)
+        const referenceBid_el = (
+            <InputNumber size="large" disabled={hasLeaderEditRestrictions}/>
+        )
+
         const thumbnail_fn = getFieldDecorator('thumbnail', {
             rules: []
         });
@@ -686,6 +707,8 @@ class C extends BaseComponent {
 
             taskReward: taskReward_fn(taskReward_el),
             taskRewardUsd: taskRewardUsd_fn(taskRewardUsd_el),
+
+            referenceBid: referenceBid_fn(referenceBid_el),
 
             thumbnail: thumbnail_fn(thumbnail_el),
 
@@ -1022,6 +1045,12 @@ class C extends BaseComponent {
                                 </FormItem>
                                 }
                             </div>
+                        }
+
+                        {!this.state.assignSelf && this.state.isBidding &&
+                            <FormItem label="Reference Bid" {...formItemLayout}>
+                                {p.referenceBid}
+                            </FormItem>
                         }
 
                         <Divider/>
