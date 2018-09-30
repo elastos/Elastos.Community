@@ -749,7 +749,7 @@ class C extends BaseComponent {
         )
     }
 
-    format(contents) {
+    format(contents = '') {
         let first = true;
         let elements = []
         let key = 0
