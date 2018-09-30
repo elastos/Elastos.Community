@@ -187,15 +187,17 @@
   .c_Header .c_MenuTopRight {
     margin-right: 0;
   }
-}
+  .c_Header.ant-layout-header {
+    .c_Side_Menu {
+      // display: none;
+      display: unset;
 
-.c_Side_Menu {
-  // display: none;
-  @media only screen and (max-width: $mobile-width) {
-    display: unset;
+      .c_MenuItem.help {
+        padding-right: 0;
+      }
+    }
   }
 }
-
 
 .project-detail-nobar {
   .login-register-modal {
