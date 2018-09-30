@@ -46,7 +46,7 @@ export default class extends BaseComponent {
                 {this.state.activeKey === 'post' ? this.showPostRegLogScreen() : (
                     <Tabs activeKey={this.state.activeKey} onChange={(key) => { this.setState({activeKey: key}) }}>
                         <TabPane tab="Login" key="login">
-                            <LoginForm />
+                            <LoginForm onHideModal={this.props.onHideModal}/>
                         </TabPane>
                         <TabPane tab="Register" key="register">
                             <RegisterForm onChangeActiveKey={(key) => { this.setState({activeKey: key}) }}/>

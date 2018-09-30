@@ -23,7 +23,9 @@ class C extends BaseComponent {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.props.login(values.username, values.password, this.state.persist)
+                this.props.login(values.username, values.password, this.state.persist).then(() => {
+                    this.props.onHideModal()
+                })
             }
         })
     }
