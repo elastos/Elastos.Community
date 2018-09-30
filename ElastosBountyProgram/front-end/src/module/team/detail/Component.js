@@ -357,7 +357,9 @@ class C extends BaseComponent {
 
                             {!this.state.applying && this.props.page === 'LEADER' && (isTeamMember || isTeamOwner) &&
                                 <Row>
-                                    <Comments type="team" canPost={true} model={this.props.teamId}/>
+                                    <Comments type="team" canPost={true} model={this.props.teamId}
+                                        returnUrl={`/team-detail/${this.props.detail._id}`}
+                                    />
                                 </Row>
                             }
 

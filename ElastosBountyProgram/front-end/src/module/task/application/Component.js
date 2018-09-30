@@ -125,7 +125,9 @@ export default class extends BaseComponent {
                         <Comments type="taskCandidate" reduxType="task" canPost={true} model={applicant}
                             detailReducer={(detail) => _.find(detail.candidates, (candidate) => {
                                 return candidate.user._id === this.props.match.params.applicantId
-                            })}/>
+                            })}
+                            returnUrl={`/task-detail/${this.props.task._id}`}
+                        />
                     </Col>
                     <Col span={6} className="gridCol applicants">
                         <h4>{this.state.isDeveloperEvent ? 'Registrants' : 'Applicants'}</h4>

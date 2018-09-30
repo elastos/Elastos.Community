@@ -152,7 +152,9 @@ class C extends BaseComponent {
                     <Comments type="taskCandidate" reduxType="task" canPost={true} model={applicant}
                         detailReducer={(detail) => _.find(detail.candidates, (candidate) => {
                             return candidate._id === this.props.taskCandidateId
-                        })}/>
+                        })}
+                        returnUrl={`/empower-35-detail/${this.props.detail._id}`}
+                    />
                 </div>
             </div>
         )

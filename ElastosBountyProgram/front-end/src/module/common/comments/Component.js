@@ -228,6 +228,7 @@ class C extends BaseComponent {
                 this.props.postComment(this.props.type,
                     this.props.reduxType,
                     this.props.detailReducer,
+                    this.props.returnUrl,
                     this.getModelId(),
                     values.comment && values.comment.getPlainText(),
                     values.headline).then(() => {

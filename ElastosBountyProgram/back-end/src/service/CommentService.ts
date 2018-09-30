@@ -10,7 +10,7 @@ const sanitizeWithEmail = '-password -salt -resetToken'
 export default class extends Base {
     public async create(type, param): Promise<boolean> {
         const {
-            comment, headline, createdBy, id
+            comment, headline, createdBy, id, returnUrl
         } = param
 
         const createdAt = param.createdAt || new Date()
@@ -35,15 +35,15 @@ export default class extends Base {
 
             const mentions = comment.match(/@\w+/g)
             if (mentions) {
-                this.sendMentionEmails(type, param, createdBy, mentions)
+                this.sendMentionEmails(type, param, createdBy, mentions, returnUrl)
             }
 
             if (commentable.subscribers) {
-                this.sendSubscriberEmails(type, param, createdBy, commentable.subscribers)
+                this.sendSubscriberEmails(type, param, createdBy, commentable.subscribers, returnUrl)
             }
 
             if (commentable.createdBy) {
-                this.sendNotificationEmail(type, param, createdBy, commentable.createdBy, null)
+                this.sendNotificationEmail(type, param, createdBy, commentable.createdBy, null, returnUrl)
 
                 if (!_.map(commentable.subscribers, (sub) => sub.user._id.toString()).includes(this.currentUser._id.toString())) {
 
@@ -55,7 +55,7 @@ export default class extends Base {
                     }
                 }
             } else if (commentable.owner) {
-                this.sendNotificationEmail(type, param, createdBy, commentable.owner, null)
+                this.sendNotificationEmail(type, param, createdBy, commentable.owner, null, returnUrl)
             } else if (type === 'Task_Candidate') {
                 commentable = await db_commentable.getDBInstance().findOne({_id: id})
                     .populate('createdBy')
@@ -65,7 +65,7 @@ export default class extends Base {
                 const task = await db_task.getDBInstance().findOne({_id: commentable.task.toString()})
                     .populate('createdBy')
 
-                this.sendNotificationEmail('Application', param, createdBy, task.createdBy, commentable.user)
+                this.sendNotificationEmail('Application', param, createdBy, task.createdBy, commentable.user, returnUrl)
             } else if (type === 'User_Team') {
                 commentable = await db_commentable.getDBInstance().findOne({_id: id})
                     .populate('user')
@@ -74,7 +74,7 @@ export default class extends Base {
                 const team = await db_team.getDBInstance().findOne({_id: commentable.team})
                     .populate('owner')
 
-                this.sendNotificationEmail('Application', param, createdBy, team.owner, commentable.user)
+                this.sendNotificationEmail('Application', param, createdBy, team.owner, commentable.user, returnUrl)
             }
 
             return await db_commentable.update({_id: id}, updateObj)
@@ -138,7 +138,7 @@ export default class extends Base {
         }
     }
 
-    public async sendNotificationEmail(type, param, curUser, owner, notifier) {
+    public async sendNotificationEmail(type, param, curUser, owner, notifier, returnUrl) {
         if (curUser.current_user_id === owner._id.toString() && !notifier) {
             return; // Dont notify about own comments
         }
@@ -152,7 +152,7 @@ export default class extends Base {
             ${curUser.profile.firstName} ${curUser.profile.lastName} says:<br/>${comment}
             <br/>
             <br/>
-            <a href="${process.env.SERVER_URL}/profile/task-detail/${param.id}">Click here to view the ${type}</a>
+            <a href="${process.env.SERVER_URL}${returnUrl}">Click here to view the ${type}</a>
         `
 
         const recipient = notifier || owner
@@ -167,7 +167,7 @@ export default class extends Base {
         })
     }
 
-    public async sendMentionEmails(type, param, curUser, mentions) {
+    public async sendMentionEmails(type, param, curUser, mentions, returnUrl) {
         const {
             comment
         } = param
@@ -175,6 +175,7 @@ export default class extends Base {
         let ownerSubject = `Someone has mentioned you in a post on a ${type}`
         let ownerBody = `
             ${curUser.profile.firstName} ${curUser.profile.lastName} says:<br/>${comment}
+            <a href="${process.env.SERVER_URL}${returnUrl}">Click here to view the ${type}</a>
         `
 
         // hack for now, don't send more than 1 email to an individual subscriber
@@ -208,7 +209,7 @@ export default class extends Base {
 
     }
 
-    public async sendSubscriberEmails(type, param, curUser, subscribers) {
+    public async sendSubscriberEmails(type, param, curUser, subscribers, returnUrl) {
         const {
             comment
         } = param
@@ -218,7 +219,7 @@ export default class extends Base {
             ${curUser.profile.firstName} ${curUser.profile.lastName} says:<br/>${comment}
             <br/>
             <br/>
-            <a href="${process.env.SERVER_URL}/profile/task-detail/${param.id}">Click here to view the ${type}</a>
+            <a href="${process.env.SERVER_URL}${returnUrl}">Click here to view the ${type}</a>
         `
 
         // hack for now, don't send more than 1 email to an individual subscriber

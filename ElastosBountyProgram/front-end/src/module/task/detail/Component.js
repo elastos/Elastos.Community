@@ -366,7 +366,10 @@ export default class extends BaseComponent {
                             </Row>
                         </div>}
 
-                        <Comments type="task" canPost={true} canSubscribe={!isTaskOwner} model={this.props.task}/>
+                        <Comments type="task" canPost={true} canSubscribe={!isTaskOwner}
+                            model={this.props.task}
+                            returnUrl={`/task-detail/${this.props.task._id}`}
+                        />
                     </Col>
                     {/*
                     ********************************************************************************
