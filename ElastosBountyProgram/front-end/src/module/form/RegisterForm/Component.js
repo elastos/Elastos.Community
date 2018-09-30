@@ -44,6 +44,7 @@ class C extends BaseComponent {
                         requestedCode: code,
                         savedValues: values
                     })
+                    this.props.onHideTabBar()
                 }
             }
         })

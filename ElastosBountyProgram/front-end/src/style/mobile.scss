@@ -97,6 +97,11 @@ CR 100, Empower 35, Training
             margin-right: 0;
           }
         }
+        @media only screen and (max-width: $mobile-width) {
+          &.mobile {
+            margin-top: 0;
+          }
+        }
       }
     }
 

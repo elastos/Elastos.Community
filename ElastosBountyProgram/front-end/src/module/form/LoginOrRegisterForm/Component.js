@@ -13,12 +13,12 @@ export default class extends BaseComponent {
     ord_states() {
         return {
             persist: true,
-            activeKey: 'login' // login, register, post, login-end
+            activeKey: 'login', // login, register, post
+            hideTabBar: false
         }
     }
 
     handleSubmit() {
-        const registerRedirect = sessionStorage.getItem('registerRedirect')
         sessionStorage.removeItem('registerRedirect')
         sessionStorage.removeItem('registerWelcome')
         this.props.onHideModal()
@@ -44,12 +44,15 @@ export default class extends BaseComponent {
         return (
             <div className="c_LoginOrRegister">
                 {this.state.activeKey === 'post' ? this.showPostRegLogScreen() : (
-                    <Tabs activeKey={this.state.activeKey} onChange={(key) => { this.setState({activeKey: key}) }}>
+                    <Tabs activeKey={this.state.activeKey}
+                        onChange={(key) => { this.setState({activeKey: key}) }}
+                        className={!this.state.hideTabBar ? '' : 'hide-tabbar'}>
                         <TabPane tab="Login" key="login">
                             <LoginForm onHideModal={this.props.onHideModal}/>
                         </TabPane>
                         <TabPane tab="Register" key="register">
-                            <RegisterForm onChangeActiveKey={(key) => { this.setState({activeKey: key}) }}/>
+                            <RegisterForm onHideTabBar={() => { this.setState({hideTabBar: true}) }}
+                                onChangeActiveKey={(key) => { this.setState({activeKey: key}) }}/>
                         </TabPane>
                     </Tabs>)
                 }

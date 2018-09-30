@@ -6,6 +6,11 @@
     display: flex;
     max-width: 400px;
 
+    .hide-tabbar {
+        .ant-tabs-bar {
+            display: none;
+        }
+    }
     .side-image {
         display: inline;
     }
@@ -117,6 +122,7 @@
         }
     }
     @media only screen and (max-width: $mobile-width) {
+        width: 100%;
         height: auto;
         margin-left: 0;
 
@@ -133,6 +139,9 @@
                 margin-bottom: $gap_3;
             }
         }
+      .ant-tabs {
+        margin: 0 auto;
+      }
         .ant-divider-inner-text {
             padding: 0;
         }
