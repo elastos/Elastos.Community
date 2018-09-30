@@ -121,9 +121,16 @@
         margin-left: 0;
 
         .post-state {
+            margin-top: 0;
             .welcome-header {
-                font-size: 10vw;
-                line-height: 10vw;
+                font-size: 12vw;
+                line-height: 12vw;
+            }
+            .strike-text {
+                margin-top: $gap_1;
+            }
+            .arrow-down {
+                margin-bottom: $gap_3;
             }
         }
         .ant-divider-inner-text {
