@@ -757,18 +757,9 @@ class C extends BaseComponent {
     }
 
     format(contents = '') {
-        let first = true;
-        let elements = []
-        let key = 0
-        for (let char of contents) {
-            if (char === '-') {
-                if (!first) {
-                    elements.push(<br key={key++}/>)
-                }
-                first = false
-            }
-            elements.push(char)
-        }
+        const elements = _.map(contents, (char, ind) => char === '-'
+            ? <br key={ind}/>
+            : char)
         return elements
     }
 }
