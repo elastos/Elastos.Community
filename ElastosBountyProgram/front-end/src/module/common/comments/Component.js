@@ -187,9 +187,6 @@ class C extends BaseComponent {
         return <List
                     size="large"
                     itemLayout="horizontal"
-                    pagination={{
-                        pageSize: 5,
-                    }}
                     locale={{
                         emptyText: I18N.get('comments.noComments')
                     }}
