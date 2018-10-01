@@ -47,8 +47,7 @@ class C extends BaseComponent {
         const {getFieldDecorator} = this.props.form
         const comment_fn = getFieldDecorator('comment', {
             rules: [
-                {required: true, message: 'Please input your comment!'},
-                {max: 500, message: 'Comment is too long'}
+                {required: true, message: 'Please input your comment!'}
             ],
             initialValue: Mention.toContentState('')
         })
