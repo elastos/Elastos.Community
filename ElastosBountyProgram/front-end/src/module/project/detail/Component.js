@@ -166,9 +166,8 @@ class C extends BaseComponent {
         const leaderName = detail.createdBy.profile
             ? (detail.createdBy.profile.firstName + ' ' + detail.createdBy.profile.lastName)
             : ''
-        const deadline = detail.date || ''
-        const progress = detail.progress || ''
-        const teamSize = detail.candidateCompleted.length || ''
+        const deadline = detail.applicationDeadline ? moment(detail.applicationDeadline).format('MMM D, YYYY') : ''
+        const teamSize = detail.candidateCompleted.length || '0'
         const reward = detail.bidding
             ? (detail.status === TASK_STATUS.APPROVED ? I18N.get('project.detail.bidding_closed') : I18N.get('project.detail.bidding'))
             : detail.reward.isUsd ? detail.reward.usd + ' USD' : (detail.reward.ela / 1000) + ' ELA'
@@ -197,7 +196,6 @@ class C extends BaseComponent {
                 </a>
                 <div className="content">
                     <div className="entry">{I18N.get('project.detail.deadline')}: {deadline}</div>
-                    <div className="entry">{I18N.get('project.detail.progress')}: {progress}</div>
                     <div className="entry">{I18N.get('project.detail.team_size')}: {teamSize}</div>
                     <div className="reward">{reward}</div>
                 </div>
