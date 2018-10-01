@@ -150,7 +150,7 @@ export default class extends BaseComponent {
                 </Menu>
 
                 <Menu className="c_Header_Menu c_Side_Menu pull-right">
-                    <Menu.Item className="c_MenuItem help pull-right no-margin" key="help">
+                    <Menu.Item className="c_MenuItem help no-margin" key="help">
                         <MediaQuery minWidth={MIN_WIDTH_PC}>
                             <Dropdown overlay={helpDropdown} style="margin-top: 24px;">
                                 <a className="ant-dropdown-link">
