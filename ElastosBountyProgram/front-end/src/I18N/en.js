@@ -223,6 +223,11 @@ const en = {
     'developer.search.showMore': 'Show More…',
     'developer.search.hide': 'Hide',
     'developer.search.apply': 'Apply',
+    'developer.search.view': 'View',
+    'developer.search.subtitle_prefix': 'no longer accepting',
+    'developer.search.subtitle_bids': 'bids',
+    'developer.search.subtitle_applications': 'applications',
+    'developer.search.submit_bid': 'Submit Bid',
 
     'myrepublic.teams': 'Teams',
     'myrepublic.teams.all': 'All',
@@ -332,6 +337,9 @@ const en = {
     'project.detail.bidding_winner': 'Bidding Winner',
     'project.detail.bidding_cur_1': 'There are currently',
     'project.detail.bidding_cur_2': 'other bids',
+    'project.detail.budget': 'Budget',
+    'project.detail.reward': 'Reward',
+    'project.detail.reference_bid': 'Reference Bid',
 
     'team.detail.team_active': 'Your team is currently active',
 
