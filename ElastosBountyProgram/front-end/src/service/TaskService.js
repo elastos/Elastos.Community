@@ -109,8 +109,7 @@ export default class extends BaseService {
      * @param applyMsg
      * @returns {Promise<*>}
      */
-    async pushCandidate(taskId, userId, teamId, applyMsg, attachment, attachmentFilename) {
-
+    async pushCandidate(taskId, userId, teamId, applyMsg, attachment, attachmentFilename, bid) {
         const taskRedux = this.store.getRedux('task')
         this.dispatch(taskRedux.actions.loading_update(true))
 
@@ -123,14 +122,46 @@ export default class extends BaseService {
                 teamId,
                 applyMsg,
                 attachment,
-                attachmentFilename
+                attachmentFilename,
+                bid
             }
+        })
+
+        const curTaskDetail = this.store.getState().task.detail
+        curTaskDetail.candidates = curTaskDetail.candidates || []
+        curTaskDetail.candidates.push(result)
+        this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
+
+        this.dispatch(taskRedux.actions.loading_update(false))
+
+        return result
+    }
+
+    async updateApplication(taskId, data) {
+        const taskRedux = this.store.getRedux('task')
+        this.dispatch(taskRedux.actions.loading_update(true))
+
+        const result = await api_request({
+            path: `/api/task/updateCandidate`,
+            method: 'post',
+            data
         })
 
         this.dispatch(taskRedux.actions.loading_update(false))
 
         const curTaskDetail = this.store.getState().task.detail
+        _.remove(curTaskDetail.candidates, { _id: data.taskCandidateId })
         curTaskDetail.candidates.push(result)
+
+        let all_tasks = this.store.getState().task.all_tasks
+        if (!_.isEmpty(all_tasks)) {
+            let task = _.find(all_tasks, {_id: taskId})
+            const ind = _.indexOf(_.values(all_tasks), task)
+
+            all_tasks[ind].candidates = curTaskDetail.candidates
+            this.dispatch(taskRedux.actions.all_tasks_update(all_tasks))
+        }
+
         this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
 
         return result
@@ -246,11 +277,9 @@ export default class extends BaseService {
 
         acceptedCandidate.status = TASK_CANDIDATE_STATUS.APPROVED
 
-        if (task.status === TASK_STATUS.ASSIGNED) {
-            curTaskDetail.status = TASK_STATUS.ASSIGNED
+        if (task.status === TASK_STATUS.APPROVED) {
+            curTaskDetail.status = TASK_STATUS.APPROVED
         }
-
-        debugger
 
         this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
         this.dispatch(taskRedux.actions.loading_update(false))

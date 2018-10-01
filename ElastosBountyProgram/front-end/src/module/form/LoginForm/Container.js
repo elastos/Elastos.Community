@@ -7,7 +7,6 @@ message.config({
     top: 100
 })
 
-
 export default createContainer(Component, (state) => {
     return {
         ...state.user.login_form,
@@ -26,9 +25,10 @@ export default createContainer(Component, (state) => {
 
                     const loginRedirect = sessionStorage.getItem('loginRedirect')
                     if (loginRedirect) {
+                        console.log('login redirect')
                         this.history.push(loginRedirect)
+                        sessionStorage.setItem('loggedIn', '1')
                         sessionStorage.setItem('loginDirect', null)
-
                     } else {
                         if (rs.is_admin) {
                             this.history.push('/admin/tasks')
@@ -36,11 +36,12 @@ export default createContainer(Component, (state) => {
                             this.history.push('/profile/teams')
                         }
                     }
+                    return true
                 }
 
             } catch (err) {
-                console.error(err)
                 message.error(err.message)
+                return false
             }
         }
     }

@@ -113,5 +113,6 @@ export const User = {
     active : {
         type : Boolean,
         default : false
-    }
+    },
+    circles: [{type: Schema.Types.ObjectId, ref: 'team'}]
 };

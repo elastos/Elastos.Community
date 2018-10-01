@@ -4,10 +4,11 @@ import {api_request} from '@/util'
 
 
 export default class extends BaseService {
-    async postComment(type, reduxType, detailReducer, id, commentData) {
+    async postComment(type, reduxType, detailReducer, id, commentData, headline) {
         const redux = this.store.getRedux(reduxType || type)
         const data = {
             comment: commentData,
+            headline,
             createdBy: this.store.getState().user,
             createdAt: new Date().toISOString()
         }

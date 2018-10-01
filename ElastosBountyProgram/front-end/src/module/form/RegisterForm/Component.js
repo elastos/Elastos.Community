@@ -8,6 +8,7 @@ import {
 } from '@/config/constant'
 import config from '@/config'
 import I18N from '@/I18N'
+import _ from 'lodash'
 
 import './style.scss'
 
@@ -24,15 +25,16 @@ class C extends BaseComponent {
 
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
-                console.log('Register - received values of form: ', values)
-
-                // step 2 - there is already a code generated
                 if (this.state.requestedCode) {
-                    this.props.register(
-                        this.state.savedValues.username,
-                        this.state.savedValues.password,
-                        _.omit(this.state.savedValues, ['username', 'password'])
-                    )
+                    this.props.register(this.state.savedValues.username,
+                        this.state.savedValues.password, _.omit(this.state.savedValues, ['username', 'password']))
+                        .then((shouldShowWelcome) => {
+                            if (shouldShowWelcome) {
+                                this.props.onChangeActiveKey('post')
+                            } else {
+                                this.props.onChangeActiveKey('login')
+                            }
+                        })
                 } else {
 
                     // step 1 - check username, if valid send registration code
@@ -42,6 +44,7 @@ class C extends BaseComponent {
                         requestedCode: code,
                         savedValues: values
                     })
+                    this.props.onHideTabBar()
                 }
             }
         })
@@ -53,6 +56,22 @@ class C extends BaseComponent {
         const min = 100000
         const max = 1000000
         return Math.round(Math.random() * (max - min) + min);
+    }
+
+    checkEmail(rule, value, callback, source, options) {
+        const emailRegex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+
+        if (value && emailRegex.test(value)) {
+            this.props.checkEmail(value).then((isExist) => {
+                if (isExist) {
+                    callback(I18N.get('register.error.duplicate_email'))
+                } else {
+                    callback()
+                }
+            })
+        } else {
+            callback()
+        }
     }
 
     validateRegCode(rule, value, callback) {
@@ -107,22 +126,20 @@ class C extends BaseComponent {
         const {getFieldDecorator} = this.props.form
 
         const firstName_fn = getFieldDecorator('firstName', {
-            rules: [{required: true, message: I18N.get('register.form.label_first_name')}],
+            rules: [],
             initialValue: ''
         })
         const firstName_el = (
             <Input size="large"
-                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 placeholder={I18N.get('register.form.first_name')}/>
         )
 
         const lastName_fn = getFieldDecorator('lastName', {
-            rules: [{required: true, message: I18N.get('register.form.label_last_name')}],
+            rules: [],
             initialValue: ''
         })
         const lastName_el = (
             <Input size="large"
-                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 placeholder={I18N.get('register.form.last_name')}/>
         )
 
@@ -135,7 +152,6 @@ class C extends BaseComponent {
         })
         const username_el = (
             <Input size="large"
-                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 placeholder={I18N.get('register.form.username')}/>
         )
 
@@ -143,12 +159,13 @@ class C extends BaseComponent {
             rules: [{
                 required: true, message: I18N.get('register.form.label_email')
             }, {
-                type: 'email', message: I18N.get('register.error.email')
+                type: 'email', message: I18N.get('register.error.email'),
+            }, {
+                validator: this.checkEmail.bind(this)
             }]
         })
         const email_el = (
             <Input size="large"
-                prefix={<Icon type="mail" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 placeholder={I18N.get('register.form.email')}/>
         )
 
@@ -161,7 +178,6 @@ class C extends BaseComponent {
         })
         const pwd_el = (
             <Input size="large"
-                prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 type="password" placeholder={I18N.get('register.form.password')}/>
         )
 
@@ -174,12 +190,11 @@ class C extends BaseComponent {
         })
         const pwdConfirm_el = (
             <Input size="large"
-                prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 type="password" placeholder={I18N.get('register.form.password_confirm')}/>
         )
 
         const country_fn = getFieldDecorator('country', {
-            rules: [{required: true, message: I18N.get('register.form.label_country')}]
+            rules: []
         })
         const country_el = (
             <Select size="large"
@@ -259,27 +274,33 @@ class C extends BaseComponent {
         if (this.state.requestedCode) {
             const p = this.getConfirmInputProps()
             return (
-                <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
-                    <Divider>{I18N.get('register.code')}</Divider>
-                    <FormItem>
-                        {p.regCode}
-                    </FormItem>
-                    <FormItem>
-                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn" onClick={this.handleSubmit.bind(this)}>
-                            {I18N.get('register.submit')}
-                        </Button>
-                    </FormItem>
-                </Form>
+                <div>
+                    <h3 className="citizen-title komu-a">{I18N.get('register.code.title')}</h3>
+                    <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
+                        <FormItem>
+                            {p.regCode}
+                        </FormItem>
+                        <FormItem>
+                            <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn d_btn_join" onClick={this.handleSubmit.bind(this)}>
+                                {I18N.get('register.submit')}
+                            </Button>
+                        </FormItem>
+                        <Divider className="code-sent-text">
+                            {I18N.get('register.code')}
+                            <span className="code-email">{this.state.savedValues.email}</span>
+                        </Divider>
+                    </Form>
+                </div>
             )
         } else {
             const p = this.getInputProps()
             return (
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_registerForm">
                     <FormItem>
-                        {p.userName}
+                        {p.email}
                     </FormItem>
                     <FormItem>
-                        {p.email}
+                        {p.userName}
                     </FormItem>
                     <FormItem>
                         {p.pwd}
@@ -287,38 +308,11 @@ class C extends BaseComponent {
                     <FormItem>
                         {p.pwdConfirm}
                     </FormItem>
-                    <h5>
-                        {I18N.get('register.form.about_section')}
-                    </h5>
-                    <FormItem>
-                        {p.firstName}
-                    </FormItem>
-                    <FormItem>
-                        {p.lastName}
-                    </FormItem>
-                    <FormItem>
-                        {p.country}
-                    </FormItem>
-                    <FormItem>
-                        <Collapse accordion={true} bordered={false}>
-                            <Collapse.Panel header={I18N.get('3533')} key="1">
-                                <FormItem>
-                                    {p.organizer}
-                                </FormItem>
-                                <FormItem>
-                                    {p.developer}
-                                </FormItem>
-                                <FormItem>
-                                    {p.source}
-                                </FormItem>
-                            </Collapse.Panel>
-                        </Collapse>
-                    </FormItem>
-                    {/*<FormItem>
+                    {/* <FormItem>
                         {p.recaptcha}
-                    </FormItem>*/}
+                    </FormItem> */}
                     <FormItem>
-                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn" onClick={this.handleSubmit.bind(this)}>
+                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn d_btn_join" onClick={this.handleSubmit.bind(this)}>
                             {I18N.get('register.submit')}
                         </Button>
                     </FormItem>
@@ -328,29 +322,13 @@ class C extends BaseComponent {
     }
 
     ord_render() {
-        const {getFieldDecorator} = this.props.form
         const form = this.getForm()
-
-        // TODO: terms of service checkbox
-
-        // TODO: react-motion animate slide left
 
         return (
             <div className="c_registerContainer">
-                <h2>
-                    {I18N.get('register.title')}
-                    {/* Become a Contributor */}
-                </h2>
-
-                <h5>
-                    {I18N.get('register.description_1')}
-                    {/* As a member you can sign up for bounties on EBP,  */}
-                </h5>
-
                 {form}
             </div>
         )
-
     }
 }
 

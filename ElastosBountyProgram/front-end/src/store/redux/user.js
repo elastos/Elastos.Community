@@ -17,6 +17,7 @@ class UserRedux extends BaseRedux {
             username: '',
 
             role: '',
+            circles: [],
 
             // TODO: I think we scrap this
             login_form: {

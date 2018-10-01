@@ -83,16 +83,16 @@ class C extends BaseComponent {
         const description = detail.profile.description || ''
         const leaderImage = detail.owner.profile.avatar || ''
 
-        const recruiting_el = _.isEmpty(detail.recruitedSkillsets)
-            ? I18N.get('project.detail.not_recruiting')
-            : (
-                <div>
-                    <span className="gap-right">{I18N.get('project.detail.recruiting')}: </span>
-                    <span>
-                        {_.map(detail.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>)}
-                    </span>
-                </div>
-            )
+        const recruiting_el = (
+            <div>
+                <span className="gap-right">{I18N.get('project.detail.recruiting')}: </span>
+                <span>
+                    {_.isEmpty(detail.recruitedSkillsets) ? (
+                        <span>{I18N.get('project.detail.recruiting_skills_unknown')}</span>) : (
+                        _.map(detail.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>))}
+                </span>
+            </div>
+        )
 
         return (
             <div>
@@ -113,7 +113,7 @@ class C extends BaseComponent {
                     <hr className="divider"/>
                     <div className="description-title">{recruiting_el}</div>
                     <hr className="divider"/>
-                    <div className="description-content">{description}</div>
+                    <div className="description-content" dangerouslySetInnerHTML={{__html: description}} />
                 </div>
             </div>
         )
@@ -132,6 +132,8 @@ class C extends BaseComponent {
                             src={candidate.user.profile.avatar}/>
                         <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
                             {`${candidate.user.profile.firstName} ${candidate.user.profile.lastName}`}</a>
+
+                        {candidate.role === 'LEADER' && ' - Team Leader'}
                     </div>)
             }
         }]

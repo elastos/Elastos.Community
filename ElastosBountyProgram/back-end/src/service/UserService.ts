@@ -33,17 +33,18 @@ export default class extends Base {
         const db_user = this.getDBModel('User');
 
         const username = param.username.toLowerCase();
+        const email = param.email.toLowerCase();
 
         this.validate_username(username);
         this.validate_password(param.password);
-        this.validate_email(param.email);
+        this.validate_email(email);
 
         // check username and email unique
-        if(await db_user.findOne({username})){
-            throw 'username already exists';
+        if (await db_user.findOne({ username })) {
+            throw 'This username is already taken'
         }
-        if(await db_user.findOne({email : param.email})){
-            throw 'email already exists';
+        if (await db_user.findOne({ email: email })) {
+            throw 'This email is already taken'
         }
 
         const salt = uuid.v4();
@@ -51,7 +52,7 @@ export default class extends Base {
         const doc = {
             username,
             password : this.getPassword(param.password, salt),
-            email : param.email,
+            email,
             salt,
             profile : {
                 firstName : param.firstName,
@@ -75,13 +76,16 @@ export default class extends Base {
     }
 
     public async getUserSalt(username): Promise<String>{
+        const isEmail = validate.email(username);
         username = username.toLowerCase();
+
+        const query = {[isEmail ? 'email' : 'username'] : username};
+
         const db_user = this.getDBModel('User');
-        const user = await db_user.db.findOne({
-            username
-        });
+        const user = await db_user.db.findOne(query);
+
         if(!user){
-            throw 'invalid username';
+            throw 'invalid username or email';
         }
         return user.salt;
     }
@@ -96,18 +100,16 @@ export default class extends Base {
         const {userId} = param
 
         const db_user = this.getDBModel('User');
+        const db_team = this.getDBModel('Team')
 
         if (param.admin && (!this.currentUser || (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
             this.currentUser._id !== userId))) {
             throw 'Access Denied'
         }
 
-        if (!param.admin) {
-            selectFields += ' -email'
-        }
-
         const user = db_user.getDBInstance().findOne({_id: userId})
             .select(selectFields)
+            .populate('circles')
 
         if (!user) {
             throw `userId: ${userId} not found`
@@ -127,13 +129,19 @@ export default class extends Base {
         let user = await db_user.findById(userId)
         let countryChanged = false
 
-        if (!this.currentUser || (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
-            this.currentUser._id.toString() !== userId)) {
+        if (!this.currentUser || (this.currentUser.role !== constant.USER_ROLE.ADMIN && this.currentUser._id.toString() !== userId)) {
             throw 'Access Denied'
         }
 
         if (!user) {
             throw `userId: ${userId} not found`
+        }
+
+        if(this.currentUser.role === constant.USER_ROLE.ADMIN && param.role){
+            if(Object.keys(constant.USER_ROLE).indexOf(param.role) === -1){
+                throw 'invalid role'
+            }
+            updateObj.role = param.role
         }
 
         if (param.profile && param.profile.country && param.profile.country !== user.profile.country) {
@@ -148,6 +156,12 @@ export default class extends Base {
             updateObj.email = param.email
         }
 
+        if (param.password) {
+            const salt = uuid.v4();
+            updateObj.password = this.getPassword(param.password, salt)
+            updateObj.salt = salt
+        }
+
         if (param.removeAttachment) {
             updateObj.avatar = null
             updateObj.avatarFileType = ''
@@ -156,7 +170,8 @@ export default class extends Base {
 
         await db_user.update({_id: userId}, updateObj)
 
-        user = await db_user.findById(userId)
+        user = db_user.getDBInstance().findOne({_id: userId})
+            .populate('circles')
 
         // if we change the country, we add the new country as a community if not already
         // keep the old one too - TODO: think through this logic, maybe we only keep the old one if the new one already exists
@@ -169,10 +184,11 @@ export default class extends Base {
 
     public async findUser(query): Promise<Document>{
         const db_user = this.getDBModel('User');
-        return await db_user.findOne({
-            username: query.username.toLowerCase(),
+        const isEmail = validate.email(query.username);
+        return await db_user.getDBInstance().findOne({
+            [isEmail ? 'email' : 'username']: query.username.toLowerCase(),
             password: query.password
-        });
+        }).populate('circles');
     }
 
     public async findUsers(query): Promise<Document[]>{
@@ -195,7 +211,10 @@ export default class extends Base {
      */
     public async findAll(query): Promise<Document[]>{
         const db_user = this.getDBModel('User');
-        selectFields += ' -email'
+
+        if (!query.admin || this.currentUser.role !== constant.USER_ROLE.ADMIN) {
+            selectFields += ' -email'
+        }
 
         const finalQuery:any = {
             active: true,
@@ -228,7 +247,7 @@ export default class extends Base {
             throw 'Access Denied'
         }
 
-        const user = await db_user.findOne({username}, {reject: false});
+        let user = await db_user.findOne({username}, {reject: false});
         if(!user){
             throw 'user does not exist';
         }
@@ -237,11 +256,16 @@ export default class extends Base {
             throw 'old password is incorrect';
         }
 
-        return await db_user.update({username}, {
+        const res = await db_user.update({username}, {
             $set : {
                 password : this.getPassword(password, user.salt)
             }
         });
+
+        user = db_user.getDBInstance().findOne({username})
+            .populate('circles')
+
+        return user
     }
 
     /*
@@ -284,7 +308,7 @@ export default class extends Base {
             body: `For your convenience your username is ${userEmailMatch.username}
                 <br/>
                 <br/>
-                Please click this link to reset your password: 
+                Please click this link to reset your password:
                 <a href="${process.env.SERVER_URL}/reset-password?token=${resetToken}">${process.env.SERVER_URL}/reset-password?token=${resetToken}</a>`
         })
 
@@ -444,6 +468,10 @@ export default class extends Base {
         const db_community = this.getDBModel('Community');
         const communityService = this.getService(CommunityService);
 
+        if (!user.profile || _.isEmpty(user.profile.country)) {
+            return;
+        }
+
         // 1st check if the country already exists
         let countryCommunity = await db_community.findOne({
             type: constant.COMMUNITY_TYPE.COUNTRY,
@@ -466,5 +494,19 @@ export default class extends Base {
             userId: user._id,
             communityId: countryCommunity._id
         })
+    }
+
+    public async checkEmail(param) {
+        const db_user = this.getDBModel('User');
+
+        const email = param.email.toLowerCase();
+
+        this.validate_email(email);
+
+        if (await db_user.findOne({ email: email })) {
+            throw 'This email is already taken'
+        }
+
+        return true
     }
 }

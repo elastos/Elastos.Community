@@ -2,6 +2,12 @@
 @import '../../style/color';
 
 .c_Search {
+
+  .subtitle {
+    color: $text_light_gray;
+    font-size: 14px;
+  }
+
   .admin-left-column {
     .filter-switch {
       padding-bottom: $gap_0;
@@ -22,6 +28,15 @@
 
     .ant-list-item {
       margin: $gap_0 0;
+      .ant-list-item-main {
+        .ant-list-item-content {
+          > .description-content {
+            ul, ol {
+              margin-left: 16px;
+            }
+          }
+        }
+      }
     }
   }
 

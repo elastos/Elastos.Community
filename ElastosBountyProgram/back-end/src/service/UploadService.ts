@@ -47,7 +47,7 @@ export default class extends Base {
             fs.mkdirSync(path);
         }
 
-        file.mv(path+file_name);
+        const res = await file.mv(path+file_name);
 
         // TODO: add retry
         const uploader = s3_client.uploadFile({

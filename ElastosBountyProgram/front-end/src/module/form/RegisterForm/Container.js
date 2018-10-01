@@ -52,21 +52,17 @@ export default createContainer(Component, (state) => {
 
                 if (rs) {
                     userService.sendConfirmationEmail(profile.email)
-                    message.success('Successfully Registered - Please Login')
-
                     const registerRedirect = sessionStorage.getItem('registerRedirect')
 
                     if (registerRedirect) {
-                        sessionStorage.removeItem('registerRedirect')
-                        sessionStorage.setItem('registered', true)
-                        this.history.push(registerRedirect)
+                        return true;
                     } else {
-                        this.history.replace('/login')
+                        this.history.push('/empower35')
                     }
                 }
             } catch (err) {
                 console.error(err)
-                message.error('Registration Failed - Please Contact Our Support')
+                message.error(err && err.message ? err.message : 'Registration Failed - Please Contact Our Support')
             }
         },
 
@@ -76,6 +72,15 @@ export default createContainer(Component, (state) => {
 
         async sendRegistrationCode(email, code) {
             return userService.sendRegistrationCode(email, code)
+        },
+
+        async checkEmail(email) {
+            try {
+                await userService.checkEmail(email)
+                return false
+            } catch (err) {
+                return true
+            }
         }
     }
 })

@@ -1,77 +1,82 @@
 import React from 'react'
 import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
+import {TEAM_TYPE, TEAM_SUBCATEGORY} from '@/constant'
 import I18N from '@/I18N'
 import './style.scss'
-import { Col, Row, Card, Button, message, Spin, Avatar, Modal } from 'antd'
+import { Col, Row, Card, Button, message, Spin, Avatar, Modal, Icon } from 'antd'
 import _ from 'lodash'
-import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
-import {USER_EMPOWER_TYPE} from '@/constant'
 
-import ModalEmpowerForm from './modal_form/Component'
-
-// person head profile
-const image = '/assets/images/emp35/profile_new.jpg'
-const image_white = '/assets/images/user_blurred_white_2.png'
-
-const COLOR_SCHEME = {
-    WHITE: 'WHITE',
-    DARK: 'DARK'
-}
-
-
-
-/**
- * TODO: all the positions should load from the DB, copy pasting for now
- * until applications are being processed
- */
 export default class extends StandardPage {
-
-    constructor(props) {
-        super(props)
-
-        this.formEmpowerApply = null
-
-        this.state = {
-            loading: false,
-            showLoginRegisterModal: false,
-            visibleModalEmpowerApply: false,
-            visibleModalEmpowerView: false
+    ord_props() {
+        return {
         }
     }
 
     async componentDidMount() {
-        this.setState({ loading: false })
-        await this.props.getEmpowerUsers()
-    }
-
-    componentWillUnmount() {
-
+        await this.props.getTeams({ type: TEAM_TYPE.CRCLE })
     }
 
     checkForLoading(followup) {
-        return this.state.loading
-            ? <Spin size="large"/>
+        return this.props.loading
+            ? <div className="full-width halign-wrapper">
+                <Spin size="large"/>
+            </div>
             : _.isFunction(followup) && followup()
     }
 
-    ord_states() {
-        return {
-            showDetailId: null,
-            loading: false
-        }
+    buildCircle(circle = {}) {
+        const member = !!_.find(this.props.myCircles, { _id: circle._id })
+        const mainClassName = 'emp35-circle-item ' + (member
+            ? 'member'
+            : '')
+
+        return (
+            <div className={mainClassName}>
+                <img
+                    className="ellipsis-img"
+                    src={ member
+                        ? '/assets/images/emp35/circle_ellipse_active.svg'
+                        : '/assets/images/emp35/circle_ellipse.svg'
+                    }
+                />
+                <img
+                    className="circle-img"
+                    src="/assets/images/emp35/circle_group.svg"
+                />
+                <div className="indicator-container">
+                    <Icon type="message" style={{ fontSize: 11 }}/>
+                    <div className="indicator">{circle.comments.length}</div>
+                    <Icon type="team" style={{ fontSize: 11 }}/>
+                    <div className="indicator">{circle.members.length}</div>
+                </div>
+                <span className="title"
+                    onClick={() => this.props.history.push(`/empower35-detail/${circle._id}`)}>{circle.name}</span>
+            </div>
+        );
     }
 
-    showDetailModal(id) {
-        this.setState({
-            showDetailId: id
-        })
+    buildCirclesWorker(circles, grid) {
+        return (
+            <Row className="d_Row">
+                {_.map(circles, (circle) => (
+                    <Col key={circle._id} xs={24} sm={24} md={grid}>
+                        {this.buildCircle(circle)}
+                    </Col>
+                ))}
+            </Row>
+        )
     }
 
-    handleDetailModalClose(e) {
-        this.setState({
-            showDetailId: null
-        })
+    buildMyCircles() {
+        const myCircles = this.props.myCircles
+        return this.buildCirclesWorker(myCircles, 12)
+    }
+
+    buildCircles(query) {
+        const circles = this.props.all_teams || {};
+        const queriedCircles = _.filter(_.values(circles), query)
+        return this.buildCirclesWorker(queriedCircles, 6)
     }
 
     ord_renderContent () {
@@ -82,40 +87,16 @@ export default class extends StandardPage {
                     <div className="d_box">
                         <div className="p_content">
                             {this.buildHeader()}
-                            {this.buildEmpower()}
+                            {this.buildMyCirclesContainer()}
                             {this.buildTeamHeader()}
-                            {this.buildTeamBusiness()}
-                            {this.buildTeamMarketing()}
-                            {this.buildTeamLegal()}
-                            {this.buildMidSection()}
-                            {this.buildLowerSection()}
-                            {this.buildDisclaimer()}
+                            {this.buildEssentialCircles()}
+                            {this.buildAdvancedCircles()}
+                            {this.buildServicesCircles()}
+                            {this.buildCircleStatement()}
                         </div>
                     </div>
                 </div>
 
-                {/* TODO: when we have actual positions filled
-                <Modal
-                    visible={this.state.visibleModalEmpowerView}
-                    onCancel={() => this.setState({visibleModalEmpowerView: false})}
-                    footer={null}
-                    wrapClassName="empower-modal-view"
-                    width="90%"
-                    style={{top: '5%'}}
-                >
-
-                </Modal>
-                */}
-                {this.renderLoginOrRegisterModal()}
-
-                <ModalEmpowerForm
-                    wrappedComponentRef={this.saveFormEmpowerApplyRef}
-                    empowerType={this.state.applyEmpowerType}
-                    isLogin={this.state.is_login}
-                    visible={this.state.visibleModalEmpowerApply}
-                    onCancel={this.handleCancelModalEmpowerApply.bind(this)}
-                    onApply={this.handleApplyModalEmpowerApply.bind(this)}
-                />
                 <Footer/>
             </div>
         )
@@ -124,11 +105,22 @@ export default class extends StandardPage {
     buildHeader() {
         return (
             <div className="emp35-header">
+                <div className="circle-container">
+                    <img className="circle" src="assets/images/training_circle.png"></img>
+                </div>
+                <div className="right-box-container">
+                    <div className="small-box"></div>
+                    <div className="box"></div>
+                    <img src="assets/images/training_white_slashed_box.png"/>
+                </div>
+                <div className="bottom-box-container">
+                    <div className="box"></div>
+                </div>
+                <div className="connector-container">
+                    <img src="assets/images/training_mini_connector.png"/>
+                </div>
                 <div className="container">
                     <div className="rect-container">
-                        <img id="box_top_right_1" src="/assets/images/emp35/emp35_topRight1.png"/>
-                        <img id="box_top_right_rect_sm" src="/assets/images/emp35/emp35_rectSmall.png"/>
-                        <img id="box_top_right_rect_lg" src="/assets/images/emp35/emp35_rectLarge.png"/>
                         <div className="rect"></div>
                     </div>
                     <div className="title">
@@ -136,30 +128,18 @@ export default class extends StandardPage {
                     </div>
                     <div className="content">
                         <div class="center">
-                            {/* Desktop */}
-                            <div className="strike-text dsk">
+                            <div className="strike-text">
                                 <div className="strike-line"/>
                                 <p>{I18N.get('emp35.header.content.1')}</p>
                             </div>
-                            <br/>
-                            <div className="strike-text dsk">
+                            <div className="strike-text">
                                 <div className="strike-line"/>
                                 <p>{I18N.get('emp35.header.content.2')}</p>
                             </div>
-                            <br/>
-                            <div className="strike-text dsk">
+                            <div className="strike-text">
                                 <div className="strike-line"/>
                                 <p>{I18N.get('emp35.header.content.3')}</p>
                             </div>
-
-                            {/* Mobile */}
-                            <div className="strike-text mob">
-                                <div className="strike-line"/>
-                                <p>{I18N.get('emp35.header.content.1')}</p>
-                            </div>
-
-                            <br/>
-                            <img id="emp35_down_arrow" src="/assets/images/emp35/down_arrow.png"/>
                         </div>
                     </div>
                 </div>
@@ -167,19 +147,57 @@ export default class extends StandardPage {
         )
     }
 
-    buildEmpower() {
+    buildMyCirclesContainer() {
         return (
-            <div className="emp35-empower">
-                <div className="container">
-                    <img id="emp35_logo" src="/assets/images/emp35/E35.png"/>
-                    <img id="emp35_greenDiag" src="/assets/images/emp35/green_diag.png"/>
-                    <div className="title">
-                        {I18N.get('emp35.empower.title')}
+            <div className="emp35-my-circles-container">
+                <div className="emp35-my-circles">
+                    <div className="emp35-my-circles-message">
+                        <div className="container">
+                            <div className="content">
+                                <p>
+                                    {I18N.get('emp35.empower.content')}
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <div className="content">
-                        <p>{I18N.get('emp35.empower.content.1')}</p>
-                        <p>{I18N.get('emp35.empower.content.2')}</p>
-                        <p>{I18N.get('emp35.empower.content.3')}</p>
+                    <div className="emp35-my-circles-list">
+                        <div className="message-container">
+                            <div className="container">
+                                <div className="content">
+                                    <div className="header">
+                                        <img id="emp35_square" src="/assets/images/emp35/square.png"/>
+                                        <div className="inner-container">
+                                            <span className="title">{I18N.get('emp35.mycircles.title')}</span>
+                                        </div>
+                                    </div>
+                                    {this.props.is_login && this.buildMyCircles()}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    buildCircleStatement() {
+        return (
+            <div className="emp35-statement-container">
+                <div className="emp35-statement">
+                    <div className="emp35-statement-image">
+                        <img id="emp35_statement" src="/assets/images/what@2x.jpg"/>
+                    </div>
+                    <div className="emp35-statement-message">
+                        <div className="message-container">
+                            <img id="emp35_square" src="/assets/images/emp35/square.png"/>
+                            <div className="container">
+                                <div className="content">
+                                    <p>
+                                        {I18N.get('emp35.circles.statement')}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -188,82 +206,34 @@ export default class extends StandardPage {
 
     buildTeamHeader() {
         return (
-            <div className="emp35-teamHeader">
-                <div className="container">
-                    {/* <div id="emp35_darkBlock"/> */}
-                    <img id="emp35_lock" src="/assets/images/emp35/lock.png"/>
-                    <img id="emp35_square" src="/assets/images/emp35/square.png"/>
-                    <div className="inner-container">
-                        <span className="title">{I18N.get('emp35.teamHeader.title')}</span>
+            <div className="emp35-teamHeader-container">
+                <div className="header-bar" />
+                <div className="emp35-teamHeader">
+                    <div className="container">
+                        <div className="circle-container">
+                            <img src="assets/images/training_circle.png"></img>
+                        </div>
+                        <img id="emp35_lock" src="/assets/images/training_connector.png"/>
+                        <img id="emp35_square" src="/assets/images/emp35/square.png"/>
+                        <div className="inner-container">
+                            <span className="title">{I18N.get('emp35.teamHeader.title')}</span>
+                        </div>
                     </div>
                 </div>
             </div>
         )
     }
 
-    // temporary, these should load from DB
-    generatePositionCards(empowerType, numCards, colorScheme) {
-
-        return <div className="row-positions">
-            {_.range(numCards).map((index) => {
-                return <Card
-                    className={'card-emp35-position ' + colorScheme.toLowerCase()}
-                    bordered={false}
-                    hoverable={true}
-                    key={empowerType.toLowerCase() + '-pos-' + index}
-                    onClick={() => {
-                        if (empowerType === 'OPEN_TITLE') {
-                            return
-                        }
-
-                        if (!this.props.is_login) {
-                            this.showLoginRegisterModal()
-                            return
-                        }
-
-                        this.setState({
-                            applyEmpowerType: empowerType,
-                            visibleModalEmpowerApply: true
-                        })
-                    }}
-                    cover={<img className="event-card-image" src={colorScheme === 'WHITE' ? image_white : image}/>}>
-
-                    <Card.Meta
-                        description={I18N.get('emp35.position.open')}
-                    />
-                </Card>
-            })}
-        </div>
-
-        /* view card
-        <Card
-            className="card-emp35-position"
-            bordered={false}
-            hoverable={true}
-            key="business-pos-2"
-            onClick={() => this.setState({visibleModalEmpowerView: true})}
-            cover={<img className="event-card-image" src={image}/>}>
-
-            <Card.Meta
-                description={'John Smith'}
-            />
-        </Card>
-        */
-    }
-
-    buildTeamBusiness() {
-
+    buildEssentialCircles() {
         return (
-            <div className="emp35-teamDark" style={{paddingTop: '120px'}}>
+            <div className="emp35-teamDark">
                 <div className="container">
                     <Row>
-                        <Col xs={{span: 24}} md={{span: 14}}>
-                            <span className="blue-title">{I18N.get('emp35.position.marketing')}</span>
-                            {this.generatePositionCards(USER_EMPOWER_TYPE.MARKETING, 3, COLOR_SCHEME.DARK)}
-                        </Col>
-                        <Col xs={{span: 24}} md={{span: 10}}>
-                            <span className="blue-title">{I18N.get('emp35.position.productManager')}</span>
-                            {this.generatePositionCards(USER_EMPOWER_TYPE.PRODUCT_MANAGER, 2, COLOR_SCHEME.DARK)}
+                        <Col xs={{span: 24}} md={{span: 24}}>
+                            <span className="blue-title">Essential</span>
+                            {this.checkForLoading(() => {
+                                return this.buildCircles({ subcategory: TEAM_SUBCATEGORY.ESSENTIAL })
+                            })}
                         </Col>
                     </Row>
                 </div>
@@ -271,28 +241,16 @@ export default class extends StandardPage {
         )
     }
 
-    buildTeamMarketing() {
-
+    buildAdvancedCircles() {
         return (
-            <div className="emp35-teamDark" style={{paddingTop: '120px'}}>
+            <div className="emp35-teamDark">
                 <div className="container">
                     <Row>
-                        <Col xs={{span: 24}} md={{span: 5}}>
-                            <span className="blue-title">{I18N.get('emp35.position.legal')}</span>
-
-                            {this.generatePositionCards(USER_EMPOWER_TYPE.LEGAL, 1, COLOR_SCHEME.DARK)}
-                        </Col>
-                        <Col xs={{span: 24}} md={{span: 9}}>
-
-                            <span className="blue-title">{I18N.get('emp35.position.writer')}</span>
-
-                            {this.generatePositionCards(USER_EMPOWER_TYPE.WRITER, 2, COLOR_SCHEME.DARK)}
-                        </Col>
-                        <Col xs={{span: 24}} md={{span: 10}}>
-
-                            <span className="blue-title">{I18N.get('emp35.position.partnership')}</span>
-
-                            {this.generatePositionCards(USER_EMPOWER_TYPE.PARTNERSHIP, 2, COLOR_SCHEME.DARK)}
+                        <Col xs={{span: 24}} md={{span: 24}}>
+                            <span className="blue-title">Advanced</span>
+                            {this.checkForLoading(() => {
+                                return this.buildCircles({ subcategory: TEAM_SUBCATEGORY.ADVANCED })
+                            })}
                         </Col>
                     </Row>
                 </div>
@@ -300,249 +258,20 @@ export default class extends StandardPage {
         )
     }
 
-    buildTeamLegal() {
-
+    buildServicesCircles() {
         return (
-            <div className="emp35-teamLegal" style={{paddingTop: '120px'}}>
-                <div className="container" style={{paddingLeft: '66px'}}>
-
-                    <img id="ela_logo_dark" src="/assets/images/emp35/ELA_logo_dark.png"/>
-                    <img id="ela_logo_white" src="/assets/images/emp35/White.png"/>
-
-                    <span className="blue-title">{I18N.get('emp35.position.mediaProducer')}</span>
-
-                    {this.generatePositionCards(USER_EMPOWER_TYPE.MEDIA_PRODUCER, 1, COLOR_SCHEME.DARK)}
-                </div>
-            </div>
-        )
-    }
-
-    buildMidSection() {
-        return <Row className="lower-section">
-            <Col xs={{span: 24}} md={{span: 14}}>
-                {this.buildTeamDesigner()}
-                {this.buildTeamContent()}
-                {this.buildTeamWriter()}
-            </Col>
-            <Col xs={{span: 24}} md={{span: 10}}>
-                {this.buildTeamMedia()}
-            </Col>
-        </Row>
-    }
-
-    buildTeamDesigner() {
-        return (
-            <div className="emp35-teamDesigner">
-                <div className="container">
-                    <div className="inner-container">
-                        <span className="dark-title">{I18N.get('emp35.position.investments')}</span>
-                        {this.generatePositionCards(USER_EMPOWER_TYPE.INVESTMENTS, 2, COLOR_SCHEME.WHITE)}
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    buildTeamContent() {
-        return (
-            <div className="emp35-teamDesigner">
-                <div className="container">
-                    <div className="inner-container">
-                        <span className="dark-title">{I18N.get('emp35.position.leadDevSupport')}</span>
-                        {this.generatePositionCards(USER_EMPOWER_TYPE.LEAD_DEVELOPER_SUPPORT, 2, COLOR_SCHEME.WHITE)}
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    buildTeamWriter() {
-        return (
-            <div className="emp35-teamMedia">
-                <div className="container">
-                    <Row className="innerContainer">
-                        <Col xs={{span: 12}}>
-                            <span className="dark-title">{I18N.get('emp35.position.dAppAnalyst')}</span>
-                            {this.generatePositionCards(USER_EMPOWER_TYPE.DAPP_ANALYST, 1, COLOR_SCHEME.WHITE)}
-                        </Col>
-                        <Col xs={{span: 12}}>
-                            <span className="dark-title">{I18N.get('emp35.position.dAppConsultant')}</span>
-                            {this.generatePositionCards(USER_EMPOWER_TYPE.DAPP_CONSULTANT, 1, COLOR_SCHEME.WHITE)}
-                        </Col>
-                    </Row>
-                </div>
-            </div>
-        )
-    }
-
-    buildTeamMedia() {
-        return (
-            <div className="emp35-teamMedia">
-                <div className="container">
-                    <div className="inner-container" style={{textAlign: 'left'}}>
-                        <span className="dark-title">{I18N.get('emp35.position.businessDevelopment')}</span>
-
-                        {this.generatePositionCards(USER_EMPOWER_TYPE.BUSINESS_DEVELOPMENT, 1, COLOR_SCHEME.WHITE)}
-                    </div>
-                    <img id="emp35_seal" src="/assets/images/emp35/CyberRepublic-Blue.png"/>
-                </div>
-            </div>
-        )
-    }
-
-    buildLowerSection() {
-        return <section>
-            <div className="emp35-teamDark" style={{paddingTop: '120px'}}>
+            <div className="emp35-teamDark">
                 <div className="container">
                     <Row>
-                        <Col xs={{span: 24}} md={{span: 10}}>
-                            <span className="blue-title">{I18N.get('emp35.position.leadAdministrator')}</span>
-
-                            {this.generatePositionCards(USER_EMPOWER_TYPE.ADMINISTRATOR, 1, COLOR_SCHEME.DARK)}
-                        </Col>
-                        <Col xs={{span: 24}} md={{span: 7}}>
-
-                            <span className="blue-title">{I18N.get('emp35.position.security')}</span>
-
-                            {this.generatePositionCards(USER_EMPOWER_TYPE.SECURITY, 1, COLOR_SCHEME.DARK)}
-                        </Col>
-                        <Col xs={{span: 24}} md={{span: 7}}>
-
-                            <span className="blue-title">{I18N.get('emp35.position.hrDirector')}</span>
-
-                            {this.generatePositionCards(USER_EMPOWER_TYPE.HR_DIRECTOR, 1, COLOR_SCHEME.DARK)}
+                        <Col xs={{span: 24}} md={{span: 24}}>
+                            <span className="blue-title">Services</span>
+                            {this.checkForLoading(() => {
+                                return this.buildCircles({ subcategory: TEAM_SUBCATEGORY.SERVICES })
+                            })}
                         </Col>
                     </Row>
                 </div>
             </div>
-            <div className="emp35-teamDark" style={{paddingTop: '120px'}}>
-                <div className="container">
-                    <Row>
-                        <Col xs={{span: 24}} md={{span: 10}}>
-                            <span className="blue-title">{I18N.get('emp35.position.leadTranslator')}</span>
-
-                            {this.generatePositionCards(USER_EMPOWER_TYPE.LEAD_TRANSLATOR, 1, COLOR_SCHEME.DARK)}
-                        </Col>
-                        <Col xs={{span: 24}} md={{span: 14}}>
-
-                            <span className="blue-title">{I18N.get('emp35.position.openTitles')}</span>
-
-                            {this.generatePositionCards(USER_EMPOWER_TYPE.OPEN_TITLE, 3, COLOR_SCHEME.DARK)}
-                        </Col>
-                    </Row>
-                </div>
-            </div>
-            <div className="emp35-teamDark" style={{paddingTop: '120px'}}>
-                <div className="container">
-                    <span className="blue-title">Regional Evangelist</span>
-
-                    {this.generatePositionCards(USER_EMPOWER_TYPE.REGIONAL_EVANGELIST, 10, COLOR_SCHEME.DARK)}
-                </div>
-            </div>
-        </section>
-    }
-
-    buildDisclaimer() {
-        return (
-            <div className="disclaimer-box">
-                <div className="welcomeBox">
-                    <div className="title">
-                        {I18N.get('emp35.disclaimer.title')}
-                    </div>
-                    <div className="content">
-                        {I18N.get('emp35.disclaimer.content')}
-                    </div>
-                </div>
-            </div>
         )
-    }
-
-    buildFooter() {
-
-    }
-
-    handleSubmitProjectProposal() {
-
-    }
-
-    saveFormEmpowerApplyRef = (formRef) => {
-        this.formEmpowerApply = formRef
-    }
-
-    handleCancelModalEmpowerApply() {
-        this.setState({
-            visibleModalEmpowerApply: false
-        })
-    }
-
-    handleApplyModalEmpowerApply() {
-
-        const form = this.formEmpowerApply.props.form
-
-        form.validateFields((err, values) => {
-            if (err) {
-                return
-            }
-
-            form.resetFields()
-            this.setState({visibleModalEmpowerApply: false})
-
-            this.props.empowerApply(values, this.state).then(() => {
-                message.success(I18N.get('emp35.apply.success'))
-
-            }).catch((err) => {
-                console.error(err);
-                message.error(I18N.get('emp35.apply.error'))
-            })
-        })
-    }
-
-    /*
-    ************************************************************************************
-    * Login / Register Modal
-    ************************************************************************************
-     */
-    renderLoginOrRegisterModal() {
-        if (this.props.is_login) {
-            return
-        }
-
-        return (
-            <Modal
-                className="project-detail-nobar"
-                visible={this.state.showLoginRegisterModal}
-                onOk={this.handleLoginRegisterModalOk}
-                onCancel={this.handleLoginRegisterModalCancel}
-                footer={null}
-                width="70%"
-            >
-                <LoginOrRegisterForm />
-            </Modal>
-        )
-    }
-
-    showLoginRegisterModal = () => {
-        sessionStorage.setItem('loginRedirect', '/empower35')
-        sessionStorage.setItem('registerRedirect', '/empower35')
-
-        this.setState({
-            showLoginRegisterModal: true
-        })
-    }
-
-    handleLoginRegisterModalOk = (e) => {
-        sessionStorage.removeItem('registerRedirect')
-
-        this.setState({
-            showLoginRegisterModal: false
-        })
-    }
-
-    handleLoginRegisterModalCancel = (e) => {
-        sessionStorage.removeItem('registerRedirect')
-
-        this.setState({
-            showLoginRegisterModal: false
-        })
     }
 }

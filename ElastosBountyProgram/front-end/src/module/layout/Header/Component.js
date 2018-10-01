@@ -125,7 +125,7 @@ export default class extends BaseComponent {
     }
 
     getSelectedKeys() {
-        const keys = _.map(['cr100', 'empower35', 'evangelist-training', 'profile', 'developer', 'social', 'community'], (key) => {
+        const keys = _.map(['cr100', 'empower35', 'ambassadors', 'profile', 'developer', 'social', 'community'], (key) => {
             return ((this.props.pathname || '').indexOf(`/${key}`) === 0) ? key : ''
         })
 
@@ -150,23 +150,27 @@ export default class extends BaseComponent {
                 </Menu>
 
                 <Menu className="c_Header_Menu c_Side_Menu pull-right">
-                    <MediaQuery minWidth={MIN_WIDTH_PC}>
-                        <Menu.Item className="c_MenuItem help pull-right no-margin" key="help">
+                    <Menu.Item className="c_MenuItem help no-margin" key="help">
+                        <MediaQuery minWidth={MIN_WIDTH_PC}>
                             <Dropdown overlay={helpDropdown} style="margin-top: 24px;">
                                 <a className="ant-dropdown-link">
-                                    <Icon className="no-margin" type="question-circle-o" />
+                                    <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fillRule="evenodd" clipRule="evenodd" d="M0 0H14V1H0V0ZM0 5H14V6H0V5ZM14 10H0V11H14V10Z" fill="black"/>
+                                    </svg>
                                 </a>
                             </Dropdown>
-                        </Menu.Item>
-                    </MediaQuery>
+                        </MediaQuery>
+                    </Menu.Item>
                     <Menu.Item className="c_MenuItem mobile" key="mobileMenu" onClick={this.props.toggleMobileMenu}>
                         <Icon type="menu-fold"/>
                     </Menu.Item>
-                    <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
-                        <div className="pull-right language-dropdown mobile" style={{marginTop: 17}}>
-                            {this.buildLanguageDropdown()}
-                        </div>
-                    </MediaQuery>
+                    <Menu.Item style={{marginTop: 13}}>
+                        <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                            <div className="pull-right language-dropdown mobile">
+                                {this.buildLanguageDropdown()}
+                            </div>
+                        </MediaQuery>
+                    </Menu.Item>
                 </Menu>
 
                 <MediaQuery minWidth={MIN_WIDTH_PC}>
@@ -204,7 +208,7 @@ export default class extends BaseComponent {
                         {I18N.get('council.0001')}
                     </Menu.Item>
 
-                    <Menu.Item className="c_MenuItem link" key="evangelist-training">
+                    <Menu.Item className="c_MenuItem link" key="ambassadors">
                         {I18N.get('0107')}
                     </Menu.Item>
 
@@ -250,10 +254,11 @@ export default class extends BaseComponent {
             'developer',
             'cr100',
             'empower35',
-            'evangelist-training',
+            'ambassadors',
             'social',
             'leader',
             'community',
+            'council',
             'directory',
             'account',
             'teams',

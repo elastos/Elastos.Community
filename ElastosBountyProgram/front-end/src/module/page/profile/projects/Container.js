@@ -13,22 +13,23 @@ export default createContainer(Component, (state) => {
 
     if (/^\/admin/.test(state.router.location.pathname)) {
         page = 'ADMIN'
-    } else if (/^\/profile/.test(state.router.location.pathname)){
+    } else if (/^\/profile/.test(state.router.location.pathname)) {
         page = 'LEADER'
     }
 
     const taskState = {
         ...state.task,
+        ...state.team,
         page,
         currentUserId,
         is_leader: state.user.role === USER_ROLE.LEADER,
-        is_admin: state.user.role === USER_ROLE.ADMIN
+        is_admin: state.user.role === USER_ROLE.ADMIN,
+        loading: state.task.loading || state.team.loading
     }
 
     if (!_.isArray(taskState.all_tasks)) {
         taskState.all_tasks = _.values(taskState.all_tasks)
     }
-
 
     taskState.filter = state.task.filter || {}
     taskState.owned_tasks = []
@@ -39,6 +40,8 @@ export default createContainer(Component, (state) => {
 
     // tasks I am candidate of and approved
     taskState.candidate_active_tasks = []
+
+    taskState.cr100_tasks = []
 
     if (taskState.all_tasks.length) {
         for (let task of taskState.all_tasks) {
@@ -71,6 +74,10 @@ export default createContainer(Component, (state) => {
                         taskState.candidate_pending_tasks.push(task)
                     }
                 }
+            }
+
+            if (task.category === TASK_CATEGORY.CR100) {
+                taskState.cr100_tasks.push(task)
             }
         }
     }

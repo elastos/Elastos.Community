@@ -12,7 +12,7 @@ import MediaQuery from 'react-responsive'
 import moment from 'moment/moment'
 import Footer from '@/module/layout/Footer/Container'
 import I18N from '@/I18N'
-import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from "../../../../config/constant"
+import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '../../../../config/constant'
 
 const FormItem = Form.Item;
 
@@ -21,7 +21,7 @@ const FILTERS = {
     OWNED: 'owned',
     ACTIVE: 'active',
     APPLIED: 'applied',
-    REJECTED: 'rejected',
+    REJECTED: 'rejected'
 }
 
 export default class extends StandardPage {
@@ -166,19 +166,70 @@ export default class extends StandardPage {
         )
     }
 
+    getListItem(item) {
+        const ownerProfile = item.owner.profile || {};
+        return (
+            <div className="list-item">
+                <MediaQuery minWidth={MIN_WIDTH_PC}>
+                    <List.Item
+                        key={item.id}
+                        extra={this.getCarousel(item)}
+                    >
+                        <h3 class="no-margin no-padding one-line brand-color">
+                            <a onClick={this.linkTeamDetail.bind(this, item.id)}>{item.title}</a>
+                        </h3>
+                        <h5 class="no-margin">
+                            {item.description}
+                        </h5>
+                        <div className="description-content" dangerouslySetInnerHTML={{__html: item.content}} />
+                        <div className="ant-list-item-right-box">
+                            <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                <Avatar size="large" icon="user" className="pull-right" src={ownerProfile.avatar}/>
+                                <div class="clearfix"/>
+                                <div><span class="no-info">Owner: </span>{ownerProfile.firstName} {ownerProfile.lastName}</div>
+                            </a>
+                            <Button type="primary" className="pull-down" onClick={this.linkTeamDetail.bind(this, item.id)}>View</Button>
+                        </div>
+                    </List.Item>
+                </MediaQuery>
+                <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                    <List.Item
+                        key={item.id}
+                        className="ignore-right-box"
+                    >
+                        <h3 class="no-margin no-padding one-line brand-color">
+                            <a onClick={this.linkTeamDetail.bind(this, item.id)}>{item.title}</a>
+                        </h3>
+                        <h5 className="no-margin">
+                            {item.description}
+                        </h5>
+                        <div>
+                            <a onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                <span>{ownerProfile.firstName} {ownerProfile.lastName}</span>
+                                <Divider type="vertical"/>
+                                <Avatar size="large" icon="user" src={ownerProfile.avatar}/>
+                            </a>
+                            <Button type="primary" className="pull-right" onClick={this.linkTeamDetail.bind(this, item.id)}>View</Button>
+                        </div>
+                    </List.Item>
+                </MediaQuery>
+            </div>
+        );
+    }
+
     getListComponent() {
         const teams = this.props.all_teams
         const description_fn = (entity) => {
-            return _.isEmpty(entity.recruitedSkillsets)
-                ? I18N.get('project.detail.not_recruiting')
-                : (
-                    <div className="valign-wrapper">
-                        <div className="gap-right pull-left">{I18N.get('project.detail.recruiting')}: </div>
-                        <div className="pull-left">
-                            {_.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>)}
-                        </div>
+            return (
+                <div className="valign-wrapper">
+                    <div className="gap-right pull-left">{I18N.get('project.detail.recruiting')}: </div>
+                    <div className="pull-left">
+                        {_.isEmpty(entity.recruitedSkillsets) ? (
+                            <span>{I18N.get('project.detail.recruiting_skills_unknown')}</span>) : (
+                            _.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>))}
                     </div>
-                )
+                </div>
+            )
         }
 
         const data = _.map(teams, (team, id) => {
@@ -195,55 +246,7 @@ export default class extends StandardPage {
         return (
             <List itemLayout='vertical' size='large' loading={this.props.loading}
                 className="with-right-box" dataSource={data}
-                renderItem={item => (
-                    <div className="list-item">
-                        <MediaQuery minWidth={MIN_WIDTH_PC}>
-                            <List.Item
-                                key={item.id}
-                                extra={this.getCarousel(item)}
-                            >
-                                <h3 class="no-margin no-padding one-line brand-color">
-                                    <a onClick={this.linkTeamDetail.bind(this, item.id)}>{item.title}</a>
-                                </h3>
-                                <h5 class="no-margin">
-                                    {item.description}
-                                </h5>
-                                <div>
-                                    {item.content}
-                                </div>
-                                <div className="ant-list-item-right-box">
-                                    <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
-                                        <Avatar size="large" icon="user" className="pull-right" src={item.owner.profile.avatar}/>
-                                        <div class="clearfix"/>
-                                        <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
-                                    </a>
-                                    <Button type="primary" className="pull-down" onClick={this.linkTeamDetail.bind(this, item.id)}>View</Button>
-                                </div>
-                            </List.Item>
-                        </MediaQuery>
-                        <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
-                            <List.Item
-                                key={item.id}
-                                className="ignore-right-box"
-                            >
-                                <h3 class="no-margin no-padding one-line brand-color">
-                                    <a onClick={this.linkTeamDetail.bind(this, item.id)}>{item.title}</a>
-                                </h3>
-                                <h5 className="no-margin">
-                                    {item.description}
-                                </h5>
-                                <div>
-                                    <a onClick={this.linkUserDetail.bind(this, item.owner)}>
-                                        <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
-                                        <Divider type="vertical"/>
-                                        <Avatar size="large" icon="user" src={item.owner.profile.avatar}/>
-                                    </a>
-                                    <Button type="primary" className="pull-right" onClick={this.linkTeamDetail.bind(this, item.id)}>View</Button>
-                                </div>
-                            </List.Item>
-                        </MediaQuery>
-                    </div>
-                )}
+                renderItem={item => this.getListItem(item)}
             />
         )
     }

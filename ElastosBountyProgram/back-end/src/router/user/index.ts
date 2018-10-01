@@ -8,6 +8,7 @@ import current_user from './current_user';
 import send_email from './send_email';
 import send_reg_email from './send_reg_email';
 import send_confirm_email from './send_confirm_email';
+import check_email from './check_email';
 import change_password from './change_password';
 import forgot_password from './forgot_password';
 import reset_password from './reset_password';
@@ -47,6 +48,11 @@ export default Base.setRouter([
     {
         path: '/send-confirm',
         router: send_confirm_email,
+        method: 'post'
+    },
+    {
+        path: '/check-email',
+        router: check_email,
         method: 'post'
     },
     {

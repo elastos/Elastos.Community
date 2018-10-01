@@ -14,7 +14,7 @@ export default class extends EmptyPage {
     buildLanguageDropdown() {
         return (
             <div className="language-dropdown">
-                <Select defaultValue={I18N.getLang()} style={{ width: 24 + 11 + 11 }} onChange={this.props.changeLanguage}>
+                <Select defaultValue={I18N.getLang()} style={{ width: 24+11+11 }} onChange={this.props.changeLanguage}>
                     <Select.Option value="en">
                         <Flag name="US" format="png"
                             basePath="/assets/images/flags"
@@ -59,7 +59,7 @@ export default class extends EmptyPage {
                             <li><a href="/cr100">{I18N.get('0105')}</a></li>
                             <li><a href="/empower35">{I18N.get('0106')}</a></li>
                             <li><a href="/council/list">{I18N.get('council.0001')}</a></li>
-                            <li><a href="/evangelist-training">{I18N.get('0107')}</a></li>
+                            <li><a href="/ambassadors">{I18N.get('0107')}</a></li>
                             <li><a href="/developer">{I18N.get('0102')}</a></li>
 
                             {this.props.is_login
@@ -91,10 +91,10 @@ export default class extends EmptyPage {
                 <div className="contentContainer">
                     <nav className="toplinks">
                         <ul>
-                            <li><a href="/cr100">{I18N.get('0105')}</a></li>
-                            <li><a href="/empower35">{I18N.get('0106')}</a></li>
-                            <li><a href="/evangelist-training">{I18N.get('0107')}</a></li>
-                            <li><a href="/community">{I18N.get('0102')}</a></li>
+                            <li><a href="/cr100">CR100</a></li>
+                            <li><a href="/empower35">Empower35</a></li>
+                            <li><a href="/ambassadors">Ambassadors</a></li>
+                            <li><a href="/community">Community</a></li>
 
                             {this.props.is_login
                                 ? <li><a href="/profile/teams">{I18N.get('0104')}</a></li>

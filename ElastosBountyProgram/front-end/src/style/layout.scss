@@ -51,6 +51,12 @@
     .c_MenuItem.help {
       padding-right: 46px;
     }
+
+    @media only screen and (max-width: $mobile-width) {
+      .c_MenuItem.help {
+        display: none;
+      }
+    }
   }
 
   .c_MenuItem {
@@ -187,12 +193,42 @@
   .c_Header .c_MenuTopRight {
     margin-right: 0;
   }
-}
-
-.c_Side_Menu {
-  // display: none;
-  @media only screen and (max-width: $mobile-width) {
-    display: unset;
+  .c_Header.ant-layout-header {
+    .c_Side_Menu {
+      // display: none;
+      display: unset;
+    }
   }
 }
 
+.project-detail-nobar {
+  .login-register-modal {
+    width: calc(100% + 72px);
+    margin-left: -36px;
+    margin-bottom: -36px;
+    display: flex;
+
+    .side-image {
+      display: flex;
+      max-width: 50%;
+
+      img {
+        padding-top: $gap_2;
+        width: 100%;
+      }
+    }
+    .side-form {
+      display: flex;
+      margin: $gap_4 auto 0;
+    }
+
+    @media only screen and (max-width: $mobile-width) {
+      .side-image {
+        display: none;
+      }
+      .side-form {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -23,8 +23,9 @@ class C extends BaseComponent {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.props.login(values.username, values.password, this.state.persist)
-
+                this.props.login(values.username, values.password, this.state.persist).then(() => {
+                    this.props.onHideModal()
+                })
             }
         })
     }
@@ -37,7 +38,6 @@ class C extends BaseComponent {
         })
         const userName_el = (
             <Input size="large"
-                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 placeholder={I18N.get('login.username')}/>
         )
 
@@ -46,13 +46,12 @@ class C extends BaseComponent {
         })
         const pwd_el = (
             <Input size="large"
-                prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 type="password" placeholder={I18N.get('login.password')}/>
         )
 
         const persist_fn = getFieldDecorator('persist')
         const persist_el = (
-            <Checkbox onClick={this.togglePersist.bind(this)} checked={this.state.persist}>{I18N.get('login.logged')}</Checkbox>
+            <Checkbox className="checkbox pull-left" onClick={this.togglePersist.bind(this)} checked={this.state.persist}>{I18N.get('login.logged')}</Checkbox>
         )
 
         return {
@@ -70,14 +69,6 @@ class C extends BaseComponent {
         const p = this.getInputProps()
         return (
             <Form onSubmit={this.handleSubmit.bind(this)} className="c_loginForm">
-                <h2>
-                    {I18N.get('login.title')}
-                </h2>
-
-                <h5>
-                    {I18N.get('login.description_1')}
-                </h5>
-
                 <FormItem>
                     {p.userName}
                 </FormItem>
@@ -86,18 +77,11 @@ class C extends BaseComponent {
                 </FormItem>
                 <FormItem>
                     {p.persist}
-                </FormItem>
-                <FormItem className="d_item">
-                    <a className="login-form-forgot" onClick={() => this.props.history.push('/forgot-password')}>{I18N.get('login.forget')}</a>
+                    <a className="login-form-forgot pull-right" onClick={() => this.props.history.push('/forgot-password')}>{I18N.get('login.forget')}</a>
                 </FormItem>
                 <FormItem>
-                    <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
+                    <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn d_btn_join">
                         {I18N.get('login.submit')}
-                    </Button>
-                </FormItem>
-                <FormItem>
-                    <Button onClick={() => this.props.history.push('/register')} type="ebp" htmlType="button" className="d_btn">
-                        Don't have an account? Click here to register.
                     </Button>
                 </FormItem>
             </Form>

@@ -21,6 +21,14 @@ const sanitize = '-password -salt -email -resetToken'
 // TODO: we need some sort of status -> status permitted map
 
 export default class extends Base {
+
+    /**
+     * TODO: We must ensure that bids are secret, and unless you are an admin we don't return the
+     * bids on the task
+     *
+     * @param param
+     * @returns {Promise<"mongoose".Document>}
+     */
     public async show(param): Promise<Document> {
         const db_task = this.getDBModel('Task')
         const db_task_candidate = this.getDBModel('Task_Candidate')
@@ -60,6 +68,29 @@ export default class extends Base {
                 await db_team.getDBInstance().populate(candidate, {
                     path: 'team'
                 })
+
+                if (candidate.team) {
+                    await db_user.getDBInstance().populate(candidate.team, {
+                        path: 'owner',
+                        select: sanitize
+                    })
+
+                    await db_team.getDBInstance().populate(candidate.team, ['members'])
+
+                    /* // should be user_team populate
+                    for (let member of candidate.team.members) {
+                        await db_team.getDBInstance().populate(member, {
+                            path: 'team',
+                            select: sanitize
+                        })
+
+                        await db_user.getDBInstance().populate(member, {
+                            path: 'user',
+                            select: sanitize
+                        })
+                    }
+                    */
+                }
 
                 for (let comment of candidate.comments) {
                     for (let thread of comment) {
@@ -105,6 +136,8 @@ export default class extends Base {
         const db_task = this.getDBModel('Task');
         const db_task_candidate = this.getDBModel('Task_Candidate');
         const db_user = this.getDBModel('User');
+        const db_team = this.getDBModel('Team');
+        const db_user_team = this.getDBModel('User_Team');
 
         const tasks = await db_task.list(param, {
             updatedAt: -1
@@ -153,7 +186,13 @@ export default class extends Base {
                         path: 'user',
                         select: sanitize
                     })
+
                     await db_task_candidate.getDBInstance().populate(candidate, ['team'])
+
+                    if (candidate.team) {
+                        await db_team.getDBInstance().populate(candidate.team, ['members'])
+                    }
+
                 }
             }
         }
@@ -182,7 +221,7 @@ export default class extends Base {
 
             attachment, attachmentType, attachmentFilename, isUsd,
 
-            domain, recruitedSkillsets, pictures, pitch
+            domain, recruitedSkillsets, pictures, pitch, bidding, referenceBid
         } = param;
         this.validate_name(name);
         this.validate_description(description);
@@ -193,12 +232,19 @@ export default class extends Base {
         let status = constant.TASK_STATUS.CREATED;
 
         if (rewardUpfront.ela > 0 || reward.ela > 0 || rewardUpfront.usd > 0 || reward.usd > 0) {
-            status = constant.TASK_STATUS.PENDING;
+
+            // there is ELA / USD involved so we start in PENDING unless we are an admin
+            if (this.currentUser.role === constant.USER_ROLE.ADMIN) {
+                status = constant.TASK_STATUS.PENDING
+            } else {
+                status = constant.TASK_STATUS.APPROVED
+            }
+
         } else {
             // if there is no ELA and you are assigning yourself,
-            // it'll automatically go to ASSIGNED
+            // it'll automatically go to APPROVED
             if (assignSelf) {
-                status = constant.TASK_STATUS.ASSIGNED
+                status = constant.TASK_STATUS.APPROVED
             }
         }
 
@@ -213,6 +259,8 @@ export default class extends Base {
 
             eventDateRange, eventDateRangeStart, eventDateRangeEnd, eventDateStatus,
             location,
+            bidding,
+            referenceBid,
 
             attachment, attachmentType, attachmentFilename,
             candidateLimit,
@@ -256,7 +304,7 @@ export default class extends Base {
 
         const db_task = this.getDBModel('Task');
 
-        console.log('create task => ', doc);
+        // console.log('create task => ', doc);
         const task = await db_task.save(doc);
 
         this.sendCreateEmail(this.currentUser, task)
@@ -298,6 +346,10 @@ export default class extends Base {
             throw 'Access Denied'
         }
 
+        if (param.status === constant.TASK_STATUS.ASSIGNED) {
+            throw 'Assigned Status is Deprecated'
+        }
+
         // organizer cannot change task to these statuses
         if (this.currentUser.role === constant.USER_ROLE.LEADER) {
 
@@ -307,7 +359,7 @@ export default class extends Base {
                 constant.TASK_STATUS.APPROVED
 
             ].includes(param.status)) {
-                throw 'Access Denied'
+                throw 'Access Denied - Status'
             }
 
         }
@@ -340,11 +392,6 @@ export default class extends Base {
                     updateObj.status = constant.TASK_STATUS.APPROVED
                     updateObj.approvedBy = this.currentUser._id
 
-                    // if assignSelf = true, then we push the status to ASSIGNED
-                    if (task.assignSelf) {
-                        updateObj.status = constant.TASK_STATUS.ASSIGNED
-                    }
-
                     // TODO: move this to agenda/queue
                     await this.sendTaskApproveEmail(this.currentUser, taskOwner, task)
 
@@ -371,40 +418,34 @@ export default class extends Base {
         // if you're the owner - applies for admins and organizers
         if (this.currentUser._id.toString() === task.createdBy.toString()) {
 
-            // shortcut with error for these
-            if (task.status !== constant.TASK_STATUS.ASSIGNED &&
+            // shortcut with error for these - only allow status change from APPROVED -> SUBMITTED
+            if (task.status !== constant.TASK_STATUS.APPROVED &&
                 param.status === constant.TASK_STATUS.SUBMITTED
             ) {
                 throw 'Invalid Action'
             }
 
+            // these status changes are only allowed if we are changing to APPROVED/SUBMITTED status
             if (task.status !== constant.TASK_STATUS.PENDING &&
                 (
                     param.status === constant.TASK_STATUS.SUBMITTED ||
-                    param.status === constant.TASK_STATUS.ASSIGNED
+                    param.status === constant.TASK_STATUS.APPROVED
                 )
             ) {
                 updateObj.status = param.status
 
+                if (param.status === constant.TASK_STATUS.SUBMITTED) {
+                    await this.sendTaskSuccessEmail(taskOwner, task)
+                }
+
+                /*
                 if (param.status === constant.TASK_STATUS.ASSIGNED) {
                     await this.sendTaskAssignedEmail(taskOwner, task)
 
-                } else if (param.status === constant.TASK_STATUS.SUBMITTED) {
-                    await this.sendTaskSuccessEmail(taskOwner, task)
-                }
+                } else
+                */
             }
         }
-
-        if (param.status === constant.TASK_STATUS.SUBMITTED) {
-
-        }
-
-        // TODO: check if candidate is the owner, then we auto .... ?
-        /*
-        if (param.status === constant.TASK_STATUS.ASSIGNED) {
-
-        }
-        */
 
         // TODO: check if user is approved candidate
         // TODO: accept as complete should not be allowed unless at least one candidate has submitted
@@ -460,17 +501,73 @@ export default class extends Base {
         return rs;
     }
 
+    public async updateCandidate(param): Promise<boolean> {
+        const {taskCandidateId, user, team, attachment, attachmentFilename, bid} = param
+        const candidateSelector = {
+            _id: param.taskCandidateId
+        }
+        const updateObj:any = {}
+
+        if (user) {
+            updateObj.user = user
+        }
+
+        if (team) {
+            updateObj.team = team
+        }
+
+        if (attachment) {
+            updateObj.attachment = attachment
+        }
+
+        if (attachmentFilename) {
+            updateObj.attachmentFilename = attachmentFilename
+        }
+
+        if (bid || bid === 0) {
+            updateObj.bid = bid
+        }
+
+        if (user || team) {
+            updateObj.type = user
+                ? constant.TASK_CANDIDATE_TYPE.USER
+                : constant.TASK_CANDIDATE_TYPE.TEAM
+        }
+
+        const db_tc = this.getDBModel('Task_Candidate')
+        if(!await db_tc.findOne(candidateSelector)) {
+            throw 'Candidate not found'
+        }
+
+        await db_tc.update(candidateSelector, updateObj)
+
+        const taskCandidate = await db_tc.getDBInstance().findOne(candidateSelector)
+            .populate('user', sanitize)
+            .populate('team', sanitize)
+
+        if (taskCandidate.team) {
+            const db_team = this.getDBModel('Team');
+            await db_team.db.populate(taskCandidate.team, {
+                path: 'owner',
+                select: sanitize
+            })
+        }
+
+        return taskCandidate
+    }
+
     /*
     * candidate could be user or team
     *
     * */
     public async addCandidate(param): Promise<boolean> {
-        const {teamId, userId, taskId, applyMsg, assignSelf, attachment, attachmentFilename} = param;
+        const {teamId, userId, taskId, applyMsg, assignSelf, attachment, attachmentFilename, bid} = param;
         const doc: any = {
             task: taskId,
             applyMsg,
             attachment,
-            attachmentFilename
+            attachmentFilename,
+            bid
         };
         const db_user = this.getDBModel('User');
 
@@ -513,12 +610,6 @@ export default class extends Base {
             throw 'invalid task id';
         }
 
-        // check limit
-        const total = await db_tc.count({taskId});
-        if(total >= task.candidateLimit){
-            throw 'candidate amount is up to limit';
-        }
-
         console.log('add task candidate =>', doc);
         const taskCandidate = await db_tc.save(doc);
 
@@ -531,8 +622,22 @@ export default class extends Base {
 
         await task.save()
 
-        // populate the taskCandidate
-        await db_tc.db.populate(taskCandidate, ['user', 'team'])
+        await db_tc.db.populate(taskCandidate, {
+            path: 'user',
+            select: sanitize
+        })
+
+        await db_tc.db.populate(taskCandidate, {
+            path: 'team',
+            select: sanitize
+        })
+
+        if (taskCandidate.team) {
+            await db_user.db.populate(taskCandidate.team, {
+                path: 'owner',
+                select: sanitize
+            })
+        }
 
         // send the email - first get the task owner
         if (!assignSelf) {
@@ -588,7 +693,15 @@ export default class extends Base {
         await task.save()
 
         // populate the taskCandidate
-        await db_tc.db.populate(taskCandidate, ['user', 'team'])
+        await db_tc.db.populate(taskCandidate, {
+            path: 'user',
+            select: sanitize
+        })
+
+        await db_tc.db.populate(taskCandidate, {
+            path: 'team',
+            select: sanitize
+        })
 
         const taskOwner = await db_user.findById(task.createdBy)
         await this.sendAddCandidateEmail(this.currentUser, taskOwner, task)
@@ -759,11 +872,11 @@ export default class extends Base {
             }
         }
 
-        if (acceptedCnt >= task.candidateSltLimit) {
+        if (task.bidding || acceptedCnt >= task.candidateSltLimit) {
             await db_task.update({
                 _id: task._id
             }, {
-                status: constant.TASK_STATUS.ASSIGNED
+                status: constant.TASK_STATUS.APPROVED
             })
         }
 
@@ -810,15 +923,6 @@ export default class extends Base {
         let doc = await db_tc.findById(taskCandidateId)
         await db_tc.db.populate(doc, ['team'])
 
-        if (!doc || doc.role === constant.TEAM_ROLE.OWNER) {
-            throw 'Invalid status'
-        }
-
-        if (doc.user.toString() !== this.currentUser._id.toString() ||
-            doc.team.owner.toString() !== this.currentUser._id.toString()) {
-            throw 'Access Denied'
-        }
-
         await db_tc.remove({
             _id: taskCandidateId
         })
@@ -861,12 +965,24 @@ export default class extends Base {
         // TODO check current user has enough votePower or not.
     }
 
+    /**
+     * Returns all task candidates that match the user id
+     *
+     * @param userId
+     */
     public async getCandidatesForUser(userId) {
-
         const db_task_candidate = this.getDBModel('Task_Candidate');
-
         return db_task_candidate.list({user: userId})
+    }
 
+    /**
+     * Returns all task candidates that match the team id
+     *
+     * @param teamId
+     */
+    public async getCandidatesForTeam(teamId) {
+        const db_task_candidate = this.getDBModel('Task_Candidate');
+        return db_task_candidate.list({team: teamId})
     }
 
     /**

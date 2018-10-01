@@ -23,4 +23,14 @@
             display: none;
         }
     }
+
+    .ant-dropdown-link {
+        &:hover svg path{
+            fill: #43AF92;
+        }
+
+        svg{
+            vertical-align: middle;
+        }
+    }
 }

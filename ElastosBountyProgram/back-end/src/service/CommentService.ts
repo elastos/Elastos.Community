@@ -10,7 +10,7 @@ const sanitizeWithEmail = '-password -salt -resetToken'
 export default class extends Base {
     public async create(type, param): Promise<boolean> {
         const {
-            comment, createdBy, id
+            comment, headline, createdBy, id
         } = param
 
         const createdAt = param.createdAt || new Date()
@@ -28,6 +28,7 @@ export default class extends Base {
             }
             updateObj.comments.push({
                 comment,
+                headline,
                 createdBy: this.currentUser,
                 createdAt
             })

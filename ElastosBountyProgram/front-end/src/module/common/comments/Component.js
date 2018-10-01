@@ -5,6 +5,7 @@ import config from '@/config'
 import './style.scss'
 import moment from 'moment'
 import _ from 'lodash'
+import I18N from '@/I18N'
 
 const TextArea = Input.TextArea
 const FormItem = Form.Item
@@ -43,15 +44,29 @@ class C extends BaseComponent {
     getInputProps() {
         const {getFieldDecorator} = this.props.form
         const comment_fn = getFieldDecorator('comment', {
-            rules: [{required: true, message: 'Please input your comment!'}],
+            rules: [
+                {required: true, message: 'Please input your comment'},
+                {max: 500, message: 'Comment is too long'}
+            ],
             initialValue: ''
         })
         const comment_el = (
             <TextArea rows={4} placeholder="Comments or updates"/>
         )
 
+        const headline_fn = getFieldDecorator('headline', {
+            rules: [{
+                max: 100, message: 'Headline is too long'
+            }],
+            initialValue: ''
+        })
+        const headline_el = (
+            <Input placeholder="Headline"/>
+        )
+
         return {
-            comment: comment_fn(comment_el)
+            comment: comment_fn(comment_el),
+            headline: headline_fn(headline_el)
         }
     }
 
@@ -95,6 +110,11 @@ class C extends BaseComponent {
         // TODO - canSubscribe requires canPost here, could be improved
         return this.props.canPost ?
             (<Form onSubmit={this.handleSubmit.bind(this)} className="c_commentForm">
+                { this.props.headlines &&
+                    <FormItem>
+                        {p.headline}
+                    </FormItem>
+                }
                 <FormItem>
                     {p.comment}
                 </FormItem>
@@ -135,59 +155,61 @@ class C extends BaseComponent {
         const footer = this.getFooter()
 
         const commentItems = _.map(comments, (comment, ind) =>
-            {
-                const thread = _.first(comment)
-                const createdByUsername = (thread.createdBy && thread.createdBy.username) || ''
-                const avatar = (thread.createdBy && thread.createdBy.profile.avatar) || ''
-                const createdById = (thread.createdBy && thread.createdBy._id)
-                const dateFormatted = dateFormatter(thread.createdAt)
+        {
+            const thread = _.first(comment)
+            const createdByUsername = (thread.createdBy && thread.createdBy.username) || ''
+            const avatar = (thread.createdBy && thread.createdBy.profile && thread.createdBy.profile.avatar) || '/assets/images/Elastos_Logo.png'
+            const createdById = (thread.createdBy && thread.createdBy._id)
+            const dateFormatted = dateFormatter(thread.createdAt)
 
-                return {
-                    title: thread.comment,
-                    description: (
-                        <div>
-                            <a onClick={() => {createdById && this.props.history.push(`/member/${createdById}`)}}>
-                                {createdByUsername}
-                            </a>
-                            {dateFormatted && <span>, {dateFormatted}</span>}
-                        </div>
-                    ),
-                    avatar,
-                }
+            return {
+                comment: thread.comment,
+                headline: thread.headline,
+                description: (
+                    <div className="commenter-info">
+                        <a onClick={() => {createdById && this.props.history.push(`/member/${createdById}`)}}>
+                            {createdByUsername}
+                        </a>
+                        {dateFormatted &&
+                        <span>
+                            <span className="date-colon">, </span>
+                            <span className="date">{dateFormatted}</span>
+                        </span>}
+                    </div>
+                ),
+                avatar
             }
-        )
+        })
 
         // Show in reverse chronological order
         commentItems && commentItems.reverse();
 
-        return  <div>
-            {commentItems && commentItems.length ?
-                <List
+        return <List
                     size="large"
                     itemLayout="horizontal"
-                    pagination={{
-                        pageSize: 5,
+                    locale={{
+                        emptyText: I18N.get('comments.noComments')
                     }}
                     dataSource={commentItems}
                     header={footer}
                     renderItem={(item, ind) => (
                         <List.Item key={ind}>
-                            <List.Item.Meta
-                                avatar={<Avatar src={item.avatar}/>}
-                                title={item.title}
-                                description={item.description}
-                            />
+                            <Avatar className="comment-avatar pull-left" src={item.avatar} shape="circle" size={64}/>
+                            <div className="comment-content pull-left">
+                                { item.headline &&
+                                    <h4>
+                                        {item.headline}
+                                    </h4>
+                                }
+                                <h5>
+                                    {item.comment}
+                                </h5>
+                                <hr/>
+                                {item.description}
+                            </div>
                         </List.Item>
                     )}
-                /> :
-                <div>
-                    {footer}
-                    <div className="center no-info">
-                        no comments
-                    </div>
-                </div>
-            }
-        </div>
+                />
     }
 
     handleSubmit(e) {
@@ -198,7 +220,8 @@ class C extends BaseComponent {
                     this.props.reduxType,
                     this.props.detailReducer,
                     this.getModelId(),
-                    values.comment).then(() => {
+                    values.comment,
+                    values.headline).then(() => {
                         this.props.form.resetFields()
                     })
             }

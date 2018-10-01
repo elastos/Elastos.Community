@@ -1,10 +1,11 @@
 import {createContainer} from '@/util'
-import Component from './Component'
 import TaskService from '@/service/TaskService'
 import TeamService from '@/service/TeamService'
+import Component from './Component'
+import _ from 'lodash'
 
 export default createContainer(Component, (state) => {
-    let page = 'PUBLIC' // default
+    let page = 'CR100' // default
 
     if (/^\/admin/.test(state.router.location.pathname)) {
         page = 'ADMIN'
@@ -18,6 +19,7 @@ export default createContainer(Component, (state) => {
         ownedTeams: state.team.all_teams,
         currentUserId: state.user.current_user_id,
         currentUserAvatar: state.user.profile.avatar,
+        is_admin: state.user.is_admin,
         loading: state.task.loading || state.team.loading
     }
 }, () => {
@@ -33,12 +35,18 @@ export default createContainer(Component, (state) => {
             return taskService.resetTaskDetail()
         },
 
-        async applyToTask(taskId, userId, teamId, applyMsg) {
-            return taskService.pushCandidate(taskId, userId, teamId, applyMsg)
-        },
-
+        // TODO: we need to get all the users's teams and all teams that applied for the task
         async getTeams(query) {
             return teamService.index(query)
+        },
+
+        async getUserTeams(userId) {
+            return teamService.getUserTeams(userId)
+        },
+
+        async applyToTask(taskId, userId, teamId, applyMsg, attachment, attachmentFilename, bid) {
+
+            return taskService.pushCandidate(taskId, userId, teamId, applyMsg, attachment, attachmentFilename, bid)
         },
 
         resetAllTeams() {

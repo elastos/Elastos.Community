@@ -3,13 +3,16 @@ import Component from './Component'
 import TaskService from '@/service/TaskService'
 import TeamService from '@/service/TeamService'
 import _ from 'lodash'
-import {TASK_CATEGORY, TASK_TYPE} from '@/constant'
+import {TASK_CATEGORY, TASK_TYPE, TEAM_TYPE} from '@/constant'
 
 export default createContainer(Component, (state) => {
+
+    // TODO: not sure this should be all one struct
     return {
         ...state.task,
         ...state.team,
         ...state.user,
+        all_teams: _.filter(state.team.all_teams, { type: TEAM_TYPE.TEAM }),
         loading: state.team.loading || state.task.loading
     }
 }, () => {
@@ -30,7 +33,10 @@ export default createContainer(Component, (state) => {
         },
 
         async getTeams(filters) {
-            return teamService.index(filters)
+            return teamService.index({
+                ...filters,
+                type: TEAM_TYPE.TEAM
+            })
         },
 
         resetTeams () {

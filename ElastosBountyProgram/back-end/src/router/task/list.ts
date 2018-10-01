@@ -3,6 +3,7 @@ import TaskService from '../../service/TaskService';
 import * as _ from 'lodash';
 import {constant} from '../../constant';
 import {Types} from 'mongoose';
+import TeamService from "../../service/TeamService";
 const ObjectId = Types.ObjectId;
 
 export default class extends Base{
@@ -31,8 +32,7 @@ export default class extends Base{
         if (param.category && _.values(constant.TASK_CATEGORY).includes(param.category)) {
             query.category = param.category;
         } else {
-            query.category = {$in: [constant.TASK_CATEGORY.DEVELOPER, constant.TASK_CATEGORY.SOCIAL,
-                constant.TASK_CATEGORY.CR100]}
+            query.category = {$in: [constant.TASK_CATEGORY.DEVELOPER, constant.TASK_CATEGORY.SOCIAL]}
         }
 
         if (param.domain) {
@@ -82,13 +82,29 @@ export default class extends Base{
             // we need to find task candidates that match the user
             const taskCandidatesForUser = await taskService.getCandidatesForUser(currentUserId)
 
+            // we need to find task candidates that match the users' team
+
+            // Fetch all team where the current user is a member of
+            const teamService = this.buildService(TeamService)
+            const param2 = {
+                teamHasUser: currentUserId
+            }
+            const teams = await teamService.list(param2)
+
+            // Iterate all teams and check if the team is a candidate of the task
+            for (let i = 0; i < _.size(teams); i++) {
+                const userTeam = teams[i] as any
+                const taskCandidates = await taskService.getCandidatesForTeam(userTeam._id)
+                if (taskCandidates.length) {
+                    query.$or.push({candidates: {$in: _.map(taskCandidates, '_id')}})
+                }
+            }
+
             if (taskCandidatesForUser.length) {
                 query.$or.push({candidates: {$in: _.map(taskCandidatesForUser, '_id')}})
             }
 
-            query.$or.push({subscribers: {$in: [currentUserId]}})
-
-            // TODO: how about teams? Probably needs to be done too
+            query.$or.push({subscribers: {$all: [{"$elemMatch": {user: currentUserId}}] }})
 
             query.status = {$in: [
                     constant.TASK_STATUS.CREATED,

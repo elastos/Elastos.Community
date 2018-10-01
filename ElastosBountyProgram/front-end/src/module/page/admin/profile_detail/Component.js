@@ -17,7 +17,10 @@ export default class extends AdminPage {
         await super.componentDidMount()
         const userId = this.props.match.params.userId
         this.props.getMember(userId)
+    }
 
+    componentWillUnmount() {
+        this.props.resetMemberDetail()
     }
 
     ord_renderContent () {
@@ -43,7 +46,7 @@ export default class extends AdminPage {
                         <div className="p_admin_content">
                             <Row className="clearfix">
                                 <Col span={4} className="admin-left-column wrap-box-navigator">
-                                    <Navigator selectedItem={'tasks'}/>
+                                    <Navigator selectedItem={'users'}/>
                                 </Col>
                                 <Col span={20} className="admin-left-column wrap-box-user">
                                     <Profile user={this.props.member}/>

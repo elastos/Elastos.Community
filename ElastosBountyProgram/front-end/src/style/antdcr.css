@@ -2533,6 +2533,7 @@ mark {
 @media screen and (max-width: 480px) {
   .ant-back-top {
     right: 20px;
+    bottom: 100px;
   }
 }
 .ant-badge {

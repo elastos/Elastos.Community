@@ -118,6 +118,7 @@ export default {
     'register.form.username': '用户名',
     'register.form.label_email': '请输入您的邮箱',
     'register.error.email': '无效邮箱',
+    'register.error.duplicate_email': '邮箱已被注册',
     'register.form.email': '邮箱',
     'register.form.label_password': '请输入密码',
     'register.form.password': '密码',
@@ -143,6 +144,10 @@ export default {
     'forgot.sent_email': '重置密码邮件已发送',
     'forgot.new_password': '请输入新密码',
     'forgot.success': '修改密码成功',
+
+    // UserEditForm
+    'user.edit.form.label_role': '请选择一名角色',
+    'user.edit.form.role': '角色',
 
     // Developer
     'developer.breadcrumb.developers': '开发者',
@@ -335,6 +340,11 @@ export default {
     '.cancel': '取消',
     '.edit': '编辑',
 
+    // Role
+    'role.member': '普通用户',
+    'role.organizer': '组织者',
+    'role.admin': '管理员',
+
      // Landing
      'landing.elastos': 'Elastos',
      'landing.alpha': 'ALPHA',
@@ -344,20 +354,20 @@ export default {
      'landing.action.here': '这里',
      'landing.stayUpdate': '与Cyber Republic保持同步',
      'landing.whatIs': '什么是Elastos?',
- 
- 
+
+
      'landing.whatIs.content.1': 'Elastos是第一个完全安全和去中心化环境互联网。使用区块链构建，它提供了一个虚拟生态系统，它保护去中心化式应用程序不受互联网的直接访问，同时允许数十亿用户具有近乎无限的可扩展性。',
      'landing.whatIs.content.2': 'Elastos是一个“Cyber Republic”，其通过拥有和交换数据和数字资产来产生财富。',
- 
+
      'landing.cr100.content.1': '欢迎来到万物互联',
      'landing.cr100.content.2': '这里是为安全与自由',
      'landing.cr100.content.3': '由设计而来。',
      'landing.cr100.content.4': '加入我们的构建前100个项目。',
- 
+
      'landing.solution.explained.1': '主链处理基本的支付和散列存储。其他所有东西，包括智能合约，都运行在侧链上，其中应用程序能够创建额外的侧链。',
      'landing.solution.explained.2': 'Elastos与比特币融合可以降低能源消耗并且为所有应用提供比特币网络安全。包含侧链，从而可以同时在多个链中使用比特币哈希能力。',
      'landing.solution.explained.3': '使用PoW+DPoS作为Elastos区块链的共识模型，侧链可以选择与ELA合并PoW挖掘，或者在PoS、DPoS、DBFT等共识模型之间进行合并。',
- 
+
      'landing.elaSol': 'Elastos解决方案',
      'landing.scalability': '可扩展性',
      'landing.mainSideChain': '主链+侧链结构',
@@ -365,7 +375,7 @@ export default {
      'landing.mergeMining': '合并挖矿',
      'landing.consensus': '共识',
      'landing.consensusMulti': '混合共识理论',
- 
+
      'landing.fourPillars': '四大支柱',
      'landing.ofSmartWeb': 'Elastos智能网络',
      'landing.blockchain': 'Elastos区块链',
@@ -387,7 +397,7 @@ export default {
      'landing.carrier.content.2': '为其传递信息的平台',
      'landing.carrier.content.3': '应用程序通过接管所有网络',
      'landing.carrier.content.4': '虚拟机之间的通信。',
- 
+
      'landing.businessModel.the': '',
      'landing.businessModel': 'Elastos商业模式',
      'landing.businessModel.content.1': '实现所有智能设备',
@@ -422,17 +432,17 @@ export default {
      'landing.businessModel.content.30': '移植到Elastos平台。',
      'landing.businessModel.content.31': '数字内容的生命周期',
      'landing.businessModel.content.32': '通过数不清的应用。',
- 
+
      'landing.vision.header': '我们的愿景是',
      'landing.vision.content.1': '向用户提供',
      'landing.vision.content.2': '相互信任的',
      'landing.vision.content.3': '运行环境。',
- 
+
      'landing.application.header': '应用',
      'landing.application.content.1': '在Elastos上的应用程序将运行在区块链技术的可靠运行时环境中。它通过提供一个“沙箱”环境来创建真正的安全性，在允许访问internet之前，该环境需要从区块链进行验证。这为构建任何类型的应用程序和任何用例或场景提供了巨大的潜力。',
      'landing.application.content.2': '下面是用例示例',
      'landing.application.content.3': '关于在Elastos上构建应用程序:',
- 
+
      'landing.usecase.content.1': '支持点对点对话,',
      'landing.usecase.content.2': '点对点文档传输',
      'landing.usecase.content.3': '通过去中心化的P2P通信。',
@@ -444,12 +454,12 @@ export default {
      'landing.usecase.content.9': '支持数字内容应用程序，如:电子书',
      'landing.usecase.content.10': '游戏和视频播放器。 所有数字资产都',
      'landing.usecase.content.11': '可以在信任的环境中得到保护。',
- 
+
      'landing.elaToken': 'Elastos令牌(ELA)',
      'landing.elaToken.content.1': 'ELA令牌将用于在区块链上注册id，打开通往Elastos生态系统的门。 一旦加入，将会有无数的交流机会。',
      'landing.elaToken.content.2': '您可以购买去中心化应用程序，获得云存储，购买和销售数字产品和资产，如歌曲、电影、书籍和视频，以及无限的其他资源。',
      'landing.elaToken.content.3': '此外，ELA令牌持有者将有机会投资于众多项目。对于在Elastos上运行的每一个DApp，拥有ELA来注册数字资产将是非常重要的，从而为令牌创造持续的必要性。',
- 
+
      'landing.cr': 'Cyber Republic',
      'landing.contribute.1': '我们是一个由领导者、开发者、组织者和设计师组成的多元化民主团体',
      'landing.contribute.2': '成立的目的是在我们的社区推广Elastos。会员资格对每个人开放。',
@@ -460,7 +470,7 @@ export default {
      'landing.contribute.mob.5': '向所有人开放。',
      'landing.contribute.action.1': '成为',
      'landing.contribute.action.2': ' 一名贡献者',
- 
+
      'landing.empower35.header': 'Empower35',
      'landing.empower35.partnership': '首席合伙人',
      'landing.empower35.marketer': '营销员',
@@ -472,7 +482,7 @@ export default {
      'landing.empower35.evangelist': '布道者',
      'landing.empower35.action.1': '显示全部',
      'landing.empower35.action.2': '职位',
- 
+
      'landing.footer.header.1': '成为Cyber Republic',
      'landing.footer.header.2': '的一部分',
      'landing.footer.note': '与Cyber Republic保持同步',
@@ -488,14 +498,14 @@ export default {
      'landing.footer.support': '支持:',
      'landing.footer.contracts': '其他合同:',
      'landing.footer.join': '加入我们',
- 
+
      'landing.0220': 'LA令牌将用于在区块链上注册id，打开通往Elastos生态系统的门。 一旦加入，将会有无数的交流机会。',
      'landing.0221': '您可以购买去中心化应用程序，获得云存储，购买和销售数字产品和资产，如歌曲、电影、书籍和视频，以及无限的其他资源。',
      'landing.0222': '此外，ELA令牌持有者将有机会投资于众多项目。对于在Elastos上运行的每一个DApp，拥有ELA来注册数字资产将是非常重要的，从而为令牌创造持续的必要性。',
- 
+
      'landing.0230': '在Elastos上的应用程序将运行在区块链技术的可靠运行时环境中。它通过提供一个“沙箱”环境来创建真正的安全性，在允许访问internet之前，该环境需要从区块链进行验证。这为构建任何类型的应用程序和任何用例或场景提供了巨大的潜力。',
      'landing.0231': '',
- 
+
      // Our Vision
      'vision.00': '我们的愿景',
      'vision.01': 'Cyber Republic的愿景开始于一个有雄心的想法: 创建一个自主运营、自治的企业家和开发人员社区，它们可以独立于Elastos发挥作用，但有统一的目标是把它发展成全球性的成功。',

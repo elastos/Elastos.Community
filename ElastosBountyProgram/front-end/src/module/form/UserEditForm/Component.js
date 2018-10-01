@@ -19,8 +19,11 @@ import {
 } from 'antd'
 
 import config from '@/config'
+import { MIN_LENGTH_PASSWORD } from '@/config/constant'
 
-import {upload_file} from "@/util";
+import I18N from '@/I18N'
+
+import {upload_file} from '@/util'
 import './style.scss'
 
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, USER_GENDER} from '@/constant'
@@ -76,6 +79,26 @@ class C extends BaseComponent {
         })
     }
 
+    compareToFirstPassword(rule, value, callback) {
+        const form = this.props.form
+        if (value && value !== form.getFieldValue('password')) {
+            callback(I18N.get('register.error.passwords')) // Two passwords you entered do not match'
+        } else {
+            callback()
+        }
+    }
+
+    validateToNextPassword(rule, value, callback) {
+        const form = this.props.form
+        if (value && this.state.confirmDirty) {
+            form.validateFields(['confirmPassword'], { force: true })
+        }
+        if (value && value.length < MIN_LENGTH_PASSWORD) {
+            callback(`${I18N.get('register.error.password_length_1')} ${MIN_LENGTH_PASSWORD} ${I18N.get('register.error.password_length_2')}`)
+        }
+        callback()
+    }
+
     getInputProps () {
 
         const {getFieldDecorator} = this.props.form
@@ -94,12 +117,45 @@ class C extends BaseComponent {
             <Input size="large" disabled/>
         )
 
-        const email_fn = getFieldDecorator('email', {
-            rules: [{required: true, message: 'Email is required'}],
-            initialValue: user.email
+        const role_fn = getFieldDecorator('role', {
+            rules: [{required: true, message: I18N.get('user.edit.form.label_role')}],
+            initialValue: user.role
         })
-        const email_el = (
-            <Input size="large"/>
+        const role_el = (
+            <Select size="large"
+                    showSearch
+                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    placeholder="Role">
+                {_.entries(config.data.mappingRoleToName).map(([key, val]) => {
+                    return <Select.Option key={key} value={key}>
+                        {I18N.get(val)}
+                    </Select.Option>
+                })}
+            </Select>
+        )
+
+        const password_fn = getFieldDecorator('password', {
+            rules: [{
+                required: false, message: I18N.get('register.form.label_password')
+            }, {
+                validator: this.validateToNextPassword.bind(this)
+            }]
+        })
+
+        const password_el = (
+            <Input type="password" />
+        )
+
+        const passwordConfirm_fn = getFieldDecorator('passwordConfirm', {
+            rules: [{
+                required: false, message: I18N.get('register.form.label_password_confirm')
+            }, {
+                validator: this.compareToFirstPassword.bind(this)
+            }]
+        })
+
+        const passwordConfirm_el = (
+            <Input type="password" />
         )
 
         const firstName_fn = getFieldDecorator('firstName', {
@@ -141,11 +197,11 @@ class C extends BaseComponent {
         });
         const p_avatar = {
             showUploadList: false,
-            customRequest :(info)=>{
+            customRequest: (info) => {
                 this.setState({
                     avatar_loading: true
                 });
-                upload_file(info.file).then((d)=>{
+                upload_file(info.file).then((d) => {
                     const url = d.url;
                     this.setState({
                         avatar_loading: false,
@@ -283,7 +339,9 @@ class C extends BaseComponent {
         return {
             // General
             username: username_fn(username_el),
-            email: email_fn(email_el),
+            role: role_fn(role_el),
+            password: password_fn(password_el),
+            passwordConfirm: passwordConfirm_fn(passwordConfirm_el),
 
             firstName: firstName_fn(firstName_el),
             lastName: lastName_fn(lastName_el),
@@ -309,7 +367,7 @@ class C extends BaseComponent {
     removeAttachment = async () => {
         this.setState({
             avatar_loading: false,
-            avatar_url : null,
+            avatar_url: null,
             avatar_type: '',
             avatar_filename: '',
 
@@ -324,12 +382,12 @@ class C extends BaseComponent {
         const formItemLayout = {
             labelCol: {
                 xs: {span: 24},
-                sm: {span: 8},
+                sm: {span: 8}
             },
             wrapperCol: {
                 xs: {span: 24},
-                sm: {span: 12},
-            },
+                sm: {span: 12}
+            }
         }
 
         // const existingTask = this.props.existingTask
@@ -349,8 +407,16 @@ class C extends BaseComponent {
                         <FormItem label="Username" {...formItemLayout}>
                             {p.username}
                         </FormItem>
-                        <FormItem label="Email" {...formItemLayout}>
-                            {p.email}
+                        {this.props.is_admin &&
+                        <FormItem label={I18N.get('user.edit.form.role')} {...formItemLayout}>
+                            {p.role}
+                        </FormItem>
+                        }
+                        <FormItem label="Password" {...formItemLayout}>
+                            {p.password}
+                        </FormItem>
+                        <FormItem label="Confirm Password" {...formItemLayout}>
+                            {p.passwordConfirm}
                         </FormItem>
                         <FormItem label="First Name" {...formItemLayout}>
                             {p.firstName}

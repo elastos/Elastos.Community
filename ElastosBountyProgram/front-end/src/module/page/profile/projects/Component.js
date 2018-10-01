@@ -10,7 +10,7 @@ import { Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button,
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
 import I18N from '@/I18N'
-import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from "../../../../config/constant"
+import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '../../../../config/constant'
 
 const FormItem = Form.Item;
 
@@ -19,7 +19,8 @@ const FILTERS = {
     ACTIVE: 'active',
     APPLIED: 'applied',
     OWNED: 'owned',
-    SUBSCRIBED: 'subscribed'
+    SUBSCRIBED: 'subscribed',
+    CR100: 'cr100'
 }
 
 export default class extends StandardPage {
@@ -84,16 +85,16 @@ export default class extends StandardPage {
 
     getListComponent(tasks) {
         const description_fn = (entity) => {
-            return _.isEmpty(entity.recruitedSkillsets)
-                ? I18N.get('project.detail.not_recruiting')
-                : (
-                    <div className="valign-wrapper">
-                        <div className="gap-right pull-left">{I18N.get('project.detail.recruiting')}: </div>
-                        <div className="pull-left">
-                            {_.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>)}
-                        </div>
+            return (
+                <div className="valign-wrapper">
+                    <div className="gap-right pull-left">{I18N.get('project.detail.recruiting')}: </div>
+                    <div className="pull-left">
+                        {_.isEmpty(entity.recruitedSkillsets) ? (
+                            <span>{I18N.get('project.detail.recruiting_skills_unknown')}</span>) : (
+                            _.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>))}
                     </div>
-                )
+                </div>
+            )
         }
 
         const data = _.map(tasks, (task, id) => {
@@ -238,6 +239,7 @@ export default class extends StandardPage {
         const tasksPendingData = this.props.candidate_pending_tasks
         const tasksOwnedData = this.props.owned_tasks
         const tasksSubscribedData = this.props.subscribed_tasks
+        const tasksCr100Data = this.props.cr100_tasks
         const allTasks = this.props.all_tasks
 
         return (
@@ -264,11 +266,6 @@ export default class extends StandardPage {
                                     {(this.props.is_leader || this.props.is_admin) &&
                                     <div className="pull-right filter-group">
                                         <Button onClick={() => this.props.history.push('/task-create?type=PROJECT&category=DEVELOPER')}>{I18N.get('myrepublic.projects.create')}</Button>
-                                    </div>
-                                    }
-                                    {this.props.is_admin &&
-                                    <div className="pull-right filter-group gap-right">
-                                        <Button onClick={() => this.props.history.push('/task-create?type=PROJECT&category=CR100')}>{I18N.get('myrepublic.projects.create.cr100')}</Button>
                                     </div>
                                     }
                                     <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
@@ -300,7 +297,10 @@ export default class extends StandardPage {
                                                 onClick={this.setAppliedFilter.bind(this)}>{I18N.get('myrepublic.projects.applied')}</Button>
                                             <Button
                                                 className={(this.state.filter === FILTERS.SUBSCRIBED && 'selected') || ''}
-                                                onClick={this.setSubscribedFilter.bind(this)}>{I18N.get('myrepublic.projects.subscribed')}</Button>
+                                                onClick={this.setSubscribedFilter.bind(this)}>Liked</Button>
+                                            <Button
+                                                className={(this.state.filter === FILTERS.CR100 && 'selected') || ''}
+                                                onClick={this.setCr100Filter.bind(this)}>CR100</Button>
                                         </Button.Group>
                                     </MediaQuery>
                                     {this.state.filter === FILTERS.ALL && this.getListComponent(allTasks)}
@@ -308,6 +308,7 @@ export default class extends StandardPage {
                                     {this.state.filter === FILTERS.APPLIED && this.getListComponent(tasksPendingData)}
                                     {this.state.filter === FILTERS.OWNED && this.getListComponent(tasksOwnedData)}
                                     {this.state.filter === FILTERS.SUBSCRIBED && this.getListComponent(tasksSubscribedData)}
+                                    {this.state.filter === FILTERS.CR100 && this.getListComponent(tasksCr100Data)}
                                 </Col>
                             </Row>
                             <Row>
@@ -361,6 +362,10 @@ export default class extends StandardPage {
 
     setSubscribedFilter() {
         this.setState({ filter: FILTERS.SUBSCRIBED })
+    }
+
+    setCr100Filter() {
+        this.setState({ filter: FILTERS.CR100 })
     }
 
     linkTaskDetail(taskId) {

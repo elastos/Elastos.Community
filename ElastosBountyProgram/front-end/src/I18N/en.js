@@ -25,7 +25,8 @@ const en = {
     '0104': 'My Republic',
     '0105': 'CR100',
     '0106': 'Empower35',
-    '0107': 'Training',
+    '0107': 'Ambassadors',
+    '0108': 'Council',
 
     '0200': 'Profile',
     '0201': 'Login',
@@ -68,6 +69,7 @@ const en = {
     '2304': 'My Communities',
     '2305': 'My Projects',
 
+    'comments.noComments': 'No comments yet. Be the first to post!',
     // Admin tasks
     'admin.tasks.status': 'Status',
 
@@ -90,20 +92,26 @@ const en = {
     'home.summary_2': 'formed to promote Elastos in our communities. Membership is open to everyone.',
 
     // LoginForm
-    'login.label_username': 'Please input your username',
-    'login.username': 'Username',
+    'login.label_username': 'Please input your email address or username',
+    'login.username': 'Email',
     'login.label_password': 'Please input your password',
     'login.password': 'Password',
-    'login.logged': 'Keep me logged in',
+    'login.logged': 'Remember me',
     'login.forget': 'Forgot password',
-    'login.submit': 'Log in',
+    'login.submit': 'Go',
     'login.reset': 'Reset password',
     'login.title': 'Login to Cyber Republic',
     'login.description_1': 'Input your credentials below.',
 
+    // ApplyForm
+    'apply.form.attachment': 'Supporting Attachment',
+    'apply.form.suited': 'What Makes You Most Suited?',
+    'apply.form.prompt': 'What Makes You Like To Apply?',
+
     // RegisterFrom
     'register.title': 'Become a Contributor',
-    'register.description_1': 'As a member you can sign up for bounties on Cyber Republic.',
+    'register.description_1': 'This will only take a few seconds.',
+    'register.description_2': 'As a member you can sign up for bounties on Cyber Republic.',
     'register.required': 'Required Fields',
     'register.error.code': 'The code you entered does not match',
     'register.error.passwords': 'Two passwords you entered do not match',
@@ -120,6 +128,7 @@ const en = {
     'register.form.username': 'Username',
     'register.form.label_email': 'Please input your email',
     'register.error.email': 'Invalid email',
+    'register.error.duplicate_email': 'This email is already taken',
     'register.form.email': 'Email',
     'register.form.label_password': 'Please input a Password',
     'register.form.password': 'Password',
@@ -133,10 +142,14 @@ const en = {
     'register.form.no': 'No',
     'register.form.developer': 'Are you a software developer or engineer?',
     'register.form.hear': 'Where did you hear about us?',
-    'register.code': 'We have sent a confirmation code to your email.',
+    'register.code': 'We have sent a confirmation code to ',
     'register.submit': 'Register',
-    '3533': 'Optional Info',
+    'register.welcome': 'Welcome to the Cyber Republic!',
+    'register.join_circle': 'Join a Circle and earn ELA',
+    'register.join': 'Join',
+    '3533': 'More about you',
     '3534': 'Country',
+    'register.code.title': 'Become a citizen',
 
     // Forgot / Reset Password Form
     'forgot.title': 'Forgot your password? Enter your email to be sent a reset password link.',
@@ -147,8 +160,13 @@ const en = {
     'forgot.new_password': 'Please enter a new password',
     'forgot.success': 'Password changed successfully',
 
+    // UserEditForm
+    'user.edit.form.label_role': 'Please select a role',
+    'user.edit.form.role': 'Role',
+
     // Developer
-    'developer.breadcrumb.developers': 'Developers',
+    'developer.breadcrumb.developers': 'Community',
+    'developer.breadcrumb.search': 'Search',
     'developer.learn': 'Learn',
     'developer.learn.basics': 'Elastos Basics',
     'developer.learn.concepts': 'Key Concepts',
@@ -174,6 +192,8 @@ const en = {
     'developer.components.issues': 'Issues',
     'developer.components.docs': 'Docs',
     'developer.components.info': 'More Info',
+    'developer.cr100.application.success': 'Application Successful',
+    'developer.cr100.application.view': 'View',
     'developer.cr100.projects': 'Projects',
     'developer.cr100.submit_whitepaper': 'Submit Whitepaper',
     'developer.cr100.welcome.1': 'CR100 is our flagship project, inviting teams of entrepreneurs to apply for funding to design and build the next great Elastos Ecosystem DApp. The 100 projects listed are templates that exemplify the diversity and abilities of the Elastos infrastructure. ',
@@ -203,6 +223,11 @@ const en = {
     'developer.search.showMore': 'Show More…',
     'developer.search.hide': 'Hide',
     'developer.search.apply': 'Apply',
+    'developer.search.view': 'View',
+    'developer.search.subtitle_prefix': 'no longer accepting',
+    'developer.search.subtitle_bids': 'bids',
+    'developer.search.subtitle_applications': 'applications',
+    'developer.search.submit_bid': 'Submit Bid',
 
     'myrepublic.teams': 'Teams',
     'myrepublic.teams.all': 'All',
@@ -222,52 +247,43 @@ const en = {
     'myrepublic.projects.create.cr100': 'Create CR100',
 
     // Empower 35
-    'emp35.header.title': 'We Will Build It Together',
-    'emp35.header.content.1': 'We are democratically elected cross-functional group',
-    'emp35.header.content.2': 'of community evangelists empowered to spearhead',
-    'emp35.header.content.3': 'projects in Elastos',
+    'emp35.header.title': 'Circles & Empower35',
+    'emp35.header.content.1': 'Connect with others, form teams, complete tasks, earn ELA.',
+    'emp35.header.content.2': 'As people showcase their abilities, the E35 will be chosen',
+    'emp35.header.content.3': 'gradually to manage and lead each team.',
 
     'emp35.empower.title': 'Empower 35',
-    'emp35.empower.content.1': 'Empower35 is a project to select the future leaders, managers, and congresspeople of Cyber Republic. This group of experts in business, marketing, writing, visual arts, design, law and public speaking will be the first representatives that will shape and enable all future growth of our autonomous and decentralized democratic republic.',
-    'emp35.empower.content.2': 'In the coming weeks, we will begin accepting applications for each role and positions will be selected by our Cyber Republic Council. Qualified applicants who are selected will be paid in ELA and can apply for a budget based on their proposal to manage and hire their own teams in each respective area.',
-    'emp35.empower.content.3': 'These 35 will build and grow the ecosystem and be tasked with finding the next group of leaders as our republic continues to expand and work towards our goal of full democratic decentralization.',
-    'emp35.teamHeader.title': 'Empower35 Team',
+    'emp35.empower.content': 'You can join up to two Circles. Once inside, form even smaller teams, create tasks for approval and begin showcasing your talents. Circles are smart networks within the larger smart network of Cyber Republic. As each Circle expands, the entire network expands with it.',
+    'emp35.teamHeader.title': 'Circles',
 
-    'emp35.disclaimer.title': 'Disclaimer',
-    'emp35.disclaimer.content': 'Roles described above are managerial level positions and the number of open positions are subject to change. The first group of Empower 35 candidates will be directly chosen by the council.',
-    'emp35.position.open': 'Position Open',
-    'emp35.position.legal': 'Legal',
-    'emp35.position.writer': 'Writer',
-    'emp35.position.partnership': 'Partnership',
-    'emp35.position.marketing': 'Marketing',
-    'emp35.position.productManager': 'Product Manager',
-    'emp35.position.mediaProducer': 'Media Producer',
-    'emp35.position.investments': 'Investments',
-    'emp35.position.leadDevSupport': 'Lead Developer Support',
-    'emp35.position.dAppAnalyst': 'dApp Analyst',
-    'emp35.position.dAppConsultant': 'dApp Consultant',
-    'emp35.position.businessDevelopment': 'Business Development',
-    'emp35.position.leadAdministrator': 'Lead Administrator',
-    'emp35.position.security': 'Security',
-    'emp35.position.hrDirector': 'HR Director',
-    'emp35.position.leadTranslator': 'Lead Translator',
-    'emp35.position.openTitles': 'Open Titles',
+    'emp35.mycircles.title': 'My Circles',
+    'emp35.circles.statement': 'A circle is a shape where all points are equal distance from the center. CR circles are teams of decentralized citizens who all revolve around a single area of expertise. Circles are designed to group people by their talent and allow them to begin creating and completing talent specific tasks. In time, leaders will be elected to manage each circle.',
 
-    'emp35.apply.success': 'Thank you for applying, we will be in touch shortly',
-    'emp35.apply.error': 'Error - Please email us',
+    // Circle Detail
+    'circle.header.join': 'Join',
+    'circle.header.leave': 'Leave',
+    'circle.header.maxReached': 'Limit reached',
+    'circle.createPost': 'Create Post',
+    'circle.joinToPost': 'Join the Circle to post',
+    'circle.registerToPost': 'Register to join the Circle and post',
+    'circle.members': 'Members',
+    'circle.posts': 'Posts',
 
     // Training
-    'training.header.title': 'Evangelist Training',
-    'training.header.content.1': 'Cyber Republic will offer an all expenses paid trip for evangelists',
+    'training.header.title': 'Ambassadors Training',
+    'training.header.content.1': 'Cyber Republic will offer an all expenses paid trip for ambassadors',
     'training.header.content.2': 'and guest speakers to spend one week training with the Elastos Team',
-    'training.header.content.3': 'in various regions to become an official Elastos Evangelist. Graduates',
+    'training.header.content.3': 'in various regions to become an official Elastos Ambassador. Graduates',
     'training.header.content.4': 'of the program will be given an ELA budget and be empowered to',
     'training.header.content.5': 'speak on behalf of Cyber Republic at events and meetups.',
-    'training.evangelist.title': 'Goals',
-    'training.evangelist.content': 'The goal of the program is for participants to not only learn the technology from the Elastos Team first hand, but to develop a presentation crafted with marketing and PR professionals that will allow evangelists to be professionally prepared to represent the project to the public. Cyber Republic plans to run this program several times per year and applications will be available soon. ',
+    'training.evangelist.title': 'Ambassadors Training',
+    'training.evangelist.content': 'The goal of the program is for participants to not only learn the technology from the Elastos Team first hand, but to develop a presentation crafted with marketing and PR professionals that will allow ambassadors to be professionally prepared to represent the project to the public. Cyber Republic plans to run this program several times per year. ',
+    'training.thanksForApplying': 'Thank you for applying, we will be in touch shortly!',
+    'training.applyError': 'An error has occured. Please contact us directly.',
+    'training.apply.title': 'Apply to be an ambassador?',
 
     // Itinerary
-    'training.itinerary.title': 'Itinerary',
+    'training.itinerary.title': 'Itinerary Example',
     'training.itinerary.content.venueLabel': 'Venue',
     'training.itinerary.content.venue': 'Houses in Silicon Valley',
     'training.itinerary.content.day13Label': 'Day 1-4',
@@ -282,15 +298,25 @@ const en = {
     'training.disclaimer': 'Training content and itinerary subject to change',
 
     // Project/Team detail
-    'project.detail.deadline': 'Deadline',
+    'project.detail.deadline': 'Application Deadline',
+    'project.detail.completion_deadline': 'Completion Deadline',
     'project.detail.progress': 'Progress',
     'project.detail.team_size': 'Team Size',
-    'project.detail.recruiting': 'Recruiting',
+    'project.detail.recruiting': 'Desired Skills',
     'project.detail.not_recruiting': 'Recruitment Closed',
-    'project.detail.current_contributors': 'Current Contributors',
+    'project.detail.recruiting_skills_unknown': 'Not Specified',
+    'project.detail.current_contributors': 'Current Assignee',
+    'project.detail.owner': 'Project Owner',
     'project.detail.pending_applications': 'Pending Applications',
+    'project.detail.pending_bids': 'Pending Bids',
+    'project.detail.your_bids': 'Your Bids',
+    'project.detail.your_bid': 'Your Bid',
+    'project.detail.total_bids': 'Total Bids',
+    'project.detail.subscribers': 'Liked By',
     'project.detail.current_members': 'Current Members',
-    'project.detail.leave': 'Leave',
+    'project.detail.leave': 'Withdraw Application',
+    'project.detail.you_bid': 'You bid',
+    'project.detail.leave_bid': 'Withdraw Bid',
     'project.detail.remove': 'Remove',
     'project.detail.view': 'View',
     'project.detail.approve': 'Approve',
@@ -300,9 +326,25 @@ const en = {
     'project.detail.popup.leave_team': 'Leave Team',
     'project.detail.popup.applied': 'Applied',
     'project.detail.popup.join_team': 'Join Team',
-    'project.detail.popup.join_project': 'Join Project',
+    'project.detail.popup.join_project': 'Apply for Project',
+    'project.detail.popup.bid_project': 'Bid on Project',
+    'project.detail.bidding': 'Bidding Open',
+    'project.detail.bidding_closed': 'Bidding Closed',
+    'project.detail.tell_us_why_join': 'Tell us why you want to join.',
+    'project.detail.tell_us_why_bid': 'Tell us why you want to bid.',
+    'project.detail.no_attachments': 'No attachments',
+    'project.detail.bid_updated': 'Bid updated',
+    'project.detail.bidding_winner': 'Bidding Winner',
+    'project.detail.bidding_cur_1': 'There are currently',
+    'project.detail.bidding_cur_2': 'other bids',
+    'project.detail.budget': 'Budget',
+    'project.detail.reward': 'Reward',
+    'project.detail.reference_bid': 'Reference Bid',
 
     'team.detail.team_active': 'Your team is currently active',
+
+    'team.create.error.nameRequired': 'Team name is required',
+    'team.create.error.nameTooShort': 'Team name is too short',
 
     // Team specializations
     'team.spec.media': 'Media',
@@ -326,8 +368,12 @@ const en = {
     // General
     'select.placeholder': 'Please select',
     '.ok': 'Ok',
+    '.apply': 'Apply',
     '.cancel': 'Cancel',
     '.edit': 'Edit',
+    '.upload': 'Click to Upload',
+    '.yes': 'Yes',
+    '.no': 'No',
 
     // Landing
     'landing.elastos': 'Elastos',
@@ -490,6 +536,12 @@ const en = {
     'landing.0230': 'Applications on Elastos will run in a trustful runtime environment that utilizes blockchain technology. This creates real security by providing a “sandboxed” environment that will need verification from the blockchain before allowing access to the internet. This enables massive potential for the construction of any type of application with any use case or scenario.',
     'landing.0231': '',
 
+    // Project Detail
+    'pdetail.like': 'Like',
+    'pdetail.unlike': 'Unlike',
+    'pdetail.involve': 'Apply',
+    'pdetail.funding': 'Funding: 100k for 5% of the equity or coins/tokens',
+
     // Our Vision
     'vision.00': 'Our Vision',
     'vision.01': 'The vision for Cyber Republic starts with an ambitious idea: create a self-running and self-governed community of entrepreneurs and developers who can function independently of Elastos but with the unified goal to grow it into a global success.',
@@ -498,8 +550,12 @@ const en = {
     'vision.04': 'In the meantime, we have assembled a Cyber Republic Council to make the important decisions as this project moves in the direction of full democratic decentralization. This Council, made up of members Fay Li, Kevin Zhang, and Yipeng Su, will utilize community input and make strategic decisions to grow the project. In time, the members of the Empower35 project along with other leaders in Cyber Republic will form a government and become self-running. Our Constitution is currently in progress.',
     'vision.05': 'The Elastos vision to change the internet runs parallel to Cyber Republic’s vision to change the way people organize and build a global project. This Alpha version is the template and the framework for our goal to move towards a completely modern and unique online republic. Your input and active participation are necessary for this vision to continue to take shape.',
     'vision.06': 'More information and more specifics on how to apply for individual projects are to come.',
-    'vision.07': 'We look forward to building an international haven for entrepreneurship  and innovation for the new internet.'
+    'vision.07': 'We look forward to building an international haven for entrepreneurship  and innovation for the new internet.',
 
+    // Role
+    'role.member': 'Member',
+    'role.organizer': 'Organizer',
+    'role.admin': 'Admin'
 };
 
 // lang mappings
