@@ -44,9 +44,7 @@ class C extends BaseComponent {
         this.props.getTaskDetail(taskId)
 
         // This sets both user.teams and teams.all_teams
-        this.props.getUserTeams(this.props.currentUserId)
-
-
+        this.props.getTeams({ owner: this.props.currentUserId })
     }
 
     componentWillUnmount() {
