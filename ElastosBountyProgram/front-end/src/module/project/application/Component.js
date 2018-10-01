@@ -80,7 +80,9 @@ export default class extends BaseComponent {
                         </Row>
                         <Row>
                             <Comments type="taskCandidate" reduxType="task" canPost={true} model={applicant}
-                                detailReducer={(detail) => _.find(detail.candidates, { _id: this.props.applicantId })}/>
+                                detailReducer={(detail) => _.find(detail.candidates, { _id: this.props.applicantId })}
+                                returnUrl={`/project-detail/${this.props.detail._id}`}
+                            />
                         </Row>
                     </Col>
                 </Row>

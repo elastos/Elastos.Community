@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import { Form, Col, Row, List, Avatar, Icon, Divider, Button, Input } from 'antd'
+import { Form, Col, Row, List, Avatar, Icon, Divider, Button, Input, Mention } from 'antd'
 import config from '@/config'
 import './style.scss'
 import moment from 'moment'
@@ -13,6 +13,7 @@ const FormItem = Form.Item
 class C extends BaseComponent {
 
     componentDidMount() {
+        this.props.listUsers()
     }
 
     componentWillUnmount() {
@@ -42,16 +43,20 @@ class C extends BaseComponent {
     }
 
     getInputProps() {
+        const allUsers = _.map(this.props.all_users, (user) => user.username)
         const {getFieldDecorator} = this.props.form
         const comment_fn = getFieldDecorator('comment', {
             rules: [
-                {required: true, message: 'Please input your comment'},
-                {max: 500, message: 'Comment is too long'}
+                {required: true, message: 'Please input your comment!'}
             ],
-            initialValue: ''
+            initialValue: Mention.toContentState('')
         })
         const comment_el = (
-            <TextArea rows={4} placeholder="Comments or updates"/>
+            <Mention
+                multiLines
+                style={{ width: '100%', height: 100 }}
+                suggestions={allUsers}
+                placeholder="Comments or updates"/>
         )
 
         const headline_fn = getFieldDecorator('headline', {
@@ -154,6 +159,23 @@ class C extends BaseComponent {
 
         const footer = this.getFooter()
 
+        const enrichComment = (comment) => {
+            const words = comment.match(/@*\w+/g)
+
+            if (words) {
+                return (
+                    <div>
+                        {_.map(words, (word, ind) => /@\w+/.test(word)
+                            ? <a key={ind} onClick={() => this.showUserProfile(word.replace('@', ''))}>{word} </a>
+                            : <span key={ind}>{word} </span>
+                        )}
+                    </div>
+                )
+            }
+
+            return null
+        }
+
         const commentItems = _.map(comments, (comment, ind) =>
         {
             const thread = _.first(comment)
@@ -202,7 +224,7 @@ class C extends BaseComponent {
                                     </h4>
                                 }
                                 <h5>
-                                    {item.comment}
+                                    {enrichComment(item.comment)}
                                 </h5>
                                 <hr/>
                                 {item.description}
@@ -219,13 +241,21 @@ class C extends BaseComponent {
                 this.props.postComment(this.props.type,
                     this.props.reduxType,
                     this.props.detailReducer,
+                    this.props.returnUrl,
                     this.getModelId(),
-                    values.comment,
+                    values.comment && values.comment.getPlainText(),
                     values.headline).then(() => {
                         this.props.form.resetFields()
                     })
             }
         })
+    }
+
+    showUserProfile(username) {
+        const user = _.find(this.props.all_users, { username })
+        if (user) {
+            this.props.history.push(`/member/${user._id}`)
+        }
     }
 }
 
