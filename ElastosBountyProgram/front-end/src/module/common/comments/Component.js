@@ -160,6 +160,23 @@ class C extends BaseComponent {
 
         const footer = this.getFooter()
 
+        const enrichComment = (comment) => {
+            const words = comment.match(/@*\w+/g)
+
+            if (words) {
+                return (
+                    <div>
+                        {_.map(words, (word, ind) => /@\w+/.test(word)
+                            ? <a key={ind} onClick={() => this.showUserProfile(word.replace('@', ''))}>{word} </a>
+                            : <span key={ind}>{word} </span>
+                        )}
+                    </div>
+                )
+            }
+
+            return null
+        }
+
         const commentItems = _.map(comments, (comment, ind) =>
         {
             const thread = _.first(comment)
@@ -211,7 +228,7 @@ class C extends BaseComponent {
                                     </h4>
                                 }
                                 <h5>
-                                    {item.comment}
+                                    {enrichComment(item.comment)}
                                 </h5>
                                 <hr/>
                                 {item.description}
@@ -236,6 +253,13 @@ class C extends BaseComponent {
                     })
             }
         })
+    }
+
+    showUserProfile(username) {
+        const user = _.find(this.props.all_users, { username })
+        if (user) {
+            this.props.history.push(`/member/${user._id}`)
+        }
     }
 }
 
