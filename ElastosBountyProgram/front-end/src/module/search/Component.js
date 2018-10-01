@@ -507,6 +507,12 @@ export default class extends BaseComponent {
         return this.renderMain()
     }
 
+    getAvatarWithFallback(avatar) {
+        return _.isEmpty(avatar)
+            ? '/assets/images/Elastos_Logo.png'
+            : avatar
+    }
+
     getCarousel(item) {
         const pictures = _.map(item.pictures, (picture, ind) => {
             return (
@@ -621,7 +627,8 @@ export default class extends BaseComponent {
                                 <div class="description-content" dangerouslySetInnerHTML={{__html: item.content}}/>
                                 <div className="ant-list-item-right-box">
                                     <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
-                                        <Avatar size="large" className="pull-right" src={item.owner.profile.avatar}/>
+                                        <Avatar size="large" className="pull-right"
+                                            src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
                                         <div class="clearfix"/>
                                         <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
                                     </a>
@@ -646,7 +653,8 @@ export default class extends BaseComponent {
                                     <a onClick={this.linkUserDetail.bind(this, item.owner)}>
                                         <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
                                         <Divider type="vertical"/>
-                                        <Avatar size="large" src={item.owner.profile.avatar}/>
+                                        <Avatar size="large"
+                                            src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
                                     </a>
                                     <Button onClick={clickHandler.bind(this, item.id)}
                                         type="primary" className="pull-right">{I18N.get('developer.search.apply')}</Button>
