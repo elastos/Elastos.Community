@@ -127,7 +127,7 @@ class C extends BaseComponent {
 
 
     linkProfileInfo(userId) {
-        this.props.history.push(`/member/${userId}`)
+        window.open(`/member/${userId}`)
     }
 
     approveUser(taskCandidateId) {
@@ -235,11 +235,14 @@ class C extends BaseComponent {
 
                     {(detail.rewardUpfront.usd > 0 || detail.rewardUpfront.ela > 0) &&
                     <div className="pull-right">
-                        <span className="light-grey-text">Budget:</span> {budget}
+                        <span className="light-grey-text">{I18N.get('project.detail.budget')}:</span> {budget}
                     </div>}
                     <div className="pull-right clearfix">
-                        <span className="light-grey-text">Reward:</span> {reward}
+                        <span className="light-grey-text">{I18N.get('project.detail.reward')}:</span> {reward}
                     </div>
+                    {detail.bidding && detail.referenceBid && <div className="pull-right clearfix">
+                        <span className="light-grey-text">{I18N.get('project.detail.reference_bid')}:</span> {detail.referenceBid} ELA
+                    </div>}
                 </div>
                 <div class="description-box">
                     <hr className="divider"/>
@@ -533,13 +536,12 @@ class C extends BaseComponent {
         const currentUserId = this.props.currentUserId
         const detail = this.props.detail
 
-
         // status checks
         if (detail.bidding && _.indexOf([TASK_STATUS.CREATED, TASK_STATUS.PENDING], detail.status) < 0) {
             return ''
         }
 
-        if (!detail.bidding && _.indexOf([TASK_STATUS.APPROVED], detail.status) >= 0) {
+        if (!detail.bidding && _.find(detail.candidates, (candidate) => candidate.status === TASK_CANDIDATE_STATUS.APPROVED)) {
             return ''
         }
 
@@ -547,8 +549,8 @@ class C extends BaseComponent {
         let pendingCandidates = this.getPendingCandidates()
         let pendingCandidatesCnt = pendingCandidates.length
 
-        // only show current user's bids
-        if (!this.props.is_admin) {
+        // only show current user's bids if it's bidding - for projects with a set reward we can show them
+        if (!this.props.is_admin && detail.bidding) {
             pendingCandidates = _.filter(pendingCandidates, (candidate) => {
                 if (candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === currentUserId) {
                     return true
