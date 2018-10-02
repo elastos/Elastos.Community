@@ -160,6 +160,10 @@ class C extends BaseComponent {
         const footer = this.getFooter()
 
         const enrichComment = (comment) => {
+            if (!comment) {
+                return
+            }
+
             const words = comment.match(/@*\w+/g)
 
             if (words) {
@@ -173,7 +177,7 @@ class C extends BaseComponent {
                 )
             }
 
-            return null
+            return
         }
 
         const commentItems = _.map(comments, (comment, ind) =>
