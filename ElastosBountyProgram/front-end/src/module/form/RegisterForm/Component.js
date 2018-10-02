@@ -29,10 +29,12 @@ class C extends BaseComponent {
                     this.props.register(this.state.savedValues.username,
                         this.state.savedValues.password, _.omit(this.state.savedValues, ['username', 'password']))
                         .then((shouldShowWelcome) => {
-                            if (shouldShowWelcome) {
-                                this.props.onChangeActiveKey('post')
-                            } else {
-                                this.props.onChangeActiveKey('login')
+                            if (_.isFunction(this.props.onChangeActiveKey)) {
+                                if (shouldShowWelcome) {
+                                    this.props.onChangeActiveKey('post')
+                                } else {
+                                    this.props.onChangeActiveKey('login')
+                                }
                             }
                         })
                 } else {
@@ -44,7 +46,9 @@ class C extends BaseComponent {
                         requestedCode: code,
                         savedValues: values
                     })
-                    this.props.onHideTabBar()
+                    if (_.isFunction(this.props.onHideTabBar)) {
+                        this.props.onHideTabBar()
+                    }
                 }
             }
         })
