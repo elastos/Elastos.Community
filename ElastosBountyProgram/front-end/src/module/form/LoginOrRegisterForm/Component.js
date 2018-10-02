@@ -4,6 +4,7 @@ import LoginForm from '@/module/form/LoginForm/Container'
 import RegisterForm from '@/module/form/RegisterForm/Container'
 import I18N from '@/I18N'
 import {Tabs, Row, Col} from 'antd'
+import _ from 'lodash'
 
 import './style.scss'
 
@@ -21,7 +22,9 @@ export default class extends BaseComponent {
     handleSubmit() {
         sessionStorage.removeItem('registerRedirect')
         sessionStorage.removeItem('registerWelcome')
-        this.props.onHideModal()
+        if (_.isFunction(this.props.onHideModal)) {
+            this.props.onHideModal()
+        }
         this.props.history.push('/empower35')
     }
 
