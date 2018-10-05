@@ -145,7 +145,7 @@ const en = {
     'register.code': 'We have sent a confirmation code to ',
     'register.submit': 'Register',
     'register.welcome': 'Welcome to the Cyber Republic!',
-    'register.join_circle': 'Join a Circle and earn ELA',
+    'register.join_circle': 'Join a CRcle and earn ELA',
     'register.join': 'Join',
     '3533': 'More about you',
     '3534': 'Country',
@@ -247,25 +247,25 @@ const en = {
     'myrepublic.projects.create.cr100': 'Create CR100',
 
     // Empower 35
-    'emp35.header.title': 'Circles & Empower35',
+    'emp35.header.title': 'CRcles & Empower35',
     'emp35.header.content.1': 'Connect with others, form teams, complete tasks, earn ELA.',
     'emp35.header.content.2': 'As people showcase their abilities, the E35 will be chosen',
     'emp35.header.content.3': 'gradually to manage and lead each team.',
 
     'emp35.empower.title': 'Empower 35',
-    'emp35.empower.content': 'You can join up to two Circles. Once inside, form even smaller teams, create tasks for approval and begin showcasing your talents. Circles are smart networks within the larger smart network of Cyber Republic. As each Circle expands, the entire network expands with it.',
-    'emp35.teamHeader.title': 'Circles',
+    'emp35.empower.content': 'You can join up to two CRcles. Once inside, form even smaller teams, create tasks for approval and begin showcasing your talents. CRcles are smart networks within the larger smart network of Cyber Republic. As each CRcle expands, the entire network expands with it.',
+    'emp35.teamHeader.title': 'CRcles',
 
-    'emp35.mycircles.title': 'My Circles',
-    'emp35.circles.statement': 'A circle is a shape where all points are equal distance from the center. CR circles are teams of decentralized citizens who all revolve around a single area of expertise. Circles are designed to group people by their talent and allow them to begin creating and completing talent specific tasks. In time, leaders will be elected to manage each circle.',
+    'emp35.mycircles.title': 'My CRcles',
+    'emp35.circles.statement': 'A circle is a shape where all points are equal distance from the center. CR\'s "CRcles" are teams of decentralized citizens who all revolve around a single area of expertise. CRcles are designed to group people by their talent and allow them to begin creating and completing talent specific tasks. In time, leaders will be elected to manage each CRcle.',
 
     // Circle Detail
     'circle.header.join': 'Join',
     'circle.header.leave': 'Leave',
     'circle.header.maxReached': 'Limit reached',
     'circle.createPost': 'Create Post',
-    'circle.joinToPost': 'Join the Circle to post',
-    'circle.registerToPost': 'Register to join the Circle and post',
+    'circle.joinToPost': 'Join the CRcle to post',
+    'circle.registerToPost': 'Register to join the CRcle and post',
     'circle.members': 'Members',
     'circle.posts': 'Posts',
 
