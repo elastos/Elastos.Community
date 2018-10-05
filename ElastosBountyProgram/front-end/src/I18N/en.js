@@ -24,7 +24,7 @@ const en = {
     '0102': 'Community',
     '0104': 'My Republic',
     '0105': 'CR100',
-    '0106': 'Empower35',
+    '0106': 'CRcles',
     '0107': 'Ambassadors',
     '0108': 'Council',
 
