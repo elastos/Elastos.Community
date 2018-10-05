@@ -132,6 +132,8 @@ class C extends BaseComponent {
                             src={candidate.user.profile.avatar}/>
                         <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
                             {`${candidate.user.profile.firstName} ${candidate.user.profile.lastName}`}</a>
+
+                        {candidate.role === 'LEADER' && ' - Team Leader'}
                     </div>)
             }
         }]
@@ -355,7 +357,9 @@ class C extends BaseComponent {
 
                             {!this.state.applying && this.props.page === 'LEADER' && (isTeamMember || isTeamOwner) &&
                                 <Row>
-                                    <Comments type="team" canPost={true} model={this.props.teamId}/>
+                                    <Comments type="team" canPost={true} model={this.props.teamId}
+                                        returnUrl={`/team-detail/${this.props.detail._id}`}
+                                    />
                                 </Row>
                             }
 

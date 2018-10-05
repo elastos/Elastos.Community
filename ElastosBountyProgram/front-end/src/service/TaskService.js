@@ -127,12 +127,12 @@ export default class extends BaseService {
             }
         })
 
-        this.dispatch(taskRedux.actions.loading_update(false))
-
         const curTaskDetail = this.store.getState().task.detail
         curTaskDetail.candidates = curTaskDetail.candidates || []
         curTaskDetail.candidates.push(result)
         this.dispatch(taskRedux.actions.detail_update(curTaskDetail))
+
+        this.dispatch(taskRedux.actions.loading_update(false))
 
         return result
     }

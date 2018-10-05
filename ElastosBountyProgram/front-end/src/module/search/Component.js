@@ -6,7 +6,7 @@ import {
 } from 'antd'
 import _ from 'lodash'
 import './style.scss'
-import {SKILLSET_TYPE, TEAM_TASK_DOMAIN} from '@/constant'
+import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS} from '@/constant'
 import ProjectDetail from '@/module/project/detail/Container'
 import TeamDetail from '@/module/team/detail/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
@@ -14,12 +14,14 @@ import Footer from '@/module/layout/Footer/Container'
 import MediaQuery from 'react-responsive'
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
 import I18N from '@/I18N'
+import moment from 'moment'
 
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
 const TreeNode = TreeSelect.TreeNode;
 
 export default class extends BaseComponent {
+
     componentDidMount() {
         this.refetch()
     }
@@ -505,6 +507,12 @@ export default class extends BaseComponent {
         return this.renderMain()
     }
 
+    getAvatarWithFallback(avatar) {
+        return _.isEmpty(avatar)
+            ? '/assets/images/Elastos_Logo.png'
+            : avatar
+    }
+
     getCarousel(item) {
         const pictures = _.map(item.pictures, (picture, ind) => {
             return (
@@ -537,14 +545,33 @@ export default class extends BaseComponent {
             : this.props.all_tasks
 
         const description_fn = (entity) => {
+
             return (
-                <div className="valign-wrapper">
-                    <div className="gap-right pull-left">{I18N.get('project.detail.recruiting')}: </div>
-                    <div className="pull-left">
-                        {_.isEmpty(entity.recruitedSkillsets) ? (
-                            <span>{I18N.get('project.detail.recruiting_skills_unknown')}</span>) : (
-                            _.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>))}
+                <div>
+                    <div className="valign-wrapper">
+                        <div className="gap-right pull-left">{I18N.get('project.detail.recruiting')}: </div>
+                        <div className="pull-left">
+                            {_.isEmpty(entity.recruitedSkillsets) ? (
+                                <span>{I18N.get('project.detail.recruiting_skills_unknown')}</span>) : (
+                                _.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>))}
+                        </div>
                     </div>
+                    {entity.referenceBid &&
+                        <div className="valign-wrapper">
+                            <div className="gap-right pull-left">{I18N.get('project.detail.reference_bid')}:</div>
+                            <div className="pull-left default-text">
+                                <b>{entity.referenceBid} ELA</b>
+                            </div>
+                        </div>
+                    }
+                    {entity.applicationDeadline &&
+                    <div className="valign-wrapper">
+                        <div className="gap-right pull-left">{I18N.get('project.detail.deadline')}:</div>
+                        <div className="pull-left light-grey-text">
+                            {moment(entity.applicationDeadline).format('MMM D')} ELA
+                        </div>
+                    </div>
+                    }
                 </div>
             )
         }
@@ -565,18 +592,20 @@ export default class extends BaseComponent {
                 return {
                     href: '',
                     title: task.name,
+                    bidding: task.bidding,
                     pictures: task.pictures && task.pictures.length > 0 ? task.pictures : [{ url: '/assets/images/Elastos_Logo.png' }],
                     description: description_fn(task),
                     content: task.description,
                     owner: task.createdBy,
+                    hasApprovedApplication: !!_.find(task.candidates, (candidate) => candidate.status === TASK_CANDIDATE_STATUS.APPROVED),
                     id: task._id
                 }
             })
 
         const clickHandler = !this.props.is_login
             ? this.showLoginRegisterModal
-            : this.isLookingForTeam() ? this.showTeamModal
-            : this.showProjectModal
+            : (this.isLookingForTeam() ? this.showTeamModal
+                : this.showProjectModal)
 
         return (
             <List loading={this.props.loading} itemLayout='vertical' size='large'
@@ -591,18 +620,21 @@ export default class extends BaseComponent {
                                 <h3 class="no-margin no-padding one-line brand-color">
                                     <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
                                 </h3>
+                                {item.hasApprovedApplication && <span className="subtitle"> {I18N.get('developer.search.subtitle_prefix')} {item.bidding ? I18N.get('developer.search.subtitle_bids') : I18N.get('developer.search.subtitle_applications')}</span>}
                                 <h5 class="no-margin">
                                     {item.description}
                                 </h5>
                                 <div class="description-content" dangerouslySetInnerHTML={{__html: item.content}}/>
                                 <div className="ant-list-item-right-box">
                                     <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
-                                        <Avatar size="large" className="pull-right" src={item.owner.profile.avatar}/>
+                                        <Avatar size="large" className="pull-right"
+                                            src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
                                         <div class="clearfix"/>
                                         <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
                                     </a>
-                                    <Button onClick={clickHandler.bind(this, item.id)}
-                                        type="primary" className="pull-down">{I18N.get('developer.search.apply')}</Button>
+
+                                    {this.renderApplyButton(item, clickHandler)}
+
                                 </div>
                             </List.Item>
                         </MediaQuery>
@@ -621,7 +653,8 @@ export default class extends BaseComponent {
                                     <a onClick={this.linkUserDetail.bind(this, item.owner)}>
                                         <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
                                         <Divider type="vertical"/>
-                                        <Avatar size="large" src={item.owner.profile.avatar}/>
+                                        <Avatar size="large"
+                                            src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
                                     </a>
                                     <Button onClick={clickHandler.bind(this, item.id)}
                                         type="primary" className="pull-right">{I18N.get('developer.search.apply')}</Button>
@@ -632,6 +665,24 @@ export default class extends BaseComponent {
                 )}
             />
         )
+    }
+
+    // this is also just a view button if the project cannot accept anymore applications
+    renderApplyButton(detail, clickHandler) {
+
+        let cssClass = 'primary'
+
+        if (detail.hasApprovedApplication) {
+            cssClass = 'default'
+        }
+
+        return <div className="pull-down">
+            <span></span>
+            <Button onClick={clickHandler.bind(this, detail.id)}
+                    type={cssClass}>
+                {detail.hasApprovedApplication ? I18N.get('developer.search.view') : (detail.bidding ? I18N.get('developer.search.submit_bid') : I18N.get('developer.search.apply'))}
+            </Button>
+        </div>
     }
 
     linkUserDetail(user) {

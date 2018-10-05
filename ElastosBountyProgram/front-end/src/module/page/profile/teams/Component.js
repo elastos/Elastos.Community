@@ -167,7 +167,7 @@ export default class extends StandardPage {
     }
 
     getListItem(item) {
-        const profile = item.owner.profile || {};
+        const ownerProfile = item.owner.profile || {};
         return (
             <div className="list-item">
                 <MediaQuery minWidth={MIN_WIDTH_PC}>
@@ -184,9 +184,9 @@ export default class extends StandardPage {
                         <div className="description-content" dangerouslySetInnerHTML={{__html: item.content}} />
                         <div className="ant-list-item-right-box">
                             <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
-                                <Avatar size="large" icon="user" className="pull-right" src={profile.avatar}/>
+                                <Avatar size="large" icon="user" className="pull-right" src={ownerProfile.avatar}/>
                                 <div class="clearfix"/>
-                                <div>{profile.firstName} {profile.lastName}</div>
+                                <div><span class="no-info">Owner: </span>{ownerProfile.firstName} {ownerProfile.lastName}</div>
                             </a>
                             <Button type="primary" className="pull-down" onClick={this.linkTeamDetail.bind(this, item.id)}>View</Button>
                         </div>
@@ -205,9 +205,9 @@ export default class extends StandardPage {
                         </h5>
                         <div>
                             <a onClick={this.linkUserDetail.bind(this, item.owner)}>
-                                <span>{profile.firstName} {profile.lastName}</span>
+                                <span>{ownerProfile.firstName} {ownerProfile.lastName}</span>
                                 <Divider type="vertical"/>
-                                <Avatar size="large" icon="user" src={profile.avatar}/>
+                                <Avatar size="large" icon="user" src={ownerProfile.avatar}/>
                             </a>
                             <Button type="primary" className="pull-right" onClick={this.linkTeamDetail.bind(this, item.id)}>View</Button>
                         </div>

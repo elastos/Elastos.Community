@@ -26,7 +26,12 @@ import ProjectApplication from '@/module/project/application/Container'
 import _ from 'lodash'
 import './style.scss'
 
+/*
+ * Project Pop-up UI
+ *
+ */
 class C extends BaseComponent {
+
     ord_states() {
         return {
             showAppModal: false,
@@ -37,9 +42,9 @@ class C extends BaseComponent {
     componentDidMount() {
         const taskId = this.props.taskId
         this.props.getTaskDetail(taskId)
-        this.props.getTeams({
-            owner: this.props.currentUserId
-        })
+
+        // This sets both user.teams and teams.all_teams
+        this.props.getTeams({ owner: this.props.currentUserId })
     }
 
     componentWillUnmount() {
@@ -53,21 +58,41 @@ class C extends BaseComponent {
     }
 
     // TODO: Refactor all these, lots of redundancy with the REJECTED flag
-    isMember(taskCandidateId) {
-        const candidate = _.find(this.props.detail.candidates, (candidate) => {
-            if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
-                return candidate._id === taskCandidateId && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED
+    /*
+     * member = applicant
+     */
+
+    /**
+     * Check if the logged in user is an applicant
+     *
+     * They can either be an applicant themselves or one or more of their team has applied
+     */
+    /*
+    getApplications(taskCandidateId) {
+
+        const candidates = _.filter(this.props.detail.candidates, (candidate) => {
+
+            if (candidate.status === TASK_CANDIDATE_STATUS.REJECTED) {
+                return false
             }
+
+            if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
+                return candidate._id === taskCandidateId
+
+            } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
+                return _.find(this.props.ownedTeams, (item) => item._id === candidate.team._id && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED)
+            }
+
             return false
         })
-        if (!candidate) {
-            return false
-        }
-        if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
-            return candidate.user._id === this.props.currentUserId && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED
-        } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
-            return _.find(this.props.ownedTeams, (item) => item._id === candidate.team._id && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED)
-        }
+
+        // debugger
+
+        return candidates
+    }
+
+    isMember(taskCandidateId) {
+        return !!this.getApplications(taskCandidateId).length
     }
 
     isMemberByUserId(userId) {
@@ -95,9 +120,12 @@ class C extends BaseComponent {
             return candidate.bid
         }
     }
+    */
+
+
 
     linkProfileInfo(userId) {
-        this.props.history.push(`/member/${userId}`)
+        window.open(`/member/${userId}`)
     }
 
     approveUser(taskCandidateId) {
@@ -166,12 +194,15 @@ class C extends BaseComponent {
         const leaderName = detail.createdBy.profile
             ? (detail.createdBy.profile.firstName + ' ' + detail.createdBy.profile.lastName)
             : ''
-        const deadline = detail.applicationDeadline ? moment(detail.applicationDeadline).format('MMM D, YYYY') : ''
-        const teamSize = detail.candidateCompleted.length || '0'
+        const deadline = detail.applicationDeadline ? moment(detail.applicationDeadline).format('MMM D') : <span className="no-data">no deadline</span>
+        const completionDeadline = detail.completionDeadline ? moment(detail.completionDeadline).format('MMM D') : <span className="no-data">no completion deadline</span>
+
         const reward = detail.bidding
             ? (detail.status === TASK_STATUS.APPROVED ? I18N.get('project.detail.bidding_closed') : I18N.get('project.detail.bidding'))
-            : detail.reward.isUsd ? detail.reward.usd + ' USD' : (detail.reward.ela / 1000) + ' ELA'
-        const description = detail.descBreakdown || detail.description || ''
+            : detail.reward.isUsd ? (detail.reward.usd / 100) + ' USD' : (detail.reward.ela / 1000) + ' ELA'
+
+        const budget = detail.rewardUpfront.isUsd ? (detail.rewardUpfront.usd / 100) + ' USD' : (detail.rewardUpfront.ela / 1000) + ' ELA'
+
         const leaderImage = detail.createdBy.profile.avatar || ''
 
         const recruiting_el = (
@@ -195,159 +226,47 @@ class C extends BaseComponent {
                     <span className="ellipsis">{leaderName}</span>
                 </a>
                 <div className="content">
+                    {/* Application Deadline */}
                     <div className="entry">{I18N.get('project.detail.deadline')}: {deadline}</div>
-                    <div className="entry">{I18N.get('project.detail.team_size')}: {teamSize}</div>
-                    <div className="reward">{reward}</div>
+                    {detail.completionDeadline &&
+                    <div className="entry">{I18N.get('project.detail.completion_deadline')}: {completionDeadline}</div>}
+
+                    {(detail.rewardUpfront.usd > 0 || detail.rewardUpfront.ela > 0) &&
+                    <div className="pull-right">
+                        <span className="light-grey-text">{I18N.get('project.detail.budget')}:</span> {budget}
+                    </div>}
+                    <div className="pull-right clearfix">
+                        <span className="light-grey-text">{I18N.get('project.detail.reward')}:</span> {reward}
+                    </div>
+                    {detail.bidding && detail.referenceBid && <div className="pull-right clearfix">
+                        <span className="light-grey-text">{I18N.get('project.detail.reference_bid')}:</span> {detail.referenceBid} ELA
+                    </div>}
                 </div>
                 <div class="description-box">
                     <hr className="divider"/>
                     <div className="description-title">{recruiting_el}</div>
                     <hr className="divider"/>
-                    <div className="description-content">{description}</div>
+                    <div className="description-content">{detail.description || ''}</div>
+                    <div className="description-content">{detail.descBreakdown || ''}</div>
                 </div>
             </div>
         )
     }
 
-    getCurrentContributors() {
+    // maybe rename
+    getCurrentContributorsData() {
         const detail = this.props.detail
-        const applicants = _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.APPROVED });
-        /*
-        // TODO: can we document why we add the task owner as a contributor?
-        if (this.isTaskOwner()) {
-            applicants.unshift({
-                _id: 'such_fake_id',
-                user: this.props.detail.createdBy,
-                type: TASK_CANDIDATE_TYPE.USER
-            })
-        }
-        */
-        const columns = [{
-            title: 'Name',
-            key: 'name',
-            render: candidate => {
-                return (
-                    <div>
-                        {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
-                        <div>
-                            <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
-                                <Avatar className={'gap-right ' + (candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
-                                    src={candidate.user.profile.avatar}/>
-                                {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
-                            </a>
-                        </div>
-                        }
-                        {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
-                        <div>
-                            <a onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
-                                <Avatar className="gap-right" src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
-                                {candidate.team.name}
-                            </a>
-                        </div>
-                        }
-                    </div>)
-            }
-        }, {
-            title: 'Action',
-            key: 'action',
-            render: candidate => {
-                return (
-                    <div>
-                        {this.isTaskOwner() && !this.props.detail.bidding &&
-                        <div className="text-right">
-                            <a onClick={this.removeUser.bind(this, candidate._id)}>{I18N.get('project.detail.remove')}</a>
-                        </div>
-                        }
-                    </div>
-                )
-            }
-        }]
-
-        return (
-            <Table
-                className="no-borders headerless"
-                dataSource={applicants}
-                columns={columns}
-                bordered={false}
-                pagination={false}
-                rowKey="_id"
-            />
-        )
+        return _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.APPROVED });
     }
 
-    getCurrentApplicants() {
+    getPendingCandidates() {
         const detail = this.props.detail
-        const applicants = _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.PENDING });
-        const columns = [{
-            title: 'Name',
-            key: 'user',
-            render: candidate => {
-                return (
-                    <div>
-                        {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
-                        <div>
-                            <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
-                                <Avatar className="gap-right" src={candidate.user.profile.avatar} />
-                                {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
-                            </a>
-                        </div>
-                        }
-                        {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
-                        <div>
-                            <a onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
-                                <Avatar className="gap-right" src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
-                                {candidate.team.name}
-                            </a>
-                        </div>
-                        }
-                    </div>)
-            }
-        }, {
-            title: 'Action',
-            key: 'action',
-            render: (candidate) => {
-                return (
-                    <div className="text-right">
-                        {this.props.detail.bidding && <span>
-                            Bid: {candidate.bid} ELA
-                            <Divider type="vertical"/>
-                        </span>}
-                        {(this.props.page === 'ADMIN' || this.isTaskOwner() || this.isMember(candidate._id)) && (
-                            <span>
-                                <a onClick={this.showAppModal.bind(this, candidate._id)}>{I18N.get('project.detail.view')}</a>
-                                <Divider type="vertical"/>
-                            </span>
-                        )}
-                        {this.isMember(candidate._id) && (
-                            <span>
-                                <a onClick={this.withdrawApplication.bind(this, candidate._id)}>{I18N.get('project.detail.withdraw_application')}</a>
-                                {this.isMember(candidate._id) && <Divider type="vertical"/>}
-                            </span>)
-                        }
-                        {this.isTaskOwner() &&
-                        <span className="inline-block">
-                            <a onClick={this.approveUser.bind(this, candidate._id)}>{I18N.get('project.detail.approve')}</a>
-                            <Divider type="vertical"/>
-                            <a onClick={this.disapproveUser.bind(this, candidate._id)}>{I18N.get('project.detail.disapprove')}</a>
-                        </span>
-                        }
-                    </div>
-                )
-            }
-        }]
-
-        return (
-            <Table
-                className="no-borders headerless"
-                dataSource={applicants}
-                columns={columns}
-                bordered={false}
-                pagination={false}
-                rowKey="_id">
-            </Table>
-        )
+        return _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.PENDING });
     }
 
+    /**
+     * This is the application submit
+     */
     handleSubmit(e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
@@ -355,6 +274,11 @@ class C extends BaseComponent {
                 const isSelf = (values.applicant === '$me')
                 const userId = isSelf && this.props.currentUserId
                 const teamId = !isSelf && values.applicant
+
+                if (this.props.detail.bidding && !values.bid) {
+                    message.error('bid is required')
+                    return
+                }
 
                 this.props.applyToTask(this.props.taskId, userId, teamId, values.applyMsg, null, null, values.bid)
                     .then(() => {
@@ -375,47 +299,64 @@ class C extends BaseComponent {
         })
         const applyMsg_el = (
             <Input.TextArea rows={8} className="team-application" disabled={this.props.loading}
-                placeholder={this.props.detail.bidding ? I18N.get('project.detail.tell_us_why_bid') : I18N.get('project.detail.tell_us_why_join')}/>
+                            placeholder={this.props.detail.bidding ? I18N.get('project.detail.tell_us_why_bid') : I18N.get('project.detail.tell_us_why_join')}/>
         )
         const applyMsgPanel = applyMsg_fn(applyMsg_el)
 
-        const bid_fn = getFieldDecorator('bid', {
-            rules: [{required: true, message: 'Bid is required'}],
-            initialValue: 0
-        })
-
+        const bid_fn = getFieldDecorator('bid')
         const bid_el = (
-            <InputNumber disabled={this.props.loading}/>
+            <InputNumber min={1} disabled={this.props.loading}/>
         )
         const bid = bid_fn(bid_el)
 
-        const applicant_fn = getFieldDecorator('applicant', {
-            rules: [],
-            initialValue: '$me'
-        })
+        // generate select options
+        let applicantOpts = {}
+        const applicantSltOpts = []
+
+        if (!this.hasAppliedBySelf()) {
+            applicantSltOpts.push(<Select.Option key="$me "value="$me">
+                Apply as myself
+                <Avatar size="small" src={this.props.currentUserAvatar} className="pull-right"/>
+            </Select.Option>)
+            applicantOpts.initialValue = '$me'
+        }
+
+        for (let team of this.props.ownedTeams) {
+            if (!this.hasAppliedByTeam(team)) {
+                applicantSltOpts.push(<Select.Option key={team._id} value={team._id}>
+                    Apply with {team.name}
+                    {!_.isEmpty(team.pictures)
+                        ? <Avatar size="small" src={team.pictures[0].thumbUrl} className="pull-right"/>
+                        : <Avatar size="small" type="user" className="pull-right"/>
+                    }
+                </Select.Option>)
+            }
+        }
+
+        // shortcut here if user has exhaused all application options
+        if (!applicantSltOpts.length) {
+            return <div className="no-teams">
+                You have already applied with yourself and any possible teams
+                <br/>
+                <br/>
+                <Button disabled={this.props.loading} className="d_btn pull-left" onClick={() => this.setState({ applying: false })}>
+                    Cancel
+                </Button>
+            </div>
+        }
+
+        const applicant_fn = getFieldDecorator('applicant', applicantOpts)
         const applicant_el = (
             <Select className="team-selector pull-right" disabled={this.props.loading}
                 // https://github.com/vazco/uniforms/issues/228
-                getPopupContainer={x => {
-                    while (x && x.tagName.toLowerCase() !== 'form') {
-                        x = x.parentElement;
-                    }
-
-                    return x;
-                }}>
-                <Select.Option value="$me">
-                    Apply as myself
-                    <Avatar size="small" src={this.props.currentUserAvatar} className="pull-right"/>
-                </Select.Option>
-                {_.map(this.props.ownedTeams, (team) =>
-                    <Select.Option key={team._id} value={team._id}>
-                        Apply with {team.name}
-                        {!_.isEmpty(team.pictures)
-                            ? <Avatar size="small" src={team.pictures[0].thumbUrl} className="pull-right"/>
-                            : <Avatar size="small" type="user" className="pull-right"/>
+                    getPopupContainer={x => {
+                        while (x && x.tagName.toLowerCase() !== 'form') {
+                            x = x.parentElement;
                         }
-                    </Select.Option>
-                )}
+
+                        return x;
+                    }}>
+                {_.map(applicantSltOpts, (applicantOpt) => applicantOpt)}
             </Select>
         )
         const applicantPanel = applicant_fn(applicant_el)
@@ -426,15 +367,15 @@ class C extends BaseComponent {
                     {applyMsgPanel}
                 </Form.Item>
                 { this.props.detail.bidding &&
-                    <div>
-                        <Form.Item className="no-margin pull-right">
-                            <div>
-                                <span>Bid (ELA): </span>
-                                {bid}
-                            </div>
-                        </Form.Item>
-                        <div className="clearfix"/>
-                    </div>
+                <div>
+                    <Form.Item className="no-margin pull-right">
+                        <div>
+                            <span>Bid (ELA): </span>
+                            {bid}
+                        </div>
+                    </Form.Item>
+                    <div className="clearfix"/>
+                </div>
                 }
                 <Button disabled={this.props.loading} className="d_btn pull-left" onClick={() => this.setState({ applying: false })}>
                     Cancel
@@ -467,10 +408,12 @@ class C extends BaseComponent {
         return isTaskCandidate || belongsToMemberTeam || isTaskOwner
     }
 
-    ord_render () {
-        const loading = _.isEmpty(this.props.detail)
+    ord_render() {
+        const detail = this.props.detail
+        const loading = _.isEmpty(detail)
         const isTaskOwner = this.props.detail.createdBy && (this.props.detail.createdBy._id === this.props.currentUserId)
-        const isMember = this.isMemberByUserId(this.props.currentUserId)
+        // const isMember = this.isMemberByUserId(this.props.currentUserId)
+
         return (
             <div className="c_Project c_Detail">
                 { loading
@@ -491,42 +434,49 @@ class C extends BaseComponent {
                                 </Col>
                             </Row>
 
-                            {this.props.page !== 'LEADER' && !isTaskOwner && !isMember &&
-                                <Row className="actions">
-                                    <Button type="primary" onClick={() => this.setState({ applying: true })}>
-                                        {this.props.detail.bidding ? I18N.get('project.detail.popup.bid_project') : I18N.get('project.detail.popup.join_project')}
-                                    </Button>
-                                </Row>
-                            }
+                            {/*
+                            *******************************************************************************************************************
+                            * Apply Button
+                            * - this may be unintuitive but we should always show the button, you can always apply as a team or user
+                            * unless you've exhausted all the teams, but even then we can inform the user of this in a better way than hiding
+                            *******************************************************************************************************************
+                            */}
+                            {!this.state.applying && this.props.page !== 'LEADER' && !isTaskOwner && this.renderApplyButton()}
 
+                            {/*
+                            *******************************************************************************************************************
+                            * Applying Form
+                            *******************************************************************************************************************
+                            */}
                             {this.state.applying && this.getApplicationForm()}
 
-                            {!this.state.applying &&
-                                <Row className="contributors">
-                                    {/* For a bidding task you cannot leave after the task is APPROVED */}
-                                    {isMember && (this.props.detail.bidding && (this.props.detail.status === TASK_STATUS.CREATED || this.props.detail.status === TASK_STATUS.PENDING)) &&
-                                        <Button onClick={this.removeUserByUserId.bind(this, this.props.currentUserId)} className="leave-button">
-                                            {this.props.detail.bidding ?
-                                                `${I18N.get('project.detail.you_bid')} ${this.getMemberBid(this.props.currentUserId)} ELA - ${I18N.get('project.detail.leave_bid')}` :
-                                                I18N.get('project.detail.leave')}
-                                        </Button>
-                                    }
-                                    <h3 className="no-margin align-left">{I18N.get('project.detail.current_contributors')}</h3>
-                                    {this.getCurrentContributors()}
-                                </Row>
-                            }
+                            {/*
+                            *******************************************************************************************************************
+                            * Approved Applicants (might not be necessary except for admin/leader)
+                            *******************************************************************************************************************
+                            */}
+                            {(!this.state.applying && this.getCurrentContributorsData().length) ? this.renderContributors() : ''}
 
-                            {!this.state.applying && (this.props.page === 'LEADER' || this.props.page === 'ADMIN') &&
-                                <Row className="applications">
-                                    <h3 className="no-margin">{this.props.detail.bidding ? I18N.get('project.detail.pending_bids') : I18N.get('project.detail.pending_applications')}</h3>
-                                    {this.getCurrentApplicants()}
-                                </Row>
-                            }
+                            {/*
+                            *******************************************************************************************************************
+                            * Pending Bids / Applications - only show if CREATED/PENDING
+                            *******************************************************************************************************************
+                            */}
+                            {!this.state.applying && this.renderPendingCandidates()}
 
-                            {(this.props.page === 'LEADER' || this.props.page === 'ADMIN') && this.canComment() &&
-                                <Row>
-                                    <Comments type="task" canPost={true} canSubscribe={!isTaskOwner} model={this.props.taskId}/>
-                                </Row>
+                            {/*
+                            *******************************************************************************************************************
+                            * Comments
+                            * - not enabled for bidding projects to minimize confusion in a closed bid
+                            *******************************************************************************************************************
+                            */}
+                            {!this.props.detail.bidding && (this.props.page === 'LEADER' || this.props.page === 'ADMIN') && this.canComment() &&
+                            <Row>
+                                <br/>
+                                <Comments type="task" canPost={true} canSubscribe={!isTaskOwner} model={this.props.taskId}
+                                    returnUrl={`/project-detail/${this.props.taskId}`}
+                                />
+                            </Row>
                             }
                         </div>
                     )
@@ -545,6 +495,319 @@ class C extends BaseComponent {
         )
     }
 
+    renderApplyButton() {
+
+        const detail = this.props.detail
+
+        // if not bidding check if there is already an approved
+        if (!detail.bidding && _.find(detail.candidates, (candidate) => candidate.status === TASK_CANDIDATE_STATUS.APPROVED)) {
+            return ''
+        }
+
+        if (detail.bidding && _.indexOf([TASK_STATUS.CREATED, TASK_STATUS.PENDING], detail.status) < 0) {
+            return ''
+        }
+
+        return <Row className="actions">
+            <Button type="primary" onClick={() => this.setState({ applying: true })}>
+                {detail.bidding ? I18N.get('project.detail.popup.bid_project') : I18N.get('project.detail.popup.join_project')}
+            </Button>
+        </Row>
+    }
+
+
+    /**
+     * Render pending bids or applications
+     *
+     * BIDDING - we show for CREATED/PENDING status only
+     *
+     * For Admins - only admins can create tasks/projects for bidding
+     * - they can see all applications (user/team), we assume they are never a bidder
+     *
+     * For everyone else they can only see their own bids and the total number of bids
+     *
+     *
+     * PROJECT - we show if APPROVED, but no one is selected yet
+     *
+     * We can see other people who applied
+     */
+    renderPendingCandidates() {
+
+        const currentUserId = this.props.currentUserId
+        const detail = this.props.detail
+
+        // status checks
+        if (detail.bidding && _.indexOf([TASK_STATUS.CREATED, TASK_STATUS.PENDING], detail.status) < 0) {
+            return ''
+        }
+
+        if (!detail.bidding && _.find(detail.candidates, (candidate) => candidate.status === TASK_CANDIDATE_STATUS.APPROVED)) {
+            return ''
+        }
+
+
+        let pendingCandidates = this.getPendingCandidates()
+        let pendingCandidatesCnt = pendingCandidates.length
+
+        // only show current user's bids if it's bidding - for projects with a set reward we can show them
+        if (!this.props.is_admin && detail.bidding) {
+            pendingCandidates = _.filter(pendingCandidates, (candidate) => {
+                if (candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === currentUserId) {
+                    return true
+
+                }
+
+                if (candidate.type === TASK_CANDIDATE_TYPE.TEAM && this.loggedInUserBelongsToCandidate(candidate)) {
+                    // here we make the assumption that any member of a team can view the team's bid
+                    return true
+                }
+            })
+        }
+
+        let title = ''
+        if (detail.bidding) {
+            if (this.props.is_admin) {
+                title = I18N.get('project.detail.pending_bids')
+            } else {
+                title = I18N.get('project.detail.your_bids')
+            }
+        } else {
+            title = I18N.get('project.detail.pending_applications')
+        }
+
+        return <Row className="applications">
+            {/* Title */}
+            <h3 className="no-margin">
+                {title}
+            </h3>
+
+            {pendingCandidates.length && this.renderCandidates(pendingCandidates)}
+
+            {/* this works because we filtered pendingCandidates after we saved the count */}
+            {(this.props.page !== 'ADMIN' || !this.props.is_admin) && detail.bidding &&
+            `${I18N.get('project.detail.bidding_cur_1')} ${pendingCandidatesCnt - pendingCandidates.length} ${I18N.get('project.detail.bidding_cur_2')}`
+            }
+
+            {!detail.bidding && pendingCandidates.length === 0 && <div className="no-data no-info">There are no applications yet</div>}
+        </Row>
+    }
+
+    renderCandidates(candidates) {
+
+        const columns = [{
+            title: 'Name',
+            key: 'name',
+            render: (candidate) => {
+                return (
+                    <div>
+                        {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
+                        <div>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                                <Avatar className={'gap-right ' + (candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
+                                        src={candidate.user.profile.avatar}/>
+                                {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
+                            </a>
+                        </div>
+                        }
+                        {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
+                        <div>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
+                                <Avatar className="gap-right" src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
+                                {candidate.team.name}
+                                {this.loggedInUserOwnerOfCandidate(candidate) ?
+                                    <span className="no-info"> (team owner)</span> :
+                                    <span className="no-info"> (team member)</span>
+                                }
+                            </a>
+                        </div>
+                        }
+                    </div>)
+            }
+        }, {
+            title: 'Action',
+            key: 'action',
+            render: (candidate) => {
+                return (
+                    <div className="text-right">
+                        {this.props.detail.bidding && <span>
+                            Bid: {candidate.bid} ELA
+                        </span>}
+                        {(this.props.page === 'ADMIN' || this.isTaskOwner() || this.loggedInUserBelongsToCandidate(candidate)) && (
+                            <span>
+                                <Divider type="vertical"/>
+                                <a onClick={this.showAppModal.bind(this, candidate._id)}>{I18N.get('project.detail.view')}</a>
+                            </span>
+                        )}
+                        {this.loggedInUserOwnerOfCandidate(candidate) && (
+                            <span>
+                                <Divider type="vertical"/>
+                                <a onClick={this.withdrawApplication.bind(this, candidate._id)}>{I18N.get('project.detail.withdraw_application')}</a>
+                            </span>)
+                        }
+                        {this.isTaskOwner() &&
+                        <span className="inline-block">
+                            <Divider type="vertical"/>
+                            <a onClick={this.approveUser.bind(this, candidate._id)}>{I18N.get('project.detail.approve')}</a>
+                            <Divider type="vertical"/>
+                            <a onClick={this.disapproveUser.bind(this, candidate._id)}>{I18N.get('project.detail.disapprove')}</a>
+                        </span>
+                        }
+                    </div>
+                )
+                /*
+                return (
+                    <div>
+                        {this.isTaskOwner() && !this.props.detail.bidding &&
+                        <div className="text-right">
+                            <a onClick={this.removeUser.bind(this, candidate._id)}>{I18N.get('project.detail.remove')}</a>
+                        </div>
+                        }
+                    </div>
+                )
+                */
+            }
+        }]
+
+        return (
+            <Table
+                className="no-borders headerless"
+                dataSource={candidates}
+                columns={columns}
+                bordered={false}
+                pagination={false}
+                rowKey="_id"
+            />
+        )
+    }
+
+    /**
+     * For bidding tasks, contributors are the actual assigned user
+     */
+    renderContributors() {
+
+        let currentContributors = this.getCurrentContributorsData()
+
+        const columns = [{
+            title: 'Name',
+            key: 'name',
+            render: (candidate) => {
+                return (
+                    <div>
+                        {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
+                        <div>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                                <Avatar className={'gap-right ' + (candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
+                                        src={candidate.user.profile.avatar}/>
+                                {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
+                            </a>
+                        </div>
+                        }
+                        {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
+                        <div>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
+                                <Avatar className="gap-right" src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
+                                {candidate.team.name}
+                            </a>
+                        </div>
+                        }
+                    </div>)
+            }
+        }, {
+            title: 'Action',
+            key: 'action',
+            render: (candidate) => {
+                return (
+                    <div className="text-right">
+                        {this.isTaskOwner() && !this.props.detail.bidding &&
+                        <a onClick={this.removeUser.bind(this, candidate._id)}>{I18N.get('project.detail.remove')}</a>
+                        }
+                        {this.isTaskOwner() && this.props.detail.bidding &&
+                        <span>
+                            Bid: {candidate.bid} ELA
+                        </span>}
+                        {(this.props.page === 'ADMIN' || this.isTaskOwner() || this.loggedInUserBelongsToCandidate(candidate)) && (
+                            <span>
+                                <Divider type="vertical"/>
+                                <a onClick={this.showAppModal.bind(this, candidate._id)}>{I18N.get('project.detail.view')}</a>
+                            </span>
+                        )}
+                    </div>
+                )
+            }
+        }]
+
+        return <Row className="contributors">
+            <h3 className="no-margin align-left">{this.props.detail.bidding ? I18N.get('project.detail.bidding_winner') : I18N.get('project.detail.current_contributors')}</h3>
+
+            <Table
+                className="no-borders headerless"
+                dataSource={currentContributors}
+                columns={columns}
+                bordered={false}
+                pagination={false}
+                rowKey="_id"
+            />
+        </Row>
+    }
+
+    /*
+    ****************************************************************************************************************
+    * Helpers
+    ****************************************************************************************************************
+     */
+    isUnapproved() {
+        return (this.props.detail.status === TASK_STATUS.CREATED || this.props.detail.status === TASK_STATUS.PENDING)
+    }
+
+    loggedInUserBelongsToCandidate(candidate) {
+        const loggedInUserId = this.props.currentUserId
+        if (candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === loggedInUserId) {
+            return true
+        }
+
+        if (candidate.type === TASK_CANDIDATE_TYPE.TEAM && _.find(candidate.team.members, {user: loggedInUserId})) {
+            return true
+        }
+    }
+
+    /**
+     * Is the logged in user the passed in candidate
+     * or the owner of the team
+     *
+     * @param candidate
+     * @return Boolean
+     */
+    loggedInUserOwnerOfCandidate(candidate) {
+        const loggedInUserId = this.props.currentUserId
+        if (candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === loggedInUserId) {
+            return true
+        }
+
+        if (candidate.type === TASK_CANDIDATE_TYPE.TEAM && candidate.team.owner._id === loggedInUserId){
+            return true
+        }
+    }
+
+    // check if logged in user has applied by themselves
+    hasAppliedBySelf() {
+        const loggedInUserId = this.props.currentUserId
+        const pendingCandidates = this.getPendingCandidates()
+        return !!_.find(pendingCandidates, (candidate) => candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === loggedInUserId)
+    }
+
+    // check if logged in user has applied by the passed in team
+    hasAppliedByTeam(team) {
+        const pendingCandidates = this.getPendingCandidates()
+        return !!_.find(pendingCandidates, (candidate) => {
+            return (candidate.type === TASK_CANDIDATE_TYPE.TEAM && candidate.team._id === team._id)
+        })
+    }
+
+    /*
+    ****************************************************************************************************************
+    * Modals
+    ****************************************************************************************************************
+     */
     showAppModal = (projectCandidateId) => {
         this.setState({
             showAppModal: true,

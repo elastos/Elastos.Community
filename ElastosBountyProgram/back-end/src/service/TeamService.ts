@@ -432,6 +432,8 @@ export default class extends Base {
             query.$or = [
                 { _id: {$in: _.map(userTeams, 'team')} }
             ]
+
+            query.type = constant.TEAM_TYPE.TEAM
         }
 
         if (param.type) {
@@ -447,6 +449,8 @@ export default class extends Base {
                 path: 'owner',
                 select: sanitize,
             })
+
+            await db_team.getDBInstance().populate(team, ['members'])
 
             for (let comment of team.comments) {
                 for (let thread of comment) {
