@@ -19,7 +19,7 @@ export default createContainer(Component, (state) => {
         resetTeamDetail() {
             return teamService.resetTeamDetail()
         },
-        async applyToTeam(teamId, userId, applyMsg = 'I am interested in this circle.') {
+        async applyToTeam(teamId, userId, applyMsg = 'I am interested in this CRcle.') {
             return teamService.pushCandidate(teamId, userId, applyMsg)
         },
         async withdrawCandidate(teamCandidateId) {

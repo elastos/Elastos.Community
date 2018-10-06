@@ -156,7 +156,7 @@ export default class extends Base {
         const MAX_USER_CIRCLES = 2
 
         if (_.size(userCrcles) >= MAX_USER_CIRCLES) {
-            throw 'maximum number of circles reached'
+            throw 'maximum number of CRcles reached'
         }
 
         // Accept CRcle applications automatically
