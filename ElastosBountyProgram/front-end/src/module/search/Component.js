@@ -552,7 +552,7 @@ export default class extends BaseComponent {
                         <div className="gap-right pull-left">{I18N.get('project.detail.recruiting')}: </div>
                         <div className="pull-left">
                             {_.isEmpty(entity.recruitedSkillsets) ? (
-                                <span>{I18N.get('project.detail.recruiting_skills_unknown')}</span>) : (
+                                <span className="default-text">{I18N.get('project.detail.recruiting_skills_unknown')}</span>) : (
                                 _.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>))}
                         </div>
                     </div>
@@ -589,6 +589,7 @@ export default class extends BaseComponent {
                 }
             })
             : _.map(entities, (task, id) => {
+                const applicationDeadline = task.applicationDeadline ? new Date(task.applicationDeadline).getTime() : Date.now();
                 return {
                     href: '',
                     title: task.name,
@@ -597,7 +598,7 @@ export default class extends BaseComponent {
                     description: description_fn(task),
                     content: task.description,
                     owner: task.createdBy,
-                    hasApprovedApplication: !!_.find(task.candidates, (candidate) => candidate.status === TASK_CANDIDATE_STATUS.APPROVED),
+                    applicationDeadlinePassed: Date.now() > applicationDeadline,
                     id: task._id
                 }
             })
@@ -617,19 +618,23 @@ export default class extends BaseComponent {
                                 key={item.id}
                                 extra={this.getCarousel(item)}
                             >
-                                <h3 class="no-margin no-padding one-line brand-color">
+                                <h3 className="no-margin no-padding one-line brand-color">
                                     <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
                                 </h3>
-                                {item.hasApprovedApplication && <span className="subtitle"> {I18N.get('developer.search.subtitle_prefix')} {item.bidding ? I18N.get('developer.search.subtitle_bids') : I18N.get('developer.search.subtitle_applications')}</span>}
-                                <h5 class="no-margin">
+                                {item.applicationDeadlinePassed &&
+                                <span className="subtitle">
+                                    {I18N.get('developer.search.subtitle_prefix')} {I18N.get('developer.search.subtitle_applications')}
+                                </span>
+                                }
+                                <h5 className="no-margin">
                                     {item.description}
                                 </h5>
-                                <div class="description-content" dangerouslySetInnerHTML={{__html: item.content}}/>
+                                <div className="description-content" dangerouslySetInnerHTML={{__html: item.content}}/>
                                 <div className="ant-list-item-right-box">
                                     <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
                                         <Avatar size="large" className="pull-right"
                                             src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
-                                        <div class="clearfix"/>
+                                        <div className="clearfix"/>
                                         <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
                                     </a>
 
@@ -643,10 +648,10 @@ export default class extends BaseComponent {
                                 key={item.id}
                                 className="ignore-right-box"
                             >
-                                <h3 class="no-margin no-padding one-line brand-color">
+                                <h3 className="no-margin no-padding one-line brand-color">
                                     <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
                                 </h3>
-                                <h5 class="no-margin">
+                                <h5 className="no-margin">
                                     {item.description}
                                 </h5>
                                 <div>

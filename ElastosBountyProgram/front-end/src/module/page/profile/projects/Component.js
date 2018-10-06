@@ -7,6 +7,7 @@ import './style.scss'
 import '../../admin/admin.scss'
 import { Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button,
     Table, Select, Divider, List, Carousel, Avatar, Tag } from 'antd'
+import {TASK_CANDIDATE_STATUS} from '@/constant'
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
 import I18N from '@/I18N'
@@ -86,29 +87,41 @@ export default class extends StandardPage {
     getListComponent(tasks) {
         const description_fn = (entity) => {
             return (
-                <div className="valign-wrapper">
-                    <div className="gap-right pull-left">{I18N.get('project.detail.recruiting')}: </div>
-                    <div className="pull-left">
-                        {_.isEmpty(entity.recruitedSkillsets) ? (
-                            <span>{I18N.get('project.detail.recruiting_skills_unknown')}</span>) : (
-                            _.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>))}
+                <div>
+                    <div className="valign-wrapper">
+                        <div className="gap-right pull-left">{I18N.get('project.detail.recruiting')}: </div>
+                        <div className="pull-left">
+                            {_.isEmpty(entity.recruitedSkillsets) ? (
+                                <span className="default-text">{I18N.get('project.detail.recruiting_skills_unknown')}</span>) : (
+                                _.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>))}
+                        </div>
                     </div>
+                    {entity.applicationDeadline &&
+                    <div className="valign-wrapper">
+                        <div className="gap-right pull-left">{I18N.get('project.detail.deadline')}:</div>
+                        <div className="pull-left default-text">
+                            {moment(entity.applicationDeadline).format('MMM D')}
+                        </div>
+                    </div>
+                    }
                 </div>
             )
         }
 
         const data = _.map(tasks, (task, id) => {
+            const applicationDeadline = task.applicationDeadline ? new Date(task.applicationDeadline).getTime() : Date.now();
             return {
                 href: '',
                 title: task.name,
                 description: description_fn(task),
                 content: task.description,
                 owner: task.createdBy,
+                applicationDeadlinePassed: Date.now() > applicationDeadline,
                 id: task._id,
                 task
             }
         })
-
+        console.log(data)
         return (
             <List itemLayout='vertical' size='large' loading={this.props.loading}
                 className="with-right-box" dataSource={data}
@@ -122,6 +135,11 @@ export default class extends StandardPage {
                                 <h3 class="no-margin no-padding one-line brand-color">
                                     <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
                                 </h3>
+                                {item.applicationDeadlinePassed &&
+                                    <span className="subtitle">
+                                        {I18N.get('developer.search.subtitle_prefix')} {I18N.get('developer.search.subtitle_applications')}
+                                    </span>
+                                }
                                 <h5 class="no-margin">
                                     {item.description}
                                 </h5>
