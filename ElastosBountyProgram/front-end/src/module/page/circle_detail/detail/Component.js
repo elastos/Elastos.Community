@@ -145,6 +145,14 @@ class C extends BaseComponent {
             : avatar
     }
 
+    getUserNameWithFallback(user) {
+        if (_.isEmpty(user.profile.firstName) && _.isEmpty(user.profile.lastName)) {
+            return user.username
+        }
+
+        return _.trim([user.profile.firstName, user.profile.lastName].join(' '))
+    }
+
     renderMembers() {
         const members = _.filter(this.props.detail.members, { status: TEAM_USER_STATUS.NORMAL })
         const columns = [{
@@ -156,7 +164,7 @@ class C extends BaseComponent {
                         <Avatar className={'gap-right ' + (candidate.role === 'LEADER' ? 'avatar-leader' : 'avatar-member')}
                             src={this.getAvatarWithFallback(candidate.user.profile.avatar)}/>
                         <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
-                            {`${candidate.user.profile.firstName} ${candidate.user.profile.lastName}`}</a>
+                            {this.getUserNameWithFallback(candidate.user)}</a>
                     </div>
                 )
             }
