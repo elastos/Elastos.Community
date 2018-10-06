@@ -68,9 +68,10 @@ export default class extends Base {
             active: true
         };
 
-        let newUser = await db_user.save(doc);
+        const newUser = await db_user.save(doc);
 
         await this.linkCountryCommunity(newUser)
+        this.sendConfirmation(doc)
 
         return newUser
     }
@@ -439,12 +440,14 @@ export default class extends Base {
 
         await mail.send({
             to: email,
+            toName: email,
             subject: 'Your Cyber Republic registration code',
             body: `Your code: ${code}`
         })
 
         await mail.send({
             to: 'clarenceliu@elastos.org',
+            toName: 'clarenceliu@elastos.org',
             subject: 'New Code Registration',
             body: `Code: ${code} -> ${email}`
         })
@@ -457,8 +460,13 @@ export default class extends Base {
 
         await mail.send({
             to: email,
+            toName: email,
             subject: 'Welcome to Cyber Republic',
-            body: 'Your registration is complete.'
+            body: `
+                Your registration is complete.<br/>
+                <br/>
+                <a href="https://discord.gg/MHSUVZN">Join us on Discord</a>
+            `
         })
 
         return true
