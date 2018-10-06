@@ -121,7 +121,6 @@ export default class extends StandardPage {
                 task
             }
         })
-        console.log(data)
         return (
             <List itemLayout='vertical' size='large' loading={this.props.loading}
                 className="with-right-box" dataSource={data}
