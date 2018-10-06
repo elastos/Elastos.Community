@@ -56,6 +56,7 @@ class C extends BaseComponent {
                 multiLines
                 style={{ width: '100%', height: 100 }}
                 suggestions={allUsers}
+                notFoundContent={I18N.get('mentions.notFound')}
                 placeholder="Comments or updates"/>
         )
 
