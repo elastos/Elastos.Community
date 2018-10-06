@@ -27,9 +27,6 @@ export default createContainer(Component, (state) => {
                 const rs = await userService.register(username, password, profile)
 
                 if (rs) {
-                    userService.sendConfirmationEmail(profile.email)
-                    message.success('Successfully Registered - Please Login')
-
                     const registerRedirect = sessionStorage.getItem('registerRedirect')
 
                     if (registerRedirect) {
@@ -51,7 +48,6 @@ export default createContainer(Component, (state) => {
                 const rs = await userService.register(username, password, profile)
 
                 if (rs) {
-                    userService.sendConfirmationEmail(profile.email)
                     const registerRedirect = sessionStorage.getItem('registerRedirect')
 
                     if (registerRedirect) {
