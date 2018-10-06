@@ -249,7 +249,9 @@ export default class extends BaseComponent {
 
                             <Row>
                                 <Comments type="submission" canPost={true} model={this.props.submission}
-                                    canSubscribe={this.canSubscribe()}/>
+                                    canSubscribe={this.canSubscribe()}
+                                    returnUrl={`/submission-detail/${this.props.submission._id}`}
+                                />
                             </Row>
                         </div>
                     )

@@ -4,6 +4,7 @@ import {Form, Icon, Input, Button, Checkbox} from 'antd'
 import ReCAPTCHA from 'react-google-recaptcha';
 import {RECAPTCHA_KEY} from '@/config/constant';
 import I18N from '@/I18N'
+import _ from 'lodash'
 
 import './style.scss'
 
@@ -24,7 +25,9 @@ class C extends BaseComponent {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 this.props.login(values.username, values.password, this.state.persist).then(() => {
-                    this.props.onHideModal()
+                    if (_.isFunction(this.props.onHideModal)) {
+                        this.props.onHideModal()
+                    }
                 })
             }
         })

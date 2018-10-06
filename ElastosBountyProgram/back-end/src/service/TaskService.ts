@@ -216,6 +216,8 @@ export default class extends Base {
             thumbnail, infoLink, community, communityParent, category, type, startTime, endTime,
             candidateLimit, candidateSltLimit, rewardUpfront, reward, assignSelf,
 
+            applicationDeadline, completionDeadline,
+
             eventDateRange, eventDateRangeStart, eventDateRangeEnd, eventDateStatus,
             location,
 
@@ -256,6 +258,8 @@ export default class extends Base {
             domain,
             recruitedSkillsets,
             pictures,
+
+            applicationDeadline, completionDeadline,
 
             eventDateRange, eventDateRangeStart, eventDateRangeEnd, eventDateStatus,
             location,

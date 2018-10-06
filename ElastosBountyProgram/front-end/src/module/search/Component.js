@@ -567,8 +567,8 @@ export default class extends BaseComponent {
                     {entity.applicationDeadline &&
                     <div className="valign-wrapper">
                         <div className="gap-right pull-left">{I18N.get('project.detail.deadline')}:</div>
-                        <div className="pull-left light-grey-text">
-                            {moment(entity.applicationDeadline).format('MMM D')} ELA
+                        <div className="pull-left default-text">
+                            {moment(entity.applicationDeadline).format('MMM D')}
                         </div>
                     </div>
                     }

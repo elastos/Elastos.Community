@@ -16,6 +16,10 @@ export default {
 
         const {to, toName, subject, body, replyTo} = options
 
+        if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_URL) {
+            return
+        }
+
         const mailgun = Mailgun({
             apiKey: process.env.MAILGUN_API_KEY,
             domain: process.env.MAILGUN_URL

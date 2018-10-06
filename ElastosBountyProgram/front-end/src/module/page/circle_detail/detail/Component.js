@@ -204,6 +204,7 @@ class C extends BaseComponent {
                         headlines={true}
                         type="team"
                         canPost={this.isTeamMember()}
+                        returnUrl={`/empower35-detail/${this.props.detail._id}`}
                         model={this.props.detail}/>
                 </div>
             </div>

@@ -473,7 +473,9 @@ class C extends BaseComponent {
                             {!this.props.detail.bidding && (this.props.page === 'LEADER' || this.props.page === 'ADMIN') && this.canComment() &&
                             <Row>
                                 <br/>
-                                <Comments type="task" canPost={true} canSubscribe={!isTaskOwner} model={this.props.taskId}/>
+                                <Comments type="task" canPost={true} canSubscribe={!isTaskOwner} model={this.props.taskId}
+                                    returnUrl={`/project-detail/${this.props.taskId}`}
+                                />
                             </Row>
                             }
                         </div>
