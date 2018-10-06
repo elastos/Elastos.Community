@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+        }
+        .container {
+            width: 100%;
+            height: 100%;
+            background: #0F2631 url("../images/cr_email_background.png");
+            background-size: contain;
+        }
+        .cr-logo {
+            width: 20vw;
+            margin: auto auto;
+            padding-top: 10vh;
+            padding-bottom: 10vh;
+        }
+        .cr-logo img {
+            width: 100%;
+        }
+        .content-container {
+            width: 50vw;
+            margin: auto auto;
+            background-color: white;
+        }
+        .code-container {
+            padding-top: 5vh;
+            text-align: center;
+        }
+        .code-box {
+            margin: 0 5px;
+            padding: 1vw;
+            display: inline-block;
+            border: 1px solid #233842;
+            font-size: 60px;
+            color: #50E3C2;
+        }
+        .code-box-divider {
+            width: 5vw;
+            display: inline-block;
+        }
+        .code-text {
+            margin-top: 75px;
+            margin-bottom: 120px;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+        }
+        .cr-link {
+            padding-bottom: 50px;
+            text-align: center;
+        }
+        .cr-link a {
+            color: rgba(15, 38, 49, 0.5);
+        }
+        @media only screen and (max-width: 768px) {
+            .container {
+                display: flex;
+                flex-direction: column;
+            }
+            .cr-logo {
+                width: 50%;
+            }
+            .content-container {
+                width: 80%;
+                height: 70%;
+                margin: 0;
+            }
+            .code-box {
+                font-size: 10vw;
+            }
+            .code-text {
+                font-size: 5vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cr-logo">
+            <img src="../images/logo-white-text.svg" />
+        </div>
+        <div class="content-container">
+            <div class="code-container">
+                <div class="code-box">1</div>
+                <div class="code-box">1</div>
+                <div class="code-box">1</div>
+                <div class="code-box-divider"></div>
+                <div class="code-box">1</div>
+                <div class="code-box">1</div>
+                <div class="code-box">1</div>
+            </div>
+            <div class="code-text">
+                <span>USE THIS CODE TO LOGIN</span>
+            </div>
+            <div class="cr-link">
+                <a href="https://www.cyberrepublic.org">cyberrepublic.org</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
