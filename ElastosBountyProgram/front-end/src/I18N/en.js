@@ -69,6 +69,8 @@ const en = {
     '2304': 'My Communities',
     '2305': 'My Projects',
 
+    'mentions.notFound': 'User not found',
+
     'comments.noComments': 'No comments yet. Be the first to post!',
     // Admin tasks
     'admin.tasks.status': 'Status',
