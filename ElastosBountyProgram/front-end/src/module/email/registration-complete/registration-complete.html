@@ -50,16 +50,16 @@
             font-weight: 100;
         }
         .circle-container {
-            padding: 25px 0;
+            padding: 20px 0;
             text-align: center;
         }
         .circle-box {
-            margin: 0 25px;
+            margin: 0 20px 25px 20px;
             display: inline-block;
             border: 1px solid #233842;
         }
         .upper-circle-box {
-            padding: 60px 30px;
+            padding: 60px 25px;
             background-color: #0F2631;
             color: white;
         }
@@ -95,6 +95,9 @@
             color: rgba(15, 38, 49, 0.5);
         }
         @media only screen and (max-width: 768px) {
+            .container {
+                padding-bottom: 0;
+            }
             .cr-title {
                 padding: 10vh 0;
             }
@@ -115,7 +118,7 @@
                 font-size: 4vw;
             }
             .description p {
-                font-size: 3vw;
+                font-size: 3.5vw;
             }
             .circle-box {
                 width: 25%;
@@ -123,6 +126,9 @@
             }
             .upper-circle-box {
                 padding: 50px 0;
+            }
+            .upper-circle-box span {
+                font-size: 4vw;
             }
         }
     </style>
