@@ -125,7 +125,7 @@ export default class extends BaseComponent {
     }
 
     getSelectedKeys() {
-        const keys = _.map(['cr100', 'empower35', 'ambassadors', 'profile', 'developer', 'social', 'community'], (key) => {
+        const keys = _.map(['cr100', 'crcles', 'ambassadors', 'profile', 'developer', 'social', 'community'], (key) => {
             return ((this.props.pathname || '').indexOf(`/${key}`) === 0) ? key : ''
         })
 
@@ -200,7 +200,7 @@ export default class extends BaseComponent {
                         {I18N.get('0105')}
                     </Menu.Item>
 
-                    <Menu.Item className="c_MenuItem link" key="empower35">
+                    <Menu.Item className="c_MenuItem link" key="crcles">
                         {I18N.get('0106')}
                     </Menu.Item>
 
@@ -253,7 +253,7 @@ export default class extends BaseComponent {
             'home',
             'developer',
             'cr100',
-            'empower35',
+            'crcles',
             'ambassadors',
             'social',
             'leader',

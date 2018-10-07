@@ -260,6 +260,7 @@ const en = {
     'emp35.circles.statement': 'A circle is a shape where all points are equal distance from the center. CR\'s "CRcles" are teams of decentralized citizens who all revolve around a single area of expertise. CRcles are designed to group people by their talent and allow them to begin creating and completing talent specific tasks. In time, leaders will be elected to manage each CRcle.',
 
     // Circle Detail
+    'circle.title': 'Crcle Detail',
     'circle.header.join': 'Join',
     'circle.header.leave': 'Leave',
     'circle.header.maxReached': 'Limit reached',

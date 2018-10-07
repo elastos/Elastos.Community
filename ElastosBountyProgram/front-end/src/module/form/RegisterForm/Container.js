@@ -53,7 +53,7 @@ export default createContainer(Component, (state) => {
                     if (registerRedirect) {
                         return true;
                     } else {
-                        this.history.push('/empower35')
+                        this.history.push('/crcles')
                     }
                 }
             } catch (err) {
