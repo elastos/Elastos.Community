@@ -18,20 +18,21 @@ export default class extends StandardPage {
                 <div className="ebp-page-title">
                     <Row className="d_row d_rowGrey">
                         <h3 className="page-header">
-                            Join Slack
+                            Join Discord & Telegram
                         </h3>
                     </Row>
                 </div>
                 <div className="ebp-page">
                     <Row className="d_row">
                         <h4>
-                            All members on sign-up should receive an email inviting them to Slack
+                            After joining Cyber Republic please join our Discord channel at <a href="https://discord.gg/UG9j6kh">https://discord.gg/UG9j6kh</a> and
+                            Telegram at <a href="https://t.me/elastosgroup">https://t.me/elastosgroup</a>
                         </h4>
 
                         <p>
-                            Please use Slack to collaborate and find team members in your community.<br/>
+                            Please use Discord to collaborate and find team members in your community.<br/>
                             <br/>
-                            If you do not receive one please email us at <a href="mailto:slack@elastos.org">slack@elastos.org</a>
+                            If you have any issues please email us at <a href="mailto:cyberrepublic@elastos.org">cyberrepublic@elastos.org</a>
                         </p>
                     </Row>
                 </div>
