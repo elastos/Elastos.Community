@@ -343,7 +343,13 @@ const en = {
     'project.detail.reward': 'Reward',
     'project.detail.reference_bid': 'Reference Bid',
 
-    'team.detail.team_active': 'Your team is currently active',
+    'team.detail.title.status.active': 'Your team is currently active',
+    'team.detail.title.status.closed': 'Your team is closed now',
+    'team.detail.title.status.draft': 'Your team is not open yet',
+    'team.detail.recuriting': 'Recruitment In Progress',
+    'team.detail.not_recruiting': 'Recruitment Closed',
+    'team.detail.status.active': 'Open',
+    'team.detail.status.closed': 'Close',
 
     'team.create.error.nameRequired': 'Team name is required',
     'team.create.error.nameTooShort': 'Team name is too short',
@@ -376,6 +382,7 @@ const en = {
     '.upload': 'Click to Upload',
     '.yes': 'Yes',
     '.no': 'No',
+    '.view': 'View',
 
     // Landing
     'landing.elastos': 'Elastos',
