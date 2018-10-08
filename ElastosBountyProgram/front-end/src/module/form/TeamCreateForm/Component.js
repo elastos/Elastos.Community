@@ -51,7 +51,7 @@ class C extends BaseComponent {
             fileList: (props.existingTeam && props.existingTeam.pictures) || [],
             previewVisible: false,
             previewImage: '',
-            status: TEAM_STATUS.ACTIVE
+            status: (props.existingTeam && props.existingTeam.status) || TEAM_STATUS.ACTIVE
         }
 
         this.pictureUrlLookups = []
@@ -76,7 +76,7 @@ class C extends BaseComponent {
                     metadata: '',
                     pictures: this.state.fileList || [],
                     type: this.props.existingTeam && this.props.existingTeam.type,
-                    status: this.state.editing ? TEAM_STATUS.ACTIVE : this.state.status
+                    status: this.state.status
                 }
 
                 _.each(createParams.pictures, (pictureFile) => {
@@ -332,12 +332,12 @@ class C extends BaseComponent {
 
                 { !this.props.embedded &&
                     <FormItem wrapperCol={{ xs: { span: 24, offset: 0 }, sm: { span: 12, offset: 8 } }}>
-                        {!this.state.editing && <Button loading={this.props.loading} onClick={this.changeStatusActive.bind(this)} htmlType="submit" className="d_btn pull-left create-btn">
+                        {!this.state.editing && <Button loading={this.props.loading} htmlType="submit" className="d_btn pull-left">
                             Create & Open
                         </Button>}
-                        <Button loading={this.props.loading} onClick={this.changeStatusDraft.bind(this)} type="ebp" htmlType="submit" className="d_btn pull-left">
-                            {this.state.editing ? 'Save' : 'Save as Draft'}
-                        </Button>
+                        {this.state.editing && <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn pull-left">
+                            Save
+                        </Button>}
                     </FormItem>
                 }
             </div>
@@ -361,19 +361,5 @@ class C extends BaseComponent {
         )
     }
     
-    changeStatusActive() {
-        this.setState({
-            status: TEAM_STATUS.ACTIVE
-        })
-    }
-
-    changeStatusDraft() {
-        if(!this.state.editing){
-            this.setState({
-                status: TEAM_STATUS.DRAFT
-            })
-        }
-    }
-
 }
 export default Form.create()(C)

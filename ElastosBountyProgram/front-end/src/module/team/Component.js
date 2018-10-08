@@ -41,7 +41,6 @@ export default class extends BaseComponent {
             <div className="pull-left">
                 {this.props.team.status == TEAM_STATUS.ACTIVE && I18N.get('team.detail.title.status.active')}
                 {this.props.team.status == TEAM_STATUS.CLOSED && I18N.get('team.detail.title.status.closed')}
-                {this.props.team.status == TEAM_STATUS.DRAFT && I18N.get('team.detail.title.status.draft')}
             </div>
             <div className="pull-right right-align">
                 <Button onClick={this.switchEditMode.bind(this)}>
@@ -53,9 +52,6 @@ export default class extends BaseComponent {
                     {I18N.get('team.detail.status.closed')}
                 </Button>}
                 {this.props.team.status == TEAM_STATUS.CLOSED && <Button loading={this.props.loading} onClick={this.activeTeam.bind(this)}>
-                    {I18N.get('team.detail.status.active')}
-                </Button>}
-                {this.props.team.status == TEAM_STATUS.DRAFT && <Button loading={this.props.loading} onClick={this.activeTeam.bind(this)}>
                     {I18N.get('team.detail.status.active')}
                 </Button>}
             </div>

@@ -95,7 +95,7 @@ class C extends BaseComponent {
             </div>
         )
 
-        return ((status == TEAM_STATUS.ACTIVE || status == TEAM_STATUS.CLOSED) || (this.isTeamOwner && status == TEAM_STATUS.DRAFT)) && (
+        return (
             <div>
                 <div className="title">
                     <span>{name}</span>

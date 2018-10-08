@@ -320,7 +320,6 @@ export default {
     'team.detail.not_recruiting': '招募取消',
     'team.detail.status.active': '开启',
     'team.detail.status.closed': '关闭',
-    'team.detail.status.reopen': '重新开启',
 
     // Team specializations
     'team.spec.media': '媒体',

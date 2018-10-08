@@ -350,7 +350,6 @@ const en = {
     'team.detail.not_recruiting': 'Recruitment Closed',
     'team.detail.status.active': 'Open',
     'team.detail.status.closed': 'Close',
-    'team.detail.status.reopen': 'Reopen',
 
     'team.create.error.nameRequired': 'Team name is required',
     'team.create.error.nameTooShort': 'Team name is too short',

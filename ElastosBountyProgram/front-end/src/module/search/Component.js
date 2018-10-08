@@ -60,13 +60,6 @@ export default class extends BaseComponent {
             query.domain = this.state.domain
         }
 
-        if (this.isLookingForTeam()) {
-            let status = [];
-            status.push(TEAM_STATUS.ACTIVE);
-            status.push(TEAM_STATUS.CLOSED);
-            query.status = status
-        }
-
         return query
     }
 
@@ -674,8 +667,9 @@ export default class extends BaseComponent {
                                         <Avatar size="large"
                                             src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
                                     </a>
-                                    <Button onClick={clickHandler.bind(this, item.id)}
-                                        type="primary" className="pull-right">{I18N.get('developer.search.apply')}</Button>
+
+                                    {this.renderApplyButton(item, clickHandler)}
+                                    
                                 </div>
                             </List.Item>
                         </MediaQuery>
@@ -698,7 +692,7 @@ export default class extends BaseComponent {
             <span></span>
             <Button onClick={clickHandler.bind(this, detail.id)}
                     type={cssClass}>
-                {detail.hasApprovedApplication ? I18N.get('developer.search.view') : (detail.bidding ? I18N.get('developer.search.submit_bid') : I18N.get('developer.search.apply'))}
+                {(detail.hasApprovedApplication || detail.status == TEAM_STATUS.CLOSED || detail.isTeamOwner) ? I18N.get('developer.search.view') : (detail.bidding ? I18N.get('developer.search.submit_bid') : I18N.get('developer.search.apply'))}
             </Button>
         </div>
     }

@@ -117,7 +117,7 @@ export const TEAM_TASK_DOMAIN = create([
     'EXCHANGE'
 ])
 
-export const TEAM_STATUS = create(['ACTIVE', 'CLOSED', 'DRAFT']);
+export const TEAM_STATUS = create(['ACTIVE', 'CLOSED']);
 export const TEAM_SUBCATEGORY = create(['ESSENTIAL', 'ADVANCED', 'SERVICES'])
 export const TEAM_ROLE = create(['MEMBER', 'LEADER'])
 export const TEAM_USER_STATUS = create(['NORMAL', 'PENDING', 'REJECT'])

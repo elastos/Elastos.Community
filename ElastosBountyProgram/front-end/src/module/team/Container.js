@@ -1,6 +1,7 @@
 import {createContainer} from '@/util'
 import Component from './Component'
 import TeamService from '@/service/TeamService'
+import {message} from 'antd'
 
 export default createContainer(Component, (state) => {
     let page = 'PUBLIC' // default
