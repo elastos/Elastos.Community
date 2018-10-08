@@ -12,7 +12,6 @@ message.config({
  * TODO: move this to server side
  */
 export default createContainer(Component, (state) => {
-
     return {
         ...state.user.register_form,
         language: state.language
@@ -21,28 +20,6 @@ export default createContainer(Component, (state) => {
     const userService = new UserService()
 
     return {
-
-        async checkUsername(username) {
-            try {
-                const rs = await userService.register(username, password, profile)
-
-                if (rs) {
-                    const registerRedirect = sessionStorage.getItem('registerRedirect')
-
-                    if (registerRedirect) {
-                        sessionStorage.removeItem('registerRedirect')
-                        sessionStorage.setItem('registered', true)
-                        this.history.push(registerRedirect)
-                    } else {
-                        this.history.replace('/login')
-                    }
-                }
-            } catch (err) {
-                console.error(err)
-                message.error('Registration Failed - Please Contact Our Support')
-            }
-        },
-
         async register(username, password, profile) {
             try {
                 const rs = await userService.register(username, password, profile)

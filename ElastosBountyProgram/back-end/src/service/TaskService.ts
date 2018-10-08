@@ -42,6 +42,7 @@ export default class extends Base {
             .populate('approvedBy', sanitize)
             .populate('community')
             .populate('communityParent')
+            .populate('circle')
 
         if (task) {
             for (let subscriber of task.subscribers) {
@@ -165,6 +166,11 @@ export default class extends Base {
                     select: sanitize,
                 })
 
+                await db_team.getDBInstance().populate(task, {
+                    path: 'circle',
+                    select: sanitize,
+                })
+
                 for (let subscriber of task.subscribers) {
                     await db_user.getDBInstance().populate(subscriber, {
                         path: 'user',
@@ -212,7 +218,7 @@ export default class extends Base {
     public async create(param): Promise<Document> {
 
         const {
-            name, description, descBreakdown, goals,
+            name, description, descBreakdown, goals, circle,
             thumbnail, infoLink, community, communityParent, category, type, startTime, endTime,
             candidateLimit, candidateSltLimit, rewardUpfront, reward, assignSelf,
 
@@ -251,7 +257,7 @@ export default class extends Base {
         }
 
         const doc = {
-            name, description, descBreakdown, goals, infoLink, category, type,
+            name, description, descBreakdown, goals, infoLink, category, type, circle,
             startTime,
             endTime,
             thumbnail,
