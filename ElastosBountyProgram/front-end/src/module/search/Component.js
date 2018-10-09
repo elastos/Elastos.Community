@@ -1,7 +1,7 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import {
-    Col, Row, Icon, Input, Button, List, Checkbox, Radio,
+    Col, Row, Icon, Input, Button, List, Checkbox, Radio, Select,
     Carousel, Modal, Avatar, Affix, Tag, TreeSelect, Switch, Divider, Spin
 } from 'antd'
 import _ from 'lodash'
@@ -19,6 +19,7 @@ import moment from 'moment'
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
 const TreeNode = TreeSelect.TreeNode;
+const Option = Select.Option;
 
 export default class extends BaseComponent {
 
@@ -112,9 +113,9 @@ export default class extends BaseComponent {
         }, this.refetch.bind(this))
     }
 
-    onChangeLookingForSwitch(value) {
+    onChangeLookingForSelect(value) {
         this.setState({
-            lookingFor: value ? 'TEAM' : 'PROJECT'
+            lookingFor: value
         }, this.refetch.bind(this))
     }
 
@@ -303,6 +304,15 @@ export default class extends BaseComponent {
         return elements;
     }
 
+    getCircleTree() {
+        const elements = _.map(this.props.all_circles, (option) => {
+            return (
+                <TreeNode value={option._id} title={option.name} key={option._id}/>
+            )
+        })
+        return elements;
+    }
+
     handleOnFiltersChange(e) {
         const skillset = []
         const domain = []
@@ -474,35 +484,52 @@ export default class extends BaseComponent {
                     </Affix>
                 </MediaQuery>
                 <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
-                    <div className="filter-switch">
-                        <Switch defaultChecked onChange={this.onChangeLookingForSwitch.bind(this)} />
-                        {this.state.lookingFor === lookingForOptions[0].value &&
-                        <span className="label">{lookingForOptions[0].label}</span>
-                        }
-                        {this.state.lookingFor === lookingForOptions[1].value &&
-                        <span className="label">{lookingForOptions[1].label}</span>
-                        }
+                    <div className="filter-select-container">
+                        <Select className="filter-select" defaultValue={this.state.lookingFor} onChange={this.onChangeLookingForSelect.bind(this)}>
+                            <Option value="PROJECT">{I18N.get('developer.search.project')}</Option>
+                            <Option value="TEAM">{I18N.get('developer.search.team')}</Option>
+                            <Option value="TASK">{I18N.get('developer.search.task')}</Option>
+                        </Select>
                     </div>
+                    {this.state.lookingFor !== 'TASK' &&
+                        <TreeSelect
+                            className="filters-tree"
+                            showSearch
+                            value={this.state.filtersTree}
+                            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                            placeholder="Filters"
+                            allowClear
+                            multiple
+                            treeDefaultExpandAll
+                            treeCheckable={true}
+                            onChange={this.handleOnFiltersChange.bind(this)}
+                        >
+                            <TreeNode value="0" title={I18N.get('developer.search.skillset')} key="0">
+                                {this.getSkillsetTree(skillsetOptions)}
+                            </TreeNode>
+                            <TreeNode value="1" title={I18N.get('developer.search.category')} key="1">
+                                {this.getCategoryTree(categoryOptions)}
+                            </TreeNode>
+                        </TreeSelect>
+                    }
+                    {this.state.lookingFor === 'TASK' &&
                     <TreeSelect
                         className="filters-tree"
                         showSearch
-                        style={{ width: 300 }}
-                        value={this.state.filtersTree}
+                        value={this.state.circle}
                         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                         placeholder="Filters"
                         allowClear
                         multiple
                         treeDefaultExpandAll
-                        treeCheckable={true}
-                        onChange={this.handleOnFiltersChange.bind(this)}
+                        treeCheckable={!this.props.all_circles_loading}
+                        onChange={this.onChangeCircle.bind(this)}
                     >
-                        <TreeNode value="0" title="Skillset" key="0">
-                            {this.getSkillsetTree(skillsetOptions)}
-                        </TreeNode>
-                        <TreeNode value="1" title="Category" key="1">
-                            {this.getCategoryTree(categoryOptions)}
+                        <TreeNode icon="" value="0" title={this.props.all_circles_loading ? I18N.get('.loading') : I18N.get('developer.search.circle')} key="0">
+                            {this.getCircleTree()}
                         </TreeNode>
                     </TreeSelect>
+                    }
                 </MediaQuery>
             </div>)
     }
@@ -747,7 +774,7 @@ export default class extends BaseComponent {
         return <div className="pull-down">
             <span></span>
             <Button onClick={clickHandler.bind(this, detail.id)}
-                    type={cssClass}>
+                type={cssClass}>
                 {detail.hasApprovedApplication ? I18N.get('developer.search.view') : (detail.bidding ? I18N.get('developer.search.submit_bid') : I18N.get('developer.search.apply'))}
             </Button>
         </div>
