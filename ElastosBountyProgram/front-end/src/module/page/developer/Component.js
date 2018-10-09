@@ -115,7 +115,7 @@ export default class extends StandardPage {
                                     </div>
                                     <div className="button-container">
                                         <Button block={matches}>
-                                            <a target="_blank" href="https://github.com/elastos/Elastos.Community/tree/master/ElastosBountyProgram">
+                                            <a target="_blank" href="https://github.com/elastos/Elastos.Community/blob/3640cec31f917725db0a6e7dd686a95ac975b8c6/ElastosBountyProgram/front-end/src/module/page/developer/learn/detail/TheFourPillars/ElastosRuntime/Component.js">
                                                 {I18N.get('developer.components.docs')}
                                             </a>
                                         </Button>
