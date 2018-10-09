@@ -53,4 +53,34 @@
         padding-left: $gap_0;
         padding-right: $gap_0;
     }
+
+    .language-us {
+        position: absolute;
+        top: 4.5px;
+    }
+
+    .language-cn {
+        position: absolute;
+        top: 6.5px;
+    }
+}
+
+.language-us {
+    position: absolute;
+    top: 6px;
+    padding-left: 5px;
+    color: #000000;
+    font-family: Synthese;
+    line-height: normal;
+    font-size: 14px;
+}
+
+.language-cn {
+    position: absolute;
+    top: 9px;
+    padding-left: 5px;
+    color: #000000;
+    font-family: Microsoft YaHei;
+    line-height: normal;
+    font-size: 11px;
 }
