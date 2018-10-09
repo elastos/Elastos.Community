@@ -376,6 +376,7 @@ const en = {
     '.upload': 'Click to Upload',
     '.yes': 'Yes',
     '.no': 'No',
+    '.loading': 'Loading...',
 
     // Landing
     'landing.elastos': 'Elastos',
