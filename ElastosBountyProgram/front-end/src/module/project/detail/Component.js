@@ -200,7 +200,7 @@ class C extends BaseComponent {
 
         const budget = detail.rewardUpfront.isUsd ? (detail.rewardUpfront.usd / 100) + ' USD' : (detail.rewardUpfront.ela / 1000) + ' ELA'
 
-        const leaderImage = detail.createdBy.profile.avatar || ''
+        const leaderImage = this.getAvatarWithFallback(detail.createdBy.profile.avatar)
 
         const recruiting_el = (
             <div>
@@ -313,7 +313,7 @@ class C extends BaseComponent {
         if (!this.hasAppliedBySelf()) {
             applicantSltOpts.push(<Select.Option key="$me "value="$me">
                 Apply as myself
-                <Avatar size="small" src={this.props.currentUserAvatar} className="pull-right"/>
+                <Avatar size="small" src={this.getAvatarWithFallback(this.props.currentUserAvatar)} className="pull-right"/>
             </Select.Option>)
             applicantOpts.initialValue = '$me'
         }
@@ -589,8 +589,21 @@ class C extends BaseComponent {
         </Row>
     }
 
-    renderCandidates(candidates) {
+    getAvatarWithFallback(avatar) {
+        return _.isEmpty(avatar)
+            ? '/assets/images/Elastos_Logo.png'
+            : avatar
+    }
 
+    getUserNameWithFallback(user) {
+        if (_.isEmpty(user.profile.firstName) && _.isEmpty(user.profile.lastName)) {
+            return user.username
+        }
+
+        return _.trim([user.profile.firstName, user.profile.lastName].join(' '))
+    }
+
+    renderCandidates(candidates) {
         const columns = [{
             title: 'Name',
             key: 'name',
@@ -601,19 +614,21 @@ class C extends BaseComponent {
                         <div>
                             <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
                                 <Avatar className={'gap-right ' + (candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
-                                        src={candidate.user.profile.avatar}/>
-                                {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
+                                        src={this.getAvatarWithFallback(candidate.user.profile.avatar)}/>
+                                {this.getUserNameWithFallback(candidate.user)}
                             </a>
                         </div>
                         }
                         {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
                         <div>
                             <a onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
-                                <Avatar className="gap-right" src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
+                                <Avatar className="gap-right"
+                                    src={this.getAvatarWithFallback(!_.isEmpty(candidate.team.pictures) &&
+                                        candidate.team.pictures[0].url)} />
                                 {candidate.team.name}
                                 {this.loggedInUserOwnerOfCandidate(candidate) ?
-                                    <span className="no-info"> (team owner)</span> :
-                                    <span className="no-info"> (team member)</span>
+                                    <span className="no-info"> (Owner)</span> :
+                                    <span className="no-info"> (Member)</span>
                                 }
                             </a>
                         </div>
@@ -694,15 +709,17 @@ class C extends BaseComponent {
                         <div>
                             <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
                                 <Avatar className={'gap-right ' + (candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
-                                        src={candidate.user.profile.avatar}/>
-                                {candidate.user.profile.firstName + ' ' + candidate.user.profile.lastName}
+                                        src={this.getAvatarWithFallback(candidate.user.profile.avatar)}/>
+                                {this.getUserNameWithFallback(candidate.user)}
                             </a>
                         </div>
                         }
                         {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
                         <div>
                             <a onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
-                                <Avatar className="gap-right" src={!_.isEmpty(candidate.team.pictures) && candidate.team.pictures[0].url} />
+                                <Avatar className="gap-right"
+                                    src={this.getAvatarWithFallback(!_.isEmpty(candidate.team.pictures) &&
+                                        candidate.team.pictures[0].url)} />
                                 {candidate.team.name}
                             </a>
                         </div>
