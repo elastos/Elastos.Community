@@ -247,7 +247,7 @@ export const Task = {
     pictures: [PictureSchema],
     dAppId: Number,
     archived: Boolean,
-    circle: {type: Schema.Types.ObjectId, ref: 'teams'}
+    circle: {type: Schema.Types.ObjectId, ref: 'team'}
 };
 
 
