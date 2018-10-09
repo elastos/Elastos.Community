@@ -64,7 +64,10 @@ export default class {
             };
             this.actions[reset_key] = ()=>{
                 return {
-                    type : reset_key
+                    type: reset_key,
+                    param: {
+                        pathname: pathName
+                    }
                 };
             };
         });
