@@ -823,10 +823,12 @@ class C extends BaseComponent {
                         <FormItem label="Name" {...formItemLayout}>
                             {p.taskName}
                         </FormItem>
-                        <FormItem label="Assign to Circle" {...formItemLayout}>
-                            {p.circle}
-                        </FormItem>
-                        <FormItem label="Community"  {...formItemLayout}>
+                        {this.props.taskType !== 'PROJECT' &&
+                            <FormItem label="Assign to Circle" {...formItemLayout}>
+                                {p.circle}
+                            </FormItem>
+                        }
+                        <FormItem label="Community" {...formItemLayout}>
                             {p.taskCommunity}
                         </FormItem>
 
