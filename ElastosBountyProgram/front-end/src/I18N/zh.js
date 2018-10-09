@@ -243,7 +243,7 @@ export default {
     'emp35.teamHeader.title': 'Empower35 Team',
 
     'emp35.disclaimer.title': '免责声明',
-    'emp35.disclaimer.content': '上述角色是管理层的职位，空缺职位数目变化。第一批Empower 35候选人将由理事会直接选出。',
+    'emp35.disclaimer.content': '上述角色是管理层的职位，空缺职位数目变化。第一批Empower 35候选人将由共治委员会直接选出。',
     'emp35.position.open': '职位空缺',
     'emp35.position.legal': '法律要求',
     'emp35.position.writer': '作者',
