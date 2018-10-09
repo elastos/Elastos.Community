@@ -4,6 +4,7 @@ import { TEAM_USER_STATUS } from '@/constant'
 import {Avatar, Button, Col, Form, Icon, Popconfirm, Row, Spin, Table, Input, Modal} from 'antd'
 import Comments from '@/module/common/comments/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
+import ProjectDetail from '@/module/project/detail/Container'
 import './style.scss'
 import _ from 'lodash'
 import I18N from '@/I18N'
@@ -14,7 +15,8 @@ const { TextArea } = Input;
 class C extends BaseComponent {
     ord_states() {
         return {
-            showLoginRegisterModal: false
+            showLoginRegisterModal: false,
+            showTaskModal: false
         }
     }
 
@@ -37,21 +39,21 @@ class C extends BaseComponent {
     }
 
     isTeamMember() {
-        return _.find(this.props.detail.members, (member) => {
+        return _.find(this.props.team.detail.members, (member) => {
             return member.user._id === this.props.currentUserId &&
                 member.status === TEAM_USER_STATUS.NORMAL
         })
     }
 
     hasApplied() {
-        return _.find(this.props.detail.members, (member) => {
+        return _.find(this.props.team.detail.members, (member) => {
             return member.user._id === this.props.currentUserId &&
                 member.status === TEAM_USER_STATUS.PENDING
         })
     }
 
     async leaveTeam() {
-        const member = _.find(this.props.detail.members, (member) => {
+        const member = _.find(this.props.team.detail.members, (member) => {
             return member.user._id === this.props.currentUserId &&
                 member.status === TEAM_USER_STATUS.NORMAL
         })
@@ -111,10 +113,16 @@ class C extends BaseComponent {
         return (
             <div className="header-container">
                 <img className="circle-rectangle" src="/assets/images/emp35/circle_rectangle.png"/>
-                <div className="circle-name komu-a">{this.props.detail.name}</div>
+                <div className="circle-name komu-a">
+                    {
+                        this.props.loading
+                            ? <br/>
+                            : this.props.team.detail.name || <br/>
+                    }
+                </div>
                 <Row>
                     <Col span={8} className="left-col">
-                        <div className="circle-contributor-number komu-a">{_.size(this.props.detail.comments)}</div>
+                        <div className="circle-contributor-number komu-a">{_.size(this.props.team.detail.comments)}</div>
                         <span className="circle-contributor-label synthese">{I18N.get('circle.posts')}</span>
                     </Col>
                     <Col span={8}>
@@ -122,7 +130,7 @@ class C extends BaseComponent {
                         <img className="circle-down-arrow" src="/assets/images/emp35/down_arrow.png"/>
                     </Col>
                     <Col span={8} className="right-col">
-                        <div className="circle-members-number komu-a">{_.size(this.props.detail.members)}</div>
+                        <div className="circle-members-number komu-a">{_.size(this.props.team.detail.members)}</div>
                         <span className="circle-members-label synthese">{I18N.get('circle.members')}</span>
                     </Col>
                 </Row>
@@ -135,11 +143,9 @@ class C extends BaseComponent {
     }
 
     renderContent() {
-        const description = this.props.detail.profile.description ||
-            I18N.get('emp35.circles.statement')
         return (
             <div className="content-paragraphs">
-                <p className="synthese">{description}</p>
+                <p className="synthese">{I18N.get('emp35.circles.statement')}</p>
             </div>
         )
     }
@@ -159,7 +165,7 @@ class C extends BaseComponent {
     }
 
     renderMembers() {
-        const members = _.filter(this.props.detail.members, { status: TEAM_USER_STATUS.NORMAL })
+        const members = _.filter(this.props.team.detail.members, { status: TEAM_USER_STATUS.NORMAL })
         const columns = [{
             title: 'Name',
             key: 'name',
@@ -197,6 +203,10 @@ class C extends BaseComponent {
 
     renderTasks() {
         const tasks = this.props.all_tasks
+        const clickHandler = !this.props.is_login
+            ? this.showLoginRegisterModal
+            : this.showTaskModal
+
         const columns = [{
             title: 'Name',
             key: 'name',
@@ -218,7 +228,7 @@ class C extends BaseComponent {
                 return (
                     <div key={task._id} className="text-right">
                         {task.createdBy._id !== this.props.currentUserId &&
-                            <a onClick={this.viewTask.bind(this, task._id)}>
+                            <a onClick={clickHandler.bind(this, task._id)}>
                                 {task.bidding ? I18N.get('developer.search.submit_bid') : I18N.get('developer.search.apply')}
                             </a>
                         }
@@ -270,18 +280,15 @@ class C extends BaseComponent {
                         headlines={true}
                         type="team"
                         canPost={this.isTeamMember()}
-                        returnUrl={`/empower35-detail/${this.props.detail._id}`}
-                        model={this.props.detail}/>
+                        returnUrl={`/empower35-detail/${this.props.team.detail._id}`}
+                        model={this.props.team.detail}/>
                 </div>
             </div>
         )
     }
 
     ord_render () {
-        return (_.isEmpty(this.props.detail, true) ? (
-            <div className="valign-wrapper halign-wrapper">
-                <Spin size="large"/>
-            </div>) : (
+        return (
             <div className="c_Circle c_Detail">
                 <div className="header">
                     <div className="left-box-container">
@@ -312,7 +319,8 @@ class C extends BaseComponent {
                 <div className="rectangle"/>
                 <div className="rectangle double-size"/>
                 {this.renderLoginOrRegisterModal()}
-            </div>)
+                {this.renderTaskModal()}
+            </div>
         )
     }
 
@@ -339,9 +347,26 @@ class C extends BaseComponent {
                         <img src="/assets/images/login-left.png"/>
                     </div>
                     <div className="side-form">
-                        <LoginOrRegisterForm onHideModal={this.hideShowModal()}/>
+                        <LoginOrRegisterForm onHideModal={this.hideShowModal.bind()}/>
                     </div>
                 </div>
+            </Modal>
+        )
+    }
+
+    renderTaskModal() {
+        return (
+            <Modal
+                className="project-detail-nobar"
+                visible={this.state.showTaskModal}
+                onOk={this.handleTaskModalOk}
+                onCancel={this.handleTaskModalCancel}
+                footer={null}
+                width="70%"
+            >
+                { this.state.showTaskModal &&
+                    <ProjectDetail taskId={this.state.taskDetailId}/>
+                }
             </Modal>
         )
     }
@@ -368,6 +393,25 @@ class C extends BaseComponent {
 
         this.setState({
             showLoginRegisterModal: false
+        })
+    }
+
+    handleTaskModalOk = (e) => {
+        this.setState({
+            showTaskModal: false
+        })
+    }
+
+    handleTaskModalCancel = (e) => {
+        this.setState({
+            showTaskModal: false
+        })
+    }
+
+    showTaskModal(id) {
+        this.setState({
+            showTaskModal: true,
+            taskDetailId: id
         })
     }
 }

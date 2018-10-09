@@ -118,21 +118,21 @@ export default class extends BaseComponent {
         }, this.refetch.bind(this))
     }
 
-    showProjectModal = (id) => {
+    showProjectModal(id) {
         this.setState({
             showProjectModal: true,
             taskDetailId: id
         })
     }
 
-    showTeamModal = (id) => {
+    showTeamModal(id) {
         this.setState({
             showTeamModal: true,
             teamDetailId: id
         })
     }
 
-    showLoginRegisterModal = () => {
+    showLoginRegisterModal() {
         sessionStorage.setItem('loginRedirect', '/developer/search')
         sessionStorage.setItem('registerRedirect', '/developer/search')
 

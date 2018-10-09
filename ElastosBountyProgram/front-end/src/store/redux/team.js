@@ -13,7 +13,7 @@ class TeamRedux extends BaseRedux {
             all_circles: [],
             all_circles_loading: false,
             detail: {}
-        };
+        }
     }
 }
 
