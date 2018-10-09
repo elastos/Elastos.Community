@@ -17,6 +17,10 @@ export default class extends StandardPage {
         await this.props.getTeams({ type: TEAM_TYPE.CRCLE })
     }
 
+    componentWillUnmount() {
+        this.props.resetAllTeams()
+    }
+
     checkForLoading(followup) {
         return this.props.loading
             ? <div className="full-width halign-wrapper">
