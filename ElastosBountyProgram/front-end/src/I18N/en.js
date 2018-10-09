@@ -271,6 +271,7 @@ const en = {
     'circle.joinToPost': 'Join the CRcle to post',
     'circle.registerToPost': 'Register to join the CRcle and post',
     'circle.members': 'Members',
+    'circle.tasks': 'Tasks',
     'circle.posts': 'Posts',
 
     // Training

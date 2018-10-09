@@ -21,6 +21,7 @@ class C extends BaseComponent {
     componentDidMount() {
         const teamId = this.props.match.params.circleId
         this.props.getTeamDetail(teamId)
+        this.props.getCircleTasks(teamId)
     }
 
     componentWillUnmount() {
@@ -67,6 +68,10 @@ class C extends BaseComponent {
         } else {
             this.showLoginRegisterModal()
         }
+    }
+
+    viewTask(taskId) {
+
     }
 
     getMainActions() {
@@ -190,6 +195,59 @@ class C extends BaseComponent {
         )
     }
 
+    renderTasks() {
+        const tasks = this.props.all_tasks
+        const columns = [{
+            title: 'Name',
+            key: 'name',
+            render: task => {
+                return (
+                    <div key={task._id}>
+                        <Avatar className="gap-right"
+                            src={this.getAvatarWithFallback(task.thumbnail)}/>
+                        <a className="row-name-link" href={`/task-detail/${task._id}`}>
+                            {task.name}
+                        </a>
+                    </div>
+                )
+            }
+        }, {
+            title: 'Action',
+            key: 'action',
+            render: task => {
+                return (
+                    <div key={task._id} className="text-right">
+                        {task.createdBy._id !== this.props.currentUserId &&
+                            <a onClick={this.viewTask.bind(this, task._id)}>
+                                {task.bidding ? I18N.get('developer.search.submit_bid') : I18N.get('developer.search.apply')}
+                            </a>
+                        }
+                    </div>
+                )
+            }
+        }]
+        return (
+            <div>
+                <div className="member-header">
+                    <div className="member-header-icon"><img src="/assets/images/tri-square-dark.svg"/></div>
+                    <div className="member-header-label komu-a">{I18N.get('circle.tasks')}</div>
+                </div>
+                <div className="members-list">
+                    <Table
+                        className="no-borders headerless"
+                        loading={this.props.task_loading}
+                        dataSource={tasks}
+                        columns={columns}
+                        bordered={false}
+                        rowKey="_id"
+                        pagination={false}
+                        scroll={{ y: 400 }}>
+                    </Table>
+                </div>
+            </div>
+        )
+    }
+
     renderComments() {
         return (
             <div>
@@ -244,6 +302,9 @@ class C extends BaseComponent {
                 </div>
                 <div className="members-section">
                     {this.renderMembers()}
+                </div>
+                <div className="tasks-section">
+                    {this.renderTasks()}
                 </div>
                 <div className="rectangle double-size pull-right"/>
                 <div className="clearfix"/>
