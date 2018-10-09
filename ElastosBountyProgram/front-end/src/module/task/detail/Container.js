@@ -18,7 +18,7 @@ export default createContainer(Component, (state) => {
         async listTeamsOwned(userId) {
 
             try {
-                const result = await teamService.list({
+                const result = await teamService.index({
                     owner: userId
                 })
 

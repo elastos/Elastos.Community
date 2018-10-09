@@ -1,8 +1,10 @@
-import {createContainer, goPath} from "@/util";
-import Component from './Component';
-import TaskService from '@/service/TaskService';
+import {createContainer, goPath} from "@/util"
+import Component from './Component'
+import TaskService from '@/service/TaskService'
+import TeamService from '@/service/TeamService'
 import CommunityService from '@/service/CommunityService'
 import {message} from 'antd'
+import {TEAM_TYPE} from '@/constant'
 import _ from 'lodash'
 
 message.config({
@@ -11,11 +13,14 @@ message.config({
 
 export default createContainer(Component, (state) => {
     return {
-        is_admin: state.user.is_admin
-    };
+        is_admin: state.user.is_admin,
+        loading: state.task.loading || state.team.loading,
+        all_teams: state.team.all_teams
+    }
 }, () => {
-    const taskService = new TaskService();
-    const communityService = new CommunityService();
+    const taskService = new TaskService()
+    const teamService = new TeamService()
+    const communityService = new CommunityService()
 
     return {
         async createTask(formData, st) {
@@ -44,6 +49,7 @@ export default createContainer(Component, (state) => {
                     location: formData.taskLocation,
 
                     infoLink: formData.taskLink,
+                    circle: formData.circle,
 
                     thumbnail: st.thumbnail_url,
                     thumbnailFilename: st.thumbnail_filename,
@@ -115,6 +121,7 @@ export default createContainer(Component, (state) => {
                     descBreakdown: formData.taskDescBreakdown,
                     goals: formData.taskGoals,
 
+                    circle: formData.circle,
                     eventDateRange: formData.eventDateRange,
                     eventDateRangeStart: formData.eventDateRangeStart,
                     eventDateRangeEnd: formData.eventDateRangeEnd,
@@ -203,6 +210,12 @@ export default createContainer(Component, (state) => {
 
         resetTaskDetail() {
             return taskService.resetTaskDetail()
+        },
+
+        async getAllCircles() {
+            return teamService.index({
+                type: TEAM_TYPE.CRCLE
+            })
         },
 
         async getAllCommunities() {

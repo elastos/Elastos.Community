@@ -43,6 +43,10 @@ export default class extends Base{
             query.recruitedSkillsets = { $in: param.skillset.split(',') }
         }
 
+        if (param.circle) {
+            query.circle = { $in: param.circle.split(',') }
+        }
+
         if (param.eventDateRangeStart) {
             query.eventDateRangeStart = JSON.parse(param.eventDateRangeStart)
         }
