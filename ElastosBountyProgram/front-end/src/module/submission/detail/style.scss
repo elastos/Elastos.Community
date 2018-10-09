@@ -100,5 +100,10 @@
 
   .description-box {
     padding-left: $gap_2;
+
+    .description-content {
+      height: 190px;
+      overflow: auto;
+    }
   }
 }
