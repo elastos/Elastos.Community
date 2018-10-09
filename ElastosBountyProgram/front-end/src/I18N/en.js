@@ -214,11 +214,13 @@ const en = {
 
     'developer.search.team': 'Team',
     'developer.search.project': 'Project',
+    'developer.search.task': 'Task',
     'developer.search.category': 'Category',
     'developer.search.category.social': 'Social',
     'developer.search.category.iot': 'IoT',
     'developer.search.category.media': 'Media',
     'developer.search.category.finance': 'Finance',
+    'developer.search.circle': 'Circle',
     'developer.search.lookingFor': 'Looking For',
     'developer.search.search.placeholder': 'Search',
     'developer.search.skillset': 'Skillset',

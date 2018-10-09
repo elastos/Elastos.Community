@@ -12,7 +12,8 @@ export default createContainer(Component, (state) => {
         ...state.task,
         ...state.team,
         ...state.user,
-        all_teams: _.filter(state.team.all_teams, { type: TEAM_TYPE.TEAM }),
+        all_teams: _.values(state.team.all_teams),
+        all_circles: _.values(state.team.all_circles),
         loading: state.team.loading || state.task.loading
     }
 }, () => {
@@ -20,12 +21,24 @@ export default createContainer(Component, (state) => {
     const teamService = new TeamService()
 
     return {
-        async getTasks(filters) {
+        async getProjects(filters) {
             return taskService.index({
                 ...filters,
                 type: TASK_TYPE.PROJECT,
                 category: TASK_CATEGORY.DEVELOPER
             })
+        },
+
+        async getTasks(filters) {
+            return taskService.index({
+                ...filters,
+                type: TASK_TYPE.TASK,
+                category: TASK_CATEGORY.DEVELOPER
+            })
+        },
+
+        async loadAllCircles() {
+            return teamService.loadAllCircles()
         },
 
         resetTasks () {
