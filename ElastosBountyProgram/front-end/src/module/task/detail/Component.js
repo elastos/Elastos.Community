@@ -86,6 +86,18 @@ export default class extends BaseComponent {
                                             </p>) : <div className="center"><Spin size="small"/></div>}
                                     </Col>
                                 </Row>
+                                { this.props.task.circle &&
+                                    <Row>
+                                        <Col span={4} className="label-col">
+                                            Circle
+                                        </Col>
+                                        <Col span={20}>
+                                            <p>
+                                                {this.props.task.circle.name}
+                                            </p>
+                                        </Col>
+                                    </Row>
+                                }
                                 <Row>
                                     <Col span={4} className="label-col">
                                         Category
