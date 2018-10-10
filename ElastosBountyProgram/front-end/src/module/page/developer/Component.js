@@ -21,10 +21,14 @@ export default class extends StandardPage {
         this.props.history.push('/developer/search?type=PROJECT');
     }
 
+    navigateToTaskSearch() {
+        this.props.history.push('/developer/search?type=TASK');
+    }
+
     buildTopRow () {
         return (
             <Row className="d_row d_rowTop" type="flex" justify="center">
-                <Col sm={{span: 24}} md={{span: 8}} className="d_box" onClick={() => this.navigateToLearn()}>
+                <Col sm={{span: 24}} md={{span: 6}} className="d_box" onClick={() => this.navigateToLearn()}>
                     <Card hoverable className="feature-box">
                         <div className="title">
                             <span>{I18N.get('developer.learn')}</span>
@@ -40,7 +44,7 @@ export default class extends StandardPage {
                         </div>
                     </Card>
                 </Col>
-                <Col sm={{span: 24}} md={{span: 8}} className="d_box" onClick={() => this.navigateToTeamSearch()}>
+                <Col sm={{span: 24}} md={{span: 6}} className="d_box" onClick={() => this.navigateToTeamSearch()}>
                     <Card hoverable className="feature-box">
                         <div className="title">
                             <span>{I18N.get('developer.team')}</span>
@@ -54,7 +58,7 @@ export default class extends StandardPage {
                         </div>
                     </Card>
                 </Col>
-                <Col sm={{span: 24}} md={{span: 8}} className="d_box" onClick={() => this.navigateToProjectSearch()}>
+                <Col sm={{span: 24}} md={{span: 6}} className="d_box" onClick={() => this.navigateToProjectSearch()}>
                     <Card hoverable className="feature-box">
                         <div className="title">
                             <span>{I18N.get('developer.project')}</span>
@@ -65,6 +69,20 @@ export default class extends StandardPage {
                             <div>- {I18N.get('developer.project.top')}</div>
                             <div>- {I18N.get('developer.project.join')}</div>
                             <div>- {I18N.get('developer.project.issue')}</div>
+                        </div>
+                    </Card>
+                </Col>
+                <Col sm={{span: 24}} md={{span: 6}} className="d_box" onClick={() => this.navigateToTaskSearch()}>
+                    <Card hoverable className="feature-box">
+                        <div className="title">
+                            <span>{I18N.get('developer.task')}</span>
+                            <img src="/assets/images/start.svg"/>
+                        </div>
+                        <hr className="feature-box-divider"/>
+                        <div className="content">
+                            <div>- {I18N.get('developer.task.top')}</div>
+                            <div>- {I18N.get('developer.task.join')}</div>
+                            <div>- {I18N.get('developer.task.issue')}</div>
                         </div>
                     </Card>
                 </Col>
