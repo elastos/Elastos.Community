@@ -27,7 +27,8 @@ export default createContainer(Component, (state) => {
     return {
         async postComment(type, reduxType, detailReducer, returnUrl, parentId, comment, headline) {
             try {
-                const rs = await commentService.postComment(type, reduxType, detailReducer, returnUrl, parentId, comment, headline)
+                const rs = await commentService.postComment(type, reduxType, detailReducer,
+                    returnUrl, parentId, comment, headline)
 
                 if (rs) {
                     message.success('Your comment has been posted.');

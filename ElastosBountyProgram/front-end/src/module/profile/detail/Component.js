@@ -2,6 +2,7 @@ import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import UserContactForm from '@/module/form/UserContactForm/Container'
 import moment from 'moment'
+import Comments from '@/module/common/comments/Container'
 
 import { Col, Row, Tabs, Icon } from 'antd'
 
@@ -51,40 +52,54 @@ export default class extends BaseComponent {
     }
 
     renderMobile() {
-        return <Tabs>
-            <TabPane tab="General" key="general">
-                {this.renderGeneral()}
-            </TabPane>
-            <TabPane tab="Social Media" key="socialMedia">
-                {this.renderSocialMedia()}
-            </TabPane>
-            <TabPane tab="Send an Email" key="contactForm">
-                {this.renderContactForm()}
-            </TabPane>
-        </Tabs>
+        return <div>
+            <Tabs>
+                <TabPane tab="General" key="general">
+                    {this.renderGeneral()}
+                </TabPane>
+                <TabPane tab="Social Media" key="socialMedia">
+                    {this.renderSocialMedia()}
+                </TabPane>
+                <TabPane tab="Send an Email" key="contactForm">
+                    {this.renderContactForm()}
+                </TabPane>
+            </Tabs>
+            <Comments type="user" reduxType="member" canPost={true} model={this.props.member}
+                headlines={true} returnUrl={`/member/${this.props.member._id}`}
+            />
+        </div>
     }
 
     renderDesktop() {
-        return <Row>
-            <Col span={12} className="gridCol">
-                <Tabs>
-                    <TabPane tab="General" key="general">
-                        {this.renderGeneral()}
-                    </TabPane>
-                    <TabPane tab="Social Media" key="socialMedia">
-                        {this.renderSocialMedia()}
-                    </TabPane>
-                </Tabs>
-            </Col>
-            <Col span={12} className="gridCol left-vert-sep">
-                <Row>
-                    <Col span={24} className="section-title">
-                        <h4>Send an Email</h4>
-                    </Col>
-                </Row>
-                {this.renderContactForm()}
-            </Col>
-        </Row>
+        return <div>
+            <Row>
+                <Col span={12} className="gridCol">
+                    <Tabs>
+                        <TabPane tab="General" key="general">
+                            {this.renderGeneral()}
+                        </TabPane>
+                        <TabPane tab="Social Media" key="socialMedia">
+                            {this.renderSocialMedia()}
+                        </TabPane>
+                    </Tabs>
+                </Col>
+                <Col span={12} className="gridCol left-vert-sep">
+                    <Row>
+                        <Col span={24} className="section-title">
+                            <h4>Send an Email</h4>
+                        </Col>
+                    </Row>
+                    {this.renderContactForm()}
+                </Col>
+            </Row>
+            <Row>
+                <Col span={24} className="gridCol">
+                    <Comments type="user" reduxType="member" canPost={true} model={this.props.member}
+                        headlines={true} returnUrl={`/member/${this.props.member._id}`}
+                    />
+                </Col>
+            </Row>
+        </div>
     }
 
     renderGeneral() {
