@@ -3,20 +3,15 @@ import BaseComponent from '@/model/BaseComponent'
 import UserContactForm from '@/module/form/UserContactForm/Container'
 import moment from 'moment'
 import Comments from '@/module/common/comments/Container'
-
 import { Col, Row, Tabs, Icon } from 'antd'
+import I18N from '@/I18N'
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE} from '@/constant'
+import './style.scss'
+import config from '@/config'
+import MediaQuery from 'react-responsive'
 
 const TabPane = Tabs.TabPane
-
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE} from '@/constant'
-
-import './style.scss'
-
-import config from '@/config'
-
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
-
-import MediaQuery from 'react-responsive'
 
 export default class extends BaseComponent {
 
@@ -36,7 +31,7 @@ export default class extends BaseComponent {
             <div className="c_Member public">
                 <h3>
                     <MediaQuery maxWidth={720}>
-                        <Icon type="left" style={{color: '#5E6C86'}} onClick={() => {this.props.history.goBack()}}/>
+                        <Icon type="left" style={{color: '#5E6C86'}} onClick={() => this.props.history.goBack()}/>
                     </MediaQuery>&nbsp;
                     {this.props.member.username} -&nbsp;
                     <span className="no-info">{roleName.toLowerCase()}</span>
@@ -66,6 +61,7 @@ export default class extends BaseComponent {
             </Tabs>
             <Comments type="user" reduxType="member" canPost={true} model={this.props.member}
                 headlines={true} returnUrl={`/member/${this.props.member._id}`}
+                header={I18N.get('comments.posts')}
             />
         </div>
     }
@@ -96,6 +92,7 @@ export default class extends BaseComponent {
                 <Col span={24} className="gridCol">
                     <Comments type="user" reduxType="member" canPost={true} model={this.props.member}
                         headlines={true} returnUrl={`/member/${this.props.member._id}`}
+                        header={I18N.get('comments.posts')}
                     />
                 </Col>
             </Row>

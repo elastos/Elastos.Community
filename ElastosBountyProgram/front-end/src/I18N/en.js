@@ -71,6 +71,8 @@ const en = {
 
     'mentions.notFound': 'User not found',
 
+    'comments': 'Comments',
+    'comments.posts': 'Posts',
     'comments.noComments': 'No comments yet. Be the first to post!',
     // Admin tasks
     'admin.tasks.status': 'Status',
