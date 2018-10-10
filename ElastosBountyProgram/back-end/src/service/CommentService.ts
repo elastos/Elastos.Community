@@ -75,6 +75,9 @@ export default class extends Base {
                     .populate('owner')
 
                 this.sendNotificationEmail('Application', param, createdBy, team.owner, commentable.user, returnUrl)
+            } else if (type === 'User') {
+                commentable = await db_commentable.getDBInstance().findOne({_id: id})
+                this.sendNotificationEmail('Profile', param, createdBy, commentable, null, returnUrl)
             }
 
             return await db_commentable.update({_id: id}, updateObj)

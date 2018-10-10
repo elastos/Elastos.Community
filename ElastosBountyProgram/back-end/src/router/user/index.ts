@@ -13,6 +13,7 @@ import change_password from './change_password';
 import forgot_password from './forgot_password';
 import reset_password from './reset_password';
 import list_users from './list_users';
+import comment from './comment'
 
 export default Base.setRouter([
     {
@@ -84,5 +85,10 @@ export default Base.setRouter([
         path : '/list',
         router : list_users,
         method : 'get'
-    }
+    },
+    {
+        path : '/:id/comment',
+        router : comment,
+        method : 'post'
+    },
 ]);

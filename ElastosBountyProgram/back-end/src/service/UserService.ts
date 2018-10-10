@@ -100,7 +100,7 @@ export default class extends Base {
 
         const {userId} = param
 
-        const db_user = this.getDBModel('User');
+        const db_user = this.getDBModel('User')
         const db_team = this.getDBModel('Team')
 
         if (param.admin && (!this.currentUser || (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
@@ -108,12 +108,23 @@ export default class extends Base {
             throw 'Access Denied'
         }
 
-        const user = db_user.getDBInstance().findOne({_id: userId})
+        const user = await db_user.getDBInstance().findOne({_id: userId})
             .select(selectFields)
             .populate('circles')
 
         if (!user) {
             throw `userId: ${userId} not found`
+        }
+
+        if (user.comments) {
+            for (let comment of user.comments) {
+                for (let thread of comment) {
+                    await db_user.getDBInstance().populate(thread, {
+                        path: 'createdBy',
+                        select: selectFields
+                    })
+                }
+            }
         }
 
         return user

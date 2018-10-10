@@ -153,13 +153,8 @@ export default class extends BaseService {
             method: 'get'
         })
 
-        // this is gross, if we are focused on a user, it shouldn't matter if it's you or another user
-        // we should use the same base redux model
-        if (options.admin) {
-
-            await this.dispatch(memberRedux.actions.focus_user_update(result))
-            await this.dispatch(memberRedux.actions.loading_update(false))
-        }
+        await this.dispatch(memberRedux.actions.detail_update(result))
+        await this.dispatch(memberRedux.actions.loading_update(false))
 
         return result
     }
@@ -181,7 +176,7 @@ export default class extends BaseService {
             data: doc
         })
 
-        await this.dispatch(memberRedux.actions.focus_user_update(result))
+        await this.dispatch(memberRedux.actions.detail_update(result))
         await this.dispatch(memberRedux.actions.loading_update(false))
 
         return result

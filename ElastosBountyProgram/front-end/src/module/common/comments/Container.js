@@ -6,18 +6,20 @@ import {message} from 'antd'
 import _ from 'lodash'
 
 export default createContainer(Component, (state) => {
-    return {
-        task: state.task.detail,
-        submission: state.submission.detail,
-        team: state.team.detail,
-        loading: {
-            task: state.task.loading,
-            submission: state.submission.loading,
-            team: state.team.loading
-        },
+    const commentables = ['task', 'submission', 'team', 'member']
+
+    let props = {
         currentUserId: state.user.current_user_id,
-        all_users: _.values(state.member.users || [])
+        all_users: _.values(state.member.users || []),
+        loading: {}
     }
+
+    _.each(commentables, (commentable) => {
+        props[commentable] = state[commentable].detail
+        props.loading[commentable] = state[commentable].loading
+    })
+
+    return props
 }, () => {
     const commentService = new CommentService()
     const userService = new UserService()
@@ -25,7 +27,8 @@ export default createContainer(Component, (state) => {
     return {
         async postComment(type, reduxType, detailReducer, returnUrl, parentId, comment, headline) {
             try {
-                const rs = await commentService.postComment(type, reduxType, detailReducer, returnUrl, parentId, comment, headline)
+                const rs = await commentService.postComment(type, reduxType, detailReducer,
+                    returnUrl, parentId, comment, headline)
 
                 if (rs) {
                     message.success('Your comment has been posted.');
