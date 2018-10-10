@@ -192,6 +192,7 @@ class C extends BaseComponent {
                         dataSource={members}
                         columns={columns}
                         bordered={false}
+                        loading={this.props.loading}
                         rowKey="_id"
                         pagination={false}
                         scroll={{ y: 400 }}>
