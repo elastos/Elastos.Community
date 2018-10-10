@@ -17,15 +17,12 @@ import {
     Divider
 
 } from 'antd'
-
 import config from '@/config'
 import { MIN_LENGTH_PASSWORD } from '@/config/constant'
-
+import TimezonePicker from 'react-timezone'
 import I18N from '@/I18N'
-
 import {upload_file} from '@/util'
 import './style.scss'
-
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, USER_GENDER} from '@/constant'
 
 const FormItem = Form.Item
@@ -172,6 +169,20 @@ class C extends BaseComponent {
         })
         const lastName_el = (
             <Input size="large"/>
+        )
+
+        const timezone_fn = getFieldDecorator('timezone', {
+            rules: [],
+            initialValue: user.profile.timezone
+        })
+
+        const timezone_el = (
+            <TimezonePicker
+                className="timezone-picker"
+                inputProps={{
+                    placeholder: 'Select Timezone...'
+                }}
+            />
         )
 
         const bio_fn = getFieldDecorator('bio', {
@@ -375,6 +386,7 @@ class C extends BaseComponent {
             avatar: avatar_fn(avatar_el),
             country: country_fn(country_el),
             bio: bio_fn(bio_el),
+            timezone: timezone_fn(timezone_el),
 
             walletAddress: walletAddress_fn(walletAddress_el),
 
@@ -476,6 +488,9 @@ class C extends BaseComponent {
                         }
                         <FormItem label="Country" {...formItemLayout}>
                             {p.country}
+                        </FormItem>
+                        <FormItem label="Timezone" {...formItemLayout}>
+                            {p.timezone}
                         </FormItem>
                         <FormItem label="Wallet Address" {...formItemLayout}>
                             {p.walletAddress}
