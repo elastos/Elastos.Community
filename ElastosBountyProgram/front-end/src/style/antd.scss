@@ -274,3 +274,25 @@ h3.one-line {
 .ant-form-item-children > div {
   position: relative;
 }
+
+.timezone-picker > ul {
+  background: white;
+  z-index: 1;
+
+  & > li {
+    min-height: 38px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.timezone-picker > input {
+  border: 1px solid #d9d9d9 !important;
+  border-radius: 4px !important;
+  height: 40px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #66bda3 !important;
+  }
+}

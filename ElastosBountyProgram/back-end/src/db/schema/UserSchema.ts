@@ -32,7 +32,10 @@ export const Profile = {
     wechat: String,
     twitter: String,
     facebook: String,
+    github: String,
+    linkedin: String,
 
+    bio: String,
     beOrganizer : Boolean,
     isDeveloper : Boolean,
 
