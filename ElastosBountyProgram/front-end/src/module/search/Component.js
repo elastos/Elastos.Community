@@ -15,6 +15,7 @@ import MediaQuery from 'react-responsive'
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
 import I18N from '@/I18N'
 import moment from 'moment'
+import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
@@ -48,7 +49,8 @@ export default class extends BaseComponent {
             taskDetailId: 0,
             teamDetailId: 0,
             showMobile: false,
-            filtersTree: ['TEAM']
+            filtersTree: ['TEAM'],
+            showUserInfo: null
         }
     }
 
@@ -721,7 +723,7 @@ export default class extends BaseComponent {
                                 </h5>
                                 <div className="description-content" dangerouslySetInnerHTML={{__html: item.content}}/>
                                 <div className="ant-list-item-right-box">
-                                    <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                    <a className="pull-up" onClick={() => this.setState({ showUserInfo: item.owner })}>
                                         <Avatar size="large" className="pull-right"
                                             src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
                                         <div className="clearfix"/>
@@ -756,10 +758,23 @@ export default class extends BaseComponent {
                                 </div>
                             </List.Item>
                         </MediaQuery>
+                        <Modal
+                            className="profile-overview-popup-modal"
+                            visible={!!this.state.showUserInfo}
+                            onCancel={this.handleCancelProfilePopup.bind(this)}
+                            footer={null}>
+                            <ProfilePopup showUserInfo={this.state.showUserInfo}></ProfilePopup>
+                        </Modal>
                     </div>
                 )}
             />
         )
+    }
+
+    handleCancelProfilePopup() {
+        this.setState({
+            showUserInfo: null
+        })
     }
 
     // this is also just a view button if the project cannot accept anymore applications

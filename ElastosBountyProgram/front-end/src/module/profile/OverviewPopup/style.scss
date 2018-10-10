@@ -1,0 +1,40 @@
+
+@import '../../../style/variable';
+@import '../../../style/color';
+
+.c_ProfileModalPopup {
+  background-color: $bg_blue;
+
+  .header-image-container {
+    img {
+      width: 100%;
+    }
+  }
+  .profile-image {
+    width: 100%;
+    margin-top: -$gap_5;
+    text-align: center;
+  }
+  .profile-info {
+    text-align: center;
+
+    .name {
+
+    }
+    .location-circle {
+
+    }
+  }
+  .profile-interaction {
+
+  }
+  .profile-view-button {
+    width: 100%;
+
+    button {
+      width: 100%;
+      background-color: $cr100_green;
+      color: white;
+    }
+  }
+}
