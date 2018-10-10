@@ -54,15 +54,15 @@ export default class extends Base {
             password : this.getPassword(param.password, salt),
             email,
             salt,
-            profile : {
-                firstName : param.firstName,
-                lastName : param.lastName,
-                country : param.country,
-                state : param.state,
-                city : param.city,
-                beOrganizer : param.beOrganizer === 'yes',
-                isDeveloper : param.isDeveloper === 'yes',
-                source : param.source
+            profile: {
+                firstName: param.firstName,
+                lastName: param.lastName,
+                country: param.country,
+                state: param.state,
+                city: param.city,
+                beOrganizer: param.beOrganizer === 'yes',
+                isDeveloper: param.isDeveloper === 'yes',
+                source: param.source
             },
             role : constant.USER_ROLE.MEMBER,
             active: true
