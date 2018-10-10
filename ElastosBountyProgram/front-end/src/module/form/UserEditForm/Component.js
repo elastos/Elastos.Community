@@ -174,6 +174,14 @@ class C extends BaseComponent {
             <Input size="large"/>
         )
 
+        const bio_fn = getFieldDecorator('bio', {
+            rules: [{required: true, message: 'Biography is required'}],
+            initialValue: user.profile.bio
+        })
+        const bio_el = (
+            <Input.TextArea rows={4}/>
+        )
+
         const gender_fn = getFieldDecorator('gender', {
             rules: [],
             initialValue: user.profile.gender
@@ -305,7 +313,25 @@ class C extends BaseComponent {
             <Input size="large"/>
         )
 
+        const linkedin_fn = getFieldDecorator('linkedin', {
+            rules: [
+                {min: 4, message: 'please enter at least 4 characters'}
+            ],
+            initialValue: user.profile.linkedin
+        })
+        const linkedin_el = (
+            <Input size="large"/>
+        )
 
+        const github_fn = getFieldDecorator('github', {
+            rules: [
+                {min: 4, message: 'please enter at least 4 characters'}
+            ],
+            initialValue: user.profile.github
+        })
+        const github_el = (
+            <Input size="large"/>
+        )
 
         /*
         ****************************************************************************************
@@ -348,6 +374,7 @@ class C extends BaseComponent {
             gender: gender_fn(gender_el),
             avatar: avatar_fn(avatar_el),
             country: country_fn(country_el),
+            bio: bio_fn(bio_el),
 
             walletAddress: walletAddress_fn(walletAddress_el),
 
@@ -357,6 +384,8 @@ class C extends BaseComponent {
             wechat: wechat_fn(wechat_el),
             twitter: twitter_fn(twitter_el),
             facebook: facebook_fn(facebook_el),
+            linkedin: linkedin_fn(linkedin_el),
+            github: github_fn(github_el),
 
             // Questions
             organizer: organizer_fn(organizer_el),
@@ -424,6 +453,9 @@ class C extends BaseComponent {
                         <FormItem label="Last Name" {...formItemLayout}>
                             {p.lastName}
                         </FormItem>
+                        <FormItem label="About Me" {...formItemLayout}>
+                            {p.bio}
+                        </FormItem>
                         <FormItem label="Gender" {...formItemLayout}>
                             {p.gender}
                         </FormItem>
@@ -451,6 +483,12 @@ class C extends BaseComponent {
 
                         <Divider>Social Media</Divider>
 
+                        <FormItem label="LinkedIn" {...formItemLayout}>
+                            {p.linkedin}
+                        </FormItem>
+                        <FormItem label="GitHub" {...formItemLayout}>
+                            {p.github}
+                        </FormItem>
                         <FormItem label="Telegram" {...formItemLayout}>
                             {p.telegram}
                         </FormItem>

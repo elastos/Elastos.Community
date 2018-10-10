@@ -155,6 +155,14 @@ export default class extends BaseComponent {
                     </Row>
                     <Row>
                         <Col span={8} className="gridCol right-align">
+                            About Me
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.profile.bio}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
                             Gender
                         </Col>
                         <Col span={16} className="gridCol">
@@ -179,6 +187,14 @@ export default class extends BaseComponent {
                     </Row>
                     <Row>
                         <Col span={8} className="gridCol right-align">
+                            Timezone
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.profile.timezone}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
                             Wallet Address
                         </Col>
                         <Col span={16} className="gridCol">
@@ -193,6 +209,22 @@ export default class extends BaseComponent {
                 ***************************************************************************
                 */}
                 <TabPane tab="Social Media" key="socialMedia">
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            LinkedIn
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.profile.linkedin}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            GitHub
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.profile.github}
+                        </Col>
+                    </Row>
                     <Row>
                         <Col span={8} className="gridCol right-align">
                             Telegram
