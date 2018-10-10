@@ -257,7 +257,9 @@ const en = {
     'myrepublic.projects.create.cr100': 'Create CR100',
 
     // Empower 35
-    'emp35.header.title': 'CRcles & Empower35',
+    'emp35.header.title.part1': 'CR',
+    'emp35.header.title.part2': 'cles',
+    'emp35.header.title.part3': ' & Empower35',
     'emp35.header.content.1': 'Connect with others, form teams, complete tasks, earn ELA.',
     'emp35.header.content.2': 'As people showcase their abilities, the E35 will be chosen',
     'emp35.header.content.3': 'gradually to manage and lead each team.',
