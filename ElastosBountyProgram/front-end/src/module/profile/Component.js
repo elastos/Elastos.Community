@@ -155,7 +155,7 @@ export default class extends BaseComponent {
                     </Row>
                     <Row>
                         <Col span={8} className="gridCol right-align">
-                            About Me
+                            Bio
                         </Col>
                         <Col span={16} className="gridCol">
                             {this.props.user.profile.bio}

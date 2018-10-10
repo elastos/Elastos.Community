@@ -465,7 +465,7 @@ class C extends BaseComponent {
                         <FormItem label="Last Name" {...formItemLayout}>
                             {p.lastName}
                         </FormItem>
-                        <FormItem label="About Me" {...formItemLayout}>
+                        <FormItem label="Bio" {...formItemLayout}>
                             {p.bio}
                         </FormItem>
                         <FormItem label="Gender" {...formItemLayout}>
