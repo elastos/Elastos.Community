@@ -6,7 +6,7 @@ import {
 } from 'antd'
 import _ from 'lodash'
 import './style.scss'
-import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS} from '@/constant'
+import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS, TEAM_STATUS} from '@/constant'
 import ProjectDetail from '@/module/project/detail/Container'
 import TeamDetail from '@/module/team/detail/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
@@ -675,7 +675,9 @@ export default class extends BaseComponent {
                     description: description_fn(team),
                     content: team.profile.description,
                     owner: team.owner,
-                    id: team._id
+                    id: team._id,
+                    status: team.status,
+                    isTeamOwner: this.props.current_user_id === team.owner._id
                 }
             })
             : _.map(entities, (task, id) => {
@@ -710,6 +712,9 @@ export default class extends BaseComponent {
                             >
                                 <h3 className="no-margin no-padding one-line brand-color">
                                     <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
+                                    <span className={item.status == TEAM_STATUS.ACTIVE ? 'team-status-active' : 'team-status-close'}>
+                                        {item.status == TEAM_STATUS.ACTIVE ? I18N.get('team.detail.recuriting') : I18N.get('team.detail.not_recruiting')}
+                                    </span>
                                 </h3>
                                 {item.applicationDeadlinePassed &&
                                 <span className="subtitle">
@@ -740,6 +745,9 @@ export default class extends BaseComponent {
                             >
                                 <h3 className="no-margin no-padding one-line brand-color">
                                     <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
+                                    <span className={item.status == TEAM_STATUS.ACTIVE ? 'team-status-active' : 'team-status-close'}>
+                                        {item.status == TEAM_STATUS.ACTIVE ? I18N.get('team.detail.recuriting') : I18N.get('team.detail.not_recruiting')}
+                                    </span>
                                 </h3>
                                 <h5 className="no-margin">
                                     {item.description}
@@ -751,8 +759,9 @@ export default class extends BaseComponent {
                                         <Avatar size="large"
                                             src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
                                     </a>
-                                    <Button onClick={clickHandler.bind(this, item.id)}
-                                        type="primary" className="pull-right">{I18N.get('developer.search.apply')}</Button>
+
+                                    {this.renderApplyButton(item, clickHandler)}
+
                                 </div>
                             </List.Item>
                         </MediaQuery>
@@ -775,7 +784,7 @@ export default class extends BaseComponent {
             <span></span>
             <Button onClick={clickHandler.bind(this, detail.id)}
                 type={cssClass}>
-                {detail.hasApprovedApplication ? I18N.get('developer.search.view') : (detail.bidding ? I18N.get('developer.search.submit_bid') : I18N.get('developer.search.apply'))}
+                {(detail.hasApprovedApplication  || detail.status == TEAM_STATUS.CLOSED || detail.isTeamOwner) ? I18N.get('developer.search.view') : (detail.bidding ? I18N.get('developer.search.submit_bid') : I18N.get('developer.search.apply'))}
             </Button>
         </div>
     }

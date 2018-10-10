@@ -156,6 +156,7 @@ export const SUBMISSION_CAMPAIGN = {
     EMPOWER_35: 'EMPOWER_35'
 }
 
+export const TEAM_STATUS = create(['ACTIVE', 'CLOSED']);
 export const SKILLSET_TYPE = create(['CPP', 'JAVASCRIPT', 'GO', 'PYTHON', 'JAVA', 'SWIFT'])
 export const TEAM_TASK_DOMAIN = create([
     'AUTHENTICITY',

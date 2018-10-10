@@ -1,7 +1,7 @@
 import BaseService from '../model/BaseService'
 import _ from 'lodash'
 import {api_request} from '@/util'
-import {TEAM_TYPE} from '@/constant'
+import {TEAM_TYPE, TEAM_STATUS} from '@/constant'
 
 export default class extends BaseService {
     async index(qry = {}) {
@@ -163,6 +163,42 @@ export default class extends BaseService {
 
         this.dispatch(teamRedux.actions.detail_update(curTeamDetail))
 
+        return result
+    }
+
+    async closeTeam(teamId){
+        const teamRedux = this.store.getRedux('team')
+        this.dispatch(teamRedux.actions.loading_update(true))
+         const result = await api_request({
+            path: '/api/team/action/close',
+            method: 'post',
+            data: {
+                teamId
+            }
+        })
+         const curTeamDetail = this.store.getState().team.detail
+        curTeamDetail.status = TEAM_STATUS.CLOSED
+         this.dispatch(teamRedux.actions.loading_update(false))
+        this.dispatch(teamRedux.actions.detail_update(curTeamDetail))
+        
+        return result
+    }
+
+    async activeTeam(teamId){
+        const teamRedux = this.store.getRedux('team')
+        this.dispatch(teamRedux.actions.loading_update(true))
+         const result = await api_request({
+            path: '/api/team/action/active',
+            method: 'post',
+            data: {
+                teamId
+            }
+        })
+         const curTeamDetail = this.store.getState().team.detail
+        curTeamDetail.status = TEAM_STATUS.ACTIVE
+         this.dispatch(teamRedux.actions.loading_update(false))
+        this.dispatch(teamRedux.actions.detail_update(curTeamDetail))
+        
         return result
     }
 
