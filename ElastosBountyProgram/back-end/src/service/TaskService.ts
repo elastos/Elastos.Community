@@ -227,7 +227,7 @@ export default class extends Base {
             eventDateRange, eventDateRangeStart, eventDateRangeEnd, eventDateStatus,
             location,
 
-            attachment, attachmentType, attachmentFilename, isUsd,
+            attachment, attachmentType, attachmentFilename, isUsd, readDisclaimer,
 
             domain, recruitedSkillsets, pictures, pitch, bidding, referenceBid
         } = param;
@@ -264,6 +264,7 @@ export default class extends Base {
             domain,
             recruitedSkillsets,
             pictures,
+            readDisclaimer,
 
             applicationDeadline, completionDeadline,
 

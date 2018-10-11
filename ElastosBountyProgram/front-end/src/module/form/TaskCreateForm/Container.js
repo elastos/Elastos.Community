@@ -47,6 +47,7 @@ export default createContainer(Component, (state) => {
                     eventDateRangeEnd: formData.eventDateRangeEnd,
                     eventDateStatus: formData.eventDateStatus,
                     location: formData.taskLocation,
+                    readDisclaimer: formData.readDisclaimer,
 
                     infoLink: formData.taskLink,
                     circle: formData.circle,
@@ -120,6 +121,7 @@ export default createContainer(Component, (state) => {
                     description: formData.taskDesc,
                     descBreakdown: formData.taskDescBreakdown,
                     goals: formData.taskGoals,
+                    readDisclaimer: formData.readDisclaimer,
 
                     circle: formData.circle,
                     eventDateRange: formData.eventDateRange,
