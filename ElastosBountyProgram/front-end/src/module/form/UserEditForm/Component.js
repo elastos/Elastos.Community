@@ -130,7 +130,7 @@ class C extends BaseComponent {
                 })}
             </Select>
         )
-        
+
         const email_fn = getFieldDecorator('email', {
             rules: [{required: true, message: I18N.get('user.edit.form.label_email')}],
             initialValue: user.email
@@ -462,9 +462,10 @@ class C extends BaseComponent {
                             {p.role}
                         </FormItem>
                         }
+                        {/*
                         <FormItem label={I18N.get('1202')} {...formItemLayout}>
                             {p.email}
-                        </FormItem>
+                        </FormItem>*/}
                         <FormItem label="Password" {...formItemLayout}>
                             {p.password}
                         </FormItem>
