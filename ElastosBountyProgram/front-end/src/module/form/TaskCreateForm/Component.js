@@ -83,7 +83,8 @@ class C extends BaseComponent {
 
                 // admin does not need to agree to disclaimer
                 if (!this.props.is_admin) {
-                    if (values.taskReward || values.taskRewardUsd || values.taskRewardUpfront || values.taskRewardUpfrontUsd) {
+                    if (values.taskReward || values.taskRewardUsd ||
+                        values.taskRewardUpfront || values.taskRewardUpfrontUsd) {
                         if (!this.state.readDisclaimer) {
                             message.error('You must confirm you have read the payment rules and disclaimer')
                             document.getElementById('disclaimerLink').focus()
@@ -91,8 +92,6 @@ class C extends BaseComponent {
                         }
 
                         values.readDisclaimer = true
-                    } else {
-                        values.readDisclaimer = false
                     }
                 }
 
@@ -164,16 +163,20 @@ class C extends BaseComponent {
         })
     }
 
-    getInputProps () {
+    hasLeaderEditRestrictions() {
+        const existingTask = this.props.existingTask
+        return this.props.page === 'LEADER' &&
+            ![TASK_STATUS.CREATED, TASK_STATUS.PENDING].includes(existingTask.status)
+    }
 
+    getInputProps () {
         const {getFieldDecorator} = this.props.form
         const existingTask = this.props.existingTask
 
         // if this is approved - TODO: back-end restrictions + tests
         // this is for the organizer page and editing is more restrictive
         // unless it's just CREATED/PENDING
-        const hasLeaderEditRestrictions = this.props.page === 'LEADER' &&
-            ![TASK_STATUS.CREATED, TASK_STATUS.PENDING].includes(existingTask.status)
+        const hasLeaderEditRestrictions = this.hasLeaderEditRestrictions()
 
         const taskName_fn = getFieldDecorator('taskName', {
             rules: [
@@ -1030,7 +1033,9 @@ class C extends BaseComponent {
                                 {this.state.assignSelf && <br/>}
 
                                 <FormItem label="Fiat ($USD)" {...formItemLayout}>
-                                    <Checkbox name="isUsd" checked={this.state.isUsd} onChange={() => {this.setState({isUsd: !this.state.isUsd})}}/>
+                                    <Checkbox name="isUsd" checked={this.state.isUsd}
+                                        disabled={this.hasLeaderEditRestrictions()}
+                                        onChange={() => {this.setState({isUsd: !this.state.isUsd})}}/>
                                 </FormItem>
 
                                 {this.state.isUsd ?
