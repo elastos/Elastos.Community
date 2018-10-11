@@ -317,13 +317,6 @@ export default class extends Base {
         // console.log('create task => ', doc);
         const task = await db_task.save(doc);
 
-        // console.log("===================")
-        // console.log(task.circle)
-        // console.log("===================")
-        // console.log(task)
-
-        // console.log("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")
-
         this.sendCreateEmail(this.currentUser, task)
 
         // if assignSelf = true, we add self as the candidate
