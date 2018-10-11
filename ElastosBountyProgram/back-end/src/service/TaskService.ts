@@ -325,6 +325,11 @@ export default class extends Base {
             await this.addCandidate({taskId: task._id, userId: this.currentUser._id, assignSelf: true})
         }
 
+        if (circle) {
+            // Notify all users of the corresponding circle about the new task.
+            this.sendNewCircleTaskNotification(circle, task);
+        }
+
         return task
     }
 
@@ -1105,6 +1110,61 @@ export default class extends Base {
             subject: candidateSubject,
             body: candidateBody
         })
+    }
+
+    public async sendNewCircleTaskNotification(id, task) {
+        const db_team = this.getDBModel('Team');
+        const db_user = this.getDBModel('User')
+        const db_user_team = this.getDBModel('User_Team');
+
+        const team = await db_team.findOne({
+            _id: id,
+            type: constant.TEAM_TYPE.CRCLE
+        });
+
+        if (team) {
+            const userTeams = await db_user_team.find({ _id: { $in: team.members }});
+            const users = await db_user.find({ _id: { $in: _.map(userTeams, 'user') }});
+            const to = _.map(users, 'email');
+
+            const formatUsername = (user) => {
+                const firstName = user.profile && user.profile.firstName
+                const lastName = user.profile && user.profile.lastName
+
+                if (_.isEmpty(firstName) && _.isEmpty(lastName)) {
+                    return user.username
+                }
+
+                return [firstName, lastName].join(' ')
+            }
+
+            const recVariables = _.zipObject(to, _.map(users, (target) => {
+                return {
+                    _id: target._id,
+                    username: formatUsername(target)
+                }
+            }))
+
+            const subject = `New CRcle Task has been created`
+            const body = `
+                <h2>Hello %recipient.username%,</h2>
+                <br/>
+                A new ${task.type} has been created under the ${team.name} CRcle you're a member of.
+                <br/>
+                <h3>
+                ${task.name}
+                </h3>
+                <br/>
+                <a href="${process.env.SERVER_URL}/profile/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
+                `
+
+            await mail.send({
+                to,
+                subject: subject,
+                body: body,
+                recVariables
+            });
+        }
     }
 
     public async sendTaskApproveEmail(curUser, taskOwner, task) {

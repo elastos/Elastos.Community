@@ -15,7 +15,8 @@ export default createContainer(Component, (state) => {
     return {
         is_admin: state.user.is_admin,
         loading: state.task.loading || state.team.loading,
-        all_teams: state.team.all_teams
+        all_circles: state.team.all_circles,
+        all_circles_loading: state.team.all_circles_loading
     }
 }, () => {
     const taskService = new TaskService()
@@ -215,9 +216,7 @@ export default createContainer(Component, (state) => {
         },
 
         async getAllCircles() {
-            return teamService.index({
-                type: TEAM_TYPE.CRCLE
-            })
+            return teamService.loadAllCircles()
         },
 
         async getAllCommunities() {
