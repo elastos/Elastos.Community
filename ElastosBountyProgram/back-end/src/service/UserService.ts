@@ -223,9 +223,10 @@ export default class extends Base {
      */
     public async findAll(query): Promise<Document[]>{
         const db_user = this.getDBModel('User');
+        let excludeFields = selectFields;
 
         if (!query.admin || this.currentUser.role !== constant.USER_ROLE.ADMIN) {
-            selectFields += ' -email'
+            excludeFields += ' -email'
         }
 
         const finalQuery:any = {
@@ -240,7 +241,7 @@ export default class extends Base {
         return await db_user
             .getDBInstance()
             .find(finalQuery)
-            .select(selectFields)
+            .select(excludeFields)
             .sort({username: 1});
     }
 

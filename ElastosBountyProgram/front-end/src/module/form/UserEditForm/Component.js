@@ -130,6 +130,14 @@ class C extends BaseComponent {
                 })}
             </Select>
         )
+        
+        const email_fn = getFieldDecorator('email', {
+            rules: [{required: true, message: I18N.get('user.edit.form.label_email')}],
+            initialValue: user.email
+        })
+        const email_el = (
+            <Input size="large" disabled/>
+        )
 
         const password_fn = getFieldDecorator('password', {
             rules: [{
@@ -377,6 +385,7 @@ class C extends BaseComponent {
             // General
             username: username_fn(username_el),
             role: role_fn(role_el),
+            email: email_fn(email_el),
             password: password_fn(password_el),
             passwordConfirm: passwordConfirm_fn(passwordConfirm_el),
 
@@ -453,6 +462,9 @@ class C extends BaseComponent {
                             {p.role}
                         </FormItem>
                         }
+                        <FormItem label={I18N.get('1202')} {...formItemLayout}>
+                            {p.email}
+                        </FormItem>
                         <FormItem label="Password" {...formItemLayout}>
                             {p.password}
                         </FormItem>
