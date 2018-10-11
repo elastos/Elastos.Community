@@ -212,13 +212,13 @@ class C extends BaseComponent {
         })
 
         const circle_el = (
-            <Select disabled={this.props.loading}>
+            <Select disabled={this.props.all_circles_loading}>
                 <Select.Option value={null}>
-                    {this.props.loading
+                    {this.props.all_circles_loading
                         ? I18N.get('.loading')
                         : I18N.get('.no')}
                 </Select.Option>
-                {_.map(this.props.all_teams, (circle, ind) =>
+                {_.map(this.props.all_circles, (circle, ind) =>
                     <Select.Option key={ind} value={circle._id}>
                         {circle.name}
                     </Select.Option>

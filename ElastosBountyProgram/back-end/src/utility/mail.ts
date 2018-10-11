@@ -10,11 +10,11 @@ export default {
      * @param {any} subject
      * @param {any} body
      * @param {any} replyTo - {name, email}
+     * @param {any} recVariables - multiple receipent metadata
      * @returns {Promise<any>}
      */
     async send(options) {
-
-        const {to, toName, subject, body, replyTo} = options
+        const {to, toName, subject, body, replyTo, recVariables} = options
 
         if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_URL) {
             return
@@ -25,12 +25,13 @@ export default {
             domain: process.env.MAILGUN_URL
         })
 
-        const data:any = {
+        const data = {
             from: 'Cyber Republic - Elastos <no-reply@elastosjs.com>',
-            to: Array.isArray(to) ? to : `${toName} <${to}>`,
+            to: _.isArray(to) ? to : `${toName} <${to}>`,
             subject: subject,
-            html: body
-        };
+            html: body,
+            'recipient-variables': _.isArray(to) && recVariables
+        }
 
         if (replyTo && !_.isEmpty(replyTo)) {
             data['h:Reply-To'] = `${replyTo.name} <${replyTo.email}>`
