@@ -317,11 +317,23 @@ export default class extends Base {
         // console.log('create task => ', doc);
         const task = await db_task.save(doc);
 
+        // console.log("===================")
+        // console.log(task.circle)
+        // console.log("===================")
+        // console.log(task)
+
+        // console.log("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")
+
         this.sendCreateEmail(this.currentUser, task)
 
         // if assignSelf = true, we add self as the candidate
         if (assignSelf) {
             await this.addCandidate({taskId: task._id, userId: this.currentUser._id, assignSelf: true})
+        }
+
+        if (!assignSelf && circle) {
+            // Notify all users of the corresponding circle about the new task.
+            this.sendNewCircleTaskNotification(circle, task);
         }
 
         return task
@@ -1104,6 +1116,36 @@ export default class extends Base {
             subject: candidateSubject,
             body: candidateBody
         })
+    }
+
+    public async sendNewCircleTaskNotification(id, task) {
+        const db_team = this.getDBModel('Team');
+        const db_user = this.getDBModel('User')
+        const db_user_team = this.getDBModel('User_Team');
+
+        const team = await db_team.findOne({
+            _id: id,
+            type: constant.TEAM_TYPE.CRCLE
+        });
+        
+        if (team) {
+            const userTeams = await db_user_team.find({ _id: { $in: team.members }});
+            const users = await db_user.find({ _id: { $in: _.map(userTeams, 'user') }});
+            const to = _.map(users, 'email');
+        
+            let subject = `New CRcle Task - ${task.name} has been created`
+            let body = `
+                ${task.name} has been created under a circle that you are a member of (${team.name}).
+                <br/>
+                <br/>
+                <a href="${process.env.SERVER_URL}/profile/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
+                `
+            await mail.send({
+                to,
+                subject: subject,
+                body: body
+            });
+        }
     }
 
     public async sendTaskApproveEmail(curUser, taskOwner, task) {

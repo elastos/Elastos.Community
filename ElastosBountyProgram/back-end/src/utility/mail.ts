@@ -27,7 +27,7 @@ export default {
 
         const data:any = {
             from: 'Cyber Republic - Elastos <no-reply@elastosjs.com>',
-            to: `${toName} <${to}>`,
+            to: Array.isArray(to) ? to : `${toName} <${to}>`,
             subject: subject,
             html: body
         };
