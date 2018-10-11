@@ -1157,9 +1157,6 @@ export default class extends Base {
                 <a href="${process.env.SERVER_URL}/profile/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
                 `
 
-            console.log('  ## body ', body)
-            console.log('  ## recV ', recVariables)
-
             await mail.send({
                 to,
                 subject: subject,
