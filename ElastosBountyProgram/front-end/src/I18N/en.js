@@ -165,6 +165,7 @@ const en = {
     'forgot.success': 'Password changed successfully',
 
     // UserEditForm
+    'user.edit.form.label_email': 'Email is required',
     'user.edit.form.label_role': 'Please select a role',
     'user.edit.form.role': 'Role',
 

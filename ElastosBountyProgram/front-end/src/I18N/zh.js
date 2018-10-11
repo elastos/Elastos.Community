@@ -146,6 +146,7 @@ export default {
     'forgot.success': '修改密码成功',
 
     // UserEditForm
+    'user.edit.form.label_email': '邮箱不能为空',
     'user.edit.form.label_role': '请选择一名角色',
     'user.edit.form.role': '角色',
 
