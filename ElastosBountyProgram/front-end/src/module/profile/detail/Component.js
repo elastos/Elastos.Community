@@ -3,7 +3,7 @@ import BaseComponent from '@/model/BaseComponent'
 import UserContactForm from '@/module/form/UserContactForm/Container'
 import moment from 'moment'
 import Comments from '@/module/common/comments/Container'
-import { Col, Row, Tabs, Icon, Button } from 'antd'
+import { Col, Row, Tabs, Icon, Button, Divider } from 'antd'
 import I18N from '@/I18N'
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE} from '@/constant'
 import './style.scss'
@@ -97,7 +97,7 @@ export default class extends BaseComponent {
                                 this.props.member.profile.timezone && <Col md={{span: 17, offset: 1}} lg={{span: 9, offset: 1}}>{this.renderLocalTime()}</Col>
                             }
 
-                            <Col md={{span: 17, offset: 7}} lg={{ span: 8, offset: 0}}>{this.renderSocialMedia()}</Col>
+                            <Col style={{float: 'right'}} md={{span: 17, offset: 7}} lg={{ span: 8, offset: 0}}>{this.renderSocialMedia()}</Col>
                         </Row>
                     </Col>
                     <Col span={22} offset={1}>
