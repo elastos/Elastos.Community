@@ -7,11 +7,46 @@ import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE}
 import './style.scss'
 import config from '@/config'
 import MediaQuery from 'react-responsive'
+import _ from 'lodash'
 
 export default class extends BaseComponent {
+
+    ord_states() {
+    }
+
+    async componentDidMount() {
+        let circleId = null;
+        if (_.size(this.props.showUserInfo.circles) > 0) {
+            circleId = this.props.showUserInfo.circles[0]
+        }
+        if (circleId) {
+            await this.props.getTeamDetail(circleId)
+        }
+    }
+
+    componentWillUnmount() {
+        this.props.resetTeamDetail()
+    }
+
+    getCountry(countryCode) {
+        return config.data.mappingCountryCodeToName[countryCode];
+    }
+
+    sendMessage(user) {
+        this.linkUserDetail(user)
+    }
+
+    linkUserDetail(user) {
+        this.props.history.push(`/member/${user._id}`)
+    }
+
     ord_render () {
-        const user = this.props.showUserInfo || null
-        console.log(user)
+        const user = this.props.showUserInfo
+        const team = this.props.team;
+
+        if (!user || !team) {
+            return <span></span>;
+        }
         return (
             <div className="c_ProfileModalPopup">
                 <div className="header-image-container">
@@ -21,30 +56,29 @@ export default class extends BaseComponent {
                     <div className="profile-image">
                         <img src="/assets/images/user_blurred_white.png"/>
                     </div>
-                    { user === null ? <div>Loading..</div>
-                        : <div>
-                            <div className="profile-info">
-                                <div className="name">
-                                    {user.profile.firstName}
-                                    {' ' + user.profile.lastName}
-                                </div>
-                                <div className="location-circle">
-                                    <span>
-                                        <Icon type="compass" />
-                                        Germany
-                                    </span>
-                                    <span>[Design Circle]</span>
-                                </div>
+                    <div>
+                        <div className="profile-info">
+                            <div className="name komu-a">
+                                {user.profile.firstName}
+                                {' ' + user.profile.lastName}
                             </div>
-                            <div className="profile-interaction">
-                                <a>Send Direct Message</a>
-                                <span>Local time: 5:31 PM</span>
-                            </div>
-                            <div className="profile-view-button">
-                                <Button>View Profile</Button>
+                            <div className="location-circle">
+                                <span>
+                                    <Icon type="compass" />
+                                    {this.getCountry(user.profile.country)}
+                                </span>
+                                {!this.props.loading &&
+                                <span className="circle">[{team.name} {I18N.get('developer.search.circle')}]</span>}
                             </div>
                         </div>
-                    }
+                        <div className="profile-interaction">
+                            <div><a onClick={() => this.sendMessage(user)}>{I18N.get('profile.sendMessage')}</a></div>
+                            <div><span>{I18N.get('profile.localTime')} {moment(Date.now()).format('h:mm A')}</span></div>
+                        </div>
+                        <div className="profile-view-button">
+                            <Button className="komu-a" onClick={() => this.linkUserDetail(user)}>{I18N.get('profile.viewProfile')}</Button>
+                        </div>
+                    </div>
                 </div>
             </div>
         )

@@ -402,7 +402,6 @@ const en = {
     'landing.stayUpdate': 'Stay up to date with Cyber Republic',
     'landing.whatIs': 'What is Elastos?',
 
-
     'landing.whatIs.content.1': 'Elastos is the first completely safe and decentralized environment on the internet. Built with blockchain, it provides a virtual ecosystem where decentralized applications are protected from direct access with the internet while allowing near infinite scalability to billions of users.',
     'landing.whatIs.content.2': 'Elastos is a “Cyber Republic” that enables wealth generation through the ownership and exchange of data and digital assets.',
 
@@ -572,7 +571,12 @@ const en = {
     // Role
     'role.member': 'Member',
     'role.organizer': 'Organizer',
-    'role.admin': 'Admin'
+    'role.admin': 'Admin',
+
+    // Profile
+    'profile.localTime': 'Local time',
+    'profile.sendMessage': 'Send Direct Message',
+    'profile.viewProfile': 'View Profile'
 };
 
 // lang mappings
