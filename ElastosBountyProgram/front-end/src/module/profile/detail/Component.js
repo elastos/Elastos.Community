@@ -3,7 +3,7 @@ import BaseComponent from '@/model/BaseComponent'
 import UserContactForm from '@/module/form/UserContactForm/Container'
 import moment from 'moment'
 import Comments from '@/module/common/comments/Container'
-import { Col, Row, Tabs, Icon } from 'antd'
+import { Col, Row, Tabs, Icon, Button } from 'antd'
 import I18N from '@/I18N'
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE} from '@/constant'
 import './style.scss'
@@ -29,17 +29,10 @@ export default class extends BaseComponent {
 
         return (
             <div className="c_Member public">
-                <h3>
-                    <MediaQuery maxWidth={720}>
-                        <Icon type="left" style={{color: '#5E6C86'}} onClick={() => this.props.history.goBack()}/>
-                    </MediaQuery>&nbsp;
-                    {this.props.member.username} -&nbsp;
-                    <span className="no-info">{roleName.toLowerCase()}</span>
-                </h3>
-                <MediaQuery maxWidth={720}>
+                <MediaQuery maxWidth={780}>
                     {this.renderMobile()}
                 </MediaQuery>
-                <MediaQuery minWidth={720}>
+                <MediaQuery minWidth={781}>
                     {this.renderDesktop()}
                 </MediaQuery>
             </div>
@@ -47,163 +40,171 @@ export default class extends BaseComponent {
     }
 
     renderMobile() {
-        return <div>
-            <Tabs>
-                <TabPane tab="General" key="general">
-                    {this.renderGeneral()}
-                </TabPane>
-                <TabPane tab="Social Media" key="socialMedia">
-                    {this.renderSocialMedia()}
-                </TabPane>
-                <TabPane tab="Send an Email" key="contactForm">
-                    {this.renderContactForm()}
-                </TabPane>
-            </Tabs>
-            <Comments type="user" reduxType="member" canPost={true} model={this.props.member}
-                headlines={true} returnUrl={`/member/${this.props.member._id}`}
-                header={I18N.get('comments.posts')}
-            />
-        </div>
+        return (
+            <div>
+                {this.renderBanner()}
+                <Row className="profile-info">
+                    <Col span={22} offset={1}>
+                        <Row>
+                            <Col sm={5} xs={5} style={{height: '100%'}}>&nbsp;{this.renderAvatar(true)}</Col>
+                            <Col sm={18} xs={18} offset={1}>
+                                {this.renderFullName(true)}
+                                {this.renderLocation()}
+                                {this.renderLocalTime()}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                {this.renderSocialMedia(true)}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                {this.renderDescription()}
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span={22} offset={1}>
+                        <Comments type="user" reduxType="member" canPost={true} model={this.props.member}
+                            headlines={true} returnUrl={`/member/${this.props.member._id}`}
+                            header={I18N.get('comments.posts')}
+                        />
+                    </Col>
+                </Row>
+            </div>
+        )
     }
 
     renderDesktop() {
-        return <div>
-            <Row>
-                <Col span={12} className="gridCol">
-                    <Tabs>
-                        <TabPane tab="General" key="general">
-                            {this.renderGeneral()}
-                        </TabPane>
-                        <TabPane tab="Social Media" key="socialMedia">
-                            {this.renderSocialMedia()}
-                        </TabPane>
-                    </Tabs>
-                </Col>
-                <Col span={12} className="gridCol left-vert-sep">
-                    <Row>
-                        <Col span={24} className="section-title">
-                            <h4>Send an Email</h4>
-                        </Col>
-                    </Row>
-                    {this.renderContactForm()}
-                </Col>
-            </Row>
-            <Row>
-                <Col span={24} className="gridCol">
-                    <Comments type="user" reduxType="member" canPost={true} model={this.props.member}
-                        headlines={true} returnUrl={`/member/${this.props.member._id}`}
-                        header={I18N.get('comments.posts')}
-                    />
-                </Col>
-            </Row>
-        </div>
+        return (
+            <div>
+                {this.renderBanner()}
+                <Row className="profile-info">
+                    <Col span={22} offset={1}>
+                        <Row>
+                            <Col lg={6} md={6} style={{height: '100%'}}>&nbsp;{this.renderAvatar()}</Col>
+                            <Col lg={17} md={17} offset={1}>{this.renderFullName()}</Col>
+                        </Row>
+                        <Row>
+                            <Col lg={6} md={6}>{this.renderSendMessage()}</Col>
+                            <Col lg={17} md={17} offset={1}>{this.renderLocation()}</Col>
+                        </Row>
+                        <Row>
+                            <Col lg={6} md={6}>{this.renderFollow()}</Col>
+                            {
+                                this.props.member.profile.timezone && <Col md={{span: 17, offset: 1}} lg={{span: 9, offset: 1}}>{this.renderLocalTime()}</Col>
+                            }
+
+                            <Col md={{span: 17, offset: 7}} lg={{ span: 8, offset: 0}}>{this.renderSocialMedia()}</Col>
+                        </Row>
+                    </Col>
+                    <Col span={22} offset={1}>
+                        {this.renderDescription()}
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col span={24} className="gridCol">
+                        <Comments type="user" reduxType="member" canPost={true} model={this.props.member}
+                            headlines={true} returnUrl={`/member/${this.props.member._id}`}
+                            header={I18N.get('comments.posts')}
+                        />
+                    </Col>
+                </Row>
+            </div>
+        )
     }
 
-    renderGeneral() {
-        return <div>
-            {this.props.member.profile.avatar &&
-            <Row>
-                <Col offset={8} span={16}>
-                    <img src={this.props.member.profile.avatar} style={{height: '100px'}}/>
-                </Col>
-            </Row>
-            }
-            <Row>
-                <Col span={8} className="label-col">
-                    First Name
-                </Col>
-                <Col span={16}>
-                    <p>
-                        {this.props.member.profile.firstName}
-                    </p>
-                </Col>
-            </Row>
-            <Row>
-                <Col span={8} className="label-col">
-                    Last Name
-                </Col>
-                <Col span={16}>
-                    <p>
-                        {this.props.member.profile.lastName}
-                    </p>
-                </Col>
-            </Row>
-            <Row>
-                <Col span={8} className="label-col">
-                    Gender
-                </Col>
-                <Col span={16}>
-                    <p>
-                        {this.props.member.profile.gender}
-                    </p>
-                </Col>
-            </Row>
-            <Row>
-                <Col span={8} className="label-col">
-                    Country
-                </Col>
-                <Col span={16}>
-                    <p>
-                        {this.getCountryName(this.props.member.profile.country)}
-                    </p>
-                </Col>
-            </Row>
-        </div>
+    renderBanner() {
+        return (
+            <div className="profile-banner">
+                <img src="/assets/images/profile-banner.svg" />
+            </div>
+        )
     }
 
-    renderSocialMedia() {
-        return <div>
-            <Row>
-                <Col span={8} className="label-col">
-                    Telegram
-                </Col>
-                <Col span={16}>
-                    <p>
-                        {this.props.member.profile.telegram}
-                    </p>
-                </Col>
-            </Row>
-            <Row>
-                <Col span={8} className="label-col">
-                    Reddit
-                </Col>
-                <Col span={16}>
-                    <p>
-                        {this.props.member.profile.reddit}
-                    </p>
-                </Col>
-            </Row>
-            <Row>
-                <Col span={8} className="label-col">
-                    WeChat
-                </Col>
-                <Col span={16}>
-                    <p>
-                        {this.props.member.profile.wechat}
-                    </p>
-                </Col>
-            </Row>
-            <Row>
-                <Col span={8} className="label-col">
-                    Twitter
-                </Col>
-                <Col span={16}>
-                    <p>
-                        {this.props.member.profile.twitter}
-                    </p>
-                </Col>
-            </Row>
-            <Row>
-                <Col span={8} className="label-col">
-                    Facebook
-                </Col>
-                <Col span={16}>
-                    <p>
-                        {this.props.member.profile.facebook}
-                    </p>
-                </Col>
-            </Row>
-        </div>
+    renderAvatar(isMobile) {
+        return (
+            <div className={`profile-avatar-container ${isMobile ? 'profile-avatar-container-mobile' : ''}`}>
+                <div className="profile-avatar">
+                    <img src={this.props.member.profile.avatar} />
+                </div>
+            </div>
+        )
+    }
+
+    renderFullName(isMobile) {
+        return (
+            <h1 className={`profile-general-title ${isMobile ? 'profile-general-title-mobile' : ''}`}>
+                {this.props.member.profile.firstName}&nbsp;
+                {this.props.member.profile.lastName}
+            </h1>
+        )
+    }
+
+    renderSendMessage() {
+        return (
+            <div>
+                <Button type="primary" className="profile-send-msg">Send Message</Button>
+            </div>
+        )
+    }
+
+    renderFollow() {
+        return (
+            <div>
+                <Button className="profile-follow">Follow</Button>
+            </div>
+        )
+    }
+
+    renderLocation() {
+        return (
+            <div className="profile-general-info">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>
+                    <strong>{this.getCountryName(this.props.member.profile.country)}</strong>
+                </span>
+            </div>
+        )
+    }
+
+    renderLocalTime() {
+        return (
+            <div className="profile-general-info">
+                <i class="far fa-circle"></i>
+                <span>
+                    <strong>Local time: {this.props.member.profile.timezone}</strong>
+                </span>
+            </div>
+        )
+    }
+
+    renderSocialMedia(isMobile) {
+        const { profile } = this.props.member
+
+        return (
+            <div className={`profile-social ${isMobile ? 'profile-social-mobile' : ''}`}>
+                {profile.telegram && <a href={profile.telegram} target="_blank"><i className="fab fa-telegram fa-2x"/></a>}
+                {profile.twitter && <a href={profile.twitter} target="_blank"><i className="fab fa-twitter fa-2x"/></a>}
+                {profile.facebook && <a href={profile.facebook} target="_blank"><i class="fab fa-facebook-square fa-2x"></i></a>}
+                {profile.reddit && <a href={profile.reddit} target="_blank"><i className="fab fa-reddit fa-2x"/></a>}
+                {profile.linkedin && <a href={profile.linkedin} target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>}
+            </div>
+        )
+    }
+
+    renderDescription() {
+        return (
+            <div>
+                {
+                    this.props.member.profile.bio &&
+                    <div className="profile-description">{this.props.member.profile.bio}</div>
+                }
+            </div>
+        )
     }
 
     renderContactForm() {
