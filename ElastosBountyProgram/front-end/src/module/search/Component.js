@@ -6,7 +6,7 @@ import {
 } from 'antd'
 import _ from 'lodash'
 import './style.scss'
-import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS} from '@/constant'
+import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT} from '@/constant'
 import ProjectDetail from '@/module/project/detail/Container'
 import TeamDetail from '@/module/team/detail/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
@@ -589,6 +589,13 @@ export default class extends BaseComponent {
                         <TeamDetail teamId={this.state.teamDetailId}/>
                     }
                 </Modal>
+                <Modal
+                    className="profile-overview-popup-modal"
+                    visible={!!this.state.showUserInfo}
+                    onCancel={this.handleCancelProfilePopup.bind(this)}
+                    footer={null}>
+                    <ProfilePopup showUserInfo={this.state.showUserInfo}></ProfilePopup>
+                </Modal>
                 {this.renderLoginOrRegisterModal()}
                 <Footer/>
             </div>
@@ -601,7 +608,7 @@ export default class extends BaseComponent {
 
     getAvatarWithFallback(avatar) {
         return _.isEmpty(avatar)
-            ? '/assets/images/Elastos_Logo.png'
+            ? USER_AVATAR_DEFAULT
             : avatar
     }
 
@@ -747,7 +754,7 @@ export default class extends BaseComponent {
                                     {item.description}
                                 </h5>
                                 <div>
-                                    <a onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                    <a onClick={() => this.setState({ showUserInfo: item.owner })}>
                                         <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
                                         <Divider type="vertical"/>
                                         <Avatar size="large"
@@ -758,13 +765,6 @@ export default class extends BaseComponent {
                                 </div>
                             </List.Item>
                         </MediaQuery>
-                        <Modal
-                            className="profile-overview-popup-modal"
-                            visible={!!this.state.showUserInfo}
-                            onCancel={this.handleCancelProfilePopup.bind(this)}
-                            footer={null}>
-                            <ProfilePopup showUserInfo={this.state.showUserInfo}></ProfilePopup>
-                        </Modal>
                     </div>
                 )}
             />
@@ -793,9 +793,5 @@ export default class extends BaseComponent {
                 {detail.hasApprovedApplication ? I18N.get('developer.search.view') : (detail.bidding ? I18N.get('developer.search.submit_bid') : I18N.get('developer.search.apply'))}
             </Button>
         </div>
-    }
-
-    linkUserDetail(user) {
-        this.props.history.push(`/member/${user._id}`)
     }
 }

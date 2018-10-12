@@ -7,7 +7,7 @@ import './style.scss'
 import '../../admin/admin.scss'
 import { Col, Row, Icon, Form, Input, Breadcrumb, Button,
     Divider, Select, Table, List, Carousel, Avatar, Tag } from 'antd'
-import { TEAM_USER_STATUS } from '@/constant'
+import { TEAM_USER_STATUS, TEAM_AVATAR_DEFAULT } from '@/constant'
 import MediaQuery from 'react-responsive'
 import moment from 'moment/moment'
 import Footer from '@/module/layout/Footer/Container'
@@ -235,7 +235,7 @@ export default class extends StandardPage {
         const data = _.map(teams, (team, id) => {
             return {
                 title: team.name,
-                pictures: team.pictures && team.pictures.length > 0 ? team.pictures : [{ url: '/assets/images/Elastos_Logo.png' }],
+                pictures: team.pictures && team.pictures.length > 0 ? team.pictures : [{ url: TEAM_AVATAR_DEFAULT }],
                 description: description_fn(team),
                 content: team.profile.description,
                 owner: team.owner,

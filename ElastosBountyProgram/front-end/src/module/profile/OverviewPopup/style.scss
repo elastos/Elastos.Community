@@ -14,6 +14,11 @@
     width: 100%;
     margin-top: -$gap_5;
     text-align: center;
+
+    img {
+      max-width: 200px;
+      border: 1px solid dimgray;
+    }
   }
   .profile-info {
     text-align: center;
@@ -76,4 +81,5 @@
   .ant-modal-close-x {
     color: white;
   }
+
 }

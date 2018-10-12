@@ -3,7 +3,7 @@ import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
 import { Button, Icon } from 'antd'
 import I18N from '@/I18N'
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE} from '@/constant'
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE, USER_AVATAR_DEFAULT} from '@/constant'
 import './style.scss'
 import config from '@/config'
 import MediaQuery from 'react-responsive'
@@ -43,10 +43,12 @@ export default class extends BaseComponent {
     ord_render () {
         const user = this.props.showUserInfo
         const team = this.props.team;
-
         if (!user || !team) {
+
             return <span></span>;
         }
+
+        const avatar = user.profile.avatar || USER_AVATAR_DEFAULT
         return (
             <div className="c_ProfileModalPopup">
                 <div className="header-image-container">
@@ -54,7 +56,7 @@ export default class extends BaseComponent {
                 </div>
                 <div>
                     <div className="profile-image">
-                        <img src="/assets/images/user_blurred_white.png"/>
+                        <img src={avatar}/>
                     </div>
                     <div>
                         <div className="profile-info">

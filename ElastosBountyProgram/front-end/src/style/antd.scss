@@ -271,6 +271,10 @@ h3.one-line {
   background: $bg_blue;
 }
 
+.ant-modal-mask {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
 .ant-form-item-children > div {
   position: relative;
 }

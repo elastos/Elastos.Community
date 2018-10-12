@@ -1,22 +1,35 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import { Form, Col, Row, List, Avatar, Icon, Divider, Button, Input, Mention } from 'antd'
+import {Form, Col, Row, List, Avatar, Icon, Divider, Button, Input, Mention, Modal} from 'antd'
 import config from '@/config'
 import './style.scss'
 import moment from 'moment'
 import _ from 'lodash'
 import I18N from '@/I18N'
+import ProfilePopup from '@/module/profile/OverviewPopup/Container'
+import { USER_AVATAR_DEFAULT } from '@/constant'
 
 const TextArea = Input.TextArea
 const FormItem = Form.Item
 
 class C extends BaseComponent {
+    ord_states() {
+        return {
+            showUserInfo: null
+        }
+    }
 
     async componentDidMount() {
         this.props.listUsers()
     }
 
     componentWillUnmount() {
+    }
+
+    linkUserDetail(user) {
+        this.setState({
+            showUserInfo: user
+        })
     }
 
     // only wraps loading / renderMain
@@ -32,8 +45,21 @@ class C extends BaseComponent {
             <div className="c_Comments">
                 {this.renderHeader()}
                 {this.renderComments()}
+                <Modal
+                    className="profile-overview-popup-modal"
+                    visible={!!this.state.showUserInfo}
+                    onCancel={this.handleCancelProfilePopup.bind(this)}
+                    footer={null}>
+                    <ProfilePopup showUserInfo={this.state.showUserInfo}></ProfilePopup>
+                </Modal>
             </div>
         )
+    }
+
+    handleCancelProfilePopup() {
+        this.setState({
+            showUserInfo: null
+        })
     }
 
     renderHeader() {
@@ -185,7 +211,7 @@ class C extends BaseComponent {
         {
             const thread = _.first(comment)
             const createdByUsername = (thread.createdBy && thread.createdBy.username) || ''
-            const avatar = (thread.createdBy && thread.createdBy.profile && thread.createdBy.profile.avatar) || '/assets/images/Elastos_Logo.png'
+            const avatar = (thread.createdBy && thread.createdBy.profile && thread.createdBy.profile.avatar) || USER_AVATAR_DEFAULT
             const createdById = (thread.createdBy && thread.createdBy._id)
             const dateFormatted = dateFormatter(thread.createdAt)
 
@@ -194,7 +220,7 @@ class C extends BaseComponent {
                 headline: thread.headline,
                 description: (
                     <div className="commenter-info">
-                        <a onClick={() => {createdById && this.props.history.push(`/member/${createdById}`)}}>
+                        <a onClick={() => { this.linkUserDetail(thread.createdBy) }}>
                             {createdByUsername}
                         </a>
                         {dateFormatted &&
