@@ -50,6 +50,7 @@
 
     .c_MenuItem.help {
       padding-right: 46px;
+      padding-left: 4px;
     }
 
     @media only screen and (max-width: $mobile-width) {
@@ -60,17 +61,12 @@
   }
 
   .c_MenuItem {
-    height: $header_height;
+    height: 80px;
     font-size: 14px;
-    font-weight: 300;
     font-stretch: normal;
     padding-top: 48px;
     line-height: 20px;
     margin: -1px 0 0 0;
-
-    &.link {
-      height: 100px;
-    }
 
     &.logo {
       padding-top: 24px;
