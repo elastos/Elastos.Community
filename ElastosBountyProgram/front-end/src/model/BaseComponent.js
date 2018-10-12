@@ -30,4 +30,7 @@ export default class extends React.Component{
 	ord_methods(){
 		return {};
 	}
+    ord_loading(f=false){
+        this.setState({loading : f});
+    }
 };

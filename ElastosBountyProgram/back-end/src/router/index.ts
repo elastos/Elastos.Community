@@ -12,6 +12,7 @@ import taskCandidate from './task_candidate';
 import teamCandidate from './team_candidate';
 import community from './community';
 import submission from './submission';
+import cvote from './cvote';
 
 import upload from './upload';
 
@@ -84,6 +85,7 @@ router.use('/teamCandidate', teamCandidate)
 router.use('/community', community);
 router.use('/upload', upload);
 router.use('/submission', submission);
+router.use('/cvote', cvote);
 
 router.use((req, res)=>{
     return res.sendStatus(403);

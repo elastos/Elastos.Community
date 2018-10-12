@@ -3,9 +3,14 @@ import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import I18N from '@/I18N'
 import './style.scss'
-import { Col, Row, Card, Button, message, Spin, Avatar, Modal } from 'antd'
+import { Col, Row, Card, Button, message, Tabs, Modal } from 'antd'
+const TabPane = Tabs.TabPane;
+
 import _ from 'lodash'
 import {USER_EMPOWER_TYPE} from '@/constant'
+
+import CouncilList from './list/Container'
+import CVoteList from '../CVote/list/Container'
 
 
 /**
@@ -18,23 +23,25 @@ export default class extends StandardPage {
         super(props)
 
         this.state = {
-            loading: false,
+
+            // save the page you are on
+            subpage: this.props.subpage || 'list',
+            loading: false
         }
-    }
-
-    async componentDidMount() {
-        this.setState({ loading: false })
-    }
-
-    componentWillUnmount() {
-
     }
 
     ord_renderContent () {
         return (
             <div className="p_council">
 
-                TODO
+                <Tabs defaultActiveKey={this.state.subpage}>
+                    <TabPane key="list" tab="list">
+                        <CouncilList/>
+                    </TabPane>
+                    <TabPane key="vote" tab="vote">
+                        <CVoteList/>
+                    </TabPane>
+                </Tabs>
 
                 <Footer/>
             </div>
