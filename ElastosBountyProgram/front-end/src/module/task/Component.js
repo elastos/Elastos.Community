@@ -153,7 +153,7 @@ export default class extends BaseComponent {
             {this.props.task.category !== 'CR100' &&
             <div className="pull-right right-align">
                 {/* Admin & Task Owner CAN Mark as Complete */}
-                {this.props.task.status === TASK_STATUS.APPROVED && isTaskOwner &&
+                {(this.props.task.status === TASK_STATUS.APPROVED || this.props.task.status === TASK_STATUS.ASSIGNED) && isTaskOwner &&
                 <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsSubmitted.bind(this)}>
                     <Button>Mark as Complete</Button>
                 </Popconfirm>
