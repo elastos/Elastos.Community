@@ -72,8 +72,11 @@ export default class extends BaseComponent {
                 {this.props.task.status === TASK_STATUS.PENDING &&
                 <span className="help-text">&nbsp; - this task is awaiting approval</span>
                 }
-                {this.props.task.status === TASK_STATUS.APPROVED && this.props.task.approvedBy &&
-                <span className="help-text">&nbsp; - this task is approved by {this.props.task.approvedBy.username}</span>
+                {(this.props.task.status === TASK_STATUS.APPROVED || this.props.task.status === TASK_STATUS.ASSIGNED) && this.props.task.approvedBy &&
+                <span className="help-text">
+                    &nbsp; - this task is approved by {this.props.task.approvedBy.username}
+                    {this.props.task.approvedDate && ` on ${moment(this.props.task.approvedDate).format('MMM D')}`}
+                </span>
                 }
                 {this.props.task.status === TASK_STATUS.SUCCESS &&
                 ((this.props.task.reward.ela > 0 || this.props.task.reward.usd > 0) ?
@@ -94,7 +97,7 @@ export default class extends BaseComponent {
                 </Popconfirm>
                 }
                 {/* Admin & Task Owner CAN Mark as Complete */}
-                {this.props.task.status === TASK_STATUS.APPROVED &&
+                {(this.props.task.status === TASK_STATUS.APPROVED || this.props.task.status === TASK_STATUS.ASSIGNED) &&
                 <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsSubmitted.bind(this)}>
                     <Button>Mark as Complete</Button>
                 </Popconfirm>

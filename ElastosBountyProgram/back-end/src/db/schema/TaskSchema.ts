@@ -82,6 +82,7 @@ export const TaskCandidate = {
 
     // this is the admin that approved the candidate
     approvedBy: Schema.Types.ObjectId,
+    approvedDate: Date,
 
     output : TaskOutput,
 
