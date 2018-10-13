@@ -145,7 +145,7 @@ export default class extends BaseComponent {
         return (
             <div className={`profile-button ${isMobile ? 'profile-button-mobile' : ''}`}>
                 {this.renderSendMessage()}
-                {/*this.renderFollow()*/}
+                {this.renderFollow()}
             </div>
         )
     }
@@ -155,7 +155,17 @@ export default class extends BaseComponent {
     }
 
     renderFollow() {
-        return <Button className="profile-follow">Follow</Button>
+        const isMyself = this.props.member._id === this.props.currentUserId
+        const isFollowing = this.isUserSubscribed()
+        const clickHandler = isFollowing ? this.unfollowUser : this.followUser
+
+        return <Button className="profile-follow" disabled={isMyself}
+            loading={this.props.subscribing} onClick={clickHandler.bind(this)}>
+            {isFollowing
+                ? I18N.get('user.unfollow')
+                : I18N.get('user.follow')
+            }
+        </Button>
     }
 
     renderLocation(isMobile) {
@@ -233,4 +243,19 @@ export default class extends BaseComponent {
         return config.data.mappingCountryCodeToName[countryCode]
     }
 
+    isUserSubscribed() {
+        const curDetail = this.props.member
+        const subscribers = curDetail.subscribers || []
+        return !!_.find(subscribers, (subscriber) => {
+            return subscriber.user && subscriber.user._id === this.props.currentUserId
+        })
+    }
+
+    followUser() {
+        this.props.subscribe('user', this.props.member._id)
+    }
+
+    unfollowUser() {
+        this.props.unsubscribe('user', this.props.member._id)
+    }
 }

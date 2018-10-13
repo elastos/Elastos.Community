@@ -1,5 +1,6 @@
 import {Schema} from 'mongoose'
 import {CommentSchema} from './CommentSchema'
+import {SubscriberSchema} from './SubscriberSchema'
 
 export const Region = {
     country: String,
@@ -119,5 +120,6 @@ export const User = {
         default : false
     },
     circles: [{type: Schema.Types.ObjectId, ref: 'team'}],
-    comments: [[CommentSchema]]
+    comments: [[CommentSchema]],
+    subscribers: [SubscriberSchema]
 };
