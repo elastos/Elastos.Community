@@ -50,7 +50,9 @@ class C extends BaseComponent {
                     visible={!!this.state.showUserInfo}
                     onCancel={this.handleCancelProfilePopup.bind(this)}
                     footer={null}>
-                    <ProfilePopup showUserInfo={this.state.showUserInfo}></ProfilePopup>
+                    { this.state.showUserInfo &&
+                        <ProfilePopup showUserInfo={this.state.showUserInfo}/>
+                    }
                 </Modal>
             </div>
         )

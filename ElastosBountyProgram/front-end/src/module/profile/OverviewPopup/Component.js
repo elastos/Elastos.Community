@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import { Button, Icon } from 'antd'
+import { Button, Icon, Spin } from 'antd'
 import I18N from '@/I18N'
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE, USER_AVATAR_DEFAULT} from '@/constant'
 import './style.scss'
@@ -10,22 +10,12 @@ import _ from 'lodash'
 import moment from 'moment-timezone'
 
 export default class extends BaseComponent {
-
-    ord_states() {
-    }
-
     async componentDidMount() {
-        let circleId = null;
-        if (_.size(this.props.showUserInfo.circles) > 0) {
-            circleId = this.props.showUserInfo.circles[0]
-        }
-        if (circleId) {
-            await this.props.getTeamDetail(circleId)
-        }
+        this.props.getMember(this.props.showUserInfo._id)
     }
 
     componentWillUnmount() {
-        this.props.resetTeamDetail()
+        this.props.resetMemberDetail()
     }
 
     getCountry(countryCode) {
@@ -41,13 +31,15 @@ export default class extends BaseComponent {
     }
 
     ord_render () {
-        const user = this.props.showUserInfo
-        const team = this.props.team;
-        if (!user || !team) {
-
-            return <span></span>;
+        if (this.props.loading || _.isEmpty(this.props.member)) {
+            return (
+                <div className="flex-center spin-container">
+                    <Spin size="large" />
+                </div>
+            )
         }
 
+        const user = this.props.member
         const avatar = user.profile.avatar || USER_AVATAR_DEFAULT
         const now = moment(Date.now())
         const localTime = user.profile.timezone
@@ -74,8 +66,13 @@ export default class extends BaseComponent {
                                     <Icon type="compass" />
                                     {this.getCountry(user.profile.country)}
                                 </span>
-                                {!this.props.loading &&
-                                <span className="circle">[{team.name} {I18N.get('developer.search.circle')}]</span>}
+                                {
+                                    _.map(user.circles, (circle, ind) =>
+                                        <span key={ind} className="circle">
+                                            [{circle.name} {I18N.get('developer.search.circle')}]
+                                        </span>
+                                    )
+                                }
                             </div>
                         </div>
                         <div className="profile-interaction">

@@ -137,11 +137,10 @@ export default class extends BaseService {
     }
 
     // restrictive getter - public profile should never return email / private info
-    // TODO: I am using member to refer to a profile other than yourself, might want to change it
     async getMember(userId, options = {}) {
-
         let path = `/api/user/public/${userId}`
         const memberRedux = this.store.getRedux('member')
+        await this.dispatch(memberRedux.actions.loading_update(true))
 
         await this.dispatch(memberRedux.actions.loading_update(true))
 

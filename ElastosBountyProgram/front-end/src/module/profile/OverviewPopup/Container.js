@@ -1,20 +1,20 @@
 import {createContainer} from '@/util'
 import Component from './Component'
-import TeamService from '@/service/TeamService'
+import UserService from '@/service/UserService'
 
 export default createContainer(Component, (state) => {
     return {
-        team: state.team.detail,
-        loading: state.team.loading
+        member: state.member.detail,
+        loading: state.member.loading
     }
 }, () => {
-    const teamService = new TeamService()
+    const userService = new UserService()
     return {
-        async getTeamDetail(teamId) {
-            return teamService.get(teamId)
+        async getMember(userId) {
+            return userService.getMember(userId)
         },
-        resetTeamDetail() {
-            return teamService.resetTeamDetail()
+        resetMemberDetail() {
+            return userService.resetMemberDetail()
         }
     }
 })
