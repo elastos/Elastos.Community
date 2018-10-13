@@ -3,7 +3,11 @@
 We will regularly schedule virtual meetups where the community members can directly interact with the developers on the status of the project and ask any questions they need clarification on. Each meetup will have a different agenda.
 
 ## Past Meetups
-### Thurlsday, Sep 27th, 2018 at 13:00 Eastern Daylight Time: Current Progress and Status
+### Thursday, Oct 11th, 2018 
+- [Link to powerpoint slides](https://docs.google.com/presentation/d/1LgM5b9iH0DjqS0U_T5EBSteJSDkQRTpR64ZrwXAgaYs/edit?usp=sharing)
+- [Link to youtube recording](https://www.youtube.com/watch?v=Loh0g_XKKHo)
+
+### Thursday, Sep 27th, 2018 at 13:00 Eastern Daylight Time: Current Progress and Status
 - [Link to powerpoint slides](https://docs.google.com/presentation/d/1dMiiEV8HIceAQW89OQCgGkMkh8ghtnXVhRoQux_J-uY/edit?usp=sharing)
 - [Link to youtube recording](https://www.youtube.com/watch?v=5WjeXjHkvio&feature=youtu.be)
 
