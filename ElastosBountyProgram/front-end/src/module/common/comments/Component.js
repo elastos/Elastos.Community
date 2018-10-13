@@ -12,7 +12,7 @@ const FormItem = Form.Item
 
 class C extends BaseComponent {
 
-    componentDidMount() {
+    async componentDidMount() {
         this.props.listUsers()
     }
 

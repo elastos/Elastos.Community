@@ -125,6 +125,13 @@ export default class extends Base {
                     })
                 }
             }
+
+            for (let subscriber of user.subscribers) {
+                await db_user.getDBInstance().populate(subscriber, {
+                    path: 'user',
+                    select: selectFields
+                })
+            }
         }
 
         return user

@@ -143,8 +143,9 @@ export default class extends BaseService {
         let path = `/api/user/public/${userId}`
         const memberRedux = this.store.getRedux('member')
 
+        await this.dispatch(memberRedux.actions.loading_update(true))
+
         if (options.admin) {
-            await this.dispatch(memberRedux.actions.loading_update(true))
             path += '?admin=true'
         }
 
@@ -160,8 +161,8 @@ export default class extends BaseService {
     }
 
     resetMemberDetail() {
-        const taskRedux = this.store.getRedux('member')
-        this.dispatch(taskRedux.actions.focus_user_reset())
+        const memberRedux = this.store.getRedux('member')
+        this.dispatch(memberRedux.actions.detail_reset())
     }
 
     async update(userId, doc) {
@@ -219,8 +220,6 @@ export default class extends BaseService {
     async getAll(query) {
         const memberRedux = this.store.getRedux('member')
 
-        await this.dispatch(memberRedux.actions.loading_update(true))
-
         const result = await api_request({
             path : `/api/user/list`,
             method : 'get',
@@ -228,7 +227,6 @@ export default class extends BaseService {
         });
 
         await this.dispatch(memberRedux.actions.users_update(result))
-        await this.dispatch(memberRedux.actions.loading_update(false))
 
         return result
     }

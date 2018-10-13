@@ -92,11 +92,10 @@ export default class extends Base {
         } = param
 
         const db_commentable = this.getDBModel(type)
-        let commentable = await db_commentable.getDBInstance().findOne({_id: id})
+        const commentable = await db_commentable.getDBInstance().findOne({_id: id})
             .populate('createdBy')
 
         if (commentable) {
-
             if (_.map(commentable.subscribers, (sub) => sub._id.toString()).includes(this.currentUser._id.toString())) {
                 return
             }
@@ -122,7 +121,7 @@ export default class extends Base {
         } = param
 
         const db_commentable = this.getDBModel(type)
-        let commentable = await db_commentable.getDBInstance().findOne({_id: id})
+        const commentable = await db_commentable.getDBInstance().findOne({_id: id})
             .populate('createdBy')
             .populate('subscribers', sanitize)
 

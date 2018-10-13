@@ -8,6 +8,7 @@ class MemberRedux extends BaseRedux {
     defineDefaultState() {
         return {
             loading: false,
+            subscribing: false,
             detail: {},
             users: []
         };

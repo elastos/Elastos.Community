@@ -168,6 +168,8 @@ const en = {
     'user.edit.form.label_email': 'Email is required',
     'user.edit.form.label_role': 'Please select a role',
     'user.edit.form.role': 'Role',
+    'user.follow': 'Follow',
+    'user.unfollow': 'Unfollow',
 
     // Developer
     'developer.breadcrumb.developers': 'Community',
