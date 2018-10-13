@@ -1,6 +1,5 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import moment from 'moment'
 import { Button, Icon } from 'antd'
 import I18N from '@/I18N'
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE, USER_AVATAR_DEFAULT} from '@/constant'
@@ -8,6 +7,7 @@ import './style.scss'
 import config from '@/config'
 import MediaQuery from 'react-responsive'
 import _ from 'lodash'
+import moment from 'moment-timezone'
 
 export default class extends BaseComponent {
 
@@ -49,6 +49,11 @@ export default class extends BaseComponent {
         }
 
         const avatar = user.profile.avatar || USER_AVATAR_DEFAULT
+        const now = moment(Date.now())
+        const localTime = user.profile.timezone
+            ? now.tz(user.profile.timezone).format('LT z')
+            : 'Unknown'
+
         return (
             <div className="c_ProfileModalPopup">
                 <div className="header-image-container">
@@ -75,7 +80,7 @@ export default class extends BaseComponent {
                         </div>
                         <div className="profile-interaction">
                             <div><a onClick={() => this.sendMessage(user)}>{I18N.get('profile.sendMessage')}</a></div>
-                            <div><span>{I18N.get('profile.localTime')} {moment(Date.now()).format('h:mm A')}</span></div>
+                            <div><span>{I18N.get('profile.localTime')} {localTime}</span></div>
                         </div>
                         <div className="profile-view-button">
                             <Button className="komu-a" onClick={() => this.linkUserDetail(user)}>{I18N.get('profile.viewProfile')}</Button>
