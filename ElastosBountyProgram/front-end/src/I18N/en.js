@@ -610,7 +610,9 @@ const en = {
     // Profile
     'profile.localTime': 'Local time',
     'profile.sendMessage': 'Send Direct Message',
-    'profile.viewProfile': 'View Profile'
+    'profile.viewProfile': 'View Profile',
+    'profile.projectsTasks': 'Projects/Tasks',
+    'profile.view': 'View'
 };
 
 // lang mappings
