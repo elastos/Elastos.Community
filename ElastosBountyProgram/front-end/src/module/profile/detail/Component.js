@@ -9,6 +9,7 @@ import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE}
 import './style.scss'
 import config from '@/config'
 import MediaQuery from 'react-responsive'
+import _ from 'lodash'
 
 const TabPane = Tabs.TabPane
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
@@ -115,7 +116,7 @@ export default class extends BaseComponent {
         return (
             <div className={`profile-avatar-container ${isMobile ? 'profile-avatar-container-mobile' : ''}`}>
                 <div className="profile-avatar">
-                    <img src={this.props.member.profile.avatar} />
+                    <img src={this.getAvatarWithFallback(this.props.member.profile.avatar)} />
                 </div>
             </div>
         )
@@ -156,6 +157,12 @@ export default class extends BaseComponent {
                 </span>
             </div>
         )
+    }
+
+    getAvatarWithFallback(avatar) {
+        return _.isEmpty(avatar)
+            ? '/assets/images/Elastos_Logo.png'
+            : avatar
     }
 
     renderLocalTime(isMobile) {
