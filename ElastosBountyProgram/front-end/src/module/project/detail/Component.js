@@ -20,7 +20,7 @@ import {
     InputNumber
 } from 'antd'
 import I18N from '@/I18N'
-import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS, TASK_STATUS } from '@/constant'
+import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS, TASK_STATUS, USER_AVATAR_DEFAULT } from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import ProjectApplication from '@/module/project/application/Container'
 import _ from 'lodash'
@@ -592,7 +592,7 @@ class C extends BaseComponent {
 
     getAvatarWithFallback(avatar) {
         return _.isEmpty(avatar)
-            ? '/assets/images/Elastos_Logo.png'
+            ? USER_AVATAR_DEFAULT
             : avatar
     }
 

@@ -14,6 +14,7 @@ import {
 } from 'antd'
 import I18N from '@/I18N'
 import TeamCreateForm from '@/module/form/TeamCreateForm/Container'
+import { USER_AVATAR_DEFAULT, TEAM_AVATAR_DEFAULT } from '@/constant'
 import _ from 'lodash'
 import './style.scss'
 
@@ -121,7 +122,7 @@ class C extends BaseComponent {
 
     getAvatarWithFallback(avatar) {
         return _.isEmpty(avatar)
-            ? '/assets/images/Elastos_Logo.png'
+            ? USER_AVATAR_DEFAULT
             : avatar
     }
 
@@ -185,13 +186,13 @@ class C extends BaseComponent {
                 mode: 'solo'
             },
             {
-                img: '/assets/images/team_blurred.svg',
+                img: TEAM_AVATAR_DEFAULT,
                 description: 'I registered a team and would like to work on this the project',
                 text: 'Existing Team',
                 mode: 'team'
             },
             {
-                img: '/assets/images/team_blurred.svg',
+                img: TEAM_AVATAR_DEFAULT,
                 description: 'I would like to create a team and work on this project',
                 text: 'Create Team',
                 mode: 'newteam'

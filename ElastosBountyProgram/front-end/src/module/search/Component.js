@@ -6,7 +6,7 @@ import {
 } from 'antd'
 import _ from 'lodash'
 import './style.scss'
-import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS} from '@/constant'
+import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT} from '@/constant'
 import ProjectDetail from '@/module/project/detail/Container'
 import TeamDetail from '@/module/team/detail/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
@@ -15,6 +15,7 @@ import MediaQuery from 'react-responsive'
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
 import I18N from '@/I18N'
 import moment from 'moment'
+import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
@@ -48,7 +49,8 @@ export default class extends BaseComponent {
             taskDetailId: 0,
             teamDetailId: 0,
             showMobile: false,
-            filtersTree: ['TEAM']
+            filtersTree: ['TEAM'],
+            showUserInfo: null
         }
     }
 
@@ -587,6 +589,15 @@ export default class extends BaseComponent {
                         <TeamDetail teamId={this.state.teamDetailId}/>
                     }
                 </Modal>
+                <Modal
+                    className="profile-overview-popup-modal"
+                    visible={!!this.state.showUserInfo}
+                    onCancel={this.handleCancelProfilePopup.bind(this)}
+                    footer={null}>
+                    { this.state.showUserInfo &&
+                        <ProfilePopup showUserInfo={this.state.showUserInfo}/>
+                    }
+                </Modal>
                 {this.renderLoginOrRegisterModal()}
                 <Footer/>
             </div>
@@ -599,7 +610,7 @@ export default class extends BaseComponent {
 
     getAvatarWithFallback(avatar) {
         return _.isEmpty(avatar)
-            ? '/assets/images/Elastos_Logo.png'
+            ? USER_AVATAR_DEFAULT
             : avatar
     }
 
@@ -721,7 +732,7 @@ export default class extends BaseComponent {
                                 </h5>
                                 <div className="description-content" dangerouslySetInnerHTML={{__html: item.content}}/>
                                 <div className="ant-list-item-right-box">
-                                    <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                    <a className="pull-up" onClick={() => this.setState({ showUserInfo: item.owner })}>
                                         <Avatar size="large" className="pull-right"
                                             src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
                                         <div className="clearfix"/>
@@ -745,7 +756,7 @@ export default class extends BaseComponent {
                                     {item.description}
                                 </h5>
                                 <div>
-                                    <a onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                    <a onClick={() => this.setState({ showUserInfo: item.owner })}>
                                         <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
                                         <Divider type="vertical"/>
                                         <Avatar size="large"
@@ -760,6 +771,12 @@ export default class extends BaseComponent {
                 )}
             />
         )
+    }
+
+    handleCancelProfilePopup() {
+        this.setState({
+            showUserInfo: null
+        })
     }
 
     // this is also just a view button if the project cannot accept anymore applications
@@ -778,9 +795,5 @@ export default class extends BaseComponent {
                 {detail.hasApprovedApplication ? I18N.get('developer.search.view') : (detail.bidding ? I18N.get('developer.search.submit_bid') : I18N.get('developer.search.apply'))}
             </Button>
         </div>
-    }
-
-    linkUserDetail(user) {
-        this.props.history.push(`/member/${user._id}`)
     }
 }

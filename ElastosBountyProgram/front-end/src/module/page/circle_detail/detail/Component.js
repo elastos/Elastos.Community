@@ -1,10 +1,11 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import { TEAM_USER_STATUS } from '@/constant'
+import { TEAM_USER_STATUS, USER_AVATAR_DEFAULT, TASK_AVATAR_DEFAULT } from '@/constant'
 import {Avatar, Button, Col, Form, Icon, Popconfirm, Row, Spin, Table, Input, Modal} from 'antd'
 import Comments from '@/module/common/comments/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
 import ProjectDetail from '@/module/project/detail/Container'
+import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 import './style.scss'
 import _ from 'lodash'
 import I18N from '@/I18N'
@@ -16,7 +17,8 @@ class C extends BaseComponent {
     ord_states() {
         return {
             showLoginRegisterModal: false,
-            showTaskModal: false
+            showTaskModal: false,
+            showUserInfo: null
         }
     }
 
@@ -138,8 +140,11 @@ class C extends BaseComponent {
         )
     }
 
-    linkProfileInfo(userId) {
-        this.props.history.push(`/member/${userId}`)
+    linkProfileInfo(user) {
+        this.setState({
+            showUserInfo: user
+        })
+        // this.props.history.push(`/member/${userId}`)
     }
 
     renderContent() {
@@ -152,7 +157,13 @@ class C extends BaseComponent {
 
     getAvatarWithFallback(avatar) {
         return _.isEmpty(avatar)
-            ? '/assets/images/Elastos_Logo.png'
+            ? USER_AVATAR_DEFAULT
+            : avatar
+    }
+
+    getTaskAvatarWithFallback(avatar) {
+        return _.isEmpty(avatar)
+            ? TASK_AVATAR_DEFAULT
             : avatar
     }
 
@@ -174,7 +185,7 @@ class C extends BaseComponent {
                     <div key={candidate._id}>
                         <Avatar className={'gap-right ' + (candidate.role === 'LEADER' ? 'avatar-leader' : 'avatar-member')}
                             src={this.getAvatarWithFallback(candidate.user.profile.avatar)}/>
-                        <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                        <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user)}>
                             {this.getUserNameWithFallback(candidate.user)}</a>
                     </div>
                 )
@@ -215,7 +226,7 @@ class C extends BaseComponent {
                 return (
                     <div key={task._id}>
                         <Avatar className="gap-right"
-                            src={this.getAvatarWithFallback(task.thumbnail)}/>
+                            src={this.getTaskAvatarWithFallback(task.thumbnail)}/>
                         <a className="row-name-link" href={`/task-detail/${task._id}`}>
                             {task.name}
                         </a>
@@ -321,8 +332,23 @@ class C extends BaseComponent {
                 <div className="rectangle double-size"/>
                 {this.renderLoginOrRegisterModal()}
                 {this.renderTaskModal()}
+                <Modal
+                    className="profile-overview-popup-modal"
+                    visible={!!this.state.showUserInfo}
+                    onCancel={this.handleCancelProfilePopup.bind(this)}
+                    footer={null}>
+                    { this.state.showUserInfo &&
+                        <ProfilePopup showUserInfo={this.state.showUserInfo}/>
+                    }
+                </Modal>
             </div>
         )
+    }
+
+    handleCancelProfilePopup() {
+        this.setState({
+            showUserInfo: null
+        })
     }
 
     hideShowModal() {
