@@ -31,6 +31,9 @@
     }
     .location-circle {
       span {
+        &:first-child {
+          display: block;
+        }
         margin: 0 $gap_1;
         font-family: 'Synthese', sans-serif;
 
