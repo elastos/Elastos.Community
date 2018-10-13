@@ -184,6 +184,10 @@ $avatar-size: 160px;
       margin-left: 10px;
     }
 
+    .location-icon {
+      margin-right: 3px;
+    }
+
     &.profile-general-info-mobile {
       margin-bottom: 10px !important;
     }
@@ -191,11 +195,10 @@ $avatar-size: 160px;
 
   .profile-general-title {
     text-transform: uppercase;
-    font-size: 25px;
-    font-weight: bold;
+    font-size: 36px;
     padding-bottom: 0;
     padding-top: 0;
-    margin-bottom: 23px;
+    margin-bottom: 6px;
     margin-top: 10px;
 
     &.profile-general-title-mobile {

@@ -134,7 +134,7 @@ export default class extends BaseComponent {
 
     renderFullName(isMobile) {
         return (
-            <h1 className={`profile-general-title ${isMobile ? 'profile-general-title-mobile' : ''}`}>
+            <h1 className={`komu-a profile-general-title ${isMobile ? 'profile-general-title-mobile' : ''}`}>
                 {this.props.member.profile.firstName}&nbsp;
                 {this.props.member.profile.lastName}
             </h1>
@@ -145,7 +145,7 @@ export default class extends BaseComponent {
         return (
             <div className={`profile-button ${isMobile ? 'profile-button-mobile' : ''}`}>
                 {this.renderSendMessage()}
-                {this.renderFollow()}
+                {/*this.renderFollow()*/}
             </div>
         )
     }
@@ -161,9 +161,9 @@ export default class extends BaseComponent {
     renderLocation(isMobile) {
         return (
             <div className={`profile-general-info ${isMobile ? 'profile-general-info-mobile' : ''}`}>
-                <i class="fas fa-map-marker-alt"></i>
+                <i class="fas fa-map-marker-alt location-icon"></i>
                 <span>
-                    <strong>{this.getCountryName(this.props.member.profile.country)}</strong>
+                    {this.getCountryName(this.props.member.profile.country)}
                 </span>
             </div>
         )
@@ -184,7 +184,7 @@ export default class extends BaseComponent {
 
         return (
             <div className={`profile-general-info ${isMobile ? 'profile-general-info-mobile' : ''}`}>
-                <i class="far fa-circle"/>
+                <Icon type="clock-circle"/>
                 <span>
                     Local time {localTime}
                 </span>
