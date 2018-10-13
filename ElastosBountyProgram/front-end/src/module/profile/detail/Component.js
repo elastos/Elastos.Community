@@ -29,11 +29,15 @@ export default class extends BaseComponent {
 
         return (
             <div className="c_Member public">
-                <MediaQuery maxWidth={780}>
-                    {this.renderMobile()}
+                <MediaQuery maxWidth={800}>
+                    <div className="member-content member-content-mobile">
+                        {this.renderMobile()}
+                    </div>
                 </MediaQuery>
-                <MediaQuery minWidth={781}>
-                    {this.renderDesktop()}
+                <MediaQuery minWidth={801}>
+                    <div className="member-content">
+                        {this.renderDesktop()}
+                    </div>
                 </MediaQuery>
             </div>
         )
@@ -42,29 +46,16 @@ export default class extends BaseComponent {
     renderMobile() {
         return (
             <div>
-                {this.renderBanner()}
-                <Row className="profile-info">
-                    <Col span={22} offset={1}>
-                        <Row>
-                            <Col sm={5} xs={5} style={{height: '100%'}}>&nbsp;{this.renderAvatar(true)}</Col>
-                            <Col sm={18} xs={18} offset={1}>
-                                {this.renderFullName(true)}
-                                {this.renderLocation()}
-                                {this.renderLocalTime()}
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                {this.renderSocialMedia(true)}
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                {this.renderDescription()}
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
+                {this.renderBanner(true)}
+                <div className="profile-info-container profile-info-container-mobile clearfix">
+                    {this.renderAvatar(true)}
+                    {this.renderFullName(true)}
+                    {this.renderLocation(true)}
+                    {this.renderLocalTime(true)}
+                    {this.renderSocialMedia(true)}
+                    {this.renderButton(true)}
+                    {this.renderDescription(true)}
+                </div>
                 <Row>
                     <Col span={22} offset={1}>
                         <Comments type="user" reduxType="member" canPost={true} model={this.props.member}
@@ -81,29 +72,24 @@ export default class extends BaseComponent {
         return (
             <div>
                 {this.renderBanner()}
-                <Row className="profile-info">
-                    <Col span={22} offset={1}>
-                        <Row>
-                            <Col lg={6} md={6} style={{height: '100%'}}>&nbsp;{this.renderAvatar()}</Col>
-                            <Col lg={17} md={17} offset={1}>{this.renderFullName()}</Col>
-                        </Row>
-                        <Row>
-                            <Col lg={6} md={6}>{this.renderSendMessage()}</Col>
-                            <Col lg={17} md={17} offset={1}>{this.renderLocation()}</Col>
-                        </Row>
-                        <Row>
-                            <Col lg={6} md={6}>{this.renderFollow()}</Col>
-                            {
-                                this.props.member.profile.timezone && <Col md={{span: 17, offset: 1}} lg={{span: 9, offset: 1}}>{this.renderLocalTime()}</Col>
-                            }
+                <div className="profile-info-container clearfix">
+                    <div className="profile-left pull-left">
+                        {this.renderAvatar()}
+                        {this.renderButton()}
+                    </div>
+                    <div className="profile-right pull-left">
+                        {this.renderFullName()}
+                        {this.renderLocation()}
+                        <div className="pull-left">
+                            {this.renderLocalTime()}
+                        </div>
+                        <div className="pull-right">
+                            {this.renderSocialMedia()}
+                        </div>
+                    </div>
 
-                            <Col style={{float: 'right'}} md={{span: 17, offset: 7}} lg={{ span: 8, offset: 0}}>{this.renderSocialMedia()}</Col>
-                        </Row>
-                    </Col>
-                    <Col span={22} offset={1}>
-                        {this.renderDescription()}
-                    </Col>
-                </Row>
+                    {this.renderDescription()}
+                </div>
 
                 <Row>
                     <Col span={24} className="gridCol">
@@ -117,10 +103,10 @@ export default class extends BaseComponent {
         )
     }
 
-    renderBanner() {
+    renderBanner(isMobile) {
         return (
-            <div className="profile-banner">
-                <img src="/assets/images/profile-banner.svg" />
+            <div className={`profile-banner ${isMobile ? 'profile-banner-mobile' : ''}`}>
+                <span style={{ backgroundImage: `url('/assets/images/profile-banner.svg')` }}></span>
             </div>
         )
     }
@@ -144,25 +130,26 @@ export default class extends BaseComponent {
         )
     }
 
-    renderSendMessage() {
+    renderButton(isMobile) {
         return (
-            <div>
-                <Button type="primary" className="profile-send-msg">Send Message</Button>
+            <div className={`profile-button ${isMobile ? 'profile-button-mobile' : ''}`}>
+                {this.renderSendMessage()}
+                {this.renderFollow()}
             </div>
         )
+    }
+
+    renderSendMessage() {
+        return <Button type="primary" className="profile-send-msg">Send Message</Button>
     }
 
     renderFollow() {
-        return (
-            <div>
-                <Button className="profile-follow">Follow</Button>
-            </div>
-        )
+        return <Button className="profile-follow">Follow</Button>
     }
 
-    renderLocation() {
+    renderLocation(isMobile) {
         return (
-            <div className="profile-general-info">
+            <div className={`profile-general-info ${isMobile ? 'profile-general-info-mobile' : ''}`}>
                 <i class="fas fa-map-marker-alt"></i>
                 <span>
                     <strong>{this.getCountryName(this.props.member.profile.country)}</strong>
@@ -171,13 +158,13 @@ export default class extends BaseComponent {
         )
     }
 
-    renderLocalTime() {
+    renderLocalTime(isMobile) {
         return (
-            <div className="profile-general-info">
-                <i class="far fa-circle"></i>
-                <span>
+            <div className={`profile-general-info ${isMobile ? 'profile-general-info-mobile' : ''}`}>
+                {this.props.member.profile.timezone && <i class="far fa-circle"></i>}
+                {this.props.member.profile.timezone && <span>
                     <strong>Local time: {this.props.member.profile.timezone}</strong>
-                </span>
+                </span>}
             </div>
         )
     }
@@ -196,12 +183,12 @@ export default class extends BaseComponent {
         )
     }
 
-    renderDescription() {
+    renderDescription(isMobile) {
         return (
             <div>
                 {
                     this.props.member.profile.bio &&
-                    <div className="profile-description">{this.props.member.profile.bio}</div>
+                    <div className={`profile-description ${isMobile ? 'profile-description-mobile' : ''}`}>{this.props.member.profile.bio}</div>
                 }
             </div>
         )
