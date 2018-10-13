@@ -50,25 +50,21 @@ export default class extends BaseComponent {
         )
     }
 
-    // TODO
     renderEditForm() {
         return <div className="form-wrapper">
             <UserEditForm user={this.props.user} page={this.props.page} switchEditMode={this.switchEditMode.bind(this)}/>
         </div>
     }
 
-    // for now public and your profile view looks the same
     renderDetail() {
-
         if (!this.state.publicView && (this.props.page === 'ADMIN' || this.props.page === 'LEADER')) {
             return this.renderPersonalDetail()
         } else {
-            return <UserPublicDetail member={this.props.user} page={this.props.page}/>
+            return <UserPublicDetail userId={this.props.currentUserId} page={this.props.page}/>
         }
     }
 
     renderHeader() {
-
         // TODO: edit only if you're own profile / is admin
         return <div className="l_banner">
             <div className="pull-left">
