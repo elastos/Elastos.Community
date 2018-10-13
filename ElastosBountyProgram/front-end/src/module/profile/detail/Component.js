@@ -1,7 +1,7 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import UserContactForm from '@/module/form/UserContactForm/Container'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import Comments from '@/module/common/comments/Container'
 import { Col, Row, Tabs, Icon, Button, Divider } from 'antd'
 import I18N from '@/I18N'
@@ -166,12 +166,18 @@ export default class extends BaseComponent {
     }
 
     renderLocalTime(isMobile) {
+        const now = moment(Date.now())
+        const user = this.props.member
+        const localTime = user.profile.timezone
+            ? now.tz(user.profile.timezone).format('LT z')
+            : 'Unknown'
+
         return (
             <div className={`profile-general-info ${isMobile ? 'profile-general-info-mobile' : ''}`}>
-                {this.props.member.profile.timezone && <i class="far fa-circle"></i>}
-                {this.props.member.profile.timezone && <span>
-                    <strong>Local time: {this.props.member.profile.timezone}</strong>
-                </span>}
+                <i class="far fa-circle"/>
+                <span>
+                    Local time {localTime}
+                </span>
             </div>
         )
     }
