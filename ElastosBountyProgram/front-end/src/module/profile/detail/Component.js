@@ -5,7 +5,7 @@ import moment from 'moment-timezone'
 import Comments from '@/module/common/comments/Container'
 import {Col, Row, Tabs, Icon, Button, Spin, Table} from 'antd'
 import I18N from '@/I18N'
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE, USER_AVATAR_DEFAULT} from '@/constant'
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE, USER_AVATAR_DEFAULT, TEAM_TYPE} from '@/constant'
 import './style.scss'
 import config from '@/config'
 import MediaQuery from 'react-responsive'
@@ -314,8 +314,21 @@ export default class extends BaseComponent {
             key: 'view',
             width: 100,
             render: entry => {
+                console.log(entry)
                 return (
-                    <Button key={entry._id} className="cr-btn">{I18N.get('profile.view')}</Button>
+                    <Button key={entry._id} className="cr-btn" onClick={() => {
+                        if (entry.type === 'Team') {
+                            this.linkTeamDetail(entry._id)
+                        } else if (entry.type === 'Circle') {
+                            this.linkCircleDetail(entry._id)
+                        } else if (entry.type === 'CR100') {
+                            this.linkCR100Detail((entry._id))
+                        } else {
+                            this.linkProjectDetail((entry._id))
+                        }
+                    }}>
+                        {I18N.get('profile.view')}
+                    </Button>
                 )
             }
         }]
@@ -360,5 +373,21 @@ export default class extends BaseComponent {
 
     unfollowUser() {
         this.props.unsubscribe('user', this.props.member._id)
+    }
+
+    linkTeamDetail(teamId) {
+        this.props.history.push(`/profile/team-detail/${teamId}`)
+    }
+
+    linkCircleDetail(circleId) {
+        this.props.history.push(`/circle-detail/${circleId}`)
+    }
+
+    linkCR100Detail(taskId) {
+        this.props.history.push(`/project-detail/${taskId}`)
+    }
+
+    linkProjectDetail(taskId) {
+        this.props.history.push(`/profile/project-detail/${taskId}`)
     }
 }
