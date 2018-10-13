@@ -3,10 +3,10 @@ import BaseComponent from '@/model/BaseComponent'
 import UserContactForm from '@/module/form/UserContactForm/Container'
 import moment from 'moment-timezone'
 import Comments from '@/module/common/comments/Container'
-import { Col, Row, Tabs, Icon, Button, Divider, Spin } from 'antd'
+import {Col, Row, Tabs, Icon, Button, Spin, Table} from 'antd'
 import I18N from '@/I18N'
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE} from '@/constant'
-import '../style.scss'
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE, USER_AVATAR_DEFAULT} from '@/constant'
+import './style.scss'
 import config from '@/config'
 import MediaQuery from 'react-responsive'
 import _ from 'lodash'
@@ -15,8 +15,16 @@ const TabPane = Tabs.TabPane
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
 export default class extends BaseComponent {
+
+    ord_states() {
+        return {
+        }
+    }
+
     async componentDidMount() {
         this.props.getMember(this.props.userId)
+        this.props.getUserTeams(this.props.userId)
+        this.props.getTasks(this.props.userId)
     }
 
     componentWillUnmount() {
@@ -102,6 +110,8 @@ export default class extends BaseComponent {
                     {this.renderDescription()}
                 </div>
 
+                {this.renderProjectsTasks()}
+
                 <Row>
                     <Col span={24} className="gridCol">
                         <Comments type="user" reduxType="member" canPost={true} model={this.props.member}
@@ -181,7 +191,7 @@ export default class extends BaseComponent {
 
     getAvatarWithFallback(avatar) {
         return _.isEmpty(avatar)
-            ? '/assets/images/Elastos_Logo.png'
+            ? USER_AVATAR_DEFAULT
             : avatar
     }
 
@@ -238,6 +248,98 @@ export default class extends BaseComponent {
                 }
             </Col>
         </Row>
+    }
+
+    renderProjectsTasks() {
+        const teams = _.map(this.props.teams, (team) => {
+            return {
+                _id: team._id,
+                type: 'Team',
+                name: team.name,
+                date: team.updatedAt
+            }
+        })
+        const circles = _.map(this.props.member.circles, (circle) => {
+            return {
+                _id: circle._id,
+                type: 'Circle',
+                name: circle.name,
+                date: circle.updatedAt
+            }
+        })
+        const projects = _.map(this.props.tasks, (task) => {
+            return {
+                _id: task._id,
+                type: task.type === TASK_CATEGORY.CR100 ? 'CR100' : 'Project',
+                name: task.name,
+                date: task.updatedAt
+            }
+        })
+        const data = _.concat(teams, circles, projects)
+        const columns = [{
+            title: 'Type',
+            key: 'type',
+            width: 150,
+            render: entry => {
+                return (
+                    <div key={entry._id}>
+                        {entry.type}
+                    </div>
+                )
+            }
+        }, {
+            title: 'Name',
+            key: 'name',
+            width: 350,
+            render: entry => {
+                return (
+                    <div key={entry._id}>
+                        {entry.name}
+                    </div>
+                )
+            }
+        }, {
+            title: 'Date',
+            key: 'date',
+            width: 200,
+            render: entry => {
+                return (
+                    <div key={entry._id}>
+                        {moment(entry.date).format('MM/DD/YYYY')}
+                    </div>
+                )
+            }
+        }, {
+            title: '',
+            key: 'view',
+            width: 100,
+            render: entry => {
+                return (
+                    <Button key={entry._id} className="cr-btn">{I18N.get('profile.view')}</Button>
+                )
+            }
+        }]
+        return (
+            <div className="projects-tasks">
+                <div className="pt-header">
+                    <div className="pt-header-label komu-a">{I18N.get('profile.projectsTasks')}</div>
+                </div>
+                <div className="pt-list">
+                    {this.props.loadingList ?
+                        <div className="flex-center spin-container">
+                            <Spin size="large" />
+                        </div> :
+                        <Table
+                            dataSource={data}
+                            columns={columns}
+                            loading={this.props.loading}
+                            rowKey="_id"
+                            pagination={false}>
+                        </Table>
+                    }
+                </div>
+            </div>
+        )
     }
 
     getCountryName(countryCode) {

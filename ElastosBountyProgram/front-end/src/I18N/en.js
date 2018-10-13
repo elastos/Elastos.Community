@@ -612,6 +612,8 @@ const en = {
     'profile.localTime': 'Local time',
     'profile.sendMessage': 'Send Direct Message',
     'profile.viewProfile': 'View Profile',
+    'profile.projectsTasks': 'Projects/Tasks',
+    'profile.view': 'View',
     'profile.editProfile': 'Edit Profile',
     'profile.showPublicProfile': 'Show Public Profile',
     'profile.crContributors': 'CR Contributors',
