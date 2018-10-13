@@ -3,7 +3,7 @@ import BaseComponent from '@/model/BaseComponent'
 import UserContactForm from '@/module/form/UserContactForm/Container'
 import moment from 'moment-timezone'
 import Comments from '@/module/common/comments/Container'
-import { Col, Row, Tabs, Icon, Button, Divider } from 'antd'
+import { Col, Row, Tabs, Icon, Button, Divider, Spin } from 'antd'
 import I18N from '@/I18N'
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE} from '@/constant'
 import './style.scss'
@@ -15,12 +15,22 @@ const TabPane = Tabs.TabPane
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
 export default class extends BaseComponent {
+    async componentDidMount() {
+        this.props.getMember(this.props.userId)
+    }
+
+    componentWillUnmount() {
+        this.props.resetMemberDetail()
+    }
 
     // TODO: add twitter, telegram, linkedIn, FB
     ord_render () {
-
-        if (!this.props.member) {
-            return <div/>
+        if (this.props.loading || _.isEmpty(this.props.member)) {
+            return (
+                <div className="flex-center spin-container">
+                    <Spin size="large" />
+                </div>
+            )
         }
 
         let roleName = this.props.member.role
