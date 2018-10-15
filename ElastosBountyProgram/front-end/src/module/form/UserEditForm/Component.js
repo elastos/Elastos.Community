@@ -69,6 +69,22 @@ class C extends BaseComponent {
         })
     }
 
+    checkEmail(rule, value, callback, source, options) {
+        const emailRegex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+
+        if (this.props.is_admin && value && emailRegex.test(value) && this.props.user.email !== value) {
+            this.props.checkEmail(value).then((isExist) => {
+                if (isExist) {
+                    callback(I18N.get('register.error.duplicate_email'))
+                } else {
+                    callback()
+                }
+            })
+        } else {
+            callback()
+        }
+    }
+
     compareToFirstPassword(rule, value, callback) {
         const form = this.props.form
         if (value && value !== form.getFieldValue('password')) {
@@ -124,11 +140,17 @@ class C extends BaseComponent {
         )
 
         const email_fn = getFieldDecorator('email', {
-            rules: [{required: true, message: I18N.get('user.edit.form.label_email')}],
+            rules: [{
+                required: true, message: I18N.get('user.edit.form.label_email')
+            }, {
+                type: 'email', message: I18N.get('register.error.email'),
+            }, {
+                validator: this.checkEmail.bind(this)
+            }],
             initialValue: user.email
         })
         const email_el = (
-            <Input disabled/>
+            <Input size="large" disabled={!(this.props.is_admin && this.props.history.location.pathname.indexOf("/admin/profile/") !== -1)} />
         )
 
         const password_fn = getFieldDecorator('password', {
