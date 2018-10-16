@@ -14,7 +14,7 @@
   }
 
   .app-meta-row {
-    height: 24px;
+    min-height: 24px;
   }
 
   .app-meta,
@@ -33,7 +33,13 @@
   }
 
   .app-footer .ant-btn {
-    text-transform: uppercase;
+    height: 36px;
+    & > span {
+      @extend .komu-a;
+      text-transform: uppercase;
+      font-size: 24px;
+      line-height: 38px;
+    }
   }
 
   .square {
