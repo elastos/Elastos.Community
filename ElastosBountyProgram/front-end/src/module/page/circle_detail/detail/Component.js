@@ -4,7 +4,7 @@ import { TEAM_USER_STATUS, USER_AVATAR_DEFAULT, TASK_AVATAR_DEFAULT } from '@/co
 import {Avatar, Button, Col, Form, Icon, Popconfirm, Row, Spin, Table, Input, Modal} from 'antd'
 import Comments from '@/module/common/comments/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
-import ProjectDetail from '@/module/project/detail/Container'
+import TaskDetail from '@/module/task/popup/Container'
 import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 import './style.scss'
 import _ from 'lodash'
@@ -18,7 +18,8 @@ class C extends BaseComponent {
         return {
             showLoginRegisterModal: false,
             showTaskModal: false,
-            showUserInfo: null
+            showUserInfo: null,
+            taskDetailId: null
         }
     }
 
@@ -216,8 +217,8 @@ class C extends BaseComponent {
     renderTasks() {
         const tasks = this.props.all_tasks
         const clickHandler = !this.props.is_login
-            ? this.showLoginRegisterModal
-            : this.showTaskModal
+            ? this.showLoginRegisterModal.bind(this)
+            : this.showTaskModal.bind(this)
 
         const columns = [{
             title: 'Name',
@@ -227,27 +228,14 @@ class C extends BaseComponent {
                     <div key={task._id}>
                         <Avatar className="gap-right"
                             src={this.getTaskAvatarWithFallback(task.thumbnail)}/>
-                        <a className="row-name-link" href={`/task-detail/${task._id}`}>
+                        <a className="row-name-link" onClick={() => clickHandler(task._id)}>
                             {task.name}
                         </a>
                     </div>
                 )
             }
-        }, {
-            title: 'Action',
-            key: 'action',
-            render: task => {
-                return (
-                    <div key={task._id} className="text-right">
-                        {task.createdBy._id !== this.props.currentUserId &&
-                            <a onClick={clickHandler.bind(this, task._id)}>
-                                {task.bidding ? I18N.get('developer.search.submit_bid') : I18N.get('developer.search.apply')}
-                            </a>
-                        }
-                    </div>
-                )
-            }
         }]
+
         return (
             <div>
                 <div className="member-header">
@@ -392,7 +380,7 @@ class C extends BaseComponent {
                 width="70%"
             >
                 { this.state.showTaskModal &&
-                    <ProjectDetail taskId={this.state.taskDetailId}/>
+                    <TaskDetail taskId={this.state.taskDetailId}/>
                 }
             </Modal>
         )

@@ -115,6 +115,10 @@ h3.one-line {
   margin-right: 0;
 }
 
+.ant-input-lg {
+  line-height: 40px;
+}
+
 .ant-menu-inline {
   border-right: 0;
 }
@@ -269,6 +273,14 @@ h3.one-line {
 .ant-modal-body {
   padding: 36px;
   background: $bg_blue;
+}
+
+.ant-btn > span {
+  line-height: 24px;
+}
+
+.ant-switch-inner {
+  line-height: 16px;
 }
 
 .ant-form-item-children > div {

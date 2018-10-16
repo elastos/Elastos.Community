@@ -23,6 +23,10 @@
     }
   }
 
+  .comment-avatar {
+    cursor: pointer;
+  }
+
   .comment-content {
     margin-left: $gap_2;
     width: 90%;

@@ -9,6 +9,7 @@ import './style.scss'
 import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT} from '@/constant'
 import ProjectDetail from '@/module/project/detail/Container'
 import TeamDetail from '@/module/team/detail/Container'
+import TaskDetail from '@/module/task/popup/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
 import Footer from '@/module/layout/Footer/Container'
 import MediaQuery from 'react-responsive'
@@ -44,6 +45,7 @@ export default class extends BaseComponent {
             skillsetShowAllEntries: false,
             categoryShowAllEntries: false,
             showProjectModal: false,
+            showTaskModal: false,
             showTeamModal: false,
             showLoginRegisterModal: false,
             taskDetailId: 0,
@@ -91,6 +93,10 @@ export default class extends BaseComponent {
         return this.state.lookingFor === 'TEAM'
     }
 
+    isLookingForTask() {
+        return this.state.lookingFor === 'TASK'
+    }
+
     onChangeLookingFor(e) {
         this.setState({
             lookingFor: e.target.value
@@ -128,6 +134,13 @@ export default class extends BaseComponent {
         })
     }
 
+    showTaskModal(id) {
+        this.setState({
+            showTaskModal: true,
+            taskDetailId: id
+        })
+    }
+
     showTeamModal(id) {
         this.setState({
             showTeamModal: true,
@@ -150,6 +163,12 @@ export default class extends BaseComponent {
         })
     }
 
+    handleTaskModalOk = (e) => {
+        this.setState({
+            showTaskModal: false
+        })
+    }
+
     handleTeamModalOk = (e) => {
         this.setState({
             showTeamModal: false
@@ -159,6 +178,12 @@ export default class extends BaseComponent {
     handleProjectModalCancel = (e) => {
         this.setState({
             showProjectModal: false
+        })
+    }
+
+    handleTaskModalCancel = (e) => {
+        this.setState({
+            showTaskModal: false
         })
     }
 
@@ -579,6 +604,18 @@ export default class extends BaseComponent {
                 </Modal>
                 <Modal
                     className="project-detail-nobar"
+                    visible={this.state.showTaskModal}
+                    onOk={this.handleTaskModalOk}
+                    onCancel={this.handleTaskModalCancel}
+                    footer={null}
+                    width="70%"
+                >
+                    { this.state.showTaskModal &&
+                        <TaskDetail taskId={this.state.taskDetailId}/>
+                    }
+                </Modal>
+                <Modal
+                    className="project-detail-nobar"
                     visible={this.state.showTeamModal}
                     onOk={this.handleTeamModalOk}
                     onCancel={this.handleTeamModalCancel}
@@ -704,10 +741,15 @@ export default class extends BaseComponent {
                 }
             })
 
+        const handlersLookup = {
+            TEAM: this.showTeamModal,
+            PROJECT: this.showProjectModal,
+            TASK: this.showTaskModal
+        }
+
         const clickHandler = !this.props.is_login
             ? this.showLoginRegisterModal
-            : (this.isLookingForTeam() ? this.showTeamModal
-                : this.showProjectModal)
+            : handlersLookup[this.state.lookingFor] || _.noop
 
         return (
             <List loading={this.props.loading} itemLayout='vertical' size='large'

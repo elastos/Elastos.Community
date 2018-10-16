@@ -381,6 +381,15 @@ const en = {
     'team.skillset.java': 'Java',
     'team.skillset.swift': 'Swift',
 
+    'task.owner': 'Owner',
+    'task.circle': 'Circle',
+    'task.type': 'Type',
+    'task.description': 'Description',
+    'task.category': 'Category',
+    'task.applyDeadline': 'Apply deadline',
+    'task.completionDeadline': 'Deadline',
+    'task.applyMessage': 'See full task and apply',
+
     // General
     'select.placeholder': 'Please select',
     '.ok': 'Ok',
