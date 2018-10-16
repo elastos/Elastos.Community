@@ -222,7 +222,7 @@ class C extends BaseComponent {
                 headline: thread.headline,
                 description: (
                     <div className="commenter-info">
-                        <a onClick={() => { this.linkUserDetail(thread.createdBy) }}>
+                        <a onClick={() => this.linkUserDetail(thread.createdBy)}>
                             {createdByUsername}
                         </a>
                         {dateFormatted &&
@@ -232,7 +232,10 @@ class C extends BaseComponent {
                         </span>}
                     </div>
                 ),
-                avatar
+                avatar: (
+                    <Avatar className="comment-avatar pull-left" src={avatar} shape="circle" size={64}
+                        onClick={() => this.linkUserDetail(thread.createdBy)}/>
+                )
             }
         })
 
@@ -249,7 +252,7 @@ class C extends BaseComponent {
                     header={footer}
                     renderItem={(item, ind) => (
                         <List.Item key={ind}>
-                            <Avatar className="comment-avatar pull-left" src={item.avatar} shape="circle" size={64}/>
+                            {item.avatar}
                             <div className="comment-content pull-left">
                                 { item.headline &&
                                     <h4>
