@@ -164,12 +164,12 @@ export default class extends StandardPage {
             <Row>
                 <Col>
                     <h4>
-                        Join Slack
+                        Join Discord
                     </h4>
 
                     <p>
-                        If you do not receive an invite just email us at <a href="mailto:slack@elastos.org">slack@elastos.org</a> and
-                        we'll double check your email and send you an invite.
+                        After joining Cyber Republic please join our Discord channel at <a href="https://discord.gg/UG9j6kh">https://discord.gg/UG9j6kh</a> and
+                        Telegram at <a href="https://t.me/elastosgroup">https://t.me/elastosgroup</a>
                     </p>
                 </Col>
             </Row>
@@ -256,7 +256,7 @@ export default class extends StandardPage {
             <Row>
                 <Col>
                     <h4>
-                        Join Slack and be part of the community!
+                        Join Discord and be part of the community!
                     </h4>
 
                     <p>

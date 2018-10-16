@@ -407,6 +407,7 @@ export default class extends Base {
 
                     updateObj.status = constant.TASK_STATUS.APPROVED
                     updateObj.approvedBy = this.currentUser._id
+                    updateObj.approvedDate = new Date()
 
                     // TODO: move this to agenda/queue
                     await this.sendTaskApproveEmail(this.currentUser, taskOwner, task)
@@ -435,7 +436,9 @@ export default class extends Base {
         if (this.currentUser._id.toString() === task.createdBy.toString()) {
 
             // shortcut with error for these - only allow status change from APPROVED -> SUBMITTED
-            if (task.status !== constant.TASK_STATUS.APPROVED &&
+            // still need to handle some tasks that are assigned stage
+            // TODO: update all ASSIGNED status tasks
+            if (task.status !== constant.TASK_STATUS.APPROVED && task.status !== constant.TASK_STATUS.ASSIGNED &&
                 param.status === constant.TASK_STATUS.SUBMITTED
             ) {
                 throw 'Invalid Action'

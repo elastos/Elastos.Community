@@ -153,7 +153,7 @@ class C extends BaseComponent {
                         detailReducer={(detail) => _.find(detail.candidates, (candidate) => {
                             return candidate._id === this.props.taskCandidateId
                         })}
-                        returnUrl={`/empower35-detail/${this.props.detail._id}`}
+                        returnUrl={`/crcles-detail/${this.props.detail._id}`}
                     />
                 </div>
             </div>

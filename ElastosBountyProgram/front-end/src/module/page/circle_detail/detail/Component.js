@@ -280,7 +280,7 @@ class C extends BaseComponent {
                         headlines={true}
                         type="team"
                         canPost={this.isTeamMember()}
-                        returnUrl={`/empower35-detail/${this.props.team.detail._id}`}
+                        returnUrl={`/crcles-detail/${this.props.team.detail._id}`}
                         model={this.props.team.detail}/>
                 </div>
             </div>
@@ -387,8 +387,8 @@ class C extends BaseComponent {
     }
 
     showLoginRegisterModal = () => {
-        sessionStorage.setItem('loginRedirect', `/empower35-detail/${this.props.match.params.circleId}`)
-        sessionStorage.setItem('registerRedirect', `/empower35-detail/${this.props.match.params.circleId}`)
+        sessionStorage.setItem('loginRedirect', `/crcles-detail/${this.props.match.params.circleId}`)
+        sessionStorage.setItem('registerRedirect', `/crcles-detail/${this.props.match.params.circleId}`)
 
         this.setState({
             showLoginRegisterModal: true
