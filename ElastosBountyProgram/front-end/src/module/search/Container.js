@@ -33,7 +33,7 @@ export default createContainer(Component, (state) => {
             return taskService.index({
                 ...filters,
                 type: TASK_TYPE.TASK,
-                category: TASK_CATEGORY.DEVELOPER
+                category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.SOCIAL]
             })
         },
 
