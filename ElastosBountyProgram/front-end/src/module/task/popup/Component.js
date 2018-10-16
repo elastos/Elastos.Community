@@ -17,7 +17,8 @@ import {
     Form,
     Divider,
     Modal,
-    InputNumber
+    InputNumber,
+    Popover
 } from 'antd'
 import I18N from '@/I18N'
 import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE,
@@ -47,37 +48,10 @@ class C extends BaseComponent {
         this.props.resetTaskDetail()
     }
 
-    isTaskOwner() {
-        return this.props.detail.createdBy._id === this.props.currentUserId
-    }
-
-    linkProfileInfo(userId) {
-        this.props.history.push(`/member/${userId}`)
-    }
-
-    showTaskDetail() {
-        this.props.history.push(`/task-detail/${this.props.detail._id}`)
-    }
-
-    getAvatarWithFallback(avatar) {
-        return _.isEmpty(avatar)
-            ? USER_AVATAR_DEFAULT
-            : avatar
-    }
-
-    getUserNameWithFallback(user) {
-        if (_.isEmpty(user.profile.firstName) && _.isEmpty(user.profile.lastName)) {
-            return user.username
-        }
-
-        return _.trim([user.profile.firstName, user.profile.lastName].join(' '))
-    }
-
+    // Renderers
     ord_render() {
         const detail = this.props.detail
         const loading = this.props.loading || _.isEmpty(this.props.detail)
-        const isTaskOwner = this.props.detail.createdBy &&
-            (this.props.detail.createdBy._id === this.props.currentUserId)
 
         return (
             <div className="c_TaskPopup">
@@ -124,6 +98,11 @@ class C extends BaseComponent {
         )
 
         const detail = this.props.detail
+        const budget = this.getBudgetFormatted()
+        const reward = this.getRewardFormatted()
+        const EVENT_DATE_FORMAT = 'MMM D, YYYY - HH:mm'
+        const DEADLINE_FORMAT = 'MMM D'
+
         return (
             <div className="app-meta">
                 {generateRow(I18N.get('task.owner'),
@@ -136,15 +115,51 @@ class C extends BaseComponent {
 
                 {generateRow(I18N.get('task.category'), detail.category)}
 
-                {generateRow(I18N.get('task.description'), detail.description, 'task-description')}
+                {detail.location && generateRow(I18N.get('task.location'), detail.location)}
+
+                {detail.community && generateRow(I18N.get('task.community'), this.getCommunityDisp())}
 
                 {detail.applicationDeadline &&
                     generateRow(I18N.get('task.applyDeadline'),
-                        moment(detail.applicationDeadline).format('MMM D'))}
+                        moment(detail.applicationDeadline).format(DEADLINE_FORMAT))}
 
                 {detail.completionDeadline &&
                     generateRow(I18N.get('task.completionDeadline'),
-                        moment(detail.completionDeadline).format('MMM D'))}
+                        moment(detail.completionDeadline).format(DEADLINE_FORMAT))}
+
+                {detail.bidding &&
+                    generateRow(I18N.get('task.referenceBid'),
+                        detail.referenceBid || I18N.get('task.referenceBid.none'))}
+
+                {!detail.bidding && budget && generateRow(I18N.get('task.budget'), (
+                    <div>
+                        <span>{budget}</span>
+                        {this.getBudgetExplanation()}
+                    </div>
+                )) || null}
+
+                {!detail.bidding && reward && generateRow(I18N.get('task.reward'), (
+                    <div>
+                        <span>{reward}</span>
+                        {this.getRewardExplanation()}
+                    </div>
+                )) || null}
+
+                {detail.goals && generateRow(I18N.get('task.goals'), detail.goals)}
+
+                {detail.descBreakdown && generateRow(I18N.get('task.descBreakdown'), detail.descBreakdown)}
+
+                {detail.eventDateRangeStart && generateRow(I18N.get('task.eventStart'),
+                    moment(detail.eventDateRangeStart).format(EVENT_DATE_FORMAT) + ' (' +
+                    detail.eventDateStatus + ')')}
+
+                {detail.eventDateRangeEnd && generateRow(I18N.get('task.eventEnd'),
+                    moment(detail.eventDateRangeEnd).format(EVENT_DATE_FORMAT))}
+
+                {generateRow(I18N.get('task.description'), detail.description, 'task-description')}
+
+                {detail.infoLink && generateRow(I18N.get('task.infoLink'),
+                    <a href={detail.infoLink} target="_blank">{detail.infoLink}</a>)}
             </div>
         )
     }
@@ -165,6 +180,96 @@ class C extends BaseComponent {
                 </Button>
             </div>
         )
+    }
+
+    // Helpers
+    getCurrency() {
+        return this.props.detail.reward.isUsd ? 'USD' : 'ELA'
+    }
+
+    getReward() {
+        return this.props.detail.reward &&
+            ((this.props.detail.reward.usd / 100) || this.props.detail.reward.ela / 1000)
+    }
+
+    getRewardElaPerUsd() {
+        return this.props.detail.reward && this.props.detail.reward.elaPerUsd
+    }
+
+    getRewardFormatted() {
+        const epu = this.getRewardElaPerUsd()
+        const suffix = epu ? ` (@${epu} ELA/USD)` : ''
+        return this.getReward() && `${this.getReward()} ${this.getCurrency()}${suffix}`
+    }
+
+    getBudget() {
+        return this.props.detail.rewardUpfront &&
+            ((this.props.detail.rewardUpfront.usd / 100) || this.props.detail.rewardUpfront.ela / 1000)
+    }
+
+    getBudgetElaPerUsd() {
+        return this.props.detail.rewardUpfront && this.props.detail.rewardUpfront.elaPerUsd
+    }
+
+    getBudgetFormatted() {
+        const epu = this.getBudgetElaPerUsd()
+        const suffix = epu ? ` (@${epu} ELA/USD)` : ''
+        return this.getBudget() && `${this.getBudget()} ${this.getCurrency()}${suffix}`
+    }
+
+    getCommunityDisp() {
+        let str = ''
+
+        if (this.props.detail.communityParent) {
+            str += this.props.detail.communityParent.name + '/'
+        }
+        if (this.props.detail.community) {
+            str += this.props.detail.community.name
+        }
+
+        return str
+    }
+
+    getBudgetExplanation() {
+        return (
+            <Popover content={I18N.get('task.budget.explain')}>
+                <Icon className="help-icon" type="question-circle-o"/>
+            </Popover>
+        )
+    }
+
+    getRewardExplanation() {
+        return (
+            <Popover content={I18N.get('task.reward.explain')}>
+                <Icon className="help-icon" type="question-circle-o"/>
+            </Popover>
+        )
+    }
+
+    isTaskOwner() {
+        return this.props.detail.createdBy._id === this.props.currentUserId
+    }
+
+    linkProfileInfo(userId) {
+        this.props.history.push(`/member/${userId}`)
+    }
+
+    showTaskDetail() {
+        this.props.history.push(`/task-detail/${this.props.detail._id}`)
+    }
+
+    getAvatarWithFallback(avatar) {
+        return _.isEmpty(avatar)
+            ? USER_AVATAR_DEFAULT
+            : avatar
+    }
+
+    getUserNameWithFallback(user) {
+        if (_.isEmpty(user.profile.firstName) && _.isEmpty(user.profile.lastName)) {
+            return user.username
+        }
+
+        return _.trim([user.profile.firstName, user.profile.lastName].join(' '))
     }
 }
 
