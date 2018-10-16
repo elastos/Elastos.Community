@@ -112,7 +112,6 @@ const ProjectPitch = {
  *
  */
 export const Task = {
-
     name : {
         type : String,
         required : true

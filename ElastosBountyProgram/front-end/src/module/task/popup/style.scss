@@ -1,0 +1,42 @@
+@import '@/style/variable';
+@import '@/style/color';
+
+.c_TaskPopup {
+  padding: $gap_2;
+  max-width: 800px;
+  margin: 0 auto;
+
+  .app-header {
+    font-size: 36px;
+    position: relative;
+    padding-top: $gap_1;
+  }
+
+  .app-meta-row {
+    height: 24px;
+  }
+
+  .app-meta,
+  .app-footer,
+  .app-applications {
+    margin-top: $gap_2;
+  }
+
+  .app-meta {
+    padding-bottom: $gap_2;
+  }
+
+  .task-description {
+    margin: $gap_1 0;
+  }
+
+  .app-footer .ant-btn {
+    text-transform: uppercase;
+  }
+
+  .square {
+    position: absolute;
+    top: 0;
+    left: -28px;
+  }
+}

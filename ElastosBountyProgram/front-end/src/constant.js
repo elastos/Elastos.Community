@@ -41,7 +41,7 @@ export const USER_LANGUAGE = {
 }
 
 export const USER_GENDER = {
-    MALE: 'male',
+    male: 'male',
     FEMALE: 'female',
     OTHER: 'other'
 }
