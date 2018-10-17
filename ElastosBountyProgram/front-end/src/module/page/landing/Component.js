@@ -1087,8 +1087,10 @@ export default class extends EmptyPage {
                     <div className="square-ornament left">
                         <div className="sq fill sm"></div>
                         <div className="sq fill med"></div>
-                        <div className="sq fill lrg"></div>
-                        <div className="sq diags"><img src="assets/images/diags-blue.svg"/></div>
+                        <MediaQuery minWidth={MIN_WIDTH_PC}>
+                            <div className="sq fill lrg"></div>
+                            <div className="sq diags"><img src="assets/images/diags-blue.svg"/></div>
+                        </MediaQuery>
                     </div>
                     <div className="square-ornament right">
                         <div className="sq fill sm"></div>
