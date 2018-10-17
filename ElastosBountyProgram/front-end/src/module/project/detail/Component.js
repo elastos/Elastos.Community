@@ -17,7 +17,8 @@ import {
     Form,
     Divider,
     Modal,
-    InputNumber
+    InputNumber,
+    Popover
 } from 'antd'
 import I18N from '@/I18N'
 import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS, TASK_STATUS, USER_AVATAR_DEFAULT } from '@/constant'
