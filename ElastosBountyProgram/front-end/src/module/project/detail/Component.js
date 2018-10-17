@@ -83,24 +83,6 @@ class C extends BaseComponent {
         return this.withdrawApplication(candidate._id)
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     getImageCarousel() {
         const details = this.props.task;
 
@@ -128,17 +110,6 @@ class C extends BaseComponent {
             </div>
         )
     }
-
-
-
-
-
-
-
-
-
-
-
 
     getCurrentContributorsData() {
         const detail = this.props.task
@@ -391,7 +362,8 @@ class C extends BaseComponent {
                         </div>
                     )
                     : (
-                        <div style={{paddingBottom: '150px'}}>
+                        <div className="detail-container">
+                            {this.getImageCarousel()}
                             {this.renderHeader()}
                             {this.renderMeta()}
 
