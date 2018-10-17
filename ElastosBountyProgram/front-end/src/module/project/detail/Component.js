@@ -25,6 +25,7 @@ import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS,
     TASK_STATUS, USER_AVATAR_DEFAULT } from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import ProjectApplication from '@/module/project/application/Container'
+import ProjectApplicationStart from '@/module/page/project_detail/application/start/Container'
 import _ from 'lodash'
 import './style.scss'
 
@@ -36,6 +37,7 @@ class C extends BaseComponent {
     ord_states() {
         return {
             showAppModal: false,
+            showApplicationStartModal: false,
             projectCandidateId: null
         }
     }
@@ -50,81 +52,6 @@ class C extends BaseComponent {
 
     componentWillUnmount() {
         this.props.resetTaskDetail()
-    }
-
-    isTaskOwner() {
-        return this.props.task.createdBy._id === this.props.currentUserId
-    }
-
-    linkProfileInfo(userId) {
-        window.open(`/member/${userId}`)
-    }
-
-    approveUser(taskCandidateId) {
-        this.props.acceptCandidate(taskCandidateId);
-    }
-
-    disapproveUser(taskCandidateId) {
-        this.props.rejectCandidate(taskCandidateId);
-    }
-
-    withdrawApplication(taskCandidateId) {
-        this.props.withdrawCandidate(taskCandidateId);
-    }
-
-    removeUser(taskCandidateId) {
-        this.props.rejectCandidate(taskCandidateId)
-    }
-
-    removeUserByUserId(userId) {
-        const candidate = _.find(this.props.task.candidates, (candidate) =>
-            candidate.user._id === userId && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED)
-        if (!candidate) {
-            return false
-        }
-        return this.withdrawApplication(candidate._id)
-    }
-
-    getImageCarousel() {
-        const IMAGE_SIZE = 150
-
-        const details = this.props.task;
-        const carouselImages = []
-
-        if (details.thumbnail) {
-            carouselImages.push(<img width={IMAGE_SIZE} height={IMAGE_SIZE}
-                src={details.thumbnail} key="main"/>)
-        }
-
-        for (let i of details.pictures) {
-            carouselImages.push(<img width={IMAGE_SIZE} height={IMAGE_SIZE}
-                src={i.url} key={i}/>)
-        }
-
-        if (carouselImages.length === 0) {
-            carouselImages.push(<img width={IMAGE_SIZE} height={IMAGE_SIZE}
-                src={'/assets/images/Group_1685.12.svg'} key={0} />);
-        }
-
-        return (
-            <div className="carousel-container">
-                <div className="pictures-container">
-                    <Carousel autoplay>
-                        {carouselImages}
-                    </Carousel>
-                </div>
-            </div>
-        )
-    }
-
-    getCurrentContributorsData() {
-        const detail = this.props.task
-        return _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.APPROVED });
-    }
-
-    getPendingCandidates() {
-        const detail = this.props.task
-        return _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.PENDING });
     }
 
     /**
@@ -151,105 +78,6 @@ class C extends BaseComponent {
                     })
             }
         })
-    }
-
-    canApply() {
-        return !this.hasAppliedBySelf() ||
-            _.some(this.props.ownedTeams, (team) => !this.hasAppliedByTeam(team))
-    }
-
-    getApplicationForm() {
-        const {getFieldDecorator} = this.props.form
-        const applyMsg_fn = getFieldDecorator('applyMsg', {
-            rules: [{required: true, message: 'Application is required'}],
-            initialValue: ''
-        })
-        const applyMsg_el = (
-            <Input.TextArea rows={8} className="team-application"
-                disabled={this.props.loading} placeholder={this.props.task.bidding
-                    ? I18N.get('project.detail.tell_us_why_bid')
-                    : I18N.get('project.detail.tell_us_why_join')}/>
-        )
-        const applyMsgPanel = applyMsg_fn(applyMsg_el)
-
-        const bid_fn = getFieldDecorator('bid')
-        const bid_el = (
-            <InputNumber min={1} disabled={this.props.loading}/>
-        )
-        const bid = bid_fn(bid_el)
-
-        // generate select options
-        let applicantOpts = {}
-        const applicantSltOpts = []
-
-        if (!this.hasAppliedBySelf()) {
-            applicantSltOpts.push(<Select.Option key="$me" value="$me">
-                Apply as myself
-                <Avatar size="small" src={this.getAvatarWithFallback(
-                    this.props.currentUserAvatar)} className="pull-right"/>
-            </Select.Option>)
-            applicantOpts.initialValue = '$me'
-        }
-
-        for (let team of this.props.ownedTeams) {
-            if (!this.hasAppliedByTeam(team)) {
-                applicantSltOpts.push(<Select.Option key={team._id} value={team._id}>
-                    Apply with {team.name}
-                    {!_.isEmpty(team.pictures)
-                        ? <Avatar size="small" src={team.pictures[0].thumbUrl}
-                            className="pull-right"/>
-                        : <Avatar size="small" type="user" className="pull-right"/>
-                    }
-                </Select.Option>)
-            }
-        }
-
-        const applicant_fn = getFieldDecorator('applicant', applicantOpts)
-        const applicant_el = (
-            <Select className="team-selector pull-right" disabled={this.props.loading}
-                // https://github.com/vazco/uniforms/issues/228
-                    getPopupContainer={x => {
-                        while (x && x.tagName.toLowerCase() !== 'form') {
-                            x = x.parentElement;
-                        }
-
-                        return x;
-                    }}>
-                {_.map(applicantSltOpts, (applicantOpt) => applicantOpt)}
-            </Select>
-        )
-        const applicantPanel = applicant_fn(applicant_el)
-
-        return (
-            <Form onSubmit={this.handleSubmit.bind(this)} className="application-form">
-                <Form.Item className="no-margin">
-                    {applyMsgPanel}
-                </Form.Item>
-                { this.props.task.bidding &&
-                <div>
-                    <Form.Item className="no-margin pull-right">
-                        <div>
-                            <span>Bid (ELA): </span>
-                            {bid}
-                        </div>
-                    </Form.Item>
-                    <div className="clearfix"/>
-                </div>
-                }
-                <Button disabled={this.props.loading} className="d_btn pull-left"
-                    onClick={() => this.setState({ applying: false })}>
-                    Cancel
-                </Button>
-                <Button disabled={this.props.loading} className="d_btn pull-right"
-                    type="primary" htmlType="submit">
-                    Apply
-                </Button>
-                <Form.Item className="pull-right">
-                    {applicantPanel}
-                </Form.Item>
-                <div class="clearfix"/>
-            </Form>
-        )
     }
 
     canComment() {
@@ -390,25 +218,20 @@ class C extends BaseComponent {
                             * unless you've exhausted all the teams, but even then we can inform
                             *   the user of this in a better way than hiding
                             */}
-                            {!this.state.applying && this.props.page !== 'LEADER' &&
+                            {this.props.page !== 'LEADER' &&
                                 !isTaskOwner && this.renderApplyButton()}
-
-                            {/*
-                            * Applying Form
-                            */}
-                            {this.state.applying && this.getApplicationForm()}
 
                             {/*
                             * Approved Applicants (might not be necessary except for admin/leader)
                             */}
-                            {(!this.state.applying && this.getCurrentContributorsData().length)
+                            {this.getCurrentContributorsData().length
                                 ? this.renderContributors()
                                 : ''}
 
                             {/*
                             * Pending Bids / Applications - only show if CREATED/PENDING
                             */}
-                            {!this.state.applying && this.renderPendingCandidates()}
+                            {this.renderPendingCandidates()}
 
                             {/*
                             * Comments
@@ -427,17 +250,24 @@ class C extends BaseComponent {
                         </div>
                     )
                 }
-                <Modal
-                    className="project-detail-nobar"
-                    visible={this.state.showAppModal}
-                    onOk={this.handleAppModalOk}
-                    onCancel={this.handleAppModalCancel}
-                    footer={null}
-                    width="70%"
-                >
-                    <ProjectApplication applicantId={this.state.projectCandidateId}/>
-                </Modal>
+                {this.renderApplicationStartModal()}
+                {this.renderViewApplicationModal()}
             </div>
+        )
+    }
+
+    renderViewApplicationModal() {
+        return (
+            <Modal
+                className="project-detail-nobar"
+                visible={this.state.showAppModal}
+                onOk={this.handleAppModalOk}
+                onCancel={this.handleAppModalCancel}
+                footer={null}
+                width="70%"
+            >
+                <ProjectApplication applicantId={this.state.projectCandidateId}/>
+            </Modal>
         )
     }
 
@@ -455,7 +285,7 @@ class C extends BaseComponent {
         }
 
         return <Row className="actions">
-            <Button type="primary" onClick={() => this.setState({ applying: true })}
+            <Button type="primary" onClick={() => this.showApplicationStartModal()}
                 disabled={!this.canApply()}>
                 {detail.bidding
                     ? I18N.get('project.detail.popup.bid_project')
@@ -464,6 +294,23 @@ class C extends BaseComponent {
         </Row>
     }
 
+    renderApplicationStartModal() {
+        return (
+            <Modal
+                className="project-detail-nobar"
+                visible={this.state.showApplicationStartModal}
+                onOk={this.handleApplicationStartModalOk.bind(this)}
+                onCancel={this.handleApplicationStartModalCancel.bind(this)}
+                footer={null}
+                width="70%"
+            >
+                {this.state.showApplicationStartModal &&
+                    <ProjectApplicationStart task={this.props.task}
+                        finisher={this.handleApplicationStartModalOk.bind(this)} />
+                }
+            </Modal>
+        )
+    }
 
     /**
      * Render pending bids or applications
@@ -599,39 +446,44 @@ class C extends BaseComponent {
             render: (candidate) => {
                 return (
                     <div className="text-right">
-                        {this.props.task.bidding &&
-                            <span>
-                                Bid: {candidate.bid} ELA
-                            </span>
-                        }
-                        {(this.props.page === 'ADMIN' || this.isTaskOwner() ||
-                            this.loggedInUserBelongsToCandidate(candidate)) && (
-                            <span>
-                                <Divider type="vertical"/>
-                                <a onClick={this.showAppModal.bind(this, candidate._id)}>
-                                    {I18N.get('project.detail.view')}
-                                </a>
-                            </span>
-                        )}
-                        {this.loggedInUserOwnerOfCandidate(candidate) && (
-                            <span>
-                                <Divider type="vertical"/>
-                                <a onClick={this.withdrawApplication.bind(this, candidate._id)}>
-                                    {I18N.get('project.detail.withdraw_application')}
-                                </a>
-                            </span>)
-                        }
-                        {this.isTaskOwner() &&
-                            <span className="inline-block">
-                                <Divider type="vertical"/>
-                                <a onClick={this.approveUser.bind(this, candidate._id)}>
-                                    {I18N.get('project.detail.approve')}
-                                </a>
-                                <Divider type="vertical"/>
-                                <a onClick={this.disapproveUser.bind(this, candidate._id)}>
-                                    {I18N.get('project.detail.disapprove')}
-                                </a>
-                            </span>
+                        {this.props.loading
+                            ? <Spin/>
+                            : <div>
+                                {this.props.task.bidding &&
+                                    <span>
+                                        Bid: {candidate.bid} ELA
+                                    </span>
+                                }
+                                {(this.props.page === 'ADMIN' || this.isTaskOwner() ||
+                                    this.loggedInUserBelongsToCandidate(candidate)) && (
+                                    <span>
+                                        <Divider type="vertical"/>
+                                        <a onClick={this.showAppModal.bind(this, candidate._id)}>
+                                            {I18N.get('project.detail.view')}
+                                        </a>
+                                    </span>
+                                )}
+                                {this.loggedInUserOwnerOfCandidate(candidate) && (
+                                    <span>
+                                        <Divider type="vertical"/>
+                                        <a onClick={this.withdrawApplication.bind(this, candidate._id)}>
+                                            {I18N.get('project.detail.withdraw_application')}
+                                        </a>
+                                    </span>)
+                                }
+                                {this.isTaskOwner() &&
+                                    <span className="inline-block">
+                                        <Divider type="vertical"/>
+                                        <a onClick={this.approveUser.bind(this, candidate._id)}>
+                                            {I18N.get('project.detail.approve')}
+                                        </a>
+                                        <Divider type="vertical"/>
+                                        <a onClick={this.disapproveUser.bind(this, candidate._id)}>
+                                            {I18N.get('project.detail.disapprove')}
+                                        </a>
+                                    </span>
+                                }
+                            </div>
                         }
                     </div>
                 )
@@ -876,6 +728,105 @@ class C extends BaseComponent {
         }
 
         return str
+    }
+
+    isTaskOwner() {
+        return this.props.task.createdBy._id === this.props.currentUserId
+    }
+
+    linkProfileInfo(userId) {
+        window.open(`/member/${userId}`)
+    }
+
+    approveUser(taskCandidateId) {
+        this.props.acceptCandidate(taskCandidateId);
+    }
+
+    disapproveUser(taskCandidateId) {
+        this.props.rejectCandidate(taskCandidateId);
+    }
+
+    withdrawApplication(taskCandidateId) {
+        this.props.withdrawCandidate(taskCandidateId);
+    }
+
+    removeUser(taskCandidateId) {
+        this.props.rejectCandidate(taskCandidateId)
+    }
+
+    removeUserByUserId(userId) {
+        const candidate = _.find(this.props.task.candidates, (candidate) =>
+            candidate.user._id === userId && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED)
+        if (!candidate) {
+            return false
+        }
+        return this.withdrawApplication(candidate._id)
+    }
+
+    getImageCarousel() {
+        const IMAGE_SIZE = 150
+
+        const details = this.props.task;
+        const carouselImages = []
+
+        if (details.thumbnail) {
+            carouselImages.push(<img width={IMAGE_SIZE} height={IMAGE_SIZE}
+                src={details.thumbnail} key="main"/>)
+        }
+
+        for (let i of details.pictures) {
+            carouselImages.push(<img width={IMAGE_SIZE} height={IMAGE_SIZE}
+                src={i.url} key={i}/>)
+        }
+
+        if (carouselImages.length === 0) {
+            carouselImages.push(<img width={IMAGE_SIZE} height={IMAGE_SIZE}
+                src={'/assets/images/Group_1685.12.svg'} key={0} />);
+        }
+
+        return (
+            <div className="carousel-container">
+                <div className="pictures-container">
+                    <Carousel autoplay>
+                        {carouselImages}
+                    </Carousel>
+                </div>
+            </div>
+        )
+    }
+
+    getCurrentContributorsData() {
+        const detail = this.props.task
+        return _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.APPROVED });
+    }
+
+    getPendingCandidates() {
+        const detail = this.props.task
+        return _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.PENDING });
+    }
+
+    canApply() {
+        return !this.hasAppliedBySelf() &&
+            !_.some(this.props.ownedTeams, (team) => this.hasAppliedByTeam(team))
+    }
+
+    showApplicationStartModal() {
+        this.setState({
+            showApplicationStartModal: true
+        })
+    }
+
+    handleApplicationStartModalOk = (e) => {
+        this.setState({
+            showApplicationStartModal: false
+        })
+        this.showApplicationModal()
+    }
+
+    handleApplicationStartModalCancel() {
+        this.setState({
+            showApplicationStartModal: false
+        })
     }
 }
 
