@@ -69,9 +69,10 @@ export default class extends BaseComponent {
                                 </span>
                                 {
                                     _.map(user.circles, (circle, ind) =>
-                                        <span key={ind} className="circle">
+                                        <a key={ind} className="circle" href={`/crcle-detail/${circle._id}`}
+                                            target="_blank">
                                             [{circle.name} {I18N.get('developer.search.circle')}]
-                                        </span>
+                                        </a>
                                     )
                                 }
                             </div>
