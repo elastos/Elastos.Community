@@ -69,7 +69,8 @@ export default class extends BaseComponent {
                                 </span>
                                 {
                                     _.map(user.circles, (circle, ind) =>
-                                        <a key={ind} className="circle" href={`/crcles-detail/${circle._id}`}
+                                        <a key={ind} className="circle"
+                                            onClick={() => this.props.history.push(`/crcles-detail/${circle._id}`)}
                                             target="_blank">
                                             [{circle.name} {I18N.get('developer.search.circle')}]
                                         </a>
