@@ -38,12 +38,6 @@
     color: $primary_color;
   }
 
-  .c_Comments h3,
-  .header h3 {
-    @extend .komu-a;
-    font-size: 36px;
-  }
-
   .header {
     margin-top: $gap_3;
   }
