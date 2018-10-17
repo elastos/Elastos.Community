@@ -26,6 +26,7 @@ import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS,
 import Comments from '@/module/common/comments/Container'
 import ProjectApplication from '@/module/project/application/Container'
 import ProjectApplicationStart from '@/module/page/project_detail/application/start/Container'
+import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 import _ from 'lodash'
 import './style.scss'
 
@@ -38,7 +39,8 @@ class C extends BaseComponent {
         return {
             showAppModal: false,
             showApplicationStartModal: false,
-            projectCandidateId: null
+            projectCandidateId: null,
+            showUserInfo: null
         }
     }
 
@@ -52,32 +54,6 @@ class C extends BaseComponent {
 
     componentWillUnmount() {
         this.props.resetTaskDetail()
-    }
-
-    /**
-     * This is the application submit
-     */
-    handleSubmit(e) {
-        e.preventDefault()
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                const isSelf = (values.applicant === '$me')
-                const userId = isSelf && this.props.currentUserId
-                const teamId = !isSelf && values.applicant
-
-                if (this.props.task.bidding && !values.bid) {
-                    message.error('bid is required')
-                    return
-                }
-
-                this.props.applyToTask(this.props.taskId, userId, teamId,
-                    values.applyMsg, null, null, values.bid)
-                    .then(() => {
-                        this.setState({ applying: false })
-                        message.success('Application sent. Thank you!')
-                    })
-            }
-        })
     }
 
     canComment() {
@@ -253,9 +229,25 @@ class C extends BaseComponent {
                 }
                 {this.renderApplicationStartModal()}
                 {this.renderViewApplicationModal()}
+                <Modal
+                    className="profile-overview-popup-modal"
+                    visible={!!this.state.showUserInfo}
+                    onCancel={this.handleCancelProfilePopup.bind(this)}
+                    footer={null}>
+                    { this.state.showUserInfo &&
+                        <ProfilePopup showUserInfo={this.state.showUserInfo}/>
+                    }
+                </Modal>
             </div>
         )
     }
+
+    handleCancelProfilePopup() {
+        this.setState({
+            showUserInfo: null
+        })
+    }
+
 
     renderViewApplicationModal() {
         return (
@@ -428,7 +420,7 @@ class C extends BaseComponent {
                     <div>
                         {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
                         <div>
-                            <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.user)}>
                                 <Avatar className={'gap-right ' +
                                     (candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
                                     src={this.getAvatarWithFallback(candidate.user.profile.avatar)}/>
@@ -528,7 +520,7 @@ class C extends BaseComponent {
                     <div>
                         {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
                         <div>
-                            <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.user)}>
                                 <Avatar className={'gap-right ' +
                                     (candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
                                         src={this.getAvatarWithFallback(candidate.user.profile.avatar)}/>
@@ -746,8 +738,10 @@ class C extends BaseComponent {
         return this.props.task.createdBy._id === this.props.currentUserId
     }
 
-    linkProfileInfo(userId) {
-        this.props.history.push(`/member/${userId}`)
+    linkProfileInfo(user) {
+        this.setState({
+            showUserInfo: user
+        })
     }
 
     linkTeamInfo(userId) {
