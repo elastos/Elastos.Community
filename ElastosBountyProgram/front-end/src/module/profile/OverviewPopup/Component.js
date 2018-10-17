@@ -79,7 +79,6 @@ export default class extends BaseComponent {
                             </div>
                         </div>
                         <div className="profile-interaction">
-                            <div><a onClick={() => this.sendMessage(user)}>{I18N.get('profile.sendMessage')}</a></div>
                             <div><span>{I18N.get('profile.localTime')} {localTime}</span></div>
                         </div>
                         <div className="profile-view-button">
