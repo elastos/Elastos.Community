@@ -75,8 +75,8 @@ beforeAll(async ()=>{
 describe('Tests for Task Update', () => {
 
     // TODO: add another test for leaders it should not be APPROVED
-    test('Make sure task is initially APPROVED for admin', async () => {
-        expect(testData.taskSocialEvent.status).toBe(constant.TASK_STATUS.APPROVED)
+    test('Make sure task is initially PENDING for non-admin', async () => {
+        expect(testData.taskSocialEvent.status).toBe(constant.TASK_STATUS.PENDING)
     })
 
     test('Member cannot change anything', async () => {
