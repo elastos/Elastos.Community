@@ -640,7 +640,7 @@ class C extends BaseComponent {
                     <div className="project-info">
                         {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
                             <Row className="applications ebp-wrap">
-                                <h3 className="no-margin">{this.props.detail.bidding ? I18N.get('project.detail.pending_bids') : I18N.get('project.detail.pending_applications')}</h3>
+                                <h3 className="no-margin with-gizmo">{this.props.detail.bidding ? I18N.get('project.detail.pending_bids') : I18N.get('project.detail.pending_applications')}</h3>
                                 {this.getCurrentApplicantsData().length ?
                                     this.getCurrentApplicants() :
                                     <div className="no-data">No applications yet</div>
@@ -650,7 +650,7 @@ class C extends BaseComponent {
 
                         {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
                             <Row className="subscribers ebp-wrap">
-                                <h3 className="no-margin">{I18N.get('project.detail.subscribers')}</h3>
+                                <h3 className="no-margin with-gizmo">{I18N.get('project.detail.subscribers')}</h3>
                                 {this.getCurrentSubscribers()}
                             </Row>
                         }
@@ -715,21 +715,21 @@ class C extends BaseComponent {
     getDescription1() {
         return (
             <div className="ebp-wrap">
-                <h3>
+                <h3 className="with-gizmo">
                     {I18N.get('developer.cr100.pitch.problem')}
                 </h3>
                 <div>
                     {this.props.detail.pitch && this.props.detail.pitch.problem}
                 </div>
 
-                <h3>
+                <h3 className="with-gizmo">
                     {I18N.get('developer.cr100.pitch.valueProposition')}
                 </h3>
                 <div>
                     {this.props.detail.pitch && this.props.detail.pitch.valueProposition}
                 </div>
 
-                <h3>
+                <h3 className="with-gizmo">
                     {I18N.get('developer.cr100.pitch.useCase')}
                 </h3>
                 <div>
@@ -742,14 +742,14 @@ class C extends BaseComponent {
     getDescription2() {
         return (
             <div className="ebp-wrap">
-                <h3>
+                <h3 className="with-gizmo">
                     {I18N.get('developer.cr100.pitch.beneficiaries')}
                 </h3>
                 <div>
                     {this.props.detail.pitch && this.format(this.props.detail.pitch.beneficiaries)}
                 </div>
 
-                <h3>
+                <h3 className="with-gizmo">
                     {I18N.get('developer.cr100.pitch.elaInfrastructure')}
                 </h3>
                 <div>

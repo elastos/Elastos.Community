@@ -343,14 +343,14 @@ class C extends BaseComponent {
 
                             {!this.state.applying &&
                                 <Row className="contributors">
-                                    <h3 className="no-margin align-left">{I18N.get('project.detail.current_members')}</h3>
+                                    <h3 className="no-margin align-left with-gizmo">{I18N.get('project.detail.current_members')}</h3>
                                     {this.renderCurrentContributors()}
                                 </Row>
                             }
 
                             {!this.state.applying &&
                                 <Row className="applications">
-                                    <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
+                                    <h3 className="no-margin with-gizmo">{I18N.get('project.detail.pending_applications')}</h3>
                                     {this.renderCurrentApplicants()}
                                 </Row>
                             }

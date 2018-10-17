@@ -12,6 +12,10 @@
     font-size: 36px;
     position: relative;
     padding-top: $gap_1;
+
+    h3 {
+      padding: 0;
+    }
   }
 
   .app-meta-row {

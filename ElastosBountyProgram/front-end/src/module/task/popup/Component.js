@@ -77,10 +77,9 @@ class C extends BaseComponent {
     renderHeader() {
         return (
             <div className="app-header">
-                <img src="/assets/images/emp35/square.png" className="square"/>
-                <span className="komu-a">
+                <h3 className="komu-a with-gizmo">
                     {this.props.detail.name}
-                </span>
+                </h3>
             </div>
         )
     }
