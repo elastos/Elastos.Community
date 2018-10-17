@@ -117,7 +117,7 @@ export default class extends BaseComponent {
     renderBanner(isMobile) {
         return (
             <div className={`profile-banner ${isMobile ? 'profile-banner-mobile' : ''}`}>
-                <span style={{ backgroundImage: `url('/assets/images/profile-banner.svg')` }}></span>
+                <span style={{ backgroundImage: `url('/assets/images/profile-banner.png')` }}></span>
             </div>
         )
     }
