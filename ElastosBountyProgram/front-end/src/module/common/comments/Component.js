@@ -66,7 +66,7 @@ class C extends BaseComponent {
 
     renderHeader() {
         return (
-            <h3 className="no-margin">{this.props.header || I18N.get('comments')}</h3>
+            <h3 className="no-margin with-gizmo">{this.props.header || I18N.get('comments')}</h3>
         )
     }
 

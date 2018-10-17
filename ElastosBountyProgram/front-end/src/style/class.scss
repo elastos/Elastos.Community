@@ -182,3 +182,17 @@
     }
   }
 }
+h3.with-gizmo {
+  position: relative;
+}
+h3.with-gizmo:before {
+  position: absolute;
+  top: -$gap_0;
+  left: -$gap_1;
+  display:inline-block;
+  width: 12px;
+  height: 12px;
+  background-image: url("/assets/images/tri-square-dark.svg");
+  background-size: 12px 12px;
+  content: "";
+}

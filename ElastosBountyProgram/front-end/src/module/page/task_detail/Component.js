@@ -46,7 +46,7 @@ export default class extends StandardPage {
                 <div className="ebp-page">
                     <TaskDetail task={this.props.task}/>
                 </div>
-                <Footer />
+                <Footer/>
             </div>
         )
     }

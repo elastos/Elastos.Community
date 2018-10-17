@@ -22,7 +22,7 @@ import {
 } from 'antd'
 import I18N from '@/I18N'
 import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS,
-    TASK_STATUS, USER_AVATAR_DEFAULT, TASK_TYPE } from '@/constant'
+    TASK_STATUS, USER_AVATAR_DEFAULT, TEAM_AVATAR_DEFAULT, TASK_TYPE } from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import ProjectApplication from '@/module/project/application/Container'
 import ProjectApplicationStart from '@/module/page/project_detail/application/start/Container'
@@ -102,7 +102,7 @@ class C extends BaseComponent {
     renderHeader() {
         return (
             <div className="header">
-                <h3>
+                <h3 className="with-gizmo">
                     {this.props.task.name}
                 </h3>
             </div>
@@ -381,7 +381,7 @@ class C extends BaseComponent {
         ].join(' ')
 
         return <Row className="applications">
-            <h3 className="no-margin">
+            <h3 className="no-margin title with-gizmo">
                 {title}
             </h3>
 
@@ -402,6 +402,12 @@ class C extends BaseComponent {
     getAvatarWithFallback(avatar) {
         return _.isEmpty(avatar)
             ? USER_AVATAR_DEFAULT
+            : avatar
+    }
+
+    getTeamAvatarWithFallback(avatar) {
+        return _.isEmpty(avatar)
+            ? TEAM_AVATAR_DEFAULT
             : avatar
     }
 
@@ -432,9 +438,9 @@ class C extends BaseComponent {
                         }
                         {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
                         <div>
-                            <a onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
+                            <a onClick={this.linkTeamInfo.bind(this, candidate.team._id)}>
                                 <Avatar className="gap-right"
-                                    src={this.getAvatarWithFallback(!_.isEmpty(candidate.team.pictures) &&
+                                    src={this.getTeamAvatarWithFallback(!_.isEmpty(candidate.team.pictures) &&
                                         candidate.team.pictures[0].url)} />
                                 {candidate.team.name}
                                 {this.loggedInUserOwnerOfCandidate(candidate) ?
@@ -532,7 +538,7 @@ class C extends BaseComponent {
                         }
                         {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
                         <div>
-                            <a onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
+                            <a onClick={this.linkTeamInfo.bind(this, candidate.team._id)}>
                                 <Avatar className="gap-right"
                                     src={this.getAvatarWithFallback(!_.isEmpty(candidate.team.pictures) &&
                                         candidate.team.pictures[0].url)} />
@@ -573,7 +579,7 @@ class C extends BaseComponent {
         }]
 
         return <Row className="contributors">
-            <h3 className="no-margin align-left">
+            <h3 className="no-margin align-left with-gizmo">
                 {this.props.task.bidding
                     ? I18N.get('project.detail.bidding_winner')
                     : I18N.get('project.detail.current_contributors')}
@@ -742,6 +748,10 @@ class C extends BaseComponent {
 
     linkProfileInfo(userId) {
         window.open(`/member/${userId}`)
+    }
+
+    linkTeamInfo(userId) {
+        window.open(`/team-detail/${userId}`)
     }
 
     approveUser(taskCandidateId) {

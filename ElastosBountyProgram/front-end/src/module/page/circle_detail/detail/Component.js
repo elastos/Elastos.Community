@@ -195,8 +195,7 @@ class C extends BaseComponent {
         return (
             <div>
                 <div className="member-header">
-                    <div className="member-header-icon"><img src="/assets/images/tri-square-dark.svg"/></div>
-                    <div className="member-header-label komu-a">{I18N.get('circle.members')}</div>
+                    <h3 className="member-header-label komu-a with-gizmo">{I18N.get('circle.members')}</h3>
                 </div>
                 <div className="members-list">
                     <Table
@@ -239,8 +238,7 @@ class C extends BaseComponent {
         return (
             <div>
                 <div className="member-header">
-                    <div className="member-header-icon"><img src="/assets/images/tri-square-dark.svg"/></div>
-                    <div className="member-header-label komu-a">{I18N.get('circle.tasks')}</div>
+                    <h3 className="member-header-label komu-a with-gizmo">{I18N.get('circle.tasks')}</h3>
                 </div>
                 <div className="members-list">
                     <Table
