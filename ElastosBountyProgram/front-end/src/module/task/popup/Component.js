@@ -64,6 +64,7 @@ class C extends BaseComponent {
                     : (
                         <div>
                             {this.renderHeader()}
+                            {this.getCarousel()}
                             {this.renderMeta()}
                             {this.renderFooter()}
                         </div>
@@ -243,6 +244,42 @@ class C extends BaseComponent {
 
     linkProfileInfo(userId) {
         this.props.history.push(`/member/${userId}`)
+    }
+
+    getCarousel() {
+        const IMAGE_SIZE = 150
+
+        const item = this.props.detail
+        const pictures = _.map(item.pictures, (picture, ind) => {
+            return (
+                <div key={ind}>
+                    <img width={IMAGE_SIZE} height={IMAGE_SIZE}
+                        alt="logo" src={picture.url} />
+                </div>
+            )
+        })
+
+        if (item.thumbnail) {
+            pictures.unshift(
+                <div key="main">
+                    <img width={IMAGE_SIZE} height={IMAGE_SIZE}
+                        alt="logo" src={item.thumbnail} />
+                </div>
+            )
+        }
+
+        if (pictures.length === 0) {
+            pictures.push(<img width={IMAGE_SIZE} height={IMAGE_SIZE}
+                src={'/assets/images/Group_1685.12.svg'} key={0} />);
+        }
+
+        return (
+            <div className="carousel-wrapper">
+                <Carousel autoplay>
+                    {pictures}
+                </Carousel>
+            </div>
+        )
     }
 
     showTaskDetail() {
