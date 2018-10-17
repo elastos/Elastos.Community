@@ -34,14 +34,13 @@
           display: block;
         }
         margin: 0 $gap_1;
-        font-family: 'Synthese', sans-serif;
 
         i {
           margin-right: $gap_0;
         }
       }
       .circle {
-        color: $cr100_green;
+        color: $primary_color;
       }
     }
   }
@@ -54,12 +53,10 @@
       flex: 1;
 
       a {
-        font-family: 'Synthese', sans-serif;
         color: black;
         text-decoration: underline;
       }
       span {
-        font-family: 'Synthese', sans-serif;
         color: black;
       }
     }
@@ -70,8 +67,9 @@
     button {
       height: 60px;
       width: 100%;
-      background-color: $cr100_green;
-      border: 1px solid #1DE9B6;
+      background-color: $primary_color;
+      border-color: $primary_color;
+      border-radius: 0;
       color: white;
       font-size: 24px;
       font-weight: bold;
