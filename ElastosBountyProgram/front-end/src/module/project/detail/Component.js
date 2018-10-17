@@ -747,11 +747,11 @@ class C extends BaseComponent {
     }
 
     linkProfileInfo(userId) {
-        window.open(`/member/${userId}`)
+        this.props.history.push(`/member/${userId}`)
     }
 
     linkTeamInfo(userId) {
-        window.open(`/team-detail/${userId}`)
+        this.props.history.push(`/team-detail/${userId}`)
     }
 
     approveUser(taskCandidateId) {
