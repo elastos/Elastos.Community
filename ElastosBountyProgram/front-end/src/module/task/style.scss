@@ -1,6 +1,6 @@
-
-@import '../../style/variable';
-@import '../../style/color';
+@import '@/style/variable';
+@import '@/style/color';
+@import '@/style/typography';
 
 .c_ProfileContainer {
   background: white;
@@ -34,56 +34,26 @@
     color: $primary_color;
   }
 
-  .public {
+  .c_Comments h3,
+  .header h3 {
+    @extend .komu-a;
+    font-size: 36px;
+  }
 
-    .label-col {
-      color: $text_light_gray;
+  .header {
+    margin-top: $gap_3;
+  }
+
+  .meta {
+    margin-bottom: $gap_4;
+
+    .help-icon {
+      margin-left: $gap_0;
     }
 
-    .task-thumbnail {
-      width: 100%;
-      padding-left: $gap_0;
-    }
-
-    .ant-row {
-      margin: $gap_0 0;
-
-      div[class^="ant-col-"]{
-        @media only screen and (max-width: $mobile-width) {
-          float: none;
-        }
-      }
-
-      p {
-        padding-bottom: $gap_0;
-      }
-    }
-
-    .ant-divider-inner-text {
-      color: $text_light_gray;
-    }
-
-    .main-area {
-      border-right: 1px solid $border_gray;
-
-      @media only screen and (max-width: $mobile-width) {
-        border-right: 0;
-        border-bottom: 1px solid $border_gray;
-        padding-bottom: 40px;
-      }
-    }
-
-    .applicants {
-      text-align: center;
-      position: relative;
-      padding-bottom: $gap_3;
-
-      .join-btn {
-        position: absolute;
-        bottom: 0;
-        left: 20%;
-        width: 60%;
-      }
+    .meta-row {
+      min-height: 24px;
+      line-height: 24px;
     }
   }
 }

@@ -1,5 +1,4 @@
-
-@import "../../../../style/variable";
+@import "@/style/variable";
 
 .p_ProfileTaskDetail {
   background: white;
@@ -19,5 +18,9 @@
 
   .form-wrapper {
     padding: $gap_2 0;
+  }
+
+  .c_TaskDetail .public {
+    padding: 0 $gap_2;
   }
 }

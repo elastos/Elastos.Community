@@ -29,23 +29,21 @@ export default class extends StandardPage {
                 <div className="ebp-header-divider">
 
                 </div>
+                <Breadcrumb>
+                    <Breadcrumb.Item href="/">
+                        <Icon type="home"/>
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Item>
+                        {!this.props.loading && (this.props.task.category === TASK_CATEGORY.SOCIAL ?
+                            <Link to="/social">Social {_.capitalize(this.props.task.type)}s</Link> :
+                            <Link to="/developer">Developer {_.capitalize(this.props.task.type)}s</Link>)
+                        }
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Item>
+                        {this.props.task.name}
+                    </Breadcrumb.Item>
+                </Breadcrumb>
                 <div className="ebp-page">
-
-                    <Breadcrumb>
-                        <Breadcrumb.Item href="/">
-                            <Icon type="home"/>
-                        </Breadcrumb.Item>
-                        <Breadcrumb.Item>
-                            {this.props.task.category === TASK_CATEGORY.SOCIAL ?
-                                <Link to="/social">Social {_.capitalize(this.props.task.type)}s</Link> :
-                                <Link to="/developer">Developer {_.capitalize(this.props.task.type)}s</Link>
-                            }
-                        </Breadcrumb.Item>
-                        <Breadcrumb.Item>
-                            {this.props.task.name}
-                        </Breadcrumb.Item>
-                    </Breadcrumb>
-
                     <TaskDetail task={this.props.task}/>
                 </div>
                 <Footer />

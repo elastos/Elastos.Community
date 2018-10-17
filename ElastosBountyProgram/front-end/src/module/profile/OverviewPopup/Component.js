@@ -11,7 +11,8 @@ import moment from 'moment-timezone'
 
 export default class extends BaseComponent {
     async componentDidMount() {
-        this.props.getMember(this.props.showUserInfo._id)
+        this.props.getMember(this.props.showUserInfo._id ||
+            this.props.showUserInfo.current_user_id)
     }
 
     componentWillUnmount() {
