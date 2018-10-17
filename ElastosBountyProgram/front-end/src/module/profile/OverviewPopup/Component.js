@@ -50,7 +50,7 @@ export default class extends BaseComponent {
         return (
             <div className="c_ProfileModalPopup">
                 <div className="header-image-container">
-                    <img src="/assets/images/city_background.svg"/>
+                    <img src="/assets/images/city_background.png"/>
                 </div>
                 <div>
                     <div className="profile-image">
