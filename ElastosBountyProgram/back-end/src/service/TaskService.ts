@@ -641,19 +641,25 @@ export default class extends Base {
 
         await task.save()
 
-        await db_tc.db.populate(taskCandidate, {
+        await db_tc.getDBInstance().populate(taskCandidate, {
             path: 'user',
             select: sanitize
         })
 
-        await db_tc.db.populate(taskCandidate, {
+        await db_tc.getDBInstance().populate(taskCandidate, {
             path: 'team',
             select: sanitize
         })
 
         if (taskCandidate.team) {
-            await db_user.db.populate(taskCandidate.team, {
+            const db_ut = this.getDBModel('User_Team')
+            await db_user.getDBInstance().populate(taskCandidate.team, {
                 path: 'owner',
+                select: sanitize
+            })
+
+            await db_ut.getDBInstance().populate(taskCandidate.team, {
+                path: 'members',
                 select: sanitize
             })
         }
