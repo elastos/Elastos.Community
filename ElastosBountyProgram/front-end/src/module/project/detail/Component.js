@@ -22,7 +22,7 @@ import {
 } from 'antd'
 import I18N from '@/I18N'
 import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS,
-    TASK_STATUS, USER_AVATAR_DEFAULT } from '@/constant'
+    TASK_STATUS, USER_AVATAR_DEFAULT, TASK_TYPE } from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import ProjectApplication from '@/module/project/application/Container'
 import ProjectApplicationStart from '@/module/page/project_detail/application/start/Container'
@@ -289,8 +289,13 @@ class C extends BaseComponent {
             <Button type="primary" onClick={() => this.showApplicationStartModal()}
                 disabled={!this.canApply()}>
                 {detail.bidding
-                    ? I18N.get('project.detail.popup.bid_project')
-                    : I18N.get('project.detail.popup.join_project')}
+                    ? detail.type === TASK_TYPE.TASK || detail.type === TASK_TYPE.EVENT
+                        ? I18N.get('project.detail.popup.bid_task')
+                        : I18N.get('project.detail.popup.bid_project')
+                    : detail.type === TASK_TYPE.TASK || detail.type === TASK_TYPE.EVENT
+                        ? I18N.get('project.detail.popup.join_task')
+                        : I18N.get('project.detail.popup.join_project')
+                }
             </Button>
         </Row>
     }
