@@ -5,7 +5,10 @@
 
   background: #ffffff;
   text-align: left;
-  padding: 0 $gap_3;
+
+  .ant-breadcrumb {
+    padding: 0 $gap_3;
+  }
 
   .ebp-page {
     max-width: $lg-width;

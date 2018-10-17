@@ -237,7 +237,7 @@ const en = {
     'developer.search.hide': 'Hide',
     'developer.search.apply': 'Apply',
     'developer.search.view': 'View',
-    'developer.search.subtitle_prefix': 'no longer accepting',
+    'developer.search.subtitle_prefix': 'No longer accepting',
     'developer.search.subtitle_bids': 'bids',
     'developer.search.subtitle_applications': 'applications',
     'developer.search.submit_bid': 'Submit Bid',
@@ -404,6 +404,7 @@ const en = {
     'task.attachment': 'Attachment',
     'task.budget.explain': 'Budget is for expenses/costs',
     'task.reward.explain': 'Reward is for labor and time',
+    'task.bid': 'Bid',
 
     // General
     'select.placeholder': 'Please select',

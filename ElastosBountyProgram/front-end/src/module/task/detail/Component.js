@@ -5,553 +5,311 @@ import moment from 'moment'
 import ModalApplyTask from '../ModalApplyTask/Component'
 import ModalAcceptApplicant from '../ModalAcceptApplicant/Component'
 
-import { Col, Row, Button, Divider, message, Badge, List, Icon, Tooltip, Popconfirm, Spin, Popover } from 'antd'
-
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_TYPE, TASK_CANDIDATE_STATUS} from '@/constant'
+import { Col, Row, Button, Divider, message, Badge, List,
+    Icon, Tooltip, Popconfirm, Spin, Popover, Table } from 'antd'
+import { TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_TYPE,
+    TASK_CANDIDATE_STATUS, TASK_EVENT_DATE_TYPE } from '@/constant'
 import Comments from '@/module/common/comments/Container'
-import { TASK_EVENT_DATE_TYPE } from '../../../constant'
+import I18N from '@/I18N'
+import _ from 'lodash'
 
-const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
 export default class extends BaseComponent {
-
     ord_states() {
-
-        let acceptedCnt = 0
-
-        if (this.props.task && _.isArray(this.props.task.candidates)) {
-            for (let candidate of this.props.task.candidates) {
-                if (candidate.status === TASK_CANDIDATE_STATUS.APPROVED) {
-                    acceptedCnt += 1
-                }
-            }
-        }
-
         return {
-            visibleModalApplyTask: false,
-            visibleModalAcceptApplicant: false,
-            visibleModalMemberProfile: false,
-            acceptedCnt,
-            selectedTaskCandidate: null,
-            isDeveloperEvent: this.props.task.category === TASK_CATEGORY.DEVELOPER &&
-                                this.props.task.type === TASK_TYPE.EVENT,
-            teamsOwned: []
         }
     }
 
     async componentDidMount() {
-        this.setState({loading : true});
-        const teamsOwned = await this.props.listTeamsOwned(this.props.userId)
-
-        this.setState({
-            loading: false,
-            teamsOwned: (teamsOwned && teamsOwned.list) || []
-        })
+        this.props.listTeamsOwned(this.props.userId)
     }
 
     componentWillUnmount() {
-        // this may cause issues if a parent is checking the loading field
-        this.props.resetTaskDetail()
     }
 
-    ord_render () {
-        const isTaskOwner = (this.props.task && this.props.task.createdBy &&
-            this.props.task.createdBy._id) === this.props.userId
+    ord_render() {
         return (
             <div className="public">
-                <Row>
-                    <Col sm={24} md={24} lg={18} className="gridCol main-area">
-                        <Row>
-                            <Col>
-                                <h4 className="center">
-                                    {this.props.task.name}
-                                    {this.props.task.assignSelf &&
-                                    <span class="no-info"> - assigned to owner</span>
-                                    }
-                                </h4>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={this.props.task.thumbnail ? 18 : 24}>
-                                <Row>
-                                    <Col span={4} className="label-col">
-                                        Organizer
-                                    </Col>
-                                    <Col span={20}>
-                                        {this.props.task && this.props.task.createdBy ? (
-                                            <p>
-                                                <a onClick={() => {this.props.history.push(`/member/${this.props.task.createdBy._id}`)}}>
-                                                    {this.props.task.createdBy.username}
-                                                </a>
-                                            </p>) : <div className="center"><Spin size="small"/></div>}
-                                    </Col>
-                                </Row>
-                                { this.props.task.circle &&
-                                    <Row>
-                                        <Col span={4} className="label-col">
-                                            Circle
-                                        </Col>
-                                        <Col span={20}>
-                                            <p>
-                                                {this.props.task.circle.name}
-                                            </p>
-                                        </Col>
-                                    </Row>
-                                }
-                                <Row>
-                                    <Col span={4} className="label-col">
-                                        Category
-                                    </Col>
-                                    <Col span={20}>
-                                        <p>
-                                            {this.props.task.category}
-                                        </p>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col span={4} className="label-col">
-                                        Type
-                                    </Col>
-                                    <Col span={20}>
-                                        <p>
-                                            {this.props.task.type}
-                                        </p>
-                                    </Col>
-                                </Row>
-                                {this.props.task.community &&
-                                <Row>
-                                    <Col span={4} className="label-col">
-                                        Community
-                                    </Col>
-                                    <Col span={20}>
-                                        <p>
-                                            {this.getCommunityDisp()}
-                                        </p>
-                                    </Col>
-                                </Row>
-                                }
-                                {this.props.task.applicationDeadline &&
-                                <Row>
-                                    <Col span={4} className="label-col">
-                                        Application Deadline
-                                    </Col>
-                                    <Col span={20}>
-                                        {moment(this.props.task.applicationDeadline).format('MMM D, YYYY')}
-                                    </Col>
-                                </Row>
-                                }
-                                {this.props.task.completionDeadline &&
-                                <Row>
-                                    <Col span={4} className="label-col">
-                                        Completion Deadline
-                                    </Col>
-                                    <Col span={20}>
-                                        {moment(this.props.task.completionDeadline).format('MMM D, YYYY')}
-                                    </Col>
-                                </Row>
-                                }
-                                <Row>
-                                    <Col span={4} className="label-col">
-                                        Description
-                                    </Col>
-                                    <Col span={20}>
-                                        <p>
-                                            {this.props.task.description}
-                                        </p>
-                                    </Col>
-                                </Row>
-                                {this.props.task.descBreakdown &&
-                                <Row>
-                                    <Col sm={24} md={4}>
-                                        <span className="no-info">Breakdown of Budget / Reward</span>
-                                    </Col>
-                                    <Col sm={24} md={20}>
-                                        <p>
-                                            {this.props.task.descBreakdown}
-                                        </p>
-                                    </Col>
-                                </Row>}
-                                {this.props.task.goals &&
-                                <Row>
-                                    <Col sm={24} md={4} className="label-col">
-                                        Goals
-                                    </Col>
-                                    <Col span={20}>
-                                        <p>
-                                            {this.props.task.goals}
-                                        </p>
-                                    </Col>
-                                </Row>}
-                                {this.props.task.infoLink &&
-                                <Row>
-                                    <Col sm={24} md={4} className="label-col">
-                                        Info Link
-                                    </Col>
-                                    <Col sm={24} md={20}>
-                                        <a target="_blank" href={this.props.task.infoLink}>
-                                            {this.props.task.infoLink}
-                                        </a>
-                                    </Col>
-                                </Row>}
-
-                                {/*
-                                ********************************************************************************
-                                * Event Info
-                                ********************************************************************************
-                                */}
-                                {this.props.task.type === TASK_TYPE.EVENT &&
-                                <div>
-                                    {this.props.task.eventDateRangeStart &&
-                                    <Row>
-                                        <Col span={4} className="label-col">
-                                            Date Start
-                                        </Col>
-                                        <Col span={8}>
-                                            {moment(this.props.task.eventDateRangeStart).format('MMM D, YYYY - HH:mm')}
-                                        </Col>
-                                        {this.props.task.eventDateRangeEnd &&
-                                        <Col span={4} className="label-col">
-                                            End
-                                        </Col>}
-                                        {this.props.task.eventDateRangeEnd &&
-                                        <Col span={8}>
-                                            {moment(this.props.task.eventDateRangeEnd).format('MMM D, YYYY - HH:mm')}
-                                        </Col>}
-                                    </Row>}
-                                    {this.props.task.eventDateRangeStart &&
-                                    <Row>
-                                        <Col span={4} className="label-col">
-                                            Confirmed
-                                        </Col>
-                                        <Col span={20}>
-                                            {(() => {
-                                                switch (this.props.task.eventDateStatus) {
-                                                    case TASK_EVENT_DATE_TYPE.NOT_APPLICABLE:
-                                                        return 'N/A'
-                                                    case TASK_EVENT_DATE_TYPE.TENTATIVE:
-                                                        return 'Tentative'
-                                                    case TASK_EVENT_DATE_TYPE.CONFIRMED:
-                                                        return 'Confirmed'
-                                                }
-                                            })()}
-                                        </Col>
-                                    </Row>}
-                                    <Row>
-                                        <Col span={4} className="label-col">
-                                            Location
-                                        </Col>
-                                        <Col span={20}>
-                                            {this.props.task.location}
-                                        </Col>
-                                    </Row>
-                                </div>}
-                                {this.props.task.reward && (
-                                    this.props.task.reward.usd ||
-                                    this.props.task.rewardUpfront.usd ||
-                                    this.props.task.reward.ela ||
-                                    this.props.task.rewardUpfront.ela
-                                ) ?
-                                (this.props.task.reward && this.props.task.reward.isUsd ?
-                                    <div>
-                                        <Divider>
-                                            Budget / Reward&nbsp;
-                                            <Popover content="Budget is for expenses/costs, reward is for labor and time">
-                                                <Icon className="help-icon" type="question-circle-o"/>
-                                            </Popover>
-                                        </Divider>
-                                        <Row>
-                                            <Col span={4} className="label-col">
-                                                USD Budget
-                                            </Col>
-                                            <Col span={8}>
-                                                <p>
-                                                    {this.props.task.rewardUpfront.usd / 100}
-                                                </p>
-                                            </Col>
-                                            {this.props.task.rewardUpfront.elaPerUsd > 0 &&
-                                            <Col span={4} className="label-col">
-                                                ELA/USD
-                                            </Col>}
-                                            {this.props.task.rewardUpfront.elaPerUsd > 0 &&
-                                            <Col span={8}>
-                                                <p>
-                                                    {this.props.task.rewardUpfront.elaPerUsd}
-                                                </p>
-                                            </Col>}
-                                        </Row>
-                                        <Row>
-                                            <Col span={4} className="label-col">
-                                                USD Reward
-                                            </Col>
-                                            <Col span={8}>
-                                                <p>
-                                                    {this.props.task.reward.usd / 100}
-                                                </p>
-                                            </Col>
-                                            {this.props.task.reward.elaPerUsd > 0 &&
-                                            <Col span={4} className="label-col">
-                                                ELA/USD
-                                            </Col>}
-                                            {this.props.task.reward.elaPerUsd > 0 &&
-                                            <Col span={8}>
-                                                <p>
-                                                    {this.props.task.reward.elaPerUsd}
-                                                </p>
-                                            </Col>}
-                                        </Row>
-                                    </div> :
-                                    <div>
-                                        <Row>
-                                            <Col sm={24} md={4} className="label-col">
-                                                ELA Budget
-                                            </Col>
-                                            <Col sm={24} md={20}>
-                                                <p>
-                                                    {this.props.task.rewardUpfront && this.props.task.rewardUpfront.ela / 1000}
-                                                </p>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col sm={24} md={4} className="label-col">
-                                                ELA Reward
-                                            </Col>
-                                            <Col sm={24} md={20}>
-                                                <p>
-                                                    {this.props.task.reward && this.props.task.reward.ela / 1000}
-                                                </p>
-                                            </Col>
-                                        </Row>
-                                    </div>) : <div/>
-                                }
-                            </Col>
-                            {this.props.task.thumbnail &&
-                            <Col span={6}>
-                                <img src={this.props.task.thumbnail} class="task-thumbnail"/>
-                            </Col>
-                            }
-                        </Row>
-                        {!this.props.task.assignSelf &&
-                        <div>
-                            <Divider>{this.state.isDeveloperEvent ? 'Registration Info' : 'Application Info'}</Divider>
-                            <Row>
-                                {!this.state.isDeveloperEvent && this.props.task.candidateLimit &&
-                                <Col sm={24} md={4} className="label-col">
-                                    Max Applicants
-                                </Col>
-                                }
-                                {!this.state.isDeveloperEvent && this.props.task.candidateLimit &&
-                                <Col sm={24} md={8}>
-                                    {this.props.task.candidateLimit}
-                                </Col>
-                                }
-                                <Col sm={24} md={4} className="label-col">
-                                    Max Accepted
-                                </Col>
-                                <Col sm={24} md={8}>
-                                    {this.props.task.candidateSltLimit}
-                                </Col>
-                            </Row>
-                        </div>}
-
-                        {/*
-                        ********************************************************************************
-                        * Attachment
-                        ********************************************************************************
-                        */}
-                        {this.props.task.attachment && <div>
-                            <div className="vert-gap"/>
-                            <Divider>Attachment</Divider>
-
-                            <Row>
-                                <Col span={4} className="label-col">
-                                    File
-                                </Col>
-                                <Col span={20}>
-                                    <a target="_blank" href={this.props.task.attachment}>
-                                        {this.props.task.attachmentType === 'application/pdf' ?
-                                            <Icon type="file-pdf"/> :
-                                            <Icon type="file"/>
-                                        } &nbsp;
-                                        {this.props.task.attachmentFilename}
-                                    </a>
-                                </Col>
-                            </Row>
-                        </div>}
-
-                        <Comments type="task" canPost={true} canSubscribe={!isTaskOwner}
-                            model={this.props.task}
-                            returnUrl={`/task-detail/${this.props.task._id}`}
-                        />
-                    </Col>
-                    {/*
-                    ********************************************************************************
-                    * Applicants (Right Col)
-                    ********************************************************************************
-                    */}
-                    <Col sm={24} lg={6} className="gridCol applicants">
-                        <h4>{this.state.isDeveloperEvent ? 'Registrants' : 'Applicants'}</h4>
-
-                        {(this.props.task.candidates && this.props.task.candidates.length) ?
-                        <List
-                            size="small"
-                            dataSource={this.props.task.candidates}
-                            renderItem={(candidate) => {
-
-                                const name = candidate.type === TASK_CANDIDATE_TYPE.USER ? (candidate.user && candidate.user.username) : (candidate.team && candidate.team.name)
-                                const lastSeen = isTaskOwner
-                                    ? candidate.lastSeenByOwner
-                                    : candidate.lastSeenByCandidate
-                                const unread = _.filter(candidate.comments, (comment) => {
-                                    return !lastSeen || new Date(_.first(comment).createdAt) > new Date(lastSeen)
-                                })
-                                const listItemActions = []
-
-                                if (this.state.isDeveloperEvent && candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
-                                    listItemActions.unshift(
-                                        <Tooltip title="Team">
-                                            <Icon type="team"/>
-                                        </Tooltip>)
-                                }
-
-                                const candidateIsUserOrTeam =
-                                    ((candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === this.props.userId) ||
-                                    (candidate.type === TASK_CANDIDATE_TYPE.TEAM && _.map(this.state.teamsOwned, '_id').includes(candidate.team._id)))
-
-                                const isLeader = this.props.page === 'LEADER' && isTaskOwner && !candidateIsUserOrTeam
-                                // we either show the remove icon or the approved icon,
-                                // after approval the user cannot rescind their application
-
-                                // if the candidate is the logged in user, show remove icon
-                                if (candidateIsUserOrTeam) {
-                                    if (this.state.isDeveloperEvent) {
-                                        listItemActions.unshift(
-                                            <Tooltip title="Withdraw application">
-                                                <a onClick={this.removeApplication.bind(this, candidate._id)}>
-                                                    <Icon type="close-circle-o"/>
-                                                </a>
-                                            </Tooltip>
-                                        )
-                                    } else {
-
-                                        // non developer events should confirm
-                                        if (candidate.type === TASK_CANDIDATE_TYPE.USER) {
-                                            listItemActions.unshift(
-                                                <Tooltip title="Withdraw application">
-                                                    <Popconfirm
-                                                        title="Are you sure you want to withdraw your application?"
-                                                        onConfirm={this.removeApplication.bind(this, candidate._id)}
-                                                        placement="left"
-                                                        okText="Yes"
-                                                        cancelText="No"
-                                                    >
-                                                        <Icon type="close-circle-o"/>
-                                                    </Popconfirm>
-                                                </Tooltip>)
-                                        } else if (candidate.type === TASK_CANDIDATE_TYPE.TEAM) {
-                                            listItemActions.unshift(
-                                                <Tooltip title="remove team">
-                                                    <Popconfirm
-                                                        title="Are you sure you want to withdraw your team's application?"
-                                                        onConfirm={this.removeApplication.bind(this, candidate._id)}
-                                                        placement="left"
-                                                        okText="Yes"
-                                                        cancelText="No"
-                                                    >
-                                                        <Icon type="close-circle-o"/>
-                                                    </Popconfirm>
-                                                </Tooltip>)
-                                        }
-                                    }
-
-                                } else if (candidate.status === TASK_CANDIDATE_STATUS.APPROVED){
-                                    // this should be the leader's view - they can approve applicants
-                                    listItemActions.unshift(
-                                        <Tooltip title={isTaskOwner ? (candidateIsUserOrTeam ? 'You are automatically accepted' : 'Candidate already accepted') : 'Accepted candidate'}>
-                                            <Icon type="check-circle"/>
-                                        </Tooltip>)
-                                }
-
-                                if (isTaskOwner) {
-                                    if (candidate.status !== TASK_CANDIDATE_STATUS.APPROVED) {
-                                        listItemActions.unshift(
-                                            <Tooltip title="Accept application">
-                                                <a onClick={this.showModalAcceptApplicant.bind(this, candidate)}>
-                                                    <Icon type="check-circle-o" />
-                                                </a>
-                                            </Tooltip>)
-                                    }
-
-                                    const prefix = this.props.page === 'LEADER'
-                                        ? '/profile'
-                                        : ''
-                                    listItemActions.unshift(
-                                        <Tooltip title="View application">
-                                            <a onClick={() => {this.props.history.push(`${prefix}/task-app/${this.props.task._id}/${candidate.user._id}`)}}>
-                                                <Icon type="info-circle-o"/>
-                                            </a>
-                                        </Tooltip>)
-                                }
-
-                                if (unread.length) {
-                                    const suffix = unread.length > 1 ? 's' : ''
-                                    const title = `${unread.length} new message${suffix}`
-                                    listItemActions.unshift(
-                                        <Tooltip title={title}>
-                                            <Badge dot count={unread.length}>
-                                                <Icon type="message"/>
-                                            </Badge>
-                                        </Tooltip>
-                                    )
-                                }
-
-                                const userOrTeamName = name
-                                const selfIcon = candidateIsUserOrTeam
-                                    ?
-                                        (
-                                            <Icon type="user"/>
-                                        )
-                                    : null
-
-                                return <List.Item actions={listItemActions}>
-                                    <Tooltip title="View profile">
-                                        <a onClick={() => {this.props.history.push(`/member/${candidate.user._id}`)}}>
-                                            {selfIcon}
-                                            {userOrTeamName}
-                                        </a>
-                                    </Tooltip>
-                                </List.Item>
-                            }}
-                        /> : <span className="no-info">
-                                {this.props.task.status === TASK_STATUS.PENDING ? 'task must be approved first' : (this.state.isDeveloperEvent ? 'no registrants' : 'no applicants')}
-                            </span>
-                        }
-
-                        {this.props.is_login &&
-                        !isTaskOwner &&
-                        this.renderJoinButton.call(this)}
-
-                    </Col>
-                </Row>
-
-                <ModalApplyTask
-                    wrappedComponentRef={this.saveFormApplyTaskRef}
-                    teamsOwned={this.state.teamsOwned}
-                    visible={this.state.visibleModalApplyTask}
-                    onCancel={this.handleCancelModalApplyTask}
-                    onCreate={this.handleModalApplyTask}
-                />
-
-                <ModalAcceptApplicant
-                    wrappedComponentRef={this.saveAcceptCandidateRef}
-                    acceptedCnt={this.state.acceptedCnt}
-                    acceptedMax={this.props.task.candidateSltLimit}
-                    taskCandidate={this.state.modalTaskCandidate}
-                    visible={this.state.visibleModalAcceptApplicant}
-                    onCancel={this.handleCancelModalAcceptApplicant}
-                    onCreate={this.handleModalAcceptApplicant}
-                />
+                {this.renderHeader()}
+                {this.renderMeta()}
+                {this.renderApplicants()}
+                {this.renderComments()}
             </div>
         )
+    }
+
+    renderHeader() {
+        return (
+            <div className="header">
+                <h3>
+                    {this.props.task.name}
+                </h3>
+            </div>
+        )
+    }
+
+    renderMeta() {
+        const generateRow = (key, value, cssRowClass) => (
+            <Row className={[cssRowClass, 'meta-row'].join(' ')}>
+                <Col span={8}>
+                    {key}
+                </Col>
+                <Col span={16}>
+                    {value}
+                </Col>
+            </Row>
+        )
+
+        const detail = this.props.task
+        const budget = this.getBudgetFormatted()
+        const reward = this.getRewardFormatted()
+        const EVENT_DATE_FORMAT = 'MMM D, YYYY - HH:mm'
+        const DEADLINE_FORMAT = 'MMM D'
+
+        return (
+            <div className="meta">
+                {generateRow(I18N.get('task.owner'),
+                    this.getUserNameWithFallback(detail.createdBy))}
+
+                {detail.circle &&
+                    generateRow(I18N.get('task.circle'), detail.circle.name)}
+
+                {generateRow(I18N.get('task.type'), detail.type)}
+
+                {generateRow(I18N.get('task.category'), detail.category)}
+
+                {detail.location && generateRow(I18N.get('task.location'), detail.location)}
+
+                {detail.community && generateRow(I18N.get('task.community'), this.getCommunityDisp())}
+
+                {detail.applicationDeadline &&
+                    generateRow(I18N.get('task.applyDeadline'),
+                        moment(detail.applicationDeadline).format(DEADLINE_FORMAT))}
+
+                {detail.completionDeadline &&
+                    generateRow(I18N.get('task.completionDeadline'),
+                        moment(detail.completionDeadline).format(DEADLINE_FORMAT))}
+
+                {detail.bidding &&
+                    generateRow(I18N.get('task.referenceBid'),
+                        detail.referenceBid || I18N.get('task.referenceBid.none'))}
+
+                {!detail.bidding && budget && generateRow(I18N.get('task.budget'), (
+                    <div>
+                        <span>{budget}</span>
+                        {this.getBudgetExplanation()}
+                    </div>
+                )) || null}
+
+                {!detail.bidding && reward && generateRow(I18N.get('task.reward'), (
+                    <div>
+                        <span>{reward}</span>
+                        {this.getRewardExplanation()}
+                    </div>
+                )) || null}
+
+                {detail.goals && generateRow(I18N.get('task.goals'), detail.goals)}
+
+                {detail.descBreakdown && generateRow(I18N.get('task.descBreakdown'), detail.descBreakdown)}
+
+                {detail.eventDateRangeStart && generateRow(I18N.get('task.eventStart'),
+                    moment(detail.eventDateRangeStart).format(EVENT_DATE_FORMAT) + ' (' +
+                    detail.eventDateStatus + ')')}
+
+                {detail.eventDateRangeEnd && generateRow(I18N.get('task.eventEnd'),
+                    moment(detail.eventDateRangeEnd).format(EVENT_DATE_FORMAT))}
+
+                {generateRow(I18N.get('task.description'), detail.description, 'task-description')}
+
+                {detail.attachment && generateRow(I18N.get('task.attachment'),
+                    <a href={detail.attachment} target="_blank">{detail.attachmentFilename}</a>)}
+
+                {detail.infoLink && generateRow(I18N.get('task.infoLink'),
+                    <a href={detail.infoLink} target="_blank">{detail.infoLink}</a>)}
+            </div>
+        )
+    }
+
+    renderComments() {
+        const isTaskOwner = this.isTaskOwner()
+
+        return this.props.loading
+            ? (
+                <div className="valign-wrapper halign-wrapper">
+                    <Spin size="large"/>
+                </div>
+            )
+            : (
+                <Comments type="task" canPost={this.canComment()} canSubscribe={!isTaskOwner}
+                    model={this.props.task}
+                    returnUrl={`/task-detail/${this.props.task._id}`}/>
+            )
+    }
+
+    renderApplicants() {
+        const currentUserId = this.props.currentUserId
+        const detail = this.props.detail
+
+        // status checks
+        if (detail.bidding && _.indexOf([TASK_STATUS.CREATED, TASK_STATUS.PENDING], detail.status) < 0) {
+            return
+        }
+
+        if (!detail.bidding && _.find(detail.candidates, (candidate) => candidate.status === TASK_CANDIDATE_STATUS.APPROVED)) {
+            return
+        }
+
+        let pendingCandidates = this.getPendingCandidates()
+        let pendingCandidatesCnt = pendingCandidates.length
+
+        // only show current user's bids if it's bidding - for projects with a set reward we can show them
+        if (!this.props.is_admin && detail.bidding) {
+            pendingCandidates = _.filter(pendingCandidates, (candidate) => {
+                return (candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === currentUserId) ||
+                    (candidate.type === TASK_CANDIDATE_TYPE.TEAM && this.loggedInUserBelongsToCandidate(candidate))
+            })
+        }
+
+        let title = ''
+        if (detail.bidding) {
+            if (this.props.is_admin) {
+                title = I18N.get('project.detail.pending_bids')
+            } else {
+                title = I18N.get('project.detail.your_bids')
+            }
+        } else {
+            title = I18N.get('project.detail.pending_applications')
+        }
+
+        return <Row className="applications">
+            {/* Title */}
+            <h3 className="no-margin">
+                {title}
+            </h3>
+
+            {pendingCandidates.length && this.renderCandidates(pendingCandidates)}
+
+            {/* this works because we filtered pendingCandidates after we saved the count */}
+            {(this.props.page !== 'ADMIN' || !this.props.is_admin) && detail.bidding &&
+                `${I18N.get('project.detail.bidding_cur_1')} ${pendingCandidatesCnt - pendingCandidates.length} ${I18N.get('project.detail.bidding_cur_2')}`
+            }
+
+            {!detail.bidding && pendingCandidates.length === 0 && <div className="no-data no-info">There are no applications yet.</div>}
+        </Row>
+    }
+
+    canComment() {
+        const isTaskCandidate = _.find(this.props.task.candidates, (candidate) => {
+            return candidate.user && candidate.user._id === this.props.userId &&
+                candidate.status === TASK_CANDIDATE_STATUS.APPROVED
+        })
+
+        const allCandidateTeamIds = _.compact(_.map(this.props.task.candidates, (candidate) => {
+            return candidate.team && candidate.team._id
+        }))
+
+        const currentUserTeamIds = _.map(this.props.all_teams, '_id')
+        const belongsToMemberTeam = !_.isEmpty(_.intersection(allCandidateTeamIds, currentUserTeamIds))
+        const isTaskOwner = this.props.task.createdBy && (this.props.task.createdBy._id === this.props.userId)
+
+        return isTaskCandidate || belongsToMemberTeam || isTaskOwner
+    }
+
+    getCurrentContributorsData() {
+        const detail = this.props.task
+        return _.filter(detail.candidates, { status: TASK_CANDIDATE_STATUS.APPROVED });
+    }
+
+    loggedInUserBelongsToCandidate(candidate) {
+        const loggedInUserId = this.props.userId
+        if (candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === loggedInUserId) {
+            return true
+        }
+
+        if (candidate.type === TASK_CANDIDATE_TYPE.TEAM && _.find(candidate.team.members, {user: loggedInUserId})) {
+            return true
+        }
+    }
+
+    linkProfileInfo(userId) {
+        // TODO: open profile popup
+    }
+
+    removeUser() {
+        // TODO
+    }
+
+    showAppModal() {
+
+    }
+
+    getAvatarWithFallback(avatar) {
+        return _.isEmpty(avatar)
+            ? USER_AVATAR_DEFAULT
+            : avatar
+    }
+
+    getUserNameWithFallback(user) {
+        if (_.isEmpty(user.profile.firstName) && _.isEmpty(user.profile.lastName)) {
+            return user.username
+        }
+
+        return _.trim([user.profile.firstName, user.profile.lastName].join(' '))
+    }
+
+    getCurrency() {
+        return this.props.task.reward.isUsd ? 'USD' : 'ELA'
+    }
+
+    getReward() {
+        return this.props.task.reward &&
+            ((this.props.task.reward.usd / 100) || this.props.task.reward.ela)
+    }
+
+    getRewardElaPerUsd() {
+        return this.props.task.reward && this.props.task.reward.elaPerUsd
+    }
+
+    getRewardFormatted() {
+        const epu = this.getRewardElaPerUsd()
+        const suffix = epu ? ` (@${epu} ELA/USD)` : ''
+        return this.getReward() && `${this.getReward()} ${this.getCurrency()}${suffix}`
+    }
+
+    getBudgetExplanation() {
+        return (
+            <Popover content={I18N.get('task.budget.explain')}>
+                <Icon className="help-icon" type="question-circle-o"/>
+            </Popover>
+        )
+    }
+
+    getRewardExplanation() {
+        return (
+            <Popover content={I18N.get('task.reward.explain')}>
+                <Icon className="help-icon" type="question-circle-o"/>
+            </Popover>
+        )
+    }
+
+    getBudget() {
+        return this.props.task.rewardUpfront &&
+            ((this.props.task.rewardUpfront.usd / 100) || this.props.task.rewardUpfront.ela)
+    }
+
+    getBudgetElaPerUsd() {
+        return this.props.task.rewardUpfront && this.props.task.rewardUpfront.elaPerUsd
+    }
+
+    getBudgetFormatted() {
+        const epu = this.getBudgetElaPerUsd()
+        const suffix = epu ? ` (@${epu} ELA/USD)` : ''
+        return this.getBudget() && `${this.getBudget()} ${this.getCurrency()}${suffix}`
+    }
+
+    isTaskOwner() {
+        return (this.props.task && this.props.task.createdBy &&
+            this.props.task.createdBy._id) === this.props.userId
     }
 
     getCommunityDisp() {
@@ -565,167 +323,4 @@ export default class extends BaseComponent {
 
         return str
     }
-
-    /**
-     * Developer Events - multiple people can simply join
-     * Developer Tasks - members must apply for task, with a certain # to be selected
-     *
-     * Social Events - members must apply to help
-     * Social Tasks - members must apply for task, with a certain # to be selected
-     */
-    renderJoinButton() {
-
-        if (this.state.isDeveloperEvent) {
-            return <Button className="join-btn" onClick={this.confirmDeveloperEventJoin}>
-                Join Event
-            </Button>
-            // shortcuts here
-        }
-
-        let buttonText = ''
-        const appliedAlready = _.find(this.props.task.candidates, (candidate) => {
-            return candidate && candidate.user && candidate.user._id === this.props.userId
-        })
-
-        if (!appliedAlready) {
-            if (this.props.task.type === TASK_TYPE.TASK) {
-                buttonText = 'Apply for Task'
-            } else {
-                buttonText = 'Apply to Help'
-            }
-
-            return <Button className="join-btn" onClick={this.showModalApplyTask}>
-                {buttonText}
-            </Button>
-        } else {
-            buttonText = 'My Application'
-            const prefix = this.props.page === 'LEADER' ? '/profile' : ''
-
-            return (<Button className="join-btn" onClick={() => {
-                this.props.history.push(`${prefix}/task-app/${this.props.task._id}/${this.props.userId}`)
-            }}>
-                {buttonText}
-            </Button>)
-        }
-    }
-
-    /**
-     * First we show a modal with teams or apply alone, only
-     * the leader of a team can apply
-     */
-    showModalApplyTask = () => {
-        this.formRefApplyTask.props.form.setFieldsValue({}, () => {
-            this.setState({
-                visibleModalApplyTask: true
-            })
-        })
-    }
-
-    saveFormApplyTaskRef = (formRef) => {
-        this.formRefApplyTask = formRef
-    }
-
-    handleCancelModalApplyTask = () => {
-        const form = this.formRefApplyTask.props.form
-        form.resetFields()
-
-        this.setState({visibleModalApplyTask: false})
-    }
-
-    handleModalApplyTask = () => {
-
-        const form = this.formRefApplyTask.props.form
-
-        // applyId is either literally 'self' or a teamId
-        const applyId = form.getFieldValue('applyId')
-
-        const isSelf = form.getFieldValue('applyId') === 'self'
-
-        let userId, teamId
-
-        if (isSelf) {
-            // we push our own id
-            userId = this.props.userId
-        } else {
-            teamId = applyId
-        }
-
-        const taskId = this.props.task._id
-        const applyMsg = form.getFieldValue('applyMsg') || ''
-
-        this.handleCancelModalApplyTask()
-
-        // TODO: throwing an error in pushCandidate doesn't seem to trigger the catch error block
-        this.props.pushCandidate(taskId, userId, teamId, applyMsg).then((result) => {
-            if (result) {
-                message.success('You have applied, you will be contacted if approved')
-            }
-
-        }).catch((err) => {
-            // never entered
-            message.error(err.message, 10)
-        })
-
-    }
-
-    async removeApplication(tcId) {
-        const taskId = this.props.task._id
-        const res = await this.props.pullCandidate(taskId, tcId)
-    }
-
-    /**
-     * For organizers they can accept an applicant
-     */
-    showModalAcceptApplicant = (taskCandidate) => {
-        this.setState({
-            modalTaskCandidate: taskCandidate,
-            visibleModalAcceptApplicant: true
-        })
-
-    }
-
-    saveAcceptCandidateRef = (ref) => {
-        this.acceptCandidateRef = ref
-    }
-
-    handleCancelModalAcceptApplicant = () => {
-        this.setState({visibleModalAcceptApplicant: false})
-    }
-
-    handleModalAcceptApplicant = () => {
-
-        // this is the candidate we are accepting
-        const taskCandidateId = this.state.modalTaskCandidate._id
-        this.handleCancelModalAcceptApplicant()
-
-        this.props.acceptCandidate(taskCandidateId).then((result) => {
-            message.success('Applicant has been accepted and contacted')
-
-            let acceptedCnt = this.state.acceptedCnt
-
-            acceptedCnt += 1
-
-            this.setState({acceptedCnt})
-
-        }).catch((err) => {
-            message.error(err.message, 10)
-        })
-    }
-
-    /**
-     * If it's a developer event, we simply accept the registration
-     *
-     * // TODO: send the reminder
-     */
-    confirmDeveloperEventJoin = () => {
-
-        message.success('You have successfully registered for this event, a reminder will be sent closer to the event date')
-
-        const taskId = this.props.task._id
-        const userId = this.props.userId
-
-        this.props.pushCandidate(taskId, userId)
-    }
-    // TODO: after max applicants are selected, we should send an email to those
-    // that were not selected
 }

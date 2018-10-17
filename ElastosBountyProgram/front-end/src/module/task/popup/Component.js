@@ -21,7 +21,7 @@ import {
     Popover
 } from 'antd'
 import I18N from '@/I18N'
-import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE,
+import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TASK_TYPE,
     TEAM_USER_STATUS, TASK_STATUS, USER_AVATAR_DEFAULT } from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import ProjectApplication from '@/module/project/application/Container'
@@ -65,7 +65,6 @@ class C extends BaseComponent {
                         <div>
                             {this.renderHeader()}
                             {this.renderMeta()}
-                            {this.renderApplications()}
                             {this.renderFooter()}
                         </div>
                     )
@@ -160,14 +159,6 @@ class C extends BaseComponent {
 
                 {detail.infoLink && generateRow(I18N.get('task.infoLink'),
                     <a href={detail.infoLink} target="_blank">{detail.infoLink}</a>)}
-            </div>
-        )
-    }
-
-    renderApplications() {
-        return (
-            <div>
-
             </div>
         )
     }

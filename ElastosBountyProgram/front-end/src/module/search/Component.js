@@ -7,7 +7,6 @@ import {
 import _ from 'lodash'
 import './style.scss'
 import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT} from '@/constant'
-import ProjectDetail from '@/module/project/detail/Container'
 import TeamDetail from '@/module/team/detail/Container'
 import TaskDetail from '@/module/task/popup/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
@@ -44,7 +43,6 @@ export default class extends BaseComponent {
             entryCount: 3,
             skillsetShowAllEntries: false,
             categoryShowAllEntries: false,
-            showProjectModal: false,
             showTaskModal: false,
             showTeamModal: false,
             showLoginRegisterModal: false,
@@ -127,13 +125,6 @@ export default class extends BaseComponent {
         }, this.refetch.bind(this))
     }
 
-    showProjectModal(id) {
-        this.setState({
-            showProjectModal: true,
-            taskDetailId: id
-        })
-    }
-
     showTaskModal(id) {
         this.setState({
             showTaskModal: true,
@@ -157,12 +148,6 @@ export default class extends BaseComponent {
         })
     }
 
-    handleProjectModalOk = (e) => {
-        this.setState({
-            showProjectModal: false
-        })
-    }
-
     handleTaskModalOk = (e) => {
         this.setState({
             showTaskModal: false
@@ -172,12 +157,6 @@ export default class extends BaseComponent {
     handleTeamModalOk = (e) => {
         this.setState({
             showTeamModal: false
-        })
-    }
-
-    handleProjectModalCancel = (e) => {
-        this.setState({
-            showProjectModal: false
         })
     }
 
@@ -592,18 +571,6 @@ export default class extends BaseComponent {
                 </Row>
                 <Modal
                     className="project-detail-nobar"
-                    visible={this.state.showProjectModal}
-                    onOk={this.handleProjectModalOk}
-                    onCancel={this.handleProjectModalCancel}
-                    footer={null}
-                    width="70%"
-                >
-                    { this.state.showProjectModal &&
-                        <ProjectDetail taskId={this.state.taskDetailId}/>
-                    }
-                </Modal>
-                <Modal
-                    className="project-detail-nobar"
                     visible={this.state.showTaskModal}
                     onOk={this.handleTaskModalOk}
                     onCancel={this.handleTaskModalCancel}
@@ -743,7 +710,7 @@ export default class extends BaseComponent {
 
         const handlersLookup = {
             TEAM: this.showTeamModal,
-            PROJECT: this.showProjectModal,
+            PROJECT: this.showTaskModal,
             TASK: this.showTaskModal
         }
 

@@ -7,7 +7,9 @@ import { message } from 'antd/lib/index'
 export default createContainer(Component, (state) => {
     return {
         userId: state.user.current_user_id,
-        is_login: state.user.is_login
+        is_login: state.user.is_login,
+        all_teams: state.team.all_teams,
+        loading: state.team.loading
     }
 }, () => {
 
@@ -16,7 +18,6 @@ export default createContainer(Component, (state) => {
 
     return {
         async listTeamsOwned(userId) {
-
             try {
                 const result = await teamService.index({
                     owner: userId

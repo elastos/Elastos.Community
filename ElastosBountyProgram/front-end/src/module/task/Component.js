@@ -7,7 +7,6 @@ import { Col, Icon, Popconfirm, Menu, Button, Spin, Dropdown } from 'antd'
 import Comments from '@/module/common/comments/Container'
 
 // TODO: admin detail should also be in a new component too to be consistent
-import TaskPublicDetail from './detail/Container'
 import ProjectPublicDetail from '@/module/project/detail/Container'
 
 import './style.scss'
@@ -48,14 +47,13 @@ export default class extends BaseComponent {
 
     renderEditForm() {
         return <div className="form-wrapper">
-            <TaskCreateForm existingTask={this.props.task} page={this.props.page} switchEditMode={this.switchEditMode.bind(this)}/>
+            <TaskCreateForm existingTask={this.props.task} page={this.props.page}
+                switchEditMode={this.switchEditMode.bind(this)}/>
         </div>
     }
 
     renderDetail() {
-        return this.props.task.type === TASK_TYPE.PROJECT
-            ? <ProjectPublicDetail taskId={this.props.task._id}/>
-            : <TaskPublicDetail task={this.props.task} page={this.props.page}/>
+        return <ProjectPublicDetail taskId={this.props.task._id}/>
     }
 
     renderAdminHeader() {
