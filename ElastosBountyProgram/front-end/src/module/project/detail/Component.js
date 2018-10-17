@@ -21,7 +21,8 @@ import {
     Popover
 } from 'antd'
 import I18N from '@/I18N'
-import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS, TASK_STATUS, USER_AVATAR_DEFAULT } from '@/constant'
+import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS,
+    TASK_STATUS, USER_AVATAR_DEFAULT } from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import ProjectApplication from '@/module/project/application/Container'
 import _ from 'lodash'
@@ -76,7 +77,8 @@ class C extends BaseComponent {
     }
 
     removeUserByUserId(userId) {
-        const candidate = _.find(this.props.task.candidates, (candidate) => candidate.user._id === userId && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED)
+        const candidate = _.find(this.props.task.candidates, (candidate) =>
+            candidate.user._id === userId && candidate.status !== TASK_CANDIDATE_STATUS.REJECTED)
         if (!candidate) {
             return false
         }
@@ -141,7 +143,8 @@ class C extends BaseComponent {
                     return
                 }
 
-                this.props.applyToTask(this.props.taskId, userId, teamId, values.applyMsg, null, null, values.bid)
+                this.props.applyToTask(this.props.taskId, userId, teamId,
+                    values.applyMsg, null, null, values.bid)
                     .then(() => {
                         this.setState({ applying: false })
                         message.success('Application sent. Thank you!')
@@ -162,8 +165,10 @@ class C extends BaseComponent {
             initialValue: ''
         })
         const applyMsg_el = (
-            <Input.TextArea rows={8} className="team-application" disabled={this.props.loading}
-                            placeholder={this.props.task.bidding ? I18N.get('project.detail.tell_us_why_bid') : I18N.get('project.detail.tell_us_why_join')}/>
+            <Input.TextArea rows={8} className="team-application"
+                disabled={this.props.loading} placeholder={this.props.task.bidding
+                    ? I18N.get('project.detail.tell_us_why_bid')
+                    : I18N.get('project.detail.tell_us_why_join')}/>
         )
         const applyMsgPanel = applyMsg_fn(applyMsg_el)
 
@@ -180,7 +185,8 @@ class C extends BaseComponent {
         if (!this.hasAppliedBySelf()) {
             applicantSltOpts.push(<Select.Option key="$me" value="$me">
                 Apply as myself
-                <Avatar size="small" src={this.getAvatarWithFallback(this.props.currentUserAvatar)} className="pull-right"/>
+                <Avatar size="small" src={this.getAvatarWithFallback(
+                    this.props.currentUserAvatar)} className="pull-right"/>
             </Select.Option>)
             applicantOpts.initialValue = '$me'
         }
@@ -190,7 +196,8 @@ class C extends BaseComponent {
                 applicantSltOpts.push(<Select.Option key={team._id} value={team._id}>
                     Apply with {team.name}
                     {!_.isEmpty(team.pictures)
-                        ? <Avatar size="small" src={team.pictures[0].thumbUrl} className="pull-right"/>
+                        ? <Avatar size="small" src={team.pictures[0].thumbUrl}
+                            className="pull-right"/>
                         : <Avatar size="small" type="user" className="pull-right"/>
                     }
                 </Select.Option>)
@@ -229,10 +236,12 @@ class C extends BaseComponent {
                     <div className="clearfix"/>
                 </div>
                 }
-                <Button disabled={this.props.loading} className="d_btn pull-left" onClick={() => this.setState({ applying: false })}>
+                <Button disabled={this.props.loading} className="d_btn pull-left"
+                    onClick={() => this.setState({ applying: false })}>
                     Cancel
                 </Button>
-                <Button disabled={this.props.loading} className="d_btn pull-right" type="primary" htmlType="submit">
+                <Button disabled={this.props.loading} className="d_btn pull-right"
+                    type="primary" htmlType="submit">
                     Apply
                 </Button>
                 <Form.Item className="pull-right">
@@ -254,8 +263,10 @@ class C extends BaseComponent {
         }))
 
         const currentUserTeamIds = _.map(this.props.ownedTeams, '_id')
-        const belongsToMemberTeam = !_.isEmpty(_.intersection(allCandidateTeamIds, currentUserTeamIds))
-        const isTaskOwner = this.props.task.createdBy && (this.props.task.createdBy._id === this.props.currentUserId)
+        const belongsToMemberTeam = !_.isEmpty(
+            _.intersection(allCandidateTeamIds, currentUserTeamIds))
+        const isTaskOwner = this.props.task.createdBy &&
+            (this.props.task.createdBy._id === this.props.currentUserId)
 
         return isTaskCandidate || belongsToMemberTeam || isTaskOwner
     }
@@ -355,7 +366,8 @@ class C extends BaseComponent {
     ord_render() {
         const detail = this.props.task
         const loading = _.isEmpty(detail)
-        const isTaskOwner = this.props.task.createdBy && (this.props.task.createdBy._id === this.props.currentUserId)
+        const isTaskOwner = this.props.task.createdBy &&
+            (this.props.task.createdBy._id === this.props.currentUserId)
 
         return (
             <div className="c_Project c_Detail">
@@ -372,48 +384,45 @@ class C extends BaseComponent {
                             {this.renderMeta()}
 
                             {/*
-                            *******************************************************************************************************************
                             * Apply Button
-                            * - this may be unintuitive but we should always show the button, you can always apply as a team or user
-                            * unless you've exhausted all the teams, but even then we can inform the user of this in a better way than hiding
-                            *******************************************************************************************************************
+                            * - this may be unintuitive but we should always show the button,
+                            *   you can always apply as a team or user
+                            * unless you've exhausted all the teams, but even then we can inform
+                            *   the user of this in a better way than hiding
                             */}
-                            {!this.state.applying && this.props.page !== 'LEADER' && !isTaskOwner && this.renderApplyButton()}
+                            {!this.state.applying && this.props.page !== 'LEADER' &&
+                                !isTaskOwner && this.renderApplyButton()}
 
                             {/*
-                            *******************************************************************************************************************
                             * Applying Form
-                            *******************************************************************************************************************
                             */}
                             {this.state.applying && this.getApplicationForm()}
 
                             {/*
-                            *******************************************************************************************************************
                             * Approved Applicants (might not be necessary except for admin/leader)
-                            *******************************************************************************************************************
                             */}
-                            {(!this.state.applying && this.getCurrentContributorsData().length) ? this.renderContributors() : ''}
+                            {(!this.state.applying && this.getCurrentContributorsData().length)
+                                ? this.renderContributors()
+                                : ''}
 
                             {/*
-                            *******************************************************************************************************************
                             * Pending Bids / Applications - only show if CREATED/PENDING
-                            *******************************************************************************************************************
                             */}
                             {!this.state.applying && this.renderPendingCandidates()}
 
                             {/*
-                            *******************************************************************************************************************
                             * Comments
                             * - not enabled for bidding projects to minimize confusion in a closed bid
-                            *******************************************************************************************************************
                             */}
-                            {!this.props.task.bidding && (this.props.page === 'LEADER' || this.props.page === 'ADMIN') && this.canComment() &&
-                            <Row>
-                                <br/>
-                                <Comments type="task" canPost={true} canSubscribe={!isTaskOwner} model={this.props.taskId}
-                                    returnUrl={`/project-detail/${this.props.taskId}`}
-                                />
-                            </Row>
+                            {!this.props.task.bidding && (this.props.page === 'LEADER' ||
+                                this.props.page === 'ADMIN') && this.canComment() &&
+                                <Row>
+                                    <br/>
+                                    <Comments type="task" canPost={true}
+                                        canSubscribe={!isTaskOwner} model={this.props.taskId}
+                                        returnUrl={`/project-detail/${this.props.taskId}`}
+                                    />
+                                </Row>
                             }
                         </div>
                     )
@@ -446,7 +455,8 @@ class C extends BaseComponent {
         }
 
         return <Row className="actions">
-            <Button type="primary" onClick={() => this.setState({ applying: true })} disabled={!this.canApply()}>
+            <Button type="primary" onClick={() => this.setState({ applying: true })}
+                disabled={!this.canApply()}>
                 {detail.bidding
                     ? I18N.get('project.detail.popup.bid_project')
                     : I18N.get('project.detail.popup.join_project')}
@@ -475,11 +485,13 @@ class C extends BaseComponent {
         const detail = this.props.task
 
         // status checks
-        if (detail.bidding && _.indexOf([TASK_STATUS.CREATED, TASK_STATUS.PENDING], detail.status) < 0) {
+        if (detail.bidding && _.indexOf([TASK_STATUS.CREATED,
+                TASK_STATUS.PENDING], detail.status) < 0) {
             return ''
         }
 
-        if (!detail.bidding && _.find(detail.candidates, (candidate) => candidate.status === TASK_CANDIDATE_STATUS.APPROVED)) {
+        if (!detail.bidding && _.find(detail.candidates,
+            (candidate) => candidate.status === TASK_CANDIDATE_STATUS.APPROVED)) {
             return ''
         }
 
@@ -490,31 +502,32 @@ class C extends BaseComponent {
         // only show current user's bids if it's bidding - for projects with a set reward we can show them
         if (!this.props.is_admin && detail.bidding) {
             pendingCandidates = _.filter(pendingCandidates, (candidate) => {
-                if (candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === currentUserId) {
+                if (candidate.type === TASK_CANDIDATE_TYPE.USER &&
+                    candidate.user._id === currentUserId) {
                     return true
 
                 }
 
-                if (candidate.type === TASK_CANDIDATE_TYPE.TEAM && this.loggedInUserBelongsToCandidate(candidate)) {
+                if (candidate.type === TASK_CANDIDATE_TYPE.TEAM &&
+                    this.loggedInUserBelongsToCandidate(candidate)) {
                     // here we make the assumption that any member of a team can view the team's bid
                     return true
                 }
             })
         }
 
-        let title = ''
-        if (detail.bidding) {
-            if (this.props.is_admin) {
-                title = I18N.get('project.detail.pending_bids')
-            } else {
-                title = I18N.get('project.detail.your_bids')
-            }
-        } else {
-            title = I18N.get('project.detail.pending_applications')
-        }
+        const title = detail.bidding
+            ? this.props.is_admin
+                ? I18N.get('project.detail.pending_bids')
+                : I18N.get('project.detail.your_bids')
+            : I18N.get('project.detail.pending_applications')
+        const bidsLeft = [
+            I18N.get('project.detail.bidding_cur_1'),
+            pendingCandidatesCnt - pendingCandidates.length,
+            I18N.get('project.detail.bidding_cur_2')
+        ].join(' ')
 
         return <Row className="applications">
-            {/* Title */}
             <h3 className="no-margin">
                 {title}
             </h3>
@@ -522,11 +535,14 @@ class C extends BaseComponent {
             {pendingCandidates.length && this.renderCandidates(pendingCandidates)}
 
             {/* this works because we filtered pendingCandidates after we saved the count */}
-            {(this.props.page !== 'ADMIN' || !this.props.is_admin) && detail.bidding &&
-            `${I18N.get('project.detail.bidding_cur_1')} ${pendingCandidatesCnt - pendingCandidates.length} ${I18N.get('project.detail.bidding_cur_2')}`
-            }
+            {(this.props.page !== 'ADMIN' || !this.props.is_admin) &&
+                detail.bidding && bidsLeft}
 
-            {!detail.bidding && pendingCandidates.length === 0 && <div className="no-data no-info">There are no applications yet</div>}
+            {!detail.bidding && pendingCandidates.length === 0 &&
+                <div className="no-data no-info">
+                    There are no applications yet
+                </div>
+            }
         </Row>
     }
 
@@ -554,8 +570,9 @@ class C extends BaseComponent {
                         {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
                         <div>
                             <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
-                                <Avatar className={'gap-right ' + (candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
-                                        src={this.getAvatarWithFallback(candidate.user.profile.avatar)}/>
+                                <Avatar className={'gap-right ' +
+                                    (candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
+                                    src={this.getAvatarWithFallback(candidate.user.profile.avatar)}/>
                                 {this.getUserNameWithFallback(candidate.user)}
                             </a>
                         </div>
@@ -582,28 +599,39 @@ class C extends BaseComponent {
             render: (candidate) => {
                 return (
                     <div className="text-right">
-                        {this.props.task.bidding && <span>
-                            Bid: {candidate.bid} ELA
-                        </span>}
-                        {(this.props.page === 'ADMIN' || this.isTaskOwner() || this.loggedInUserBelongsToCandidate(candidate)) && (
+                        {this.props.task.bidding &&
+                            <span>
+                                Bid: {candidate.bid} ELA
+                            </span>
+                        }
+                        {(this.props.page === 'ADMIN' || this.isTaskOwner() ||
+                            this.loggedInUserBelongsToCandidate(candidate)) && (
                             <span>
                                 <Divider type="vertical"/>
-                                <a onClick={this.showAppModal.bind(this, candidate._id)}>{I18N.get('project.detail.view')}</a>
+                                <a onClick={this.showAppModal.bind(this, candidate._id)}>
+                                    {I18N.get('project.detail.view')}
+                                </a>
                             </span>
                         )}
                         {this.loggedInUserOwnerOfCandidate(candidate) && (
                             <span>
                                 <Divider type="vertical"/>
-                                <a onClick={this.withdrawApplication.bind(this, candidate._id)}>{I18N.get('project.detail.withdraw_application')}</a>
+                                <a onClick={this.withdrawApplication.bind(this, candidate._id)}>
+                                    {I18N.get('project.detail.withdraw_application')}
+                                </a>
                             </span>)
                         }
                         {this.isTaskOwner() &&
-                        <span className="inline-block">
-                            <Divider type="vertical"/>
-                            <a onClick={this.approveUser.bind(this, candidate._id)}>{I18N.get('project.detail.approve')}</a>
-                            <Divider type="vertical"/>
-                            <a onClick={this.disapproveUser.bind(this, candidate._id)}>{I18N.get('project.detail.disapprove')}</a>
-                        </span>
+                            <span className="inline-block">
+                                <Divider type="vertical"/>
+                                <a onClick={this.approveUser.bind(this, candidate._id)}>
+                                    {I18N.get('project.detail.approve')}
+                                </a>
+                                <Divider type="vertical"/>
+                                <a onClick={this.disapproveUser.bind(this, candidate._id)}>
+                                    {I18N.get('project.detail.disapprove')}
+                                </a>
+                            </span>
                         }
                     </div>
                 )
@@ -637,7 +665,8 @@ class C extends BaseComponent {
                         {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
                         <div>
                             <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
-                                <Avatar className={'gap-right ' + (candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
+                                <Avatar className={'gap-right ' +
+                                    (candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
                                         src={this.getAvatarWithFallback(candidate.user.profile.avatar)}/>
                                 {this.getUserNameWithFallback(candidate.user)}
                             </a>
@@ -662,16 +691,22 @@ class C extends BaseComponent {
                 return (
                     <div className="text-right">
                         {this.isTaskOwner() && !this.props.task.bidding &&
-                        <a onClick={this.removeUser.bind(this, candidate._id)}>{I18N.get('project.detail.remove')}</a>
+                            <a onClick={this.removeUser.bind(this, candidate._id)}>
+                                {I18N.get('project.detail.remove')}
+                            </a>
                         }
                         {this.isTaskOwner() && this.props.task.bidding &&
-                        <span>
-                            Bid: {candidate.bid} ELA
-                        </span>}
-                        {(this.props.page === 'ADMIN' || this.isTaskOwner() || this.loggedInUserBelongsToCandidate(candidate)) && (
+                            <span>
+                                Bid: {candidate.bid} ELA
+                            </span>
+                        }
+                        {(this.props.page === 'ADMIN' || this.isTaskOwner() ||
+                            this.loggedInUserBelongsToCandidate(candidate)) && (
                             <span>
                                 <Divider type="vertical"/>
-                                <a onClick={this.showAppModal.bind(this, candidate._id)}>{I18N.get('project.detail.view')}</a>
+                                <a onClick={this.showAppModal.bind(this, candidate._id)}>
+                                    {I18N.get('project.detail.view')}
+                                </a>
                             </span>
                         )}
                     </div>
@@ -703,16 +738,19 @@ class C extends BaseComponent {
     ****************************************************************************************************************
      */
     isUnapproved() {
-        return (this.props.task.status === TASK_STATUS.CREATED || this.props.task.status === TASK_STATUS.PENDING)
+        return (this.props.task.status === TASK_STATUS.CREATED ||
+            this.props.task.status === TASK_STATUS.PENDING)
     }
 
     loggedInUserBelongsToCandidate(candidate) {
         const loggedInUserId = this.props.currentUserId
-        if (candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === loggedInUserId) {
+        if (candidate.type === TASK_CANDIDATE_TYPE.USER &&
+            candidate.user._id === loggedInUserId) {
             return true
         }
 
-        if (candidate.type === TASK_CANDIDATE_TYPE.TEAM && _.find(candidate.team.members, {user: loggedInUserId})) {
+        if (candidate.type === TASK_CANDIDATE_TYPE.TEAM &&
+            _.find(candidate.team.members, {user: loggedInUserId})) {
             return true
         }
     }
@@ -726,11 +764,13 @@ class C extends BaseComponent {
      */
     loggedInUserOwnerOfCandidate(candidate) {
         const loggedInUserId = this.props.currentUserId
-        if (candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === loggedInUserId) {
+        if (candidate.type === TASK_CANDIDATE_TYPE.USER &&
+            candidate.user._id === loggedInUserId) {
             return true
         }
 
-        if (candidate.type === TASK_CANDIDATE_TYPE.TEAM && candidate.team.owner._id === loggedInUserId){
+        if (candidate.type === TASK_CANDIDATE_TYPE.TEAM &&
+            candidate.team.owner._id === loggedInUserId){
             return true
         }
     }
@@ -739,14 +779,16 @@ class C extends BaseComponent {
     hasAppliedBySelf() {
         const loggedInUserId = this.props.currentUserId
         const pendingCandidates = this.getPendingCandidates()
-        return !!_.find(pendingCandidates, (candidate) => candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === loggedInUserId)
+        return !!_.find(pendingCandidates, (candidate) =>
+            candidate.type === TASK_CANDIDATE_TYPE.USER && candidate.user._id === loggedInUserId)
     }
 
     // check if logged in user has applied by the passed in team
     hasAppliedByTeam(team) {
         const pendingCandidates = this.getPendingCandidates()
         return !!_.find(pendingCandidates, (candidate) => {
-            return (candidate.type === TASK_CANDIDATE_TYPE.TEAM && candidate.team._id === team._id)
+            return (candidate.type === TASK_CANDIDATE_TYPE.TEAM &&
+                candidate.team._id === team._id)
         })
     }
 
