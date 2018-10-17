@@ -36,8 +36,14 @@
     padding-bottom: $gap_2;
   }
 
-  .task-description {
+  .task-description,
+  .task-goals,
+  .task-breakdown {
     margin: $gap_1 0;
+  }
+
+  .task-description {
+    font-weight: 600;
   }
 
   .app-footer .ant-btn {
