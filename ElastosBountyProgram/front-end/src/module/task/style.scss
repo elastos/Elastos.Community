@@ -34,28 +34,26 @@
     color: $primary_color;
   }
 
-  .public {
-    .c_Comments h3,
-    .header h3 {
-      @extend .komu-a;
-      font-size: 36px;
+  .c_Comments h3,
+  .header h3 {
+    @extend .komu-a;
+    font-size: 36px;
+  }
+
+  .header {
+    margin-top: $gap_3;
+  }
+
+  .meta {
+    margin-bottom: $gap_4;
+
+    .help-icon {
+      margin-left: $gap_0;
     }
 
-    .header {
-      margin-top: $gap_3;
-    }
-
-    .meta {
-      margin-bottom: $gap_4;
-
-      .help-icon {
-        margin-left: $gap_0;
-      }
-
-      .meta-row {
-        min-height: 24px;
-        line-height: 24px;
-      }
+    .meta-row {
+      min-height: 24px;
+      line-height: 24px;
     }
   }
 }
