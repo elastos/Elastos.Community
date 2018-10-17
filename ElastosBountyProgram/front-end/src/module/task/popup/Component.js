@@ -145,9 +145,10 @@ class C extends BaseComponent {
                     </div>
                 )) || null}
 
-                {detail.goals && generateRow(I18N.get('task.goals'), detail.goals)}
+                {detail.goals && generateRow(I18N.get('task.goals'), detail.goals, 'task-goals')}
 
-                {detail.descBreakdown && generateRow(I18N.get('task.descBreakdown'), detail.descBreakdown)}
+                {detail.descBreakdown && generateRow(I18N.get('task.descBreakdown'),
+                    detail.descBreakdown, 'task-breakdown')}
 
                 {detail.eventDateRangeStart && generateRow(I18N.get('task.eventStart'),
                     moment(detail.eventDateRangeStart).format(EVENT_DATE_FORMAT) + ' (' +
