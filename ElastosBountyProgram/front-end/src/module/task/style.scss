@@ -4,6 +4,10 @@
 
 .c_ProfileContainer {
   background: white;
+
+  .c_Project.c_Detail {
+    padding: 0 $gap_2;
+  }
 }
 
 .c_TaskDetail,
