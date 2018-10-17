@@ -6,6 +6,7 @@
   padding: $gap_2;
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
 
   .app-header {
     font-size: 36px;
@@ -15,6 +16,13 @@
 
   .app-meta-row {
     min-height: 24px;
+  }
+
+  .carousel-wrapper {
+    position: absolute;
+    right: -$gap_3;
+    top: $gap_2;
+    width: 150px;
   }
 
   .app-meta,

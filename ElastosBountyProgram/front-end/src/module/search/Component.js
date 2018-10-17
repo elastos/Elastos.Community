@@ -619,10 +619,11 @@ export default class extends BaseComponent {
     }
 
     getCarousel(item) {
+        const IMAGE_SIZE = 188
         const pictures = _.map(item.pictures, (picture, ind) => {
             return (
                 <div key={ind}>
-                    <img width={188} height={188} alt="logo" src={picture.url} />
+                    <img width={IMAGE_SIZE} height={IMAGE_SIZE} alt="logo" src={picture.url} />
                 </div>
             )
         })
@@ -630,9 +631,14 @@ export default class extends BaseComponent {
         if (item.thumbnail) {
             pictures.unshift(
                 <div key="main">
-                    <img width={188} height={188} alt="logo" src={item.thumbnail} />
+                    <img width={IMAGE_SIZE} height={IMAGE_SIZE} alt="logo" src={item.thumbnail} />
                 </div>
             )
+        }
+
+        if (pictures.length === 0) {
+            pictures.push(<img width={IMAGE_SIZE} height={IMAGE_SIZE}
+                src={'/assets/images/Group_1685.12.svg'} key={0} />);
         }
 
         return (
@@ -686,7 +692,7 @@ export default class extends BaseComponent {
                 return {
                     href: '',
                     title: team.name,
-                    pictures: team.pictures && team.pictures.length > 0 ? team.pictures : [{ url: '/assets/images/Elastos_Logo.png' }],
+                    pictures: team.pictures,
                     description: description_fn(team),
                     content: team.profile.description,
                     owner: team.owner,
@@ -699,7 +705,8 @@ export default class extends BaseComponent {
                     href: '',
                     title: task.name,
                     bidding: task.bidding,
-                    pictures: task.pictures && task.pictures.length > 0 ? task.pictures : [{ url: '/assets/images/Elastos_Logo.png' }],
+                    pictures: task.pictures,
+                    thumbnail: task.thumbnail,
                     description: description_fn(task),
                     content: task.description,
                     owner: task.createdBy,

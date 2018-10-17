@@ -84,20 +84,24 @@ class C extends BaseComponent {
     }
 
     getImageCarousel() {
-        const details = this.props.task;
+        const IMAGE_SIZE = 150
 
-        let carouselImages = []
+        const details = this.props.task;
+        const carouselImages = []
 
         if (details.thumbnail) {
-            carouselImages.push(<img src={details.thumbnail} key="main"/>)
+            carouselImages.push(<img width={IMAGE_SIZE} height={IMAGE_SIZE}
+                src={details.thumbnail} key="main"/>)
         }
 
         for (let i of details.pictures) {
-            carouselImages.push(<img src={i.url} key={i}/>)
+            carouselImages.push(<img width={IMAGE_SIZE} height={IMAGE_SIZE}
+                src={i.url} key={i}/>)
         }
 
         if (carouselImages.length === 0) {
-            carouselImages.push(<img src={'/assets/images/Elastos_Logo.png'} key={0} />);
+            carouselImages.push(<img width={IMAGE_SIZE} height={IMAGE_SIZE}
+                src={'/assets/images/Group_1685.12.svg'} key={0} />);
         }
 
         return (
