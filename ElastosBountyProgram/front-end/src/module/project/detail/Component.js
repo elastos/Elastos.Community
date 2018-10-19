@@ -119,6 +119,15 @@ class C extends BaseComponent {
 
                 {detail.community && generateRow(I18N.get('task.community'), this.getCommunityDisp())}
 
+                {detail.approvedBy && generateRow(I18N.get('task.approvedBy'), (
+                    <div>
+                        {detail.approvedBy.username}
+                        {this.props.task.approvedDate && <span>
+                            &nbsp; on {moment(detail.approvedDate).format('MMM D, YYYY')}
+                        </span>}
+                    </div>
+                ))}
+
                 {detail.applicationDeadline &&
                     generateRow(I18N.get('task.applyDeadline'),
                         moment(detail.applicationDeadline).format(DEADLINE_FORMAT))}
