@@ -11,7 +11,7 @@ import {USER_EMPOWER_TYPE} from '@/constant'
 
 import CouncilList from './list/Container'
 import CVoteList from '../CVote/list/Container'
-
+import CouncilBoard from './board/Container'
 
 /**
  * TODO: all the positions should load from the DB, copy pasting for now
@@ -25,7 +25,7 @@ export default class extends StandardPage {
         this.state = {
 
             // save the page you are on
-            subpage: this.props.subpage || 'list',
+            subpage: this.props.council.tab || 'board',
             loading: false
         }
     }
@@ -34,7 +34,10 @@ export default class extends StandardPage {
         return (
             <div className="p_council">
 
-                <Tabs defaultActiveKey={this.state.subpage}>
+                <Tabs defaultActiveKey={this.state.subpage} onChange={this.tabChange.bind(this)}>
+                    <TabPane key="board" tab="board">
+                        <CouncilBoard/>
+                    </TabPane>
                     <TabPane key="list" tab="list">
                         <CouncilList/>
                     </TabPane>
@@ -42,9 +45,12 @@ export default class extends StandardPage {
                         <CVoteList/>
                     </TabPane>
                 </Tabs>
-
                 <Footer/>
             </div>
         )
+    }
+
+    async tabChange(activeKey) {
+        return this.props.changeTab(activeKey)
     }
 }

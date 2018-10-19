@@ -34,6 +34,7 @@ export default class extends StandardPage {
         this.props.history.push(`/project-detail/${id}`)
     }
 
+    // TODO: what's up with these admin CSS classes?
     ord_renderContent () {
         return (
             <div className="p_Cr100">
