@@ -122,7 +122,7 @@ class C extends BaseComponent {
                 {detail.approvedBy && generateRow(I18N.get('task.approvedBy'), (
                     <div>
                         {detail.approvedBy.username}
-                        {this.props.task.approvedDate && <span>
+                        {detail.approvedDate && <span>
                             &nbsp; on {moment(detail.approvedDate).format('MMM D, YYYY')}
                         </span>}
                     </div>
