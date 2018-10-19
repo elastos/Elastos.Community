@@ -2,6 +2,7 @@ import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import {Form, Col, Row, List, Avatar, Icon, Divider, Button, Input, Mention, Modal} from 'antd'
 import config from '@/config'
+import {MAX_LENGTH_COMMENT} from '@/config/constant'
 import './style.scss'
 import moment from 'moment'
 import _ from 'lodash'
@@ -74,9 +75,9 @@ class C extends BaseComponent {
         const allUsers = _.map(this.props.all_users, (user) => user.username)
         const {getFieldDecorator} = this.props.form
         const comment_fn = getFieldDecorator('comment', {
-            rules: [
-                {required: true, message: 'Please input your comment!'}
-            ],
+            rules: [{
+                required: true, message: 'Please input your comment!'
+            }],
             initialValue: Mention.toContentState('')
         })
         const comment_el = (
@@ -91,6 +92,8 @@ class C extends BaseComponent {
         const headline_fn = getFieldDecorator('headline', {
             rules: [{
                 max: 100, message: 'Headline is too long'
+            }, {
+                required: true, message: 'Please input headline!'
             }],
             initialValue: ''
         })
@@ -273,6 +276,27 @@ class C extends BaseComponent {
     handleSubmit(e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
+            const commentPlainText = values.comment.getPlainText()
+
+            if (!commentPlainText) {
+                this.props.form.setFields({
+                    comment: {
+                        errors: [new Error('Please input comment')],
+                    }
+                });
+                return;
+            }
+
+            if (commentPlainText.length > MAX_LENGTH_COMMENT) {
+                this.props.form.setFields({
+                    comment: {
+                        value: values.comment,
+                        errors: [new Error('Comment is too long')],
+                    }
+                });
+                return;
+            }
+
             if (!err) {
                 this.props.postComment(this.props.type,
                     this.props.reduxType,
