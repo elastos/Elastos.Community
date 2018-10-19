@@ -226,6 +226,7 @@ export const Task = {
 
     approved: Boolean,
     approvedBy: {type: Schema.Types.ObjectId, ref: 'users'},
+    approvedDate: Date,
 
     budgetDisbursed: Boolean,
     budgetDisburseMemo: String,
