@@ -20,7 +20,7 @@ export default class extends BaseComponent {
         const map = {
             '1' : 'New Motion',
             '2' : 'Motion against any existing motion',
-            '3' : 'Anyting else'
+            '3' : 'Anything else'
         };
 
         const columns = [

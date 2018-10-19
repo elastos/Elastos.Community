@@ -1,3 +1,4 @@
+import {Schema} from "mongoose";
 
 
 export const CVote = {
@@ -17,6 +18,7 @@ export const CVote = {
         type : String,
         required : true
     },
+    // name of proposer
     proposedBy : {
         type : String,
         required : true
@@ -32,9 +34,8 @@ export const CVote = {
     },
     vote_map : Object,
     reason_map : Object,
-    createdBy : {
-        type : String
-    },
+    createdBy: {type: Schema.Types.ObjectId, ref: 'users'},
+
     status : {
         type : String
     }

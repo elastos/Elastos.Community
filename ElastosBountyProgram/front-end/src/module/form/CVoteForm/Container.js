@@ -6,7 +6,7 @@ import {message} from 'antd'
 
 
 export default createContainer(Component, (state) => {
-    
+
     return {
         user : state.user,
         isLogin : state.user.is_login,
@@ -19,7 +19,7 @@ export default createContainer(Component, (state) => {
             select_type : [
                 {name : 'New Motion', code : 1},
                 {name : 'Motion against any existing motion', code : 2},
-                {name : 'Anyting else', code : 3}
+                {name : 'Anything else', code : 3}
             ],
             select_vote : [
                 {name : 'Support', value : 'support'},

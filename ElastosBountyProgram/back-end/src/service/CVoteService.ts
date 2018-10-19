@@ -17,15 +17,20 @@ export default class extends Base {
         const db_cvote = this.getDBModel('CVote');
 
         if(!this.currentUser || !this.currentUser._id){
-            throw 'invalid current user';
+            throw 'cvoteservice.create - invalid current user';
+        }
+
+        // TODO: this should probably be COUNCIL role
+        if (this.currentUser.role !== 'ADMIN') {
+            throw 'cvoteservice.create - invalid user role'
         }
 
         const {
             title, type, content, proposedBy, motionId, isConflict, notes, vote_map, reason_map
         } = param;
         const doc: any = {
-            title, 
-            type, 
+            title,
+            type,
             content,
             proposedBy,
             motionId,
@@ -55,13 +60,13 @@ export default class extends Base {
         const list = await db_cvote.list(query, {
             createdAt: -1
         }, 100);
-        
+
         for(let item of list){
             if(item.createdBy){
                 const u = await db_user.findOne({_id : item.createdBy});
                 item.createdBy = u.username;
             }
-            
+
         }
 
         return list;
@@ -86,8 +91,8 @@ export default class extends Base {
             title, type, content, proposedBy, motionId, isConflict, notes, vote_map, reason_map
         } = param;
         const doc: any= {
-            title, 
-            type, 
+            title,
+            type,
             content,
             proposedBy,
             motionId,
@@ -102,7 +107,7 @@ export default class extends Base {
         const cvote = await db_cvote.update({_id : param._id}, doc);
 
         this.sendEmailNotification({_id : param._id}, 'update');
-        
+
         return cvote;
     }
 
@@ -175,7 +180,7 @@ export default class extends Base {
         if(ns > 1){
             rs = constant.CVOTE_STATUS.ACTIVE;
         }
-        
+
 
         return rs;
     }
