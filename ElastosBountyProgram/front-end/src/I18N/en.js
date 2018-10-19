@@ -407,6 +407,7 @@ const en = {
     'task.budget.explain': 'Budget is for expenses/costs',
     'task.reward.explain': 'Reward is for labor and time',
     'task.bid': 'Bid',
+    'task.approvedBy': 'Approved By',
 
     // General
     'select.placeholder': 'Please select',
