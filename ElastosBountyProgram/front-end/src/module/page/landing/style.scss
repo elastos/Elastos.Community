@@ -1014,7 +1014,7 @@
   }
   .toplinks li + li,
   .mobile-top li + li {
-    margin-left: 35px;
+    margin-left: 16px;
   }
   .toplinks li.lang,
   .mobile-top li.lang {
@@ -1064,6 +1064,8 @@
   div.hasIcon {
     margin-right: -6px;
     margin-left: 36px;
+    padding-right: 8px;
+    height: 44px;
   }
   li.hasIcon .txt,
   div.hasIcon .txt,

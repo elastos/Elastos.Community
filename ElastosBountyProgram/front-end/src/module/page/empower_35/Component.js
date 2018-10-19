@@ -17,6 +17,10 @@ export default class extends StandardPage {
         await this.props.getTeams({ type: TEAM_TYPE.CRCLE })
     }
 
+    componentWillUnmount() {
+        this.props.resetAllTeams()
+    }
+
     checkForLoading(followup) {
         return this.props.loading
             ? <div className="full-width halign-wrapper">
@@ -123,8 +127,10 @@ export default class extends StandardPage {
                     <div className="rect-container">
                         <div className="rect"></div>
                     </div>
-                    <div className="title">
-                        {I18N.get('emp35.header.title')}
+                    <div class="title">
+                        <span className="title-big">{I18N.get('emp35.header.title.part1')}</span>
+                        <span className="title-small">{I18N.get('emp35.header.title.part2')}</span>
+                        <span className="title-big">{I18N.get('emp35.header.title.part3')}</span>
                     </div>
                     <div className="content">
                         <div class="center">

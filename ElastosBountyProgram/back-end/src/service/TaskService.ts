@@ -43,6 +43,7 @@ export default class extends Base {
             .populate('approvedBy', sanitize)
             .populate('community')
             .populate('communityParent')
+            .populate('circle')
 
         if (task) {
             for (let subscriber of task.subscribers) {
@@ -166,6 +167,11 @@ export default class extends Base {
                     select: sanitize,
                 })
 
+                await db_team.getDBInstance().populate(task, {
+                    path: 'circle',
+                    select: sanitize,
+                })
+
                 for (let subscriber of task.subscribers) {
                     await db_user.getDBInstance().populate(subscriber, {
                         path: 'user',
@@ -213,7 +219,7 @@ export default class extends Base {
     public async create(param): Promise<Document> {
 
         const {
-            name, description, descBreakdown, goals,
+            name, description, descBreakdown, goals, circle,
             thumbnail, infoLink, community, communityParent, category, type, startTime, endTime,
             candidateLimit, candidateSltLimit, rewardUpfront, reward, assignSelf,
 
@@ -222,7 +228,7 @@ export default class extends Base {
             eventDateRange, eventDateRangeStart, eventDateRangeEnd, eventDateStatus,
             location,
 
-            attachment, attachmentType, attachmentFilename, isUsd,
+            attachment, attachmentType, attachmentFilename, isUsd, readDisclaimer,
 
             domain, recruitedSkillsets, pictures, pitch, bidding, referenceBid
         } = param;
@@ -252,13 +258,14 @@ export default class extends Base {
         }
 
         const doc = {
-            name, description, descBreakdown, goals, infoLink, category, type,
+            name, description, descBreakdown, goals, infoLink, category, type, circle,
             startTime,
             endTime,
             thumbnail,
             domain,
             recruitedSkillsets,
             pictures,
+            readDisclaimer,
 
             applicationDeadline, completionDeadline,
 
@@ -317,6 +324,11 @@ export default class extends Base {
         // if assignSelf = true, we add self as the candidate
         if (assignSelf) {
             await this.addCandidate({taskId: task._id, userId: this.currentUser._id, assignSelf: true})
+        }
+
+        if (circle) {
+            // Notify all users of the corresponding circle about the new task.
+            this.sendNewCircleTaskNotification(circle, task);
         }
 
         return task
@@ -630,19 +642,25 @@ export default class extends Base {
 
         await task.save()
 
-        await db_tc.db.populate(taskCandidate, {
+        await db_tc.getDBInstance().populate(taskCandidate, {
             path: 'user',
             select: sanitize
         })
 
-        await db_tc.db.populate(taskCandidate, {
+        await db_tc.getDBInstance().populate(taskCandidate, {
             path: 'team',
             select: sanitize
         })
 
         if (taskCandidate.team) {
-            await db_user.db.populate(taskCandidate.team, {
+            const db_ut = this.getDBModel('User_Team')
+            await db_user.getDBInstance().populate(taskCandidate.team, {
                 path: 'owner',
+                select: sanitize
+            })
+
+            await db_ut.getDBInstance().populate(taskCandidate.team, {
+                path: 'members',
                 select: sanitize
             })
         }
@@ -1102,6 +1120,61 @@ export default class extends Base {
             subject: candidateSubject,
             body: candidateBody
         })
+    }
+
+    public async sendNewCircleTaskNotification(id, task) {
+        const db_team = this.getDBModel('Team');
+        const db_user = this.getDBModel('User')
+        const db_user_team = this.getDBModel('User_Team');
+
+        const team = await db_team.findOne({
+            _id: id,
+            type: constant.TEAM_TYPE.CRCLE
+        });
+
+        if (team) {
+            const userTeams = await db_user_team.find({ _id: { $in: team.members }});
+            const users = await db_user.find({ _id: { $in: _.map(userTeams, 'user') }});
+            const to = _.map(users, 'email');
+
+            const formatUsername = (user) => {
+                const firstName = user.profile && user.profile.firstName
+                const lastName = user.profile && user.profile.lastName
+
+                if (_.isEmpty(firstName) && _.isEmpty(lastName)) {
+                    return user.username
+                }
+
+                return [firstName, lastName].join(' ')
+            }
+
+            const recVariables = _.zipObject(to, _.map(users, (target) => {
+                return {
+                    _id: target._id,
+                    username: formatUsername(target)
+                }
+            }))
+
+            const subject = `New CRcle Task has been created`
+            const body = `
+                <h2>Hello %recipient.username%,</h2>
+                <br/>
+                A new ${task.type} has been created under the ${team.name} CRcle you're a member of.
+                <br/>
+                <h3>
+                ${task.name}
+                </h3>
+                <br/>
+                <a href="${process.env.SERVER_URL}/profile/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
+                `
+
+            await mail.send({
+                to,
+                subject: subject,
+                body: body,
+                recVariables
+            });
+        }
     }
 
     public async sendTaskApproveEmail(curUser, taskOwner, task) {

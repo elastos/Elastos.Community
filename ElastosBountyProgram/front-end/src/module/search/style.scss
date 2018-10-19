@@ -9,22 +9,18 @@
   }
 
   .admin-left-column {
-    .filter-switch {
+    .filter-select-container {
       padding-bottom: $gap_0;
 
-      span {
-        margin-right: $gap_0;
-      }
-
-      .label {
-        font-size: 18px;
-        vertical-align: middle;
+      .filter-select {
+        width: 100%;
       }
     }
   }
 
   .admin-right-column {
     min-height: 392px;
+    padding: 0 20px !important;
 
     .ant-list-item {
       margin: $gap_0 0;
@@ -44,6 +40,7 @@
   }
 
   .filters-tree {
+    width: 100%;
     margin-bottom: $gap_1;
   }
 }

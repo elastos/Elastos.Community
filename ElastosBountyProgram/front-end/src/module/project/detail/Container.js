@@ -14,7 +14,7 @@ export default createContainer(Component, (state) => {
     }
 
     return {
-        ...state.task,
+        task: state.task.detail,
         page,
         ownedTeams: state.team.all_teams,
         currentUserId: state.user.current_user_id,

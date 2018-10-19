@@ -367,13 +367,16 @@ export default class extends BaseService {
     }
 
     async create(doc) {
+        const taskRedux = this.store.getRedux('task')
+        this.dispatch(taskRedux.actions.loading_update(true))
+
         const res = await api_request({
             path: '/api/task/create',
             method: 'post',
             data: doc
         })
 
-        // TODO: take user to task detail page
+        this.dispatch(taskRedux.actions.loading_update(false))
 
         return res
     }

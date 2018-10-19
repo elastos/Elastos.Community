@@ -146,6 +146,7 @@ export default {
     'forgot.success': '修改密码成功',
 
     // UserEditForm
+    'user.edit.form.label_email': '邮箱不能为空',
     'user.edit.form.label_role': '请选择一名角色',
     'user.edit.form.role': '角色',
 
@@ -165,6 +166,10 @@ export default {
     'developer.project.top': 'Top 100 项目',
     'developer.project.join': '参与正在进行中的项目',
     'developer.project.issue': '提交问题',
+    'developer.task': 'Task Search',
+    'developer.task.top': 'Top tasks',
+    'developer.task.join': 'Join a task that is in active development',
+    'developer.task.issue': 'Submit an issue',
     'developer.action': '亦来云适合我吗?',
     'developer.components': '亦来云核心组件',
     'developer.components.core.title': 'Elastos RunTime (RT)',

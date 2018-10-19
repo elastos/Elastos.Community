@@ -58,9 +58,9 @@ export default class extends EmptyPage {
                         <ul>
                             <li><a href="/cr100">{I18N.get('0105')}</a></li>
                             <li><a href="/crcles">{I18N.get('0106')}</a></li>
+                            <li><a href="/developer">{I18N.get('0102')}</a></li>
                             <li><a href="/council/list">{I18N.get('council.0001')}</a></li>
                             <li><a href="/ambassadors">{I18N.get('0107')}</a></li>
-                            <li><a href="/developer">{I18N.get('0102')}</a></li>
 
                             {this.props.is_login
                                 ? <li><a href="/profile/teams">{I18N.get('0104')}</a></li>
@@ -1087,8 +1087,10 @@ export default class extends EmptyPage {
                     <div className="square-ornament left">
                         <div className="sq fill sm"></div>
                         <div className="sq fill med"></div>
-                        <div className="sq fill lrg"></div>
-                        <div className="sq diags"><img src="assets/images/diags-blue.svg"/></div>
+                        <MediaQuery minWidth={MIN_WIDTH_PC}>
+                            <div className="sq fill lrg"></div>
+                            <div className="sq diags"><img src="assets/images/diags-blue.svg"/></div>
+                        </MediaQuery>
                     </div>
                     <div className="square-ornament right">
                         <div className="sq fill sm"></div>

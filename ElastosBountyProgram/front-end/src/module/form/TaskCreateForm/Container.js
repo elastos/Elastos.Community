@@ -1,8 +1,10 @@
-import {createContainer, goPath} from "@/util";
-import Component from './Component';
-import TaskService from '@/service/TaskService';
+import {createContainer, goPath} from "@/util"
+import Component from './Component'
+import TaskService from '@/service/TaskService'
+import TeamService from '@/service/TeamService'
 import CommunityService from '@/service/CommunityService'
 import {message} from 'antd'
+import {TEAM_TYPE} from '@/constant'
 import _ from 'lodash'
 
 message.config({
@@ -11,11 +13,15 @@ message.config({
 
 export default createContainer(Component, (state) => {
     return {
-        is_admin: state.user.is_admin
-    };
+        is_admin: state.user.is_admin,
+        loading: state.task.loading || state.team.loading,
+        all_circles: state.team.all_circles,
+        all_circles_loading: state.team.all_circles_loading
+    }
 }, () => {
-    const taskService = new TaskService();
-    const communityService = new CommunityService();
+    const taskService = new TaskService()
+    const teamService = new TeamService()
+    const communityService = new CommunityService()
 
     return {
         async createTask(formData, st) {
@@ -42,8 +48,10 @@ export default createContainer(Component, (state) => {
                     eventDateRangeEnd: formData.eventDateRangeEnd,
                     eventDateStatus: formData.eventDateStatus,
                     location: formData.taskLocation,
+                    readDisclaimer: formData.readDisclaimer,
 
                     infoLink: formData.taskLink,
+                    circle: formData.circle,
 
                     thumbnail: st.thumbnail_url,
                     thumbnailFilename: st.thumbnail_filename,
@@ -114,7 +122,9 @@ export default createContainer(Component, (state) => {
                     description: formData.taskDesc,
                     descBreakdown: formData.taskDescBreakdown,
                     goals: formData.taskGoals,
+                    readDisclaimer: formData.readDisclaimer,
 
+                    circle: formData.circle,
                     eventDateRange: formData.eventDateRange,
                     eventDateRangeStart: formData.eventDateRangeStart,
                     eventDateRangeEnd: formData.eventDateRangeEnd,
@@ -203,6 +213,10 @@ export default createContainer(Component, (state) => {
 
         resetTaskDetail() {
             return taskService.resetTaskDetail()
+        },
+
+        async getAllCircles() {
+            return teamService.loadAllCircles()
         },
 
         async getAllCommunities() {

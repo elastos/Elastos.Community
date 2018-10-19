@@ -29,7 +29,7 @@ export default class extends StandardPage {
                     <Row className="d_row">
                         <Col>
                             <h4>
-                                How do can I create Developer Events/Tasks
+                                How do I create Developer Events/Tasks?
                             </h4>
 
                             <p>
@@ -62,7 +62,7 @@ export default class extends StandardPage {
                         </Col>
                         <Col>
                             <h4>
-                                What's the difference between a task's max applicants and max accepted
+                                What's the difference between a task's max applicants and max accepted?
                             </h4>
 
                             <p>

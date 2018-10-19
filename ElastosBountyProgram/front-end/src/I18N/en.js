@@ -69,6 +69,10 @@ const en = {
     '2304': 'My Communities',
     '2305': 'My Projects',
 
+    'mentions.notFound': 'User not found',
+
+    'comments': 'Comments',
+    'comments.posts': 'Posts',
     'comments.noComments': 'No comments yet. Be the first to post!',
     // Admin tasks
     'admin.tasks.status': 'Status',
@@ -161,8 +165,11 @@ const en = {
     'forgot.success': 'Password changed successfully',
 
     // UserEditForm
+    'user.edit.form.label_email': 'Email is required',
     'user.edit.form.label_role': 'Please select a role',
     'user.edit.form.role': 'Role',
+    'user.follow': 'Follow',
+    'user.unfollow': 'Unfollow',
 
     // Developer
     'developer.breadcrumb.developers': 'Community',
@@ -181,6 +188,10 @@ const en = {
     'developer.project.top': 'Top 100 projects',
     'developer.project.join': 'Join a project that is in active development',
     'developer.project.issue': 'Submit an issue',
+    'developer.task': 'Task Search',
+    'developer.task.top': 'Top tasks',
+    'developer.task.join': 'Join a task that is in active development',
+    'developer.task.issue': 'Submit an issue',
     'developer.action': 'Is Elastos suited to my project?',
     'developer.components': 'Elastos Core Components',
     'developer.components.core.title': 'Elastos RunTime (RT)',
@@ -212,11 +223,13 @@ const en = {
 
     'developer.search.team': 'Team',
     'developer.search.project': 'Project',
+    'developer.search.task': 'Task',
     'developer.search.category': 'Category',
     'developer.search.category.social': 'Social',
     'developer.search.category.iot': 'IoT',
     'developer.search.category.media': 'Media',
     'developer.search.category.finance': 'Finance',
+    'developer.search.circle': 'Circle',
     'developer.search.lookingFor': 'Looking For',
     'developer.search.search.placeholder': 'Search',
     'developer.search.skillset': 'Skillset',
@@ -224,7 +237,7 @@ const en = {
     'developer.search.hide': 'Hide',
     'developer.search.apply': 'Apply',
     'developer.search.view': 'View',
-    'developer.search.subtitle_prefix': 'no longer accepting',
+    'developer.search.subtitle_prefix': 'No longer accepting',
     'developer.search.subtitle_bids': 'bids',
     'developer.search.subtitle_applications': 'applications',
     'developer.search.submit_bid': 'Submit Bid',
@@ -247,7 +260,9 @@ const en = {
     'myrepublic.projects.create.cr100': 'Create CR100',
 
     // Empower 35
-    'emp35.header.title': 'CRcles & Empower35',
+    'emp35.header.title.part1': 'CR',
+    'emp35.header.title.part2': 'cles',
+    'emp35.header.title.part3': ' & Empower35',
     'emp35.header.content.1': 'Connect with others, form teams, complete tasks, earn ELA.',
     'emp35.header.content.2': 'As people showcase their abilities, the E35 will be chosen',
     'emp35.header.content.3': 'gradually to manage and lead each team.',
@@ -268,6 +283,7 @@ const en = {
     'circle.joinToPost': 'Join the CRcle to post',
     'circle.registerToPost': 'Register to join the CRcle and post',
     'circle.members': 'Members',
+    'circle.tasks': 'Tasks',
     'circle.posts': 'Posts',
 
     // Training
@@ -328,7 +344,9 @@ const en = {
     'project.detail.popup.applied': 'Applied',
     'project.detail.popup.join_team': 'Join Team',
     'project.detail.popup.join_project': 'Apply for Project',
+    'project.detail.popup.join_task': 'Apply for Task',
     'project.detail.popup.bid_project': 'Bid on Project',
+    'project.detail.popup.bid_task': 'Bid on Task',
     'project.detail.bidding': 'Bidding Open',
     'project.detail.bidding_closed': 'Bidding Closed',
     'project.detail.tell_us_why_join': 'Tell us why you want to join.',
@@ -366,6 +384,31 @@ const en = {
     'team.skillset.java': 'Java',
     'team.skillset.swift': 'Swift',
 
+    'task.owner': 'Owner',
+    'task.circle': 'Circle',
+    'task.type': 'Type',
+    'task.description': 'Description',
+    'task.category': 'Category',
+    'task.applyDeadline': 'Apply deadline',
+    'task.completionDeadline': 'Deadline',
+    'task.applyMessage': 'See full task and apply',
+    'task.referenceBid': 'Reference bid',
+    'task.referenceBid.none': 'Bidding Open',
+    'task.budget': 'Budget',
+    'task.reward': 'Reward',
+    'task.infoLink': 'Further info',
+    'task.goals': 'Goals',
+    'task.eventStart': 'Event start',
+    'task.eventEnd': 'Event end',
+    'task.descBreakdown': 'Budget breakdown',
+    'task.location': 'Event location',
+    'task.community': 'Community',
+    'task.attachment': 'Attachment',
+    'task.budget.explain': 'Budget is for expenses/costs',
+    'task.reward.explain': 'Reward is for labor and time',
+    'task.bid': 'Bid',
+    'task.approvedBy': 'Approved By',
+
     // General
     'select.placeholder': 'Please select',
     '.ok': 'Ok',
@@ -375,6 +418,7 @@ const en = {
     '.upload': 'Click to Upload',
     '.yes': 'Yes',
     '.no': 'No',
+    '.loading': 'Loading...',
 
     // Landing
     'landing.elastos': 'Elastos',
@@ -385,7 +429,6 @@ const en = {
     'landing.action.here': 'Here',
     'landing.stayUpdate': 'Stay up to date with Cyber Republic',
     'landing.whatIs': 'What is Elastos?',
-
 
     'landing.whatIs.content.1': 'Elastos is the first completely safe and decentralized environment on the internet. Built with blockchain, it provides a virtual ecosystem where decentralized applications are protected from direct access with the internet while allowing near infinite scalability to billions of users.',
     'landing.whatIs.content.2': 'Elastos is a “Cyber Republic” that enables wealth generation through the ownership and exchange of data and digital assets.',
@@ -556,7 +599,12 @@ const en = {
     // Role
     'role.member': 'Member',
     'role.organizer': 'Organizer',
-    'role.admin': 'Admin'
+    'role.admin': 'Admin',
+
+    // Profile
+    'profile.localTime': 'Local time',
+    'profile.sendMessage': 'Send Direct Message',
+    'profile.viewProfile': 'View Profile'
 };
 
 // lang mappings

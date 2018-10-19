@@ -209,6 +209,10 @@
 
   .contributors {
     margin-top: $gap_2;
+
+    h3 {
+      padding: 0;
+    }
     .title {
       font-size: 24px;
     }
@@ -224,6 +228,11 @@
   }
 
   .applications {
+    margin-top: $gap_2;
+
+    h3 {
+      padding: 0;
+    }
     .title {
       font-size: 24px;
     }

@@ -21,11 +21,12 @@ import {
     Badge
 } from 'antd'
 import {upload_file} from '@/util';
-import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS } from '@/constant'
+import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS, USER_AVATAR_DEFAULT } from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
 import Application from '../application/Container'
 import ApplicationStart from '../application/start/Container'
+import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 import I18N from '@/I18N'
 import ItemsCarousel from 'react-items-carousel'
 import _ from 'lodash'
@@ -37,7 +38,8 @@ class C extends BaseComponent {
             showLoginRegisterModal: false,
             showApplicationModal: false,
             showApplicationStartModal: false,
-            taskCandidateId: null
+            taskCandidateId: null,
+            showUserInfo: null
         }
     }
 
@@ -249,8 +251,10 @@ class C extends BaseComponent {
         this.props.unsubscribeFromProject(this.props.taskId)
     }
 
-    linkProfileInfo(userId) {
-        this.props.history.push(`/member/${userId}`)
+    linkProfileInfo(user) {
+        this.setState({
+            showUserInfo: user
+        })
     }
 
     linkTeamDetail(teamId) {
@@ -306,7 +310,7 @@ class C extends BaseComponent {
 
     getAvatarWithFallback(avatar) {
         return _.isEmpty(avatar)
-            ? '/assets/images/Elastos_Logo.png'
+            ? USER_AVATAR_DEFAULT
             : avatar
     }
 
@@ -341,7 +345,7 @@ class C extends BaseComponent {
                     <div>
                         {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
                         <div>
-                            <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.user)}>
                                 <Avatar className={'gap-right ' + (candidate._id === 'such_fake_id' ? 'avatar-leader' : 'avatar-member')}
                                     src={this.getCandidateAvatar(candidate)}/>
                                 {this.getCandidateDisplayName(candidate)}
@@ -350,7 +354,7 @@ class C extends BaseComponent {
                         }
                         {(candidate.type === TASK_CANDIDATE_TYPE.TEAM) &&
                         <div>
-                            <a onClick={this.linkProfileInfo.bind(this, candidate.team._id)}>
+                            <a onClick={this.linkTeamDetail.bind(this, candidate.team._id)}>
                                 <Avatar className="gap-right" src={this.getTeamAvatar(candidate)} />
                                 {candidate.team.name}
                             </a>
@@ -423,7 +427,7 @@ class C extends BaseComponent {
                 return (
                     <div>
                         <div>
-                            <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.user)}>
                                 <Avatar className="gap-right" src={this.getCandidateAvatar(candidate)} />
                                 {this.getCandidateDisplayName(candidate)}
                             </a>
@@ -460,7 +464,7 @@ class C extends BaseComponent {
                     <div>
                         {(candidate.type === TASK_CANDIDATE_TYPE.USER) &&
                         <div>
-                            <a onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                            <a onClick={this.linkProfileInfo.bind(this, candidate.user)}>
                                 <Avatar className="gap-right" src={this.getCandidateAvatar(candidate)} />
                                 {this.getCandidateDisplayName(candidate)}
                             </a>
@@ -636,7 +640,7 @@ class C extends BaseComponent {
                     <div className="project-info">
                         {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
                             <Row className="applications ebp-wrap">
-                                <h3 className="no-margin">{this.props.detail.bidding ? I18N.get('project.detail.pending_bids') : I18N.get('project.detail.pending_applications')}</h3>
+                                <h3 className="no-margin with-gizmo">{this.props.detail.bidding ? I18N.get('project.detail.pending_bids') : I18N.get('project.detail.pending_applications')}</h3>
                                 {this.getCurrentApplicantsData().length ?
                                     this.getCurrentApplicants() :
                                     <div className="no-data">No applications yet</div>
@@ -646,7 +650,7 @@ class C extends BaseComponent {
 
                         {(this.props.is_admin || this.isTaskOwner() || this.props.page === 'PUBLIC') &&
                             <Row className="subscribers ebp-wrap">
-                                <h3 className="no-margin">{I18N.get('project.detail.subscribers')}</h3>
+                                <h3 className="no-margin with-gizmo">{I18N.get('project.detail.subscribers')}</h3>
                                 {this.getCurrentSubscribers()}
                             </Row>
                         }
@@ -667,9 +671,24 @@ class C extends BaseComponent {
                     {this.renderLoginOrRegisterModal()}
                     {this.renderApplicationModal()}
                     {this.renderApplicationStartModal()}
+                    <Modal
+                        className="profile-overview-popup-modal"
+                        visible={!!this.state.showUserInfo}
+                        onCancel={this.handleCancelProfilePopup.bind(this)}
+                        footer={null}>
+                        { this.state.showUserInfo &&
+                            <ProfilePopup showUserInfo={this.state.showUserInfo}/>
+                        }
+                    </Modal>
                 </div>
             </div>
         )
+    }
+
+    handleCancelProfilePopup() {
+        this.setState({
+            showUserInfo: null
+        })
     }
 
     getHeader() {
@@ -696,21 +715,21 @@ class C extends BaseComponent {
     getDescription1() {
         return (
             <div className="ebp-wrap">
-                <h3>
+                <h3 className="with-gizmo">
                     {I18N.get('developer.cr100.pitch.problem')}
                 </h3>
                 <div>
                     {this.props.detail.pitch && this.props.detail.pitch.problem}
                 </div>
 
-                <h3>
+                <h3 className="with-gizmo">
                     {I18N.get('developer.cr100.pitch.valueProposition')}
                 </h3>
                 <div>
                     {this.props.detail.pitch && this.props.detail.pitch.valueProposition}
                 </div>
 
-                <h3>
+                <h3 className="with-gizmo">
                     {I18N.get('developer.cr100.pitch.useCase')}
                 </h3>
                 <div>
@@ -723,14 +742,14 @@ class C extends BaseComponent {
     getDescription2() {
         return (
             <div className="ebp-wrap">
-                <h3>
+                <h3 className="with-gizmo">
                     {I18N.get('developer.cr100.pitch.beneficiaries')}
                 </h3>
                 <div>
                     {this.props.detail.pitch && this.format(this.props.detail.pitch.beneficiaries)}
                 </div>
 
-                <h3>
+                <h3 className="with-gizmo">
                     {I18N.get('developer.cr100.pitch.elaInfrastructure')}
                 </h3>
                 <div>

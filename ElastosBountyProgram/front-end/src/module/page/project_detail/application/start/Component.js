@@ -10,10 +10,12 @@ import {
     Avatar,
     Select,
     Input,
+    InputNumber,
     Form
 } from 'antd'
 import I18N from '@/I18N'
 import TeamCreateForm from '@/module/form/TeamCreateForm/Container'
+import { USER_AVATAR_DEFAULT, TEAM_AVATAR_DEFAULT, TASK_CATEGORY } from '@/constant'
 import _ from 'lodash'
 import './style.scss'
 
@@ -43,11 +45,13 @@ class C extends BaseComponent {
             if (!err) {
                 if (this.state.mode === 'solo' ||
                     (this.state.mode === 'team' && values.team === '$me')) {
-                    this.props.applyToTask(this.props.task._id, this.props.currentUserId, null, values.applyMsg).then(() => {
+                    this.props.applyToTask(this.props.task._id,
+                        this.props.currentUserId, null, values.applyMsg, null, null, values.bid).then(() => {
                         this.setState({ confirmation: true })
                     })
                 } else if (this.state.mode === 'team') {
-                    this.props.applyToTask(this.props.task._id, null, values.team, values.applyMsg).then(() => {
+                    this.props.applyToTask(this.props.task._id, null, values.team, values.applyMsg,
+                        null, null, values.bid).then(() => {
                         this.setState({ confirmation: true })
                     })
                 } else if (this.state.mode === 'newteam') {
@@ -56,7 +60,8 @@ class C extends BaseComponent {
                     sanitized.tags = sanitized.tags.join(',')
 
                     this.props.createTeam(sanitized).then((team) => {
-                        this.props.applyToTask(this.props.task._id, null, team._id).then(() => {
+                        this.props.applyToTask(this.props.task._id, null, team._id,
+                            null, null, null, values.bid).then(() => {
                             this.setState({ confirmation: true })
                         })
                     })
@@ -121,7 +126,7 @@ class C extends BaseComponent {
 
     getAvatarWithFallback(avatar) {
         return _.isEmpty(avatar)
-            ? '/assets/images/Elastos_Logo.png'
+            ? USER_AVATAR_DEFAULT
             : avatar
     }
 
@@ -157,10 +162,14 @@ class C extends BaseComponent {
     }
 
     getHeader() {
+        const title = this.props.task.category === TASK_CATEGORY.CR100
+            ? `#${this.props.task.dAppId} - ${this.props.task.name}`
+            : this.props.task.name
+
         return (
             <div className="full-width halign-wrapper start-header">
                 <h3 className="start-project-title komu-a">
-                    #{this.props.task.dAppId} - {this.props.task.name}
+                    {title}
                 </h3>
                 <div className="strike-text start-welcome">
                     <div className="strike-line"/>
@@ -177,22 +186,30 @@ class C extends BaseComponent {
 
     getModeSelector() {
         // TODO: Change place holder user images with team
+
+        const entityLookup = {
+            TASK: 'Task',
+            PROJECT: 'Project',
+            EVENT: 'Event'
+        }
+
+        const entity = entityLookup[this.props.task.type]
         const data = [
             {
                 img: '/assets/images/user_blurred.png',
-                description: 'I would like to contribute to this project',
+                description: `I would like to contribute to this ${entity}`,
                 text: 'Solo',
                 mode: 'solo'
             },
             {
-                img: '/assets/images/team_blurred.svg',
-                description: 'I registered a team and would like to work on this the project',
+                img: TEAM_AVATAR_DEFAULT,
+                description: `I registered a team and would like to work on this ${entity}`,
                 text: 'Existing Team',
                 mode: 'team'
             },
             {
-                img: '/assets/images/team_blurred.svg',
-                description: 'I would like to create a team and work on this project',
+                img: TEAM_AVATAR_DEFAULT,
+                description: `I would like to create a team and work on this ${entity}`,
                 text: 'Create Team',
                 mode: 'newteam'
             }
@@ -244,6 +261,12 @@ class C extends BaseComponent {
 
         const {getFieldDecorator} = this.props.form
         const compLookup = {
+            bidding: (
+                <div className="mode-panel">
+                    <div className="label komu-a">How much ELA do you want?</div>
+                    <InputNumber className="input-field"/>
+                </div>
+            ),
             solo: (
                 <div className="mode-panel">
                     <div className="label komu-a">Tell us why do you want to join</div>
@@ -257,6 +280,10 @@ class C extends BaseComponent {
         }
 
         const decoratorLookup = {
+            bidding: getFieldDecorator('bid', {
+                rules: [{required: true, message: 'Bid is required'}],
+                initialValue: 0
+            }),
             solo: getFieldDecorator('applyMsg', {
                 rules: [],
                 initialValue: ''
@@ -269,15 +296,26 @@ class C extends BaseComponent {
         }
 
         const formLookup = {
-            solo: decoratorLookup.solo(compLookup.solo),
+            solo: (
+                <div>
+                    {decoratorLookup.solo(compLookup.solo)}
+                    {this.props.task.bidding && decoratorLookup.bidding(compLookup.bidding)}
+                </div>
+            ),
             team: (
                 <div className="mode-panel">
                     <div className="label komu-a">Choose your team</div>
                     {decoratorLookup.team(compLookup.team)}
                     {decoratorLookup.solo(compLookup.solo)}
+                    {this.props.task.bidding && decoratorLookup.bidding(compLookup.bidding)}
                 </div>
             ),
-            newteam: compLookup.newteam
+            newteam: (
+                <div>
+                    {compLookup.newteam}
+                    {this.props.task.bidding && decoratorLookup.bidding(compLookup.bidding)}
+                </div>
+            )
         }
 
         const className = `full-width start-mode ${this.state.mode !== 'newteam'? 'halign-wrapper' : ''}`

@@ -113,7 +113,6 @@ const ProjectPitch = {
  *
  */
 export const Task = {
-
     name : {
         type : String,
         required : true
@@ -248,8 +247,8 @@ export const Task = {
     recruitedSkillsets: [String],
     pictures: [PictureSchema],
     dAppId: Number,
-
-    archived: Boolean
+    archived: Boolean,
+    circle: {type: Schema.Types.ObjectId, ref: 'team'}
 };
 
 

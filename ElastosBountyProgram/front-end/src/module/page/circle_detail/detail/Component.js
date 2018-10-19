@@ -1,9 +1,11 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import { TEAM_USER_STATUS } from '@/constant'
+import { TEAM_USER_STATUS, USER_AVATAR_DEFAULT, TASK_AVATAR_DEFAULT } from '@/constant'
 import {Avatar, Button, Col, Form, Icon, Popconfirm, Row, Spin, Table, Input, Modal} from 'antd'
 import Comments from '@/module/common/comments/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
+import TaskDetail from '@/module/task/popup/Container'
+import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 import './style.scss'
 import _ from 'lodash'
 import I18N from '@/I18N'
@@ -14,13 +16,17 @@ const { TextArea } = Input;
 class C extends BaseComponent {
     ord_states() {
         return {
-            showLoginRegisterModal: false
+            showLoginRegisterModal: false,
+            showTaskModal: false,
+            showUserInfo: null,
+            taskDetailId: null
         }
     }
 
     componentDidMount() {
         const teamId = this.props.match.params.circleId
         this.props.getTeamDetail(teamId)
+        this.props.getCircleTasks(teamId)
     }
 
     componentWillUnmount() {
@@ -36,21 +42,21 @@ class C extends BaseComponent {
     }
 
     isTeamMember() {
-        return _.find(this.props.detail.members, (member) => {
+        return _.find(this.props.team.detail.members, (member) => {
             return member.user._id === this.props.currentUserId &&
                 member.status === TEAM_USER_STATUS.NORMAL
         })
     }
 
     hasApplied() {
-        return _.find(this.props.detail.members, (member) => {
+        return _.find(this.props.team.detail.members, (member) => {
             return member.user._id === this.props.currentUserId &&
                 member.status === TEAM_USER_STATUS.PENDING
         })
     }
 
     async leaveTeam() {
-        const member = _.find(this.props.detail.members, (member) => {
+        const member = _.find(this.props.team.detail.members, (member) => {
             return member.user._id === this.props.currentUserId &&
                 member.status === TEAM_USER_STATUS.NORMAL
         })
@@ -67,6 +73,10 @@ class C extends BaseComponent {
         } else {
             this.showLoginRegisterModal()
         }
+    }
+
+    viewTask(taskId) {
+
     }
 
     getMainActions() {
@@ -106,10 +116,16 @@ class C extends BaseComponent {
         return (
             <div className="header-container">
                 <img className="circle-rectangle" src="/assets/images/emp35/circle_rectangle.png"/>
-                <div className="circle-name komu-a">{this.props.detail.name}</div>
+                <div className="circle-name komu-a">
+                    {
+                        this.props.loading
+                            ? <br/>
+                            : this.props.team.detail.name || <br/>
+                    }
+                </div>
                 <Row>
                     <Col span={8} className="left-col">
-                        <div className="circle-contributor-number komu-a">{_.size(this.props.detail.comments)}</div>
+                        <div className="circle-contributor-number komu-a">{_.size(this.props.team.detail.comments)}</div>
                         <span className="circle-contributor-label synthese">{I18N.get('circle.posts')}</span>
                     </Col>
                     <Col span={8}>
@@ -117,7 +133,7 @@ class C extends BaseComponent {
                         <img className="circle-down-arrow" src="/assets/images/emp35/down_arrow.png"/>
                     </Col>
                     <Col span={8} className="right-col">
-                        <div className="circle-members-number komu-a">{_.size(this.props.detail.members)}</div>
+                        <div className="circle-members-number komu-a">{_.size(this.props.team.detail.members)}</div>
                         <span className="circle-members-label synthese">{I18N.get('circle.members')}</span>
                     </Col>
                 </Row>
@@ -125,23 +141,30 @@ class C extends BaseComponent {
         )
     }
 
-    linkProfileInfo(userId) {
-        this.props.history.push(`/member/${userId}`)
+    linkProfileInfo(user) {
+        this.setState({
+            showUserInfo: user
+        })
+        // this.props.history.push(`/member/${userId}`)
     }
 
     renderContent() {
-        const description = this.props.detail.profile.description ||
-            I18N.get('emp35.circles.statement')
         return (
             <div className="content-paragraphs">
-                <p className="synthese">{description}</p>
+                <p className="synthese">{I18N.get('emp35.circles.statement')}</p>
             </div>
         )
     }
 
     getAvatarWithFallback(avatar) {
         return _.isEmpty(avatar)
-            ? '/assets/images/Elastos_Logo.png'
+            ? USER_AVATAR_DEFAULT
+            : avatar
+    }
+
+    getTaskAvatarWithFallback(avatar) {
+        return _.isEmpty(avatar)
+            ? TASK_AVATAR_DEFAULT
             : avatar
     }
 
@@ -154,7 +177,7 @@ class C extends BaseComponent {
     }
 
     renderMembers() {
-        const members = _.filter(this.props.detail.members, { status: TEAM_USER_STATUS.NORMAL })
+        const members = _.filter(this.props.team.detail.members, { status: TEAM_USER_STATUS.NORMAL })
         const columns = [{
             title: 'Name',
             key: 'name',
@@ -163,7 +186,7 @@ class C extends BaseComponent {
                     <div key={candidate._id}>
                         <Avatar className={'gap-right ' + (candidate.role === 'LEADER' ? 'avatar-leader' : 'avatar-member')}
                             src={this.getAvatarWithFallback(candidate.user.profile.avatar)}/>
-                        <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                        <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user)}>
                             {this.getUserNameWithFallback(candidate.user)}</a>
                     </div>
                 )
@@ -172,13 +195,56 @@ class C extends BaseComponent {
         return (
             <div>
                 <div className="member-header">
-                    <div className="member-header-icon"><img src="/assets/images/tri-square-dark.svg"/></div>
-                    <div className="member-header-label komu-a">{I18N.get('circle.members')}</div>
+                    <h3 className="member-header-label komu-a with-gizmo">{I18N.get('circle.members')}</h3>
                 </div>
                 <div className="members-list">
                     <Table
                         className="no-borders headerless"
                         dataSource={members}
+                        columns={columns}
+                        bordered={false}
+                        loading={this.props.loading}
+                        rowKey="_id"
+                        pagination={false}
+                        scroll={{ y: 400 }}>
+                    </Table>
+                </div>
+            </div>
+        )
+    }
+
+    renderTasks() {
+        const tasks = this.props.all_tasks
+        const clickHandler = !this.props.is_login
+            ? this.showLoginRegisterModal.bind(this)
+            : this.showTaskModal.bind(this)
+
+        const columns = [{
+            title: 'Name',
+            key: 'name',
+            render: task => {
+                return (
+                    <div key={task._id}>
+                        <Avatar className="gap-right"
+                            src={this.getTaskAvatarWithFallback(task.thumbnail)}/>
+                        <a className="row-name-link" onClick={() => clickHandler(task._id)}>
+                            {task.name}
+                        </a>
+                    </div>
+                )
+            }
+        }]
+
+        return (
+            <div>
+                <div className="member-header">
+                    <h3 className="member-header-label komu-a with-gizmo">{I18N.get('circle.tasks')}</h3>
+                </div>
+                <div className="members-list">
+                    <Table
+                        className="no-borders headerless"
+                        loading={this.props.task_loading}
+                        dataSource={tasks}
                         columns={columns}
                         bordered={false}
                         rowKey="_id"
@@ -212,18 +278,15 @@ class C extends BaseComponent {
                         headlines={true}
                         type="team"
                         canPost={this.isTeamMember()}
-                        returnUrl={`/crcles-detail/${this.props.detail._id}`}
-                        model={this.props.detail}/>
+                        returnUrl={`/crcles-detail/${this.props.team.detail._id}`}
+                        model={this.props.team.detail}/>
                 </div>
             </div>
         )
     }
 
     ord_render () {
-        return (_.isEmpty(this.props.detail, true) ? (
-            <div className="valign-wrapper halign-wrapper">
-                <Spin size="large"/>
-            </div>) : (
+        return (
             <div className="c_Circle c_Detail">
                 <div className="header">
                     <div className="left-box-container">
@@ -245,14 +308,33 @@ class C extends BaseComponent {
                 <div className="members-section">
                     {this.renderMembers()}
                 </div>
+                <div className="tasks-section">
+                    {this.renderTasks()}
+                </div>
                 <div className="rectangle double-size pull-right"/>
                 <div className="clearfix"/>
                 {this.renderComments()}
                 <div className="rectangle"/>
                 <div className="rectangle double-size"/>
                 {this.renderLoginOrRegisterModal()}
-            </div>)
+                {this.renderTaskModal()}
+                <Modal
+                    className="profile-overview-popup-modal"
+                    visible={!!this.state.showUserInfo}
+                    onCancel={this.handleCancelProfilePopup.bind(this)}
+                    footer={null}>
+                    { this.state.showUserInfo &&
+                        <ProfilePopup showUserInfo={this.state.showUserInfo}/>
+                    }
+                </Modal>
+            </div>
         )
+    }
+
+    handleCancelProfilePopup() {
+        this.setState({
+            showUserInfo: null
+        })
     }
 
     hideShowModal() {
@@ -278,9 +360,26 @@ class C extends BaseComponent {
                         <img src="/assets/images/login-left.png"/>
                     </div>
                     <div className="side-form">
-                        <LoginOrRegisterForm onHideModal={this.hideShowModal()}/>
+                        <LoginOrRegisterForm onHideModal={this.hideShowModal.bind()}/>
                     </div>
                 </div>
+            </Modal>
+        )
+    }
+
+    renderTaskModal() {
+        return (
+            <Modal
+                className="project-detail-nobar"
+                visible={this.state.showTaskModal}
+                onOk={this.handleTaskModalOk}
+                onCancel={this.handleTaskModalCancel}
+                footer={null}
+                width="70%"
+            >
+                { this.state.showTaskModal &&
+                    <TaskDetail taskId={this.state.taskDetailId}/>
+                }
             </Modal>
         )
     }
@@ -307,6 +406,25 @@ class C extends BaseComponent {
 
         this.setState({
             showLoginRegisterModal: false
+        })
+    }
+
+    handleTaskModalOk = (e) => {
+        this.setState({
+            showTaskModal: false
+        })
+    }
+
+    handleTaskModalCancel = (e) => {
+        this.setState({
+            showTaskModal: false
+        })
+    }
+
+    showTaskModal(id) {
+        this.setState({
+            showTaskModal: true,
+            taskDetailId: id
         })
     }
 }

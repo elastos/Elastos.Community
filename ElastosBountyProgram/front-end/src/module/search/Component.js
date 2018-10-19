@@ -1,28 +1,31 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import {
-    Col, Row, Icon, Input, Button, List, Checkbox, Radio,
-    Carousel, Modal, Avatar, Affix, Tag, TreeSelect, Switch, Divider
+    Col, Row, Icon, Input, Button, List, Checkbox, Radio, Select,
+    Carousel, Modal, Avatar, Affix, Tag, TreeSelect, Switch, Divider, Spin
 } from 'antd'
 import _ from 'lodash'
 import './style.scss'
-import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS} from '@/constant'
-import ProjectDetail from '@/module/project/detail/Container'
+import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT} from '@/constant'
 import TeamDetail from '@/module/team/detail/Container'
+import TaskDetail from '@/module/task/popup/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
 import Footer from '@/module/layout/Footer/Container'
 import MediaQuery from 'react-responsive'
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
 import I18N from '@/I18N'
 import moment from 'moment'
+import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
 const TreeNode = TreeSelect.TreeNode;
+const Option = Select.Option;
 
 export default class extends BaseComponent {
 
     componentDidMount() {
+        this.props.loadAllCircles()
         this.refetch()
     }
 
@@ -33,19 +36,21 @@ export default class extends BaseComponent {
 
     ord_states() {
         return {
-            lookingFor: this.props.preselect || 'TEAM',
+            lookingFor: this.props.preselect || 'TEAM', // TEAM, PROJECT, TASK
             skillset: [],
             domain: [],
+            circle: [],
             entryCount: 3,
             skillsetShowAllEntries: false,
             categoryShowAllEntries: false,
-            showProjectModal: false,
+            showTaskModal: false,
             showTeamModal: false,
             showLoginRegisterModal: false,
             taskDetailId: 0,
             teamDetailId: 0,
             showMobile: false,
-            filtersTree: ['TEAM']
+            filtersTree: ['TEAM'],
+            showUserInfo: null
         }
     }
 
@@ -60,21 +65,34 @@ export default class extends BaseComponent {
             query.domain = this.state.domain
         }
 
+        if (this.state.lookingFor === 'TASK') {
+            if (!_.isEmpty(this.state.circle)) {
+                query.circle = this.state.circle
+            }
+        }
+
         return query
     }
 
     refetch() {
         const query = this.getQuery()
-        const getter = this.isLookingForTeam()
-            ? this.props.getTeams
-            : this.props.getTasks
+        const lookup = {
+            TEAM: this.props.getTeams,
+            PROJECT: this.props.getProjects,
+            TASK: this.props.getTasks
+        }
 
+        const getter = lookup[this.state.lookingFor]
         getter.call(this, query)
     }
 
     // this needs to be used when it's a project to hide certain UI
     isLookingForTeam() {
         return this.state.lookingFor === 'TEAM'
+    }
+
+    isLookingForTask() {
+        return this.state.lookingFor === 'TASK'
     }
 
     onChangeLookingFor(e) {
@@ -95,27 +113,33 @@ export default class extends BaseComponent {
         }, this.refetch.bind(this))
     }
 
-    onChangeLookingForSwitch(value) {
+    onChangeCircle(value) {
         this.setState({
-            lookingFor: value ? 'TEAM' : 'PROJECT'
+            circle: value
         }, this.refetch.bind(this))
     }
 
-    showProjectModal = (id) => {
+    onChangeLookingForSelect(value) {
         this.setState({
-            showProjectModal: true,
+            lookingFor: value
+        }, this.refetch.bind(this))
+    }
+
+    showTaskModal(id) {
+        this.setState({
+            showTaskModal: true,
             taskDetailId: id
         })
     }
 
-    showTeamModal = (id) => {
+    showTeamModal(id) {
         this.setState({
             showTeamModal: true,
             teamDetailId: id
         })
     }
 
-    showLoginRegisterModal = () => {
+    showLoginRegisterModal() {
         sessionStorage.setItem('loginRedirect', '/developer/search')
         sessionStorage.setItem('registerRedirect', '/developer/search')
 
@@ -124,9 +148,9 @@ export default class extends BaseComponent {
         })
     }
 
-    handleProjectModalOk = (e) => {
+    handleTaskModalOk = (e) => {
         this.setState({
-            showProjectModal: false
+            showTaskModal: false
         })
     }
 
@@ -136,9 +160,9 @@ export default class extends BaseComponent {
         })
     }
 
-    handleProjectModalCancel = (e) => {
+    handleTaskModalCancel = (e) => {
         this.setState({
-            showProjectModal: false
+            showTaskModal: false
         })
     }
 
@@ -182,7 +206,7 @@ export default class extends BaseComponent {
         })
 
         return (
-            <RadioGroup onChange={this.onChangeLookingFor.bind(this)} value={this.state.lookingFor}>
+            <RadioGroup disabled={this.props.loading} onChange={this.onChangeLookingFor.bind(this)} value={this.state.lookingFor}>
                 {elements}
             </RadioGroup>
         )
@@ -194,7 +218,7 @@ export default class extends BaseComponent {
         const elements = _.map(filtered, (option) => {
             return (
                 <div className="checkbox" key={option.value}>
-                    <Checkbox value={option.value}>
+                    <Checkbox value={option.value} disabled={this.props.loading}>
                         {option.label}
                     </Checkbox>
                 </div>
@@ -214,7 +238,7 @@ export default class extends BaseComponent {
         const elements = _.map(filtered, (option) => {
             return (
                 <div className="checkbox" key={option.value}>
-                    <Checkbox value={option.value}>
+                    <Checkbox value={option.value} disabled={this.props.loading}>
                         {option.label}
                     </Checkbox>
                 </div>
@@ -224,6 +248,29 @@ export default class extends BaseComponent {
         return (
             <CheckboxGroup onChange={this.onChangeDomain.bind(this)}>
                 {elements}
+            </CheckboxGroup>
+        )
+    }
+
+    renderCircles(showAll) {
+        const limit = this.state.entryCount
+        const filtered = _.take(this.props.all_circles, showAll ? this.props.all_circles.length : limit)
+        const elements = _.map(filtered, (circle) => {
+            return (
+                <div className="checkbox" key={circle._id}>
+                    <Checkbox value={circle._id} disabled={this.props.loading}>
+                        {circle.name}
+                    </Checkbox>
+                </div>
+            )
+        })
+
+        return (
+            <CheckboxGroup onChange={this.onChangeCircle.bind(this)}>
+                { this.props.all_circles_loading
+                    ? <Spin/>
+                    : elements
+                }
             </CheckboxGroup>
         )
     }
@@ -263,6 +310,15 @@ export default class extends BaseComponent {
         return elements;
     }
 
+    getCircleTree() {
+        const elements = _.map(this.props.all_circles, (option) => {
+            return (
+                <TreeNode value={option._id} title={option.name} key={option._id}/>
+            )
+        })
+        return elements;
+    }
+
     handleOnFiltersChange(e) {
         const skillset = []
         const domain = []
@@ -292,6 +348,10 @@ export default class extends BaseComponent {
             {
                 label: I18N.get('developer.search.project'),
                 value: 'PROJECT'
+            },
+            {
+                label: I18N.get('developer.search.task'),
+                value: 'TASK'
             }
         ]
     }
@@ -370,82 +430,112 @@ export default class extends BaseComponent {
         const lookingForOptions = this.getLookingForOptions()
         const skillsetOptions = this.getSkillsetOptions()
         const categoryOptions = this.getCategoryOptions()
-        const lookingForElement = this.renderLookingFor(lookingForOptions, true)
-        const skillsetElement = this.renderSkillset(skillsetOptions, this.state.skillsetShowAllEntries)
-        const categoryElement = this.renderCategory(categoryOptions, this.state.categoryShowAllEntries)
-        const skillsetElementTree = this.getSkillsetTree(skillsetOptions)
-        const categoryElementTree = this.getCategoryTree(categoryOptions)
+
         return (
             <div>
                 <MediaQuery minWidth={MIN_WIDTH_PC}>
                     <Affix offsetTop={15}>
-                        <Input.Search placeholder={I18N.get('developer.search.search.placeholder')}/>
                         <div className="group">
                             <div className="title">{I18N.get('developer.search.lookingFor')}</div>
                             <div className="content">
-                                {lookingForElement}
+                                {this.renderLookingFor(lookingForOptions, true)}
                             </div>
                         </div>
-                        <div className="group">
-                            <div className="title">{I18N.get('developer.search.skillset')}</div>
-                            <div className="content">
-                                {skillsetElement}
-                                {skillsetOptions.length > this.state.entryCount &&
-                                <div className="showMore" onClick={this.enableSkillsetEntries.bind(this)}>
-                                    {
-                                        !this.state.skillsetShowAllEntries ? (<span>{I18N.get('developer.search.showMore')}</span>)
-                                            : (<span>{I18N.get('developer.search.hide')}</span>)
+                        {this.state.lookingFor !== 'TASK' &&
+                            <div className="group">
+                                <div className="title">{I18N.get('developer.search.skillset')}</div>
+                                <div className="content">
+                                    {this.renderSkillset(skillsetOptions, this.state.skillsetShowAllEntries)}
+                                    {skillsetOptions.length > this.state.entryCount &&
+                                    <div className="showMore" onClick={this.enableSkillsetEntries.bind(this)}>
+                                        {
+                                            !this.state.skillsetShowAllEntries ? (<span>{I18N.get('developer.search.showMore')}</span>)
+                                                : (<span>{I18N.get('developer.search.hide')}</span>)
+                                        }
+                                    </div>
                                     }
                                 </div>
-                                }
                             </div>
-                        </div>
-                        <div className="group">
-                            <div className="title">{I18N.get('developer.search.category')}</div>
-                            <div className="content">
-                                {categoryElement}
-                                { categoryOptions.length > this.state.entryCount &&
-                                <div className="showMore" onClick={this.enableCategoryEntries.bind(this)}>
-                                    {
-                                        !this.state.categoryShowAllEntries ? (<span>{I18N.get('developer.search.showMore')}</span>)
-                                            : (<span>{I18N.get('developer.search.hide')}</span>)
+                        }
+                        {this.state.lookingFor !== 'TASK' &&
+                            <div className="group">
+                                <div className="title">{I18N.get('developer.search.category')}</div>
+                                <div className="content">
+                                    {this.renderCategory(categoryOptions, this.state.categoryShowAllEntries)}
+                                    { categoryOptions.length > this.state.entryCount &&
+                                    <div className="showMore" onClick={this.enableCategoryEntries.bind(this)}>
+                                        {
+                                            !this.state.categoryShowAllEntries ? (<span>{I18N.get('developer.search.showMore')}</span>)
+                                                : (<span>{I18N.get('developer.search.hide')}</span>)
+                                        }
+                                    </div>
                                     }
                                 </div>
-                                }
                             </div>
-                        </div>
+                        }
+                        {this.state.lookingFor === 'TASK' &&
+                            <div className="group">
+                                <div className="title">{I18N.get('developer.search.circle')}</div>
+                                <div className="content">
+                                    {this.renderCircles(this.state.circlesShowAllEntries)}
+                                    <div className="showMore" onClick={this.enableCirclesEntries.bind(this)}>
+                                        {
+                                            !this.state.circlesShowAllEntries ? (<span>{I18N.get('developer.search.showMore')}</span>)
+                                                : (<span>{I18N.get('developer.search.hide')}</span>)
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
                     </Affix>
                 </MediaQuery>
                 <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
-                    <div className="filter-switch">
-                        <Switch defaultChecked onChange={this.onChangeLookingForSwitch.bind(this)} />
-                        {this.state.lookingFor === lookingForOptions[0].value &&
-                        <span className="label">{lookingForOptions[0].label}</span>
-                        }
-                        {this.state.lookingFor === lookingForOptions[1].value &&
-                        <span className="label">{lookingForOptions[1].label}</span>
-                        }
+                    <div className="filter-select-container">
+                        <Select className="filter-select" defaultValue={this.state.lookingFor} onChange={this.onChangeLookingForSelect.bind(this)}>
+                            <Option value="PROJECT">{I18N.get('developer.search.project')}</Option>
+                            <Option value="TEAM">{I18N.get('developer.search.team')}</Option>
+                            <Option value="TASK">{I18N.get('developer.search.task')}</Option>
+                        </Select>
                     </div>
+                    {this.state.lookingFor !== 'TASK' &&
+                        <TreeSelect
+                            className="filters-tree"
+                            showSearch
+                            value={this.state.filtersTree}
+                            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                            placeholder="Filters"
+                            allowClear
+                            multiple
+                            treeDefaultExpandAll
+                            treeCheckable={true}
+                            onChange={this.handleOnFiltersChange.bind(this)}
+                        >
+                            <TreeNode value="0" title={I18N.get('developer.search.skillset')} key="0">
+                                {this.getSkillsetTree(skillsetOptions)}
+                            </TreeNode>
+                            <TreeNode value="1" title={I18N.get('developer.search.category')} key="1">
+                                {this.getCategoryTree(categoryOptions)}
+                            </TreeNode>
+                        </TreeSelect>
+                    }
+                    {this.state.lookingFor === 'TASK' &&
                     <TreeSelect
                         className="filters-tree"
                         showSearch
-                        style={{ width: 300 }}
-                        value={this.state.filtersTree}
+                        value={this.state.circle}
                         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                         placeholder="Filters"
                         allowClear
                         multiple
                         treeDefaultExpandAll
-                        treeCheckable={true}
-                        onChange={this.handleOnFiltersChange.bind(this)}
+                        treeCheckable={!this.props.all_circles_loading}
+                        onChange={this.onChangeCircle.bind(this)}
                     >
-                        <TreeNode value="0" title="Skillset" key="0">
-                            {skillsetElementTree}
-                        </TreeNode>
-                        <TreeNode value="1" title="Category" key="1">
-                            {categoryElementTree}
+                        <TreeNode icon="" value="0" title={this.props.all_circles_loading ? I18N.get('.loading') : I18N.get('developer.search.circle')} key="0">
+                            {this.getCircleTree()}
                         </TreeNode>
                     </TreeSelect>
+                    }
                 </MediaQuery>
             </div>)
     }
@@ -462,6 +552,12 @@ export default class extends BaseComponent {
         })
     }
 
+    enableCirclesEntries() {
+        this.setState({
+            circlesShowAllEntries: !this.state.circlesShowAllEntries
+        })
+    }
+
     renderMain() {
         return (
             <div className="c_Search">
@@ -475,14 +571,14 @@ export default class extends BaseComponent {
                 </Row>
                 <Modal
                     className="project-detail-nobar"
-                    visible={this.state.showProjectModal}
-                    onOk={this.handleProjectModalOk}
-                    onCancel={this.handleProjectModalCancel}
+                    visible={this.state.showTaskModal}
+                    onOk={this.handleTaskModalOk}
+                    onCancel={this.handleTaskModalCancel}
                     footer={null}
                     width="70%"
                 >
-                    { this.state.showProjectModal &&
-                        <ProjectDetail taskId={this.state.taskDetailId}/>
+                    { this.state.showTaskModal &&
+                        <TaskDetail taskId={this.state.taskDetailId}/>
                     }
                 </Modal>
                 <Modal
@@ -497,6 +593,15 @@ export default class extends BaseComponent {
                         <TeamDetail teamId={this.state.teamDetailId}/>
                     }
                 </Modal>
+                <Modal
+                    className="profile-overview-popup-modal"
+                    visible={!!this.state.showUserInfo}
+                    onCancel={this.handleCancelProfilePopup.bind(this)}
+                    footer={null}>
+                    { this.state.showUserInfo &&
+                        <ProfilePopup showUserInfo={this.state.showUserInfo}/>
+                    }
+                </Modal>
                 {this.renderLoginOrRegisterModal()}
                 <Footer/>
             </div>
@@ -509,15 +614,16 @@ export default class extends BaseComponent {
 
     getAvatarWithFallback(avatar) {
         return _.isEmpty(avatar)
-            ? '/assets/images/Elastos_Logo.png'
+            ? USER_AVATAR_DEFAULT
             : avatar
     }
 
     getCarousel(item) {
+        const IMAGE_SIZE = 188
         const pictures = _.map(item.pictures, (picture, ind) => {
             return (
                 <div key={ind}>
-                    <img width={188} height={188} alt="logo" src={picture.url} />
+                    <img width={IMAGE_SIZE} height={IMAGE_SIZE} alt="logo" src={picture.url} />
                 </div>
             )
         })
@@ -525,9 +631,14 @@ export default class extends BaseComponent {
         if (item.thumbnail) {
             pictures.unshift(
                 <div key="main">
-                    <img width={188} height={188} alt="logo" src={item.thumbnail} />
+                    <img width={IMAGE_SIZE} height={IMAGE_SIZE} alt="logo" src={item.thumbnail} />
                 </div>
             )
+        }
+
+        if (pictures.length === 0) {
+            pictures.push(<img width={IMAGE_SIZE} height={IMAGE_SIZE}
+                src={'/assets/images/Group_1685.12.svg'} key={0} />);
         }
 
         return (
@@ -581,7 +692,7 @@ export default class extends BaseComponent {
                 return {
                     href: '',
                     title: team.name,
-                    pictures: team.pictures && team.pictures.length > 0 ? team.pictures : [{ url: '/assets/images/Elastos_Logo.png' }],
+                    pictures: team.pictures,
                     description: description_fn(team),
                     content: team.profile.description,
                     owner: team.owner,
@@ -594,7 +705,8 @@ export default class extends BaseComponent {
                     href: '',
                     title: task.name,
                     bidding: task.bidding,
-                    pictures: task.pictures && task.pictures.length > 0 ? task.pictures : [{ url: '/assets/images/Elastos_Logo.png' }],
+                    pictures: task.pictures,
+                    thumbnail: task.thumbnail,
                     description: description_fn(task),
                     content: task.description,
                     owner: task.createdBy,
@@ -603,10 +715,15 @@ export default class extends BaseComponent {
                 }
             })
 
+        const handlersLookup = {
+            TEAM: this.showTeamModal,
+            PROJECT: this.showTaskModal,
+            TASK: this.showTaskModal
+        }
+
         const clickHandler = !this.props.is_login
             ? this.showLoginRegisterModal
-            : (this.isLookingForTeam() ? this.showTeamModal
-                : this.showProjectModal)
+            : handlersLookup[this.state.lookingFor] || _.noop
 
         return (
             <List loading={this.props.loading} itemLayout='vertical' size='large'
@@ -631,7 +748,7 @@ export default class extends BaseComponent {
                                 </h5>
                                 <div className="description-content" dangerouslySetInnerHTML={{__html: item.content}}/>
                                 <div className="ant-list-item-right-box">
-                                    <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                    <a className="pull-up" onClick={() => this.setState({ showUserInfo: item.owner })}>
                                         <Avatar size="large" className="pull-right"
                                             src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
                                         <div className="clearfix"/>
@@ -655,7 +772,7 @@ export default class extends BaseComponent {
                                     {item.description}
                                 </h5>
                                 <div>
-                                    <a onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                    <a onClick={() => this.setState({ showUserInfo: item.owner })}>
                                         <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
                                         <Divider type="vertical"/>
                                         <Avatar size="large"
@@ -672,6 +789,12 @@ export default class extends BaseComponent {
         )
     }
 
+    handleCancelProfilePopup() {
+        this.setState({
+            showUserInfo: null
+        })
+    }
+
     // this is also just a view button if the project cannot accept anymore applications
     renderApplyButton(detail, clickHandler) {
 
@@ -684,13 +807,9 @@ export default class extends BaseComponent {
         return <div className="pull-down">
             <span></span>
             <Button onClick={clickHandler.bind(this, detail.id)}
-                    type={cssClass}>
+                type={cssClass}>
                 {detail.hasApprovedApplication ? I18N.get('developer.search.view') : (detail.bidding ? I18N.get('developer.search.submit_bid') : I18N.get('developer.search.apply'))}
             </Button>
         </div>
-    }
-
-    linkUserDetail(user) {
-        this.props.history.push(`/member/${user._id}`)
     }
 }

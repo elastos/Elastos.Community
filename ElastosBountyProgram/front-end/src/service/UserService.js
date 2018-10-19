@@ -137,14 +137,14 @@ export default class extends BaseService {
     }
 
     // restrictive getter - public profile should never return email / private info
-    // TODO: I am using member to refer to a profile other than yourself, might want to change it
     async getMember(userId, options = {}) {
-
         let path = `/api/user/public/${userId}`
         const memberRedux = this.store.getRedux('member')
+        await this.dispatch(memberRedux.actions.loading_update(true))
+
+        await this.dispatch(memberRedux.actions.loading_update(true))
 
         if (options.admin) {
-            await this.dispatch(memberRedux.actions.loading_update(true))
             path += '?admin=true'
         }
 
@@ -153,20 +153,15 @@ export default class extends BaseService {
             method: 'get'
         })
 
-        // this is gross, if we are focused on a user, it shouldn't matter if it's you or another user
-        // we should use the same base redux model
-        if (options.admin) {
-
-            await this.dispatch(memberRedux.actions.focus_user_update(result))
-            await this.dispatch(memberRedux.actions.loading_update(false))
-        }
+        await this.dispatch(memberRedux.actions.detail_update(result))
+        await this.dispatch(memberRedux.actions.loading_update(false))
 
         return result
     }
 
     resetMemberDetail() {
-        const taskRedux = this.store.getRedux('member')
-        this.dispatch(taskRedux.actions.focus_user_reset())
+        const memberRedux = this.store.getRedux('member')
+        this.dispatch(memberRedux.actions.detail_reset())
     }
 
     async update(userId, doc) {
@@ -181,7 +176,7 @@ export default class extends BaseService {
             data: doc
         })
 
-        await this.dispatch(memberRedux.actions.focus_user_update(result))
+        await this.dispatch(memberRedux.actions.detail_update(result))
         await this.dispatch(memberRedux.actions.loading_update(false))
 
         return result
@@ -224,8 +219,6 @@ export default class extends BaseService {
     async getAll(query) {
         const memberRedux = this.store.getRedux('member')
 
-        await this.dispatch(memberRedux.actions.loading_update(true))
-
         const result = await api_request({
             path : `/api/user/list`,
             method : 'get',
@@ -233,7 +226,6 @@ export default class extends BaseService {
         });
 
         await this.dispatch(memberRedux.actions.users_update(result))
-        await this.dispatch(memberRedux.actions.loading_update(false))
 
         return result
     }

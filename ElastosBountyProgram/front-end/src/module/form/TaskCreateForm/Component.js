@@ -60,7 +60,7 @@ class C extends BaseComponent {
     async componentDidMount() {
         const taskId = this.props.match.params.taskId
         taskId && await this.props.getTaskDetail(taskId)
-        // await this.getCommunityTrees()
+        this.props.getAllCircles()
     }
 
     componentWillUnmount() {
@@ -83,7 +83,8 @@ class C extends BaseComponent {
 
                 // admin does not need to agree to disclaimer
                 if (!this.props.is_admin) {
-                    if (values.taskReward || values.taskRewardUsd || values.taskRewardUpfront || values.taskRewardUpfrontUsd) {
+                    if (values.taskReward || values.taskRewardUsd ||
+                        values.taskRewardUpfront || values.taskRewardUpfrontUsd) {
                         if (!this.state.readDisclaimer) {
                             message.error('You must confirm you have read the payment rules and disclaimer')
                             document.getElementById('disclaimerLink').focus()
@@ -91,8 +92,6 @@ class C extends BaseComponent {
                         }
 
                         values.readDisclaimer = true
-                    } else {
-                        values.readDisclaimer = false
                     }
                 }
 
@@ -138,17 +137,15 @@ class C extends BaseComponent {
             taskCategory: this.props.taskCategory || TASK_TYPE.SOCIAL,
             assignSelf: props.existingTask ? props.existingTask.assignSelf : true,
             eventDateRange: (props.existingTask && props.existingTask.eventDateRange) || false,
-
             thumbnail_url : (props.existingTask && props.existingTask.thumbnail) || null,
             thumbnail_loading : false,
             thumbnail_filename: (props.existingTask && props.existingTask.thumbnailFilename) || '',
             thumbnail_type: '',
-
             attachment_url: (props.existingTask && props.existingTask.attachment) || null,
             attachment_loading: false,
             attachment_filename: (props.existingTask && props.existingTask.attachmentFilename) || '',
             attachment_type: '',
-
+            circle: (props.existingTask && props.existingTask.circle && props.existingTask.circle._id) || null,
             removeAttachment: false,
             editing: !!props.existingTask,
             isUsd: (props.existingTask && props.existingTask.reward.isUsd) || false,
@@ -156,8 +153,6 @@ class C extends BaseComponent {
             previewVisible: false,
             previewImage: '',
             isBidding: (props.existingTask && props.existingTask.bidding) || false,
-
-            // only show this on create
             readDisclaimer: (props.existingTask && props.existingTask.readDisclaimer) || false,
             showDisclaimer: false
         }
@@ -168,16 +163,20 @@ class C extends BaseComponent {
         })
     }
 
-    getInputProps () {
+    hasLeaderEditRestrictions() {
+        const existingTask = this.props.existingTask
+        return this.props.page === 'LEADER' &&
+            ![TASK_STATUS.CREATED, TASK_STATUS.PENDING].includes(existingTask.status)
+    }
 
+    getInputProps () {
         const {getFieldDecorator} = this.props.form
         const existingTask = this.props.existingTask
 
         // if this is approved - TODO: back-end restrictions + tests
         // this is for the organizer page and editing is more restrictive
         // unless it's just CREATED/PENDING
-        const hasLeaderEditRestrictions = this.props.page === 'LEADER' &&
-            ![TASK_STATUS.CREATED, TASK_STATUS.PENDING].includes(existingTask.status)
+        const hasLeaderEditRestrictions = this.hasLeaderEditRestrictions()
 
         const taskName_fn = getFieldDecorator('taskName', {
             rules: [
@@ -206,6 +205,27 @@ class C extends BaseComponent {
                 {this.props.is_admin &&
                     <Option value={TASK_CATEGORY.DEVELOPER}>Developer</Option>
                 }
+            </Select>
+        )
+
+        const circle_fn = getFieldDecorator('circle', {
+            rules: [],
+            initialValue: (!this.props.loading && this.state.editing &&
+                existingTask.circle && existingTask.circle._id) || null
+        })
+
+        const circle_el = (
+            <Select disabled={this.props.all_circles_loading}>
+                <Select.Option value={null}>
+                    {this.props.all_circles_loading
+                        ? I18N.get('.loading')
+                        : I18N.get('.no')}
+                </Select.Option>
+                {_.map(this.props.all_circles, (circle, ind) =>
+                    <Select.Option key={ind} value={circle._id}>
+                        {circle.name}
+                    </Select.Option>
+                )}
             </Select>
         )
 
@@ -713,7 +733,8 @@ class C extends BaseComponent {
             thumbnail: thumbnail_fn(thumbnail_el),
 
             // TODO: fix issue where existing attachment can't be removed
-            attachment: attachment_fn(attachment_el)
+            attachment: attachment_fn(attachment_el),
+            circle: circle_fn(circle_el)
         }
     }
 
@@ -790,8 +811,6 @@ class C extends BaseComponent {
             },
         }
 
-
-
         // const existingTask = this.props.existingTask
 
         // TODO: terms of service checkbox\
@@ -801,14 +820,18 @@ class C extends BaseComponent {
         // TODO: description CKE Editor
         return (
             <div className="c_taskCreateFormContainer">
-
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
                     <div>
                         <h3 class="no-margin">General Info</h3>
                         <FormItem label="Name" {...formItemLayout}>
                             {p.taskName}
                         </FormItem>
-                        <FormItem label="Community"  {...formItemLayout}>
+                        {this.props.taskType !== 'PROJECT' &&
+                            <FormItem label="Assign to Circle" {...formItemLayout}>
+                                {p.circle}
+                            </FormItem>
+                        }
+                        <FormItem label="Community" {...formItemLayout}>
                             {p.taskCommunity}
                         </FormItem>
 
@@ -1010,7 +1033,9 @@ class C extends BaseComponent {
                                 {this.state.assignSelf && <br/>}
 
                                 <FormItem label="Fiat ($USD)" {...formItemLayout}>
-                                    <Checkbox name="isUsd" checked={this.state.isUsd} onChange={() => {this.setState({isUsd: !this.state.isUsd})}}/>
+                                    <Checkbox name="isUsd" checked={this.state.isUsd}
+                                        disabled={this.hasLeaderEditRestrictions()}
+                                        onChange={() => {this.setState({isUsd: !this.state.isUsd})}}/>
                                 </FormItem>
 
                                 {this.state.isUsd ?

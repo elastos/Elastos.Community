@@ -1,4 +1,6 @@
-import {Schema} from 'mongoose';
+import {Schema} from 'mongoose'
+import {CommentSchema} from './CommentSchema'
+import {SubscriberSchema} from './SubscriberSchema'
 
 export const Region = {
     country: String,
@@ -32,7 +34,10 @@ export const Profile = {
     wechat: String,
     twitter: String,
     facebook: String,
+    github: String,
+    linkedin: String,
 
+    bio: String,
     beOrganizer : Boolean,
     isDeveloper : Boolean,
 
@@ -114,5 +119,7 @@ export const User = {
         type : Boolean,
         default : false
     },
-    circles: [{type: Schema.Types.ObjectId, ref: 'team'}]
+    circles: [{type: Schema.Types.ObjectId, ref: 'team'}],
+    comments: [[CommentSchema]],
+    subscribers: [SubscriberSchema]
 };

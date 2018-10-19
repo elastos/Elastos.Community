@@ -38,8 +38,10 @@ export default createContainer(Component, (state)=>{
                     // General
                     firstName: formData.firstName,
                     lastName: formData.lastName,
+                    bio: formData.bio,
                     gender: formData.gender,
                     country: formData.country,
+                    timezone: formData.timezone,
                     avatar: state.avatar_url,
                     avatarFilename: state.avatar_filename,
                     avatarFileType: state.avatar_type,
@@ -51,6 +53,8 @@ export default createContainer(Component, (state)=>{
                     wechat: formData.wechat,
                     twitter: formData.twitter,
                     facebook: formData.facebook,
+                    linkedin: formData.linkedin,
+                    github: formData.github,
 
                     // Questions
                     beOrganizer: formData.beOrganizer === 'yes',
