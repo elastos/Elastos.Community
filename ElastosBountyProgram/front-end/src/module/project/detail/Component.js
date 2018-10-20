@@ -687,7 +687,7 @@ class C extends BaseComponent {
 
     getReward() {
         return this.props.task.reward &&
-            ((this.props.task.reward.usd / 100) || this.props.task.reward.ela)
+            ((this.props.task.reward.usd / 100) || this.props.task.reward.ela / 1000)
     }
 
     getRewardElaPerUsd() {
@@ -718,7 +718,7 @@ class C extends BaseComponent {
 
     getBudget() {
         return this.props.task.rewardUpfront &&
-            ((this.props.task.rewardUpfront.usd / 100) || this.props.task.rewardUpfront.ela)
+            ((this.props.task.rewardUpfront.usd / 100) || this.props.task.rewardUpfront.ela / 1000)
     }
 
     getBudgetElaPerUsd() {
