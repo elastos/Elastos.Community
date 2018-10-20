@@ -161,6 +161,13 @@
   height: 53px;
 }
 
+.cr-input {
+  .ant-select-selection {
+    border-radius: 0;
+    border: 1px solid #434D72;
+  }
+}
+
 .mirror-image {
   transform: scaleX(-1);
 }
@@ -182,9 +189,11 @@
     }
   }
 }
+
 h3.with-gizmo {
   position: relative;
 }
+
 h3.with-gizmo:before {
   position: absolute;
   top: -$gap_0;
@@ -195,4 +204,10 @@ h3.with-gizmo:before {
   background-image: url("/assets/images/tri-square-dark.svg");
   background-size: 12px 12px;
   content: "";
+}
+
+.no-modal-padding {
+  .ant-modal-body {
+    padding: 0;
+  }
 }
