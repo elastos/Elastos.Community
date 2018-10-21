@@ -408,6 +408,11 @@ const en = {
     'task.reward.explain': 'Reward is for labor and time',
     'task.bid': 'Bid',
     'task.approvedBy': 'Approved By',
+    'task.application': 'Application',
+    'task.appliedOn': 'Applied on',
+    'task.soloApply': 'Apply as an Individual',
+    'task.teamApply': 'Apply as a Team',
+    'task.applyReason': 'Why you wanted to join this task',
 
     // General
     'select.placeholder': 'Please select',
@@ -419,6 +424,7 @@ const en = {
     '.yes': 'Yes',
     '.no': 'No',
     '.loading': 'Loading...',
+    'ela': 'ELA',
 
     // Landing
     'landing.elastos': 'Elastos',
