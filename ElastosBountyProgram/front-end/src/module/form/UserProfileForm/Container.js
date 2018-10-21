@@ -31,32 +31,14 @@ export default createContainer(Component, (state)=>{
             // should always be _id
             const userId = this.user.current_user_id || this.user._id
             const doc = {
-                email: formData.email,
-                username: formData.username,
-                password: formData.password,
                 profile: {
                     // General
                     firstName: formData.firstName,
                     lastName: formData.lastName,
-                    gender: formData.gender,
-                    country: formData.country,
+                    bio: formData.bio,
                     avatar: state.avatar_url,
                     avatarFilename: state.avatar_filename,
                     avatarFileType: state.avatar_type,
-                    walletAddress: formData.walletAddress,
-
-                    // Social Media
-                    telegram: formData.telegram,
-                    reddit: formData.reddit,
-                    wechat: formData.wechat,
-                    twitter: formData.twitter,
-                    facebook: formData.facebook,
-                    linkedin: formData.linkedin,
-                    github: formData.github,
-
-                    // Questions
-                    beOrganizer: formData.beOrganizer === 'yes',
-                    isDeveloper: formData.isDeveloper === 'yes',
                 },
 
                 removeAttachment: state.removeAttachment
