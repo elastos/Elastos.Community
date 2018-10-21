@@ -36,21 +36,22 @@ export default class extends BaseComponent {
             return ''
         }
         const appliedDate = moment(applicant.createdAt).format('YYYY / MM / D')
-
+        console.log(applicant)
         return (
             <div className="public">
                 <div className="gridCol main-area">
                     <div className="application-col">
-                        <h3 className="header-text with-gizmo">Application</h3>
-                        <div className="application-container">Applied on
+                        <h3 className="header-text with-gizmo">{I18N.get('task.application')}</h3>
+                        <div className="application-container">{I18N.get('task.appliedOn')}
                             <span className="application-date"> {appliedDate}</span>
                         </div>
                         <div>
                             <Select
+                                disabled={true}
                                 className="apply-type-select cr-input"
-                                defaultValue="solo">
-                                <Option value="solo"><span>Apply as an Individual</span> (Solo)</Option>
-                                <Option value="team"><span>Apply as a Team</span> (Team)</Option>
+                                defaultValue={applicant.type === TASK_CANDIDATE_TYPE.USER ? 'solo' : 'team'}>
+                                <Option value="solo"><span>{I18N.get('task.soloApply')}</span> (Solo)</Option>
+                                <Option value="team"><span>{I18N.get('task.teamApply')}m</span> (Team)</Option>
                             </Select>
                         </div>
                         { this.props.detail.bidding &&
@@ -64,14 +65,14 @@ export default class extends BaseComponent {
                                     </div>
                                     : <div>
                                         <h5>
-                                            Bid: {applicant.bid} ELA
+                                            {I18N.get('task.bid')}: {applicant.bid} {I18N.get('ela')}
                                         </h5>
                                     </div>
                                 }
                             </div>
                         }
                         <div>
-                            <div className="task-reason">Why you wanted to join this task</div>
+                            <div className="task-reason">{I18N.get('task.applyReason')}</div>
                             <div className="task-reason-text-area">
                                 <p>{applicant.applyMsg}</p>
                             </div>
