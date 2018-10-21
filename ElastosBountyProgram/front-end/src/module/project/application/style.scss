@@ -60,7 +60,8 @@
         min-height: 150px;
         padding: $gap_0 $gap_1;
         border: 1px solid $text-new_gray;
-        background: #E5EBF3;
+        background: $bg_gray;// #E5EBF3
+        cursor: not-allowed;
 
         p {
           color: #737E90;
@@ -75,7 +76,7 @@
       .c_Comments {
 
         h3 {
-          margin-left: $gap_1;
+          margin-left: $gap_1 !important;
           padding-left: $gap_0;
           font-size: 50px;
           line-height: 50px;
