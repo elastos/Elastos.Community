@@ -1,12 +1,16 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import UserEditForm from '@/module/form/UserEditForm/Container'
+import UserProfileForm from '@/module/form/UserProfileForm/Container'
 import { Col, Row, Icon, Popover, Button, Spin, Tabs } from 'antd'
+import moment from 'moment-timezone'
+import I18N from '@/I18N'
 
 import UserPublicDetail from './detail/Container'
 
 import {USER_ROLE, USER_GENDER} from '@/constant'
 import config from '@/config'
+import MediaQuery from 'react-responsive'
 
 import './style.scss'
 
@@ -27,266 +31,263 @@ export default class extends BaseComponent {
 
         this.state = {
             editing: false,
+            editingBasic: false,
             publicView: false
         }
     }
 
-    // only wraps loading / renderMain
+    // TODO: add twitter, telegram, linkedIn, FB
     ord_render () {
-        return (_.isEmpty(this.props.user) || this.props.user.loading ?
-                <div class="center"><Spin size="large" /></div> :
-                this.renderMain()
-        )
+        let content = null;
+        if (_.isEmpty(this.props.user) || this.props.user.loading) {
+            return <div class="center"><Spin size="large" /></div>;
+        }
+
+        if (this.state.publicView) {
+            content = (
+                <div className="member-content">
+                    {this.renderHeader()}
+                    <div className="container">
+                        <UserPublicDetail userId={this.props.currentUserId} page={this.props.page}/>
+                    </div>
+                </div>
+            );
+        } else if (this.state.editingBasic) {
+            content = (
+                <div className="member-content">
+                    {this.renderHeader()}
+                    <div className="container">
+                        <div>
+                            {this.renderBanner()}
+                            <div className="profile-info-container clearfix">
+                                <div className="profile-left pull-left">
+                                    {this.renderAvatar()}
+                                </div>
+                                <UserProfileForm user={this.props.user} page={this.props.page} switchEditMode={this.switchEditBasicMode}/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        } else {
+            content = (
+                <div>
+                    <MediaQuery maxWidth={800}>
+                        <div className="member-content member-content-mobile">
+                            {this.renderMobile()}
+                        </div>
+                    </MediaQuery>
+                    <MediaQuery minWidth={801}>
+                        <div className="member-content">
+                            {this.renderDesktop()}
+                        </div>
+                    </MediaQuery>
+                </div>
+            );
+        }
+
+        return (
+            <div className="c_Member public">
+                {content}
+            </div>
+        );
     }
 
-
-    // header + main area
-    renderMain() {
+    renderMobile() {
         return (
-            <div className="c_ProfileDetail">
-                {this.renderHeader()}
-                {this.state.editing ? this.renderEditForm() : this.renderDetail()}
+            <div>
+                {this.renderBanner(true)}
+                <div className="profile-info-container profile-info-container-mobile clearfix">
+                    {this.renderAvatar(true)}
+                    {this.renderFullName(true)}
+                    {this.renderLocation(true)}
+                    {this.renderLocalTime(true)}
+                    {this.renderSocialMedia(true)}
+                    {this.renderButton(true)}
+                    {this.renderDescription(true)}
+                </div>
+                {this.renderMetrics()}
+                {this.renderEditForm()}
             </div>
         )
     }
 
     renderEditForm() {
-        return <div className="form-wrapper">
-            <UserEditForm user={this.props.user} page={this.props.page} switchEditMode={this.switchEditMode.bind(this)}/>
-        </div>
-    }
-
-    renderDetail() {
-        if (!this.state.publicView && (this.props.page === 'ADMIN' || this.props.page === 'LEADER')) {
-            return this.renderPersonalDetail()
-        } else {
-            return <UserPublicDetail userId={this.props.currentUserId} page={this.props.page}/>
+        if (this.state.editing) {
+            return (
+                <UserEditForm user={this.props.user} page={this.props.page} switchEditMode={this.switchEditMode}/>
+            )
         }
     }
 
-    renderHeader() {
-        // TODO: edit only if you're own profile / is admin
-        return <div className="l_banner">
-            <div className="pull-left">
-                Your Profile
+    renderDesktop() {
+        return (
+            <div>
+                {this.renderBanner()}
+                <div className="profile-info-container clearfix">
+                    <div className="profile-left pull-left">
+                        {this.renderAvatar()}
+                        {this.renderButton()}
+                    </div>
+                    <div className="profile-right pull-left">
+                        {this.renderFullName()}
+                        {this.renderLocation()}
+                        <div className="pull-left">
+                            {this.renderLocalTime()}
+                        </div>
+                        <div className="pull-right">
+                            {this.renderSocialMedia()}
+                        </div>
+                    </div>
+                    {this.renderDescription()}
+                </div>
+                {this.renderMetrics()}
+                {this.renderEditForm()}
             </div>
-            <div className="pull-right right-align">
-                {this.state.editing && <Button onClick={this.switchEditMode.bind(this)}>
-                    Cancel
-                </Button>}
-                {this.state.publicView && <Button onClick={this.switchPublicView.bind(this)}>
-                    Cancel
-                </Button>}
-                {!this.state.editing && !this.state.publicView && <div>
-                    <Button onClick={this.switchPublicView.bind(this)}>
-                        Public Profile
-                    </Button>
-                    <Button onClick={this.switchEditMode.bind(this)}>
-                        Edit
-                    </Button>
-                </div>}
-            </div>
-            <div className="clearfix"/>
-        </div>
-
+        )
     }
 
-    renderPersonalDetail() {
+    renderHeader() {
+        if (this.state.publicView || this.state.editingBasic) {
+            const onToggle = this.state.publicView ? this.switchPublicView : this.switchEditBasicMode;
+            return (
+                <div className="header">
+                    <div className="content">
+                        {I18N.get(this.state.publicView ? 'profile.publicProfile' : 'profile.edit')}
+                    </div>
+                    <Icon className="close-btn" type="close" onClick={onToggle} />
+                </div>
+            )
+        }
+    }
+
+    renderMetrics() {
+        return (
+            <Row gutter={16} className="profile-metrics">
+                <Col md={8}>
+                    {this.renderMetricItem(I18N.get('profile.crContributors'), 0)}
+                </Col>
+                <Col md={8}>
+                    {this.renderMetricItem(I18N.get('profile.followers'), this.props.user.subscribers.length)}
+                </Col>
+                <Col md={8}>
+                    {this.renderMetricItem(I18N.get('Placeholder'), 0)}
+                </Col>                
+            </Row>
+        )
+    }
+
+    renderMetricItem(label, value) {
+        return (
+            <div className="item">
+                <div className="value">
+                    {value}
+                </div>
+                <div className="center">
+                    {label}
+                </div>
+            </div>
+        )
+    }
+
+    renderBanner(isMobile) {
+        return (
+            <div className={`profile-banner ${isMobile ? 'profile-banner-mobile' : ''}`}>
+                <span style={{ backgroundImage: `url('/assets/images/profile-banner.png')` }}></span>
+                {!this.state.editingBasic && <Icon className="profile-edit-btn" type="edit" onClick={this.switchEditBasicMode}/>}
+            </div>
+        )
+    }
+
+    renderAvatar(isMobile) {
+        return (
+            <div className={`profile-avatar-container ${isMobile ? 'profile-avatar-container-mobile' : ''}`}>
+                <div className="profile-avatar">
+                    <img src={this.getAvatarWithFallback(this.props.user.profile.avatar)} />
+                </div>
+            </div>
+        )
+    }
+
+    renderFullName(isMobile) {
+        return (
+            <h1 className={`komu-a profile-general-title ${isMobile ? 'profile-general-title-mobile' : ''}`}>
+                {this.props.user.profile.firstName}&nbsp;
+                {this.props.user.profile.lastName}
+            </h1>
+        )
+    }
+
+    renderButton(isMobile) {
+        return (
+            <div className={`profile-button ${isMobile ? 'profile-button-mobile' : ''}`}>
+                <Button className="profile-edit separated" onClick={this.switchEditMode}>
+                    {I18N.get('profile.editProfile')}
+                </Button>
+                <Button className="profile-show condensed" onClick={this.switchPublicView}>
+                    {I18N.get('profile.showPublicProfile')}
+                </Button>
+            </div>
+        )
+    }
+
+    renderLocation(isMobile) {
+        return (
+            <div className={`profile-general-info ${isMobile ? 'profile-general-info-mobile' : ''}`}>
+                <i class="fas fa-map-marker-alt location-icon"></i>
+                <span>
+                    {this.getCountryName(this.props.user.profile.country)}
+                </span>
+            </div>
+        )
+    }
+
+    getAvatarWithFallback(avatar) {
+        return _.isEmpty(avatar)
+            ? '/assets/images/Elastos_Logo.png'
+            : avatar
+    }
+
+    renderLocalTime(isMobile) {
+        const now = moment(Date.now())
+        const user = this.props.user
+        const localTime = user.profile.timezone
+            ? now.tz(user.profile.timezone).format('LT z')
+            : 'Unknown'
 
         return (
-            <Tabs defaultActiveKey="general">
-                {/*
-                ***************************************************************************
-                * General
-                ***************************************************************************
-                */}
-                <TabPane tab="General" key="general">
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            <h4>
-                                Username
-                            </h4>
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            <h4>
-                                {this.props.user.username}
-                            </h4>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8} className="gridCol strong-text right-align">
-                            Role
-                        </Col>
-                        <Col span={16} className="gridCol strong-text">
-                            {this.props.user.role === USER_ROLE.LEADER ? 'ORGANIZER' : this.props.user.role}
-                            &nbsp;
-                            <Popover content={this.getRoleHelp.call(this)}>
-                                <Icon className="help-icon" type="question-circle-o"/>
-                            </Popover>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            Email
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            {this.props.user.email}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            First Name
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            {this.props.user.profile.firstName}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            Last Name
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            {this.props.user.profile.lastName}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            Bio
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            {this.props.user.profile.bio}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            Gender
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            {this.getGenderName(this.props.user.profile.gender)}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            Avatar
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            {this.getAvatarUrl(this.props.user.profile)}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            Country
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            {this.getCountryName(this.props.user.profile.country)}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            Timezone
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            {this.props.user.profile.timezone}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            Wallet Address
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            {this.props.user.profile.walletAddress}
-                        </Col>
-                    </Row>
-                </TabPane>
+            <div className={`profile-general-info ${isMobile ? 'profile-general-info-mobile' : ''}`}>
+                <Icon type="clock-circle"/>
+                <span>
+                    Local time {localTime}
+                </span>
+            </div>
+        )
+    }
 
-                {/*
-                ***************************************************************************
-                * Social Media
-                ***************************************************************************
-                */}
-                <TabPane tab="Social Media" key="socialMedia">
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            LinkedIn
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            {this.props.user.profile.linkedin}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            GitHub
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            {this.props.user.profile.github}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            Telegram
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            {this.props.user.profile.telegram}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            Reddit
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            {this.props.user.profile.reddit}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            WeChat
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            {this.props.user.profile.wechat}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            Twitter
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            {this.props.user.profile.twitter}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            Facebook
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            {this.props.user.profile.facebook}
-                        </Col>
-                    </Row>
-                </TabPane>
+    renderSocialMedia(isMobile) {
+        const { profile } = this.props.user
 
-                {/*
-                ***************************************************************************
-                * Questions
-                ***************************************************************************
-                */}
-                <TabPane tab="Questions" key="questions">
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            Do you want to be an organizer?
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            {this.props.user.profile.beOrganizer ? 'Yes' : 'No'}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8} className="gridCol right-align">
-                            Are you a software developer or engineer?
-                        </Col>
-                        <Col span={16} className="gridCol">
-                            {this.props.user.profile.isDeveloper ? 'Yes' : 'No'}
-                        </Col>
-                    </Row>
-                </TabPane>
-            </Tabs>
+        return (
+            <div className={`profile-social ${isMobile ? 'profile-social-mobile' : ''}`}>
+                {profile.telegram && <a href={profile.telegram} target="_blank"><i className="fab fa-telegram fa-2x"/></a>}
+                {profile.twitter && <a href={profile.twitter} target="_blank"><i className="fab fa-twitter fa-2x"/></a>}
+                {profile.facebook && <a href={profile.facebook} target="_blank"><i class="fab fa-facebook-square fa-2x"></i></a>}
+                {profile.reddit && <a href={profile.reddit} target="_blank"><i className="fab fa-reddit fa-2x"/></a>}
+                {profile.linkedin && <a href={profile.linkedin} target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>}
+                {profile.github && <a href={profile.github} target="_blank"><i class="fab fa-github fa-2x"></i></a>}
+            </div>
+        )
+    }
+
+    renderDescription(isMobile) {
+        return (
+            <div>
+                {
+                    this.props.user.profile.bio &&
+                    <div className={`profile-description ${isMobile ? 'profile-description-mobile' : ''}`}>{this.props.user.profile.bio}</div>
+                }
+            </div>
         )
     }
 
@@ -294,37 +295,15 @@ export default class extends BaseComponent {
         return config.data.mappingCountryCodeToName[countryCode]
     }
 
-    getGenderName(key) {
-        return config.data.mappingGenderKeyToName[key];
+    switchEditBasicMode = () => {
+        this.setState({editingBasic: !this.state.editingBasic})
     }
 
-    getAvatarUrl(profile) {
-        if (profile.avatar) {
-            return <img src={profile.avatar} className="user-avatar"/>
-        }
-
-        return <span className="no-info">not uploaded</span>
-    }
-
-    getRoleHelp() {
-        switch (this.props.user.role) {
-
-            case USER_ROLE.MEMBER:
-                return 'you can only apply for tasks/events, if you want to be an organizer please apply on the community pages'
-
-            case USER_ROLE.LEADER:
-                return 'you can only create social tasks/events'
-
-            default:
-                return 'you are an admin user'
-        }
-    }
-
-    switchEditMode() {
+    switchEditMode = () => {
         this.setState({editing: !this.state.editing})
     }
 
-    switchPublicView() {
+    switchPublicView = () => {
         this.setState({publicView: !this.state.publicView})
     }
 

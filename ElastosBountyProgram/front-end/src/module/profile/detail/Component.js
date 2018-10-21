@@ -6,7 +6,7 @@ import Comments from '@/module/common/comments/Container'
 import { Col, Row, Tabs, Icon, Button, Divider, Spin } from 'antd'
 import I18N from '@/I18N'
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE} from '@/constant'
-import './style.scss'
+import '../style.scss'
 import config from '@/config'
 import MediaQuery from 'react-responsive'
 import _ from 'lodash'
@@ -212,6 +212,7 @@ export default class extends BaseComponent {
                 {profile.facebook && <a href={profile.facebook} target="_blank"><i class="fab fa-facebook-square fa-2x"></i></a>}
                 {profile.reddit && <a href={profile.reddit} target="_blank"><i className="fab fa-reddit fa-2x"/></a>}
                 {profile.linkedin && <a href={profile.linkedin} target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>}
+                {profile.github && <a href={profile.github} target="_blank"><i class="fab fa-github fa-2x"></i></a>}
             </div>
         )
     }

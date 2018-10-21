@@ -167,6 +167,8 @@ const en = {
     'user.edit.form.label_email': 'Email is required',
     'user.edit.form.label_role': 'Please select a role',
     'user.edit.form.role': 'Role',
+    'user.edit.form.section.general': 'General',
+    'user.edit.form.section.social': 'Social',
     'user.follow': 'Follow',
     'user.unfollow': 'Unfollow',
 
@@ -603,7 +605,14 @@ const en = {
     // Profile
     'profile.localTime': 'Local time',
     'profile.sendMessage': 'Send Direct Message',
-    'profile.viewProfile': 'View Profile'
+    'profile.viewProfile': 'View Profile',
+    'profile.editProfile': 'Edit Profile',
+    'profile.showPublicProfile': 'Show Public Profile',
+    'profile.crContributors': 'CR Contributors',
+    'profile.followers': 'Followers',
+    'profile.edit': 'Edit',
+    'profile.publicProfile': 'Public Profile',
+    'profile.save': 'Save'
 };
 
 // lang mappings
