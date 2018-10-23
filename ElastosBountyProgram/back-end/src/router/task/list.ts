@@ -26,8 +26,12 @@ export default class extends Base{
             archived: {$ne: true}
         };
 
-        if (param.type && _.values(constant.TASK_TYPE).includes(param.type)) {
-            query.type = param.type;
+        if (param.type) {
+            if (_.size(param.type) > 1) {
+                query.type = { $in: _.split(param.type, ',') };
+            } else {
+                query.type = param.type;
+            }
         }
 
         query.category = { $in: [constant.TASK_CATEGORY.DEVELOPER, constant.TASK_CATEGORY.SOCIAL] }
