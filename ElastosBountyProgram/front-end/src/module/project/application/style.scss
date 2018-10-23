@@ -33,6 +33,10 @@
         .ant-select-selection-selected-value {
           padding-left: $gap_1;
           color: #031E28;
+
+          .ant-avatar {
+            display: none;
+          }
         }
         .ant-select-arrow {
           top: 45%;
