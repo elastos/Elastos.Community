@@ -3,7 +3,7 @@ import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
 import _ from 'lodash'
 import { Col, Row, message, Input, Avatar, InputNumber, Select } from 'antd'
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_TYPE, TASK_CANDIDATE_STATUS} from '@/constant'
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_TYPE, TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT} from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import './style.scss'
 import I18N from '@/I18N'
@@ -18,6 +18,18 @@ export default class extends BaseComponent {
         }
     }
 
+    async componentDidMount() {
+        if (this.props.currentUserId) {
+            await this.props.getTeams({
+                owner: this.props.currentUserId
+            })
+        }
+    }
+
+    componentWillUnmount() {
+        this.props.resetTeams();
+    }
+
     ord_render () {
         return this.renderMain()
     }
@@ -30,13 +42,66 @@ export default class extends BaseComponent {
         return _.find(this.props.detail.candidates, { _id: this.props.applicantId })
     }
 
+    handleApplyWithChange(teamId) {
+        const solo = teamId === '$me'
+
+        this.props.updateApplication(this.props.match.params.taskId, {
+            taskCandidateId: this.props.applicantId,
+            user: solo ? this.props.currentUserId : null,
+            team: !solo ? teamId : null
+        })
+    }
+
+    getAvatarWithFallback(avatar) {
+        return _.isEmpty(avatar)
+            ? USER_AVATAR_DEFAULT
+            : avatar
+    }
+
+    getSelectDropdown() {
+        const applicant = this.getApplicant()
+        const userTeams = this.props.ownedTeams
+        const defaultValue = applicant && applicant.user
+            ? '$me'
+            : applicant && applicant.team && applicant.team._id
+
+        const elem = [];
+        elem.push(
+            <Option value="$me" key="$me">
+                {I18N.get('task.soloApply')} (Solo)
+                <Avatar size="small" src={this.getAvatarWithFallback(this.props.currentUserAvatar)}
+                    className="pull-right"/>
+            </Option>)
+
+        if (userTeams) {
+            _.forEach(userTeams, (team) => {
+                elem.push(
+                    <Option key={team._id} value={team._id}>
+                        {I18N.get('task.teamApply')} ({team.name})
+                        {!_.isEmpty(team.pictures)
+                            ? <Avatar size="small" src={this.getAvatarWithFallback(team.pictures[0].thumbUrl)}
+                                className="pull-right"/>
+                            : <Avatar size="small" src={this.getAvatarWithFallback()} className="pull-right"/>
+                        }
+                    </Option>)
+            })
+        }
+        return (
+            <Select
+                onChange={(value) => this.handleApplyWithChange(value)}
+                className="apply-type-select cr-input"
+                defaultValue={defaultValue}>
+                {elem}
+            </Select>
+        )
+    }
+
     renderMain () {
         const applicant = this.getApplicant()
-        if (!applicant) {
+        if (!applicant || !this.props.ownedTeams) {
             return ''
         }
         const appliedDate = moment(applicant.createdAt).format('YYYY / MM / D')
-        console.log(applicant)
         return (
             <div className="public">
                 <div className="gridCol main-area">
@@ -46,13 +111,7 @@ export default class extends BaseComponent {
                             <span className="application-date"> {appliedDate}</span>
                         </div>
                         <div>
-                            <Select
-                                disabled={true}
-                                className="apply-type-select cr-input"
-                                defaultValue={applicant.type === TASK_CANDIDATE_TYPE.USER ? 'solo' : 'team'}>
-                                <Option value="solo"><span>{I18N.get('task.soloApply')}</span> (Solo)</Option>
-                                <Option value="team"><span>{I18N.get('task.teamApply')}m</span> (Team)</Option>
-                            </Select>
+                            {this.getSelectDropdown()}
                         </div>
                         { this.props.detail.bidding &&
                             <div className="bid-container">
