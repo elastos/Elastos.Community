@@ -193,12 +193,12 @@ class C extends BaseComponent {
                 return
             }
 
-            const words = comment.match(/@*\w+/g)
+            const words = comment.match(/@*[^@\s]+/g)
 
             if (words) {
                 return (
                     <div>
-                        {_.map(words, (word, ind) => /@\w+/.test(word)
+                        {_.map(words, (word, ind) => /[ ]@[^@\s]+/.test(word)
                             ? <a key={ind} onClick={() => this.showUserProfile(word.replace('@', ''))}>{word} </a>
                             : <span key={ind}>{word} </span>
                         )}
