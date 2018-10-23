@@ -15,8 +15,7 @@
       padding: $gap_3;
 
       .header-text {
-        margin-left: $gap_1;
-        padding-left: $gap_0;
+        padding: 10px 0 0 10px;
         margin-bottom: $gap_2;
         font-size: 50px;
         line-height: 50px;
@@ -76,13 +75,17 @@
       .c_Comments {
 
         h3 {
-          margin-left: $gap_1 !important;
-          padding-left: $gap_0;
+          margin-top: 0 !important;
+          padding: 10px 0 0 10px;
           font-size: 50px;
           line-height: 50px;
         }
         .ant-list {
           margin-top: $gap_3;
+        }
+        #headline {
+          border-radius: 0;
+          border: 1px solid #434D72;
         }
         .ant-mention-editor {
           border-radius: 0;
