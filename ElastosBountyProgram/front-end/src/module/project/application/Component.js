@@ -79,8 +79,14 @@ export default class extends BaseComponent {
                         </div>
                     </div>
                     <div className="comments-col">
-                        <Comments type="taskCandidate" reduxType="task" canPost={true} model={applicant}
-                            detailReducer={(detail) => _.find(detail.candidates, { _id: this.props.applicantId })}
+                        <Comments
+                            headlines={true}
+                            type="taskCandidate"
+                            reduxType="task"
+                            canPost={true}
+                            model={applicant}
+                            detailReducer={(detail) => _.find(detail.candidates,
+                                { _id: this.props.applicantId })}
                             returnUrl={`/project-detail/${this.props.detail._id}`}
                         />
                     </div>
