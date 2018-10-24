@@ -334,7 +334,7 @@ export default class extends BaseComponent {
         return (
             <div className="projects-tasks">
                 <div className="pt-header">
-                    <div className="pt-header-label komu-a">{I18N.get('profile.projectsTasks')}</div>
+                    <h3 className="with-gizmo">{I18N.get('profile.projectsTasks')}</h3>
                 </div>
                 <div className="pt-list">
                     <Table
