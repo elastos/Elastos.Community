@@ -49,10 +49,18 @@ export default createContainer(Component, (state) => {
             })
         },
 
+        resetTeams() {
+            return teamService.resetAllTeams();
+        },
+
         async getTasks(currentUserId) {
             return taskService.index({
                 profileListFor: currentUserId
             })
+        },
+
+        resetTasks() {
+            return taskService.resetAllTasks()
         }
     }
 })
