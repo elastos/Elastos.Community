@@ -29,6 +29,8 @@ export default class extends BaseComponent {
 
     componentWillUnmount() {
         this.props.resetMemberDetail()
+        this.props.resetTeams()
+        this.props.resetTasks()
     }
 
     // TODO: add twitter, telegram, linkedIn, FB
