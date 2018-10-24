@@ -93,7 +93,7 @@ class C extends BaseComponent {
             rules: [{
                 max: 100, message: 'Headline is too long'
             }, {
-                required: true, message: 'Please input headline!'
+                required: this.props.headlines, message: 'Please input headline!'
             }],
             initialValue: ''
         })
