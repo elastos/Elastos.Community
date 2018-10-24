@@ -27,10 +27,12 @@ export default class extends Base{
         };
 
         if (param.type) {
-            if (_.size(param.type) > 1) {
-                query.type = { $in: _.split(param.type, ',') };
-            } else {
-                query.type = param.type;
+            const types = param.type.split(',')
+            const valid = _.intersection(_.values(constant.TASK_TYPE), types).length ===
+                types.length
+
+            if (valid) {
+                query.type = { $in: types }
             }
         }
 
