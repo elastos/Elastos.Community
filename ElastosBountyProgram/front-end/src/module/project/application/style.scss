@@ -95,6 +95,10 @@
           border-radius: 0;
           border: 1px solid #434D72;
         }
+        .ant-spin-container {
+          max-height:300px;
+          overflow-y: auto;
+        }
       }
     }
   }
