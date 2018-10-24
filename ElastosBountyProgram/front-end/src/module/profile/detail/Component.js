@@ -337,18 +337,13 @@ export default class extends BaseComponent {
                     <div className="pt-header-label komu-a">{I18N.get('profile.projectsTasks')}</div>
                 </div>
                 <div className="pt-list">
-                    {this.props.loadingList ?
-                        <div className="flex-center spin-container">
-                            <Spin size="large" />
-                        </div> :
-                        <Table
-                            dataSource={data}
-                            columns={columns}
-                            loading={this.props.loading}
-                            rowKey="_id"
-                            pagination={false}>
-                        </Table>
-                    }
+                    <Table
+                        dataSource={data}
+                        columns={columns}
+                        loading={this.props.loadingList}
+                        rowKey="_id"
+                        pagination={false}>
+                    </Table>
                 </div>
             </div>
         )
