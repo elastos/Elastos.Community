@@ -270,7 +270,7 @@ export default class extends BaseComponent {
         const projects = _.map(this.props.tasks, (task) => {
             return {
                 _id: task._id,
-                type: task.type === TASK_CATEGORY.CR100 ? 'CR100' : 'Project',
+                type: _.capitalize(task.type),
                 name: task.name,
                 date: task.updatedAt
             }
@@ -370,7 +370,7 @@ export default class extends BaseComponent {
     }
 
     linkTeamDetail(teamId) {
-        this.props.history.push(`/profile/team-detail/${teamId}`)
+        this.props.history.push(`/team-detail/${teamId}`)
     }
 
     linkCircleDetail(circleId) {
@@ -382,6 +382,6 @@ export default class extends BaseComponent {
     }
 
     linkProjectDetail(taskId) {
-        this.props.history.push(`/profile/project-detail/${taskId}`)
+        this.props.history.push(`/task-detail/${taskId}`)
     }
 }
