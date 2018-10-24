@@ -61,7 +61,7 @@ export default class extends BaseComponent {
     getSelectDropdown() {
         const applicant = this.getApplicant()
         const userTeams = this.props.ownedTeams
-        const defaultValue = applicant && applicant.user
+        const defaultValue = applicant && applicant.type === TASK_CANDIDATE_TYPE.USER
             ? '$me'
             : applicant && applicant.team && applicant.team._id
 
