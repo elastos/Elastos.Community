@@ -571,6 +571,10 @@ export default class extends Base {
                 path: 'owner',
                 select: sanitize
             })
+            await db_team.db.populate(taskCandidate.team, {
+                path: 'members',
+                select: sanitize
+            })
         }
 
         return taskCandidate

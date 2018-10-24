@@ -261,7 +261,7 @@ class C extends BaseComponent {
     renderViewApplicationModal() {
         return (
             <Modal
-                className="project-detail-nobar"
+                className="project-detail-nobar no-modal-padding"
                 visible={this.state.showAppModal}
                 onOk={this.handleAppModalOk}
                 onCancel={this.handleAppModalCancel}
