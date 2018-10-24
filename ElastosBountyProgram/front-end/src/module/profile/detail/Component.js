@@ -22,9 +22,9 @@ export default class extends BaseComponent {
     }
 
     async componentDidMount() {
-        this.props.getMember(this.props.userId)
-        this.props.getUserTeams(this.props.userId)
-        this.props.getTasks(this.props.userId)
+        this.props.getMember(this.props.currentUserId)
+        this.props.getUserTeams(this.props.currentUserId)
+        this.props.getTasks(this.props.currentUserId)
     }
 
     componentWillUnmount() {
@@ -40,7 +40,6 @@ export default class extends BaseComponent {
                 </div>
             )
         }
-
         let roleName = this.props.member.role
         if (roleName === USER_ROLE.LEADER) {
             roleName = 'ORGANIZER'
@@ -314,7 +313,6 @@ export default class extends BaseComponent {
             key: 'view',
             width: 100,
             render: entry => {
-                console.log(entry)
                 return (
                     <Button key={entry._id} className="cr-btn" onClick={() => {
                         if (entry.type === 'Team') {
