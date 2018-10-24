@@ -139,7 +139,7 @@ export default class extends BaseComponent {
                     </div>
                     <div className="comments-col">
                         <Comments
-                            headlines={true}
+                            headlines={false}
                             type="taskCandidate"
                             reduxType="task"
                             canPost={true}
