@@ -49,7 +49,7 @@ export default createContainer(Component, (state) => {
                 }
 
                 if (candidate.type === 'TEAM') {
-                    return _.map(state.user.teams, '_id').includes(candidate.team._id)
+                    return _.map(state.team.all_teams, '_id').includes(candidate.team._id)
                 }
             })
 

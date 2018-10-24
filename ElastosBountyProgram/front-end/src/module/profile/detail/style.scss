@@ -232,4 +232,46 @@ $avatar-size: 160px;
       margin-top: 25px;
     }
   }
+
+  .projects-tasks {
+    margin-top: $gap_4;
+
+    .pt-header {
+      margin: $gap_2;
+      .pt-header-label {
+        font-size: 50px;
+      }
+    }
+
+    .pt-list {
+      margin-bottom: $gap_3;
+      th {
+        background: #0F2631;
+        font-family: 'Synthese', sans-serif;
+        color: white;
+        font-weight: 600;
+      }
+      tr {
+        background: $bg_blue;
+      }
+      td {
+        border: 0;
+        font-family: 'Synthese', sans-serif;
+        color: black;
+      }
+      .cr-btn {
+        padding: 0 20px;
+        height: 28px;
+      }
+    }
+  }
+
+  .c_Comments {
+    h3 {
+      font-size: 50px;
+      font-family: "komu-a", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  }
 }
