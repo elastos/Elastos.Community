@@ -361,7 +361,7 @@ const en = {
     'project.detail.reference_bid': 'Reference Bid',
 
     'team.detail.team_active': 'This team is currently active.',
-    'team.detail.team_close': 'This team is currently closed.',
+    'team.detail.team_closed': 'This team is currently closed.',
     'team.detail.open': 'Open',
     'team.detail.close': 'Close',
     'team.detail.status.recuriting': 'Recruitment In Progress',
