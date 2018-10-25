@@ -7,7 +7,7 @@ import './style.scss'
 import I18N from '@/I18N'
 import Comments from '@/module/common/comments/Container'
 import TeamApplication from '@/module/team/application/Container'
-import { TEAM_USER_STATUS } from '@/constant'
+import { TEAM_USER_STATUS, TEAM_STATUS } from '@/constant'
 
 class C extends BaseComponent {
     ord_states() {
@@ -82,6 +82,7 @@ class C extends BaseComponent {
         const teamSize = _.size(_.filter(detail.members, { status: TEAM_USER_STATUS.NORMAL }))
         const description = detail.profile.description || ''
         const leaderImage = detail.owner.profile.avatar || ''
+        const status = detail.status || TEAM_STATUS.ACTIVE
 
         const recruiting_el = (
             <div>
@@ -98,6 +99,8 @@ class C extends BaseComponent {
             <div>
                 <div className="title">
                     <span>{name}</span>
+                    <br></br>
+                    { this.renderStatusSpan(status) }
                 </div>
                 <a className="leader" onClick={this.linkUserDetail.bind(this, detail.owner)}>
                     <Avatar size="large" src={leaderImage} />
@@ -117,6 +120,18 @@ class C extends BaseComponent {
                 </div>
             </div>
         )
+    }
+
+    renderStatusSpan(status){
+        if (status == TEAM_STATUS.ACTIVE) {
+            return <span className="team-active">
+                {I18N.get('team.detail.status.recuriting')}
+            </span> 
+        } else if (status == TEAM_STATUS.CLOSED) {
+            return <span className="team-close">
+                {I18N.get('team.detail.status.not_recruiting')}
+            </span> 
+        }
     }
 
     renderCurrentContributors() {
@@ -288,6 +303,7 @@ class C extends BaseComponent {
     getMainActions() {
         const isTeamMember = this.isTeamMember()
         const hasApplied = this.hasApplied()
+        const status = this.props.detail.status
         const mainActionButton = isTeamMember
             ? (
                 <Popconfirm title={I18N.get('project.detail.popup.leave_question')} okText="Yes" cancelText="No"
@@ -297,7 +313,7 @@ class C extends BaseComponent {
                     </Button>
                 </Popconfirm>
             )
-            : (
+            : (hasApplied || status != TEAM_STATUS.CLOSED) && (
                 <Button disabled={hasApplied} type="primary" onClick={() => this.setState({ applying: true })}>
                     {hasApplied
                         ? I18N.get('project.detail.popup.applied')

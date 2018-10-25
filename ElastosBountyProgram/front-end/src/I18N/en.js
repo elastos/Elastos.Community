@@ -360,7 +360,14 @@ const en = {
     'project.detail.reward': 'Reward',
     'project.detail.reference_bid': 'Reference Bid',
 
-    'team.detail.team_active': 'Your team is currently active',
+    'team.detail.team_active': 'This team is currently active.',
+    'team.detail.team_close': 'This team is currently closed.',
+    'team.detail.open': 'Open',
+    'team.detail.close': 'Close',
+    'team.detail.status.recuriting': 'Recruitment In Progress',
+    'team.detail.status.not_recruiting': 'Recruitment Closed',
+    'team.detail.popup.team_closed': 'Your team is closed now.',
+    'team.detail.popup.team_active': 'Your team is open now.',
 
     'team.create.error.nameRequired': 'Team name is required',
     'team.create.error.nameTooShort': 'Team name is too short',
@@ -426,6 +433,7 @@ const en = {
     '.no': 'No',
     '.loading': 'Loading...',
     'ela': 'ELA',
+    '.view': 'View',
 
     // Landing
     'landing.elastos': 'Elastos',
