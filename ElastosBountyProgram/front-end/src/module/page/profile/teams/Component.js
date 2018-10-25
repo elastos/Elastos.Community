@@ -7,7 +7,7 @@ import './style.scss'
 import '../../admin/admin.scss'
 import { Col, Row, Icon, Form, Input, Breadcrumb, Button,
     Divider, Select, Table, List, Carousel, Avatar, Tag } from 'antd'
-import { TEAM_USER_STATUS, TEAM_AVATAR_DEFAULT } from '@/constant'
+import { TEAM_USER_STATUS, TEAM_AVATAR_DEFAULT, TEAM_STATUS } from '@/constant'
 import MediaQuery from 'react-responsive'
 import moment from 'moment/moment'
 import Footer from '@/module/layout/Footer/Container'
@@ -50,6 +50,7 @@ export default class extends StandardPage {
 
         if (this.state.filter === FILTERS.ACTIVE) {
             query.teamHasUserStatus = TEAM_USER_STATUS.NORMAL
+            query.status = TEAM_STATUS.ACTIVE
         }
 
         if (this.state.filter === FILTERS.APPLIED) {
@@ -177,6 +178,7 @@ export default class extends StandardPage {
                     >
                         <h3 class="no-margin no-padding one-line brand-color">
                             <a onClick={this.linkTeamDetail.bind(this, item.id)}>{item.title}</a>
+                            { this.renderStatusSpan(item.status) }
                         </h3>
                         <h5 class="no-margin">
                             {item.description}
@@ -199,6 +201,7 @@ export default class extends StandardPage {
                     >
                         <h3 class="no-margin no-padding one-line brand-color">
                             <a onClick={this.linkTeamDetail.bind(this, item.id)}>{item.title}</a>
+                            { this.renderStatusSpan(item.status) }
                         </h3>
                         <h5 className="no-margin">
                             {item.description}
@@ -239,7 +242,8 @@ export default class extends StandardPage {
                 description: description_fn(team),
                 content: team.profile.description,
                 owner: team.owner,
-                id: team._id
+                id: team._id,
+                status: team.status || TEAM_STATUS.ACTIVE
             }
         })
 
@@ -249,6 +253,18 @@ export default class extends StandardPage {
                 renderItem={item => this.getListItem(item)}
             />
         )
+    }
+
+    renderStatusSpan(status){
+        if (status == TEAM_STATUS.ACTIVE) {
+            return <span className="team-active gap-left">
+                {I18N.get('team.detail.status.recuriting')}
+            </span> 
+        } else {
+            return <span className="team-close gap-left">
+                {I18N.get('team.detail.status.not_recruiting')}
+            </span>
+        }
     }
 
     onSelectFilter(value) {

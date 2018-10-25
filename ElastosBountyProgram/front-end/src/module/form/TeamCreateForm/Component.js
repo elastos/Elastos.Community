@@ -22,7 +22,7 @@ import {
 import I18N from '@/I18N'
 import InputTags from '@/module/shared/InputTags/Component'
 import ReactQuill from 'react-quill';
-import {TEAM_TASK_DOMAIN, SKILLSET_TYPE} from '@/constant'
+import {TEAM_TASK_DOMAIN, SKILLSET_TYPE, TEAM_STATUS} from '@/constant'
 import {upload_file} from '@/util';
 import sanitizeHtml from 'sanitize-html';
 
@@ -48,7 +48,8 @@ class C extends BaseComponent {
             editing: !!props.existingTeam,
             fileList: (props.existingTeam && props.existingTeam.pictures) || [],
             previewVisible: false,
-            previewImage: ''
+            previewImage: '',
+            status: (props.existingTeam && props.existingTeam.status) || TEAM_STATUS.ACTIVE
         }
 
         this.pictureUrlLookups = []
@@ -72,7 +73,8 @@ class C extends BaseComponent {
                     logo: '',
                     metadata: '',
                     pictures: this.state.fileList || [],
-                    type: this.props.existingTeam && this.props.existingTeam.type
+                    type: this.props.existingTeam && this.props.existingTeam.type,
+                    status: this.state.status
                 }
 
                 _.each(createParams.pictures, (pictureFile) => {
@@ -328,9 +330,16 @@ class C extends BaseComponent {
 
                 { !this.props.embedded &&
                     <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
-                        <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
-                            {this.state.editing ? 'Save' : 'Create'}
-                        </Button>
+                        { !this.state.editing && 
+                            <Button loading={this.props.loading} htmlType="submit" className="d_btn pull-left ant-btn-group">
+                                Create & Open
+                            </Button>
+                        }
+                        { this.state.editing && 
+                            <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn pull-left">
+                                Save
+                            </Button>
+                        }
                     </FormItem>
                 }
             </div>
