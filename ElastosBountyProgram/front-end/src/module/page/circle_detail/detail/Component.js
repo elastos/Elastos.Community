@@ -77,6 +77,14 @@ class C extends BaseComponent {
         }
     }
 
+    createNewTask() {
+        if (this.props.is_login) {
+            this.showCreateTaskModal()
+        } else {
+            this.showLoginRegisterModal()
+        }
+    }
+
     viewTask(taskId) {
 
     }
@@ -254,7 +262,7 @@ class C extends BaseComponent {
             <div>
                 <div className="member-header">
                     <h3 className="member-header-label komu-a with-gizmo">{I18N.get('circle.tasks')}</h3>
-                    <Button className="pull-right" onClick={this.showCreateTaskModal.bind(this)}>
+                    <Button className="pull-right" onClick={this.createNewTask.bind(this)}>
                         {I18N.get('task.createNew')}
                     </Button>
                 </div>
