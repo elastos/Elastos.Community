@@ -41,7 +41,7 @@ export default class extends BaseComponent {
             <div className="pull-left">
                 { this.props.team.status == TEAM_STATUS.ACTIVE ? 
                     I18N.get('team.detail.team_active') : 
-                    I18N.get('team.detail.team_close')
+                    I18N.get('team.detail.team_closed')
                 }
             </div>
             <div className="pull-right right-align">
