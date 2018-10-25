@@ -179,7 +179,7 @@ class C extends BaseComponent {
     renderMembers() {
         const members = _.filter(this.props.team.detail.members, { status: TEAM_USER_STATUS.NORMAL })
         const columns = [{
-            title: 'Name',
+            title: 'Member',
             key: 'name',
             render: candidate => {
                 return (
@@ -199,7 +199,7 @@ class C extends BaseComponent {
                 </div>
                 <div className="members-list">
                     <Table
-                        className="no-borders headerless"
+                        className="no-borders cr-table"
                         dataSource={members}
                         columns={columns}
                         bordered={false}
@@ -220,7 +220,7 @@ class C extends BaseComponent {
             : this.showTaskModal.bind(this)
 
         const columns = [{
-            title: 'Name',
+            title: 'Task',
             key: 'name',
             render: task => {
                 return (
@@ -242,7 +242,7 @@ class C extends BaseComponent {
                 </div>
                 <div className="members-list">
                     <Table
-                        className="no-borders headerless"
+                        className="no-borders cr-table"
                         loading={this.props.task_loading}
                         dataSource={tasks}
                         columns={columns}
