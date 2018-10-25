@@ -38,20 +38,6 @@ beforeAll(async ()=>{
 describe('Tests for Tasks', () => {
     let ts_admin: TaskService, task:any;
 
-    test('Should create task and fail because user is member role only', async () => {
-        const taskService = new TaskService(DB, {
-            user : user.member
-        });
-
-        const expectedError = 'Access Denied'
-        try {
-            await taskService.create(global.DB.TASK_1)
-            assert.fail(`Should fail with ${expectedError}`)
-        } catch (err) {
-            expect(err).to.be.equal(expectedError)
-        }
-    });
-
     test('prepare test', async ()=>{
         // add a task
         ts_admin = new TaskService(DB, {
