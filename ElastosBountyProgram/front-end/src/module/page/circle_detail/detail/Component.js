@@ -305,11 +305,11 @@ class C extends BaseComponent {
                 <div className="content-section">
                     {this.renderContent()}
                 </div>
-                <div className="members-section">
-                    {this.renderMembers()}
-                </div>
                 <div className="tasks-section">
                     {this.renderTasks()}
+                </div>
+                <div className="members-section">
+                    {this.renderMembers()}
                 </div>
                 <div className="rectangle double-size pull-right"/>
                 <div className="clearfix"/>
