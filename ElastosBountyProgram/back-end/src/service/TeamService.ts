@@ -114,8 +114,11 @@ export default class extends Base {
         return db_team.findById(teamId)
     }
 
-    public async activeTeam(param): Promise<boolean>{
-        const {teamId} = param
+    public async activateTeam(param): Promise<boolean>{
+        const { 
+            teamId
+        } = param
+
         const doc: any = {
             teamId,
             team: teamId,
@@ -139,7 +142,10 @@ export default class extends Base {
     }
 
     public async closeTeam(param): Promise<boolean>{
-        const {teamId} = param
+        const {
+            teamId
+        } = param
+        
         const doc: any = {
             teamId,
             team: teamId,
@@ -469,7 +475,7 @@ export default class extends Base {
         }
 
         if (param.status) {
-            query.status = { $in: param.status.split(',') }
+            query.status = param.status
         }
 
         if (param.teamHasUser) {

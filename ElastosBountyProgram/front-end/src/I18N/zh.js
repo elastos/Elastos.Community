@@ -146,6 +146,7 @@ export default {
     'forgot.success': '修改密码成功',
 
     // UserEditForm
+    'user.edit.form.label_email': '邮箱不能为空',
     'user.edit.form.label_role': '请选择一名角色',
     'user.edit.form.role': '角色',
 
@@ -165,6 +166,10 @@ export default {
     'developer.project.top': 'Top 100 项目',
     'developer.project.join': '参与正在进行中的项目',
     'developer.project.issue': '提交问题',
+    'developer.task': 'Task Search',
+    'developer.task.top': 'Top tasks',
+    'developer.task.join': 'Join a task that is in active development',
+    'developer.task.issue': 'Submit an issue',
     'developer.action': '亦来云适合我吗?',
     'developer.components': '亦来云核心组件',
     'developer.components.core.title': 'Elastos RunTime (RT)',
@@ -313,13 +318,14 @@ export default {
     'project.detail.popup.join_team': '加入团队',
     'project.detail.popup.join_project': '加入项目',
 
-    'team.detail.title.status.open': '你的团队招募已经开启',
-    'team.detail.title.status.closed': '你的团队招募已经关闭',
-    'team.detail.title.status.draft': '你的团队招募草稿',
-    'team.detail.recuriting': '正在招募',
-    'team.detail.not_recruiting': '招募取消',
-    'team.detail.status.active': '开启',
-    'team.detail.status.closed': '关闭',
+    'team.detail.team_active': '团队已经激活',
+    'team.detail.team_close': '团队已经关闭',
+    'team.detail.open': '激活',
+    'team.detail.close': '关闭',
+    'team.detail.status.recuriting': '正在招募',
+    'team.detail.status.not_recruiting': '招募取消',
+    'team.detail.popup.team_closed': '你的团队已激活',
+    'team.detail.popup.team_active': '你的团队已关闭',
 
     // Team specializations
     'team.spec.media': '媒体',

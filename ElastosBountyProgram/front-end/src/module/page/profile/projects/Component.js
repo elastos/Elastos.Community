@@ -5,13 +5,16 @@ import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import _ from 'lodash'
 import './style.scss'
 import '../../admin/admin.scss'
-import { Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button,
-    Table, Select, Divider, List, Carousel, Avatar, Tag } from 'antd'
-import {TASK_CANDIDATE_STATUS} from '@/constant'
+import {
+    Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button,
+    Table, Select, Divider, List, Carousel, Avatar, Tag, Modal
+} from 'antd'
+import {TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT} from '@/constant'
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
 import I18N from '@/I18N'
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '../../../../config/constant'
+import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 
 const FormItem = Form.Item;
 
@@ -30,7 +33,8 @@ export default class extends StandardPage {
 
         this.state = {
             showMobile: false,
-            filter: FILTERS.ALL
+            filter: FILTERS.ALL,
+            showUserInfo: null
         }
     }
 
@@ -147,7 +151,7 @@ export default class extends StandardPage {
                                 </div>
                                 <div className="ant-list-item-right-box">
                                     <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
-                                        <Avatar size="large" icon="user" className="pull-right" src={item.owner.profile.avatar}/>
+                                        <Avatar size="large" icon="user" className="pull-right" src={USER_AVATAR_DEFAULT}/>
                                         <div class="clearfix"/>
                                         <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
                                     </a>
@@ -175,7 +179,7 @@ export default class extends StandardPage {
                                     <a onClick={this.linkUserDetail.bind(this, item.owner)}>
                                         <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
                                         <Divider type="vertical"/>
-                                        <Avatar size="large" icon="user" src={item.owner.profile.avatar}/>
+                                        <Avatar size="large" icon="user" src={USER_AVATAR_DEFAULT}/>
                                     </a>
                                     <Button type="primary" className="pull-right" onClick={this.linkTaskDetail.bind(this, item.id)}>
                                         View
@@ -337,6 +341,15 @@ export default class extends StandardPage {
                         </div>
                     </div>
                 </div>
+                <Modal
+                    className="profile-overview-popup-modal"
+                    visible={!!this.state.showUserInfo}
+                    onCancel={this.handleCancelProfilePopup.bind(this)}
+                    footer={null}>
+                    { this.state.showUserInfo &&
+                        <ProfilePopup showUserInfo={this.state.showUserInfo}/>
+                    }
+                </Modal>
             </div>
         )
     }
@@ -394,6 +407,14 @@ export default class extends StandardPage {
     }
 
     linkUserDetail(user) {
-        this.props.history.push(`/member/${user._id}`)
+        this.setState({
+            showUserInfo: user
+        })
+    }
+
+    handleCancelProfilePopup() {
+        this.setState({
+            showUserInfo: null
+        })
     }
 }

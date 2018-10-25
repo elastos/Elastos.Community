@@ -86,18 +86,6 @@ export default class extends BaseComponent {
                                             </p>) : <div className="center"><Spin size="small"/></div>}
                                     </Col>
                                 </Row>
-                                { this.props.task.circle &&
-                                    <Row>
-                                        <Col span={4} className="label-col">
-                                            Circle
-                                        </Col>
-                                        <Col span={20}>
-                                            <p>
-                                                {this.props.task.circle.name}
-                                            </p>
-                                        </Col>
-                                    </Row>
-                                }
                                 <Row>
                                     <Col span={4} className="label-col">
                                         Category
@@ -323,6 +311,20 @@ export default class extends BaseComponent {
                                         </Row>
                                     </div>) : <div/>
                                 }
+                                {this.props.task.approvedBy &&
+                                <Row>
+                                    <Col sm={24} md={4}>
+                                        <span className="no-info">Approved By</span>
+                                    </Col>
+                                    <Col sm={24} md={20}>
+                                        <p>
+                                            {this.props.task.approvedBy.username}
+                                            {this.props.task.approvedDate && <span>
+                                                &nbsp; on {moment(this.props.task.approvedDate).format('MMM D, YYYY')}
+                                            </span>}
+                                        </p>
+                                    </Col>
+                                </Row>}
                             </Col>
                             {this.props.task.thumbnail &&
                             <Col span={6}>
@@ -330,7 +332,7 @@ export default class extends BaseComponent {
                             </Col>
                             }
                         </Row>
-                        {!this.props.task.assignSelf &&
+                        {/*!this.props.task.assignSelf &&
                         <div>
                             <Divider>{this.state.isDeveloperEvent ? 'Registration Info' : 'Application Info'}</Divider>
                             <Row>
@@ -351,7 +353,7 @@ export default class extends BaseComponent {
                                     {this.props.task.candidateSltLimit}
                                 </Col>
                             </Row>
-                        </div>}
+                        </div>*/}
 
                         {/*
                         ********************************************************************************

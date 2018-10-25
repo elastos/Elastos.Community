@@ -44,10 +44,8 @@ export default class extends BaseService {
     }
 
     async getUserTeams(userId) {
-        const userRedux = this.store.getRedux('user')
         const teamRedux = this.store.getRedux('team')
 
-        this.dispatch(userRedux.actions.loading_update(true))
         this.dispatch(teamRedux.actions.loading_update(true))
 
         const result = await api_request({
@@ -57,9 +55,6 @@ export default class extends BaseService {
                 teamHasUser: userId
             }
         });
-
-        this.dispatch(userRedux.actions.teams_update(result))
-        this.dispatch(userRedux.actions.loading_update(false))
 
         this.dispatch(teamRedux.actions.all_teams_reset())
         this.dispatch(teamRedux.actions.all_teams_update(result))
@@ -131,6 +126,42 @@ export default class extends BaseService {
     resetTeamDetail() {
         const teamRedux = this.store.getRedux('team')
         this.dispatch(teamRedux.actions.detail_reset())
+    }
+
+    async closeTeam(teamId){
+        const teamRedux = this.store.getRedux('team')
+        this.dispatch(teamRedux.actions.loading_update(true))
+        const result = await api_request({
+            path: '/api/team/action/close',
+            method: 'post',
+            data: {
+                teamId
+            }
+        })
+        const curTeamDetail = this.store.getState().team.detail
+        curTeamDetail.status = TEAM_STATUS.CLOSED
+        this.dispatch(teamRedux.actions.loading_update(false))
+        this.dispatch(teamRedux.actions.detail_update(curTeamDetail))
+        
+        return result
+    }
+
+    async activateTeam(teamId){
+        const teamRedux = this.store.getRedux('team')
+        this.dispatch(teamRedux.actions.loading_update(true))
+        const result = await api_request({
+            path: '/api/team/action/activate',
+            method: 'post',
+            data: {
+                teamId
+            }
+        })
+        const curTeamDetail = this.store.getState().team.detail
+        curTeamDetail.status = TEAM_STATUS.ACTIVE
+        this.dispatch(teamRedux.actions.loading_update(false))
+        this.dispatch(teamRedux.actions.detail_update(curTeamDetail))
+        
+        return result
     }
 
     async pushCandidate(teamId, userId, applyMsg) {

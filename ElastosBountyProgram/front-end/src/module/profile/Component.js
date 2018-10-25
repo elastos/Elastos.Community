@@ -50,25 +50,21 @@ export default class extends BaseComponent {
         )
     }
 
-    // TODO
     renderEditForm() {
         return <div className="form-wrapper">
             <UserEditForm user={this.props.user} page={this.props.page} switchEditMode={this.switchEditMode.bind(this)}/>
         </div>
     }
 
-    // for now public and your profile view looks the same
     renderDetail() {
-
         if (!this.state.publicView && (this.props.page === 'ADMIN' || this.props.page === 'LEADER')) {
             return this.renderPersonalDetail()
         } else {
-            return <UserPublicDetail member={this.props.user} page={this.props.page}/>
+            return <UserPublicDetail userId={this.props.currentUserId} page={this.props.page}/>
         }
     }
 
     renderHeader() {
-
         // TODO: edit only if you're own profile / is admin
         return <div className="l_banner">
             <div className="pull-left">
@@ -155,6 +151,14 @@ export default class extends BaseComponent {
                     </Row>
                     <Row>
                         <Col span={8} className="gridCol right-align">
+                            Bio
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.profile.bio}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
                             Gender
                         </Col>
                         <Col span={16} className="gridCol">
@@ -179,6 +183,14 @@ export default class extends BaseComponent {
                     </Row>
                     <Row>
                         <Col span={8} className="gridCol right-align">
+                            Timezone
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.profile.timezone}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
                             Wallet Address
                         </Col>
                         <Col span={16} className="gridCol">
@@ -193,6 +205,22 @@ export default class extends BaseComponent {
                 ***************************************************************************
                 */}
                 <TabPane tab="Social Media" key="socialMedia">
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            LinkedIn
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.profile.linkedin}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8} className="gridCol right-align">
+                            GitHub
+                        </Col>
+                        <Col span={16} className="gridCol">
+                            {this.props.user.profile.github}
+                        </Col>
+                    </Row>
                     <Row>
                         <Col span={8} className="gridCol right-align">
                             Telegram

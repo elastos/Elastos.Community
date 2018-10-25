@@ -15,7 +15,7 @@ export default class extends BaseComponent {
                     {I18N.get('0105')}
                 </Menu.Item>
 
-                <Menu.Item className="c_MenuItem link" key="empower35">
+                <Menu.Item className="c_MenuItem link" key="crcles">
                     {I18N.get('0106')}
                 </Menu.Item>
 
@@ -106,7 +106,7 @@ export default class extends BaseComponent {
                                 <Row>
                                     <Col span={6}>Resources</Col>
                                     <Col span={18}>Cyber Republic cyberrepublic@elastos.org</Col>
-                                </Row>                                                                                                                                
+                                </Row>
                             </Col>
                         </Row>
                     </Layout>

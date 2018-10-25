@@ -16,6 +16,9 @@ $bg_obsidian_transparent: rgba(15,38,49,0.27);
 $danger_red: #ff4d4f;
 $red: #f5222d;
 
+$span_light_grey: #d8d8d8;
+$span_dark_grey: #66769E;
+
 $modal_bg: #F6F9FD;
 
 $border_gray: #ccc;
@@ -33,4 +36,4 @@ $cr_primary_color: rgba(38, 214, 170, 0.8);
 $cr_primary_dark_color: #009999;
 
 $cr100_sky_blue: #18FFFF;
-$cr100_green: #1DE9B6;
+$cr100_green: $primary_color;

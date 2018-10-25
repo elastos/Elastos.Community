@@ -6,15 +6,16 @@ import {
 } from 'antd'
 import _ from 'lodash'
 import './style.scss'
-import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS, TEAM_STATUS} from '@/constant'
-import ProjectDetail from '@/module/project/detail/Container'
+import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT, TEAM_STATUS} from '@/constant'
 import TeamDetail from '@/module/team/detail/Container'
+import TaskDetail from '@/module/task/popup/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
 import Footer from '@/module/layout/Footer/Container'
 import MediaQuery from 'react-responsive'
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
 import I18N from '@/I18N'
 import moment from 'moment'
+import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
@@ -42,13 +43,14 @@ export default class extends BaseComponent {
             entryCount: 3,
             skillsetShowAllEntries: false,
             categoryShowAllEntries: false,
-            showProjectModal: false,
+            showTaskModal: false,
             showTeamModal: false,
             showLoginRegisterModal: false,
             taskDetailId: 0,
             teamDetailId: 0,
             showMobile: false,
-            filtersTree: ['TEAM']
+            filtersTree: ['TEAM'],
+            showUserInfo: null
         }
     }
 
@@ -89,6 +91,10 @@ export default class extends BaseComponent {
         return this.state.lookingFor === 'TEAM'
     }
 
+    isLookingForTask() {
+        return this.state.lookingFor === 'TASK'
+    }
+
     onChangeLookingFor(e) {
         this.setState({
             lookingFor: e.target.value
@@ -119,9 +125,9 @@ export default class extends BaseComponent {
         }, this.refetch.bind(this))
     }
 
-    showProjectModal(id) {
+    showTaskModal(id) {
         this.setState({
-            showProjectModal: true,
+            showTaskModal: true,
             taskDetailId: id
         })
     }
@@ -142,9 +148,9 @@ export default class extends BaseComponent {
         })
     }
 
-    handleProjectModalOk = (e) => {
+    handleTaskModalOk = (e) => {
         this.setState({
-            showProjectModal: false
+            showTaskModal: false
         })
     }
 
@@ -154,9 +160,9 @@ export default class extends BaseComponent {
         })
     }
 
-    handleProjectModalCancel = (e) => {
+    handleTaskModalCancel = (e) => {
         this.setState({
-            showProjectModal: false
+            showTaskModal: false
         })
     }
 
@@ -565,14 +571,14 @@ export default class extends BaseComponent {
                 </Row>
                 <Modal
                     className="project-detail-nobar"
-                    visible={this.state.showProjectModal}
-                    onOk={this.handleProjectModalOk}
-                    onCancel={this.handleProjectModalCancel}
+                    visible={this.state.showTaskModal}
+                    onOk={this.handleTaskModalOk}
+                    onCancel={this.handleTaskModalCancel}
                     footer={null}
                     width="70%"
                 >
-                    { this.state.showProjectModal &&
-                        <ProjectDetail taskId={this.state.taskDetailId}/>
+                    { this.state.showTaskModal &&
+                        <TaskDetail taskId={this.state.taskDetailId}/>
                     }
                 </Modal>
                 <Modal
@@ -587,6 +593,15 @@ export default class extends BaseComponent {
                         <TeamDetail teamId={this.state.teamDetailId}/>
                     }
                 </Modal>
+                <Modal
+                    className="profile-overview-popup-modal"
+                    visible={!!this.state.showUserInfo}
+                    onCancel={this.handleCancelProfilePopup.bind(this)}
+                    footer={null}>
+                    { this.state.showUserInfo &&
+                        <ProfilePopup showUserInfo={this.state.showUserInfo}/>
+                    }
+                </Modal>
                 {this.renderLoginOrRegisterModal()}
                 <Footer/>
             </div>
@@ -599,15 +614,16 @@ export default class extends BaseComponent {
 
     getAvatarWithFallback(avatar) {
         return _.isEmpty(avatar)
-            ? '/assets/images/Elastos_Logo.png'
+            ? USER_AVATAR_DEFAULT
             : avatar
     }
 
     getCarousel(item) {
+        const IMAGE_SIZE = 188
         const pictures = _.map(item.pictures, (picture, ind) => {
             return (
                 <div key={ind}>
-                    <img width={188} height={188} alt="logo" src={picture.url} />
+                    <img width={IMAGE_SIZE} height={IMAGE_SIZE} alt="logo" src={picture.url} />
                 </div>
             )
         })
@@ -615,9 +631,14 @@ export default class extends BaseComponent {
         if (item.thumbnail) {
             pictures.unshift(
                 <div key="main">
-                    <img width={188} height={188} alt="logo" src={item.thumbnail} />
+                    <img width={IMAGE_SIZE} height={IMAGE_SIZE} alt="logo" src={item.thumbnail} />
                 </div>
             )
+        }
+
+        if (pictures.length === 0) {
+            pictures.push(<img width={IMAGE_SIZE} height={IMAGE_SIZE}
+                src={'/assets/images/Group_1685.12.svg'} key={0} />);
         }
 
         return (
@@ -671,12 +692,12 @@ export default class extends BaseComponent {
                 return {
                     href: '',
                     title: team.name,
-                    pictures: team.pictures && team.pictures.length > 0 ? team.pictures : [{ url: '/assets/images/Elastos_Logo.png' }],
+                    pictures: team.pictures,
                     description: description_fn(team),
                     content: team.profile.description,
                     owner: team.owner,
                     id: team._id,
-                    status: team.status,
+                    status: team.status || TEAM_STATUS.ACTIVE,
                     isTeamOwner: this.props.current_user_id === team.owner._id
                 }
             })
@@ -686,7 +707,8 @@ export default class extends BaseComponent {
                     href: '',
                     title: task.name,
                     bidding: task.bidding,
-                    pictures: task.pictures && task.pictures.length > 0 ? task.pictures : [{ url: '/assets/images/Elastos_Logo.png' }],
+                    pictures: task.pictures,
+                    thumbnail: task.thumbnail,
                     description: description_fn(task),
                     content: task.description,
                     owner: task.createdBy,
@@ -695,10 +717,15 @@ export default class extends BaseComponent {
                 }
             })
 
+        const handlersLookup = {
+            TEAM: this.showTeamModal,
+            PROJECT: this.showTaskModal,
+            TASK: this.showTaskModal
+        }
+
         const clickHandler = !this.props.is_login
             ? this.showLoginRegisterModal
-            : (this.isLookingForTeam() ? this.showTeamModal
-                : this.showProjectModal)
+            : handlersLookup[this.state.lookingFor] || _.noop
 
         return (
             <List loading={this.props.loading} itemLayout='vertical' size='large'
@@ -712,9 +739,7 @@ export default class extends BaseComponent {
                             >
                                 <h3 className="no-margin no-padding one-line brand-color">
                                     <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
-                                    <span className={item.status == TEAM_STATUS.ACTIVE ? 'team-status-active' : 'team-status-close'}>
-                                        {item.status == TEAM_STATUS.ACTIVE ? I18N.get('team.detail.recuriting') : I18N.get('team.detail.not_recruiting')}
-                                    </span>
+                                    { this.renderStatusSpan(item.status) }
                                 </h3>
                                 {item.applicationDeadlinePassed &&
                                 <span className="subtitle">
@@ -726,15 +751,13 @@ export default class extends BaseComponent {
                                 </h5>
                                 <div className="description-content" dangerouslySetInnerHTML={{__html: item.content}}/>
                                 <div className="ant-list-item-right-box">
-                                    <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                    <a className="pull-up" onClick={() => this.setState({ showUserInfo: item.owner })}>
                                         <Avatar size="large" className="pull-right"
                                             src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
                                         <div className="clearfix"/>
                                         <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
                                     </a>
-
                                     {this.renderApplyButton(item, clickHandler)}
-
                                 </div>
                             </List.Item>
                         </MediaQuery>
@@ -745,23 +768,19 @@ export default class extends BaseComponent {
                             >
                                 <h3 className="no-margin no-padding one-line brand-color">
                                     <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
-                                    <span className={item.status == TEAM_STATUS.ACTIVE ? 'team-status-active' : 'team-status-close'}>
-                                        {item.status == TEAM_STATUS.ACTIVE ? I18N.get('team.detail.recuriting') : I18N.get('team.detail.not_recruiting')}
-                                    </span>
+                                    { this.renderStatusSpan(item.status) }
                                 </h3>
                                 <h5 className="no-margin">
                                     {item.description}
                                 </h5>
                                 <div>
-                                    <a onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                    <a onClick={() => this.setState({ showUserInfo: item.owner })}>
                                         <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
                                         <Divider type="vertical"/>
                                         <Avatar size="large"
                                             src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
                                     </a>
-
                                     {this.renderApplyButton(item, clickHandler)}
-
                                 </div>
                             </List.Item>
                         </MediaQuery>
@@ -769,6 +788,24 @@ export default class extends BaseComponent {
                 )}
             />
         )
+    }
+
+    handleCancelProfilePopup() {
+        this.setState({
+            showUserInfo: null
+        })
+    }
+
+    renderStatusSpan(status){
+        if (status == TEAM_STATUS.ACTIVE) {
+            return <span className="team-active gap-left">
+                {I18N.get('team.detail.status.recuriting')}
+            </span> 
+        } else {
+            return <span className="team-close gap-left">
+                {I18N.get('team.detail.status.not_recruiting')}
+            </span> 
+        }
     }
 
     // this is also just a view button if the project cannot accept anymore applications
@@ -784,12 +821,8 @@ export default class extends BaseComponent {
             <span></span>
             <Button onClick={clickHandler.bind(this, detail.id)}
                 type={cssClass}>
-                {(detail.hasApprovedApplication  || detail.status == TEAM_STATUS.CLOSED || detail.isTeamOwner) ? I18N.get('developer.search.view') : (detail.bidding ? I18N.get('developer.search.submit_bid') : I18N.get('developer.search.apply'))}
+                {(detail.hasApprovedApplication || detail.status == TEAM_STATUS.CLOSED || detail.isTeamOwner) ? I18N.get('developer.search.view') : (detail.bidding ? I18N.get('developer.search.submit_bid') : I18N.get('developer.search.apply'))}
             </Button>
         </div>
-    }
-
-    linkUserDetail(user) {
-        this.props.history.push(`/member/${user._id}`)
     }
 }

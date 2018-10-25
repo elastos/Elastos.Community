@@ -57,10 +57,10 @@ export default class extends EmptyPage {
                     <nav className="toplinks">
                         <ul>
                             <li><a href="/cr100">{I18N.get('0105')}</a></li>
-                            <li><a href="/empower35">{I18N.get('0106')}</a></li>
+                            <li><a href="/crcles">{I18N.get('0106')}</a></li>
+                            <li><a href="/developer">{I18N.get('0102')}</a></li>
                             <li><a href="/council/list">{I18N.get('council.0001')}</a></li>
                             <li><a href="/ambassadors">{I18N.get('0107')}</a></li>
-                            <li><a href="/developer">{I18N.get('0102')}</a></li>
 
                             {this.props.is_login
                                 ? <li><a href="/profile/teams">{I18N.get('0104')}</a></li>
@@ -92,7 +92,7 @@ export default class extends EmptyPage {
                     <nav className="toplinks">
                         <ul>
                             <li><a href="/cr100">CR100</a></li>
-                            <li><a href="/empower35">Empower35</a></li>
+                            <li><a href="/crcles">CRcles</a></li>
                             <li><a href="/ambassadors">Ambassadors</a></li>
                             <li><a href="/community">Community</a></li>
 
@@ -1087,8 +1087,10 @@ export default class extends EmptyPage {
                     <div className="square-ornament left">
                         <div className="sq fill sm"></div>
                         <div className="sq fill med"></div>
-                        <div className="sq fill lrg"></div>
-                        <div className="sq diags"><img src="assets/images/diags-blue.svg"/></div>
+                        <MediaQuery minWidth={MIN_WIDTH_PC}>
+                            <div className="sq fill lrg"></div>
+                            <div className="sq diags"><img src="assets/images/diags-blue.svg"/></div>
+                        </MediaQuery>
                     </div>
                     <div className="square-ornament right">
                         <div className="sq fill sm"></div>
@@ -1163,7 +1165,7 @@ export default class extends EmptyPage {
                             <div className="cta-btn">
                                 <p>{I18N.get('landing.empower35.action.1')} <strong>{I18N.get('landing.empower35.action.2')}</strong></p>
                                 <div className="arrow sized"><img src="assets/images/arrow.svg"/></div>
-                                <a href="/empower35"></a>
+                                <a href="/crcles"></a>
                             </div>
                         </div>
                     </div>

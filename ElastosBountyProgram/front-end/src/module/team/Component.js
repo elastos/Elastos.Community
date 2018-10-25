@@ -39,21 +39,26 @@ export default class extends BaseComponent {
     renderHeader() {
         return <div className="l_banner">
             <div className="pull-left">
-            {this.props.team.status == TEAM_STATUS.ACTIVE && I18N.get('team.detail.title.status.active')}
-                {this.props.team.status == TEAM_STATUS.CLOSED && I18N.get('team.detail.title.status.closed')}
+                { this.props.team.status == TEAM_STATUS.ACTIVE ? 
+                    I18N.get('team.detail.team_active') : 
+                    I18N.get('team.detail.team_close')
+                }
             </div>
             <div className="pull-right right-align">
                 <Button onClick={this.switchEditMode.bind(this)}>
                     {this.state.editing ? I18N.get('.cancel') : I18N.get('.edit')}
                 </Button>
             </div>
-            <div className="pull-right right-align status-btn">
-                {this.props.team.status == TEAM_STATUS.ACTIVE && <Button loading={this.props.loading} onClick={this.closeTeam.bind(this)}>
-                    {I18N.get('team.detail.status.closed')}
-                </Button>}
-                {this.props.team.status == TEAM_STATUS.CLOSED && <Button loading={this.props.loading} onClick={this.activeTeam.bind(this)}>
-                    {I18N.get('team.detail.status.active')}
-                </Button>}
+            <div className="pull-right right-align gap-right">
+                { this.props.team.status == TEAM_STATUS.ACTIVE ? (
+                    <Button loading={this.props.loading} onClick={this.closeTeam.bind(this)}>
+                        {I18N.get('team.detail.close')}
+                    </Button> 
+                    ) : (
+                    <Button loading={this.props.loading} onClick={this.activateTeam.bind(this)}>
+                        {I18N.get('team.detail.open')}
+                    </Button> )
+                }
             </div>
             <div className="clearfix"/>
         </div>
@@ -86,8 +91,8 @@ export default class extends BaseComponent {
         await this.props.closeTeam(teamId)
     }
     
-    async activeTeam() {
+    async activateTeam() {
         const teamId = this.props.team._id
-        await this.props.activeTeam(teamId)
+        await this.props.activateTeam(teamId)
     }
 }

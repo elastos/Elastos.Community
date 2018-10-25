@@ -17,7 +17,7 @@ export default class extends BaseComponent {
         const key = ev.key
         if (_.includes([
             'cr100',
-            'empower35',
+            'crcles',
             'ambassadors',
             'login',
             'register',
@@ -72,7 +72,7 @@ export default class extends BaseComponent {
                         <Menu.Item key="cr100">
                             {I18N.get('0105')}
                         </Menu.Item>
-                        <Menu.Item key="empower35">
+                        <Menu.Item key="crcles">
                             {I18N.get('0106')}
                         </Menu.Item>
                         <Menu.Item key="ambassadors">

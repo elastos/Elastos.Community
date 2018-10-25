@@ -7,7 +7,7 @@ import './style.scss'
 import '../../admin/admin.scss'
 import { Col, Row, Icon, Form, Input, Breadcrumb, Button,
     Divider, Select, Table, List, Carousel, Avatar, Tag } from 'antd'
-import { TEAM_USER_STATUS, TEAM_STATUS } from '@/constant'
+import { TEAM_USER_STATUS, TEAM_AVATAR_DEFAULT, TEAM_STATUS } from '@/constant'
 import MediaQuery from 'react-responsive'
 import moment from 'moment/moment'
 import Footer from '@/module/layout/Footer/Container'
@@ -178,9 +178,7 @@ export default class extends StandardPage {
                     >
                         <h3 class="no-margin no-padding one-line brand-color">
                             <a onClick={this.linkTeamDetail.bind(this, item.id)}>{item.title}</a>
-                            <span className={item.status == TEAM_STATUS.ACTIVE ? 'team-status-active' : 'team-status-close'}>
-                                {item.status == TEAM_STATUS.ACTIVE ? I18N.get('team.detail.recuriting') : I18N.get('team.detail.not_recruiting')}
-                            </span>
+                            { this.renderStatusSpan(item.status) }
                         </h3>
                         <h5 class="no-margin">
                             {item.description}
@@ -203,9 +201,7 @@ export default class extends StandardPage {
                     >
                         <h3 class="no-margin no-padding one-line brand-color">
                             <a onClick={this.linkTeamDetail.bind(this, item.id)}>{item.title}</a>
-                            <span className={item.status == TEAM_STATUS.ACTIVE ? 'team-status-active' : 'team-status-close'}>
-                                {item.status == TEAM_STATUS.ACTIVE ? I18N.get('team.detail.recuriting') : I18N.get('team.detail.not_recruiting')}
-                            </span>
+                            { this.renderStatusSpan(item.status) }
                         </h3>
                         <h5 className="no-margin">
                             {item.description}
@@ -242,7 +238,7 @@ export default class extends StandardPage {
         const data = _.map(teams, (team, id) => {
             return {
                 title: team.name,
-                pictures: team.pictures && team.pictures.length > 0 ? team.pictures : [{ url: '/assets/images/Elastos_Logo.png' }],
+                pictures: team.pictures && team.pictures.length > 0 ? team.pictures : [{ url: TEAM_AVATAR_DEFAULT }],
                 description: description_fn(team),
                 content: team.profile.description,
                 owner: team.owner,
@@ -257,6 +253,18 @@ export default class extends StandardPage {
                 renderItem={item => this.getListItem(item)}
             />
         )
+    }
+
+    renderStatusSpan(status){
+        if (status == TEAM_STATUS.ACTIVE) {
+            return <span className="team-active gap-left">
+                {I18N.get('team.detail.status.recuriting')}
+            </span> 
+        } else {
+            return <span className="team-close gap-left">
+                {I18N.get('team.detail.status.not_recruiting')}
+            </span>
+        }
     }
 
     onSelectFilter(value) {

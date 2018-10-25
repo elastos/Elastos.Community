@@ -377,8 +377,7 @@ $landingPageWidth: 1152px;
   Header
   ************************************************************************
    */
-   .emp35-header {
-
+  .emp35-header {
     background-color: #031E28;
     min-height: 750px;
     position: relative;
@@ -510,12 +509,30 @@ $landingPageWidth: 1152px;
       .title {
         margin-top: 106px;
 
-        font-family: "komu-a",sans-serif;
+        @media only screen and (max-width: $mobile-width) {
+          margin-top: 75px;
+        }
+      }
+
+      .title-big {
+        line-height: 100px;
+        font-family: "komu-a", sans-serif;
+        font-size: 100px;
+        text-transform: uppercase;
+        color: $cr100_green;
+
+        @media only screen and (max-width: $mobile-width) {
+          font-size: 50px;
+        }
+      }
+
+      .title-small {
+        line-height: 75px;
+        font-family: "komu-a", sans-serif;
         font-size: 75px;
         color: $cr100_green;
         @media only screen and (max-width: $mobile-width) {
-          margin-top: 75px;
-          font-size: 40px;
+          font-size: 30px;
         }
       }
 

@@ -7,7 +7,6 @@ import { Col, Icon, Popconfirm, Menu, Button, Spin, Dropdown } from 'antd'
 import Comments from '@/module/common/comments/Container'
 
 // TODO: admin detail should also be in a new component too to be consistent
-import TaskPublicDetail from './detail/Container'
 import ProjectPublicDetail from '@/module/project/detail/Container'
 
 import './style.scss'
@@ -48,14 +47,13 @@ export default class extends BaseComponent {
 
     renderEditForm() {
         return <div className="form-wrapper">
-            <TaskCreateForm existingTask={this.props.task} page={this.props.page} switchEditMode={this.switchEditMode.bind(this)}/>
+            <TaskCreateForm existingTask={this.props.task} page={this.props.page}
+                switchEditMode={this.switchEditMode.bind(this)}/>
         </div>
     }
 
     renderDetail() {
-        return this.props.task.type === TASK_TYPE.PROJECT
-            ? <ProjectPublicDetail taskId={this.props.task._id}/>
-            : <TaskPublicDetail task={this.props.task} page={this.props.page}/>
+        return <ProjectPublicDetail taskId={this.props.task._id}/>
     }
 
     renderAdminHeader() {
@@ -72,8 +70,11 @@ export default class extends BaseComponent {
                 {this.props.task.status === TASK_STATUS.PENDING &&
                 <span className="help-text">&nbsp; - this task is awaiting approval</span>
                 }
-                {this.props.task.status === TASK_STATUS.APPROVED && this.props.task.approvedBy &&
-                <span className="help-text">&nbsp; - this task is approved by {this.props.task.approvedBy.username}</span>
+                {(this.props.task.status === TASK_STATUS.APPROVED || this.props.task.status === TASK_STATUS.ASSIGNED) && this.props.task.approvedBy &&
+                <span className="help-text">
+                    &nbsp; - this task is approved by {this.props.task.approvedBy.username}
+                    {this.props.task.approvedDate && ` on ${moment(this.props.task.approvedDate).format('MMM D')}`}
+                </span>
                 }
                 {this.props.task.status === TASK_STATUS.SUCCESS &&
                 ((this.props.task.reward.ela > 0 || this.props.task.reward.usd > 0) ?
@@ -94,7 +95,7 @@ export default class extends BaseComponent {
                 </Popconfirm>
                 }
                 {/* Admin & Task Owner CAN Mark as Complete */}
-                {this.props.task.status === TASK_STATUS.APPROVED &&
+                {(this.props.task.status === TASK_STATUS.APPROVED || this.props.task.status === TASK_STATUS.ASSIGNED) &&
                 <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsSubmitted.bind(this)}>
                     <Button>Mark as Complete</Button>
                 </Popconfirm>
@@ -150,7 +151,7 @@ export default class extends BaseComponent {
             {this.props.task.category !== 'CR100' &&
             <div className="pull-right right-align">
                 {/* Admin & Task Owner CAN Mark as Complete */}
-                {this.props.task.status === TASK_STATUS.APPROVED && isTaskOwner &&
+                {(this.props.task.status === TASK_STATUS.APPROVED || this.props.task.status === TASK_STATUS.ASSIGNED) && isTaskOwner &&
                 <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsSubmitted.bind(this)}>
                     <Button>Mark as Complete</Button>
                 </Popconfirm>

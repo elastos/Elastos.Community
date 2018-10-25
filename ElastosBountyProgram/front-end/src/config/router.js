@@ -104,7 +104,7 @@ export default [
         page: Cr100Page
     },
     {
-        path: '/empower35',
+        path: '/crcles',
         page: Emp35Page
     },
     {
@@ -279,7 +279,7 @@ export default [
         page: ProfileSubmissionDetailPage
     },
     {
-        path: '/empower35-detail/:circleId',
+        path: '/crcles-detail/:circleId',
         page: CircleDetailPage
     },
     /*

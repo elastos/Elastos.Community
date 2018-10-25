@@ -1,6 +1,6 @@
-
-@import '../../../style/variable';
-@import '../../../style/color';
+@import '@/style/variable';
+@import '@/style/color';
+@import '@/style/typography';
 
 
 .c_Project.c_Detail {
@@ -8,6 +8,25 @@
 
   @media only screen and (max-width: $mobile-width) {
     padding: 0;
+  }
+
+  .meta {
+    margin: $gap_1 $gap_2 $gap_3 $gap_2;
+  }
+
+  .detail-container {
+    padding-bottom: $gap_3;
+    position: relative;
+
+    .carousel-container {
+      position: absolute;
+      right: 0;
+      width: 150px;
+    }
+
+    .header h3 {
+      padding-top: 0;
+    }
   }
 
   .team-selector {
@@ -172,6 +191,7 @@
       }
 
       .description-content {
+        white-space: pre-line;
         margin: $gap_0 $gap_2 $gap_0 0;
       }
     }
@@ -215,10 +235,14 @@
 
   .applications {
     .title {
-      font-size: 24px;
+      padding-top: 0;
     }
     .row-name-link {
       margin-left: $gap_1;
+    }
+
+    .ant-table-wrapper {
+      margin-bottom: $gap_0;
     }
   }
 

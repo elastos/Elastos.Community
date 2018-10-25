@@ -20,8 +20,8 @@ import {
     Upload,
     Badge
 } from 'antd'
-import {upload_file} from "@/util";
-import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS } from '@/constant'
+import {upload_file} from '@/util';
+import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TEAM_USER_STATUS, USER_AVATAR_DEFAULT } from '@/constant'
 import Comments from '@/module/common/comments/Container'
 import I18N from '@/I18N'
 import _ from 'lodash'
@@ -106,7 +106,7 @@ class C extends BaseComponent {
     getCandidateAvatar(candidate) {
         const avatar = candidate.user.profile.avatar
         return _.isEmpty(avatar)
-            ? '/assets/images/Elastos_Logo.png'
+            ? USER_AVATAR_DEFAULT
             : avatar
     }
 
@@ -153,7 +153,7 @@ class C extends BaseComponent {
                         detailReducer={(detail) => _.find(detail.candidates, (candidate) => {
                             return candidate._id === this.props.taskCandidateId
                         })}
-                        returnUrl={`/empower35-detail/${this.props.detail._id}`}
+                        returnUrl={`/crcles-detail/${this.props.detail._id}`}
                     />
                 </div>
             </div>

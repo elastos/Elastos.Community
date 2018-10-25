@@ -50,17 +50,20 @@ export default class extends BaseService {
         return rs
     }
 
-    async subscribe(type, id) {
-        const redux = this.store.getRedux(type)
+    async subscribe(type, id, reduxType) {
+        reduxType = reduxType || type
+        const redux = this.store.getRedux(reduxType)
 
-        this.dispatch(redux.actions.loading_update(true))
+        this.dispatch(redux.actions.subscribing_update
+            ? redux.actions.subscribing_update(true)
+            : redux.actions.loading_update(true))
 
         const rs = await api_request({
             path: `/api/${type}/${id}/subscribe`,
             method: 'post',
             data: {}
         })
-        const curDetail = this.store.getState()[type] && this.store.getState()[type].detail
+        const curDetail = this.store.getState()[reduxType] && this.store.getState()[reduxType].detail
 
         if (!curDetail) {
             return;
@@ -76,22 +79,27 @@ export default class extends BaseService {
         })
 
         this.dispatch(redux.actions.detail_update(curDetail))
-        this.dispatch(redux.actions.loading_update(false))
+        this.dispatch(redux.actions.subscribing_update
+            ? redux.actions.subscribing_update(false)
+            : redux.actions.loading_update(false))
 
         return rs
     }
 
-    async unsubscribe(type, id) {
-        const redux = this.store.getRedux(type)
+    async unsubscribe(type, id, reduxType) {
+        reduxType = reduxType || type
+        const redux = this.store.getRedux(reduxType)
 
-        this.dispatch(redux.actions.loading_update(true))
+        this.dispatch(redux.actions.subscribing_update
+            ? redux.actions.subscribing_update(true)
+            : redux.actions.loading_update(true))
 
         const rs = await api_request({
             path: `/api/${type}/${id}/unsubscribe`,
             method: 'post',
             data: {}
         })
-        const curDetail = this.store.getState()[type] && this.store.getState()[type].detail
+        const curDetail = this.store.getState()[reduxType] && this.store.getState()[reduxType].detail
 
         if (!curDetail) {
             return;
@@ -104,7 +112,9 @@ export default class extends BaseService {
         })
 
         this.dispatch(redux.actions.detail_update(curDetail))
-        this.dispatch(redux.actions.loading_update(false))
+        this.dispatch(redux.actions.subscribing_update
+            ? redux.actions.subscribing_update(false)
+            : redux.actions.loading_update(false))
 
         return rs
     }

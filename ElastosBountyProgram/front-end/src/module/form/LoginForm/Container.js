@@ -18,7 +18,7 @@ export default createContainer(Component, (state) => {
     return {
         async login(username, password, persist) {
             try {
-                const rs = await userService.login(username, password, persist)
+                const rs = await userService.login(username.trim(), password, persist)
 
                 if (rs) {
                     message.success('login success')

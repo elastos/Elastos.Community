@@ -330,12 +330,16 @@ class C extends BaseComponent {
 
                 { !this.props.embedded &&
                     <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
-                        {!this.state.editing && <Button loading={this.props.loading} htmlType="submit" className="d_btn pull-left create-btn">
-                            Create & Open
-                        </Button>}
-                        {this.state.editing && <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn pull-left">
-                            Save
-                        </Button>}
+                        { !this.state.editing && 
+                            <Button loading={this.props.loading} htmlType="submit" className="d_btn pull-left ant-btn-group">
+                                Create & Open
+                            </Button>
+                        }
+                        { this.state.editing && 
+                            <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn pull-left">
+                                Save
+                            </Button>
+                        }
                     </FormItem>
                 }
             </div>

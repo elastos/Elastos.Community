@@ -17,15 +17,12 @@ import {
     Divider
 
 } from 'antd'
-
 import config from '@/config'
 import { MIN_LENGTH_PASSWORD } from '@/config/constant'
-
+import TimezonePicker from 'react-timezone'
 import I18N from '@/I18N'
-
 import {upload_file} from '@/util'
 import './style.scss'
-
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, USER_GENDER} from '@/constant'
 
 const FormItem = Form.Item
@@ -133,6 +130,14 @@ class C extends BaseComponent {
                 })}
             </Select>
         )
+        
+        const email_fn = getFieldDecorator('email', {
+            rules: [{required: true, message: I18N.get('user.edit.form.label_email')}],
+            initialValue: user.email
+        })
+        const email_el = (
+            <Input size="large" disabled/>
+        )
 
         const password_fn = getFieldDecorator('password', {
             rules: [{
@@ -172,6 +177,28 @@ class C extends BaseComponent {
         })
         const lastName_el = (
             <Input size="large"/>
+        )
+
+        const timezone_fn = getFieldDecorator('timezone', {
+            rules: [],
+            initialValue: user.profile.timezone
+        })
+
+        const timezone_el = (
+            <TimezonePicker
+                className="timezone-picker"
+                inputProps={{
+                    placeholder: 'Select Timezone...'
+                }}
+            />
+        )
+
+        const bio_fn = getFieldDecorator('bio', {
+            rules: [{required: true, message: 'Biography is required'}],
+            initialValue: user.profile.bio
+        })
+        const bio_el = (
+            <Input.TextArea rows={4}/>
         )
 
         const gender_fn = getFieldDecorator('gender', {
@@ -305,7 +332,25 @@ class C extends BaseComponent {
             <Input size="large"/>
         )
 
+        const linkedin_fn = getFieldDecorator('linkedin', {
+            rules: [
+                {min: 4, message: 'please enter at least 4 characters'}
+            ],
+            initialValue: user.profile.linkedin
+        })
+        const linkedin_el = (
+            <Input size="large"/>
+        )
 
+        const github_fn = getFieldDecorator('github', {
+            rules: [
+                {min: 4, message: 'please enter at least 4 characters'}
+            ],
+            initialValue: user.profile.github
+        })
+        const github_el = (
+            <Input size="large"/>
+        )
 
         /*
         ****************************************************************************************
@@ -340,6 +385,7 @@ class C extends BaseComponent {
             // General
             username: username_fn(username_el),
             role: role_fn(role_el),
+            email: email_fn(email_el),
             password: password_fn(password_el),
             passwordConfirm: passwordConfirm_fn(passwordConfirm_el),
 
@@ -348,6 +394,8 @@ class C extends BaseComponent {
             gender: gender_fn(gender_el),
             avatar: avatar_fn(avatar_el),
             country: country_fn(country_el),
+            bio: bio_fn(bio_el),
+            timezone: timezone_fn(timezone_el),
 
             walletAddress: walletAddress_fn(walletAddress_el),
 
@@ -357,6 +405,8 @@ class C extends BaseComponent {
             wechat: wechat_fn(wechat_el),
             twitter: twitter_fn(twitter_el),
             facebook: facebook_fn(facebook_el),
+            linkedin: linkedin_fn(linkedin_el),
+            github: github_fn(github_el),
 
             // Questions
             organizer: organizer_fn(organizer_el),
@@ -412,6 +462,9 @@ class C extends BaseComponent {
                             {p.role}
                         </FormItem>
                         }
+                        <FormItem label={I18N.get('1202')} {...formItemLayout}>
+                            {p.email}
+                        </FormItem>
                         <FormItem label="Password" {...formItemLayout}>
                             {p.password}
                         </FormItem>
@@ -423,6 +476,9 @@ class C extends BaseComponent {
                         </FormItem>
                         <FormItem label="Last Name" {...formItemLayout}>
                             {p.lastName}
+                        </FormItem>
+                        <FormItem label="Bio" {...formItemLayout}>
+                            {p.bio}
                         </FormItem>
                         <FormItem label="Gender" {...formItemLayout}>
                             {p.gender}
@@ -445,12 +501,21 @@ class C extends BaseComponent {
                         <FormItem label="Country" {...formItemLayout}>
                             {p.country}
                         </FormItem>
+                        <FormItem label="Timezone" {...formItemLayout}>
+                            {p.timezone}
+                        </FormItem>
                         <FormItem label="Wallet Address" {...formItemLayout}>
                             {p.walletAddress}
                         </FormItem>
 
                         <Divider>Social Media</Divider>
 
+                        <FormItem label="LinkedIn" {...formItemLayout}>
+                            {p.linkedin}
+                        </FormItem>
+                        <FormItem label="GitHub" {...formItemLayout}>
+                            {p.github}
+                        </FormItem>
                         <FormItem label="Telegram" {...formItemLayout}>
                             {p.telegram}
                         </FormItem>

@@ -26,6 +26,10 @@ $mobile-padding: $gap_0 0px;
     padding: $gap_3 0;
   }
 
+  h3.with-gizmo:before {
+    top: -$gap_0 + $gap_3;
+  }
+
   .ebp-wrap {
     padding: 0;
     max-width: 800px;

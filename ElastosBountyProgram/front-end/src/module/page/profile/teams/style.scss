@@ -57,6 +57,9 @@
     max-height: 188px;
 
     > .description-content {
+
+      white-space: pre-line;
+
       ul, ol {
         margin-left: 16px;
       }

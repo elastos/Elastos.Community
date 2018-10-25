@@ -1,22 +1,36 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import { Form, Col, Row, List, Avatar, Icon, Divider, Button, Input, Mention } from 'antd'
+import {Form, Col, Row, List, Avatar, Icon, Divider, Button, Input, Mention, Modal} from 'antd'
 import config from '@/config'
+import {MAX_LENGTH_COMMENT} from '@/config/constant'
 import './style.scss'
 import moment from 'moment'
 import _ from 'lodash'
 import I18N from '@/I18N'
+import ProfilePopup from '@/module/profile/OverviewPopup/Container'
+import { USER_AVATAR_DEFAULT } from '@/constant'
 
 const TextArea = Input.TextArea
 const FormItem = Form.Item
 
 class C extends BaseComponent {
+    ord_states() {
+        return {
+            showUserInfo: null
+        }
+    }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.props.listUsers()
     }
 
     componentWillUnmount() {
+    }
+
+    linkUserDetail(user) {
+        this.setState({
+            showUserInfo: user
+        })
     }
 
     // only wraps loading / renderMain
@@ -32,13 +46,28 @@ class C extends BaseComponent {
             <div className="c_Comments">
                 {this.renderHeader()}
                 {this.renderComments()}
+                <Modal
+                    className="profile-overview-popup-modal"
+                    visible={!!this.state.showUserInfo}
+                    onCancel={this.handleCancelProfilePopup.bind(this)}
+                    footer={null}>
+                    { this.state.showUserInfo &&
+                        <ProfilePopup showUserInfo={this.state.showUserInfo}/>
+                    }
+                </Modal>
             </div>
         )
     }
 
+    handleCancelProfilePopup() {
+        this.setState({
+            showUserInfo: null
+        })
+    }
+
     renderHeader() {
         return (
-            <h3 className="no-margin">Comments</h3>
+            <h3 className="no-margin with-gizmo">{this.props.header || I18N.get('comments')}</h3>
         )
     }
 
@@ -46,9 +75,9 @@ class C extends BaseComponent {
         const allUsers = _.map(this.props.all_users, (user) => user.username)
         const {getFieldDecorator} = this.props.form
         const comment_fn = getFieldDecorator('comment', {
-            rules: [
-                {required: true, message: 'Please input your comment!'}
-            ],
+            rules: [{
+                required: true, message: 'Please input your comment!'
+            }],
             initialValue: Mention.toContentState('')
         })
         const comment_el = (
@@ -63,6 +92,8 @@ class C extends BaseComponent {
         const headline_fn = getFieldDecorator('headline', {
             rules: [{
                 max: 100, message: 'Headline is too long'
+            }, {
+                required: this.props.headlines, message: 'Please input headline!'
             }],
             initialValue: ''
         })
@@ -185,7 +216,7 @@ class C extends BaseComponent {
         {
             const thread = _.first(comment)
             const createdByUsername = (thread.createdBy && thread.createdBy.username) || ''
-            const avatar = (thread.createdBy && thread.createdBy.profile && thread.createdBy.profile.avatar) || '/assets/images/Elastos_Logo.png'
+            const avatar = (thread.createdBy && thread.createdBy.profile && thread.createdBy.profile.avatar) || USER_AVATAR_DEFAULT
             const createdById = (thread.createdBy && thread.createdBy._id)
             const dateFormatted = dateFormatter(thread.createdAt)
 
@@ -194,7 +225,7 @@ class C extends BaseComponent {
                 headline: thread.headline,
                 description: (
                     <div className="commenter-info">
-                        <a onClick={() => {createdById && this.props.history.push(`/member/${createdById}`)}}>
+                        <a onClick={() => this.linkUserDetail(thread.createdBy)}>
                             {createdByUsername}
                         </a>
                         {dateFormatted &&
@@ -204,7 +235,10 @@ class C extends BaseComponent {
                         </span>}
                     </div>
                 ),
-                avatar
+                avatar: (
+                    <Avatar className="comment-avatar pull-left" src={avatar} shape="circle" size={64}
+                        onClick={() => this.linkUserDetail(thread.createdBy)}/>
+                )
             }
         })
 
@@ -221,7 +255,7 @@ class C extends BaseComponent {
                     header={footer}
                     renderItem={(item, ind) => (
                         <List.Item key={ind}>
-                            <Avatar className="comment-avatar pull-left" src={item.avatar} shape="circle" size={64}/>
+                            {item.avatar}
                             <div className="comment-content pull-left">
                                 { item.headline &&
                                     <h4>
@@ -242,6 +276,27 @@ class C extends BaseComponent {
     handleSubmit(e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
+            const commentPlainText = values.comment.getPlainText()
+
+            if (!commentPlainText) {
+                this.props.form.setFields({
+                    comment: {
+                        errors: [new Error('Please input comment')],
+                    }
+                });
+                return;
+            }
+
+            if (commentPlainText.length > MAX_LENGTH_COMMENT) {
+                this.props.form.setFields({
+                    comment: {
+                        value: values.comment,
+                        errors: [new Error('Comment is too long')],
+                    }
+                });
+                return;
+            }
+
             if (!err) {
                 this.props.postComment(this.props.type,
                     this.props.reduxType,

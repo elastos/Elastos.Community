@@ -2,6 +2,7 @@ import {createContainer} from '@/util'
 import Component from './Component'
 import TeamService from '@/service/TeamService'
 import {message} from 'antd'
+import I18N from '@/I18N'
 
 export default createContainer(Component, (state) => {
     let page = 'PUBLIC' // default
@@ -35,16 +36,16 @@ export default createContainer(Component, (state) => {
         async closeTeam(teamId) {
             try {
                 await teamService.closeTeam(teamId)
-                message.success('Your team is closed now.');
+                message.success(I18N.get('team.detail.popup.team_closed'));
             } catch (err) {
                 message.error(err.message)
             }
         },
     
-        async activeTeam(teamId) {
+        async activateTeam(teamId) {
             try {
-                await teamService.activeTeam(teamId)
-                message.success('Your team is open now.');
+                await teamService.activateTeam(teamId)
+                message.success(I18N.get('team.detail.popup.team_active'));
             } catch (err) {
                 message.error(err.message)
             }

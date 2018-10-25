@@ -5,10 +5,11 @@ class MemberRedux extends BaseRedux {
         return ['member']
     }
 
-    defineDefaultState(){
+    defineDefaultState() {
         return {
             loading: false,
-            focus_user: null,
+            subscribing: false,
+            detail: {},
             users: []
         };
     }

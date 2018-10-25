@@ -1,10 +1,11 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import { TEAM_USER_STATUS } from '@/constant'
+import { TEAM_USER_STATUS, USER_AVATAR_DEFAULT, TASK_AVATAR_DEFAULT } from '@/constant'
 import {Avatar, Button, Col, Form, Icon, Popconfirm, Row, Spin, Table, Input, Modal} from 'antd'
 import Comments from '@/module/common/comments/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
-import ProjectDetail from '@/module/project/detail/Container'
+import TaskDetail from '@/module/task/popup/Container'
+import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 import './style.scss'
 import _ from 'lodash'
 import I18N from '@/I18N'
@@ -16,7 +17,9 @@ class C extends BaseComponent {
     ord_states() {
         return {
             showLoginRegisterModal: false,
-            showTaskModal: false
+            showTaskModal: false,
+            showUserInfo: null,
+            taskDetailId: null
         }
     }
 
@@ -138,8 +141,11 @@ class C extends BaseComponent {
         )
     }
 
-    linkProfileInfo(userId) {
-        this.props.history.push(`/member/${userId}`)
+    linkProfileInfo(user) {
+        this.setState({
+            showUserInfo: user
+        })
+        // this.props.history.push(`/member/${userId}`)
     }
 
     renderContent() {
@@ -152,7 +158,13 @@ class C extends BaseComponent {
 
     getAvatarWithFallback(avatar) {
         return _.isEmpty(avatar)
-            ? '/assets/images/Elastos_Logo.png'
+            ? USER_AVATAR_DEFAULT
+            : avatar
+    }
+
+    getTaskAvatarWithFallback(avatar) {
+        return _.isEmpty(avatar)
+            ? TASK_AVATAR_DEFAULT
             : avatar
     }
 
@@ -174,7 +186,7 @@ class C extends BaseComponent {
                     <div key={candidate._id}>
                         <Avatar className={'gap-right ' + (candidate.role === 'LEADER' ? 'avatar-leader' : 'avatar-member')}
                             src={this.getAvatarWithFallback(candidate.user.profile.avatar)}/>
-                        <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
+                        <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user)}>
                             {this.getUserNameWithFallback(candidate.user)}</a>
                     </div>
                 )
@@ -183,8 +195,7 @@ class C extends BaseComponent {
         return (
             <div>
                 <div className="member-header">
-                    <div className="member-header-icon"><img src="/assets/images/tri-square-dark.svg"/></div>
-                    <div className="member-header-label komu-a">{I18N.get('circle.members')}</div>
+                    <h3 className="member-header-label komu-a with-gizmo">{I18N.get('circle.members')}</h3>
                 </div>
                 <div className="members-list">
                     <Table
@@ -192,6 +203,7 @@ class C extends BaseComponent {
                         dataSource={members}
                         columns={columns}
                         bordered={false}
+                        loading={this.props.loading}
                         rowKey="_id"
                         pagination={false}
                         scroll={{ y: 400 }}>
@@ -204,8 +216,8 @@ class C extends BaseComponent {
     renderTasks() {
         const tasks = this.props.all_tasks
         const clickHandler = !this.props.is_login
-            ? this.showLoginRegisterModal
-            : this.showTaskModal
+            ? this.showLoginRegisterModal.bind(this)
+            : this.showTaskModal.bind(this)
 
         const columns = [{
             title: 'Name',
@@ -214,33 +226,19 @@ class C extends BaseComponent {
                 return (
                     <div key={task._id}>
                         <Avatar className="gap-right"
-                            src={this.getAvatarWithFallback(task.thumbnail)}/>
-                        <a className="row-name-link" href={`/task-detail/${task._id}`}>
+                            src={this.getTaskAvatarWithFallback(task.thumbnail)}/>
+                        <a className="row-name-link" onClick={() => clickHandler(task._id)}>
                             {task.name}
                         </a>
                     </div>
                 )
             }
-        }, {
-            title: 'Action',
-            key: 'action',
-            render: task => {
-                return (
-                    <div key={task._id} className="text-right">
-                        {task.createdBy._id !== this.props.currentUserId &&
-                            <a onClick={clickHandler.bind(this, task._id)}>
-                                {task.bidding ? I18N.get('developer.search.submit_bid') : I18N.get('developer.search.apply')}
-                            </a>
-                        }
-                    </div>
-                )
-            }
         }]
+
         return (
             <div>
                 <div className="member-header">
-                    <div className="member-header-icon"><img src="/assets/images/tri-square-dark.svg"/></div>
-                    <div className="member-header-label komu-a">{I18N.get('circle.tasks')}</div>
+                    <h3 className="member-header-label komu-a with-gizmo">{I18N.get('circle.tasks')}</h3>
                 </div>
                 <div className="members-list">
                     <Table
@@ -280,7 +278,7 @@ class C extends BaseComponent {
                         headlines={true}
                         type="team"
                         canPost={this.isTeamMember()}
-                        returnUrl={`/empower35-detail/${this.props.team.detail._id}`}
+                        returnUrl={`/crcles-detail/${this.props.team.detail._id}`}
                         model={this.props.team.detail}/>
                 </div>
             </div>
@@ -320,8 +318,23 @@ class C extends BaseComponent {
                 <div className="rectangle double-size"/>
                 {this.renderLoginOrRegisterModal()}
                 {this.renderTaskModal()}
+                <Modal
+                    className="profile-overview-popup-modal"
+                    visible={!!this.state.showUserInfo}
+                    onCancel={this.handleCancelProfilePopup.bind(this)}
+                    footer={null}>
+                    { this.state.showUserInfo &&
+                        <ProfilePopup showUserInfo={this.state.showUserInfo}/>
+                    }
+                </Modal>
             </div>
         )
+    }
+
+    handleCancelProfilePopup() {
+        this.setState({
+            showUserInfo: null
+        })
     }
 
     hideShowModal() {
@@ -365,15 +378,15 @@ class C extends BaseComponent {
                 width="70%"
             >
                 { this.state.showTaskModal &&
-                    <ProjectDetail taskId={this.state.taskDetailId}/>
+                    <TaskDetail taskId={this.state.taskDetailId}/>
                 }
             </Modal>
         )
     }
 
     showLoginRegisterModal = () => {
-        sessionStorage.setItem('loginRedirect', `/empower35-detail/${this.props.match.params.circleId}`)
-        sessionStorage.setItem('registerRedirect', `/empower35-detail/${this.props.match.params.circleId}`)
+        sessionStorage.setItem('loginRedirect', `/crcles-detail/${this.props.match.params.circleId}`)
+        sessionStorage.setItem('registerRedirect', `/crcles-detail/${this.props.match.params.circleId}`)
 
         this.setState({
             showLoginRegisterModal: true

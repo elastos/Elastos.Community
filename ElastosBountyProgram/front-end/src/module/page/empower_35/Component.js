@@ -55,7 +55,7 @@ export default class extends StandardPage {
                     <div className="indicator">{circle.members.length}</div>
                 </div>
                 <span className="title"
-                    onClick={() => this.props.history.push(`/empower35-detail/${circle._id}`)}>{circle.name}</span>
+                    onClick={() => this.props.history.push(`/crcles-detail/${circle._id}`)}>{circle.name}</span>
             </div>
         );
     }
@@ -127,8 +127,10 @@ export default class extends StandardPage {
                     <div className="rect-container">
                         <div className="rect"></div>
                     </div>
-                    <div className="title">
-                        {I18N.get('emp35.header.title')}
+                    <div class="title">
+                        <span className="title-big">{I18N.get('emp35.header.title.part1')}</span>
+                        <span className="title-small">{I18N.get('emp35.header.title.part2')}</span>
+                        <span className="title-big">{I18N.get('emp35.header.title.part3')}</span>
                     </div>
                     <div className="content">
                         <div class="center">

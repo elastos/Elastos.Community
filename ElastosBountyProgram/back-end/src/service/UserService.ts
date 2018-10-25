@@ -54,15 +54,15 @@ export default class extends Base {
             password : this.getPassword(param.password, salt),
             email,
             salt,
-            profile : {
-                firstName : param.firstName,
-                lastName : param.lastName,
-                country : param.country,
-                state : param.state,
-                city : param.city,
-                beOrganizer : param.beOrganizer === 'yes',
-                isDeveloper : param.isDeveloper === 'yes',
-                source : param.source
+            profile: {
+                firstName: param.firstName,
+                lastName: param.lastName,
+                country: param.country,
+                state: param.state,
+                city: param.city,
+                beOrganizer: param.beOrganizer === 'yes',
+                isDeveloper: param.isDeveloper === 'yes',
+                source: param.source
             },
             role : constant.USER_ROLE.MEMBER,
             active: true
@@ -100,7 +100,7 @@ export default class extends Base {
 
         const {userId} = param
 
-        const db_user = this.getDBModel('User');
+        const db_user = this.getDBModel('User')
         const db_team = this.getDBModel('Team')
 
         if (param.admin && (!this.currentUser || (this.currentUser.role !== constant.USER_ROLE.ADMIN &&
@@ -108,12 +108,30 @@ export default class extends Base {
             throw 'Access Denied'
         }
 
-        const user = db_user.getDBInstance().findOne({_id: userId})
+        const user = await db_user.getDBInstance().findOne({_id: userId})
             .select(selectFields)
             .populate('circles')
 
         if (!user) {
             throw `userId: ${userId} not found`
+        }
+
+        if (user.comments) {
+            for (let comment of user.comments) {
+                for (let thread of comment) {
+                    await db_user.getDBInstance().populate(thread, {
+                        path: 'createdBy',
+                        select: selectFields
+                    })
+                }
+            }
+
+            for (let subscriber of user.subscribers) {
+                await db_user.getDBInstance().populate(subscriber, {
+                    path: 'user',
+                    select: selectFields
+                })
+            }
         }
 
         return user
@@ -212,9 +230,10 @@ export default class extends Base {
      */
     public async findAll(query): Promise<Document[]>{
         const db_user = this.getDBModel('User');
+        let excludeFields = selectFields;
 
         if (!query.admin || this.currentUser.role !== constant.USER_ROLE.ADMIN) {
-            selectFields += ' -email'
+            excludeFields += ' -email'
         }
 
         const finalQuery:any = {
@@ -229,7 +248,7 @@ export default class extends Base {
         return await db_user
             .getDBInstance()
             .find(finalQuery)
-            .select(selectFields)
+            .select(excludeFields)
             .sort({username: 1});
     }
 

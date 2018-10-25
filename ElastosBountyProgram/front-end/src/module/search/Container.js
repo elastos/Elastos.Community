@@ -32,8 +32,8 @@ export default createContainer(Component, (state) => {
         async getTasks(filters) {
             return taskService.index({
                 ...filters,
-                type: TASK_TYPE.TASK,
-                category: TASK_CATEGORY.DEVELOPER
+                type: [TASK_TYPE.TASK, TASK_TYPE.EVENT],
+                category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.SOCIAL]
             })
         },
 

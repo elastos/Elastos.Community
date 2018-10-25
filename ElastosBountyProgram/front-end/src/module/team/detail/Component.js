@@ -100,9 +100,7 @@ class C extends BaseComponent {
                 <div className="title">
                     <span>{name}</span>
                     <br></br>
-                    <span className={status == TEAM_STATUS.ACTIVE ? 'team-status-active' : 'team-status-close'}>
-                        {status == TEAM_STATUS.ACTIVE ? I18N.get('team.detail.recuriting') : I18N.get('team.detail.not_recruiting')}
-                    </span>
+                    { this.renderStatusSpan(status) }
                 </div>
                 <a className="leader" onClick={this.linkUserDetail.bind(this, detail.owner)}>
                     <Avatar size="large" src={leaderImage} />
@@ -122,6 +120,18 @@ class C extends BaseComponent {
                 </div>
             </div>
         )
+    }
+
+    renderStatusSpan(status){
+        if (status == TEAM_STATUS.ACTIVE) {
+            return <span className="team-active">
+                {I18N.get('team.detail.status.recuriting')}
+            </span> 
+        } else if (status == TEAM_STATUS.CLOSED) {
+            return <span className="team-close">
+                {I18N.get('team.detail.status.not_recruiting')}
+            </span> 
+        }
     }
 
     renderCurrentContributors() {
@@ -303,7 +313,7 @@ class C extends BaseComponent {
                     </Button>
                 </Popconfirm>
             )
-            : (status == TEAM_STATUS.ACTIVE || hasApplied) && (
+            : (hasApplied || status != TEAM_STATUS.CLOSED) && (
                 <Button disabled={hasApplied} type="primary" onClick={() => this.setState({ applying: true })}>
                     {hasApplied
                         ? I18N.get('project.detail.popup.applied')
@@ -349,14 +359,14 @@ class C extends BaseComponent {
 
                             {!this.state.applying &&
                                 <Row className="contributors">
-                                    <h3 className="no-margin align-left">{I18N.get('project.detail.current_members')}</h3>
+                                    <h3 className="no-margin align-left with-gizmo">{I18N.get('project.detail.current_members')}</h3>
                                     {this.renderCurrentContributors()}
                                 </Row>
                             }
 
                             {!this.state.applying &&
                                 <Row className="applications">
-                                    <h3 className="no-margin">{I18N.get('project.detail.pending_applications')}</h3>
+                                    <h3 className="no-margin with-gizmo">{I18N.get('project.detail.pending_applications')}</h3>
                                     {this.renderCurrentApplicants()}
                                 </Row>
                             }

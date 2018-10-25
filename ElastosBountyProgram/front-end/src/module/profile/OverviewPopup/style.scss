@@ -1,0 +1,85 @@
+
+@import '../../../style/variable';
+@import '../../../style/color';
+
+.c_ProfileModalPopup {
+  background-color: $bg_blue;
+
+  .header-image-container {
+    img {
+      width: 100%;
+    }
+  }
+  .profile-image {
+    width: 100%;
+    margin-top: -$gap_5;
+    text-align: center;
+
+    img {
+      max-width: 200px;
+    }
+  }
+  .profile-info {
+    text-align: center;
+
+    .name {
+      padding: $gap_2 0 0 0;
+      font-size: 39px;
+      line-height: 39px;
+      color: black;
+    }
+    .location-circle {
+      span {
+        &:first-child {
+          display: block;
+        }
+        margin: 0 $gap_1;
+
+        i {
+          margin-right: $gap_0;
+        }
+      }
+      .circle {
+        color: $primary_color;
+      }
+    }
+  }
+  .profile-interaction {
+    padding: $gap_2 0;
+    display: flex;
+    text-align: center;
+
+    div {
+      flex: 1;
+
+      a {
+        color: black;
+        text-decoration: underline;
+      }
+      span {
+        color: black;
+      }
+    }
+  }
+  .profile-view-button {
+    width: 100%;
+
+    button {
+      height: 60px;
+      width: 100%;
+      background-color: $primary_color;
+      border-color: $primary_color;
+      border-radius: 0;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+}
+
+.profile-overview-popup-modal {
+  .ant-modal-close-x {
+    color: white;
+  }
+
+}

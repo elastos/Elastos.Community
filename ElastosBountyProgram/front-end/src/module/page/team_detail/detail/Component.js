@@ -17,7 +17,6 @@ class C extends BaseComponent {
     }
 
     ord_render () {
-        console.log(this.props)
         return (
             <TeamDetail team={this.props.detail}/>
         )

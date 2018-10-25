@@ -4,7 +4,7 @@ import TaskService from '@/service/TaskService'
 import TeamService from '@/service/TeamService'
 import _ from 'lodash'
 
-import {USER_ROLE, TASK_TYPE, TASK_CANDIDATE_STATUS} from '@/constant'
+import {USER_ROLE, TASK_TYPE, TASK_CANDIDATE_STATUS, TASK_CATEGORY} from '@/constant'
 
 export default createContainer(Component, (state) => {
     const currentUserId = state.user.current_user_id
@@ -49,7 +49,7 @@ export default createContainer(Component, (state) => {
                     }
 
                     if (candidate.type === 'TEAM' && candidate.team) {
-                        return _.map(state.user.teams, '_id').includes(candidate.team._id)
+                        return _.map(state.team.all_teams, '_id').includes(candidate.team._id)
                     }
                 })
 
@@ -83,7 +83,9 @@ export default createContainer(Component, (state) => {
          */
         async getTasks(currentUserId) {
             return taskService.index({
-                profileListFor: currentUserId
+                profileListFor: currentUserId,
+                type: TASK_TYPE.TASK,
+                category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.SOCIAL]
             })
         },
 

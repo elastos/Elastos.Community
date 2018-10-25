@@ -1,5 +1,6 @@
 @import "./color";
 @import "./variable";
+@import "./typography";
 
 // Helpers IMPROVEME make separate helper scss
 .no-margin {
@@ -113,6 +114,10 @@ h3.one-line {
   border-color: transparent;
   color: $text_light_gray;
   margin-right: 0;
+}
+
+.ant-input-lg {
+  line-height: 40px;
 }
 
 .ant-menu-inline {
@@ -271,6 +276,46 @@ h3.one-line {
   background: $bg_blue;
 }
 
+.ant-btn > span {
+  line-height: 24px;
+}
+
+.ant-switch-inner {
+  line-height: 16px;
+}
+
 .ant-form-item-children > div {
   position: relative;
+}
+
+.timezone-picker > ul {
+  background: white;
+  z-index: 1;
+
+  & > li {
+    min-height: 38px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.timezone-picker > input {
+  border: 1px solid #d9d9d9 !important;
+  border-radius: 4px !important;
+  height: 40px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #66bda3 !important;
+  }
+}
+
+h3 {
+  @extend .komu-a;
+  font-size: 42px;
+
+  & > * {
+    @extend .komu-a;
+    font-size: 42px;
+  }
 }

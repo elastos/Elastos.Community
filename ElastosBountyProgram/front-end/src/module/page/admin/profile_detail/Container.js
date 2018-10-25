@@ -5,7 +5,7 @@ import UserService from '@/service/UserService'
 export default createContainer(Component, (state) => {
     return {
         loading: state.member.loading,
-        member: state.member.focus_user
+        member: state.member.detail
     }
 }, () => {
     const userService = new UserService()

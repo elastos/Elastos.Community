@@ -82,6 +82,7 @@ export const TaskCandidate = {
 
     // this is the admin that approved the candidate
     approvedBy: Schema.Types.ObjectId,
+    approvedDate: Date,
 
     output : TaskOutput,
 
@@ -112,7 +113,6 @@ const ProjectPitch = {
  *
  */
 export const Task = {
-
     name : {
         type : String,
         required : true
@@ -226,6 +226,7 @@ export const Task = {
 
     approved: Boolean,
     approvedBy: {type: Schema.Types.ObjectId, ref: 'users'},
+    approvedDate: Date,
 
     budgetDisbursed: Boolean,
     budgetDisburseMemo: String,
