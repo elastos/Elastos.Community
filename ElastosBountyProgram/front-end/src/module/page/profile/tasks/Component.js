@@ -297,11 +297,9 @@ export default class extends StandardPage {
                                     <Navigator selectedItem={'profileTasks'}/>
                                 </Col>
                                 <Col sm={24} md={20} className="c_ProfileContainer admin-right-column wrap-box-user">
-                                    {(this.props.is_leader || this.props.is_admin) &&
                                     <div className="pull-right filter-group">
                                         <Button onClick={() => this.props.history.push('/task-create/')}>Create Task</Button>
                                     </div>
-                                    }
                                     <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
                                         <Select
                                             name="type"
