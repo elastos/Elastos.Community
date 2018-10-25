@@ -319,9 +319,9 @@ export default {
     'project.detail.popup.join_project': '加入项目',
 
     'team.detail.team_active': '团队已经激活',
-    'team.detail.team_close': '团队已经关闭',
+    'team.detail.team_closed': '团队已经关闭',
     'team.detail.open': '激活',
-    'team.detail.close': '关闭',
+    'team.detail.closed': '关闭',
     'team.detail.status.recuriting': '正在招募',
     'team.detail.status.not_recruiting': '招募取消',
     'team.detail.popup.team_closed': '你的团队已激活',

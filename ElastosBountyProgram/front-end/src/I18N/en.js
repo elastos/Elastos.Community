@@ -363,7 +363,7 @@ const en = {
     'team.detail.team_active': 'This team is currently active.',
     'team.detail.team_closed': 'This team is currently closed.',
     'team.detail.open': 'Open',
-    'team.detail.close': 'Close',
+    'team.detail.closed': 'Close',
     'team.detail.status.recuriting': 'Recruitment In Progress',
     'team.detail.status.not_recruiting': 'Recruitment Closed',
     'team.detail.popup.team_closed': 'Your team is closed now.',

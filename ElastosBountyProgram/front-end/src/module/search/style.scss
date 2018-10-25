@@ -50,7 +50,7 @@
   padding: $gap_2;
 }
 
-.team-active, .team-close{
+.team-active, .team-close {
   font-size: 10px !important;
   padding: 5px;
   border-radius: 5px;
@@ -58,12 +58,12 @@
   white-space: nowrap;
 }
 
-.team-active{
+.team-active {
   background-color: $span_dark_grey;
   color: white !important;
 }
 
-.team-close{
+.team-close {
   background-color: $span_light_grey;
   color: $text_new_gray !important;
 }

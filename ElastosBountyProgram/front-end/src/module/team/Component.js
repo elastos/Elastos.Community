@@ -52,7 +52,7 @@ export default class extends BaseComponent {
             <div className="pull-right right-align gap-right">
                 { this.props.team.status == TEAM_STATUS.ACTIVE ? (
                     <Button loading={this.props.loading} onClick={this.closeTeam.bind(this)}>
-                        {I18N.get('team.detail.close')}
+                        {I18N.get('team.detail.closed')}
                     </Button> 
                     ) : (
                     <Button loading={this.props.loading} onClick={this.activateTeam.bind(this)}>
