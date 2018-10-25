@@ -235,6 +235,20 @@ h3.one-line {
   }
 }
 
+.ant-table-wrapper.cr-table {
+  .ant-table-body {
+    background: $bg_blue !important;
+  }
+
+  .ant-table-thead {
+    background: $primary_color;
+
+    span {
+      color: white;
+    }
+  }
+}
+
 .ant-list-split .ant-list-item:last-child {
   border-bottom: 1px solid $border_gray;
 }
