@@ -278,7 +278,7 @@ const en = {
     'circle.title': 'Crcle Detail',
     'circle.header.join': 'Join',
     'circle.header.leave': 'Leave',
-    'circle.header.maxReached': 'Limit reached',
+    'circle.header.maxReached': 'You can only join 2 CRcles',
     'circle.createPost': 'Create Post',
     'circle.joinToPost': 'Join the CRcle to post',
     'circle.registerToPost': 'Register to join the CRcle and post',
