@@ -233,6 +233,19 @@ class C extends BaseComponent {
                     </div>
                 )
             }
+        }, {
+            title: 'Reward',
+            key: 'reward',
+            width: 150,
+            render: task => {
+                return task.bidding
+                    ? 'Bidding'
+                    : task.reward
+                        ? task.reward.isUsd
+                            ? `${task.reward.usd / 100} USD`
+                            : `${task.reward.ela / 1000} ELA`
+                        : ''
+            }
         }]
 
         return (
