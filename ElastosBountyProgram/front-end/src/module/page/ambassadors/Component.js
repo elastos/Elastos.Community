@@ -202,8 +202,7 @@ export default class extends StandardPage {
                             <div className="form-wrap">
                                 <p>Stay updated by subscribing below with your E-Mail</p>
                                 <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"/>
-                                <form id="footer-form" className="signup-form" name="mailing-list" action="https://cyberrepublic.us19.list-manage.com/subscribe/post-json?u=acb5b0ce41bfe293d881da424&id=e6afbb4dba"
-                                      method="get">
+                                <form id="footer-form" className="signup-form" name="mailing-list" action="https://cyberrepublic.us19.list-manage.com/subscribe/post?u=acb5b0ce41bfe293d881da424&amp;id=e6afbb4dba" method="post">
                                     <div className="email-wrap">
                                         <input type="email" name="EMAIL" data-type="req" placeholder="Enter Email"/>
                                         <button type="submit" className="arrow-submit">
