@@ -145,7 +145,8 @@ class C extends BaseComponent {
             attachment_loading: false,
             attachment_filename: (props.existingTask && props.existingTask.attachmentFilename) || '',
             attachment_type: '',
-            circle: (props.existingTask && props.existingTask.circle && props.existingTask.circle._id) || null,
+            circle: (props.existingTask && props.existingTask.circle && props.existingTask.circle._id) ||
+                props.circleId || null,
             removeAttachment: false,
             editing: !!props.existingTask,
             isUsd: (props.existingTask && props.existingTask.reward.isUsd) || false,
@@ -202,24 +203,22 @@ class C extends BaseComponent {
                 }
             }}>
                 <Option value={TASK_CATEGORY.SOCIAL}>Social</Option>
-                {this.props.is_admin &&
-                    <Option value={TASK_CATEGORY.DEVELOPER}>Developer</Option>
-                }
+                <Option value={TASK_CATEGORY.DEVELOPER}>Developer</Option>
             </Select>
         )
 
         const circle_fn = getFieldDecorator('circle', {
             rules: [],
-            initialValue: (!this.props.loading && this.state.editing &&
-                existingTask.circle && existingTask.circle._id) || null
+            initialValue: this.props.all_circles_loading
+                ? I18N.get('.loading')
+                : (!this.props.loading && this.state.editing &&
+                existingTask.circle && existingTask.circle._id) || this.props.circleId || null
         })
 
         const circle_el = (
-            <Select disabled={this.props.all_circles_loading}>
+            <Select disabled={this.props.all_circles_loading || this.props.disableCircleSelect}>
                 <Select.Option value={null}>
-                    {this.props.all_circles_loading
-                        ? I18N.get('.loading')
-                        : I18N.get('.no')}
+                    {I18N.get('.no')}
                 </Select.Option>
                 {_.map(this.props.all_circles, (circle, ind) =>
                     <Select.Option key={ind} value={circle._id}>
@@ -239,8 +238,8 @@ class C extends BaseComponent {
                 disabled={hasLeaderEditRestrictions} onChange={(val) => this.setState({taskType: val})}>
                 <Option value={TASK_TYPE.EVENT}>Event</Option>
                 <Option value={TASK_TYPE.TASK}>Task</Option>
-                {this.state.taskCategory === TASK_CATEGORY.DEVELOPER &&
-                <Option value={TASK_TYPE.PROJECT}>Project</Option>
+                {this.state.taskCategory === TASK_CATEGORY.DEVELOPER && (this.props.is_admin || this.props.is_leader) &&
+                    <Option value={TASK_TYPE.PROJECT}>Project</Option>
                 }
             </Select>
         )
@@ -1113,7 +1112,8 @@ class C extends BaseComponent {
                         <br/>
                         <Row style={{'margin': '50px 0 100px 0'}}>
                             <Col offset={4} span={16}>
-                                <Button loading={this.props.loading} type="primary" htmlType="submit" className="d_btn" style={{width: '100%'}}>
+                                <Button loading={this.props.loading || this.props.all_circles_loading}
+                                    type="primary" htmlType="submit" className="d_btn" style={{width: '100%'}}>
                                     {this.state.editing ? 'Save Changes' : (this.props.is_admin ? 'Create Task' : 'Submit Proposal')}
                                 </Button>
                             </Col>

@@ -4,6 +4,7 @@ import { TEAM_USER_STATUS, USER_AVATAR_DEFAULT, TASK_AVATAR_DEFAULT } from '@/co
 import {Avatar, Button, Col, Form, Icon, Popconfirm, Row, Spin, Table, Input, Modal} from 'antd'
 import Comments from '@/module/common/comments/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
+import TaskCreateForm from '@/module/form/TaskCreateForm/Container'
 import TaskDetail from '@/module/task/popup/Container'
 import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 import './style.scss'
@@ -19,7 +20,8 @@ class C extends BaseComponent {
             showLoginRegisterModal: false,
             showTaskModal: false,
             showUserInfo: null,
-            taskDetailId: null
+            taskDetailId: null,
+            showCreateModal: null
         }
     }
 
@@ -233,12 +235,28 @@ class C extends BaseComponent {
                     </div>
                 )
             }
+        }, {
+            title: 'Reward',
+            key: 'reward',
+            width: 150,
+            render: task => {
+                return task.bidding
+                    ? 'Bidding'
+                    : task.reward
+                        ? task.reward.isUsd
+                            ? `${task.reward.usd / 100} USD`
+                            : `${task.reward.ela / 1000} ELA`
+                        : ''
+            }
         }]
 
         return (
             <div>
                 <div className="member-header">
                     <h3 className="member-header-label komu-a with-gizmo">{I18N.get('circle.tasks')}</h3>
+                    <Button className="pull-right" onClick={this.showCreateTaskModal.bind(this)}>
+                        {I18N.get('task.createNew')}
+                    </Button>
                 </div>
                 <div className="members-list">
                     <Table
@@ -318,6 +336,7 @@ class C extends BaseComponent {
                 <div className="rectangle double-size"/>
                 {this.renderLoginOrRegisterModal()}
                 {this.renderTaskModal()}
+                {this.renderTaskCreateModal()}
                 <Modal
                     className="profile-overview-popup-modal"
                     visible={!!this.state.showUserInfo}
@@ -384,6 +403,24 @@ class C extends BaseComponent {
         )
     }
 
+    renderTaskCreateModal() {
+        return (
+            <Modal
+                className="project-detail-nobar"
+                visible={this.state.showCreateModal}
+                onOk={this.handleCreateTaskModalOk}
+                onCancel={this.handleCreateTaskModalCancel}
+                footer={null}
+                width="70%"
+            >
+                { this.state.showCreateModal &&
+                    <TaskCreateForm circleId={this.props.match.params.circleId}
+                        disableCircleSelect={true}/>
+                }
+            </Modal>
+        )
+    }
+
     showLoginRegisterModal = () => {
         sessionStorage.setItem('loginRedirect', `/crcles-detail/${this.props.match.params.circleId}`)
         sessionStorage.setItem('registerRedirect', `/crcles-detail/${this.props.match.params.circleId}`)
@@ -393,11 +430,29 @@ class C extends BaseComponent {
         })
     }
 
+    showCreateTaskModal = () => {
+        this.setState({
+            showCreateModal: true
+        })
+    }
+
     handleLoginRegisterModalOk = (e) => {
         sessionStorage.removeItem('registerRedirect')
 
         this.setState({
             showLoginRegisterModal: false
+        })
+    }
+
+    handleCreateTaskModalOk = (e) => {
+        this.setState({
+            showCreateModal: false
+        })
+    }
+
+    handleCreateTaskModalCancel = (e) => {
+        this.setState({
+            showCreateModal: false
         })
     }
 
