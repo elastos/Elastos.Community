@@ -292,21 +292,6 @@ export default class extends Base {
             doc['communityParent'] = communityParent;
         }
 
-        // if member role, could not create
-        const role = this.currentUser.role;
-        if(role === constant.USER_ROLE.MEMBER){
-            throw 'Access Denied';
-        }
-
-        /*
-        if(type === constant.TASK_TYPE.EVENT){
-            const userService = this.getService(UserService);
-            if(reward.ela > userService.getSumElaBudget(this.currentUser.elaBudget)){
-                throw 'ela reward could not greater than user budget';
-            }
-        }
-        */
-
         if (assignSelf) {
             // override the candidate select limit
             // TODO: visually note this in UI
