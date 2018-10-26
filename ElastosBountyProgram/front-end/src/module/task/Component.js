@@ -90,9 +90,16 @@ export default class extends BaseComponent {
             {this.props.task.category !== 'CR100' &&
             <div className="pull-right right-align">
                 {!this.state.editing && this.props.task.status === TASK_STATUS.PENDING &&
-                <Popconfirm title="Are you sure you want to approve this task?" placement="left" okText="Yes" onConfirm={this.approveTask.bind(this)}>
-                    <Button type="primary">Approve</Button>
-                </Popconfirm>
+                    <Popconfirm title="Are you sure you want to approve this task?"
+                        placement="left" okText="Yes" onConfirm={this.approveTask.bind(this)}>
+                        <Button type="primary">Approve</Button>
+                    </Popconfirm>
+                }
+                {!this.state.editing && this.props.task.status === TASK_STATUS.PENDING &&
+                    <Popconfirm title="Are you sure you want to approve this task and assign to the owner?"
+                        placement="left" okText="Yes" onConfirm={this.approveAndAssignTask.bind(this)}>
+                        <Button type="primary">Approve and Assign</Button>
+                    </Popconfirm>
                 }
                 {/* Admin & Task Owner CAN Mark as Complete */}
                 {(this.props.task.status === TASK_STATUS.APPROVED || this.props.task.status === TASK_STATUS.ASSIGNED) &&
@@ -191,7 +198,11 @@ export default class extends BaseComponent {
     async approveTask() {
         const taskId = this.props.task._id
         await this.props.approveTask(taskId)
+    }
 
+    async approveAndAssignTask() {
+        const taskId = this.props.task._id
+        await this.props.approveAndAssignTask(taskId)
     }
 
     async markAsSuccessful() {

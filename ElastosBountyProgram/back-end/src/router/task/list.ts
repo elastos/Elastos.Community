@@ -58,6 +58,10 @@ export default class extends Base{
             query.circle = { $in: param.circle.split(',') }
         }
 
+        if (_.has(param, 'assignSelf')) {
+            query.assignSelf = param.assignSelf
+        }
+
         if (param.eventDateRangeStart) {
             query.eventDateRangeStart = JSON.parse(param.eventDateRangeStart)
         }
