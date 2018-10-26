@@ -271,7 +271,7 @@ export default {
     'emp35.apply.error': '错误 - 请给我们发电子邮件',
 
     // Training
-    'training.header.title': '大使培训',
+    'training.header.title': '大使计划',
     'training.header.content.1': 'Cyber Republic 将提供为期一周的免费培训',
     'training.header.content.2': '接受亦来云团队培训成为官方大使',
     'training.header.content.3': '该项目毕业的大使将获取ELA预算',
