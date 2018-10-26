@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import StandardPage from '../../StandardPage';
 import { DEFAULT_IMAGE, USER_GENDER } from '@/constant'
+import I18N from '@/I18N'
 
 import { Table, Card, Select, Col, Row, Breadcrumb, Icon, Button, Input } from 'antd'
 const Search = Input.Search;
@@ -179,7 +180,7 @@ export default class extends StandardPage {
                 value={this.props.match.params['country'] || undefined}
                 showSearch
                 style={{width: 160}}
-                placeholder="Select a country"
+                placeholder={I18N.get('community.selectcountry')}
                 optionFilterProp="children"
                 onChange={this.handleChangeCountry.bind(this)}
             >
@@ -249,7 +250,7 @@ export default class extends StandardPage {
                                     <Breadcrumb.Item href="/">
                                         <Icon type="home"/>
                                     </Breadcrumb.Item>
-                                    <Breadcrumb.Item>Community</Breadcrumb.Item>
+                                    <Breadcrumb.Item>{I18N.get('0002')}</Breadcrumb.Item>
                                     <Breadcrumb.Item>
                                         {menuCountriesEl}
                                     </Breadcrumb.Item>
@@ -264,26 +265,25 @@ export default class extends StandardPage {
                                      className="community-left-column">
                                     {!this.state.countryExists &&
                                     <div class="guide-container">
-                                        <h4>
-                                            Hello there! Looks like your we don't have an organizer for&nbsp;
+                                        <h4>{I18N.get('community.guidecontainer.part1')}
+                                            &nbsp;
                                             {config.data.mappingCountryCodeToName[this.state.countryGeolocation]}
                                         </h4>
 
                                         <p>
-                                            We are always looking for new organizers especially in new communities.
+                                            {I18N.get('community.guidecontainer.part2')}
                                         </p>
                                         <p>
-                                            if you'd like to be an organizer for your region please register,
-                                            we'll add your country and you can then apply to be an organizer on this page.
+                                            {I18N.get('community.guidecontainer.part3')}
                                         </p>
 
                                         <br/>
 
-                                        <Button onClick={() => this.props.history.push('/register')}>Click to Register</Button>
+                                        <Button onClick={() => this.props.history.push('/register')}>{I18N.get('community.button.register')}</Button>
 
                                         <p>
                                             <br/>
-                                            <span class="no-info">or you can select a country from above</span>
+                                            <span class="no-info">{I18N.get('community.button.selectcountry')}</span>
                                         </p>
                                     </div>
                                     }

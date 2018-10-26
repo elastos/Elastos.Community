@@ -200,7 +200,7 @@ export default class extends StandardPage {
                         </Row>
                         <Row className="d_Row subscribe" justify="center">
                             <div className="form-wrap">
-                                <p>Stay updated by subscribing below with your E-Mail</p>
+                                <p>{I18N.get('training.subscribeemail.text')}</p>
                                 <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"/>
                                 <form id="footer-form" className="signup-form" name="mailing-list" action="https://cyberrepublic.us19.list-manage.com/subscribe/post?u=acb5b0ce41bfe293d881da424&amp;id=e6afbb4dba" method="post">
                                     <div className="email-wrap">

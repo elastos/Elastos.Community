@@ -286,9 +286,12 @@ const en = {
     'circle.members': 'Members',
     'circle.tasks': 'Tasks',
     'circle.posts': 'Posts',
+    'circle.uploadtext': 'If you have a whitepaper ready, drag it or click here.',
+    'circle.uploadhint': 'Use the Comments below to speak to the Project Owner and find out more.',
 
     // Training
     'training.header.title': 'Ambassadors Training',
+    'training.subscribeemail.text': 'Stay updated by subscribing below with your E-Mail',
     'training.header.content.1': 'Cyber Republic will offer an all expenses paid trip for ambassadors',
     'training.header.content.2': 'and guest speakers to spend one week training with the Elastos Team',
     'training.header.content.3': 'in various regions to become an official Elastos Ambassador. Graduates',
@@ -427,6 +430,23 @@ const en = {
     '.no': 'No',
     '.loading': 'Loading...',
     'ela': 'ELA',
+
+    // Community
+    'community.nomember': 'no members',
+    'community.buton.join': 'Join',
+    'community.buton.leave': 'Leave',
+    'community.noorganizers': 'No organizers yet',
+    'community.applytobeorganizer': 'Apply to be an Organizer',
+    'community.message.success.joincommunity': 'You were added to community',
+    'community.message.success.leavecommunity': 'You left this community successfully',
+    'community.message.error.joincommunity': 'Error while adding you to community',
+    'community.message.error.apply': 'You must be logged in to apply',
+    'community.selectcountry': 'Select a country',
+    'community.guidecontainer.part1': 'Hello there! Looks like your we do not have an organizer for',
+    'community.guidecontainer.part2': 'We are always looking for new organizers especially in new communities.',
+    'community.guidecontainer.part3': "if you'd like to be an organizer for your region please register, we'll add your country and you can then apply to be an organizer on this page.",
+    'community.button.register': "Click to Register",
+    'community.button.selectcountry': "or you can select a country from above",
 
     // Landing
     'landing.elastos': 'Elastos',
@@ -613,15 +633,20 @@ const en = {
     'profile.localTime': 'Local time',
     'profile.sendMessage': 'Send Direct Message',
     'profile.viewProfile': 'View Profile',
-    'profile.projectsTasks': 'Projects/Tasks',
-    'profile.view': 'View',
     'profile.editProfile': 'Edit Profile',
     'profile.showPublicProfile': 'Show Public Profile',
     'profile.crContributors': 'CR Contributors',
     'profile.followers': 'Followers',
     'profile.edit': 'Edit',
     'profile.publicProfile': 'Public Profile',
-    'profile.save': 'Save'
+    'profile.save': 'Save',
+    'profile.projectsTasks': 'Projects/Tasks',
+    'profile.view': 'View',
+
+    // Validate Form
+    'ambassadors.form.required': 'This must be filled out',
+    'ambassadors.form.reason.max': 'Reason too long',
+    'ambassadors.form.suitedreason.max': 'Suited reason too long'
 };
 
 // lang mappings

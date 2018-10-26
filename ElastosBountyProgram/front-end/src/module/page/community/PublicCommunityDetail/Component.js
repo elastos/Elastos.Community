@@ -9,6 +9,7 @@ import _ from 'lodash'
 import Promise from 'bluebird'
 import MediaQuery from 'react-responsive'
 import { MAX_WIDTH_MOBILE, MIN_WIDTH_PC } from '@/config/constant'
+import I18N from '@/I18N'
 
 const TabPane = Tabs.TabPane
 import '../style.scss'
@@ -307,12 +308,12 @@ export default class extends StandardPage {
         const communityId = this.getMemberCommunityId()
 
         this.props.addMember(this.props.current_user_id, communityId).then(() => {
-            message.success('You were added to community')
+            message.success(I18N.get('community.message.success.joincommunity'))
 
             this.loadCommunityMembers()
         }).catch((err) => {
             console.error(err)
-            message.error('Error while adding you to community')
+            message.error(I18N.get('community.message.error.joincommunity'))
         })
     }
 
@@ -320,7 +321,7 @@ export default class extends StandardPage {
         const communityId = this.getMemberCommunityId()
 
         this.props.removeMember(this.props.current_user_id, communityId).then(() => {
-            message.success('You left this community successfully')
+            message.success(I18N.get('community.message.success.leavecommunity'))
             this.loadCommunityMembers()
         })
     }
@@ -485,14 +486,14 @@ export default class extends StandardPage {
             communityMembers: communities
         })
     }
-    
+
     renderListMembersAndJoinButton() {
         return (
             <div>
                 <Input.Search onSearch={this.handleSearchMember.bind(this)}
                               prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                               placeholder="Username"/>
-    
+
                 <div className="list-members">
                     {this.state.communityMembers.length ?
                         <List
@@ -516,29 +517,29 @@ export default class extends StandardPage {
                                 </List.Item>
                             )}
                         /> :
-                        <div class="no-info"><br/>no members</div>
+                        <div class="no-info"><br/>{I18N.get('community.nomember')}</div>
                     }
                 </div>
-    
+
                 {this.props.current_user_id && this.props.match.params['region'] && !this.state.keyValueCommunityMembers[this.props.current_user_id] && (
-                    <Button onClick={this.joinToCommunity.bind(this)} className="btn-member-action">Join</Button>
+                    <Button onClick={this.joinToCommunity.bind(this)} className="btn-member-action">{I18N.get('community.buton.join')}</Button>
                 )}
-    
+
                 {this.props.current_user_id && !this.props.match.params['region'] && !this.state.keyValueMembersWithoutSubCommunity[this.props.current_user_id] && (
-                    <Button onClick={this.joinToCommunity.bind(this)} className="btn-member-action">Join</Button>
+                    <Button onClick={this.joinToCommunity.bind(this)} className="btn-member-action">{I18N.get('community.buton.join')}</Button>
                 )}
-    
+
                 {this.props.current_user_id && this.props.match.params['region'] && this.state.keyValueCommunityMembers[this.props.current_user_id] && (
-                    <Button onClick={this.leaveFromCommunity.bind(this)} className="btn-member-action">Leave</Button>
+                    <Button onClick={this.leaveFromCommunity.bind(this)} className="btn-member-action">{I18N.get('community.buton.leave')}</Button>
                 )}
-    
+
                 {this.props.current_user_id && !this.props.match.params['region'] && this.state.keyValueMembersWithoutSubCommunity[this.props.current_user_id] && (
-                    <Button onClick={this.leaveFromCommunity.bind(this)} className="btn-member-action">Leave</Button>
+                    <Button onClick={this.leaveFromCommunity.bind(this)} className="btn-member-action">{I18N.get('community.buton.leave')}</Button>
                 )}
             </div>
         )
     }
-    
+
     renderListOrganizersForMobile() {
         if (!this.state.community) {
             return null
@@ -568,15 +569,15 @@ export default class extends StandardPage {
                             </List.Item>
                         )}
                     /> :
-                    <div class="no-info"><br/>No organizers yet</div>
+                    <div class="no-info"><br/>{I18N.get('community.noorganizers')}</div>
                 }
             </div>
         )
     }
-    
+
     checkShouldDisplayApplyOrganizer() {
         let shouldDisplayApplyOrganizer = false;
-        
+
         const currentUserId = '5b0ff56f41xx716853f41de884';
         if (currentUserId) {
             if (!this.state.community || !this.state.community.leaders) {
@@ -585,7 +586,7 @@ export default class extends StandardPage {
                 const existedLeader = _.find(this.state.community.leaders, {
                     _id: currentUserId,
                 });
-    
+
                 shouldDisplayApplyOrganizer = !existedLeader;
             }
         }
@@ -597,7 +598,7 @@ export default class extends StandardPage {
         const menuCountriesEl = this.renderBreadcrumbCountries()
         // const menuListRegionsEl = this.renderBreadcrumbRegions()
         // const tabSubCommunities = this.renderTabSubCommunities()
-        
+
         const shouldDisplayButtonApplyOrganizer = this.checkShouldDisplayApplyOrganizer();
 
         return (
@@ -611,7 +612,7 @@ export default class extends StandardPage {
                                     <Breadcrumb.Item href="/">
                                         <Icon type="home"/>
                                     </Breadcrumb.Item>
-                                    <Breadcrumb.Item>Community</Breadcrumb.Item>
+                                    <Breadcrumb.Item>{I18N.get('0002')}</Breadcrumb.Item>
                                     {/*<Breadcrumb.Item>
                                         <Link to="/community">Global</Link>
                                     </Breadcrumb.Item>*/}
@@ -642,12 +643,12 @@ export default class extends StandardPage {
                                         </Row>
                                         {this.renderListOrganizers()}
                                         <br/>
-                                        {shouldDisplayButtonApplyOrganizer && <Button onClick={this.applyOrganizer.bind(this)}>Apply to be an Organizer</Button>}
+                                        {shouldDisplayButtonApplyOrganizer && <Button onClick={this.applyOrganizer.bind(this)}>{I18N.get('community.applytobeorganizer')}</Button>}
                                     </Col>
                                     <Col md={{span:24}} md={{span: 6}}
                                          className="community-right-column">
                                         <div>
-                                            <h4 className="without-padding">Members</h4>
+                                            <h4 className="without-padding">{I18N.get('circle.members')}</h4>
                                             {this.renderListMembersAndJoinButton()}
                                         </div>
                                     </Col>
@@ -658,7 +659,7 @@ export default class extends StandardPage {
                                     <Tabs type="card">
                                         <TabPane key="first" tab="Organizers">
                                             {this.renderListOrganizersForMobile()}
-                                            {shouldDisplayButtonApplyOrganizer && <Button onClick={this.applyOrganizer.bind(this)}>Apply to be an Organizer</Button>}
+                                            {shouldDisplayButtonApplyOrganizer && <Button onClick={this.applyOrganizer.bind(this)}>{I18N.get('community.applytobeorganizer')}</Button>}
                                         </TabPane>
                                         <TabPane key="second" tab="Members">
                                             {this.renderListMembersAndJoinButton()}
@@ -690,7 +691,7 @@ export default class extends StandardPage {
         if (this.props.current_user_id) {
             this.props.history.push(`/form/organizer?communityId=${this.getMemberCommunityId()}`)
         } else {
-            message.error('You must be logged in to apply')
+            message.error(I18N.get('community.message.error.apply'))
         }
 
     }
