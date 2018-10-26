@@ -519,9 +519,9 @@ export default {
      'vision.04': '与此同时，我们已经组建了一个Cyber Republic委员会来决定在这个项目朝着完全民主去中心化的方向发展。这个委员会由Fay Li, Kevin Zhang, 和Yipeng Su组成，他们将利用社区的收入，做出战略决定来发展这个项目。随着时间的推移, Empower35项目的成员一起和Cyber Republic其他领导者组建政府并自动运行。 我们公约正在进行中。',
      'vision.05': 'Elastos的愿景改变互联网，同时Cyber Republic愿景去改变人与人的组织方式和构建一个全球项目。Alpha版本是我们向一个完全现代和独特的共和国目标的模板和框架。你的投入和积极的参与是这个愿景得以继续形成是非常必要。',
      'vision.06': '关于如何申请个人项目的更多信息和更多细节很快将会出现。',
-     'vision.07': '我们期待着为新型互联网建立一个创业和创新的国际天堂。'
-    
-    
+     'vision.07': '我们期待着为新型互联网建立一个创业和创新的国际天堂。',
+
+
     // Empower 35  added by mike Oct 10,2018
      'emp35.header.title': 'CRcles & Empower35',
      'emp35.header.content.1': '连接其他人，组建团队，做任务，赚ELA。',
@@ -545,7 +545,7 @@ export default {
      'circle.registerToPost': '注册账号就可以加入CRcle，发动态',
      'circle.members': '成员',
      'circle.posts': '动态',
-    
-    
-    
+
+
+
 }
