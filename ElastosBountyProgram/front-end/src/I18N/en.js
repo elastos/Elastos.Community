@@ -278,7 +278,7 @@ const en = {
     'circle.title': 'Crcle Detail',
     'circle.header.join': 'Join',
     'circle.header.leave': 'Leave',
-    'circle.header.maxReached': 'You can only join 2 CRcles',
+    'circle.header.maxReached': 'Limit reached',
     'circle.createPost': 'Create Post',
     'circle.joinToPost': 'Join the CRcle to post',
     'circle.registerToPost': 'Register to join the CRcle and post',
@@ -420,7 +420,6 @@ const en = {
     'task.soloApply': 'Apply as an Individual',
     'task.teamApply': 'Apply as a Team',
     'task.applyReason': 'Why you wanted to join this task',
-    'task.createNew': 'Propose new Task',
 
     // General
     'select.placeholder': 'Please select',
