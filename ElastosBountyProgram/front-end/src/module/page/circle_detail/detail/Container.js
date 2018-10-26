@@ -27,7 +27,8 @@ export default createContainer(Component, (state) => {
         },
         async getCircleTasks(circleId) {
             return taskService.index({
-                circle: circleId
+                circle: circleId,
+                assignSelf: false
             })
         },
         async applyToTeam(teamId, userId, applyMsg = 'I am interested in this CRcle.') {

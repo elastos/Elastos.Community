@@ -135,7 +135,7 @@ class C extends BaseComponent {
             communityTrees: [],
             taskType: this.props.taskType || TASK_TYPE.EVENT,
             taskCategory: this.props.taskCategory || TASK_TYPE.SOCIAL,
-            assignSelf: props.existingTask ? props.existingTask.assignSelf : this.props.is_admin,
+            assignSelf: props.existingTask ? props.existingTask.assignSelf : !this.props.circleId,
             eventDateRange: (props.existingTask && props.existingTask.eventDateRange) || false,
             thumbnail_url : (props.existingTask && props.existingTask.thumbnail) || null,
             thumbnail_loading : false,
@@ -983,35 +983,35 @@ class C extends BaseComponent {
                                 <Icon className="help-icon" type="question-circle-o"/>
                             </Popover>
                         </h3>
-                        {this.props.is_admin && !this.props.existingTask &&
-                        <Row>
-                            <Col span={12}>
-                                <Card hoverable className={'feature-box' + (this.state.assignSelf ? ' selected' : '')} onClick={() => {this.setState({assignSelf: true})}}>
-                                    <div className="title">
-                                        <span>Private</span>
-                                    </div>
-                                    <hr className="feature-box-divider"/>
-                                    <div className="content">
-                                        <div>- You wish to do this task yourself</div>
-                                        <div>- You are proposing a budget/reward for approval</div>
-                                        <div>- This is not visible to others</div>
-                                    </div>
-                                </Card>
-                            </Col>
-                            <Col span={12}>
-                                <Card hoverable className={'feature-box' + (!this.state.assignSelf ? ' selected' : '')} onClick={() => {this.setState({assignSelf: false})}}>
-                                    <div className="title">
-                                        <span>Public</span>
-                                    </div>
-                                    <hr className="feature-box-divider"/>
-                                    <div className="content">
-                                        <div>- This is a task for others to do</div>
-                                        <div>- This is listed publicly on the site</div>
-                                        <div>- Set a reward or allow bidding</div>
-                                    </div>
-                                </Card>
-                            </Col>
-                        </Row>
+                        {!this.props.circleId && (!this.props.existingTask || this.props.is_admin) &&
+                            <Row>
+                                <Col span={12}>
+                                    <Card hoverable className={'feature-box' + (this.state.assignSelf ? ' selected' : '')} onClick={() => {this.setState({assignSelf: true})}}>
+                                        <div className="title">
+                                            <span>Private</span>
+                                        </div>
+                                        <hr className="feature-box-divider"/>
+                                        <div className="content">
+                                            <div>- You wish to do this task yourself</div>
+                                            <div>- You are proposing a budget/reward for approval</div>
+                                            <div>- This is not visible to others</div>
+                                        </div>
+                                    </Card>
+                                </Col>
+                                <Col span={12}>
+                                    <Card hoverable className={'feature-box' + (!this.state.assignSelf ? ' selected' : '')} onClick={() => {this.setState({assignSelf: false})}}>
+                                        <div className="title">
+                                            <span>Public</span>
+                                        </div>
+                                        <hr className="feature-box-divider"/>
+                                        <div className="content">
+                                            <div>- This is a task for others to do</div>
+                                            <div>- This is listed publicly on the site</div>
+                                            <div>- Set a reward or allow bidding</div>
+                                        </div>
+                                    </Card>
+                                </Col>
+                            </Row>
                         }
 
                         {!this.state.assignSelf &&
