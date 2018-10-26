@@ -520,4 +520,32 @@ export default {
      'vision.05': 'Elastos的愿景改变互联网，同时Cyber Republic愿景去改变人与人的组织方式和构建一个全球项目。Alpha版本是我们向一个完全现代和独特的共和国目标的模板和框架。你的投入和积极的参与是这个愿景得以继续形成是非常必要。',
      'vision.06': '关于如何申请个人项目的更多信息和更多细节很快将会出现。',
      'vision.07': '我们期待着为新型互联网建立一个创业和创新的国际天堂。'
+    
+    
+    // Empower 35  added by mike Oct 10,2018
+     'emp35.header.title': 'CRcles & Empower35',
+     'emp35.header.content.1': '连接其他人，组建团队，做任务，赚ELA。',
+     'emp35.header.content.2': '通过大家展现你们的才华，E35领袖会慢慢被选出。',
+     'emp35.header.content.3': '去管理和带领每个团队.',
+
+     'emp35.empower.title': 'CRcles & Empower35',
+     'emp35.empower.content': '你可以加入最多2个圈子。一旦你加入圈子，组建小团队，创建并申请任务，开始展现你的才华， CRcles是一个在CR大网络里面的智能小网络。随着CRcles的不断扩大，整个网络会随之不断扩大。',
+     'emp35.teamHeader.title': 'CRcles',
+
+     'emp35.mycircles.title': '我的CRcles',
+     'emp35.circles.statement': '一个圈子是一个所有的点到中心都相同的圆。CRcles是一个分布式的具有某个领域的专长技能的CR居民的集合。它主要是为了通过专长来聚集人们并允许人们完成他们擅长的任务。时机成熟时每个CRcle团队的领袖会被选出。',
+
+     // Circle Detail
+     'circle.title': '圈子详情',
+     'circle.header.join': '加入',
+     'circle.header.leave': '离开',
+     'circle.header.maxReached': '加入圈子数达到上限',
+     'circle.createPost': '发动态',
+     'circle.joinToPost': '加入圈子发动态',
+     'circle.registerToPost': '注册账号就可以加入CRcle，发动态',
+     'circle.members': '成员',
+     'circle.posts': '动态',
+    
+    
+    
 }
