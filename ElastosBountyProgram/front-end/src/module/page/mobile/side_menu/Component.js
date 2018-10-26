@@ -31,7 +31,8 @@ export default class extends BaseComponent {
             'about',
             'faq',
             'contact',
-            'slack'
+            'slack',
+            'council/list'
         ], key)) {
             this.props.history.push('/' + ev.key)
         }
@@ -75,15 +76,18 @@ export default class extends BaseComponent {
                         <Menu.Item key="crcles">
                             {I18N.get('0106')}
                         </Menu.Item>
+                        <Menu.Item key="developer">
+                            {I18N.get('0102')}
+                        </Menu.Item>
+                        <Menu.Item key="council/list">
+                            {I18N.get('council.0001')}
+                        </Menu.Item>
                         <Menu.Item key="ambassadors">
                             {I18N.get('0107')}
                         </Menu.Item>
-                        <Menu.Item key="developer">
+                        {/*<Menu.Item key="developer">
                             {I18N.get('0100')}
-                        </Menu.Item>
-                        <Menu.Item key="community">
-                            {I18N.get('0102')}
-                        </Menu.Item>
+                        </Menu.Item>*/}
                     </Menu>
                 </Col>
             </Row>
