@@ -135,7 +135,7 @@ class C extends BaseComponent {
             communityTrees: [],
             taskType: this.props.taskType || TASK_TYPE.EVENT,
             taskCategory: this.props.taskCategory || TASK_TYPE.SOCIAL,
-            assignSelf: props.existingTask ? props.existingTask.assignSelf : this.props.is_admin,
+            assignSelf: props.existingTask ? props.existingTask.assignSelf : !this.props.circleId,
             eventDateRange: (props.existingTask && props.existingTask.eventDateRange) || false,
             thumbnail_url : (props.existingTask && props.existingTask.thumbnail) || null,
             thumbnail_loading : false,
@@ -983,7 +983,7 @@ class C extends BaseComponent {
                                 <Icon className="help-icon" type="question-circle-o"/>
                             </Popover>
                         </h3>
-                        {this.props.is_admin && !this.props.existingTask &&
+                        {!this.props.circleId && !this.props.existingTask &&
                         <Row>
                             <Col span={12}>
                                 <Card hoverable className={'feature-box' + (this.state.assignSelf ? ' selected' : '')} onClick={() => {this.setState({assignSelf: true})}}>
