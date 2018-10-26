@@ -54,13 +54,6 @@ class C extends BaseComponent {
 
         this.state = {
             communityTrees: [],
-
-            avatar_loading: false,
-            avatar_url: this.props.user.profile.avatar || '',
-            avatar_type: this.props.user.profile.avatarFileType || '',
-            avatar_filename: this.props.user.profile.avatarFilename || '',
-
-            removeAttachment: true
         }
     }
 
@@ -319,17 +312,6 @@ class C extends BaseComponent {
             linkedin: linkedin_fn(linkedin_el),
             github: github_fn(github_el),
         }
-    }
-
-    removeAttachment = async () => {
-        this.setState({
-            avatar_loading: false,
-            avatar_url: null,
-            avatar_type: '',
-            avatar_filename: '',
-
-            removeAttachment: true
-        })
     }
 
     ord_render () {

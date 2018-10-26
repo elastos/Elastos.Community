@@ -187,6 +187,12 @@ export default class extends Base {
             updateObj.avatarFilename = ''
         }
 
+        if (param.removeBanner) {
+            updateObj.banner = null
+            updateObj.bannerFileType = ''
+            updateObj.bannerFilename = ''
+        }
+
         await db_user.update({_id: userId}, updateObj)
 
         user = db_user.getDBInstance().findOne({_id: userId})

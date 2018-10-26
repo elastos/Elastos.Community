@@ -164,15 +164,9 @@ export default class extends BaseComponent {
     renderMetrics() {
         return (
             <Row gutter={16} className="profile-metrics">
-                <Col md={8}>
-                    {this.renderMetricItem(I18N.get('profile.crContributors'), 0)}
-                </Col>
-                <Col md={8}>
+                <Col md={24}>
                     {this.renderMetricItem(I18N.get('profile.followers'), this.props.user.subscribers.length)}
                 </Col>
-                <Col md={8}>
-                    {this.renderMetricItem(I18N.get('Placeholder'), 0)}
-                </Col>                
             </Row>
         )
     }
@@ -193,7 +187,7 @@ export default class extends BaseComponent {
     renderBanner(isMobile) {
         return (
             <div className={`profile-banner ${isMobile ? 'profile-banner-mobile' : ''}`}>
-                <span style={{ backgroundImage: `url('/assets/images/profile-banner.png')` }}></span>
+                <span style={{ backgroundImage: this.getBannerWithFallback(this.props.user.profile.banner) }}></span>
                 {!this.state.editingBasic && <Icon className="profile-edit-btn" type="edit" onClick={this.switchEditBasicMode}/>}
             </div>
         )
@@ -224,7 +218,7 @@ export default class extends BaseComponent {
                 <Button className="profile-edit separated" onClick={this.switchEditMode}>
                     {I18N.get('profile.editProfile')}
                 </Button>
-                <Button className="profile-show condensed" onClick={this.switchPublicView}>
+                <Button className="profile-show" onClick={this.switchPublicView}>
                     {I18N.get('profile.showPublicProfile')}
                 </Button>
             </div>
@@ -240,6 +234,12 @@ export default class extends BaseComponent {
                 </span>
             </div>
         )
+    }
+
+    getBannerWithFallback(banner) {
+        return _.isEmpty(banner)
+            ? `url('/assets/images/profile-banner.png')`
+            : `url(${banner})`
     }
 
     getAvatarWithFallback(avatar) {

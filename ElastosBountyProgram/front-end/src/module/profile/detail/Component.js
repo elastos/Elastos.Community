@@ -117,7 +117,7 @@ export default class extends BaseComponent {
     renderBanner(isMobile) {
         return (
             <div className={`profile-banner ${isMobile ? 'profile-banner-mobile' : ''}`}>
-                <span style={{ backgroundImage: `url('/assets/images/profile-banner.png')` }}></span>
+                <span style={{ backgroundImage: this.getBannerWithFallback(this.props.member.profile.banner) }}></span>
             </div>
         )
     }
@@ -177,6 +177,12 @@ export default class extends BaseComponent {
                 </span>
             </div>
         )
+    }
+
+    getBannerWithFallback(banner) {
+        return _.isEmpty(banner)
+            ? `url('/assets/images/profile-banner.png')`
+            : `url(${banner})`
     }
 
     getAvatarWithFallback(avatar) {
