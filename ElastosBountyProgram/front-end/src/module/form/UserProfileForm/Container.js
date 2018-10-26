@@ -39,9 +39,13 @@ export default createContainer(Component, (state)=>{
                     avatar: state.avatar_url,
                     avatarFilename: state.avatar_filename,
                     avatarFileType: state.avatar_type,
+                    banner: state.banner_url,
+                    bannerFilename: state.banner_filename,
+                    bannerFileType: state.banner_type
                 },
 
-                removeAttachment: state.removeAttachment
+                removeAttachment: state.removeAttachment,
+                removeBanner: state.removeBanner
             }
 
             if(this.is_admin){

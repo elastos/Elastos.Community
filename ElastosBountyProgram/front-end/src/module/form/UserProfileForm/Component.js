@@ -30,11 +30,17 @@ class C extends BaseComponent {
 
         this.state = {
             avatar_loading: false,
+            banner_loading: false,
             avatar_url: this.props.user.profile.avatar || '',
             avatar_type: this.props.user.profile.avatarFileType || '',
             avatar_filename: this.props.user.profile.avatarFilename || '',
 
-            removeAttachment: true
+            banner_url: this.props.user.profile.banner || '',
+            banner_type: this.props.user.profile.banneFileType || '',
+            banner_filename: this.props.user.profile.bannerFilename || '',
+
+            removeAttachment: true,
+            removeBanner: false
         }
     }
 
@@ -113,23 +119,42 @@ class C extends BaseComponent {
             </Upload>
         );
 
+        const banner_fn = getFieldDecorator('banner', {
+            rules: []
+        });
+        const p_banner = {
+            showUploadList: false,
+            customRequest: (info) => {
+                this.setState({
+                    banner_loading: true
+                });
+                upload_file(info.file).then((d) => {
+                    const url = d.url;
+                    this.setState({
+                        banner_loading: false,
+
+                        banner_url: url,
+                        banner_type: d.type,
+                        banner_filename: d.filename,
+
+                        removeBanner: false
+                    });
+                })
+            }
+        };
+        const banner_el = (
+            <Upload name="logo" listType="picture" {...p_banner}>
+                <div className="link">{'Upload Banner'}</div>
+            </Upload>
+        );
+
         return {
             firstName: firstName_fn(firstName_el),
             lastName: lastName_fn(lastName_el),
             avatar: avatar_fn(avatar_el),
-            bio: bio_fn(bio_el),
+            banner: banner_fn(banner_el),
+            bio: bio_fn(bio_el)
         }
-    }
-
-    removeAttachment = async () => {
-        this.setState({
-            avatar_loading: false,
-            avatar_url: null,
-            avatar_type: '',
-            avatar_filename: '',
-
-            removeAttachment: true
-        })
     }
 
     ord_render () {
@@ -173,7 +198,7 @@ class C extends BaseComponent {
                                 colon={false}
                                 labelCol={{ sm: {span: 0}, md: {span: 0} }}
                                 wrapperCol={{ sm: {span: 24}, md: {span: 24} }}>
-                                {p.avatar}
+                                {p.banner}
                             </FormItem>
                         </Col>
                     </Row>
