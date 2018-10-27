@@ -1,6 +1,7 @@
+import {TASK_STATUS} from '@/constant'
 import council from './zh/council';
 
-export default {
+const zh = {
     council,
 
     // Header
@@ -206,7 +207,6 @@ export default {
     'developer.cr100.welcome.title': 'Cyber Republic 100',
     'developer.cr100.welcome':
         'CR100是Cyber Republic的重要基础项目，由100个不同的项目组成，展示了Elastos生态系统的一些功能。 它们包括但不限于基础架构，DApp和实用程序解决方案。',
-    'developer.cr100.welcome.title': 'Cyber Republic 100',
     'developer.cr100.disclaimer':
         '上面描述的项目可能会发生变化，仅作为示例使用',
     'developer.cr100.disclaimer.title': '免责声明',
@@ -250,19 +250,12 @@ export default {
     'myrepublic.projects.create.cr100': '创建 CR100',
 
     // Empower 35
-    'emp35.header.title': '我们将共同建设它',
-    'emp35.header.content.1': '我们是民主选举的跨职能社区团体',
-    'emp35.header.content.2': '被授权在Elastos带头开展项目',
-    'emp35.header.content.3': '',
-
-    'emp35.empower.title': 'CRcles',
     'emp35.empower.content.1':
         'Empower35 将挑选 Cyber Republic 未来管理者和议员。他们在商业、市场营销、写作、视觉艺术、设计、法律和公众演讲方面的领域是专家，他们将塑造和促进 Cyber Republic 的未来发展',
     'emp35.empower.content.2':
         '在未来几周内，我们将开始接受每个职位的申请，Cyber Republic Council 将选择职位。被选中的合格申请者将获得 ELA 报酬，并可以根据他们的提议申请预算，管理和雇佣各自领域的团队',
     'emp35.empower.content.3':
         '这35个专家将建立和发展亦来云生态系统，在继续扩大 Cyber Republic 的同时，负责寻找下一组继任者',
-    'emp35.teamHeader.title': 'Empower35 Team',
 
     'emp35.disclaimer.title': '免责声明',
     'emp35.disclaimer.content': '上述角色是管理层的职位，空缺职位数目变化。第一批Empower 35候选人将由理事会直接选出。',
@@ -361,11 +354,6 @@ export default {
     '.ok': '确定',
     '.cancel': '取消',
     '.edit': '编辑',
-
-    // Role
-    'role.member': '普通用户',
-    'role.organizer': '组织者',
-    'role.admin': '管理员',
 
      // Landing
      'landing.elastos': 'Elastos',
@@ -584,18 +572,18 @@ export default {
      'profile.viewProfile': '查看履历'
  };
 
- // lang mappings
+// lang mappings
 
- // TASK_STATUS
- en[`taskStatus.${TASK_STATUS.CREATED}`] = '我创建的Created'
- en[`taskStatus.${TASK_STATUS.PENDING}`] = '待审核的'
- en[`taskStatus.${TASK_STATUS.APPROVED}`] = '已批准的'
- en[`taskStatus.${TASK_STATUS.ASSIGNED}`] = '已分配的'
- en[`taskStatus.${TASK_STATUS.SUBMITTED}`] = '已提交的'
- en[`taskStatus.${TASK_STATUS.SUCCESS}`] = '成功'
- en[`taskStatus.${TASK_STATUS.DISTRIBUTED}`] = '已结算'
- en[`taskStatus.${TASK_STATUS.CANCELED}`] = '取消的'
- en[`taskStatus.${TASK_STATUS.EXPIRED}`] = '过期的'
+// TASK_STATUS
+zh[`taskStatus.${TASK_STATUS.CREATED}`] = '我创建的'
+zh[`taskStatus.${TASK_STATUS.PENDING}`] = '待审核的'
+zh[`taskStatus.${TASK_STATUS.APPROVED}`] = '已批准的'
+zh[`taskStatus.${TASK_STATUS.ASSIGNED}`] = '已分配的'
+zh[`taskStatus.${TASK_STATUS.SUBMITTED}`] = '已提交的'
+zh[`taskStatus.${TASK_STATUS.SUCCESS}`] = '成功'
+zh[`taskStatus.${TASK_STATUS.DISTRIBUTED}`] = '已结算'
+zh[`taskStatus.${TASK_STATUS.CANCELED}`] = '取消的'
+zh[`taskStatus.${TASK_STATUS.EXPIRED}`] = '过期的'
 
-
+export default zh
 
