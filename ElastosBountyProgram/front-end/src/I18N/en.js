@@ -1,4 +1,3 @@
-import React from 'react'
 import {TASK_STATUS} from '@/constant'
 import council from './en/council';
 

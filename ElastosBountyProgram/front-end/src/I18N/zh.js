@@ -1,6 +1,7 @@
+import {TASK_STATUS} from '@/constant'
 import council from './zh/council';
 
-export default {
+const zh = {
     council,
 
     // Header
@@ -66,6 +67,16 @@ export default {
     '2304': '社区',
     '2305': '项目',
 
+
+    'mentions.notFound': '用户不存在',
+
+    'comments': '评论',
+    'comments.posts': '动态',
+    'comments.noComments': '还没有评论，抢沙发！',
+    // Admin tasks
+    'admin.tasks.status': '状态',
+
+
     // Home
     'home.title': 'Elastos - 网络共享',
     'home.developers': '开发者',
@@ -89,7 +100,7 @@ export default {
     // LoginForm
     'login.label_username': '请输入您的用户名或邮箱!',
     'login.username': '用户名或邮箱',
-    'login.label_password': 'P请输入您的密码!',
+    'login.label_password': '请输入您的密码!',
     'login.password': '密码',
     'login.logged': '保持登录状态',
     'login.forget': '忘记密码',
@@ -97,6 +108,13 @@ export default {
     'login.reset': '重置密码',
     'login.title': '登录 Cyber Republic',
     'login.description_1': '输入密码',
+
+
+    // ApplyForm
+    'apply.form.attachment': '支持附件上传',
+    'apply.form.suited': '你觉得你比较适合的理由是什么?',
+    'apply.form.prompt': '你最想申请的目的是什么?',
+
 
     // RegisterFrom
     'register.title': '成为贡献者',
@@ -189,7 +207,6 @@ export default {
     'developer.cr100.welcome.title': 'Cyber Republic 100',
     'developer.cr100.welcome':
         'CR100是Cyber Republic的重要基础项目，由100个不同的项目组成，展示了Elastos生态系统的一些功能。 它们包括但不限于基础架构，DApp和实用程序解决方案。',
-    'developer.cr100.welcome.title': 'Cyber Republic 100',
     'developer.cr100.disclaimer':
         '上面描述的项目可能会发生变化，仅作为示例使用',
     'developer.cr100.disclaimer.title': '免责声明',
@@ -233,19 +250,12 @@ export default {
     'myrepublic.projects.create.cr100': '创建 CR100',
 
     // Empower 35
-    'emp35.header.title': '我们将共同建设它',
-    'emp35.header.content.1': '我们是民主选举的跨职能社区团体',
-    'emp35.header.content.2': '被授权在Elastos带头开展项目',
-    'emp35.header.content.3': '',
-
-    'emp35.empower.title': 'CRcles',
     'emp35.empower.content.1':
         'Empower35 将挑选 Cyber Republic 未来管理者和议员。他们在商业、市场营销、写作、视觉艺术、设计、法律和公众演讲方面的领域是专家，他们将塑造和促进 Cyber Republic 的未来发展',
     'emp35.empower.content.2':
         '在未来几周内，我们将开始接受每个职位的申请，Cyber Republic Council 将选择职位。被选中的合格申请者将获得 ELA 报酬，并可以根据他们的提议申请预算，管理和雇佣各自领域的团队',
     'emp35.empower.content.3':
         '这35个专家将建立和发展亦来云生态系统，在继续扩大 Cyber Republic 的同时，负责寻找下一组继任者',
-    'emp35.teamHeader.title': 'Empower35 Team',
 
     'emp35.disclaimer.title': '免责声明',
     'emp35.disclaimer.content': '上述角色是管理层的职位，空缺职位数目变化。第一批Empower 35候选人将由理事会直接选出。',
@@ -344,11 +354,6 @@ export default {
     '.ok': '确定',
     '.cancel': '取消',
     '.edit': '编辑',
-
-    // Role
-    'role.member': '普通用户',
-    'role.organizer': '组织者',
-    'role.admin': '管理员',
 
      // Landing
      'landing.elastos': 'Elastos',
@@ -484,9 +489,9 @@ export default {
      'landing.empower35.designer': '设计师;',
      'landing.empower35.writer': '作者',
      'landing.empower35.dapp': 'dApp 分析师',
-     'landing.empower35.evangelist': '布道者',
+     'landing.empower35.evangelist': '大使',
      'landing.empower35.action.1': '显示全部',
-     'landing.empower35.action.2': '职位',
+     'landing.empower35.action.2': '圈子',
 
      'landing.footer.header.1': '成为Cyber Republic',
      'landing.footer.header.2': '的一部分',
@@ -511,6 +516,14 @@ export default {
      'landing.0230': '在Elastos上的应用程序将运行在区块链技术的可靠运行时环境中。它通过提供一个“沙箱”环境来创建真正的安全性，在允许访问internet之前，该环境需要从区块链进行验证。这为构建任何类型的应用程序和任何用例或场景提供了巨大的潜力。',
      'landing.0231': '',
 
+
+     // Project Detail
+     'pdetail.like': '感兴趣',
+     'pdetail.unlike': '不感兴趣',
+     'pdetail.involve': '申请',
+     'pdetail.funding': '资金支持：100k美金或等值代币的5%',
+
+
      // Our Vision
      'vision.00': '我们的愿景',
      'vision.01': 'Cyber Republic的愿景开始于一个有雄心的想法: 创建一个自主运营、自治的企业家和开发人员社区，它们可以独立于Elastos发挥作用，但有统一的目标是把它发展成全球性的成功。',
@@ -524,8 +537,8 @@ export default {
 
     // Empower 35  added by mike Oct 10,2018
      'emp35.header.title': 'CRcles & Empower35',
-     'emp35.header.content.1': '连接其他人，组建团队，做任务，赚ELA。',
-     'emp35.header.content.2': '通过大家展现你们的才华，E35领袖会慢慢被选出。',
+     'emp35.header.content.1': '连接其他人，组建团队，完成任务，赚取ELA。',
+     'emp35.header.content.2': '通过展现你的才华，Empower35领袖会慢慢被选出，',
      'emp35.header.content.3': '去管理和带领每个团队.',
 
      'emp35.empower.title': 'CRcles & Empower35',
@@ -548,4 +561,29 @@ export default {
 
 
 
-}
+     // Role
+     'role.member': '普通会员',
+     'role.organizer': '组织者',
+     'role.admin': '管理员',
+
+     // Profile
+     'profile.localTime': '本地时间',
+     'profile.sendMessage': '发送消息',
+     'profile.viewProfile': '查看履历'
+ };
+
+// lang mappings
+
+// TASK_STATUS
+zh[`taskStatus.${TASK_STATUS.CREATED}`] = '我创建的'
+zh[`taskStatus.${TASK_STATUS.PENDING}`] = '待审核的'
+zh[`taskStatus.${TASK_STATUS.APPROVED}`] = '已批准的'
+zh[`taskStatus.${TASK_STATUS.ASSIGNED}`] = '已分配的'
+zh[`taskStatus.${TASK_STATUS.SUBMITTED}`] = '已提交的'
+zh[`taskStatus.${TASK_STATUS.SUCCESS}`] = '成功'
+zh[`taskStatus.${TASK_STATUS.DISTRIBUTED}`] = '已结算'
+zh[`taskStatus.${TASK_STATUS.CANCELED}`] = '取消的'
+zh[`taskStatus.${TASK_STATUS.EXPIRED}`] = '过期的'
+
+export default zh
+
