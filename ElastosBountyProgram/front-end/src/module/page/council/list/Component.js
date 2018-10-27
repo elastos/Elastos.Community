@@ -35,7 +35,7 @@ export default class extends StandardPage {
 
         return (
             <div className="d_list">
-            
+
                 <List {...p_list} renderItem={item => (
                     <List.Item key={item.title} >
                         <List.Item.Meta
@@ -45,9 +45,9 @@ export default class extends StandardPage {
                         <div style={{position:'relative',top:20}}>{item.date}</div>
                     </List.Item>
                     )}
-                /> 
+                />
 
-                <h4 style={{marginTop:24}}>Any suggestions, proposals can be sent to <a href="mailto:council@cyberrepublic.org">council@cyberrepublic.org</a></h4>
+                <h4 style={{marginTop:24}}>{I18N.get('council.list.proposals')} <a href="mailto:council@cyberrepublic.org">council@cyberrepublic.org</a></h4>
             </div>
         );
     }

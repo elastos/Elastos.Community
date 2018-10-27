@@ -2,7 +2,7 @@ import { createContainer, goPath } from '@/util'
 import Component from './Component'
 import SubmissionService from '@/service/SubmissionService'
 import { message } from 'antd'
-
+import I18N from '@/I18N'
 
 export default createContainer(Component, (state) => {
     return {
@@ -21,7 +21,7 @@ export default createContainer(Component, (state) => {
                 })
 
                 if (rs) {
-                    message.success('Your issue has been submitted. Thanks!');
+                    message.success(I18N.get('developer.form.submission.message.success'));
                 }
             } catch (err) {
                 message.error(err.message)
