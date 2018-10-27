@@ -8,7 +8,7 @@ import I18N from '@/I18N'
 
 import UserPublicDetail from './detail/Container'
 
-import {USER_ROLE, USER_GENDER} from '@/constant'
+import {USER_AVATAR_DEFAULT} from '@/constant'
 import config from '@/config'
 import MediaQuery from 'react-responsive'
 
@@ -244,7 +244,7 @@ export default class extends BaseComponent {
 
     getAvatarWithFallback(avatar) {
         return _.isEmpty(avatar)
-            ? '/assets/images/Elastos_Logo.png'
+            ? USER_AVATAR_DEFAULT
             : avatar
     }
 
