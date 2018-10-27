@@ -118,9 +118,8 @@
     }
     .members-section,
     .tasks-section {
-        width: 100%;
-        padding: $gap_5 $gap_5;
-        text-align: center;
+        max-width: 800px;
+        margin: $gap_4 auto $gap_2 auto;
 
         @media only screen and (max-width: $mobile-width) {
             padding: $gap_5 $gap_2;
@@ -128,6 +127,8 @@
 
         .member-header {
             display: inline-block;
+            margin: $gap_5 0 $gap_2 0;
+            width: 100%;
 
             .member-header-icon {
                 width: 12px;
@@ -137,11 +138,12 @@
             .member-header-label {
                 font-size: 60px;
                 line-height: 60px;
+                float: left;
             }
-        }
-        .members-list {
-            max-width: 800px;
-            margin: $gap_4 auto $gap_2 auto;
+
+            .ant-btn {
+                margin-top: 28px;
+            }
         }
     }
     .rectangle {

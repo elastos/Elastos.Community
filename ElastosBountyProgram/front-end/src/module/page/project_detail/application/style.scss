@@ -11,6 +11,7 @@
     .task-goals,
     .task-breakdown {
         margin: $gap_1 0;
+        white-space: pre-line;
     }
 
     .task-description {

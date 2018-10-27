@@ -68,6 +68,11 @@ if (!sessionStorage.getItem('api-token') && localStorage.getItem('api-token')) {
     sessionStorage.setItem('api-token', localStorage.getItem('api-token'))
 }
 
+if (sessionStorage.getItem('api-token') && !localStorage.getItem('api-token')) {
+    store.history.push('/login')
+    sessionStorage.clear();
+}
+
 if (sessionStorage.getItem('api-token')) {
     const userRedux = store.getRedux('user');
     api_request({

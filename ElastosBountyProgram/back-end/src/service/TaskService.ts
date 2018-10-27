@@ -240,8 +240,7 @@ export default class extends Base {
 
         let status = constant.TASK_STATUS.CREATED;
 
-        if (rewardUpfront.ela > 0 || reward.ela > 0 || rewardUpfront.usd > 0 || reward.usd > 0) {
-
+        if (bidding || rewardUpfront.ela > 0 || reward.ela > 0 || rewardUpfront.usd > 0 || reward.usd > 0) {
             // there is ELA / USD involved so we start in PENDING unless we are an admin
             if (this.currentUser.role !== constant.USER_ROLE.ADMIN) {
                 status = constant.TASK_STATUS.PENDING
@@ -291,21 +290,6 @@ export default class extends Base {
         if(communityParent){
             doc['communityParent'] = communityParent;
         }
-
-        // if member role, could not create
-        const role = this.currentUser.role;
-        if(role === constant.USER_ROLE.MEMBER){
-            throw 'Access Denied';
-        }
-
-        /*
-        if(type === constant.TASK_TYPE.EVENT){
-            const userService = this.getService(UserService);
-            if(reward.ela > userService.getSumElaBudget(this.currentUser.elaBudget)){
-                throw 'ela reward could not greater than user budget';
-            }
-        }
-        */
 
         if (assignSelf) {
             // override the candidate select limit
@@ -569,6 +553,10 @@ export default class extends Base {
             const db_team = this.getDBModel('Team');
             await db_team.db.populate(taskCandidate.team, {
                 path: 'owner',
+                select: sanitize
+            })
+            await db_team.db.populate(taskCandidate.team, {
+                path: 'members',
                 select: sanitize
             })
         }

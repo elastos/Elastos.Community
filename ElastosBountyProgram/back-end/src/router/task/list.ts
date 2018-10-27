@@ -26,8 +26,14 @@ export default class extends Base{
             archived: {$ne: true}
         };
 
-        if (param.type && _.values(constant.TASK_TYPE).includes(param.type)) {
-            query.type = param.type;
+        if (param.type) {
+            const types = param.type.split(',')
+            const valid = _.intersection(_.values(constant.TASK_TYPE), types).length ===
+                types.length
+
+            if (valid) {
+                query.type = { $in: types }
+            }
         }
 
         query.category = { $in: [constant.TASK_CATEGORY.DEVELOPER, constant.TASK_CATEGORY.SOCIAL] }
@@ -50,6 +56,10 @@ export default class extends Base{
 
         if (param.circle) {
             query.circle = { $in: param.circle.split(',') }
+        }
+
+        if (_.has(param, 'assignSelf')) {
+            query.assignSelf = param.assignSelf
         }
 
         if (param.eventDateRangeStart) {

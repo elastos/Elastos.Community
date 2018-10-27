@@ -204,7 +204,7 @@ class C extends BaseComponent {
                             * unless you've exhausted all the teams, but even then we can inform
                             *   the user of this in a better way than hiding
                             */}
-                            {this.props.page !== 'LEADER' &&
+                            {this.props.page !== 'LEADER' && !this.props.is_admin &&
                                 !isTaskOwner && this.renderApplyButton()}
 
                             {/*
@@ -261,7 +261,7 @@ class C extends BaseComponent {
     renderViewApplicationModal() {
         return (
             <Modal
-                className="project-detail-nobar"
+                className="project-detail-nobar no-modal-padding"
                 visible={this.state.showAppModal}
                 onOk={this.handleAppModalOk}
                 onCancel={this.handleAppModalCancel}
@@ -467,7 +467,7 @@ class C extends BaseComponent {
                                         Bid: {candidate.bid} ELA
                                     </span>
                                 }
-                                {(this.props.page === 'ADMIN' || this.isTaskOwner() ||
+                                {(this.props.page === 'ADMIN' || this.isTaskOwner() || this.props.is_admin ||
                                     this.loggedInUserBelongsToCandidate(candidate)) && (
                                     <span>
                                         <Divider type="vertical"/>
@@ -484,7 +484,7 @@ class C extends BaseComponent {
                                         </a>
                                     </span>)
                                 }
-                                {this.isTaskOwner() &&
+                                {(this.isTaskOwner() || this.props.is_admin) &&
                                     <span className="inline-block">
                                         <Divider type="vertical"/>
                                         <a onClick={this.approveUser.bind(this, candidate._id)}>
@@ -687,7 +687,7 @@ class C extends BaseComponent {
 
     getReward() {
         return this.props.task.reward &&
-            ((this.props.task.reward.usd / 100) || this.props.task.reward.ela)
+            ((this.props.task.reward.usd / 100) || (this.props.task.reward.ela / 1000))
     }
 
     getRewardElaPerUsd() {
@@ -718,7 +718,7 @@ class C extends BaseComponent {
 
     getBudget() {
         return this.props.task.rewardUpfront &&
-            ((this.props.task.rewardUpfront.usd / 100) || this.props.task.rewardUpfront.ela)
+            ((this.props.task.rewardUpfront.usd / 100) || (this.props.task.rewardUpfront.ela / 1000))
     }
 
     getBudgetElaPerUsd() {

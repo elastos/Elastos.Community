@@ -280,7 +280,7 @@ const en = {
     'circle.title': 'Crcle Detail',
     'circle.header.join': 'Join',
     'circle.header.leave': 'Leave',
-    'circle.header.maxReached': 'Limit reached',
+    'circle.header.maxReached': 'You can only join 2 CRcles',
     'circle.createPost': 'Create Post',
     'circle.joinToPost': 'Join the CRcle to post',
     'circle.registerToPost': 'Register to join the CRcle and post',
@@ -410,6 +410,12 @@ const en = {
     'task.reward.explain': 'Reward is for labor and time',
     'task.bid': 'Bid',
     'task.approvedBy': 'Approved By',
+    'task.application': 'Application',
+    'task.appliedOn': 'Applied on',
+    'task.soloApply': 'Apply as an Individual',
+    'task.teamApply': 'Apply as a Team',
+    'task.applyReason': 'Why you wanted to join this task',
+    'task.createNew': 'Propose new Task',
 
     // General
     'select.placeholder': 'Please select',
@@ -421,6 +427,7 @@ const en = {
     '.yes': 'Yes',
     '.no': 'No',
     '.loading': 'Loading...',
+    'ela': 'ELA',
 
     // Landing
     'landing.elastos': 'Elastos',
@@ -614,6 +621,8 @@ const en = {
     'profile.edit': 'Edit',
     'profile.publicProfile': 'Public Profile',
     'profile.save': 'Save'
+    'profile.projectsTasks': 'Projects/Tasks',
+    'profile.view': 'View'
 };
 
 // lang mappings
