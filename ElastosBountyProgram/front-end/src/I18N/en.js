@@ -620,7 +620,7 @@ const en = {
     'profile.followers': 'Followers',
     'profile.edit': 'Edit',
     'profile.publicProfile': 'Public Profile',
-    'profile.save': 'Save'
+    'profile.save': 'Save',
     'profile.projectsTasks': 'Projects/Tasks',
     'profile.view': 'View'
 };
