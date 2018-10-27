@@ -26,6 +26,7 @@ const en = {
     '0106': 'CRcles',
     '0107': 'Ambassadors',
     '0108': 'Council',
+    '0109': 'Blog',
 
     '0200': 'Profile',
     '0201': 'Login',
