@@ -242,6 +242,16 @@ const en = {
     'developer.search.subtitle_bids': 'bids',
     'developer.search.subtitle_applications': 'applications',
     'developer.search.submit_bid': 'Submit Bid',
+    'developer.form.submission.type.required': 'Please select a type',
+    'developer.form.submission.type.option.bug': 'Bug',
+    'developer.form.submission.type.option.security': 'Security Issue',
+    'developer.form.submission.type.option.suggestion': 'Suggestion',
+    'developer.form.submission.type.option.other': 'Other',
+    'developer.form.submission.title.required': 'Please put in some title',
+    'developer.form.submission.description.required': 'Please put in some title',
+    'developer.form.submission.placeholder.subject': 'Subject',
+    'developer.form.submission.placeholder.description': 'Describe your issue',
+    'developer.form.submission.message.success': 'Your issue has been submitted. Thanks!',
 
     'myrepublic.teams': 'Teams',
     'myrepublic.teams.all': 'All',
@@ -447,6 +457,10 @@ const en = {
     'community.guidecontainer.part3': "if you'd like to be an organizer for your region please register, we'll add your country and you can then apply to be an organizer on this page.",
     'community.button.register': "Click to Register",
     'community.button.selectcountry': "or you can select a country from above",
+    'community.link.toevent': 'See Event',
+
+    // Council
+    'council.list.proposals': 'Any suggestions, proposals can be sent to',
 
     // Landing
     'landing.elastos': 'Elastos',
