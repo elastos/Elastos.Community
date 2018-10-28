@@ -5,7 +5,6 @@ import UserProfileForm from '@/module/form/UserProfileForm/Container'
 import I18N from '@/I18N'
 import { Col, Row, Icon, Popover, Button, Spin, Tabs } from 'antd'
 import moment from 'moment-timezone'
-import I18N from '@/I18N'
 
 import UserPublicDetail from './detail/Container'
 
