@@ -285,6 +285,23 @@ const en = {
 
     'emp35.mycircles.title': 'My CRcles',
     'emp35.circles.statement': 'A circle is a shape where all points are equal distance from the center. CR\'s "CRcles" are teams of decentralized citizens who all revolve around a single area of expertise. CRcles are designed to group people by their talent and allow them to begin creating and completing talent specific tasks. In time, leaders will be elected to manage each CRcle.',
+    'emp35.form.reason.max': 'Reason too long',
+    'emp35.form.field.required': 'This must be filled out',
+    'emp35.form.suitedreason.max': 'Suited reason too long',
+    'emp35.form.field.upload': 'Upload',
+    'emp35.form.funding': 'Funding: US $100K Annual in ELA',
+    'emp35.form.apply.text': 'Why Would You Like to Apply?',
+    'emp35.form.most.suited': 'What Makes You Most Suited?',
+    'emp35.form.support': 'Supporting Attachment',
+
+    // Not found
+    'error.notfound': '404, not found',
+
+    // Form ext
+    'formext.anni2018.app.title': 'Elastos 2018 Anniversary Event Registration',
+    'formext.anni2018.video.title': 'Elastos 2018 Anniversary Event - Community Video',
+    'formext.anni2018.organizer.title': 'Organizer Application',
+    'formext.anni2018.training.title': 'Evangelist Training Application',
 
     // Circle Detail
     'circle.title': 'Crcle Detail',
