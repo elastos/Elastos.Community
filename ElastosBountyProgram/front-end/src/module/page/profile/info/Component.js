@@ -1,6 +1,7 @@
 import React from 'react'
 import StandardPage from '../../StandardPage'
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
+import I18N from '@/I18N'
 
 import Profile from '@/module/profile/Container'
 
@@ -33,8 +34,8 @@ export default class extends StandardPage {
                                 <Breadcrumb.Item href="/">
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
-                                <Breadcrumb.Item>Profile</Breadcrumb.Item>
-                                <Breadcrumb.Item>Info</Breadcrumb.Item>
+                                <Breadcrumb.Item>{I18N.get('0200')}</Breadcrumb.Item>
+                                <Breadcrumb.Item>{I18N.get('profile.info.title')}</Breadcrumb.Item>
                             </Breadcrumb>
                         </div>
                         <div className="p_Profile p_admin_content">

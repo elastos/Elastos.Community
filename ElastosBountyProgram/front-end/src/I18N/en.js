@@ -107,6 +107,9 @@ const en = {
     'login.title': 'Login to Cyber Republic',
     'login.description_1': 'Input your credentials below.',
 
+    // Logout
+    'logout.title': 'Are you sure you want to logout?',
+
     // ApplyForm
     'apply.form.attachment': 'Supporting Attachment',
     'apply.form.suited': 'What Makes You Most Suited?',
@@ -674,6 +677,15 @@ const en = {
     'profile.save': 'Save',
     'profile.projectsTasks': 'Projects/Tasks',
     'profile.view': 'View',
+    'profile.community.leave.success': 'You left community successfully',
+    'profile.community.table.name': 'Name',
+    'profile.community.table.geolocation': 'Geolocation',
+    'profile.community.table.type': 'Type',
+    'profile.community.table.actions': 'Actions',
+    'profile.community.title': 'Communities',
+    'profile.community.joincommunity': 'Joined Communities',
+    'profile.info.title': 'Info',
+    'profile.submission.create': 'Create Issue',
 
     // Validate Form
     'ambassadors.form.required': 'This must be filled out',
