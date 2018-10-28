@@ -58,12 +58,15 @@ export default class extends BaseComponent {
                     {this.renderHeader()}
                     <div className="container">
                         <div>
-                            {this.renderBanner()}
+                            {this.renderBanner(false, this.state.temporaryBanner)}
                             <div className="profile-info-container clearfix">
                                 <div className="profile-left pull-left">
-                                    {this.renderAvatar()}
+                                    {this.renderAvatar(false, this.state.temporaryAvatar)}
                                 </div>
-                                <UserProfileForm user={this.props.user} page={this.props.page} switchEditMode={this.switchEditBasicMode}/>
+                                <UserProfileForm user={this.props.user}
+                                    page={this.props.page} switchEditMode={this.switchEditBasicMode}
+                                    updateBanner={(url) => this.setState({temporaryBanner: url})}
+                                    updateAvatar={(url) => this.setState({temporaryAvatar: url})}/>
                             </div>
                         </div>
                     </div>
@@ -184,20 +187,20 @@ export default class extends BaseComponent {
         )
     }
 
-    renderBanner(isMobile) {
+    renderBanner(isMobile, url) {
         return (
             <div className={`profile-banner ${isMobile ? 'profile-banner-mobile' : ''}`}>
-                <span style={{ backgroundImage: this.getBannerWithFallback(this.props.user.profile.banner) }}></span>
+                <span style={{ backgroundImage: this.getBannerWithFallback(url || this.props.user.profile.banner) }}></span>
                 {!this.state.editingBasic && <Icon className="profile-edit-btn" type="edit" onClick={this.switchEditBasicMode}/>}
             </div>
         )
     }
 
-    renderAvatar(isMobile) {
+    renderAvatar(isMobile, url) {
         return (
             <div className={`profile-avatar-container ${isMobile ? 'profile-avatar-container-mobile' : ''}`}>
                 <div className="profile-avatar">
-                    <img src={this.getAvatarWithFallback(this.props.user.profile.avatar)} />
+                    <img src={this.getAvatarWithFallback(url || this.props.user.profile.avatar)} />
                 </div>
             </div>
         )
@@ -296,15 +299,27 @@ export default class extends BaseComponent {
     }
 
     switchEditBasicMode = () => {
-        this.setState({editingBasic: !this.state.editingBasic})
+        this.setState({
+            editingBasic: !this.state.editingBasic,
+            temporaryAvatar: null,
+            temporaryBanner: null
+        })
     }
 
     switchEditMode = () => {
-        this.setState({editing: !this.state.editing})
+        this.setState({
+            editing: !this.state.editing,
+            temporaryAvatar: null,
+            temporaryBanner: null
+        })
     }
 
     switchPublicView = () => {
-        this.setState({publicView: !this.state.publicView})
+        this.setState({
+            publicView: !this.state.publicView,
+            temporaryAvatar: null,
+            temporaryBanner: null
+        })
     }
 
 }

@@ -51,6 +51,8 @@ class C extends BaseComponent {
                 this.props.updateUser(values, this.state).then(() => {
                     this.props.getCurrentUser()
                 });
+                this.props.updateAvatar(null)
+                this.props.updateBanner(null)
                 this.props.switchEditMode()
             }
         })
@@ -110,12 +112,13 @@ class C extends BaseComponent {
 
                         removeAttachment: false
                     });
+                    this.props.updateAvatar && this.props.updateAvatar(url)
                 })
             }
         };
         const avatar_el = (
             <Upload name="logo" className="pull-right" listType="picture" {...p_avatar}>
-                <Button>
+                <Button loading={this.state.avatar_loading}>
                     Upload Avatar
                 </Button>
             </Upload>
@@ -141,12 +144,13 @@ class C extends BaseComponent {
 
                         removeBanner: false
                     });
+                    this.props.updateBanner && this.props.updateBanner(url)
                 })
             }
         };
         const banner_el = (
             <Upload name="logo" className="pull-right" listType="picture" {...p_banner}>
-                <Button>
+                <Button loading={this.state.banner_loading}>
                     Upload Banner
                 </Button>
             </Upload>
@@ -230,7 +234,8 @@ class C extends BaseComponent {
                     <br />
                     <br />
                     <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 10}}}>
-                        <Button type="primary" htmlType="submit" loading={this.props.loading}>
+                        <Button type="primary" htmlType="submit" loading={this.props.loading ||
+                            this.state.avatar_loading || this.state.banner_loading}>
                             {I18N.get('profile.save')}
                         </Button>
                     </FormItem>
