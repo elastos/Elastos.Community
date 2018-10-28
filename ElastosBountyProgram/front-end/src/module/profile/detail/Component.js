@@ -249,7 +249,7 @@ export default class extends BaseComponent {
         return <Row>
             <Col span={24}>
                 {!this.props.is_login ? <div>
-                        You must login/register first to send a message
+                        {I18N.get('profile.detail.requiredlogin')}
                     </div> :
                     <UserContactForm recipient={this.props.member}/>
                 }
@@ -284,7 +284,7 @@ export default class extends BaseComponent {
         })
         const data = _.concat(teams, circles, projects)
         const columns = [{
-            title: 'Type',
+            title: I18N.get('profile.detail.columns.type'),
             key: 'type',
             width: 150,
             render: entry => {
@@ -295,7 +295,7 @@ export default class extends BaseComponent {
                 )
             }
         }, {
-            title: 'Name',
+            title: I18N.get('profile.detail.columns.name'),
             key: 'name',
             width: 350,
             render: entry => {
@@ -306,7 +306,7 @@ export default class extends BaseComponent {
                 )
             }
         }, {
-            title: 'Date',
+            title: I18N.get('profile.detail.columns.date'),
             key: 'date',
             width: 200,
             render: entry => {
