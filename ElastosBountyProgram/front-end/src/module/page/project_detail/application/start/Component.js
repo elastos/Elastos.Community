@@ -173,12 +173,12 @@ class C extends BaseComponent {
                 </h3>
                 <div className="strike-text start-welcome">
                     <div className="strike-line"/>
-                    <p>Thanks for your interest.</p>
+                    <p>{I18N.get('profile.detail.thankforinterest')}</p>
                 </div>
                 <br/>
                 <div className="strike-text start-welcome">
                     <div className="strike-line"/>
-                    <p>Please select below the option which describes you best.</p>
+                    <p>{I18N.get('profile.detail.selectoption')}</p>
                 </div>
             </div>
         )
@@ -248,7 +248,7 @@ class C extends BaseComponent {
             <div className="full-width halign-wrapper valign-wrapper">
                 <Button htmlType="submit" type="ebp" className="d_btn"
                     loading={this.props.loading} disabled={!this.state.mode}>
-                    <span className="komu-a">Apply</span>
+                    <span className="komu-a">{I18N.get('.apply')}</span>
                 </Button>
             </div>
         )
@@ -263,13 +263,13 @@ class C extends BaseComponent {
         const compLookup = {
             bidding: (
                 <div className="mode-panel">
-                    <div className="label komu-a">How much ELA do you want?</div>
+                    <div className="label komu-a">{I18N.get('profile.detail.complookup')}</div>
                     <InputNumber className="input-field"/>
                 </div>
             ),
             solo: (
                 <div className="mode-panel">
-                    <div className="label komu-a">Tell us why do you want to join</div>
+                    <div className="label komu-a">{I18N.get('profile.detail.solo')}</div>
                     <Input.TextArea rows={4} className="input-field"/>
                 </div>
             ),
@@ -281,7 +281,7 @@ class C extends BaseComponent {
 
         const decoratorLookup = {
             bidding: getFieldDecorator('bid', {
-                rules: [{required: true, message: 'Bid is required'}],
+                rules: [{required: true, message: I18N.get('profile.detail.form.bid.required')}],
                 initialValue: 0
             }),
             solo: getFieldDecorator('applyMsg', {
