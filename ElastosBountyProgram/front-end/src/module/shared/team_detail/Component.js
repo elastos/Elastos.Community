@@ -2,6 +2,7 @@ import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import { Col, Row, Icon, Divider, Button, Spin } from 'antd'
 import _ from 'lodash';
+import I18N from '@/I18N'
 import TeamEditForm from '@/module/form/TeamCreateForm/Container'
 import TeamDetail from '@/module/team/detail/Container'
 import {TASK_STATUS, USER_GENDER} from '@/constant'
@@ -35,13 +36,13 @@ export default class extends BaseComponent {
         const canEdit = this.props.canEdit || false;
         return <div className="l_banner">
             <div className="pull-left">
-                Team Detail
+                {I18N.get('team.detail.title')}
             </div>
             <div className="pull-right right-align">
                 {
                     canEdit &&
                         <Button onClick={this.switchEditMode.bind(this)}>
-                            {this.state.editing ? 'Cancel' : 'Edit'}
+                            {this.state.editing ? I18N.get('.cancel') : I18N.get('.edit')}
                         </Button>
                 }
 
