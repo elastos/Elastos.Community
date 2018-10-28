@@ -2,6 +2,7 @@ import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import { Form, Modal, Input, Button, Row, Col, Upload, Icon } from 'antd'
 import config from '@/config'
+import I18N from '@/I18N'
 const TextArea = Input.TextArea
 import {upload_file} from "@/util";
 
@@ -40,8 +41,8 @@ export default Form.create()(
 
             const applyReason_fn = getFieldDecorator('applyReason', {
                 rules: [
-                    {max: 4096, message: 'Reason too long'},
-                    {required: true, message: 'This must be filled out'}
+                    {max: 4096, message: I18N.get('emp35.form.reason.max')},
+                    {required: true, message: I18N.get('emp35.form.field.required')}
                 ]
             })
             const applyReason_el = (
@@ -50,8 +51,8 @@ export default Form.create()(
 
             const suitedReason_fn = getFieldDecorator('suitedReason', {
                 rules: [
-                    {max: 4096, message: 'Suited reason too long'},
-                    {required: true, message: 'This must be filled out'}
+                    {max: 4096, message: I18N.get('emp35.form.field.required')},
+                    {required: true, message: I18N.get('emp35.form.suitedreason.max')}
                 ]
             })
             const suitedReason_el = (
@@ -97,7 +98,7 @@ export default Form.create()(
                             </a>
                         ) : (
                             <Button loading={this.state.attachment_loading}>
-                                <Icon type="upload" /> Click to upload
+                                <Icon type="upload" /> {I18N.get('emp35.form.field.upload')}
                             </Button>
                         )
                     }
@@ -122,8 +123,8 @@ export default Form.create()(
 
             const footerModal = (
                 <div>
-                    <Button onClick={onApply} className="ant-btn-ebp" type="primary">Apply</Button>
-                    <Button onClick={onCancel}>Cancel</Button>
+                    <Button onClick={onApply} className="ant-btn-ebp" type="primary">{I18N.get('.apply')}</Button>
+                    <Button onClick={onCancel}>{I18N.get('.cancel')}</Button>
                 </div>
             )
             return (
@@ -131,7 +132,7 @@ export default Form.create()(
                     wrapClassName="emp35-apply-modal"
                     visible={visible}
                     footer={null}
-                    okText="Apply"
+                    okText={I18N.get('.apply')}
                     onCancel={onCancel}
                     onOk={onApply}
                     width="90%"
@@ -142,14 +143,14 @@ export default Form.create()(
                         <div className="pull-left">
                             <span className="role-title komu-a">{empowerType}</span>
                             <br/>
-                            <span className="role-funding komu-a">Funding: US $100K Annual in ELA<sup>*</sup></span>
+                            <span className="role-funding komu-a">{I18N.get('emp35.form.funding')}<sup>*</sup></span>
                         </div>
                     </div>
                     <Form>
                         <div className="header-spacer clearfix"/>
                         <Row>
                             <Col className="form-title komu-a">
-                                Why Would You Like to Apply?
+                                {I18N.get('emp35.form.apply.text')}
                             </Col>
                         </Row>
                         <FormItem>
@@ -159,7 +160,7 @@ export default Form.create()(
                         <div className="header-spacer"/>
                         <Row>
                             <Col className="form-title komu-a">
-                                What Makes You Most Suited?
+                                {I18N.get('emp35.form.most.suited')}
                             </Col>
                         </Row>
                         <FormItem>
@@ -169,7 +170,7 @@ export default Form.create()(
                         <div className="header-spacer"/>
                         <Row>
                             <Col className="form-title komu-a">
-                                Supporting Attachment
+                                {I18N.get('emp35.form.support')}
                             </Col>
                         </Row>
                         <FormItem>
@@ -179,7 +180,7 @@ export default Form.create()(
 
                     <div className="center">
                         <br/>
-                        <Button onClick={onApply} className="cr-btn" type="primary">Apply</Button>
+                        <Button onClick={onApply} className="cr-btn" type="primary">{I18N.get('.apply')}</Button>
                     </div>
 
                 </Modal>
