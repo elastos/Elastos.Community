@@ -3,7 +3,7 @@ import StandardPage from '../../StandardPage';
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import config from '@/config';
 import TeamCreateForm from '@/module/form/TeamCreateForm/Container'
-
+import I18N from '@/I18N'
 import '../../admin/admin.scss'
 
 import { Col, Row, Icon, Form, Input, Button, Divider, Table } from 'antd'
@@ -36,7 +36,7 @@ export default class extends StandardPage {
                                     <Navigator selectedItem={'profileTeams'}/>
                                 </Col>
                                 <Col sm={24} md={20} className="admin-right-column wrap-box-user">
-                                    <h4 className="p_profile_action_title">Create Team</h4>
+                                    <h4 className="p_profile_action_title">{I18N.get('myrepublic.teams.create')}</h4>
                                     <TeamCreateForm />
                                 </Col>
                             </Row>
