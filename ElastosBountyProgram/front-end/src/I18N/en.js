@@ -27,6 +27,7 @@ const en = {
     '0106': 'CRcles',
     '0107': 'Ambassadors',
     '0108': 'Council',
+    '0109': 'Submissions',
 
     '0200': 'Profile',
     '0201': 'Login',
@@ -686,6 +687,15 @@ const en = {
     'profile.community.joincommunity': 'Joined Communities',
     'profile.info.title': 'Info',
     'profile.submission.create': 'Create Issue',
+    'profile.tasks.table.name': 'Name',
+    'profile.tasks.table.owner': 'Owner',
+    'profile.tasks.table.category': 'Category',
+    'profile.tasks.table.type': 'Type',
+    'profile.tasks.table.date': 'Date',
+    'profile.tasks.table.created': 'Created',
+    'profile.tasks.table.community': 'Community',
+    'profile.tasks.table.status': 'Status',
+    'profile.tasks.create.task': 'Create Task',
 
     // Validate Form
     'ambassadors.form.required': 'This must be filled out',

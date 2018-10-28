@@ -186,9 +186,9 @@ export default class extends StandardPage {
                             <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
                                 <Avatar size="large" icon="user" className="pull-right" src={ownerProfile.avatar}/>
                                 <div class="clearfix"/>
-                                <div><span class="no-info">Owner: </span>{ownerProfile.firstName} {ownerProfile.lastName}</div>
+                                <div><span class="no-info">{I18N.get('task.owner')}: </span>{ownerProfile.firstName} {ownerProfile.lastName}</div>
                             </a>
-                            <Button type="primary" className="pull-down" onClick={this.linkTeamDetail.bind(this, item.id)}>View</Button>
+                            <Button type="primary" className="pull-down" onClick={this.linkTeamDetail.bind(this, item.id)}>{I18N.get('profile.view')}</Button>
                         </div>
                     </List.Item>
                 </MediaQuery>
