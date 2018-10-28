@@ -732,6 +732,39 @@ const en = {
     'social.generalevent.description': 'This program is for members interested in helping organizers plan events or take on small tasks created by organizers to help promote Elastos to the community',
     'social.addmember.success': 'You was added to the community. Thanks!',
     'social.addmember.error': 'Error while joining the community',
+
+    // Task Application
+    'taks.application.social': 'Social',
+    'taks.application.developer': 'Developer',
+    'taks.create.project': 'Create Project',
+    'taks.create.task': 'Create Task / Event',
+
+    // Team Detail
+    'team.detail.title': 'Team Detail',
+
+    // Module Profile
+    'profile.detail.requiredlogin': 'You must login/register first to send a message',
+    'profile.detail.columns.type': 'Type',
+    'profile.detail.columns.name': 'Name',
+    'profile.detail.columns.date': 'Date',
+    'profile.detail.profile.title': 'Your Profile',
+    'profile.detail.public': 'Public Profile',
+    'profile.detail.button.edit': 'Edit',
+    'profile.detail.username': 'Username',
+    'profile.detail.role': 'Role',
+    'profile.detail.email': 'Email',
+    'profile.detail.firstname': 'First Name',
+    'profile.detail.lastname': 'Last Name',
+    'profile.detail.bio': 'Bio',
+    'profile.detail.gender': 'Gender',
+    'profile.detail.avatar': 'Avatar',
+    'profile.detail.country': 'Country',
+    'profile.detail.timezone': 'Timezone',
+    'profile.detail.walletaddress': 'Wallet Address',
+    'profile.detail.tobeorganizer': 'Do you want to be an organizer?',
+    'profile.detail.tobeengineer': 'Are you a software developer or engineer?',
+    'profile.detail.yes': 'Yes',
+    'profile.detail.no': 'No',
 };
 
 // lang mappings

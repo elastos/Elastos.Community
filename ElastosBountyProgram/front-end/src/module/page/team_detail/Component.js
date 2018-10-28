@@ -20,10 +20,10 @@ export default class extends StandardPage {
                                 <Icon type="home"/>
                             </Breadcrumb.Item>
                             <Breadcrumb.Item href="/cr100">
-                                CR100
+                                {I18N.get('0105')}
                             </Breadcrumb.Item>
                             <Breadcrumb.Item>
-                                Team Detail
+                                {I18N.get('team.detail.title')}
                             </Breadcrumb.Item>
                         </Breadcrumb>
                     </div>
