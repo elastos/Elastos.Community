@@ -649,6 +649,7 @@ const en = {
     'pdetail.unlike': 'Unlike',
     'pdetail.involve': 'Apply',
     'pdetail.funding': 'Funding: 100k for 5% of the equity or coins/tokens',
+    'pdetail.title': 'Project Detail',
 
     // Our Vision
     'vision.00': 'Our Vision',
@@ -696,11 +697,41 @@ const en = {
     'profile.tasks.table.community': 'Community',
     'profile.tasks.table.status': 'Status',
     'profile.tasks.create.task': 'Create Task',
+    'profile.detail.thankforinterest': 'Thanks for your interest.',
+    'profile.detail.selectoption': 'Please select below the option which describes you best.',
+    'profile.detail.complookup': 'How much ELA do you want?',
+    'profile.detail.solo': 'Tell us why do you want to join',
+    'profile.detail.form.bid.required': 'Bid is required',
+    'profile.detail.upload.whitepaper': 'If you have a whitepaper ready, drag it or click here.',
+    'profile.detail.upload.comment': 'Use the Comments below to speak to the Project Owner and find out more.',
+    'profile.detail.table.name': 'Name',
+    'profile.detail.table.action': 'Action',
+    'profile.detail.noapplications': 'No applications yet',
+    'profile.detail.finding': 'Funding: 100k for 5% of the equity or coins/tokens',
 
     // Validate Form
     'ambassadors.form.required': 'This must be filled out',
     'ambassadors.form.reason.max': 'Reason too long',
-    'ambassadors.form.suitedreason.max': 'Suited reason too long'
+    'ambassadors.form.suitedreason.max': 'Suited reason too long',
+
+    // Social
+    'social.formcontribution.required': 'Please select a category',
+    'social.formcontribution.option.blog': 'Blog',
+    'social.formcontribution.option.video': 'Video',
+    'social.formcontribution.option.podcast': 'Podcast',
+    'social.formcontribution.option.other': 'Other',
+    'social.formcontribution.button.submit': 'Submit',
+    'social.joincommunity.community.required': 'This field is required',
+    'social.joincommunity.button.join': 'Join community',
+    'social.joincommunity.button.cancel': 'Cancel',
+    'social.columns.name': 'Name',
+    'social.columns.community': 'Community',
+    'social.columns.reward': 'Reward',
+    'social.columns.deadline': 'Deadline',
+    'social.generalevent.header': 'General Events and Community Tasks',
+    'social.generalevent.description': 'This program is for members interested in helping organizers plan events or take on small tasks created by organizers to help promote Elastos to the community',
+    'social.addmember.success': 'You was added to the community. Thanks!',
+    'social.addmember.error': 'Error while joining the community',
 };
 
 // lang mappings

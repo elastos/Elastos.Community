@@ -3,6 +3,7 @@ import MediaQuery from "react-responsive"
 import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import ContribForm from './formContribution/Container'
+import I18N from '@/I18N'
 import moment from 'moment'
 import ModalJoinCommunity from './ModalJoinCommunity/Component'
 import './style.scss'
@@ -107,7 +108,7 @@ export default class extends StandardPage {
             changeOnSelect />
 
         const columns = [{
-            title: 'Name',
+            title: I18N.get('social.columns.name'),
             dataIndex: 'name',
             width: '20%',
             className: 'fontWeight500 allow-wrap',
@@ -123,7 +124,7 @@ export default class extends StandardPage {
                 return _.truncate(desc, {length: 100})
             }
         },*/ {
-            title: 'Community',
+            title: I18N.get('social.columns.community'),
             dataIndex: 'community',
             render: (community, data) => {
                 if (!community) {
@@ -139,7 +140,7 @@ export default class extends StandardPage {
 
             }
         }, {
-            title: 'Reward',
+            title: I18N.get('social.columns.reward'),
             dataIndex: 'reward.ela',
             className: 'right-align',
             render: (ela) => {
@@ -149,7 +150,7 @@ export default class extends StandardPage {
                 return ''
             }
         }, {
-            title: 'Deadline',
+            title: I18N.get('social.columns.deadline'),
             dataIndex: 'startTime',
             className: 'right-align',
             render: (startTime) => moment(startTime).format('MMM D')
@@ -186,13 +187,12 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page-title">
                     <h3 className="page-header">
-                        General Events and Community Tasks
+                        {I18N.get('social.generalevent.header')}
                     </h3>
                 </div>
                 <div className="ebp-page-desc d_rowGrey">
                     <p>
-                        This program is for members interested in helping organizers plan events or take on
-                        small tasks created by organizers to help promote Elastos to the community
+                        {I18N.get('social.generalevent.description')}
                     </p>
                 </div>
                 <div className="ebp-page">
@@ -390,13 +390,13 @@ export default class extends StandardPage {
 
             const communityId = values['community'][values['community'].length - 1];
             this.props.addMemberToCommunity(this.props.currentUserId, communityId).then(() => {
-                message.success('You was added to the community. Thanks!')
+                message.success(I18N.get('social.addmember.success'))
 
                 // Reload my communities
                 this.props.getMyCommunities(this.props.currentUserId)
             }).catch((err) => {
                 console.error(err);
-                message.error('Error while joining the community')
+                message.error(I18N.get('social.addmember.error'))
             })
         })
     }
