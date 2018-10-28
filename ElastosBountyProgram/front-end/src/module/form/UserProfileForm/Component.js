@@ -114,8 +114,10 @@ class C extends BaseComponent {
             }
         };
         const avatar_el = (
-            <Upload name="logo" listType="picture" {...p_avatar}>
-                <div className="link">{'Upload Avatar'}</div>
+            <Upload name="logo" className="pull-right" listType="picture" {...p_avatar}>
+                <Button>
+                    Upload Avatar
+                </Button>
             </Upload>
         );
 
@@ -143,8 +145,10 @@ class C extends BaseComponent {
             }
         };
         const banner_el = (
-            <Upload name="logo" listType="picture" {...p_banner}>
-                <div className="link">{'Upload Banner'}</div>
+            <Upload name="logo" className="pull-right" listType="picture" {...p_banner}>
+                <Button>
+                    Upload Banner
+                </Button>
             </Upload>
         );
 
@@ -204,13 +208,13 @@ class C extends BaseComponent {
                     </Row>
 
                     <Row gutter={16}>
-                        <Col sm={{span: 24}} md={{span: 12}}>
+                        <Col sm={{span: 24}} md={{span: 24}}>
                             <FormItem label="First Name" {...formItemLayout}>
                                 {p.firstName}
                             </FormItem>
 
                         </Col>
-                        <Col sm={{span: 24}} md={{span: 12}}>
+                        <Col sm={{span: 24}} md={{span: 24}}>
                             <FormItem label="Last Name" {...formItemLayout}>
                                 {p.lastName}
                             </FormItem>
@@ -226,7 +230,7 @@ class C extends BaseComponent {
                     <br />
                     <br />
                     <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 10}}}>
-                        <Button className="cr-btn" type="primary" htmlType="submit" loading={this.props.loading}>
+                        <Button type="primary" htmlType="submit" loading={this.props.loading}>
                             {I18N.get('profile.save')}
                         </Button>
                     </FormItem>
