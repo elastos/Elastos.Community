@@ -6,6 +6,7 @@ import TaskDetail from '@/module/task/Container'
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import Footer from '@/module/layout/Footer/Container';
 import config from '@/config'
+import I18N from '@/I18N'
 
 import './style.scss'
 import '../../admin/admin.scss'
@@ -41,8 +42,8 @@ export default class extends StandardPage {
                                 <Breadcrumb.Item href="/">
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
-                                <Breadcrumb.Item>Profile</Breadcrumb.Item>
-                                <Breadcrumb.Item href="/profile/projects">Projects</Breadcrumb.Item>
+                                <Breadcrumb.Item>{I18N.get('0200')}</Breadcrumb.Item>
+                                <Breadcrumb.Item href="/profile/projects">{I18N.get('myrepublic.projects')}</Breadcrumb.Item>
                                 <Breadcrumb.Item>
                                     {this.props.task.name}
                                 </Breadcrumb.Item>

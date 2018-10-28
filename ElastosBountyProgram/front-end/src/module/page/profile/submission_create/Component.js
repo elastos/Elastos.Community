@@ -1,6 +1,7 @@
 import React from 'react';
 import StandardPage from '../../StandardPage';
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
+import I18N from '@/I18N'
 import SubmissionCreateForm from '@/module/form/SubmissionCreateForm/Container'
 
 import '../../admin/admin.scss'
@@ -24,7 +25,7 @@ export default class extends StandardPage {
                                     <Navigator selectedItem={'profileSubmissions'}/>
                                 </Col>
                                 <Col sm={24} md={20} className="admin-right-column wrap-box-user">
-                                    <h4 className="p_profile_action_title">Create Issue</h4>
+                                    <h4 className="p_profile_action_title">{I18N.get('profile.submission.create')}</h4>
                                     <SubmissionCreateForm />
                                 </Col>
                             </Row>
