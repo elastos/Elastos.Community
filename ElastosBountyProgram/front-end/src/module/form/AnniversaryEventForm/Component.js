@@ -1,4 +1,5 @@
 import React from 'react'
+import I18N from '@/I18N'
 import BaseComponent from '@/model/BaseComponent'
 import {
     Form,
@@ -140,7 +141,7 @@ class C extends BaseComponent {
         // I have read the rules - TODO: disable if
         const readRules_fn = getFieldDecorator('readRules', {
             rules: [
-                {required: true, message: 'You must agree to the rules and requirements'},
+                {required: true, message: I18N.get('from.AnniversaryEventForm.readrules.required')},
             ]
         })
         const readRules_el = (
@@ -151,8 +152,8 @@ class C extends BaseComponent {
         const fullLegalName_fn = getFieldDecorator('fullLegalName', {
             initialValue: this.state.fullLegalName || this.props.user.profile.firstName + ' ' + this.props.user.profile.lastName,
             rules: [
-                {required: true, message: 'Please input an name'},
-                {min: 6, message: 'name too short'}
+                {required: true, message: I18N.get('from.AnniversaryEventForm.fullLegalName.required')},
+                {min: 6, message: I18N.get('from.AnniversaryEventForm.fullLegalName.min')}
             ]
         })
         const fullLegalName_el = (
@@ -163,8 +164,8 @@ class C extends BaseComponent {
         const walletAddress_fn = getFieldDecorator('walletAddress', {
             initialValue: this.props.user.profile.walletAddress || '',
             rules: [
-                {required: true, message: 'Please input a wallet address'},
-                {len: 34, message: 'address length error'}
+                {required: true, message: I18N.get('from.AnniversaryEventForm.walletAddress.required')},
+                {len: 34, message: I18N.get('from.AnniversaryEventForm.walletAddress.len')}
             ]
         })
         const walletAddress_el = (
@@ -206,7 +207,7 @@ class C extends BaseComponent {
                         </a>
                     ) : (
                         <Button className="mobileBtn" loading={this.state.attachment_loading}>
-                            <Icon type="upload" /> Upload Flight Receipt
+                            <Icon type="upload" /> {I18N.get('from.AnniversaryEventForm.upload')}
                         </Button>
                     )
                 }
@@ -248,7 +249,7 @@ class C extends BaseComponent {
                         </a>
                     ) : (
                         <Button className="mobileBtn" loading={this.state.passport_loading}>
-                            <Icon type="upload" /> Upload Photo of Passport
+                            <Icon type="upload" /> {I18N.get('from.AnniversaryEventForm.upload.photoofpassport')}
                         </Button>
                     )
                 }
