@@ -5,7 +5,16 @@ import * as moment from 'moment';
 
 export default class extends Base {
 
+    /**
+     * The API token only encrypts stores the userId, on a request we always query the full user, nothing else
+     * passed from the client is trusted.
+     *
+     * Since we encrypt with the APP_SECRET on the server side we trust that
+     *
+     * @returns {Promise<{code: number; data: any; message: string} | {code: number; type: string; error: string}>}
+     */
     async action(){
+
         const userService = this.buildService(UserService);
 
         const {username, password} = this.getParam();

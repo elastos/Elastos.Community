@@ -63,26 +63,26 @@ class C extends BaseComponent {
                         await this.props.updateCVote(param);
                         message.success('update success');
                         this.ord_loading(false);
-                        this.props.history.push('/cvote/list');
+                        this.props.history.push('/council');
                     }catch(e){
                         message.error(e.message);
                         this.ord_loading(false);
                     }
-                    
+
                 }
                 else{
                     try{
                         await this.props.createCVote(param);
                         message.success('create success');
                         this.ord_loading(false);
-                        this.props.history.push('/cvote/list');
+                        this.props.history.push('/council');
                     }catch(e){
                         message.error(e.message);
                         this.ord_loading(false);
                     }
-                    
+
                 }
-                
+
             }
         })
     }
@@ -90,14 +90,14 @@ class C extends BaseComponent {
     getInputProps(data) {
         const edit = this.props.edit;
         const role = this.props.user.role;
-        const isAdmin = (role === 'ADMIN' || role === 'SECRETARY');
+        const isCouncil = this.props.isCouncil;
 
         const fullName = this.user.profile.firstName + ' ' + this.user.profile.lastName;
 
         const dis = {};
         const dis1 = {};
-        const dis2 = {};
-        if(!isAdmin){
+
+        if(!isCouncil){
             dis.disabled = true;
         }
         else{
@@ -106,8 +106,11 @@ class C extends BaseComponent {
             }
         }
 
-    
-        
+        const secretaryDis2 = {disabled: true};
+        if (this.props.user.current_user_id === '5b9024b744293737fd6532e5') {
+            delete secretaryDis2.disabled
+        }
+
 
         const s = this.props.static;
         const {getFieldDecorator} = this.props.form;
@@ -178,7 +181,7 @@ class C extends BaseComponent {
             if(fullName !== name){
                 tmp.disabled = true;
             }
-            
+
             const fn = getFieldDecorator('vote_'+name, {
                 initialValue : edit ? data.vote_map[name] : (fullName !== name ? '-1' : 'support')
             });
@@ -221,11 +224,11 @@ class C extends BaseComponent {
                             else{
                                 callback();
                             }
-                            
+
                         }
                     }
                 ]
-                
+
             });
             const el = (
                 <TextArea {...dis} {...tmp} rows={4}></TextArea>
@@ -242,12 +245,12 @@ class C extends BaseComponent {
                 <Select.Option value={'YES'}>YES</Select.Option>
             </Select>
         );
-        
+
         const notes_fn = getFieldDecorator('notes', {
             initialValue : edit ? data.notes : ''
         });
         const notes_el = (
-            <TextArea {...dis} rows={4}></TextArea>
+            <TextArea {...secretaryDis2} rows={4}></TextArea>
         );
 
         return {
@@ -306,7 +309,7 @@ class C extends BaseComponent {
                 </Row>
                 <FormItem style={{marginTop: '24px'}} label="Title" {...formItemLayout}>{p.title}</FormItem>
                 <FormItem label="Type" {...formItemLayout}>{p.type}</FormItem>
-                
+
                 <FormItem label="Content" {...formItemLayout}>{p.content}</FormItem>
                 <FormItem label="Proposed by" {...formItemLayout}>{p.proposedBy}</FormItem>
 
@@ -332,16 +335,16 @@ class C extends BaseComponent {
 
                 <FormItem style={{'marginBottom':'12px'}} label="Conflict?" help="Is this proposal potentially conflict with existing constitution?" {...formItemLayout}>{p.isConflict}</FormItem>
                 <FormItem label="Notes from Secretary" {...formItemLayout}>{p.notes}</FormItem>
-                
+
                 <Row>
                     <Col offset={6} span={12}>
-                        {this.renderSubmitButton()}
-                        {this.renderFinishButton()}
-                        {this.renderUpdateNoteButton()}
+                        {this.props.isCouncil && this.renderSubmitButton()}
+                        {this.props.isCouncil && this.renderFinishButton()}
+                        {this.props.isCouncil && this.renderUpdateNoteButton()}
                     </Col>
                 </Row>
-                
-                
+
+
             </Form>
         )
     }
@@ -428,7 +431,7 @@ class C extends BaseComponent {
                 }).then(()=>{
                     message.success('complete proposal success!');
                     this.ord_loading(false);
-                    this.props.history.push('/cvote/list');
+                    this.props.history.push('/council');
                 }).catch((e)=>{
                     message.error(e.message);
                     this.ord_loading(false);
@@ -463,17 +466,17 @@ class C extends BaseComponent {
             }
         });
         if(an > 0){
-            
+
         }
         else if(en > 1){
             status = 'error';
             // ss = 'not pass'
         }
-        
+
         if(n > 1){
             status = 'finish';
             // ss = 'pass'
-        } 
+        }
 
         const sy = {
             a : {
@@ -520,7 +523,7 @@ class C extends BaseComponent {
                     <Step title="" />
                 </Steps> */}
             </div>
-            
+
         );
     }
 }

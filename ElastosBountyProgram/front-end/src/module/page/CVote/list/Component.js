@@ -96,9 +96,10 @@ export default class extends BaseComponent {
                             <h3 style={{textAlign:'left'}}>Proposal List</h3>
                         </Col>
                         <Col span={8} offset={8}>
+                            {this.props.isCouncil &&
                             <Button style={{width:'100%'}} onClick={this.toCreate.bind(this)} size="large" type="ebp" htmlType="submit" className="d_btn">
                                 Create New Proposal
-                            </Button>
+                            </Button>}
                         </Col>
                     </Row>
                     <Table

@@ -35,13 +35,13 @@ export default class extends StandardPage {
             <div className="p_council">
 
                 <Tabs defaultActiveKey={this.state.subpage} onChange={this.tabChange.bind(this)}>
-                    <TabPane key="board" tab="board">
+                    <TabPane key="board" tab="council">
                         <CouncilBoard/>
                     </TabPane>
                     <TabPane key="list" tab="list">
                         <CouncilList/>
                     </TabPane>
-                    <TabPane key="vote" tab="vote">
+                    <TabPane key="vote" tab="voting">
                         <CVoteList/>
                     </TabPane>
                 </Tabs>

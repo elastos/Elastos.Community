@@ -20,6 +20,10 @@ export default class extends Base {
             throw 'cvoteservice.create - invalid current user';
         }
 
+        if (!this.isCouncil()) {
+            throw 'cvoteservice.create - not council'
+        }
+
         // TODO: this should probably be COUNCIL role
         if (this.currentUser.role !== 'ADMIN') {
             throw 'cvoteservice.create - invalid user role'
@@ -75,16 +79,20 @@ export default class extends Base {
         const db_cvote = this.getDBModel('CVote');
 
         if(!this.currentUser || !this.currentUser._id){
-            throw 'invalid current user';
+            throw 'cvoteservice.update - invalid current user';
+        }
+
+        if (!this.isCouncil()) {
+            throw 'cvoteservice.update - not council'
         }
 
         const cur = await db_cvote.findOne({_id : param._id});
         if(!cur){
-            throw 'invalid proposal id';
+            throw 'cvoteservice.update - invalid proposal id';
         }
 
         if(this.isExpired(cur) || _.includes([constant.CVOTE_STATUS.FINAL, constant.CVOTE_STATUS.DEFERRED], cur.status)){
-            throw 'proposal finished or deferred, can not edit anymore';
+            throw 'cvoteservice.update - proposal finished or deferred, can not edit anymore';
         }
 
         const {
@@ -116,6 +124,9 @@ export default class extends Base {
         const cur = await db_cvote.findOne({_id : id});
         if(!cur){
             throw 'invalid proposal id';
+        }
+        if (!this.isCouncil()) {
+            throw 'cvoteservice.finishById - not council'
         }
         if(_.includes([constant.CVOTE_STATUS.FINAL], cur.status)){
             throw 'proposal already completed.';
@@ -200,6 +211,9 @@ export default class extends Base {
         if(!cur){
             throw 'invalid proposal id';
         }
+        if (!this.isCouncil()) {
+            throw 'cvoteservice.updateNote - not council'
+        }
         if(this.currentUser.role !== constant.USER_ROLE.SECRETARY){
             throw 'only secretary could update notes';
         }
@@ -269,5 +283,16 @@ export default class extends Base {
             console.log('---------------- start cvote cronjob -------------');
             this.eachJob();
         }, 1000*60);
+    }
+
+    private isCouncil() {
+        return [
+
+            '5b9024b744293737fd6532e2',
+            '5b9024b744293737fd6532e3',
+            '5b9024b744293737fd6532e4',
+            '5b9024b744293737fd6532e5'
+
+        ].indexOf(this.currentUser._id.toString()) >= 0
     }
 }

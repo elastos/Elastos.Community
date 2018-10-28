@@ -26,7 +26,15 @@ export default createContainer(Component, (state) => {
                 {name : 'Reject', value : 'reject'},
                 {name : 'Abstention', value : 'abstention'}
             ]
-        }
+        },
+        isCouncil: [
+
+            '5b9024b744293737fd6532e2',
+            '5b9024b744293737fd6532e3',
+            '5b9024b744293737fd6532e4',
+            '5b9024b744293737fd6532e5'
+
+        ].indexOf(state.user.current_user_id) >= 0
     }
 }, () => {
     return {

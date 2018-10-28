@@ -32,7 +32,7 @@ export default class extends StandardPage {
     }
 
     goList(){
-        this.props.history.push('/cvote/list');
+        this.props.history.push('/council');
     }
 
 }

@@ -33,12 +33,12 @@ export default class extends StandardPage {
         }
     }
     async componentDidMount(){
-  
+
         const data = await this.props.getData(this.props.match.params.id);
         this.setState({data});
     }
 
     goList(){
-        this.props.history.push('/cvote/list');
+        this.props.history.push('/council');
     }
 }

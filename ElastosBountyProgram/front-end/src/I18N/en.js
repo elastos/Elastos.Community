@@ -519,7 +519,7 @@ const en = {
     'landing.usecase.content.1': 'Support point-to-point conversation,',
     'landing.usecase.content.2': 'point-to-point document transfer through',
     'landing.usecase.content.3': 'decentralized P2P communication.',
-    'landing.usecase.content.4': 'Support point-to-point business4',
+    'landing.usecase.content.4': 'Support point-to-point business',
     'landing.usecase.content.5': 'through decentralized payment.',
     'landing.usecase.content.6': 'Support applications about evidence,',
     'landing.usecase.content.7': 'traceability to source, ID verification,',
