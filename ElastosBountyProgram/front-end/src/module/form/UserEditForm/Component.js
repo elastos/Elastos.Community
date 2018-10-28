@@ -122,7 +122,7 @@ class C extends BaseComponent {
                 })}
             </Select>
         )
-        
+
         const email_fn = getFieldDecorator('email', {
             rules: [{required: true, message: I18N.get('user.edit.form.label_email')}],
             initialValue: user.email
@@ -213,6 +213,20 @@ class C extends BaseComponent {
             <Input />
         )
 
+        const timezone_fn = getFieldDecorator('timezone', {
+            rules: [],
+            initialValue: user.profile.timezone
+        })
+
+        const timezone_el = (
+           <TimezonePicker
+                className="timezone-picker"
+                inputProps={{
+                   placeholder: 'Select Timezone...'
+                }}
+            />
+        )
+
         /*
         ****************************************************************************************
         * Social Media
@@ -300,6 +314,7 @@ class C extends BaseComponent {
             lastName: lastName_fn(lastName_el),
             gender: gender_fn(gender_el),
             country: country_fn(country_el),
+            timezone: timezone_fn(timezone_el),
 
             walletAddress: walletAddress_fn(walletAddress_el),
 
@@ -373,9 +388,12 @@ class C extends BaseComponent {
                         </FormItem>
                         <FormItem label="Wallet" {...formItemLayout}>
                             {p.walletAddress}
-                        </FormItem>                        
+                        </FormItem>
                         <FormItem label="Country" {...formItemLayout}>
                             {p.country}
+                        </FormItem>
+                        <FormItem label="Timezone" {...formItemLayout}>
+                            {p.timezone}
                         </FormItem>
 
                         <div className="label">{I18N.get('user.edit.form.section.social')}</div>
