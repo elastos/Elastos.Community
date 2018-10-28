@@ -25,7 +25,13 @@ export default class extends Base {
         }
 
         // TODO: this should probably be COUNCIL role
-        if (this.currentUser.role !== 'ADMIN') {
+        if ([
+
+            '5b9024b744293737fd6532e2',
+            '5b9024b744293737fd6532e3',
+            '5b9024b744293737fd6532e4'
+
+        ].indexOf(this.currentUser._id.toString()) < 0) {
             throw 'cvoteservice.create - invalid user role'
         }
 
