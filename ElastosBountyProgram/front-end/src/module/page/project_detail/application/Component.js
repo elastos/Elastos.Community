@@ -248,8 +248,8 @@ class C extends BaseComponent {
                     <p className="ant-upload-drag-icon">
                         <Icon type="inbox" />
                     </p>
-                    <p className="ant-upload-text">If you have a whitepaper ready, drag it or click here.</p>
-                    <p className="ant-upload-hint">Use the Comments below to speak to the Project Owner and find out more.</p>
+                    <p className="ant-upload-text">{I18N.get('profile.detail.upload.whitepaper')}</p>
+                    <p className="ant-upload-hint">{I18N.get('profile.detail.upload.comment')}</p>
                 </Upload.Dragger>
             </div>
         )

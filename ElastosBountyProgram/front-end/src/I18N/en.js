@@ -27,6 +27,7 @@ const en = {
     '0106': 'CRcles',
     '0107': 'Ambassadors',
     '0108': 'Council',
+    '0109': 'Submissions',
 
     '0200': 'Profile',
     '0201': 'Login',
@@ -106,6 +107,9 @@ const en = {
     'login.reset': 'Reset password',
     'login.title': 'Login to Cyber Republic',
     'login.description_1': 'Input your credentials below.',
+
+    // Logout
+    'logout.title': 'Are you sure you want to logout?',
 
     // ApplyForm
     'apply.form.attachment': 'Supporting Attachment',
@@ -243,6 +247,16 @@ const en = {
     'developer.search.subtitle_bids': 'bids',
     'developer.search.subtitle_applications': 'applications',
     'developer.search.submit_bid': 'Submit Bid',
+    'developer.form.submission.type.required': 'Please select a type',
+    'developer.form.submission.type.option.bug': 'Bug',
+    'developer.form.submission.type.option.security': 'Security Issue',
+    'developer.form.submission.type.option.suggestion': 'Suggestion',
+    'developer.form.submission.type.option.other': 'Other',
+    'developer.form.submission.title.required': 'Please put in some title',
+    'developer.form.submission.description.required': 'Please put in some title',
+    'developer.form.submission.placeholder.subject': 'Subject',
+    'developer.form.submission.placeholder.description': 'Describe your issue',
+    'developer.form.submission.message.success': 'Your issue has been submitted. Thanks!',
 
     'myrepublic.teams': 'Teams',
     'myrepublic.teams.all': 'All',
@@ -275,6 +289,23 @@ const en = {
 
     'emp35.mycircles.title': 'My CRcles',
     'emp35.circles.statement': 'A circle is a shape where all points are equal distance from the center. CR\'s "CRcles" are teams of decentralized citizens who all revolve around a single area of expertise. CRcles are designed to group people by their talent and allow them to begin creating and completing talent specific tasks. In time, leaders will be elected to manage each CRcle.',
+    'emp35.form.reason.max': 'Reason too long',
+    'emp35.form.field.required': 'This must be filled out',
+    'emp35.form.suitedreason.max': 'Suited reason too long',
+    'emp35.form.field.upload': 'Upload',
+    'emp35.form.funding': 'Funding: US $100K Annual in ELA',
+    'emp35.form.apply.text': 'Why Would You Like to Apply?',
+    'emp35.form.most.suited': 'What Makes You Most Suited?',
+    'emp35.form.support': 'Supporting Attachment',
+
+    // Not found
+    'error.notfound': '404, not found',
+
+    // Form ext
+    'formext.anni2018.app.title': 'Elastos 2018 Anniversary Event Registration',
+    'formext.anni2018.video.title': 'Elastos 2018 Anniversary Event - Community Video',
+    'formext.anni2018.organizer.title': 'Organizer Application',
+    'formext.anni2018.training.title': 'Evangelist Training Application',
 
     // Circle Detail
     'circle.title': 'Crcle Detail',
@@ -287,9 +318,12 @@ const en = {
     'circle.members': 'Members',
     'circle.tasks': 'Tasks',
     'circle.posts': 'Posts',
+    'circle.uploadtext': 'If you have a whitepaper ready, drag it or click here.',
+    'circle.uploadhint': 'Use the Comments below to speak to the Project Owner and find out more.',
 
     // Training
     'training.header.title': 'Ambassadors Training',
+    'training.subscribeemail.text': 'Stay updated by subscribing below with your E-Mail',
     'training.header.content.1': 'Cyber Republic will offer an all expenses paid trip for ambassadors',
     'training.header.content.2': 'and guest speakers to spend one week training with the Elastos Team',
     'training.header.content.3': 'in various regions to become an official Elastos Ambassador. Graduates',
@@ -361,6 +395,10 @@ const en = {
     'project.detail.budget': 'Budget',
     'project.detail.reward': 'Reward',
     'project.detail.reference_bid': 'Reference Bid',
+    'project.detail.noapplications': 'There are no applications yet',
+
+    'project.detail.columns.name': 'Name',
+    'project.detail.columns.action': 'Action',
 
     'team.detail.team_active': 'Your team is currently active',
 
@@ -428,6 +466,28 @@ const en = {
     '.no': 'No',
     '.loading': 'Loading...',
     'ela': 'ELA',
+    '.edit': 'Edit',
+
+    // Community
+    'community.nomember': 'no members',
+    'community.buton.join': 'Join',
+    'community.buton.leave': 'Leave',
+    'community.noorganizers': 'No organizers yet',
+    'community.applytobeorganizer': 'Apply to be an Organizer',
+    'community.message.success.joincommunity': 'You were added to community',
+    'community.message.success.leavecommunity': 'You left this community successfully',
+    'community.message.error.joincommunity': 'Error while adding you to community',
+    'community.message.error.apply': 'You must be logged in to apply',
+    'community.selectcountry': 'Select a country',
+    'community.guidecontainer.part1': 'Hello there! Looks like your we do not have an organizer for',
+    'community.guidecontainer.part2': 'We are always looking for new organizers especially in new communities.',
+    'community.guidecontainer.part3': "if you'd like to be an organizer for your region please register, we'll add your country and you can then apply to be an organizer on this page.",
+    'community.button.register': "Click to Register",
+    'community.button.selectcountry': "or you can select a country from above",
+    'community.link.toevent': 'See Event',
+
+    // Council
+    'council.list.proposals': 'Any suggestions, proposals can be sent to',
 
     // Landing
     'landing.elastos': 'Elastos',
@@ -594,6 +654,7 @@ const en = {
     'pdetail.unlike': 'Unlike',
     'pdetail.involve': 'Apply',
     'pdetail.funding': 'Funding: 100k for 5% of the equity or coins/tokens',
+    'pdetail.title': 'Project Detail',
 
     // Our Vision
     'vision.00': 'Our Vision',
@@ -622,7 +683,93 @@ const en = {
     'profile.publicProfile': 'Public Profile',
     'profile.save': 'Save',
     'profile.projectsTasks': 'Projects/Tasks',
-    'profile.view': 'View'
+    'profile.view': 'View',
+    'profile.community.leave.success': 'You left community successfully',
+    'profile.community.table.name': 'Name',
+    'profile.community.table.geolocation': 'Geolocation',
+    'profile.community.table.type': 'Type',
+    'profile.community.table.actions': 'Actions',
+    'profile.community.title': 'Communities',
+    'profile.community.joincommunity': 'Joined Communities',
+    'profile.info.title': 'Info',
+    'profile.submission.create': 'Create Issue',
+    'profile.tasks.table.name': 'Name',
+    'profile.tasks.table.owner': 'Owner',
+    'profile.tasks.table.category': 'Category',
+    'profile.tasks.table.type': 'Type',
+    'profile.tasks.table.date': 'Date',
+    'profile.tasks.table.created': 'Created',
+    'profile.tasks.table.community': 'Community',
+    'profile.tasks.table.status': 'Status',
+    'profile.tasks.create.task': 'Create Task',
+    'profile.detail.thankforinterest': 'Thanks for your interest.',
+    'profile.detail.selectoption': 'Please select below the option which describes you best.',
+    'profile.detail.complookup': 'How much ELA do you want?',
+    'profile.detail.solo': 'Tell us why do you want to join',
+    'profile.detail.form.bid.required': 'Bid is required',
+    'profile.detail.upload.whitepaper': 'If you have a whitepaper ready, drag it or click here.',
+    'profile.detail.upload.comment': 'Use the Comments below to speak to the Project Owner and find out more.',
+    'profile.detail.table.name': 'Name',
+    'profile.detail.table.action': 'Action',
+    'profile.detail.noapplications': 'No applications yet',
+    'profile.detail.finding': 'Funding: 100k for 5% of the equity or coins/tokens',
+
+    // Validate Form
+    'ambassadors.form.required': 'This must be filled out',
+    'ambassadors.form.reason.max': 'Reason too long',
+    'ambassadors.form.suitedreason.max': 'Suited reason too long',
+
+    // Social
+    'social.formcontribution.required': 'Please select a category',
+    'social.formcontribution.option.blog': 'Blog',
+    'social.formcontribution.option.video': 'Video',
+    'social.formcontribution.option.podcast': 'Podcast',
+    'social.formcontribution.option.other': 'Other',
+    'social.formcontribution.button.submit': 'Submit',
+    'social.joincommunity.community.required': 'This field is required',
+    'social.joincommunity.button.join': 'Join community',
+    'social.joincommunity.button.cancel': 'Cancel',
+    'social.columns.name': 'Name',
+    'social.columns.community': 'Community',
+    'social.columns.reward': 'Reward',
+    'social.columns.deadline': 'Deadline',
+    'social.generalevent.header': 'General Events and Community Tasks',
+    'social.generalevent.description': 'This program is for members interested in helping organizers plan events or take on small tasks created by organizers to help promote Elastos to the community',
+    'social.addmember.success': 'You was added to the community. Thanks!',
+    'social.addmember.error': 'Error while joining the community',
+
+    // Task Application
+    'taks.application.social': 'Social',
+    'taks.application.developer': 'Developer',
+    'taks.create.project': 'Create Project',
+    'taks.create.task': 'Create Task / Event',
+
+    // Team Detail
+    'team.detail.title': 'Team Detail',
+
+    // Module Profile
+    'profile.detail.requiredlogin': 'You must login/register first to send a message',
+    'profile.detail.columns.type': 'Type',
+    'profile.detail.columns.name': 'Name',
+    'profile.detail.columns.date': 'Date',
+    'profile.detail.profile.title': 'Your Profile',
+    'profile.detail.public': 'Public Profile',
+    'profile.detail.button.edit': 'Edit',
+    'profile.detail.username': 'Username',
+    'profile.detail.role': 'Role',
+    'profile.detail.email': 'Email',
+    'profile.detail.firstname': 'First Name',
+    'profile.detail.lastname': 'Last Name',
+    'profile.detail.bio': 'Bio',
+    'profile.detail.gender': 'Gender',
+    'profile.detail.avatar': 'Avatar',
+    'profile.detail.country': 'Country',
+    'profile.detail.timezone': 'Timezone',
+    'profile.detail.walletaddress': 'Wallet Address',
+    'profile.detail.tobeorganizer': 'Do you want to be an organizer?',
+    'profile.detail.tobeengineer': 'Are you a software developer or engineer?',
+    'profile.detail.yes': 'Yes',
+    'profile.detail.no': 'No',
 };
 
 // lang mappings

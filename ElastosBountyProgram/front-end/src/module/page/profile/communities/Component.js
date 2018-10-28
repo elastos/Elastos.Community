@@ -1,6 +1,7 @@
 import React from 'react';
 import StandardPage from '../../StandardPage';
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
+import I18N from '@/I18N'
 import { message } from 'antd'
 import config from '@/config'
 import './style.scss'
@@ -27,28 +28,28 @@ export default class extends StandardPage {
     leaveCommunity(communityId) {
         this.props.removeMember(this.props.currentUserId, communityId).then(() => {
             this.props.getMyCommunities(this.props.currentUserId)
-            message.success('You left community successfully')
+            message.success(I18N.get('profile.community.leave.success'))
         })
     }
 
     ord_renderContent () {
         const myCommunities = this.props.myCommunities
         const columns = [{
-            title: 'Name',
+            title: I18N.get('profile.community.table.name'),
             dataIndex: 'name',
             width: '30%',
             className: 'fontWeight500 allow-wrap',
         }, {
-            title: 'Geolocation',
+            title: I18N.get('profile.community.table.geolocation'),
             dataIndex: 'geolocation',
             render: (geolocation, record) => {
                 return config.data.mappingCountryCodeToName[geolocation] || geolocation
             }
         }, {
-            title: 'Type',
+            title: I18N.get('profile.community.table.type'),
             dataIndex: 'type',
         }, {
-            title: 'Actions',
+            title: I18N.get('profile.community.table.actions'),
             dataIndex: '_id',
             key: 'actions',
             className: 'right-align',
@@ -59,7 +60,7 @@ export default class extends StandardPage {
                 }
 
                 return (
-                    <Button onClick={this.leaveCommunity.bind(this, id)} className="btn-leave">Leave</Button>
+                    <Button onClick={this.leaveCommunity.bind(this, id)} className="btn-leave">{I18N.get('circle.header.leave')}</Button>
                 )
             }
         }]
@@ -76,8 +77,8 @@ export default class extends StandardPage {
                                 <Breadcrumb.Item href="/">
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
-                                <Breadcrumb.Item>Profile</Breadcrumb.Item>
-                                <Breadcrumb.Item>Communities</Breadcrumb.Item>
+                                <Breadcrumb.Item>{I18N.get('0200')}</Breadcrumb.Item>
+                                <Breadcrumb.Item>{I18N.get('profile.community.title')}</Breadcrumb.Item>
                             </Breadcrumb>
                         </div>
                         <div className="p_ProfileCommunities p_admin_content">
@@ -95,7 +96,7 @@ export default class extends StandardPage {
                                     </Col>
                                 </MediaQuery>
                                 <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-right-column wrap-box-user">
-                                    <h3 className="no-margin">Joined Communities</h3>
+                                    <h3 className="no-margin">{I18N.get('profile.community.joincommunity')}</h3>
 
                                     <Table
                                         columns={columns}

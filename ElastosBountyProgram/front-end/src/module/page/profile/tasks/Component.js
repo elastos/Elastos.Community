@@ -3,6 +3,7 @@ import StandardPage from '../../StandardPage';
 import Footer from '@/module/layout/Footer/Container'
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import _ from 'lodash'
+import I18N from '@/I18N'
 
 import './style.scss'
 import '../../admin/admin.scss'
@@ -135,7 +136,7 @@ export default class extends StandardPage {
         const allTasks = this.props.all_tasks
 
         const columns = [{
-            title: 'Name',
+            title: I18N.get('profile.tasks.table.name'),
             dataIndex: 'name',
             width: '30%',
             className: 'fontWeight500 allow-wrap',
@@ -143,7 +144,7 @@ export default class extends StandardPage {
                 return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
             }
         }, {
-            title: 'Owner',
+            title: I18N.get('profile.tasks.table.owner'),
             dataIndex: 'createdBy',
             width: '30%',
             render: (createdBy) => {
@@ -154,18 +155,18 @@ export default class extends StandardPage {
                 </a>
             }
         }, {
-            title: 'Category',
+            title: I18N.get('profile.tasks.table.category'),
             dataIndex: 'category',
             render: (category) => _.capitalize(category)
         }, {
-            title: 'Type',
+            title: I18N.get('profile.tasks.table.type'),
             dataIndex: 'type',
         }, {
-            title: 'Date',
+            title: I18N.get('profile.tasks.table.date'),
             dataIndex: 'startTime',
             render: (startTime) => moment(startTime).format('MMM D')
         }, {
-            title: 'Created',
+            title: I18N.get('profile.tasks.table.created'),
             dataIndex: 'createdAt',
             render: (createdAt) => moment(createdAt).format('MMM D')
         }, {
@@ -176,7 +177,7 @@ export default class extends StandardPage {
         }]
 
         const appliedColumns = [{
-            title: 'Name',
+            title: I18N.get('profile.tasks.table.name'),
             dataIndex: 'name',
             width: '30%',
             className: 'fontWeight500 allow-wrap',
@@ -184,17 +185,17 @@ export default class extends StandardPage {
                 return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
             }
         }, {
-            title: 'Owner',
+            title: I18N.get('profile.tasks.table.owner'),
             dataIndex: 'createdBy.username'
         }, {
-            title: 'Category',
+            title: I18N.get('profile.tasks.table.category'),
             dataIndex: 'category',
             render: (category) => _.capitalize(category)
         }, {
-            title: 'Type',
+            title: I18N.get('profile.tasks.table.type'),
             dataIndex: 'type',
         }, {
-            title: 'Community',
+            title: I18N.get('profile.tasks.table.community'),
             dataIndex: 'community',
             key: 'community',
             render: (community, data) => {
@@ -211,11 +212,11 @@ export default class extends StandardPage {
 
             }
         }, {
-            title: 'Date',
+            title: I18N.get('profile.tasks.table.date'),
             dataIndex: 'startTime',
             render: (startTime) => moment(startTime).format('MMM D')
         }, {
-            title: 'Created',
+            title: I18N.get('profile.tasks.table.created'),
             dataIndex: 'createdAt',
             render: (createdAt) => moment(createdAt).format('MMM D')
         }, {
@@ -227,7 +228,7 @@ export default class extends StandardPage {
 
         // TODO: this should be moved to a more restrictive admin
         const ownedColumns = [{
-            title: 'Name',
+            title: I18N.get('profile.tasks.table.name'),
             dataIndex: 'name',
             width: '30%',
             className: 'fontWeight500 allow-wrap',
@@ -235,14 +236,14 @@ export default class extends StandardPage {
                 return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
             }
         }, {
-            title: 'Category',
+            title: I18N.get('profile.tasks.table.category'),
             dataIndex: 'category',
             render: (category) => _.capitalize(category)
         }, {
-            title: 'Type',
+            title: I18N.get('profile.tasks.table.type'),
             dataIndex: 'type',
         }, {
-            title: 'Community',
+            title: I18N.get('profile.tasks.table.community'),
             dataIndex: 'community',
             key: 'community',
             render: (community, data) => {
@@ -259,14 +260,14 @@ export default class extends StandardPage {
 
             }
         }, {
-            title: 'Status',
+            title: I18N.get('profile.tasks.table.status'),
             dataIndex: 'status'
         },{
-            title: 'Date',
+            title: I18N.get('profile.tasks.table.date'),
             dataIndex: 'startTime',
             render: (startTime) => moment(startTime).format('MMM D')
         }, {
-            title: 'Created',
+            title: I18N.get('profile.tasks.table.created'),
             dataIndex: 'createdAt',
             render: (createdAt) => moment(createdAt).format('MMM D')
         }, {
@@ -288,7 +289,7 @@ export default class extends StandardPage {
                                 <Breadcrumb.Item href="/">
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
-                                <Breadcrumb.Item>Tasks</Breadcrumb.Item>
+                                <Breadcrumb.Item>{I18N.get('0006')}</Breadcrumb.Item>
                             </Breadcrumb>
                         </div>
                         <div className="p_admin_content">
@@ -299,7 +300,7 @@ export default class extends StandardPage {
                                 <Col sm={24} md={20} className="c_ProfileContainer admin-right-column wrap-box-user">
                                     {(this.props.is_leader || this.props.is_admin) &&
                                         <div className="pull-right filter-group">
-                                            <Button onClick={() => this.props.history.push('/task-create/')}>Create Task</Button>
+                                            <Button onClick={() => this.props.history.push('/task-create/')}>{I18N.get('profile.tasks.create.task')}</Button>
                                         </div>
                                     }
                                     <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>

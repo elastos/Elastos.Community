@@ -2,6 +2,7 @@ import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import { Link } from 'react-router-dom'
 import { Row, Col } from 'antd'
+import I18N from '@/I18N'
 
 export default class extends BaseComponent {
     ord_render () {
@@ -27,7 +28,7 @@ export default class extends BaseComponent {
                                 </div>
                                 <div className="event-title">{event.name}</div>
                                 <div className="event-description">{event.description}</div>
-                                <div className="event-meta">{mockData.date} / {mockData.time} / {mockData.hour} <Link to={'/admin/task-detail/' + event._id}>See Event</Link></div>
+                                <div className="event-meta">{mockData.date} / {mockData.time} / {mockData.hour} <Link to={'/admin/task-detail/' + event._id}>{I18N.get('community.link.toevent')}</Link></div>
                             </div>
                         </Col>
                     )

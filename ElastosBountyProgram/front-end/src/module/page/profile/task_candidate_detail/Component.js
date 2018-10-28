@@ -3,7 +3,7 @@ import StandardPage from '../../StandardPage'
 
 import TaskApplicationDetail from '@/module/task/application/Container'
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
-
+import I18N from '@/I18N'
 import config from '@/config'
 
 import './style.scss'
@@ -51,7 +51,7 @@ export default class extends StandardPage {
                                 <Breadcrumb.Item href="/">
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
-                                <Breadcrumb.Item>Profile</Breadcrumb.Item>
+                                <Breadcrumb.Item>{I18N.get('0200')}</Breadcrumb.Item>
                                 <Breadcrumb.Item href="/profile/tasks">Tasks</Breadcrumb.Item>
                                 <Breadcrumb.Item href={taskDetailLink}>
                                     {this.props.task.name}

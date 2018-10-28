@@ -3,7 +3,7 @@ import StandardPage from '../../StandardPage'
 
 import SubmissionDetail from '@/module/submission/Container'
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
-
+import I18N from '@/I18N'
 import config from '@/config'
 
 import './style.scss'
@@ -46,8 +46,8 @@ export default class extends StandardPage {
                                 <Breadcrumb.Item href="/">
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
-                                <Breadcrumb.Item>Profile</Breadcrumb.Item>
-                                <Breadcrumb.Item href="/profile/submissions">Submissions</Breadcrumb.Item>
+                                <Breadcrumb.Item>{I18N.get('0200')}</Breadcrumb.Item>
+                                <Breadcrumb.Item href="/profile/submissions">{I18N.get('0109')}</Breadcrumb.Item>
                                 <Breadcrumb.Item>{this.props.submission.title}</Breadcrumb.Item>
                             </Breadcrumb>
                         </div>

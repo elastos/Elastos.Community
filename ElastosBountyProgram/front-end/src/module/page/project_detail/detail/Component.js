@@ -457,7 +457,7 @@ class C extends BaseComponent {
     getCurrentApplicants() {
         const applicants = this.getCurrentApplicantsData()
         const columns = [{
-            title: 'Name',
+            title: I18N.get('profile.detail.table.name'),
             key: 'user',
             render: candidate => {
                 return (
@@ -481,7 +481,7 @@ class C extends BaseComponent {
                     </div>)
             }
         }, {
-            title: 'Action',
+            title: I18N.get('profile.detail.table.action'),
             key: 'action',
             render: candidate => {
                 return (
@@ -643,7 +643,7 @@ class C extends BaseComponent {
                                 <h3 className="no-margin with-gizmo">{this.props.detail.bidding ? I18N.get('project.detail.pending_bids') : I18N.get('project.detail.pending_applications')}</h3>
                                 {this.getCurrentApplicantsData().length ?
                                     this.getCurrentApplicants() :
-                                    <div className="no-data">No applications yet</div>
+                                    <div className="no-data">{I18N.get('profile.detail.noapplications')}</div>
                                 }
                             </Row>
                         }
@@ -703,7 +703,7 @@ class C extends BaseComponent {
                 <div className="project-name komu-a">{dAppId} {this.props.detail.name}</div>
                 <div className="strike-text project-funding">
                     <div className="strike-line"/>
-                    <p>Funding: 100k for 5% of the equity or coins/tokens</p>
+                    <p>{I18N.get('profile.detail.finding')}</p>
                 </div>
                 <div className="actions">
                     {this.getActions()}
@@ -770,7 +770,7 @@ class C extends BaseComponent {
                 <div className="rect-container">
                     <div className="rect"/>
                 </div>
-                <Button className="apply-button" onClick={applyHandler.bind(this)}>Apply</Button>
+                <Button className="apply-button" onClick={applyHandler.bind(this)}>{I18N.get('.apply')}</Button>
             </div>
         )
     }

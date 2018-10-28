@@ -41,8 +41,8 @@ export default Form.create()(
 
             const applyReason_fn = getFieldDecorator('applyReason', {
                 rules: [
-                    {max: 4096, message: 'Reason too long'},
-                    {required: true, message: 'This must be filled out'}
+                    {max: 4096, message: I18N.get('ambassadors.form.reason.max')},
+                    {required: true, message: I18N.get('ambassadors.form.required')}
                 ]
             })
             const applyReason_el = (
@@ -51,8 +51,8 @@ export default Form.create()(
 
             const suitedReason_fn = getFieldDecorator('suitedReason', {
                 rules: [
-                    {max: 4096, message: 'Suited reason too long'},
-                    {required: true, message: 'This must be filled out'}
+                    {max: 4096, message: I18N.get('ambassadors.form.suitedreason.max')},
+                    {required: true, message: I18N.get('ambassadors.form.required')}
                 ]
             })
             const suitedReason_el = (

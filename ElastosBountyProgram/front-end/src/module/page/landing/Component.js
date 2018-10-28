@@ -91,10 +91,10 @@ export default class extends EmptyPage {
                 <div className="contentContainer">
                     <nav className="toplinks">
                         <ul>
-                            <li><a href="/cr100">CR100</a></li>
-                            <li><a href="/crcles">CRcles</a></li>
-                            <li><a href="/ambassadors">Ambassadors</a></li>
-                            <li><a href="/community">Community</a></li>
+                            <li><a href="/cr100">{I18N.get('0105')}</a></li>
+                            <li><a href="/crcles">{I18N.get('0106')}</a></li>
+                            <li><a href="/ambassadors">{I18N.get('0107')}</a></li>
+                            <li><a href="/community">{I18N.get('0102')}</a></li>
 
                             {this.props.is_login
                                 ? <li><a href="/profile/teams">{I18N.get('0104')}</a></li>
