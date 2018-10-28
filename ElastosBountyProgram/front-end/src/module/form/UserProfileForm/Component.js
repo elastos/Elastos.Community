@@ -193,19 +193,12 @@ class C extends BaseComponent {
             <div className="c_userProfileFormContainer">
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
                     <Row>
-                        <Col sm={{span: 24}} md={{span: 6, offset: 12}}>
+                        <Col sm={{span: 24}} md={{span: 24}}>
                             <FormItem
                                 colon={false}
                                 labelCol={{ sm: {span: 0}, md: {span: 0} }}
                                 wrapperCol={{ sm: {span: 24}, md: {span: 24} }}>
                                 {p.avatar}
-                            </FormItem>
-                        </Col>
-                        <Col sm={{span: 24}} md={{span: 6}}>
-                            <FormItem
-                                colon={false}
-                                labelCol={{ sm: {span: 0}, md: {span: 0} }}
-                                wrapperCol={{ sm: {span: 24}, md: {span: 24} }}>
                                 {p.banner}
                             </FormItem>
                         </Col>
