@@ -466,6 +466,7 @@ const en = {
     '.no': 'No',
     '.loading': 'Loading...',
     'ela': 'ELA',
+    '.edit': 'Edit',
 
     // Community
     'community.nomember': 'no members',
