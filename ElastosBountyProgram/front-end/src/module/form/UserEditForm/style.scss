@@ -1,5 +1,7 @@
 
-@import "../../../style/variable";
+@import "@/style/variable";
+@import "@/style/color";
+@import "@/style/typography";
 
 .c_userEditFormContainer {
     .header-profile {
@@ -16,6 +18,16 @@
           line-height: 60px;
       }
   }
+
+  .timezone-picker {
+    @extend .synthese;
+    font-size: 14px;
+
+    & > input {
+      padding-top: 7px;
+    }
+  }
+
   .d_taskCreateForm {
     background-color: #f7f9fd;
     padding: $gap_3 $gap_4 0px;
@@ -32,7 +44,7 @@
     .ant-form-item-label {
       text-align: left;
     }
-  
+
     .ant-select-selection {
       .ant-select-arrow::before {
           content: '';
@@ -54,7 +66,7 @@
       text-align: right;
       color: rgba(0, 0, 0, 0.85);
     }
-  
+
     .avatarContainer {
       margin-bottom: $gap_1;
     }
