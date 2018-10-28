@@ -395,6 +395,10 @@ const en = {
     'project.detail.budget': 'Budget',
     'project.detail.reward': 'Reward',
     'project.detail.reference_bid': 'Reference Bid',
+    'project.detail.noapplications': 'There are no applications yet',
+
+    'project.detail.columns.name': 'Name',
+    'project.detail.columns.action': 'Action',
 
     'team.detail.team_active': 'Your team is currently active',
 
