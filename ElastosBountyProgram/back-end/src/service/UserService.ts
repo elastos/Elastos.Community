@@ -58,6 +58,7 @@ export default class extends Base {
                 firstName: param.firstName,
                 lastName: param.lastName,
                 country: param.country,
+                timezone: param.timezone,
                 state: param.state,
                 city: param.city,
                 beOrganizer: param.beOrganizer === 'yes',
@@ -169,6 +170,10 @@ export default class extends Base {
 
         if (param.profile) {
             updateObj.profile = Object.assign(user.profile, param.profile)
+        }
+
+        if (param.timezone) {
+            updateObj.timezone = param.timezone
         }
 
         if (param.email) {
