@@ -394,7 +394,7 @@ class C extends BaseComponent {
 
             {!detail.bidding && pendingCandidates.length === 0 &&
                 <div className="no-data no-info">
-                    There are no applications yet
+                    {I18N.get('project.detail.noapplications')}
                 </div>
             }
         </Row>
@@ -422,7 +422,7 @@ class C extends BaseComponent {
 
     renderCandidates(candidates) {
         const columns = [{
-            title: 'Name',
+            title: I18N.get('project.detail.columns.name'),
             key: 'name',
             render: (candidate) => {
                 return (
@@ -445,8 +445,8 @@ class C extends BaseComponent {
                                         candidate.team.pictures[0].url)} />
                                 {candidate.team.name}
                                 {this.loggedInUserOwnerOfCandidate(candidate) ?
-                                    <span className="no-info"> (Owner)</span> :
-                                    <span className="no-info"> (Member)</span>
+                                    <span className="no-info"> ({I18N.get('task.owner')})</span> :
+                                    <span className="no-info"> ({I18N.get('role.member')})</span>
                                 }
                             </a>
                         </div>
@@ -454,7 +454,7 @@ class C extends BaseComponent {
                     </div>)
             }
         }, {
-            title: 'Action',
+            title: I18N.get('project.detail.columns.action'),
             key: 'action',
             render: (candidate) => {
                 return (
@@ -522,7 +522,7 @@ class C extends BaseComponent {
         let currentContributors = this.getCurrentContributorsData()
 
         const columns = [{
-            title: 'Name',
+            title: I18N.get('project.detail.columns.name'),
             key: 'name',
             render: (candidate) => {
                 return (
@@ -550,7 +550,7 @@ class C extends BaseComponent {
                     </div>)
             }
         }, {
-            title: 'Action',
+            title: I18N.get('project.detail.columns.action'),
             key: 'action',
             render: (candidate) => {
                 return (
