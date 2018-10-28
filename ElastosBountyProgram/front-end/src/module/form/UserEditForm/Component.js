@@ -54,13 +54,6 @@ class C extends BaseComponent {
 
         this.state = {
             communityTrees: [],
-
-            avatar_loading: false,
-            avatar_url: this.props.user.profile.avatar || '',
-            avatar_type: this.props.user.profile.avatarFileType || '',
-            avatar_filename: this.props.user.profile.avatarFilename || '',
-
-            removeAttachment: true
         }
     }
 
@@ -111,7 +104,7 @@ class C extends BaseComponent {
             initialValue: user.username
         })
         const username_el = (
-            <Input size="large" disabled/>
+            <Input disabled/>
         )
 
         const role_fn = getFieldDecorator('role', {
@@ -119,10 +112,9 @@ class C extends BaseComponent {
             initialValue: user.role
         })
         const role_el = (
-            <Select size="large"
-                    showSearch
-                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                    placeholder="Role">
+            <Select showSearch
+                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                placeholder="Role">
                 {_.entries(config.data.mappingRoleToName).map(([key, val]) => {
                     return <Select.Option key={key} value={key}>
                         {I18N.get(val)}
@@ -136,7 +128,7 @@ class C extends BaseComponent {
             initialValue: user.email
         })
         const email_el = (
-            <Input size="large" disabled/>
+            <Input disabled/>
         )
 
         const password_fn = getFieldDecorator('password', {
@@ -168,7 +160,7 @@ class C extends BaseComponent {
             initialValue: user.profile.firstName
         })
         const firstName_el = (
-            <Input size="large"/>
+            <Input />
         )
 
         const lastName_fn = getFieldDecorator('lastName', {
@@ -176,29 +168,7 @@ class C extends BaseComponent {
             initialValue: user.profile.lastName
         })
         const lastName_el = (
-            <Input size="large"/>
-        )
-
-        const timezone_fn = getFieldDecorator('timezone', {
-            rules: [],
-            initialValue: user.profile.timezone
-        })
-
-        const timezone_el = (
-            <TimezonePicker
-                className="timezone-picker"
-                inputProps={{
-                    placeholder: 'Select Timezone...'
-                }}
-            />
-        )
-
-        const bio_fn = getFieldDecorator('bio', {
-            rules: [{required: true, message: 'Biography is required'}],
-            initialValue: user.profile.bio
-        })
-        const bio_el = (
-            <Input.TextArea rows={4}/>
+            <Input />
         )
 
         const gender_fn = getFieldDecorator('gender', {
@@ -213,52 +183,18 @@ class C extends BaseComponent {
                 <Radio key={USER_GENDER.FEMALE} value={USER_GENDER.FEMALE}>
                     {config.data.mappingGenderKeyToName[USER_GENDER.FEMALE]}
                 </Radio>
-                <Radio key={USER_GENDER.OTHER} value={USER_GENDER.OTHER}>
-                    {config.data.mappingGenderKeyToName[USER_GENDER.OTHER]}
-                </Radio>
             </RadioGroup>
         )
-
-        const avatar_fn = getFieldDecorator('avatar', {
-            rules: []
-        });
-        const p_avatar = {
-            showUploadList: false,
-            customRequest: (info) => {
-                this.setState({
-                    avatar_loading: true
-                });
-                upload_file(info.file).then((d) => {
-                    const url = d.url;
-                    this.setState({
-                        avatar_loading: false,
-
-                        avatar_url: url,
-                        avatar_type: d.type,
-                        avatar_filename: d.filename,
-
-                        removeAttachment: false
-                    });
-                })
-            }
-        };
-        const avatar_el = (
-            <Upload name="logo" listType="picture" {...p_avatar}>
-                <Button loading={this.state.avatar_loading}>
-                    <Icon type="upload" /> Click to upload
-                </Button>
-            </Upload>
-        );
 
         const country_fn = getFieldDecorator('country', {
             rules: [{required: true, message: 'Please select your country'}],
             initialValue: user.profile.country
         })
         const country_el = (
-            <Select size="large"
-                    showSearch
-                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                    placeholder="Country">
+            <Select showSearch
+                suffixIcon={<img className="circle-down-arrow" src="/assets/images/emp35/down_arrow.png"/>}
+                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                placeholder="Country">
                 {_.entries(config.data.mappingCountryCodeToName).map(([key, val]) => {
                     return <Select.Option key={key} value={key}>
                         {val}
@@ -274,7 +210,7 @@ class C extends BaseComponent {
             initialValue: user.profile.walletAddress
         })
         const walletAddress_el = (
-            <Input size="large"/>
+            <Input />
         )
 
         /*
@@ -289,7 +225,7 @@ class C extends BaseComponent {
             initialValue: user.profile.telegram
         })
         const telegram_el = (
-            <Input size="large"/>
+            <Input />
         )
 
         const reddit_fn = getFieldDecorator('reddit', {
@@ -299,7 +235,7 @@ class C extends BaseComponent {
             initialValue: user.profile.reddit
         })
         const reddit_el = (
-            <Input size="large"/>
+            <Input />
         )
 
         const wechat_fn = getFieldDecorator('wechat', {
@@ -309,7 +245,7 @@ class C extends BaseComponent {
             initialValue: user.profile.wechat
         })
         const wechat_el = (
-            <Input size="large"/>
+            <Input />
         )
 
         const twitter_fn = getFieldDecorator('twitter', {
@@ -319,7 +255,7 @@ class C extends BaseComponent {
             initialValue: user.profile.twitter
         })
         const twitter_el = (
-            <Input size="large"/>
+            <Input />
         )
 
         const facebook_fn = getFieldDecorator('facebook', {
@@ -329,7 +265,7 @@ class C extends BaseComponent {
             initialValue: user.profile.facebook
         })
         const facebook_el = (
-            <Input size="large"/>
+            <Input />
         )
 
         const linkedin_fn = getFieldDecorator('linkedin', {
@@ -339,7 +275,7 @@ class C extends BaseComponent {
             initialValue: user.profile.linkedin
         })
         const linkedin_el = (
-            <Input size="large"/>
+            <Input />
         )
 
         const github_fn = getFieldDecorator('github', {
@@ -349,36 +285,7 @@ class C extends BaseComponent {
             initialValue: user.profile.github
         })
         const github_el = (
-            <Input size="large"/>
-        )
-
-        /*
-        ****************************************************************************************
-        * Questions
-        ****************************************************************************************
-         */
-        const organizer_fn = getFieldDecorator('beOrganizer', {
-            rules: [{message: 'Please select an option'}],
-            initialValue: user.profile.beOrganizer ? 'yes' : 'no'
-        })
-        const organizer_el = (
-            <Select size="large"
-                    placeholder="Do you want to be an organizer?">
-                <Select.Option value="yes">Yes</Select.Option>
-                <Select.Option value="no">No</Select.Option>
-            </Select>
-        )
-
-        const developer_fn = getFieldDecorator('isDeveloper', {
-            rules: [{message: 'Please select an option'}],
-            initialValue: user.profile.isDeveloper ? 'yes' : 'no'
-        })
-        const developer_el = (
-            <Select size="large"
-                    placeholder="Are you a software developer or engineer?">
-                <Select.Option value="yes">Yes</Select.Option>
-                <Select.Option value="no">No</Select.Option>
-            </Select>
+            <Input />
         )
 
         return {
@@ -392,10 +299,7 @@ class C extends BaseComponent {
             firstName: firstName_fn(firstName_el),
             lastName: lastName_fn(lastName_el),
             gender: gender_fn(gender_el),
-            avatar: avatar_fn(avatar_el),
             country: country_fn(country_el),
-            bio: bio_fn(bio_el),
-            timezone: timezone_fn(timezone_el),
 
             walletAddress: walletAddress_fn(walletAddress_el),
 
@@ -407,22 +311,7 @@ class C extends BaseComponent {
             facebook: facebook_fn(facebook_el),
             linkedin: linkedin_fn(linkedin_el),
             github: github_fn(github_el),
-
-            // Questions
-            organizer: organizer_fn(organizer_el),
-            developer: developer_fn(developer_el)
         }
-    }
-
-    removeAttachment = async () => {
-        this.setState({
-            avatar_loading: false,
-            avatar_url: null,
-            avatar_type: '',
-            avatar_filename: '',
-
-            removeAttachment: true
-        })
     }
 
     ord_render () {
@@ -430,13 +319,14 @@ class C extends BaseComponent {
         const p = this.getInputProps()
 
         const formItemLayout = {
+            colon: false,
             labelCol: {
-                xs: {span: 24},
+                xs: {span: 12},
                 sm: {span: 8}
             },
             wrapperCol: {
                 xs: {span: 24},
-                sm: {span: 12}
+                sm: {span: 16}
             }
         }
 
@@ -450,26 +340,16 @@ class C extends BaseComponent {
 
         return (
             <div className="c_userEditFormContainer">
-
+                <div className="header-profile">
+                    <h3 className="header-label komu-a with-gizmo">
+                        {I18N.get('2300')}
+                    </h3>
+                </div>
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
                     <div>
-                        <Divider>General</Divider>
-                        <FormItem label="Username" {...formItemLayout}>
-                            {p.username}
-                        </FormItem>
-                        {this.props.is_admin &&
-                        <FormItem label={I18N.get('user.edit.form.role')} {...formItemLayout}>
-                            {p.role}
-                        </FormItem>
-                        }
+                        <div className="label">{I18N.get('user.edit.form.section.general')}</div>
                         <FormItem label={I18N.get('1202')} {...formItemLayout}>
                             {p.email}
-                        </FormItem>
-                        <FormItem label="Password" {...formItemLayout}>
-                            {p.password}
-                        </FormItem>
-                        <FormItem label="Confirm Password" {...formItemLayout}>
-                            {p.passwordConfirm}
                         </FormItem>
                         <FormItem label="First Name" {...formItemLayout}>
                             {p.firstName}
@@ -477,38 +357,28 @@ class C extends BaseComponent {
                         <FormItem label="Last Name" {...formItemLayout}>
                             {p.lastName}
                         </FormItem>
-                        <FormItem label="Bio" {...formItemLayout}>
-                            {p.bio}
+                        {this.props.is_admin &&
+                        <FormItem label={I18N.get('user.edit.form.role')} {...formItemLayout}>
+                            {p.role}
+                        </FormItem>
+                        }
+                        <FormItem label="Password" {...formItemLayout}>
+                            {p.password}
+                        </FormItem>
+                        <FormItem label="Confirm Password" {...formItemLayout}>
+                            {p.passwordConfirm}
                         </FormItem>
                         <FormItem label="Gender" {...formItemLayout}>
                             {p.gender}
                         </FormItem>
-                        {this.state.avatar_url ?
-                            <Row>
-                                <Col className="labelContainer" xs={{span: 24}} sm={{span: 8}}>
-                                    Avatar:
-                                </Col>
-                                <Col className="avatarContainer" xs={{span: 24}} sm={{span: 12}}>
-                                    <img style={{height: '100px'}} src={this.state.avatar_url}/>
-                                    &nbsp;
-                                    <Icon type="delete" style={{cursor: 'pointer'}} onClick={this.removeAttachment.bind(this)}/>
-                                </Col>
-                            </Row> :
-                            <FormItem label="Avatar" {...formItemLayout}>
-                                {p.avatar}
-                            </FormItem>
-                        }
+                        <FormItem label="Wallet" {...formItemLayout}>
+                            {p.walletAddress}
+                        </FormItem>                        
                         <FormItem label="Country" {...formItemLayout}>
                             {p.country}
                         </FormItem>
-                        <FormItem label="Timezone" {...formItemLayout}>
-                            {p.timezone}
-                        </FormItem>
-                        <FormItem label="Wallet Address" {...formItemLayout}>
-                            {p.walletAddress}
-                        </FormItem>
 
-                        <Divider>Social Media</Divider>
+                        <div className="label">{I18N.get('user.edit.form.section.social')}</div>
 
                         <FormItem label="LinkedIn" {...formItemLayout}>
                             {p.linkedin}
@@ -531,21 +401,14 @@ class C extends BaseComponent {
                         <FormItem label="Facebook" {...formItemLayout}>
                             {p.facebook}
                         </FormItem>
-
-                        <Divider>Questions</Divider>
-
-                        <FormItem label="Do you want to be an organizer?" {...formItemLayout}>
-                            {p.organizer}
-                        </FormItem>
-                        <FormItem label="Are you a software developer or engineer?" {...formItemLayout}>
-                            {p.developer}
-                        </FormItem>
-
-                        <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
-                            <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
-                                Save Changes
+                        <br />
+                        <br />
+                        <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 10}}}>
+                            <Button className="cr-btn" type="primary" htmlType="submit" loading={this.props.loading}>
+                                {I18N.get('profile.save')}
                             </Button>
                         </FormItem>
+                        <br />
                     </div>
                 </Form>
             </div>

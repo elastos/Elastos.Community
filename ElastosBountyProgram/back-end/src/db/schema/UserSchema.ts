@@ -20,6 +20,10 @@ export const Profile = {
     avatarFilename: String,
     avatarFileType: String,
 
+    banner : String,
+    bannerFilename: String,
+    bannerFileType: String,
+
     gender : String,
     birth : Date,
     timezone: String,

@@ -138,8 +138,8 @@ $avatar-size: 160px;
   }
 
   .profile-button {
-    width: $avatar-size;
-    float: right;
+    width: 200px;
+    margin-left: 20px;
 
     &.profile-button-mobile {
       float: none;

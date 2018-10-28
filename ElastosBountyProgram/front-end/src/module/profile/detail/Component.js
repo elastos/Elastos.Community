@@ -128,7 +128,7 @@ export default class extends BaseComponent {
     renderBanner(isMobile) {
         return (
             <div className={`profile-banner ${isMobile ? 'profile-banner-mobile' : ''}`}>
-                <span style={{ backgroundImage: `url('/assets/images/profile-banner.png')` }}></span>
+                <span style={{ backgroundImage: this.getBannerWithFallback(this.props.member.profile.banner) }}></span>
             </div>
         )
     }
@@ -190,6 +190,12 @@ export default class extends BaseComponent {
         )
     }
 
+    getBannerWithFallback(banner) {
+        return _.isEmpty(banner)
+            ? `url('/assets/images/profile-banner.png')`
+            : `url(${banner})`
+    }
+
     getAvatarWithFallback(avatar) {
         return _.isEmpty(avatar)
             ? USER_AVATAR_DEFAULT
@@ -223,6 +229,7 @@ export default class extends BaseComponent {
                 {profile.facebook && <a href={profile.facebook} target="_blank"><i class="fab fa-facebook-square fa-2x"></i></a>}
                 {profile.reddit && <a href={profile.reddit} target="_blank"><i className="fab fa-reddit fa-2x"/></a>}
                 {profile.linkedin && <a href={profile.linkedin} target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>}
+                {profile.github && <a href={profile.github} target="_blank"><i class="fab fa-github fa-2x"></i></a>}
             </div>
         )
     }

@@ -31,31 +31,21 @@ export default createContainer(Component, (state)=>{
             // should always be _id
             const userId = this.user.current_user_id || this.user._id
             const doc = {
-                email: formData.email,
-                username: formData.username,
-                password: formData.password,
                 profile: {
                     // General
                     firstName: formData.firstName,
                     lastName: formData.lastName,
-                    gender: formData.gender,
-                    country: formData.country,
+                    bio: formData.bio,
                     avatar: state.avatar_url,
-                    walletAddress: formData.walletAddress,
-
-                    // Social Media
-                    telegram: formData.telegram,
-                    reddit: formData.reddit,
-                    wechat: formData.wechat,
-                    twitter: formData.twitter,
-                    facebook: formData.facebook,
-                    linkedin: formData.linkedin,
-                    github: formData.github,
-
-                    // Questions
-                    beOrganizer: formData.beOrganizer === 'yes',
-                    isDeveloper: formData.isDeveloper === 'yes',
+                    avatarFilename: state.avatar_filename,
+                    avatarFileType: state.avatar_type,
+                    banner: state.banner_url,
+                    bannerFilename: state.banner_filename,
+                    bannerFileType: state.banner_type
                 },
+
+                removeAttachment: state.removeAttachment,
+                removeBanner: state.removeBanner
             }
 
             if(this.is_admin){

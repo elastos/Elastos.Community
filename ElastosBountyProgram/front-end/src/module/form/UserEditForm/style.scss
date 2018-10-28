@@ -2,22 +2,61 @@
 @import "../../../style/variable";
 
 .c_userEditFormContainer {
+    .header-profile {
+      margin: $gap_3 0;
+      display: inline-block;
 
-  .midLabel {
-    white-space: nowrap;
-    padding: 0 $gap_1;
-    text-align: right;
+      .header-icon {
+          width: 12px;
+          height: 12px;
+          margin-bottom: $gap_2;
+      }
+      .header-label {
+          font-size: 60px;
+          line-height: 60px;
+      }
+  }
+  .d_taskCreateForm {
+    background-color: #f7f9fd;
+    padding: $gap_3 $gap_4 0px;
+    .label {
+      padding: $gap_1 0px;
+      font-weight: 700;
+    }
+    .midLabel {
+      white-space: nowrap;
+      padding: 0 $gap_1;
+      text-align: right;
+    }
+
+    .ant-form-item-label {
+      text-align: left;
+    }
+  
+    .ant-select-selection {
+      .ant-select-arrow::before {
+          content: '';
+      }
+      .ant-select-arrow {
+          top: calc(50% - 7px);
+          width: 14px;
+          height: 27px;
+          margin-right: 4px;
+          transform: rotate(90deg);
+          background-size: contain;
+          background: url("/assets/images/arrow.svg") no-repeat;
+      }
   }
 
-  .labelContainer {
-    padding-right: 8px;
-    margin-bottom: $gap_1;
-    text-align: right;
-    color: rgba(0, 0, 0, 0.85);
+    .labelContainer {
+      padding-right: 8px;
+      margin-bottom: $gap_1;
+      text-align: right;
+      color: rgba(0, 0, 0, 0.85);
+    }
+  
+    .avatarContainer {
+      margin-bottom: $gap_1;
+    }
   }
-
-  .avatarContainer {
-    margin-bottom: $gap_1;
-  }
-
 }
