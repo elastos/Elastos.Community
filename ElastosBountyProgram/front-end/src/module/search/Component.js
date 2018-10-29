@@ -659,22 +659,31 @@ export default class extends BaseComponent {
 
             return (
                 <div>
+                    {!_.isEmpty(entity.recruitedSkillsets) &&
                     <div className="valign-wrapper">
                         <div className="gap-right pull-left">{I18N.get('project.detail.recruiting')}: </div>
                         <div className="pull-left">
-                            {_.isEmpty(entity.recruitedSkillsets) ? (
-                                <span className="default-text">{I18N.get('project.detail.recruiting_skills_unknown')}</span>) : (
-                                _.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>))}
+                            {_.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>)}
                         </div>
-                    </div>
-                    {entity.referenceBid &&
+                    </div>}
+                    {entity.bidding && (this.isAssigned_fn(entity) ?
+                        <div className="valign-wrapper">
+                            <div className="gap-right pull-left">
+                                <h4 className="important-text">Winning bid has been selected</h4>
+                            </div>
+                        </div> : (entity.referenceBid &&
                         <div className="valign-wrapper">
                             <div className="gap-right pull-left">{I18N.get('project.detail.reference_bid')}:</div>
                             <div className="pull-left default-text">
                                 <b>{entity.referenceBid} ELA</b>
                             </div>
                         </div>
-                    }
+                    ))}
+                    {!entity.bidding && this.isAssigned_fn(entity) && <div className="valign-wrapper">
+                        <div className="gap-right pull-left">
+                            <h4 className="important-text">Winning application already selected</h4>
+                        </div>
+                    </div>}
                     {entity.applicationDeadline &&
                     <div className="valign-wrapper">
                         <div className="gap-right pull-left">{I18N.get('project.detail.deadline')}:</div>
@@ -700,7 +709,7 @@ export default class extends BaseComponent {
                 }
             })
             : _.map(entities, (task, id) => {
-                const applicationDeadline = task.applicationDeadline ? new Date(task.applicationDeadline).getTime() : Date.now();
+                const applicationDeadline = task.applicationDeadline ? new Date(task.applicationDeadline).getTime() : null;
                 return {
                     href: '',
                     title: task.name,
@@ -710,8 +719,9 @@ export default class extends BaseComponent {
                     description: description_fn(task),
                     content: task.description,
                     owner: task.createdBy,
-                    applicationDeadlinePassed: Date.now() > applicationDeadline,
-                    id: task._id
+                    applicationDeadlinePassed: applicationDeadline ? Date.now() > applicationDeadline : false,
+                    id: task._id,
+                    candidates: task.candidates
                 }
             })
 
@@ -789,6 +799,10 @@ export default class extends BaseComponent {
         )
     }
 
+    isAssigned_fn(entity) {
+        return !!_.find(entity.candidates, {status: TASK_CANDIDATE_STATUS.APPROVED})
+    }
+
     handleCancelProfilePopup() {
         this.setState({
             showUserInfo: null
@@ -808,7 +822,13 @@ export default class extends BaseComponent {
             <span></span>
             <Button onClick={clickHandler.bind(this, detail.id)}
                 type={cssClass}>
-                {detail.hasApprovedApplication ? I18N.get('developer.search.view') : (detail.bidding ? I18N.get('developer.search.submit_bid') : I18N.get('developer.search.apply'))}
+                {detail.hasApprovedApplication ?
+                    I18N.get('developer.search.view') : (
+                        detail.bidding ?
+                            (this.isAssigned_fn(detail) ? I18N.get('developer.search.view') : I18N.get('developer.search.submit_bid')):
+                            (this.isAssigned_fn(detail) ? I18N.get('developer.search.view') : I18N.get('developer.search.apply'))
+                    )
+                }
             </Button>
         </div>
     }

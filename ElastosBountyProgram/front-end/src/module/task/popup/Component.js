@@ -170,7 +170,7 @@ class C extends BaseComponent {
         return (
             <div className="app-footer valign-wrapper halign-wrapper">
                 <Button onClick={this.showTaskDetail.bind(this)}>
-                    {I18N.get('task.applyMessage')}
+                    {this.isAssigned() ? I18N.get('project.detail.view') : I18N.get('task.applyMessage')}
                 </Button>
             </div>
         )
@@ -300,6 +300,10 @@ class C extends BaseComponent {
         }
 
         return _.trim([user.profile.firstName, user.profile.lastName].join(' '))
+    }
+
+    isAssigned() {
+        return !!_.find(this.props.detail.candidates, {status: TASK_CANDIDATE_STATUS.APPROVED})
     }
 }
 
