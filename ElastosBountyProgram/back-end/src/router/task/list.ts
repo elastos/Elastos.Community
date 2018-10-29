@@ -93,11 +93,6 @@ export default class extends Base{
                 {createdBy: currentUserId}
             ]
 
-            // make sure this is the logged in user
-            if (this.session.userId.toString() !== currentUserId.toString()) {
-                throw 'task.list API - profileListFor does not match session.userId'
-            }
-
             // we need to find task candidates that match the user
             const taskCandidatesForUser = await taskService.getCandidatesForUser(currentUserId)
 
