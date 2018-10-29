@@ -51,8 +51,8 @@ class C extends BaseComponent {
                 <FormItem>
                     {p.email}
                 </FormItem>
-                <FormItem>
-                    <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
+                <FormItem style={{margin: '0 20%'}}>
+                    <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn resetPassword">
                         {I18N.get('forgot.form.submit')}
                     </Button>
                 </FormItem>

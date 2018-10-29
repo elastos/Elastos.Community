@@ -107,7 +107,7 @@ class C extends BaseComponent {
         }
 
         const secretaryDis2 = {disabled: true};
-        if (this.props.user.current_user_id === '5b9024b744293737fd6532e5') {
+        if (this.props.user.current_user_id === '5bcf21f030826d68a940b018') {
             delete secretaryDis2.disabled
         }
 
