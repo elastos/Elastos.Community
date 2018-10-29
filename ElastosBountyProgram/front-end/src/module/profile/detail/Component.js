@@ -22,9 +22,9 @@ export default class extends BaseComponent {
     }
 
     async componentDidMount() {
-        this.props.getMember(this.props.currentUserId)
-        this.props.getUserTeams(this.props.currentUserId)
-        this.props.getTasks(this.props.currentUserId)
+        this.props.getMember(this.props.match.params.userId || this.props.currentUserId)
+        this.props.getUserTeams(this.props.match.params.userId || this.props.currentUserId)
+        this.props.getTasks(this.props.match.params.userId || this.props.currentUserId)
     }
 
     componentWillUnmount() {
