@@ -60,7 +60,7 @@ export default class extends EmptyPage {
                             <li><a href="/crcles">{I18N.get('0106')}</a></li>
                             <li><a href="/developer">{I18N.get('0102')}</a></li>
                             <li><a href="/council">{I18N.get('council.0001')}</a></li>
-                            <li><a href="https://blog.cyberrepublic.org">{I18N.get('0109')}</a></li>
+                            <li><a href="https://blog.cyberrepublic.org">{I18N.get('0110')}</a></li>
                             <li><a href="/ambassadors">{I18N.get('0107')}</a></li>
 
                             {this.props.is_login
@@ -96,7 +96,7 @@ export default class extends EmptyPage {
                             <li><a href="/crcles">{I18N.get('0106')}</a></li>
                             <li><a href="/developer">{I18N.get('0102')}</a></li>
                             <li><a href="/council">{I18N.get('council.0001')}</a></li>
-                            <li><a href="https://blog.cyberrepublic.org">{I18N.get('0109')}</a></li>
+                            <li><a href="https://blog.cyberrepublic.org">{I18N.get('0110')}</a></li>
                             <li><a href="/ambassadors">{I18N.get('0107')}</a></li>
 
                             {this.props.is_login
