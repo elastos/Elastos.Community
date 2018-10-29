@@ -11,7 +11,7 @@ export default class extends StandardPage {
     ord_renderContent () {
 
         // default
-        let taskType = TASK_TYPE.EVENT
+        let taskType = TASK_TYPE.TASK
         let taskCategory = TASK_CATEGORY.SOCIAL
 
         if (this.props.location && this.props.location.search) {

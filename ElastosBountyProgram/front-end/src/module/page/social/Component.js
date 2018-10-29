@@ -22,7 +22,7 @@ export default class extends StandardPage {
         communityTrees: [],
         filterCommunity: [],
 
-        taskTypeSelected: this.props.match.type || TASK_TYPE.EVENT,
+        taskTypeSelected: this.props.match.type || TASK_TYPE.TASK,
 
         lookingForHelpOnly: true
     }

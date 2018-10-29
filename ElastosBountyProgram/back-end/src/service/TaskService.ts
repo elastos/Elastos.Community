@@ -241,7 +241,7 @@ export default class extends Base {
 
         let status = constant.TASK_STATUS.CREATED;
 
-        if (bidding || rewardUpfront.ela > 0 || reward.ela > 0 || rewardUpfront.usd > 0 || reward.usd > 0) {
+        if (rewardUpfront.ela > 0 || reward.ela > 0 || rewardUpfront.usd > 0 || reward.usd > 0) {
             // there is ELA / USD involved so we start in PENDING unless we are an admin
             if (this.currentUser.role !== constant.USER_ROLE.ADMIN) {
                 status = constant.TASK_STATUS.PENDING

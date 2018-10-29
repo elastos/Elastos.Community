@@ -53,10 +53,10 @@ export default class extends BaseComponent {
                                     <br/>
                                     <a href="https://twitter.com/cyber__republic" target="_blank"><i className="fab fa-twitter fa-2x"/></a>
                                     <a href="https://www.facebook.com/ElastosCyberRepublic" target="_blank"><i className="fab fa-facebook fa-2x"/></a>
-                                    <a href="https://www.reddit.com/r/Elastos/" target="_blank"><i className="fab fa-reddit fa-2x"/></a>
+                                    <a href="https://www.reddit.com/r/CyberRepublic/" target="_blank"><i className="fab fa-reddit fa-2x"/></a>
                                     <br/>
                                     <a href="https://www.youtube.com/channel/UCjHthS-zJr0axZF5Iw8En-w" target="_blank"><i className="fab fa-youtube fa-2x"/></a>
-                                    <a href="https://www.instagram.com/elastosofficial/" target="_blank"><i className="fab fa-instagram fa-2x"/></a>
+                                    <a href="https://www.instagram.com/cyberrepublic/" target="_blank"><i className="fab fa-instagram fa-2x"/></a>
                                     <a href="https://www.linkedin.com/company/cyber-republic/" target="_blank"><i className="fab fa-linkedin fa-2x"/></a>
                                 </div>
                             </div>

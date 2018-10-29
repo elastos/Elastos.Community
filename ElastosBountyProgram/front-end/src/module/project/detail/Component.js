@@ -400,7 +400,7 @@ class C extends BaseComponent {
             {pendingCandidates.length && this.renderCandidates(pendingCandidates)}
 
             {/* this works because we filtered pendingCandidates after we saved the count */}
-            {(this.props.page !== 'ADMIN' || !this.props.is_admin) &&
+            {(this.props.page !== 'ADMIN' || !this.props.is_admin) && this.props.task.createdBy !== this.props.currentUserId &&
                 detail.bidding && bidsLeft}
 
             {!detail.bidding && pendingCandidates.length === 0 &&
