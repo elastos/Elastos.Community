@@ -273,7 +273,7 @@ class C extends BaseComponent {
         const taskDesc_fn = getFieldDecorator('taskDesc', {
             rules: [
                 {required: true, message: I18N.get('from.TaskCreateForm.taskDesc.required')},
-                {max: 4096, message: I18N.get('from.TaskCreateForm.taskDesc.max')}
+                {max: 8192, message: I18N.get('from.TaskCreateForm.taskDesc.max')}
             ],
             initialValue: this.state.editing ? existingTask.description : ''
         })
@@ -283,7 +283,7 @@ class C extends BaseComponent {
 
         const taskDescBreakdown_fn = getFieldDecorator('taskDescBreakdown', {
             rules: [
-                {max: 4096, message: I18N.get('from.TaskCreateForm.taskDescBreakdown.max')}
+                {max: 8192, message: I18N.get('from.TaskCreateForm.taskDescBreakdown.max')}
             ],
             initialValue: this.state.editing ? existingTask.descBreakdown : ''
         })
@@ -292,7 +292,7 @@ class C extends BaseComponent {
         )
         const taskGoals_fn = getFieldDecorator('taskGoals', {
             rules: [
-                {max: 4096, message: I18N.get('from.TaskCreateForm.taskGoals.max')}
+                {max: 8192, message: I18N.get('from.TaskCreateForm.taskGoals.max')}
             ],
             initialValue: this.state.editing ? existingTask.goals : ''
         })
