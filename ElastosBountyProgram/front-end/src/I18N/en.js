@@ -27,6 +27,7 @@ const en = {
     '0107': 'Ambassadors',
     '0108': 'Council',
     '0109': 'Submissions',
+    '0110': 'Blog',
 
     '0200': 'Profile',
     '0201': 'Login',
@@ -636,9 +637,9 @@ const en = {
     'landing.footer.assets': 'Logo Assets',
     'landing.footer.elaNews': 'ELA News',
     'landing.footer.contract': 'Contract',
-    'landing.footer.community': 'Global Community:',
-    'landing.footer.support': 'Support:',
-    'landing.footer.contracts': 'Other Contracts:',
+    'landing.footer.community': 'Global Community',
+    'landing.footer.support': 'Support',
+    'landing.footer.contracts': 'Other Contracts',
     'landing.footer.join': 'Join Us On',
 
     'landing.0220': 'ELA tokens will be used to register IDs on the blockchain, opening the door to the Elastos ecosystem. Once inside, countless exchange opportunities will be available.',
