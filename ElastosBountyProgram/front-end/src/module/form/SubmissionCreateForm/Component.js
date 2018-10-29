@@ -7,6 +7,7 @@ import {
     Select
 } from 'antd'
 import {SUBMISSION_TYPE} from '@/constant'
+import I18N from '@/I18N'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
@@ -44,12 +45,12 @@ class C extends BaseComponent {
         )
 
         const title_fn = getFieldDecorator('title', {
-            rules: [{required: true, message: 'Title is required'}],
+            rules: [{required: true, message: I18N.get('from.SubmissionCreateForm.title.required')}],
             initialValue: ''
         })
 
         const type_fn = getFieldDecorator('type', {
-            rules: [{required: true, message: 'Please select an issue type'}],
+            rules: [{required: true, message: I18N.get('from.SubmissionCreateForm.type.required')}],
             initialValue: this.state.issueType || SUBMISSION_TYPE.BUG
         })
         const type_el = (
@@ -65,8 +66,8 @@ class C extends BaseComponent {
 
         const description_fn = getFieldDecorator('description', {
             rules: [
-                {required: true, message: 'You must have a description'},
-                {max: 4096, message: 'Task description too long'}
+                {required: true, message: I18N.get('from.SubmissionCreateForm.description.required')},
+                {max: 4096, message: I18N.get('from.SubmissionCreateForm.description.max')}
             ],
             initialValue: ''
         })
@@ -100,18 +101,18 @@ class C extends BaseComponent {
 
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
                     <div>
-                        <FormItem label="Type" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.SubmissionCreateForm.type')} {...formItemLayout}>
                             {p.type}
                         </FormItem>
-                        <FormItem label="Title" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.SubmissionCreateForm.title')} {...formItemLayout}>
                             {p.title}
                         </FormItem>
-                        <FormItem label="Description" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.SubmissionCreateForm.description')} {...formItemLayout}>
                             {p.description}
                         </FormItem>
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
                             <Button loading={this.state.loading} type="ebp" htmlType="submit" className="d_btn">
-                                Create Issue
+                                {I18N.get('from.SubmissionCreateForm.createissue')}
                             </Button>
                         </FormItem>
                     </div>
