@@ -1,8 +1,10 @@
 import {TASK_STATUS} from '@/constant'
 import council from './en/council';
+import getting_started from './en/getting_started';
 
 const en = {
     council,
+    getting_started,
     // Header
     '0000': 'ALPHA',
     '0001': 'Bounty Programs',
