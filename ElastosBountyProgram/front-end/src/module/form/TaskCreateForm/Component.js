@@ -230,7 +230,7 @@ class C extends BaseComponent {
 
         // sub-tasks are not here because those can only be created from an existing Task Detail Page
         const taskType_fn = getFieldDecorator('taskType', {
-            rules: [{required: true, message: I18N.get('from.TaskCreateForm.taskType.required')],
+            rules: [{required: true, message: I18N.get('from.TaskCreateForm.taskType.required')}],
             initialValue: this.state.editing ? existingTask.type : (this.state.taskType || TASK_TYPE.TASK)
         })
         const taskType_el = (
