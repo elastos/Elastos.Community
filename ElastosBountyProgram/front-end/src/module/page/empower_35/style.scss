@@ -6,6 +6,9 @@ $mobile-padding: $gap_0 0px;
 $landingPageWidth: 1152px;
 
 .emp35-circle-item {
+  &:hover {
+    color: $primary_color;
+  }
 
   height: 174px;
   width: 174px;
