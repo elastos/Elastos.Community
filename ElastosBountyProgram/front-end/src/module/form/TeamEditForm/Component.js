@@ -1,6 +1,7 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import _ from 'lodash'
+import I18N from '@/I18N'
 import {
     Form,
     Icon,
@@ -62,12 +63,12 @@ class C extends BaseComponent {
         );
 
         const name_fn = getFieldDecorator('name', {
-            rules: [{required: true, message: 'team name is required'}],
+            rules: [{required: true, message: I18N.get('from.TeamEditForm.field.required')}],
             initialValue: team.name
         })
 
         const type_fn = getFieldDecorator('type', {
-            rules: [{required: true, message: 'type is required'}],
+            rules: [{required: true, message: I18N.get('from.TeamEditForm.field.required')}],
             initialValue: team.type
         })
         const type_el = (
@@ -90,10 +91,10 @@ class C extends BaseComponent {
         const recruiting_el = (
             <RadioGroup>
                 <Radio value={true}>
-                    Yes
+                    {I18N.get('from.TeamEditForm.radio.yes')}
                 </Radio>
                 <Radio value={false}>
-                    No
+                    {I18N.get('from.TeamEditForm.radio.no')}
                 </Radio>
 
             </RadioGroup>
@@ -143,26 +144,26 @@ class C extends BaseComponent {
 
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
                     <div>
-                        <FormItem label="Name" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.TeamEditForm.label.name')} {...formItemLayout}>
                             {p.name}
                         </FormItem>
-                        <FormItem label="Type" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.TeamEditForm.label.type')} {...formItemLayout}>
                             {p.type}
                         </FormItem>
-                        <FormItem label="Recruiting" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.TeamEditForm.label.recrui')} {...formItemLayout}>
                             {p.recruiting}
                         </FormItem>
-                        <FormItem label="Description" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.TeamEditForm.label.description')} {...formItemLayout}>
                             {p.description}
                         </FormItem>
-                        <FormItem label="Tags" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.TeamEditForm.label.tags')} {...formItemLayout}>
                             {p.tags}
                         </FormItem>
 
 
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
                             <Button loading={this.state.loading} type="ebp" htmlType="submit" className="d_btn">
-                                Save Changes
+                                {I18N.get('from.TeamEditForm.label.save')}
                             </Button>
                         </FormItem>
                     </div>
