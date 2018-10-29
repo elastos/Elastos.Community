@@ -253,7 +253,7 @@ class C extends BaseComponent {
         const uploadButton = (
             <div>
                 <Icon type="plus" />
-                <div className="ant-upload-text">Upload</div>
+                <div className="ant-upload-text">{I18N.get('from.TeamCreateForm.text.upload')}</div>
             </div>
         )
 
@@ -302,20 +302,20 @@ class C extends BaseComponent {
 
         const formContent = (
             <div>
-                <FormItem label="Team Name" {...formItemLayout}>
+                <FormItem label={I18N.get('from.TeamCreateForm.label.teamname')} {...formItemLayout}>
                     {p.name}
                 </FormItem>
-                <FormItem label="Type" {...formItemLayout}>
+                <FormItem label={I18N.get('from.TeamCreateForm.label.type')} {...formItemLayout}>
                     {p.type}
                 </FormItem>
-                <FormItem label="Recruiting Skillsets" {...formItemLayout}>
+                <FormItem label={I18N.get('from.TeamCreateForm.label.recrui')} {...formItemLayout}>
                     {p.skillset}
                 </FormItem>
-                <FormItem label="Description" {...formItemLayout}>
+                <FormItem label={I18N.get('from.TeamCreateForm.label.description')} {...formItemLayout}>
                     {p.description}
                 </FormItem>
                 { !this.props.embedded &&
-                    <FormItem label="Pictures" {...formItemLayout}>
+                    <FormItem label={I18N.get('from.TeamCreateForm.label.pictures')} {...formItemLayout}>
                         {p.pictures}
                     </FormItem>
                 }
@@ -329,7 +329,7 @@ class C extends BaseComponent {
                 { !this.props.embedded &&
                     <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
                         <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
-                            {this.state.editing ? 'Save' : 'Create'}
+                            {this.state.editing ? I18N.get('from.TeamCreateForm.button.save') : I18N.get('from.TeamCreateForm.button.create')}
                         </Button>
                     </FormItem>
                 }

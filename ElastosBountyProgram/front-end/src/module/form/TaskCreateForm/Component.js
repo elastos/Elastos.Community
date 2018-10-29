@@ -86,7 +86,7 @@ class C extends BaseComponent {
                     if (values.taskReward || values.taskRewardUsd ||
                         values.taskRewardUpfront || values.taskRewardUpfrontUsd) {
                         if (!this.state.readDisclaimer) {
-                            message.error('You must confirm you have read the payment rules and disclaimer')
+                            message.error(I18N.get('from.TaskCreateForm.message.error'))
                             document.getElementById('disclaimerLink').focus()
                             return
                         }
@@ -181,8 +181,8 @@ class C extends BaseComponent {
 
         const taskName_fn = getFieldDecorator('taskName', {
             rules: [
-                {required: true, message: 'Please input a task name'},
-                {min: 4, message: 'Task Name too short'}
+                {required: true, message: I18N.get('from.TaskCreateForm.taskName.required')},
+                {min: 4, message: I18N.get('from.TaskCreateForm.taskName.min')}
             ],
             initialValue: this.state.editing && existingTask ? existingTask.name : ''
         })
@@ -191,7 +191,7 @@ class C extends BaseComponent {
         )
 
         const taskCategory_fn = getFieldDecorator('taskCategory', {
-            rules: [{required: true, message: 'Please select a category'}],
+            rules: [{required: true, message: I18N.get('from.TaskCreateForm.taskCategory.required')}],
             initialValue: this.state.editing ? existingTask.category : (this.state.taskCategory || TASK_CATEGORY.SOCIAL)
         })
         const taskCategory_el = (
@@ -230,17 +230,17 @@ class C extends BaseComponent {
 
         // sub-tasks are not here because those can only be created from an existing Task Detail Page
         const taskType_fn = getFieldDecorator('taskType', {
-            rules: [{required: true, message: 'Please select a task type'}],
+            rules: [{required: true, message: I18N.get('from.TaskCreateForm.taskType.required')}],
             initialValue: this.state.editing ? existingTask.type : (this.state.taskType || TASK_TYPE.TASK)
         })
         const taskType_el = (
             <Select
                 disabled={hasLeaderEditRestrictions} onChange={(val) => this.setState({taskType: val})}>
-                <Option value={TASK_TYPE.TASK}>Task</Option>
+                <Option value={TASK_TYPE.TASK}>{I18N.get('from.TaskCreateForm.taskType.option.task')}</Option>
                 {this.state.taskCategory === TASK_CATEGORY.DEVELOPER && (this.props.is_admin || this.props.is_leader) &&
-                <Option value={TASK_TYPE.PROJECT}>Project</Option>
+                <Option value={TASK_TYPE.PROJECT}>{I18N.get('from.TaskCreateForm.taskType.option.project')}</Option>
                 }
-                <Option value={TASK_TYPE.EVENT}>Event</Option>
+                <Option value={TASK_TYPE.EVENT}>{I18N.get('from.TaskCreateForm.taskType.option.event')}</Option>
             </Select>
         )
 
@@ -272,8 +272,8 @@ class C extends BaseComponent {
 
         const taskDesc_fn = getFieldDecorator('taskDesc', {
             rules: [
-                {required: true, message: 'You must have a description'},
-                {max: 4096, message: 'Task description too long'}
+                {required: true, message: I18N.get('from.TaskCreateForm.taskDesc.required')},
+                {max: 4096, message: I18N.get('from.TaskCreateForm.taskDesc.max')}
             ],
             initialValue: this.state.editing ? existingTask.description : ''
         })
@@ -283,7 +283,7 @@ class C extends BaseComponent {
 
         const taskDescBreakdown_fn = getFieldDecorator('taskDescBreakdown', {
             rules: [
-                {max: 4096, message: 'Task breakdown too long'}
+                {max: 4096, message: I18N.get('from.TaskCreateForm.taskDescBreakdown.max')}
             ],
             initialValue: this.state.editing ? existingTask.descBreakdown : ''
         })
@@ -292,7 +292,7 @@ class C extends BaseComponent {
         )
         const taskGoals_fn = getFieldDecorator('taskGoals', {
             rules: [
-                {max: 4096, message: 'Task breakdown too long'}
+                {max: 4096, message: I18N.get('from.TaskCreateForm.taskGoals.max')}
             ],
             initialValue: this.state.editing ? existingTask.goals : ''
         })
@@ -301,7 +301,7 @@ class C extends BaseComponent {
         )
 
         const taskLink_fn = getFieldDecorator('taskLink', {
-            rules: [{required: false, message: 'Please input an info link'}],
+            rules: [{required: false, message: I18N.get('from.TaskCreateForm.taskLink.required')}],
             initialValue: this.state.editing ? existingTask.infoLink : ''
         })
         const taskLink_el = (
@@ -357,7 +357,7 @@ class C extends BaseComponent {
         )
 
         const taskLocation_fn = getFieldDecorator('taskLocation', {
-            rules: [{required: false, message: 'Please input a location'}],
+            rules: [{required: false, message: I18N.get('from.TaskCreateForm.taskLocation.required')}],
             initialValue: this.state.editing ? existingTask.location : ''
         })
         const taskLocation_el = (
@@ -371,7 +371,7 @@ class C extends BaseComponent {
         */
 
         const taskCandLimit_fn = getFieldDecorator('taskCandLimit', {
-            rules: [{required: true, type: 'integer', message: 'You must set a limit'}],
+            rules: [{required: true, type: 'integer', message: I18N.get('from.TaskCreateForm.taskCandLimit.required')}],
             initialValue: this.state.editing ? existingTask.candidateLimit : 10
         })
         const taskCandLimit_el = (
@@ -379,7 +379,7 @@ class C extends BaseComponent {
         )
 
         const taskCandSltLimit_fn = getFieldDecorator('taskCandSltLimit', {
-            rules: [{required: true, type: 'integer', message: 'You must set a limit'}],
+            rules: [{required: true, type: 'integer', message: I18N.get('from.TaskCreateForm.taskCandLimit.required')}],
             initialValue: this.state.editing ? existingTask.candidateSltLimit : 1
         })
         const taskCandSltLimit_el = (
@@ -464,7 +464,7 @@ class C extends BaseComponent {
                         <img style={{height:'100px'}} src={this.state.thumbnail_url} />
                         ) : (
                         <Button loading={this.state.thumbnail_loading}>
-                            <Icon type="upload" /> Click to upload
+                            <Icon type="upload" /> {I18N.get('from.TaskCreateForm.uploadtext')}
                         </Button>
                     )
                 }
@@ -506,7 +506,7 @@ class C extends BaseComponent {
                         </a>
                     ) : (
                         <Button loading={this.state.attachment_loading} style={{width: '100%'}}>
-                            <Icon type="upload" /> Click to upload
+                            <Icon type="upload" /> {I18N.get('from.TaskCreateForm.uploadtext')}
                         </Button>
                     )
                 }
@@ -639,7 +639,7 @@ class C extends BaseComponent {
 
         const problem_fn = getFieldDecorator('problem', {
             rules: [
-                {max: 4096, message: 'Too long'}
+                {max: 4096, message: I18N.get('from.TaskCreateForm.problem.max')}
             ],
             initialValue: this.state.editing ? existingTask.pitch && existingTask.pitch.problem : ''
         })
@@ -649,7 +649,7 @@ class C extends BaseComponent {
 
         const valueProposition_fn = getFieldDecorator('valueProposition', {
             rules: [
-                {max: 4096, message: 'Too long'}
+                {max: 4096, message: I18N.get('from.TaskCreateForm.problem.max')}
             ],
             initialValue: this.state.editing ? existingTask.pitch && existingTask.pitch.valueProposition : ''
         })
@@ -659,7 +659,7 @@ class C extends BaseComponent {
 
         const usecase_fn = getFieldDecorator('useCase', {
             rules: [
-                {max: 4096, message: 'Too long'}
+                {max: 4096, message: I18N.get('from.TaskCreateForm.problem.max')}
             ],
             initialValue: this.state.editing ? existingTask.pitch && existingTask.pitch.useCase : ''
         })
@@ -669,7 +669,7 @@ class C extends BaseComponent {
 
         const beneficiaries_fn = getFieldDecorator('beneficiaries', {
             rules: [
-                {max: 4096, message: 'Too long'}
+                {max: 4096, message: I18N.get('from.TaskCreateForm.problem.max')}
             ],
             initialValue: this.state.editing ? existingTask.pitch && existingTask.pitch.beneficiaries : ''
         })
@@ -679,7 +679,7 @@ class C extends BaseComponent {
 
         const elaInfrastructure_fn = getFieldDecorator('elaInfrastructure', {
             rules: [
-                {max: 4096, message: 'Too long'}
+                {max: 4096, message: I18N.get('from.TaskCreateForm.problem.max')}
             ],
             initialValue: this.state.editing ? existingTask.pitch && existingTask.pitch.elaInfrastructure : ''
         })
@@ -822,26 +822,26 @@ class C extends BaseComponent {
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
                     <div>
                         <h3 class="no-margin">General Info</h3>
-                        <FormItem label="Name" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.TaskCreateForm.label.name')} {...formItemLayout}>
                             {p.taskName}
                         </FormItem>
                         {this.props.taskType !== 'PROJECT' &&
-                            <FormItem label="Assign to Circle" {...formItemLayout}>
+                            <FormItem label={I18N.get('from.TaskCreateForm.label.assigntocircle')} {...formItemLayout}>
                                 {p.circle}
                             </FormItem>
                         }
-                        <FormItem label="Community" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.TaskCreateForm.label.community')} {...formItemLayout}>
                             {p.taskCommunity}
                         </FormItem>
 
                         {!this.state.thumbnail_url ?
-                            <FormItem label="Thumbnail" {...formItemLayout}>
+                            <FormItem label={I18N.get('from.TaskCreateForm.label.thumbnail')} {...formItemLayout}>
                                 {p.thumbnail}
                             </FormItem> :
                             <Row className="ant-form-item">
                                 <Col span={8} className="ant-form-item-label text-right">
                                     <label>
-                                        Thumbnail
+                                        {I18N.get('from.TaskCreateForm.label.thumbnail')}
                                     </label>
                                 </Col>
                                 <Col span={16} style={{'lineHeight': '40px'}}>
@@ -849,34 +849,34 @@ class C extends BaseComponent {
                                         <Icon type="file-image"/>
                                         {this.state.thumbnail_filename}
                                     </a>
-                                    <Popconfirm title="Are you sure you want to remove this thumbnail?" okText="Yes" onConfirm={this.removeThumbnail.bind(this)}>
+                                    <Popconfirm title={I18N.get('from.TaskCreateForm.attachment.confirm.remove')} okText={I18N.get('from.TaskCreateForm.text.ok')} onConfirm={this.removeThumbnail.bind(this)}>
                                         <Icon className="remove-attachment" type="close-circle"/>
                                     </Popconfirm>
                                     <br/>
                                 </Col>
                             </Row>
                         }
-                        <FormItem label="Category" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.TaskCreateForm.label.category')} {...formItemLayout}>
                             {p.taskCategory}
                         </FormItem>
                         {this.props.taskType !== 'PROJECT' &&
-                            <FormItem label="Type" {...formItemLayout}>
+                            <FormItem label={I18N.get('from.TaskCreateForm.label.type')} {...formItemLayout}>
                                 {p.taskType}
                             </FormItem>
                         }
                         <Row>
                             <Col span={12}>
-                                <FormItem label="Application Deadline" {...formItemLayoutAdjLeft}>
+                                <FormItem label={I18N.get('from.TaskCreateForm.label.application')} {...formItemLayoutAdjLeft}>
                                     {p.taskApplicationDeadline}
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                <FormItem label="Complete By" {...formItemLayoutAdjRight}>
+                                <FormItem label={I18N.get('from.TaskCreateForm.label.completeBy')} {...formItemLayoutAdjRight}>
                                     {p.taskCompletionDeadline}
                                 </FormItem>
                             </Col>
                         </Row>
-                        <FormItem label="Description" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.TaskCreateForm.label.description')} {...formItemLayout}>
                             {p.taskDesc}
                         </FormItem>
 
@@ -888,10 +888,10 @@ class C extends BaseComponent {
                         <FormItem {...formItemNoLabelLayout}>
                             {p.taskDescBreakdown}
                         </FormItem>
-                        <FormItem label="Goals" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.TaskCreateForm.label.goals')} {...formItemLayout}>
                             {p.taskGoals}
                         </FormItem>
-                        <FormItem label="Info Link" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.TaskCreateForm.label.info')} {...formItemLayout}>
                             {p.taskLink}
                         </FormItem>
 
@@ -899,30 +899,30 @@ class C extends BaseComponent {
                             this.state.taskType === TASK_TYPE.PROJECT) &&
                             <div>
                                 <h3 className="no-margin">Pitch</h3>
-                                <FormItem label="Problem you want to solve" {...formItemLayout}>
+                                <FormItem label={I18N.get('from.TaskCreateForm.label.problems')} {...formItemLayout}>
                                     {p.problem}
                                 </FormItem>
-                                <FormItem label="Value proposition" {...formItemLayout}>
+                                <FormItem label={I18N.get('from.TaskCreateForm.label.valueProposition')} {...formItemLayout}>
                                     {p.valueProposition}
                                 </FormItem>
-                                <FormItem label="Use Case" {...formItemLayout}>
+                                <FormItem label={I18N.get('from.TaskCreateForm.label.usecase')} {...formItemLayout}>
                                     {p.usecase}
                                 </FormItem>
-                                <FormItem label="Beneficiaries" {...formItemLayout}>
+                                <FormItem label={I18N.get('from.TaskCreateForm.label.beneficiaries')} {...formItemLayout}>
                                     {p.beneficiaries}
                                 </FormItem>
-                                <FormItem label="ELA Infrastructure" {...formItemLayout}>
+                                <FormItem label={I18N.get('from.TaskCreateForm.label.elaInfrastructure')} {...formItemLayout}>
                                     {p.elaInfrastructure}
                                 </FormItem>
 
                                 <h3 className="no-margin">Recruitment</h3>
-                                <FormItem label="Domain" {...formItemLayout}>
+                                <FormItem label={I18N.get('from.TaskCreateForm.label.domain')} {...formItemLayout}>
                                     {p.domain}
                                 </FormItem>
-                                <FormItem label="Recruiting Skillsets" {...formItemLayout}>
+                                <FormItem label={I18N.get('from.TaskCreateForm.label.recruiting')} {...formItemLayout}>
                                     {p.recruitedSkillsets}
                                 </FormItem>
-                                <FormItem label="Pictures" {...formItemLayout}>
+                                <FormItem label={I18N.get('from.TaskCreateForm.label.prictures')} {...formItemLayout}>
                                     {p.pictures}
                                 </FormItem>
                                 <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
@@ -941,30 +941,30 @@ class C extends BaseComponent {
                         {this.state.taskType === TASK_TYPE.EVENT &&
                         <div>
                             <h3 className="no-margin">Event Info</h3>
-                            <FormItem label="Date Range" {...formItemLayout}>
+                            <FormItem label={I18N.get('from.TaskCreateForm.label.daterange')} {...formItemLayout}>
                                 {p.eventDateRange}
                             </FormItem>
                             <Row>
                                 <Col span={this.state.eventDateRange ? 12 : 24}>
                                     {this.state.eventDateRange ?
-                                    <FormItem label={'Event Date' + (this.state.eventDateRange ? ' Start' : '')} {...formItemLayoutAdjLeft}>
+                                    <FormItem label={I18N.get('from.TaskCreateForm.label.eventdate') + (this.state.eventDateRange ? I18N.get('from.TaskCreateForm.label.start') : '')} {...formItemLayoutAdjLeft}>
                                         {p.eventDateRangeStart}
                                     </FormItem> :
-                                    <FormItem label={'Event Date' + (this.state.eventDateRange ? ' Start' : '')} {...formItemLayout}>
+                                    <FormItem label={I18N.get('from.TaskCreateForm.label.eventdate') + (this.state.eventDateRange ? I18N.get('from.TaskCreateForm.label.start') : '')} {...formItemLayout}>
                                         {p.eventDateRangeStart}
                                     </FormItem>}
                                 </Col>
                                 {this.state.eventDateRange &&
                                 <Col span={12}>
-                                    <FormItem label="End" {...formItemLayoutAdjRight}>
+                                    <FormItem label={I18N.get('from.TaskCreateForm.label.end')} {...formItemLayoutAdjRight}>
                                         {p.eventDateRangeEnd}
                                     </FormItem>
                                 </Col>}
                             </Row>
-                            <FormItem label="Date Confirmation" {...formItemLayout}>
+                            <FormItem label={I18N.get('from.TaskCreateForm.label.dateconfirm')} {...formItemLayout}>
                                 {p.eventDateStatus}
                             </FormItem>
-                            <FormItem label="Location" {...formItemLayout}>
+                            <FormItem label={I18N.get('from.TaskCreateForm.label.location')} {...formItemLayout}>
                                 {p.taskLocation}
                             </FormItem>
                         </div>
@@ -978,8 +978,8 @@ class C extends BaseComponent {
                         ********************************************************************************
                         */}
                         <h3 className="no-margin">
-                            Payment & Assignment&nbsp;
-                            <Popover content="Budget is for expenses/costs, reward is for labor and time">
+                            {I18N.get('from.TaskCreateForm.label.paymentassigment')}&nbsp;
+                            <Popover content={I18N.get('from.TaskCreateForm.label.budgetlabor')}>
                                 <Icon className="help-icon" type="question-circle-o"/>
                             </Popover>
                         </h3>
@@ -988,26 +988,26 @@ class C extends BaseComponent {
                                 <Col span={12}>
                                     <Card hoverable className={'feature-box' + (this.state.assignSelf ? ' selected' : '')} onClick={() => {this.setState({assignSelf: true})}}>
                                         <div className="title">
-                                            <span>Private</span>
+                                            <span>{I18N.get('from.TaskCreateForm.label.private')}</span>
                                         </div>
                                         <hr className="feature-box-divider"/>
                                         <div className="content">
-                                            <div>- You wish to do this task yourself</div>
-                                            <div>- You are proposing a budget/reward for approval</div>
-                                            <div>- This is not visible to others</div>
+                                            <div>{I18N.get('from.TaskCreateForm.label.taskyourself')}</div>
+                                            <div>{I18N.get('from.TaskCreateForm.label.proposing.approval')}</div>
+                                            <div>{I18N.get('from.TaskCreateForm.label.notvisible')}</div>
                                         </div>
                                     </Card>
                                 </Col>
                                 <Col span={12}>
                                     <Card hoverable className={'feature-box' + (!this.state.assignSelf ? ' selected' : '')} onClick={() => {this.setState({assignSelf: false})}}>
                                         <div className="title">
-                                            <span>Public</span>
+                                            <span>{I18N.get('from.TaskCreateForm.label.public')}</span>
                                         </div>
                                         <hr className="feature-box-divider"/>
                                         <div className="content">
-                                            <div>- This is a task for others to do</div>
-                                            <div>- This is listed publicly on the site</div>
-                                            <div>- Set a reward or allow bidding</div>
+                                            <div>{I18N.get('from.TaskCreateForm.label.taskforother')}</div>
+                                            <div>{I18N.get('from.TaskCreateForm.label.publicly')}</div>
+                                            <div>{I18N.get('from.TaskCreateForm.label.rewardbidding')}</div>
                                         </div>
                                     </Card>
                                 </Col>
@@ -1017,7 +1017,7 @@ class C extends BaseComponent {
                         {!this.state.assignSelf && !this.props.disableCircleSelect &&
                         <div>
                             <br/>
-                            <FormItem label="Reward Type" {...formItemLayout}>
+                            <FormItem label={I18N.get('from.TaskCreateForm.label.rewardtype')} {...formItemLayout}>
                                 <Switch
                                     onChange={() => this.setState({isBidding: !this.state.isBidding})}
                                     unCheckedChildren="Define budget"
@@ -1031,7 +1031,7 @@ class C extends BaseComponent {
                             <div>
                                 {this.state.assignSelf && <br/>}
 
-                                <FormItem label="Fiat ($USD)" {...formItemLayout}>
+                                <FormItem label={I18N.get('from.TaskCreateForm.label.fiat')} {...formItemLayout}>
                                     <Checkbox name="isUsd" checked={this.state.isUsd}
                                         disabled={this.hasLeaderEditRestrictions()}
                                         onChange={() => {this.setState({isUsd: !this.state.isUsd})}}/>
@@ -1040,20 +1040,20 @@ class C extends BaseComponent {
                                 {this.state.isUsd ?
                                     <Row>
                                         <Col>
-                                            <FormItem label="USD Budget" {...formItemLayout}>
+                                            <FormItem label={I18N.get('from.TaskCreateForm.label.usdbudget')} {...formItemLayout}>
                                                 {p.taskRewardUpfrontUsd}
                                             </FormItem>
-                                            <FormItem label="USD Reward" {...formItemLayout}>
+                                            <FormItem label={I18N.get('from.TaskCreateForm.label.usdreward')} {...formItemLayout}>
                                                 {p.taskRewardUsd}
                                             </FormItem>
                                         </Col>
                                     </Row> :
                                     <Row>
                                         <Col>
-                                            <FormItem label="ELA Budget" {...formItemLayout}>
+                                            <FormItem label={I18N.get('from.TaskCreateForm.label.elabudget')} {...formItemLayout}>
                                                 {p.taskRewardUpfront}
                                             </FormItem>
-                                            <FormItem label="ELA Reward" {...formItemLayout}>
+                                            <FormItem label={I18N.get('from.TaskCreateForm.label.elareward')} {...formItemLayout}>
                                                 {p.taskReward}
                                             </FormItem>
                                         </Col>
@@ -1065,7 +1065,7 @@ class C extends BaseComponent {
                                 <FormItem {...formItemNoLabelLayout}>
                                     <Checkbox name="readDisclaimer" checked={this.state.readDisclaimer} onChange={() => {this.setState({readDisclaimer: !this.state.readDisclaimer})}}/>
 
-                                    <span id="disclaimerLink" className="disclaimerLink" onClick={this.showDisclaimer.bind(this)}>I have read the payment rules and disclaimer</span>
+                                    <span id="disclaimerLink" className="disclaimerLink" onClick={this.showDisclaimer.bind(this)}>{I18N.get('from.TaskCreateForm.label.disclaimerrule')}</span>
                                 </FormItem>
                                 }
                             </div>
@@ -1084,7 +1084,7 @@ class C extends BaseComponent {
                         * Attachment
                         ********************************************************************************
                         */}
-                        <h3 className="no-margin">Attachment</h3>
+                        <h3 className="no-margin">{I18N.get('from.TaskCreateForm.label.attachment')}</h3>
                         <br/>
                         {!this.state.attachment_url ?
                             <FormItem {...formItemCenterLayout} className="attachmentUpload">
@@ -1099,7 +1099,7 @@ class C extends BaseComponent {
                                         } &nbsp;
                                         {this.state.attachment_filename}
                                     </a>
-                                    <Popconfirm title="Are you sure you want to remove this attachment?" okText="Yes" onConfirm={this.removeAttachment.bind(this)}>
+                                    <Popconfirm title={I18N.get('from.TaskCreateForm.label.remove.attachment')} okText="Yes" onConfirm={this.removeAttachment.bind(this)}>
                                         <Icon className="remove-attachment" type="close-circle"/>
                                     </Popconfirm>
                                     <br/>
@@ -1114,7 +1114,7 @@ class C extends BaseComponent {
                             <Col offset={4} span={16}>
                                 <Button loading={this.props.loading || this.props.all_circles_loading}
                                     type="primary" htmlType="submit" className="d_btn" style={{width: '100%'}}>
-                                    {this.state.editing ? 'Save Changes' : (this.props.is_admin ? 'Create Task' : 'Submit Proposal')}
+                                    {this.state.editing ? I18N.get('from.TaskCreateForm.button.savechange') : (this.props.is_admin ? I18N.get('from.TaskCreateForm.button.createtask') : I18N.get('from.TaskCreateForm.button.submitpropsal'))}
                                 </Button>
                             </Col>
                         </Row>
@@ -1124,28 +1124,28 @@ class C extends BaseComponent {
                 </Form>
 
                 <Modal
-                    title="Payment Rules and Disclaimer"
+                    title={I18N.get('from.TaskCreateForm.label.paymentrules')}
                     visible={this.state.showDisclaimer}
                     onCancel={this.hideDisclaimer.bind(this)}
                     footer={[
-                        <Button key="cancel" onClick={this.hideDisclaimer.bind(this)}>Close</Button>
+                        <Button key="cancel" onClick={this.hideDisclaimer.bind(this)}>{I18N.get('from.TaskCreateForm.button.close')}</Button>
                     ]}
                 >
                     <ol className="paymentRulesModal">
                         <li>
-                            Any billable work that goes beyond the original task description must be approved first
+                            {I18N.get('from.TaskCreateForm.text.payment.billable')}
                         </li>
                         <li>
-                            Upon completion of the task/event, a full report is required to receive the reward payment
+                            {I18N.get('from.TaskCreateForm.text.payment.upon')}
                         </li>
                         <li>
-                            If payment figures are in USD, the exchange rate at the time of disbursement from <a target="_blank" href="https://coinmarketcap.com/currencies/elastos">CMC</a> will be used
+                            {I18N.get('from.TaskCreateForm.text.payment.exchange')} <a target="_blank" href="https://coinmarketcap.com/currencies/elastos">CMC</a> {I18N.get('from.TaskCreateForm.text.payment.used')}
                         </li>
                         <li>
-                            All expenses require invoices or receipts
+                            {I18N.get('from.TaskCreateForm.text.payment.expenses')}
                         </li>
                         <li>
-                            This agreement is only required if the the task is billable
+                            {I18N.get('from.TaskCreateForm.text.payment.agreement')}
                         </li>
                     </ol>
                 </Modal>

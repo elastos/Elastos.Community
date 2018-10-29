@@ -61,7 +61,7 @@ class C extends BaseComponent {
                     try{
                         param._id = this.props.edit;
                         await this.props.updateCVote(param);
-                        message.success('update success');
+                        message.success(I18N.get('from.CVoteForm.message.updated.success'));
                         this.ord_loading(false);
                         this.props.history.push('/council');
                     }catch(e){
@@ -73,7 +73,7 @@ class C extends BaseComponent {
                 else{
                     try{
                         await this.props.createCVote(param);
-                        message.success('create success');
+                        message.success(I18N.get('from.CVoteForm.message.create.success'));
                         this.ord_loading(false);
                         this.props.history.push('/council');
                     }catch(e){
@@ -241,8 +241,8 @@ class C extends BaseComponent {
         });
         const isConflict_el = (
             <Select {...dis} {...dis1} size="large">
-                <Select.Option value={'NO'}>NO</Select.Option>
-                <Select.Option value={'YES'}>YES</Select.Option>
+                <Select.Option value={'NO'}>{I18N.get('from.CVoteForm.yes')}</Select.Option>
+                <Select.Option value={'YES'}>{I18N.get('from.CVoteForm.no')}</Select.Option>
             </Select>
         );
 
@@ -295,11 +295,11 @@ class C extends BaseComponent {
         return (
             <Form onSubmit={this.handleSubmit.bind(this)} className="c_loginForm">
                 <h2>
-                    Cyber Republic Council Members Proposal Form
+                    {I18N.get('from.CVoteForm.proposal.title')}
                 </h2>
 
                 <h5>
-                    Cyber Republic Council members can use this form to propose motion. All Cyber Republic citizen can view and share their own idea (offline). All proposals will be discussed in regular council meetings. All results will be disclosed to the public. This is a temporary solution before our Cyber Republic website has such a feature.
+                    {I18N.get('from.CVoteForm.proposal.content')}
                 </h5>
 
                 <Row>
@@ -307,13 +307,13 @@ class C extends BaseComponent {
                         {this.renderVoteStep(this.props.data)}
                     </Col>
                 </Row>
-                <FormItem style={{marginTop: '24px'}} label="Title" {...formItemLayout}>{p.title}</FormItem>
-                <FormItem label="Type" {...formItemLayout}>{p.type}</FormItem>
+                <FormItem style={{marginTop: '24px'}} label={I18N.get('from.CVoteForm.label.title')} {...formItemLayout}>{p.title}</FormItem>
+                <FormItem label={I18N.get('from.CVoteForm.label.type')} {...formItemLayout}>{p.type}</FormItem>
 
-                <FormItem label="Content" {...formItemLayout}>{p.content}</FormItem>
-                <FormItem label="Proposed by" {...formItemLayout}>{p.proposedBy}</FormItem>
+                <FormItem label={I18N.get('from.CVoteForm.label.content')} {...formItemLayout}>{p.content}</FormItem>
+                <FormItem label={I18N.get('from.CVoteForm.label.proposedby')} {...formItemLayout}>{p.proposedBy}</FormItem>
 
-                <FormItem style={{'marginBottom':'30px'}} label='Motion' help='If this is a motion against existing motion, refer to existing motion #' {...formItemLayout}>{p.motionId}</FormItem>
+                <FormItem style={{'marginBottom':'30px'}} label={I18N.get('from.CVoteForm.label.motion')} help={I18N.get('from.CVoteForm.label.motion.help')} {...formItemLayout}>{p.motionId}</FormItem>
 
                 {
                     _.map(s.voter, (item, i)=>{
@@ -333,8 +333,8 @@ class C extends BaseComponent {
                     })
                 }
 
-                <FormItem style={{'marginBottom':'12px'}} label="Conflict?" help="Is this proposal potentially conflict with existing constitution?" {...formItemLayout}>{p.isConflict}</FormItem>
-                <FormItem label="Notes from Secretary" {...formItemLayout}>{p.notes}</FormItem>
+                <FormItem style={{'marginBottom':'12px'}} label={I18N.get('from.CVoteForm.label.conflict')} help={I18N.get('from.CVoteForm.label.conflict.help')} {...formItemLayout}>{p.isConflict}</FormItem>
+                <FormItem label={I18N.get('from.CVoteForm.label.note')} {...formItemLayout}>{p.notes}</FormItem>
 
                 <Row>
                     <Col offset={6} span={12}>
@@ -372,7 +372,7 @@ class C extends BaseComponent {
             _id : id,
             notes
         }).then(()=>{
-            message.success('update notes success!');
+            message.success(I18N.get('from.CVoteForm.message.note.update.success'));
             this.ord_loading(false);
         }).catch((e)=>{
             message.error(e.message);
@@ -386,7 +386,7 @@ class C extends BaseComponent {
         const data = this.props.data;
         if(!this.isLogin || !_.includes(['ADMIN', 'SECRETARY'], role)){
             return (
-                <h4 style={{color:'#f00'}}>Only Council Member could create or edit proposal.</h4>
+                <h4 style={{color:'#f00'}}>{I18N.get('from.CVoteForm.text.onlycouncil')}</h4>
             );
         }
         else if(this.isLogin && edit && _.includes(['FINAL', 'DEFERRED'], data.status)){
@@ -396,7 +396,7 @@ class C extends BaseComponent {
             return (
                 <FormItem>
                     <Button loading={this.state.loading} size="large" type="ebp" htmlType="submit" className="d_btn">
-                        {edit ? 'Save' : 'Submit'}
+                        {edit ? I18N.get('from.CVoteForm.button.save') : I18N.get('from.CVoteForm.button.submit')}
                     </Button>
                 </FormItem>
             )
@@ -410,7 +410,7 @@ class C extends BaseComponent {
             return (
                 <FormItem style={{marginTop:40}}>
                     <Button loading={this.state.loading} onClick={this.finishClick.bind(this, data._id)} size="large" type="ebp" className="d_btn">
-                        Complete this proposal
+                        {I18N.get('from.CVoteForm.button.complete.proposal')}
                     </Button>
                 </FormItem>
             );
@@ -419,17 +419,17 @@ class C extends BaseComponent {
     }
     finishClick(id){
         Modal.confirm({
-            title: 'Are you sure to complete this proposal?',
+            title: I18N.get('from.CVoteForm.modal.title'),
             content: '',
-            okText: 'Confirm',
+            okText: I18N.get('from.CVoteForm.modal.confirm'),
             okType: 'danger',
-            cancelText: 'Cancel',
+            cancelText: I18N.get('from.CVoteForm.modal.cancel'),
             onOk: ()=>{
                 this.ord_loading(true);
                 this.props.finishCVote({
                     id : id
                 }).then(()=>{
-                    message.success('complete proposal success!');
+                    message.success(I18N.get('from.CVoteForm.message.proposal.update.success'));
                     this.ord_loading(false);
                     this.props.history.push('/council');
                 }).catch((e)=>{
