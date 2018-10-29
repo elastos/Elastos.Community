@@ -133,7 +133,7 @@ class C extends BaseComponent {
 
         this.state = {
             communityTrees: [],
-            taskType: this.props.taskType || TASK_TYPE.EVENT,
+            taskType: this.props.taskType || TASK_TYPE.TASK,
             taskCategory: this.props.taskCategory || TASK_TYPE.SOCIAL,
             assignSelf: props.existingTask ? props.existingTask.assignSelf : !this.props.circleId,
             eventDateRange: (props.existingTask && props.existingTask.eventDateRange) || false,
@@ -230,17 +230,17 @@ class C extends BaseComponent {
 
         // sub-tasks are not here because those can only be created from an existing Task Detail Page
         const taskType_fn = getFieldDecorator('taskType', {
-            rules: [{required: true, message: I18N.get('from.TaskCreateForm.taskType.required')}],
-            initialValue: this.state.editing ? existingTask.type : (this.state.taskType || TASK_TYPE.EVENT)
+            rules: [{required: true, message: I18N.get('from.TaskCreateForm.taskType.required')],
+            initialValue: this.state.editing ? existingTask.type : (this.state.taskType || TASK_TYPE.TASK)
         })
         const taskType_el = (
             <Select
                 disabled={hasLeaderEditRestrictions} onChange={(val) => this.setState({taskType: val})}>
-                <Option value={TASK_TYPE.EVENT}>{I18N.get('from.TaskCreateForm.taskType.option.event')}</Option>
                 <Option value={TASK_TYPE.TASK}>{I18N.get('from.TaskCreateForm.taskType.option.task')}</Option>
                 {this.state.taskCategory === TASK_CATEGORY.DEVELOPER && (this.props.is_admin || this.props.is_leader) &&
-                    <Option value={TASK_TYPE.PROJECT}>{I18N.get('from.TaskCreateForm.taskType.option.project')}</Option>
+                <Option value={TASK_TYPE.PROJECT}>{I18N.get('from.TaskCreateForm.taskType.option.project')}</Option>
                 }
+                <Option value={TASK_TYPE.EVENT}>{I18N.get('from.TaskCreateForm.taskType.option.event')}</Option>
             </Select>
         )
 
@@ -1014,7 +1014,7 @@ class C extends BaseComponent {
                             </Row>
                         }
 
-                        {!this.state.assignSelf &&
+                        {!this.state.assignSelf && !this.props.disableCircleSelect &&
                         <div>
                             <br/>
                             <FormItem label={I18N.get('from.TaskCreateForm.label.rewardtype')} {...formItemLayout}>
@@ -1072,7 +1072,7 @@ class C extends BaseComponent {
                         }
 
                         {!this.state.assignSelf && this.state.isBidding &&
-                            <FormItem label={I18N.get('from.TaskCreateForm.label.referbid')} {...formItemLayout}>
+                            <FormItem label={I18N.get('project.detail.reference_bid')} {...formItemLayout}>
                                 {p.referenceBid}
                             </FormItem>
                         }

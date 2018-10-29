@@ -204,6 +204,10 @@ export default class extends BaseComponent {
                         {I18N.get('0106')}
                     </Menu.Item>
 
+                    <Menu.Item className="c_MenuItem link" key="developer">
+                        {I18N.get('0102')}
+                    </Menu.Item>
+
                     <Menu.Item className="c_MenuItem link" key="council">
                         {I18N.get('council.0001')}
                     </Menu.Item>
@@ -298,7 +302,7 @@ export default class extends BaseComponent {
                 }
             })
         } else if (key === 'profile') {
-            this.props.history.push('/profile/teams')
+            this.props.history.push('/profile/info')
 
         } else if (key === 'blog') {
             window.location.href = 'https://blog.cyberrepublic.org'

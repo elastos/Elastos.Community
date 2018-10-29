@@ -328,6 +328,8 @@ const zh = {
     'project.detail.popup.join_team': '加入团队',
     'project.detail.popup.join_project': '加入项目',
 
+    'project.detail.comments_disabled': '不能对已经关闭的竞标项目或任务发表评论',
+
     'team.detail.team_active': '你的团队已经激活',
 
     // Team specializations

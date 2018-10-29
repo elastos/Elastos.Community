@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import { TEAM_USER_STATUS, USER_AVATAR_DEFAULT, TASK_AVATAR_DEFAULT } from '@/constant'
+import { TASK_CANDIDATE_STATUS, TEAM_USER_STATUS, USER_AVATAR_DEFAULT, TASK_AVATAR_DEFAULT } from '@/constant'
 import {Avatar, Button, Col, Form, Icon, Popconfirm, Row, Spin, Table, Input, Modal} from 'antd'
 import Comments from '@/module/common/comments/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
@@ -240,6 +240,7 @@ class C extends BaseComponent {
                         <a className="row-name-link" onClick={() => clickHandler(task._id)}>
                             {task.name}
                         </a>
+                        {this.taskIsAssigned(task) && <span>&nbsp; - (Assigned)</span>}
                     </div>
                 )
             }
@@ -280,6 +281,14 @@ class C extends BaseComponent {
                 </div>
             </div>
         )
+    }
+
+    /**
+     * Returns true if the task is already assigned
+     * @param task
+     */
+    taskIsAssigned(task) {
+        return !!_.find(task.candidates, {status: TASK_CANDIDATE_STATUS.APPROVED})
     }
 
     renderComments() {
