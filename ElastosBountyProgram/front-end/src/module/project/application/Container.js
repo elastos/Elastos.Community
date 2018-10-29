@@ -23,6 +23,10 @@ export default createContainer(Component, (state) => {
 
         async getTeams(query) {
             return teamService.index(query)
+        },
+
+        resetTeams() {
+            return teamService.resetAllTeams();
         }
     }
 })
