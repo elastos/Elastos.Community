@@ -81,8 +81,13 @@ import TeamListPage from '../module/page/admin/teams/TeamListPage';
 import AdminTeamDetailPage from '../module/page/admin/teams/TeamDetailPage';
 
 // council
+import CouncilPage from '../module/page/council/Container';
 import CouncilListPage from '../module/page/council/list/Container';
 import CouncilDetailPage from '../module/page/council/detail/Container';
+
+import CVoteCreatePage from '@/module/page/CVote/create/Container';
+import CVoteListPage from '@/module/page/CVote/list/Container';
+import CVoteEditPage from '@/module/page/CVote/edit/Container';
 
 import NotFound from '@/module/page/error/NotFound'
 
@@ -408,6 +413,10 @@ export default [
 
     // council
     {
+        path : '/council',
+        page : CouncilPage
+    },
+    {
         path : '/council/list',
         page : CouncilListPage
     },
@@ -415,7 +424,21 @@ export default [
         path : '/council/detail/:id',
         page : CouncilDetailPage
     },
+    {
+        path : '/cvote/create',
+        page : CVoteCreatePage
+    },
+    {
+        path : '/cvote/list',
+        page : CVoteListPage
+    },
+    {
+        path : '/cvote/edit/:id',
+        page : CVoteEditPage
+    },
 
+
+    // Other
     {
         page: NotFound
     }

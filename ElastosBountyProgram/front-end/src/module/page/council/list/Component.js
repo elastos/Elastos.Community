@@ -1,15 +1,15 @@
 import React from 'react'
-import StandardPage from '../../StandardPage'
+import BaseComponent from '@/model/BaseComponent'
 import I18N from '@/I18N'
 import './style.scss'
 import { Col, Row, Card, Button, Breadcrumb, Icon, List, Spin, Avatar, Modal } from 'antd'
 import _ from 'lodash'
 
-export default class extends StandardPage {
-    ord_renderContent(){
+export default class extends BaseComponent {
+
+    ord_render(){
         return (
-            <div className="p_council">
-                <div className="ebp-header-divider"></div>
+            <div className="p_councilList">
                 <div className="p_admin_index ebp-wrap">
                     <div className="d_box">
                         <div className="p_content">
@@ -20,6 +20,7 @@ export default class extends StandardPage {
             </div>
         );
     }
+
     renderList(){
         const listData = this.getListData();
         const p_list = {
@@ -51,6 +52,7 @@ export default class extends StandardPage {
             </div>
         );
     }
+
     getListData(){
         return [
             {
