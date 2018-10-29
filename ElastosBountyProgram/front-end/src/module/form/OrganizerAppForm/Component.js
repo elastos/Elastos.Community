@@ -18,6 +18,7 @@ import {
 } from 'antd'
 
 import {upload_file} from "@/util";
+import I18N from '@/I18N'
 import './style.scss'
 
 const FormItem = Form.Item
@@ -71,8 +72,8 @@ class C extends BaseComponent {
         // name
         const fullLegalName_fn = getFieldDecorator('fullLegalName', {
             rules: [
-                {required: true, message: 'Please input an name'},
-                {min: 6, message: 'name too short'}
+                {required: true, message: I18N.get('from.OrganizerAppForm.fullLegalName.required')},
+                {min: 6, message: I18N.get('from.OrganizerAppForm.fullLegalName.min')}
             ]
         })
         const fullLegalName_el = (
@@ -82,8 +83,8 @@ class C extends BaseComponent {
         // occupation
         const occupation_fn = getFieldDecorator('occupation', {
             rules: [
-                {required: true, message: 'Please input an occupation'},
-                {min: 4, message: 'occupation too short'}
+                {required: true, message: I18N.get('from.OrganizerAppForm.occupation.required')},
+                {min: 4, message: I18N.get('from.OrganizerAppForm.occupation.min')}
             ]
         })
         const occupation_el = (
@@ -93,8 +94,8 @@ class C extends BaseComponent {
         // education
         const education_fn = getFieldDecorator('education', {
             rules: [
-                {required: true, message: 'Please input an education'},
-                {min: 8, message: 'education too short'}
+                {required: true, message: I18N.get('from.OrganizerAppForm.education.required')},
+                {min: 8, message: I18N.get('from.OrganizerAppForm.education.min')}
             ]
         })
         const education_el = (
@@ -104,8 +105,8 @@ class C extends BaseComponent {
         // audienceInfo
         const audienceInfo_fn = getFieldDecorator('audienceInfo', {
             rules: [
-                {required: true, message: 'this is a required field'},
-                {max: 256, message: 'text too long'}
+                {required: true, message: I18N.get('from.OrganizerAppForm.field.required')},
+                {max: 256, message: I18N.get('from.OrganizerAppForm.field.max')}
             ]
         })
         const audienceInfo_el = (
@@ -115,8 +116,8 @@ class C extends BaseComponent {
         // publicSpeakingExp
         const publicSpeakingExp_fn = getFieldDecorator('publicSpeakingExp', {
             rules: [
-                {required: true, message: 'this is a required field'},
-                {max: 1024, message: 'text too long'}
+                {required: true, message: I18N.get('from.OrganizerAppForm.field.required')},
+                {max: 1024, message: I18N.get('from.OrganizerAppForm.field.max')}
             ]
         })
         const publicSpeakingExp_el = (
@@ -126,8 +127,8 @@ class C extends BaseComponent {
         // eventOrganizingExp
         const eventOrganizingExp_fn = getFieldDecorator('eventOrganizingExp', {
             rules: [
-                {required: true, message: 'this is a required field'},
-                {max: 1024, message: 'text too long'}
+                {required: true, message: I18N.get('from.OrganizerAppForm.field.required')},
+                {max: 1024, message: I18N.get('from.OrganizerAppForm.field.max')}
             ]
         })
         const eventOrganizingExp_el = (
@@ -137,8 +138,8 @@ class C extends BaseComponent {
         // previousExp
         const previousExp_fn = getFieldDecorator('previousExp', {
             rules: [
-                {required: true, message: 'this is a required field'},
-                {max: 1024, message: 'text too long'}
+                {required: true, message: I18N.get('from.OrganizerAppForm.field.required')},
+                {max: 1024, message: I18N.get('from.OrganizerAppForm.field.max')}
             ]
         })
         const previousExp_el = (
@@ -154,7 +155,7 @@ class C extends BaseComponent {
         // devBackground
         const devBackground_fn = getFieldDecorator('devBackground', {
             rules: [
-                {max: 1024, message: 'text too long'}
+                {max: 1024, message: I18N.get('from.OrganizerAppForm.field.max')}
             ]
         })
         const devBackground_el = (
@@ -164,8 +165,8 @@ class C extends BaseComponent {
         // description
         const description_fn = getFieldDecorator('description', {
             rules: [
-                {required: true, message: 'this is a required field'},
-                {max: 512, message: 'text too long'}
+                {required: true, message: I18N.get('from.OrganizerAppForm.field.required')},
+                {max: 512, message: I18N.get('from.OrganizerAppForm.field.max')}
             ]
         })
         const description_el = (
@@ -175,8 +176,8 @@ class C extends BaseComponent {
         // reason
         const reason_fn = getFieldDecorator('reason', {
             rules: [
-                {required: true, message: 'this is a required field'},
-                {max: 256, message: 'text too long'}
+                {required: true, message: I18N.get('from.OrganizerAppForm.field.required')},
+                {max: 256, message: I18N.get('from.OrganizerAppForm.field.max')}
             ]
         })
         const reason_el = (
@@ -214,7 +215,7 @@ class C extends BaseComponent {
                         </a>
                     ) : (
                         <Button loading={this.state.attachment_loading}>
-                            <Icon type="upload" /> Click to upload
+                            <Icon type="upload" /> {I18N.get('from.OrganizerAppForm.click.upload')}
                         </Button>
                     )
                 }
@@ -277,7 +278,7 @@ class C extends BaseComponent {
         return (!this.props.is_login ?
             <div>
                 <br/>
-                You must be logged in to apply for organizer
+                {I18N.get('from.OrganizerAppForm.mustlogged')}
             </div> :
             <div className="c_organizerAppFormContainer">
 
@@ -286,25 +287,25 @@ class C extends BaseComponent {
                         <Row>
                             <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
                                 <h4>
-                                    <span style={{'fontWeight': 200}}>Community Applying For:</span> &nbsp;
+                                    <span style={{'fontWeight': 200}}>{I18N.get('from.OrganizerAppForm.community.apply')}</span> &nbsp;
                                     {this.state.community && this.state.community.name}
                                 </h4>
                                 <br/>
                             </Col>
                         </Row>
-                        <FormItem label="Full Legal Name" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.OrganizerAppForm.fullLegalName')} {...formItemLayout}>
                             {p.fullLegalName}
                         </FormItem>
-                        <FormItem label="Occupation" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.OrganizerAppForm.Occupation')} {...formItemLayout}>
                             {p.occupation}
                         </FormItem>
-                        <FormItem label="Education" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.OrganizerAppForm.Education')} {...formItemLayout}>
                             {p.education}
                         </FormItem>
                         <Divider></Divider>
                         <Row>
                             <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
-                                What is your native language, who is your audience and where are they located? What are the language(s) you plan to use to present Elastos.
+                                {I18N.get('from.OrganizerAppForm.language')}
                             </Col>
                         </Row>
                         <FormItem {...formItemNoLabelLayout}>
@@ -313,7 +314,7 @@ class C extends BaseComponent {
 
                         <Row>
                             <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
-                                Please describe your public speaking experience and provide any examples.
+                                {I18N.get('from.OrganizerAppForm.speaking')}
                             </Col>
                         </Row>
                         <FormItem {...formItemNoLabelLayout}>
@@ -322,7 +323,7 @@ class C extends BaseComponent {
 
                         <Row>
                             <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
-                                Do you have any experience organizing events and provide any examples.
+                                {I18N.get('from.OrganizerAppForm.organizer')}
                             </Col>
                         </Row>
                         <FormItem {...formItemNoLabelLayout}>
@@ -331,20 +332,20 @@ class C extends BaseComponent {
 
                         <Row>
                             <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
-                                Please list any current or past contributions promoting Elastos.
+                                {I18N.get('from.OrganizerAppForm.contributions')}
                             </Col>
                         </Row>
                         <FormItem {...formItemNoLabelLayout}>
                             {p.previousExp}
                         </FormItem>
 
-                        <FormItem label="Are you a developer?" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.OrganizerAppForm.areyoudeveloper')} {...formItemLayout}>
                             {p.isDeveloper}
                         </FormItem>
 
                         <Row>
                             <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
-                                If you are not a developer, please explain how you are familiar with Elastos technology and what problems we solve.
+                                {I18N.get('from.OrganizerAppForm.notdeveloper')}
                             </Col>
                         </Row>
                         <FormItem {...formItemNoLabelLayout}>
@@ -353,7 +354,7 @@ class C extends BaseComponent {
 
                         <Row>
                             <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
-                                Describe Elastos in your own words.
+                                {I18N.get('from.OrganizerAppForm.describeElastos')}
                             </Col>
                         </Row>
                         <FormItem {...formItemNoLabelLayout}>
@@ -362,22 +363,22 @@ class C extends BaseComponent {
 
                         <Row>
                             <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
-                                Tell us in a few words what inspired you to join Cyber Republic.
+                                {I18N.get('from.OrganizerAppForm.inspired')}
                             </Col>
                         </Row>
                         <FormItem {...formItemNoLabelLayout}>
                             {p.reason}
                         </FormItem>
 
-                        <Divider>Please submit a video explaining<br/>what Elastos means to you.</Divider>
+                        <Divider>{I18N.get('from.OrganizerAppForm.divider.submitvideo')}</Divider>
 
-                        <FormItem label="Attachment" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.OrganizerAppForm.attachment')} {...formItemLayout}>
                             {p.attachment}
                         </FormItem>
 
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
                             <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
-                                Submit
+                                {I18N.get('from.OrganizerAppForm.submit')}
                             </Button>
                         </FormItem>
                     </div>
