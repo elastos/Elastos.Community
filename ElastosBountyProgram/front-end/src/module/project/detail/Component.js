@@ -292,6 +292,7 @@ class C extends BaseComponent {
             return
         }
 
+        // for bidding we must be in PENDING
         if (detail.bidding && _.indexOf([TASK_STATUS.CREATED, TASK_STATUS.PENDING], detail.status) < 0) {
             return
         }
