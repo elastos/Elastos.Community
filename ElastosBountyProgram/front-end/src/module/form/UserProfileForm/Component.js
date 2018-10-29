@@ -92,6 +92,14 @@ class C extends BaseComponent {
             <Input.TextArea rows={4}/>
         )
 
+        const motto_fn = getFieldDecorator('motto', {
+            rules: [],
+            initialValue: user.profile.motto
+        })
+        const motto_el = (
+            <Input.TextArea rows={4}/>
+        )
+
         const avatar_fn = getFieldDecorator('avatar', {
             rules: []
         });
@@ -161,7 +169,8 @@ class C extends BaseComponent {
             lastName: lastName_fn(lastName_el),
             avatar: avatar_fn(avatar_el),
             banner: banner_fn(banner_el),
-            bio: bio_fn(bio_el)
+            bio: bio_fn(bio_el),
+            motto: motto_fn(motto_el)
         }
     }
 
@@ -223,6 +232,13 @@ class C extends BaseComponent {
                         wrapperCol={{ sm: {span: 24}, md: {span: 16} }}
                         label="Profile Slogan">
                         {p.bio}
+                    </FormItem>
+                    <FormItem
+                        colon={false}
+                        labelCol={{ sm: {span: 24}, md: {span: 8} }}
+                        wrapperCol={{ sm: {span: 24}, md: {span: 16} }}
+                        label="Profile Motto">
+                        {p.motto}
                     </FormItem>
                     <br />
                     <br />

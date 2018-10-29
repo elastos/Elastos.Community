@@ -42,6 +42,7 @@ export const Profile = {
     linkedin: String,
 
     bio: String,
+    motto: String,
     beOrganizer : Boolean,
     isDeveloper : Boolean,
 

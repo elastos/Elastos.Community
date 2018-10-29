@@ -36,6 +36,7 @@ export default createContainer(Component, (state)=>{
                     firstName: formData.firstName,
                     lastName: formData.lastName,
                     bio: formData.bio,
+                    motto: formData.motto,
                     avatar: state.avatar_url,
                     avatarFilename: state.avatar_filename,
                     avatarFileType: state.avatar_type,
