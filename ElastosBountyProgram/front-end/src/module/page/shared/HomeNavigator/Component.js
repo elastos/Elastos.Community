@@ -70,6 +70,12 @@ export default class extends BaseComponent {
                             onClick={this.handleMenuClick.bind(this)}
                             mode="inline"
                         >
+                            <Menu.Item key="profileInfo">
+                                { this.isProfileIncomplete()
+                                    ? <Badge status="processing" text={I18N.get('2300')}/>
+                                    : I18N.get('2300')
+                                }
+                            </Menu.Item>
                             <Menu.Item key="profileTeams">
                                 {I18N.get('2302')}
                             </Menu.Item>
@@ -85,12 +91,6 @@ export default class extends BaseComponent {
                             <Menu.Item key="profileCommunities">
                                 {I18N.get('2304')}
                             </Menu.Item>
-                            <Menu.Item key="profileInfo">
-                                { this.isProfileIncomplete()
-                                    ? <Badge status="processing" text={I18N.get('2300')}/>
-                                    : I18N.get('2300')
-                                }
-                            </Menu.Item>
                         </Menu>
                     </Affix>
                 </MediaQuery>
@@ -100,6 +100,9 @@ export default class extends BaseComponent {
                         onClick={this.handleMenuClick.bind(this)}
                         mode="horizontal"
                     >
+                        <Menu.Item key="profileInfo">
+                            {I18N.get('2300')}
+                        </Menu.Item>
                         <Menu.Item key="profileTeams">
                             {I18N.get('2302')}
                         </Menu.Item>
@@ -114,9 +117,6 @@ export default class extends BaseComponent {
                         </Menu.Item>
                         <Menu.Item key="profileCommunities">
                             {I18N.get('2304')}
-                        </Menu.Item>
-                        <Menu.Item key="profileInfo">
-                            {I18N.get('2300')}
                         </Menu.Item>
                     </Menu>
                 </MediaQuery>

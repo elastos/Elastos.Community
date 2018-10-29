@@ -69,4 +69,8 @@ export default class extends BasePage {
     ord_renderContent() {
         return null;
     }
+
+    ord_loading(f=false){
+        this.setState({loading : f});
+    }
 }

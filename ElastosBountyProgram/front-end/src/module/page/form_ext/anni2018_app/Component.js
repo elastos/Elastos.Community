@@ -1,4 +1,5 @@
 import React from 'react';
+import I18N from '@/I18N';
 import StandardPage from '../../StandardPage';
 import Footer from '@/module/layout/Footer/Container'
 import AnniversaryAppForm from '@/module/form/AnniversaryEventForm/Container'
@@ -15,7 +16,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page-title">
                     <h3>
-                        Elastos 2018 Anniversary Event Registration
+                        {I18N.get('formext.anni2018.app.title')}
                     </h3>
                 </div>
                 <div className="ebp-page">

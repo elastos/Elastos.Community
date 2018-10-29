@@ -1,5 +1,6 @@
 import React from 'react';
 import StandardPage from '../StandardPage';
+import I18N from '@/I18N';
 import Footer from '@/module/layout/Footer/Container'
 import { Col, Row, Icon } from 'antd'
 
@@ -23,7 +24,7 @@ export default class extends StandardPage {
                         <Col span={18}>
                             <div class="d_leadersList">
                                 <h3>
-                                    Organizers
+                                    {I18N.get('0003')}
                                 </h3>
                             </div>
                         </Col>

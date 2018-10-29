@@ -123,6 +123,7 @@ export default class extends Base {
         return updatedTask
     }
 
+    // unused
     public async markComplete(param): Promise<Document> {
         const { taskCandidateId } = param;
 
@@ -241,7 +242,6 @@ export default class extends Base {
         let status = constant.TASK_STATUS.CREATED;
 
         if (rewardUpfront.ela > 0 || reward.ela > 0 || rewardUpfront.usd > 0 || reward.usd > 0) {
-
             // there is ELA / USD involved so we start in PENDING unless we are an admin
             if (this.currentUser.role !== constant.USER_ROLE.ADMIN) {
                 status = constant.TASK_STATUS.PENDING
@@ -291,21 +291,6 @@ export default class extends Base {
         if(communityParent){
             doc['communityParent'] = communityParent;
         }
-
-        // if member role, could not create
-        const role = this.currentUser.role;
-        if(role === constant.USER_ROLE.MEMBER){
-            throw 'Access Denied';
-        }
-
-        /*
-        if(type === constant.TASK_TYPE.EVENT){
-            const userService = this.getService(UserService);
-            if(reward.ela > userService.getSumElaBudget(this.currentUser.elaBudget)){
-                throw 'ela reward could not greater than user budget';
-            }
-        }
-        */
 
         if (assignSelf) {
             // override the candidate select limit
@@ -358,11 +343,6 @@ export default class extends Base {
             return
         }
 
-        // permission shortcuts
-        if (this.currentUser.role === constant.USER_ROLE.MEMBER) {
-            throw 'Access Denied'
-        }
-
         if (param.status === constant.TASK_STATUS.ASSIGNED) {
             throw 'Assigned Status is Deprecated'
         }
@@ -388,6 +368,11 @@ export default class extends Base {
         // get current
         const task = await db_task.findById(taskId)
         const taskOwner = await db_user.findById(task.createdBy)
+
+        // permission shortcuts
+        if (this.currentUser.role === constant.USER_ROLE.MEMBER && (this.currentUser._id.toString() !== task.createdBy.toString() || param.status !== constant.TASK_STATUS.SUBMITTED)) {
+            throw 'Access Denied'
+        }
 
         // TODO: ensure reward cannot change if status APPROVED or after
 
@@ -433,7 +418,7 @@ export default class extends Base {
             }
         }
 
-        // if you're the owner - applies for admins and organizers
+        // if you're the owner - applies for admins and organizers - TODO: revisit for security, should check if role is higher than MEMBER
         if (this.currentUser._id.toString() === task.createdBy.toString()) {
 
             // shortcut with error for these - only allow status change from APPROVED -> SUBMITTED
@@ -445,8 +430,9 @@ export default class extends Base {
                 throw 'Invalid Action'
             }
 
+            // TODO: what is this, going backwards? - maybe just the email?
             // these status changes are only allowed if we are changing to APPROVED/SUBMITTED status
-            if (task.status !== constant.TASK_STATUS.PENDING &&
+            if (task.status !== constant.TASK_STATUS.PENDING && task.status !== constant.TASK_STATUS.CREATED &&
                 (
                     param.status === constant.TASK_STATUS.SUBMITTED ||
                     param.status === constant.TASK_STATUS.APPROVED
@@ -569,6 +555,10 @@ export default class extends Base {
             const db_team = this.getDBModel('Team');
             await db_team.db.populate(taskCandidate.team, {
                 path: 'owner',
+                select: sanitize
+            })
+            await db_team.db.populate(taskCandidate.team, {
+                path: 'members',
                 select: sanitize
             })
         }

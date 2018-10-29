@@ -7,6 +7,7 @@ import team from './redux/team'
 import community from './redux/community'
 import member from './redux/member'
 import submission from './redux/submission'
+import council from './redux/council'
 import language from './redux/language'
 
 const default_state = {
@@ -30,5 +31,6 @@ export default combineReducers({
     community: community.getReducer(),
     member: member.getReducer(),
     submission: submission.getReducer(),
+    council: council.getReducer(),
     language: language.getReducer()
 })

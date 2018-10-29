@@ -24,6 +24,14 @@
   font-weight: 500;
 }
 
+.important-text {
+  margin: 0;
+  padding: 0;
+  font-size: 95%;
+  text-transform: uppercase;
+  color: #fe6619;
+}
+
 .highlight-text {
   color: $primary_color;
 }

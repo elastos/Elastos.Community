@@ -59,7 +59,8 @@ export default class extends EmptyPage {
                             <li><a href="/cr100">{I18N.get('0105')}</a></li>
                             <li><a href="/crcles">{I18N.get('0106')}</a></li>
                             <li><a href="/developer">{I18N.get('0102')}</a></li>
-                            <li><a href="/council/list">{I18N.get('council.0001')}</a></li>
+                            <li><a href="/council">{I18N.get('council.0001')}</a></li>
+                            <li><a href="https://blog.cyberrepublic.org">{I18N.get('0110')}</a></li>
                             <li><a href="/ambassadors">{I18N.get('0107')}</a></li>
 
                             {this.props.is_login
@@ -91,10 +92,12 @@ export default class extends EmptyPage {
                 <div className="contentContainer">
                     <nav className="toplinks">
                         <ul>
-                            <li><a href="/cr100">CR100</a></li>
-                            <li><a href="/crcles">CRcles</a></li>
-                            <li><a href="/ambassadors">Ambassadors</a></li>
-                            <li><a href="/community">Community</a></li>
+                            <li><a href="/cr100">{I18N.get('0105')}</a></li>
+                            <li><a href="/crcles">{I18N.get('0106')}</a></li>
+                            <li><a href="/developer">{I18N.get('0102')}</a></li>
+                            <li><a href="/council">{I18N.get('council.0001')}</a></li>
+                            <li><a href="https://blog.cyberrepublic.org">{I18N.get('0110')}</a></li>
+                            <li><a href="/ambassadors">{I18N.get('0107')}</a></li>
 
                             {this.props.is_login
                                 ? <li><a href="/profile/teams">{I18N.get('0104')}</a></li>
@@ -1252,6 +1255,7 @@ export default class extends EmptyPage {
                         <div className="col" data-num="2">
                             <ul className="resources">
                                 <li className="title">{I18N.get('landing.footer.resources')}</li>
+                                <li><a href="/vision" target="_blank">{I18N.get('vision.00')}</a></li>
                                 <li><a href="https://wallet.elastos.org/" target="_blank">{I18N.get('landing.footer.wallet')}</a></li>
                                 <li><a href="https://blockchain.elastos.org/status" target="_blank">{I18N.get('landing.footer.explorer')}</a></li>
                                 <li><a href="https://github.com/elastos" target="_blank">{I18N.get('landing.footer.github')}</a></li>
@@ -1281,13 +1285,16 @@ export default class extends EmptyPage {
 
                             <div className="social-icons">
                                 <a href="https://t.me/elastosgroup" target="_blank"><i className="fab fa-telegram fa-2x"/></a>
-                                <a href="https://github.com/elastos" target="_blank"><i className="fab fa-github fa-2x"/></a>
-                                <a href="https://discordapp.com/invite/MHSUVZN" target="_blank"><i className="fab fa-discord fa-2x"/></a>
-                                <a href="https://twitter.com/Elastos_org" target="_blank"><i className="fab fa-twitter fa-2x"/></a>
-                                <a href="https://elastos-ebp.slack.com/" target="_blank"><i className="fab fa-slack fa-2x"/></a>
-                                <a href="https://www.reddit.com/r/Elastos/" target="_blank"><i className="fab fa-reddit fa-2x"/></a>
-                                <a href="https://www.youtube.com/channel/UCy5AjgpQIQq3bv8oy_L5WTQ/" target="_blank"><i className="fab fa-youtube fa-2x"/></a>
-                                <a href="https://www.instagram.com/elastosofficial/" target="_blank"><i className="fab fa-instagram fa-2x"/></a>
+                                <a href="https://github.com/cyber-republic" target="_blank"><i className="fab fa-github fa-2x"/></a>
+                                <a href="https://discord.gg/bKcPf8R" target="_blank"><i className="fab fa-discord fa-2x"/></a>
+                                <br/>
+                                <a href="https://twitter.com/cyber__republic" target="_blank"><i className="fab fa-twitter fa-2x"/></a>
+                                <a href="https://www.facebook.com/ElastosCyberRepublic" target="_blank"><i className="fab fa-facebook fa-2x"/></a>
+                                <a href="https://www.reddit.com/r/CyberRepublic/" target="_blank"><i className="fab fa-reddit fa-2x"/></a>
+                                <br/>
+                                <a href="https://www.youtube.com/channel/UCjHthS-zJr0axZF5Iw8En-w" target="_blank"><i className="fab fa-youtube fa-2x"/></a>
+                                <a href="https://www.instagram.com/cyberrepublic/" target="_blank"><i className="fab fa-instagram fa-2x"/></a>
+                                <a href="https://www.linkedin.com/company/cyber-republic/" target="_blank"><i className="fab fa-linkedin fa-2x"/></a>
                             </div>
                         </div>
                     </div>

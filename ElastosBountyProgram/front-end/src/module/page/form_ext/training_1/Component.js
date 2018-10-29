@@ -1,4 +1,5 @@
 import React from 'react';
+import I18N from '@/I18N';
 import StandardPage from '../../StandardPage';
 import Footer from '@/module/layout/Footer/Container'
 import Training1Form from '@/module/form/Training1Form/Container'
@@ -14,7 +15,7 @@ export default class extends StandardPage {
                 </div>
                 <div className="ebp-page-title">
                     <h2>
-                        Evangelist Training Application
+                        {I18N.get('formext.anni2018.training.title')}
                     </h2>
                 </div>
                 <div className="ebp-page">

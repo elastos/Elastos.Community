@@ -2,6 +2,7 @@ import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import {Form, Icon, Input, Button, Select} from 'antd'
 import {CONTRIB_CATEGORY} from '@/constant'
+import I18N from '@/I18N'
 
 const FormItem = Form.Item
 const Option = Select.Option
@@ -24,15 +25,15 @@ class C extends BaseComponent {
         const {getFieldDecorator} = this.props.form;
 
         const contribCategory_fn = getFieldDecorator('contribCategory', {
-            rules: [{required: true, message: 'Please select a category'}],
+            rules: [{required: true, message: I18N.get('social.formcontribution.required')}],
             initialValue: 'BLOG'
         });
         const contribCategory_el = (
             <Select>
-                <Option value={CONTRIB_CATEGORY.BLOG}>Blog</Option>
-                <Option value={CONTRIB_CATEGORY.VIDEO}>Video</Option>
-                <Option value={CONTRIB_CATEGORY.PODCAST}>Podcast</Option>
-                <Option value={CONTRIB_CATEGORY.OTHER}>Other</Option>
+                <Option value={CONTRIB_CATEGORY.BLOG}>{I18N.get('social.formcontribution.option.blog')}</Option>
+                <Option value={CONTRIB_CATEGORY.VIDEO}>{I18N.get('social.formcontribution.option.video')}</Option>
+                <Option value={CONTRIB_CATEGORY.PODCAST}>{I18N.get('social.formcontribution.option.podcast')}</Option>
+                <Option value={CONTRIB_CATEGORY.OTHER}>{I18N.get('social.formcontribution.option.other')}</Option>
             </Select>
         );
 
@@ -51,7 +52,7 @@ class C extends BaseComponent {
                 </FormItem>
                 <FormItem>
                     <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn pull-right">
-                        Submit
+                        {I18N.get('social.formcontribution.button.submit')}
                     </Button>
                 </FormItem>
             </Form>

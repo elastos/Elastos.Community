@@ -2,6 +2,7 @@ import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import {Form, Icon, Input, Button, Select} from 'antd'
 import {SUBMISSION_TYPE} from '@/constant'
+import I18N from '@/I18N'
 
 const FormItem = Form.Item
 const Option = Select.Option
@@ -25,32 +26,32 @@ class C extends BaseComponent {
         const {getFieldDecorator} = this.props.form
 
         const submissionType_fn = getFieldDecorator('submissionType', {
-            rules: [{required: true, message: 'Please select a type'}],
+            rules: [{required: true, message: I18N.get('developer.form.submission.type.required')}],
             initialValue: SUBMISSION_TYPE.BUG
         })
         const submissionType_el = (
             <Select name="type">
-                <Option value={SUBMISSION_TYPE.BUG}>Bug</Option>
-                <Option value={SUBMISSION_TYPE.SECURITY_ISSUE}>Security Issue</Option>
-                <Option value={SUBMISSION_TYPE.SUGGESTION}>Suggestion</Option>
-                <Option value={SUBMISSION_TYPE.OTHER}>Other</Option>
+                <Option value={SUBMISSION_TYPE.BUG}>{I18N.get('developer.form.submission.type.option.bug')}</Option>
+                <Option value={SUBMISSION_TYPE.SECURITY_ISSUE}>{I18N.get('developer.form.submission.type.option.security')}</Option>
+                <Option value={SUBMISSION_TYPE.SUGGESTION}>{I18N.get('developer.form.submission.type.option.suggestion')}</Option>
+                <Option value={SUBMISSION_TYPE.OTHER}>{I18N.get('developer.form.submission.type.option.other')}</Option>
             </Select>
         )
 
         const submissionTitle_fn = getFieldDecorator('submissionTitle', {
-            rules: [{required: true, message: 'Please put in some title'}],
+            rules: [{required: true, message: I18N.get('developer.form.submission.title.required')}],
             initialValue: ''
         })
         const submissionTitle_el = (
-            <Input name="title" placeholder="Subject"/>
+            <Input name="title" placeholder={I18N.get('developer.form.submission.placeholder.subject')}/>
         )
 
         const submissionDescription_fn = getFieldDecorator('submissionDescription', {
-            rules: [{required: true, message: 'Please put in some description'}],
+            rules: [{required: true, message: I18N.get('developer.form.submission.description.required')}],
             initialValue: ''
         })
         const submissionDescription_el = (
-            <TextArea rows={4} type="text" name="description" placeholder="Describe your issue"/>
+            <TextArea rows={4} type="text" name="description" placeholder={I18N.get('developer.form.submission.placeholder.description')}/>
         )
 
         return {

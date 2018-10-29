@@ -58,6 +58,7 @@ export default class extends Base {
                 firstName: param.firstName,
                 lastName: param.lastName,
                 country: param.country,
+                timezone: param.timezone,
                 state: param.state,
                 city: param.city,
                 beOrganizer: param.beOrganizer === 'yes',
@@ -171,6 +172,10 @@ export default class extends Base {
             updateObj.profile = Object.assign(user.profile, param.profile)
         }
 
+        if (param.timezone) {
+            updateObj.timezone = param.timezone
+        }
+
         if (param.email) {
             updateObj.email = param.email
         }
@@ -185,6 +190,12 @@ export default class extends Base {
             updateObj.avatar = null
             updateObj.avatarFileType = ''
             updateObj.avatarFilename = ''
+        }
+
+        if (param.removeBanner) {
+            updateObj.banner = null
+            updateObj.bannerFileType = ''
+            updateObj.bannerFilename = ''
         }
 
         await db_user.update({_id: userId}, updateObj)

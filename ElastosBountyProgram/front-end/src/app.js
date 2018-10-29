@@ -72,6 +72,11 @@ if (!sessionStorage.getItem('api-token') && localStorage.getItem('api-token')) {
     sessionStorage.setItem('api-token', localStorage.getItem('api-token'))
 }
 
+if (sessionStorage.getItem('api-token') && !localStorage.getItem('api-token')) {
+    store.history.push('/login')
+    sessionStorage.clear();
+}
+
 if (sessionStorage.getItem('api-token')) {
     const userRedux = store.getRedux('user');
     api_request({
@@ -90,6 +95,7 @@ if (sessionStorage.getItem('api-token')) {
             store.dispatch(userRedux.actions.role_update(data.role))
             store.dispatch(userRedux.actions.current_user_id_update(data._id))
             store.dispatch(userRedux.actions.circles_update(_.values(data.circles)))
+            store.dispatch(userRedux.actions.subscribers_update(_.values(data.subscribers)))
             store.dispatch(userRedux.actions.loading_update(false))
             render()
         },

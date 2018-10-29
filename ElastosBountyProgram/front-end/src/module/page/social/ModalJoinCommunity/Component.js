@@ -2,6 +2,7 @@ import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import { Form, Modal, Select, Input, Button, Cascader } from 'antd'
 import config from '@/config'
+import I18N from '@/I18N'
 import CommunityService from '@/service/CommunityService'
 
 const FormItem = Form.Item
@@ -69,14 +70,14 @@ export default Form.create()(
 
             const footerModal = (
                 <div>
-                    <Button onClick={onCreate} className="ant-btn-ebp" type="primary">Join community</Button>
-                    <Button onClick={onCancel}>Cancel</Button>
+                    <Button onClick={onCreate} className="ant-btn-ebp" type="primary">{I18N.get('social.joincommunity.button.join')}</Button>
+                    <Button onClick={onCancel}>{I18N.get('social.joincommunity.button.cancel')}</Button>
                 </div>
             )
 
             const community_fn = getFieldDecorator('community', {
                 initialValue: [],
-                rules: [{required: true, message: 'This field is required'}]
+                rules: [{required: true, message: I18N.get('social.joincommunity.community.required')}]
             })
             const community_el = (
                 <Cascader options={this.state.communityTrees} placeholder="" changeOnSelect/>
@@ -85,7 +86,7 @@ export default Form.create()(
             return (
                 <Modal
                     visible={visible}
-                    title="Join community"
+                    title={I18N.get('social.joincommunity.button.join')}
                     footer={footerModal}
                     okText="Create"
                     onCancel={onCancel}

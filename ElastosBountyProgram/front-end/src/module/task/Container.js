@@ -34,13 +34,23 @@ export default createContainer(Component, (state) => {
         },
 
         async approveTask(taskId) {
-
             try {
                 await taskService.update(taskId, {
                     status: TASK_STATUS.APPROVED
                 })
-
                 message.success('Task approved successfully');
+            } catch (err) {
+                message.error(err.message)
+            }
+        },
+
+        async approveAndAssignTask(taskId) {
+            try {
+                await taskService.update(taskId, {
+                    status: TASK_STATUS.APPROVED,
+                    assignSelf: true
+                })
+                message.success('Task approved and assigned successfully');
             } catch (err) {
                 message.error(err.message)
             }

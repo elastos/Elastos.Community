@@ -13,7 +13,8 @@ export const USER_ROLE = {
     MEMBER : 'MEMBER',
     LEADER : 'LEADER',
     ADMIN : 'ADMIN',
-    COUNCIL: 'COUNCIL'
+    COUNCIL: 'COUNCIL',
+    SECRETARY: 'SECRETARY'
 }
 
 export const USER_LANGUAGE = {
@@ -124,3 +125,6 @@ export const TEAM_TYPE = create(['TEAM', 'CRCLE'])
 export const TASK_CANDIDATE_CATEGORY = {
     RSVP: 'RSVP'
 }
+
+export const CVOTE_STATUS = create(['DRAFT', 'PROPOSED', 'ACTIVE', 'REJECT', 'FINAL', 'DEFERRED']);
+export const CVOTE_EXPIRATION = 1000*60*60*24*7;

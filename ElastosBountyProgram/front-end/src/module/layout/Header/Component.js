@@ -208,8 +208,12 @@ export default class extends BaseComponent {
                         {I18N.get('0102')}
                     </Menu.Item>
 
-                    <Menu.Item className="c_MenuItem link" key="council/list">
+                    <Menu.Item className="c_MenuItem link" key="council">
                         {I18N.get('council.0001')}
+                    </Menu.Item>
+
+                    <Menu.Item className="c_MenuItem link" key="blog">
+                        {I18N.get('0110')}
                     </Menu.Item>
 
                     <Menu.Item className="c_MenuItem link" key="ambassadors">
@@ -248,6 +252,7 @@ export default class extends BaseComponent {
     clickItem(e) {
 
         const key = e.key
+
         if (_.includes([
             'landing',
             'home',
@@ -274,17 +279,16 @@ export default class extends BaseComponent {
             'faq',
             'contact',
             'slack',
-            'council/list'
+            'council'
         ], key)) {
 
             if (key === 'landing') {
                 this.props.history.push('/')
-                window.location.reload()
             } else {
                 this.props.history.push('/' + e.key)
             }
-        }
-        else if (key === 'logout') {
+
+        } else if (key === 'logout') {
             Modal.confirm({
                 title: 'Are you sure you want to logout?',
                 content: '',
@@ -298,9 +302,12 @@ export default class extends BaseComponent {
                 }
             })
         } else if (key === 'profile') {
-            this.props.history.push('/profile/teams')
-        }
-        else if (_.includes([
+            this.props.history.push('/profile/info')
+
+        } else if (key === 'blog') {
+            window.location.href = 'https://blog.cyberrepublic.org'
+
+        } else if (_.includes([
             'en',
             'zh'
         ], key)) {

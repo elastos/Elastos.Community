@@ -38,13 +38,10 @@ export default createContainer(Component, (state)=>{
                     // General
                     firstName: formData.firstName,
                     lastName: formData.lastName,
-                    bio: formData.bio,
                     gender: formData.gender,
                     country: formData.country,
                     timezone: formData.timezone,
                     avatar: state.avatar_url,
-                    avatarFilename: state.avatar_filename,
-                    avatarFileType: state.avatar_type,
                     walletAddress: formData.walletAddress,
 
                     // Social Media
@@ -60,8 +57,6 @@ export default createContainer(Component, (state)=>{
                     beOrganizer: formData.beOrganizer === 'yes',
                     isDeveloper: formData.isDeveloper === 'yes',
                 },
-
-                removeAttachment: state.removeAttachment
             }
 
             if(this.is_admin){

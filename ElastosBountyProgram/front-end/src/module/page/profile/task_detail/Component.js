@@ -5,6 +5,7 @@ import TaskDetail from '@/module/task/Container'
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import Footer from '@/module/layout/Footer/Container';
 import config from '@/config'
+import I18N from '@/I18N'
 import './style.scss'
 import '../../admin/admin.scss'
 import { Col, Row, Breadcrumb, Icon } from 'antd'
@@ -38,8 +39,8 @@ export default class extends StandardPage {
                                 <Breadcrumb.Item href="/">
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
-                                <Breadcrumb.Item>Profile</Breadcrumb.Item>
-                                <Breadcrumb.Item href="/profile/tasks">Tasks</Breadcrumb.Item>
+                                <Breadcrumb.Item>{I18N.get('0200')}</Breadcrumb.Item>
+                                <Breadcrumb.Item href="/profile/tasks">{I18N.get('0006')}</Breadcrumb.Item>
                                 <Breadcrumb.Item>
                                     {this.props.task.name}
                                 </Breadcrumb.Item>

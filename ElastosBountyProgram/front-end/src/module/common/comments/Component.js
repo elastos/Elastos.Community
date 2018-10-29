@@ -2,6 +2,7 @@ import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import {Form, Col, Row, List, Avatar, Icon, Divider, Button, Input, Mention, Modal} from 'antd'
 import config from '@/config'
+import {MAX_LENGTH_COMMENT} from '@/config/constant'
 import './style.scss'
 import moment from 'moment'
 import _ from 'lodash'
@@ -74,9 +75,9 @@ class C extends BaseComponent {
         const allUsers = _.map(this.props.all_users, (user) => user.username)
         const {getFieldDecorator} = this.props.form
         const comment_fn = getFieldDecorator('comment', {
-            rules: [
-                {required: true, message: 'Please input your comment!'}
-            ],
+            rules: [{
+                required: true, message: 'Please input your comment!'
+            }],
             initialValue: Mention.toContentState('')
         })
         const comment_el = (
@@ -91,6 +92,8 @@ class C extends BaseComponent {
         const headline_fn = getFieldDecorator('headline', {
             rules: [{
                 max: 100, message: 'Headline is too long'
+            }, {
+                required: this.props.headlines, message: 'Please input headline!'
             }],
             initialValue: ''
         })
@@ -193,20 +196,75 @@ class C extends BaseComponent {
                 return
             }
 
-            const words = comment.match(/@*[^@\s]+/g)
+            const mentions = Mention.getMentions(Mention.toContentState(comment))
 
-            if (words) {
-                return (
-                    <div>
-                        {_.map(words, (word, ind) => /[ ]@[^@\s]+/.test(word)
-                            ? <a key={ind} onClick={() => this.showUserProfile(word.replace('@', ''))}>{word} </a>
-                            : <span key={ind}>{word} </span>
-                        )}
-                    </div>
-                )
+            /*
+            ** Format visuals
+            */
+            const spanCreator = (content, key) => {
+                return <span key={key} className="non-mention">{content}</span>
+            }
+            const mentionCreator = (mention, key) => {
+                return <a key={key} onClick={() => this.showUserProfile(mention.replace('@', ''))}>
+                    {mention}
+                </a>
             }
 
-            return
+            /*
+            ** Recursive
+            ** Convert a comment into a lookup, split by mentions
+            */
+            const splitter = (mentionIndex, content) => {
+                if (mentionIndex >= mentions.length) {
+                    return content
+                }
+
+                const mention = mentions[mentionIndex]
+                const splits = content.split(mention)
+                const innerSplits = _.map(splits, (split) => splitter(mentionIndex + 1, split))
+
+                return {
+                    splits: innerSplits,
+                    connector: mention
+                }
+            }
+
+            /*
+            ** Recursive
+            ** Format the lookup into visual components
+            */
+            const formatSplit = (split, ind = 0) => {
+                if (_.isString(split)) {
+                    return spanCreator(split, ind)
+                }
+
+                /*
+                ** Mentions go between the splits, so for an array of N splits,
+                ** we want to 'cross' it with an array of N-1 mentions.
+                ** [A,B,C] cross [X,Y] = [A,X,B,Y,C]
+                **
+                ** Note the React key magic, splits get keys equal to their indices,
+                ** whereas mentions indices are offset by the splits length for uniqueness
+                ** (though the result is not sequential)
+                */
+                const innerSplits = _.map(split.splits, formatSplit)
+                const keyedMentions = _.times(innerSplits.length - 1,
+                    (index) => mentionCreator(split.connector, innerSplits.length + index))
+
+                return _.compact(_.flatten(_.zip(innerSplits, keyedMentions)))
+            }
+
+            // Build the lookup
+            const fragments = splitter(0, comment)
+
+            // Format the lookup
+            const formatted = formatSplit(fragments)
+
+            return (
+                <div>
+                    {formatted}
+                </div>
+            )
         }
 
         const commentItems = _.map(comments, (comment, ind) =>
@@ -273,6 +331,27 @@ class C extends BaseComponent {
     handleSubmit(e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
+            const commentPlainText = values.comment.getPlainText()
+
+            if (!commentPlainText) {
+                this.props.form.setFields({
+                    comment: {
+                        errors: [new Error('Please input comment')],
+                    }
+                });
+                return;
+            }
+
+            if (commentPlainText.length > MAX_LENGTH_COMMENT) {
+                this.props.form.setFields({
+                    comment: {
+                        value: values.comment,
+                        errors: [new Error('Comment is too long')],
+                    }
+                });
+                return;
+            }
+
             if (!err) {
                 this.props.postComment(this.props.type,
                     this.props.reduxType,

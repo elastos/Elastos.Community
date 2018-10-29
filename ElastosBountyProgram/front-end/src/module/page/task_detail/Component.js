@@ -1,5 +1,6 @@
 import React from 'react';
 import StandardPage from '../StandardPage';
+import I18N from '@/I18N'
 import Footer from '@/module/layout/Footer/Container'
 
 // TODO: this is backwards and confusing
@@ -35,8 +36,8 @@ export default class extends StandardPage {
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
                         {!this.props.loading && (this.props.task.category === TASK_CATEGORY.SOCIAL ?
-                            <Link to="/social">Social {_.capitalize(this.props.task.type)}s</Link> :
-                            <Link to="/developer">Developer {_.capitalize(this.props.task.type)}s</Link>)
+                            <Link to="/social">{I18N.get('taks.application.social')} {_.capitalize(this.props.task.type)}s</Link> :
+                            <Link to="/developer">{I18N.get('taks.application.developer')} {_.capitalize(this.props.task.type)}s</Link>)
                         }
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>

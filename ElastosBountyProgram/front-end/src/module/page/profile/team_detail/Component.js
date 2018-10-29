@@ -5,6 +5,7 @@ import Footer from '@/module/layout/Footer/Container';
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import { Breadcrumb, Col, Icon, Row, Spin } from 'antd';
 import TeamDetail from '@/module/team/Container';
+import I18N from '@/I18N'
 import StandardPage from '../../StandardPage';
 
 export default class extends StandardPage {
@@ -34,8 +35,8 @@ export default class extends StandardPage {
                                 <Breadcrumb.Item href="/">
                                     <Icon type="home" />
                                 </Breadcrumb.Item>
-                                <Breadcrumb.Item>Profile</Breadcrumb.Item>
-                                <Breadcrumb.Item href="/profile/tasks">Teams</Breadcrumb.Item>
+                                <Breadcrumb.Item>{I18N.get('0200')}</Breadcrumb.Item>
+                                <Breadcrumb.Item href="/profile/tasks">{I18N.get('0005')}</Breadcrumb.Item>
                                 <Breadcrumb.Item>
                                     {this.props.team.name}
                                 </Breadcrumb.Item>

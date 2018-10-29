@@ -144,6 +144,8 @@ class C extends BaseComponent {
                     </div>
                 )) || null}
 
+                {detail.status && generateRow(I18N.get('profile.tasks.table.status'), `${detail.status} ${!!_.find(detail.candidates, {status: TASK_CANDIDATE_STATUS.APPROVED}) ? '- (assigned)' : ''}`)}
+
                 {detail.goals && generateRow(I18N.get('task.goals'), detail.goals, 'task-goals')}
 
                 {detail.descBreakdown && generateRow(I18N.get('task.descBreakdown'),
@@ -168,7 +170,7 @@ class C extends BaseComponent {
         return (
             <div className="app-footer valign-wrapper halign-wrapper">
                 <Button onClick={this.showTaskDetail.bind(this)}>
-                    {I18N.get('task.applyMessage')}
+                    {this.isAssigned() ? I18N.get('project.detail.view') : I18N.get('task.applyMessage')}
                 </Button>
             </div>
         )
@@ -298,6 +300,10 @@ class C extends BaseComponent {
         }
 
         return _.trim([user.profile.firstName, user.profile.lastName].join(' '))
+    }
+
+    isAssigned() {
+        return !!_.find(this.props.detail.candidates, {status: TASK_CANDIDATE_STATUS.APPROVED})
     }
 }
 

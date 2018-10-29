@@ -56,7 +56,11 @@ class C extends BaseComponent {
         this.props.resetTaskDetail()
     }
 
+    /**
+     * Not used, for bidding projects we hide comments anyways, and otherwise it should just be a public comments thread
+     */
     canComment() {
+
         const isTaskCandidate = _.find(this.props.task.candidates, (candidate) => {
             return candidate.user && candidate.user._id === this.props.currentUserId &&
                 candidate.status === TASK_CANDIDATE_STATUS.APPROVED
@@ -204,7 +208,7 @@ class C extends BaseComponent {
                             * unless you've exhausted all the teams, but even then we can inform
                             *   the user of this in a better way than hiding
                             */}
-                            {this.props.page !== 'LEADER' &&
+                            {this.props.page !== 'LEADER' && !this.props.is_admin &&
                                 !isTaskOwner && this.renderApplyButton()}
 
                             {/*
@@ -223,14 +227,20 @@ class C extends BaseComponent {
                             * Comments
                             * - not enabled for bidding projects to minimize confusion in a closed bid
                             */}
-                            {!this.props.task.bidding && (this.props.page === 'LEADER' ||
-                                this.props.page === 'ADMIN') && this.canComment() &&
+                            {!detail.bidding ?
                                 <Row>
                                     <br/>
                                     <Comments type="task" canPost={true}
                                         canSubscribe={!isTaskOwner} model={this.props.taskId}
                                         returnUrl={`/project-detail/${this.props.taskId}`}
                                     />
+                                </Row> :
+                                <Row>
+                                    <Col className="center">
+                                        <br/>
+                                        <br/>
+                                        <span className="no-info">{I18N.get('project.detail.comments_disabled')}</span>
+                                    </Col>
                                 </Row>
                             }
                         </div>
@@ -261,7 +271,7 @@ class C extends BaseComponent {
     renderViewApplicationModal() {
         return (
             <Modal
-                className="project-detail-nobar"
+                className="project-detail-nobar no-modal-padding"
                 visible={this.state.showAppModal}
                 onOk={this.handleAppModalOk}
                 onCancel={this.handleAppModalCancel}
@@ -282,6 +292,7 @@ class C extends BaseComponent {
             return
         }
 
+        // for bidding we must be in PENDING
         if (detail.bidding && _.indexOf([TASK_STATUS.CREATED, TASK_STATUS.PENDING], detail.status) < 0) {
             return
         }
@@ -389,12 +400,12 @@ class C extends BaseComponent {
             {pendingCandidates.length && this.renderCandidates(pendingCandidates)}
 
             {/* this works because we filtered pendingCandidates after we saved the count */}
-            {(this.props.page !== 'ADMIN' || !this.props.is_admin) &&
+            {(this.props.page !== 'ADMIN' || !this.props.is_admin) && this.props.task.createdBy !== this.props.currentUserId &&
                 detail.bidding && bidsLeft}
 
             {!detail.bidding && pendingCandidates.length === 0 &&
                 <div className="no-data no-info">
-                    There are no applications yet
+                    {I18N.get('project.detail.noapplications')}
                 </div>
             }
         </Row>
@@ -422,7 +433,7 @@ class C extends BaseComponent {
 
     renderCandidates(candidates) {
         const columns = [{
-            title: 'Name',
+            title: I18N.get('project.detail.columns.name'),
             key: 'name',
             render: (candidate) => {
                 return (
@@ -445,8 +456,8 @@ class C extends BaseComponent {
                                         candidate.team.pictures[0].url)} />
                                 {candidate.team.name}
                                 {this.loggedInUserOwnerOfCandidate(candidate) ?
-                                    <span className="no-info"> (Owner)</span> :
-                                    <span className="no-info"> (Member)</span>
+                                    <span className="no-info"> ({I18N.get('task.owner')})</span> :
+                                    <span className="no-info"> ({I18N.get('role.member')})</span>
                                 }
                             </a>
                         </div>
@@ -454,7 +465,7 @@ class C extends BaseComponent {
                     </div>)
             }
         }, {
-            title: 'Action',
+            title: I18N.get('project.detail.columns.action'),
             key: 'action',
             render: (candidate) => {
                 return (
@@ -467,7 +478,7 @@ class C extends BaseComponent {
                                         Bid: {candidate.bid} ELA
                                     </span>
                                 }
-                                {(this.props.page === 'ADMIN' || this.isTaskOwner() ||
+                                {(this.props.page === 'ADMIN' || this.isTaskOwner() || this.props.is_admin ||
                                     this.loggedInUserBelongsToCandidate(candidate)) && (
                                     <span>
                                         <Divider type="vertical"/>
@@ -484,7 +495,7 @@ class C extends BaseComponent {
                                         </a>
                                     </span>)
                                 }
-                                {this.isTaskOwner() &&
+                                {(this.isTaskOwner() || this.props.is_admin) &&
                                     <span className="inline-block">
                                         <Divider type="vertical"/>
                                         <a onClick={this.approveUser.bind(this, candidate._id)}>
@@ -522,7 +533,7 @@ class C extends BaseComponent {
         let currentContributors = this.getCurrentContributorsData()
 
         const columns = [{
-            title: 'Name',
+            title: I18N.get('project.detail.columns.name'),
             key: 'name',
             render: (candidate) => {
                 return (
@@ -550,7 +561,7 @@ class C extends BaseComponent {
                     </div>)
             }
         }, {
-            title: 'Action',
+            title: I18N.get('project.detail.columns.action'),
             key: 'action',
             render: (candidate) => {
                 return (

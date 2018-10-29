@@ -145,7 +145,7 @@
   opacity: 0.66;
 }
 
-.cr-btn {
+.ant-btn.cr-btn {
   border-radius: 0;
   border: 1px solid #0F2631;
   background-color: $bg_blue;
@@ -153,38 +153,29 @@
   > span {
     color: #000;
     font-family: "komu-a", sans-serif;
-    font-size: 28px;
-    line-height: 33px;
+    font-size: 16px;
+    line-height: 28px;
     letter-spacing: 0.1em;
   }
   padding: 15px 31px 10px;
   height: 53px;
 }
 
+.cr-input {
+  .ant-select-selection {
+    border-radius: 0;
+    border: 1px solid #434D72;
+  }
+}
+
 .mirror-image {
   transform: scaleX(-1);
 }
 
-.cr-table-scroll {
-  .ant-table-scroll {
-    .ant-table-body::-webkit-scrollbar {
-      width: 10px;
-      background: white;
-    }
-    .ant-table-body::-webkit-scrollbar-track {
-      background: $bg_obsidian_transparent;
-      border: 4px solid white;
-    }
-    .ant-table-body::-webkit-scrollbar-thumb {
-      height: 40px;
-      background: $bg_obsidian;
-      border-radius: 10px;
-    }
-  }
-}
 h3.with-gizmo {
   position: relative;
 }
+
 h3.with-gizmo:before {
   position: absolute;
   top: -$gap_0;
@@ -195,4 +186,10 @@ h3.with-gizmo:before {
   background-image: url("/assets/images/tri-square-dark.svg");
   background-size: 12px 12px;
   content: "";
+}
+
+.no-modal-padding {
+  .ant-modal-body {
+    padding: 0;
+  }
 }

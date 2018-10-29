@@ -1,15 +1,15 @@
 import React from 'react'
-import StandardPage from '../../StandardPage'
+import BaseComponent from '@/model/BaseComponent'
 import I18N from '@/I18N'
 import './style.scss'
 import { Col, Row, Card, Button, Breadcrumb, Icon, List, Spin, Avatar, Modal } from 'antd'
 import _ from 'lodash'
 
-export default class extends StandardPage {
-    ord_renderContent(){
+export default class extends BaseComponent {
+
+    ord_render(){
         return (
-            <div className="p_council">
-                <div className="ebp-header-divider"></div>
+            <div className="p_councilList">
                 <div className="p_admin_index ebp-wrap">
                     <div className="d_box">
                         <div className="p_content">
@@ -20,6 +20,7 @@ export default class extends StandardPage {
             </div>
         );
     }
+
     renderList(){
         const listData = this.getListData();
         const p_list = {
@@ -35,7 +36,7 @@ export default class extends StandardPage {
 
         return (
             <div className="d_list">
-            
+
                 <List {...p_list} renderItem={item => (
                     <List.Item key={item.title} >
                         <List.Item.Meta
@@ -45,12 +46,13 @@ export default class extends StandardPage {
                         <div style={{position:'relative',top:20}}>{item.date}</div>
                     </List.Item>
                     )}
-                /> 
+                />
 
-                <h4 style={{marginTop:24}}>Any suggestions, proposals can be sent to <a href="mailto:council@cyberrepublic.org">council@cyberrepublic.org</a></h4>
+                <h4 style={{marginTop:24}}>{I18N.get('council.list.proposals')} <a href="mailto:council@cyberrepublic.org">council@cyberrepublic.org</a></h4>
             </div>
         );
     }
+
     getListData(){
         return [
             {

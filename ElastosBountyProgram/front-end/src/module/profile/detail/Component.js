@@ -3,9 +3,9 @@ import BaseComponent from '@/model/BaseComponent'
 import UserContactForm from '@/module/form/UserContactForm/Container'
 import moment from 'moment-timezone'
 import Comments from '@/module/common/comments/Container'
-import { Col, Row, Tabs, Icon, Button, Divider, Spin } from 'antd'
+import {Col, Row, Tabs, Icon, Button, Spin, Table} from 'antd'
 import I18N from '@/I18N'
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE} from '@/constant'
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE, USER_AVATAR_DEFAULT, TEAM_TYPE} from '@/constant'
 import './style.scss'
 import config from '@/config'
 import MediaQuery from 'react-responsive'
@@ -15,12 +15,22 @@ const TabPane = Tabs.TabPane
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
 export default class extends BaseComponent {
+
+    ord_states() {
+        return {
+        }
+    }
+
     async componentDidMount() {
-        this.props.getMember(this.props.userId)
+        this.props.getMember(this.props.currentUserId)
+        this.props.getUserTeams(this.props.currentUserId)
+        this.props.getTasks(this.props.currentUserId)
     }
 
     componentWillUnmount() {
         this.props.resetMemberDetail()
+        this.props.resetTeams()
+        this.props.resetTasks()
     }
 
     // TODO: add twitter, telegram, linkedIn, FB
@@ -32,7 +42,6 @@ export default class extends BaseComponent {
                 </div>
             )
         }
-
         let roleName = this.props.member.role
         if (roleName === USER_ROLE.LEADER) {
             roleName = 'ORGANIZER'
@@ -102,6 +111,8 @@ export default class extends BaseComponent {
                     {this.renderDescription()}
                 </div>
 
+                {this.renderProjectsTasks()}
+
                 <Row>
                     <Col span={24} className="gridCol">
                         <Comments type="user" reduxType="member" canPost={true} model={this.props.member}
@@ -117,7 +128,7 @@ export default class extends BaseComponent {
     renderBanner(isMobile) {
         return (
             <div className={`profile-banner ${isMobile ? 'profile-banner-mobile' : ''}`}>
-                <span style={{ backgroundImage: `url('/assets/images/profile-banner.png')` }}></span>
+                <span style={{ backgroundImage: this.getBannerWithFallback(this.props.member.profile.banner) }}></span>
             </div>
         )
     }
@@ -179,9 +190,15 @@ export default class extends BaseComponent {
         )
     }
 
+    getBannerWithFallback(banner) {
+        return _.isEmpty(banner)
+            ? `url('/assets/images/profile-banner.png')`
+            : `url(${banner})`
+    }
+
     getAvatarWithFallback(avatar) {
         return _.isEmpty(avatar)
-            ? '/assets/images/Elastos_Logo.png'
+            ? USER_AVATAR_DEFAULT
             : avatar
     }
 
@@ -212,6 +229,7 @@ export default class extends BaseComponent {
                 {profile.facebook && <a href={profile.facebook} target="_blank"><i class="fab fa-facebook-square fa-2x"></i></a>}
                 {profile.reddit && <a href={profile.reddit} target="_blank"><i className="fab fa-reddit fa-2x"/></a>}
                 {profile.linkedin && <a href={profile.linkedin} target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>}
+                {profile.github && <a href={profile.github} target="_blank"><i class="fab fa-github fa-2x"></i></a>}
             </div>
         )
     }
@@ -231,12 +249,111 @@ export default class extends BaseComponent {
         return <Row>
             <Col span={24}>
                 {!this.props.is_login ? <div>
-                        You must login/register first to send a message
+                        {I18N.get('profile.detail.requiredlogin')}
                     </div> :
                     <UserContactForm recipient={this.props.member}/>
                 }
             </Col>
         </Row>
+    }
+
+    renderProjectsTasks() {
+        const teams = _.map(this.props.teams, (team) => {
+            return {
+                _id: team._id,
+                type: 'Team',
+                name: team.name,
+                date: team.updatedAt
+            }
+        })
+        const circles = _.map(this.props.member.circles, (circle) => {
+            return {
+                _id: circle._id,
+                type: 'Circle',
+                name: circle.name,
+                date: circle.updatedAt
+            }
+        })
+        const projects = _.map(this.props.tasks, (task) => {
+            return {
+                _id: task._id,
+                type: _.capitalize(task.type),
+                name: task.name,
+                date: task.updatedAt
+            }
+        })
+        const data = _.concat(teams, circles, projects)
+        const columns = [{
+            title: I18N.get('profile.detail.columns.type'),
+            key: 'type',
+            width: 150,
+            render: entry => {
+                return (
+                    <div key={entry._id}>
+                        {entry.type}
+                    </div>
+                )
+            }
+        }, {
+            title: I18N.get('profile.detail.columns.name'),
+            key: 'name',
+            width: 350,
+            render: entry => {
+                return (
+                    <div key={entry._id}>
+                        {entry.name}
+                    </div>
+                )
+            }
+        }, {
+            title: I18N.get('profile.detail.columns.date'),
+            key: 'date',
+            width: 200,
+            render: entry => {
+                return (
+                    <div key={entry._id}>
+                        {moment(entry.date).format('MM/DD/YYYY')}
+                    </div>
+                )
+            }
+        }, {
+            title: '',
+            key: 'view',
+            width: 100,
+            render: entry => {
+                return (
+                    <Button key={entry._id} className="cr-btn" onClick={() => {
+                        if (entry.type === 'Team') {
+                            this.linkTeamDetail(entry._id)
+                        } else if (entry.type === 'Circle') {
+                            this.linkCircleDetail(entry._id)
+                        } else if (entry.type === 'CR100') {
+                            this.linkCR100Detail((entry._id))
+                        } else {
+                            this.linkProjectDetail((entry._id))
+                        }
+                    }}>
+                        {I18N.get('profile.view')}
+                    </Button>
+                )
+            }
+        }]
+        return (
+            <div className="projects-tasks">
+                <div className="pt-header">
+                    <h3 className="with-gizmo">{I18N.get('profile.projectsTasks')}</h3>
+                </div>
+                <div className="pt-list">
+                    <Table
+                        dataSource={data}
+                        columns={columns}
+                        loading={this.props.loadingList}
+                        rowKey="_id"
+                        pagination={false}>
+                    </Table>
+                </div>
+            </div>
+        )
     }
 
     getCountryName(countryCode) {
@@ -257,5 +374,21 @@ export default class extends BaseComponent {
 
     unfollowUser() {
         this.props.unsubscribe('user', this.props.member._id)
+    }
+
+    linkTeamDetail(teamId) {
+        this.props.history.push(`/team-detail/${teamId}`)
+    }
+
+    linkCircleDetail(circleId) {
+        this.props.history.push(`/circle-detail/${circleId}`)
+    }
+
+    linkCR100Detail(taskId) {
+        this.props.history.push(`/project-detail/${taskId}`)
+    }
+
+    linkProjectDetail(taskId) {
+        this.props.history.push(`/task-detail/${taskId}`)
     }
 }
