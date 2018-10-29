@@ -56,7 +56,11 @@ class C extends BaseComponent {
         this.props.resetTaskDetail()
     }
 
+    /**
+     * Not used, for bidding projects we hide comments anyways, and otherwise it should just be a public comments thread
+     */
     canComment() {
+
         const isTaskCandidate = _.find(this.props.task.candidates, (candidate) => {
             return candidate.user && candidate.user._id === this.props.currentUserId &&
                 candidate.status === TASK_CANDIDATE_STATUS.APPROVED
@@ -223,14 +227,20 @@ class C extends BaseComponent {
                             * Comments
                             * - not enabled for bidding projects to minimize confusion in a closed bid
                             */}
-                            {!this.props.task.bidding && (this.props.page === 'LEADER' ||
-                                this.props.page === 'ADMIN') && this.canComment() &&
+                            {!detail.bidding ?
                                 <Row>
                                     <br/>
                                     <Comments type="task" canPost={true}
                                         canSubscribe={!isTaskOwner} model={this.props.taskId}
                                         returnUrl={`/project-detail/${this.props.taskId}`}
                                     />
+                                </Row> :
+                                <Row>
+                                    <Col className="center">
+                                        <br/>
+                                        <br/>
+                                        <span className="no-info">Comments are disabled for closed bidding projects/tasks</span>
+                                    </Col>
                                 </Row>
                             }
                         </div>

@@ -302,7 +302,7 @@ export default class extends BaseComponent {
                 }
             })
         } else if (key === 'profile') {
-            this.props.history.push('/profile/teams')
+            this.props.history.push('/profile/info')
 
         } else if (key === 'blog') {
             window.location.href = 'https://blog.cyberrepublic.org'
