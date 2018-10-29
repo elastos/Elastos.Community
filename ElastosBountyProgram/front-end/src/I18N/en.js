@@ -400,6 +400,8 @@ const en = {
     'project.detail.columns.name': 'Name',
     'project.detail.columns.action': 'Action',
 
+    'project.detail.comments_disabled': 'Comments are disabled for closed bidding projects/tasks',
+
     'team.detail.team_active': 'Your team is currently active',
 
     'team.create.error.nameRequired': 'Team name is required',

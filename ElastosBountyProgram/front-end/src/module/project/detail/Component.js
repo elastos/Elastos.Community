@@ -239,7 +239,7 @@ class C extends BaseComponent {
                                     <Col className="center">
                                         <br/>
                                         <br/>
-                                        <span className="no-info">Comments are disabled for closed bidding projects/tasks</span>
+                                        <span className="no-info">{I18N.get('project.detail.comments_disabled')}</span>
                                     </Col>
                                 </Row>
                             }

@@ -144,6 +144,8 @@ class C extends BaseComponent {
                     </div>
                 )) || null}
 
+                {detail.status && generateRow(I18N.get('task.status'), `${detail.status} ${!!_.find(detail.candidates, {status: TASK_CANDIDATE_STATUS.APPROVED}) ? '- (assigned)' : ''}`)}
+
                 {detail.goals && generateRow(I18N.get('task.goals'), detail.goals, 'task-goals')}
 
                 {detail.descBreakdown && generateRow(I18N.get('task.descBreakdown'),
