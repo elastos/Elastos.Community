@@ -25,7 +25,7 @@ export default class extends StandardPage {
         this.state = {
 
             // save the page you are on
-            subpage: this.props.council.tab || 'board',
+            subpage: this.props.council.tab || 'list',
             loading: false
         }
     }
@@ -35,9 +35,11 @@ export default class extends StandardPage {
             <div className="p_council">
 
                 <Tabs defaultActiveKey={this.state.subpage} onChange={this.tabChange.bind(this)}>
+                    {/*
                     <TabPane key="board" tab="council">
                         <CouncilBoard/>
                     </TabPane>
+                    */}
                     <TabPane key="list" tab="list">
                         <CouncilList/>
                     </TabPane>
