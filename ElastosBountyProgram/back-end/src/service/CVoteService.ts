@@ -27,9 +27,9 @@ export default class extends Base {
         // TODO: this should probably be COUNCIL role
         if ([
 
-            '5b9024b744293737fd6532e2',
-            '5b9024b744293737fd6532e3',
-            '5b9024b744293737fd6532e4'
+            '5b28be2784f6f900350d30b9',
+            '5b367c128f23a70035d35425',
+            '5bcf21f030826d68a940b017'
 
         ].indexOf(this.currentUser._id.toString()) < 0) {
             throw 'cvoteservice.create - invalid user role'
@@ -294,10 +294,10 @@ export default class extends Base {
     private isCouncil() {
         return [
 
-            '5b9024b744293737fd6532e2',
-            '5b9024b744293737fd6532e3',
-            '5b9024b744293737fd6532e4',
-            '5b9024b744293737fd6532e5'
+            '5b28be2784f6f900350d30b9',
+            '5b367c128f23a70035d35425',
+            '5bcf21f030826d68a940b017',
+            '5bcf21f030826d68a940b018'
 
         ].indexOf(this.currentUser._id.toString()) >= 0
     }
