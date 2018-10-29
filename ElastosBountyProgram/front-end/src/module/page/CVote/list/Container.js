@@ -8,10 +8,10 @@ export default createContainer(Component, (state) => {
         isLogin : state.user.is_login,
         isCouncil: [
 
-            '5b9024b744293737fd6532e2',
-            '5b9024b744293737fd6532e3',
-            '5b9024b744293737fd6532e4',
-            '5b9024b744293737fd6532e5'
+            '5b28be2784f6f900350d30b9',
+            '5b367c128f23a70035d35425',
+            '5bcf21f030826d68a940b017',
+            '5bcf21f030826d68a940b018'
 
         ].indexOf(state.user.current_user_id) >= 0
     }

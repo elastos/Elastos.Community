@@ -50,7 +50,7 @@ const App = () => {
                         );
                     })
                 }
-            </Switch>å
+            </Switch>
         </div>
     );
 };
