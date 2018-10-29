@@ -93,7 +93,7 @@ class C extends BaseComponent {
         )
 
         const motto_fn = getFieldDecorator('motto', {
-            rules: [{required: true, message: 'Motto is required'}],
+            rules: [],
             initialValue: user.profile.motto
         })
         const motto_el = (
