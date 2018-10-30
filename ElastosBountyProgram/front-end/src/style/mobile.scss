@@ -155,7 +155,18 @@ CR 100, Empower 35, Training
     .textContainer, .bar {
       display: none;
     }
+
+    .social-icons {
+      text-align: center;
+      padding-left: 20px;
+    }
+
+    ul.social > li.title {
+      text-align: center;
+      padding-bottom: 8px;
+    }
   }
+
 
   /*
   ****************************************************************************
