@@ -54,7 +54,8 @@ $landingPageWidth: 1152px;
       font-size: 14px;
     }
   }
-  .indicator-container {
+  .indicator-container,
+  .top-indicator-container {
     position: absolute;
     top: 152px;
     left: 74px;
@@ -69,6 +70,10 @@ $landingPageWidth: 1152px;
       margin-left: $gap_0;
       margin-right: $gap_2;
     }
+  }
+
+  .top-indicator-container {
+    top: 52px;
   }
 }
 

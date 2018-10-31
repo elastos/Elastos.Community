@@ -47,6 +47,13 @@ export default class extends StandardPage {
                     className="circle-img"
                     src="/assets/images/emp35/circle_group.svg"
                 />
+                {circle.tasks &&
+                    <div className="top-indicator-container">
+                        <Icon type="check" style={{ fontSize: 11 }}/>
+                        <div className="indicator">{circle.tasks.count}</div>
+                        <div className="indicator no-margin">${circle.tasks.budget}</div>
+                    </div>
+                }
                 <div className="indicator-container">
                     <Icon type="message" style={{ fontSize: 11 }}/>
                     <div className="indicator">{circle.comments.length}</div>
