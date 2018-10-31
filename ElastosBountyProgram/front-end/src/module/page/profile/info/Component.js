@@ -48,11 +48,11 @@ export default class extends StandardPage {
                             </MediaQuery>
                             <Row>
                                 <MediaQuery minWidth={720}>
-                                    <Col span={4} className="admin-right-column wrap-box-navigator">
+                                    <Col span={4} className="admin-left-column wrap-box-navigator">
                                         <Navigator selectedItem={'profileInfo'} />
                                     </Col>
                                 </MediaQuery>
-                                <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-left-column wrap-box-user">
+                                <Col xs={{span: 24}} md={{span: 20}} className="c_ProfileContainer admin-right-column wrap-box-user">
                                     <Profile user={this.props.user}/>
                                 </Col>
                             </Row>
