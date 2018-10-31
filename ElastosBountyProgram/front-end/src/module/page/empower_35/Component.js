@@ -6,6 +6,7 @@ import I18N from '@/I18N'
 import './style.scss'
 import { Col, Row, Card, Button, message, Spin, Avatar, Modal, Icon } from 'antd'
 import _ from 'lodash'
+import numeral from 'numeral'
 
 export default class extends StandardPage {
     ord_props() {
@@ -14,15 +15,14 @@ export default class extends StandardPage {
     }
 
     async componentDidMount() {
-        await this.props.getTeams({ type: TEAM_TYPE.CRCLE })
+        await this.props.loadAllCircles()
     }
 
     componentWillUnmount() {
-        this.props.resetAllTeams()
     }
 
     checkForLoading(followup) {
-        return this.props.loading
+        return this.props.all_circles_loading
             ? <div className="full-width halign-wrapper">
                 <Spin size="large"/>
             </div>
@@ -48,6 +48,13 @@ export default class extends StandardPage {
                     className="circle-img"
                     src="/assets/images/emp35/circle_group.svg"
                 />
+                {circle.tasks &&
+                    <div className="top-indicator-container">
+                        <Icon type="check" style={{ fontSize: 11 }}/>
+                        <div className="indicator">{circle.tasks.count}</div>
+                        <div className="indicator no-margin">{numeral(circle.tasks.budget).format('($0a)')}</div>
+                    </div>
+                }
                 <div className="indicator-container">
                     <Icon type="message" style={{ fontSize: 11 }}/>
                     <div className="indicator">{circle.comments.length}</div>
@@ -78,7 +85,7 @@ export default class extends StandardPage {
     }
 
     buildCircles(query) {
-        const circles = this.props.all_teams || {};
+        const circles = this.props.all_circles || {};
         const queriedCircles = _.filter(_.values(circles), query)
         return this.buildCirclesWorker(queriedCircles, 6)
     }

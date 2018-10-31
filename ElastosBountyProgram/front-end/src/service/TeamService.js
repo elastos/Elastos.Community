@@ -32,7 +32,8 @@ export default class extends BaseService {
             method: 'get',
             data: {
                 ...qry,
-                type: TEAM_TYPE.CRCLE
+                type: TEAM_TYPE.CRCLE,
+                includeTasks: true
             }
         })
 
