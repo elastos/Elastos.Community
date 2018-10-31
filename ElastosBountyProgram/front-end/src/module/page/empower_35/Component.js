@@ -53,8 +53,8 @@ export default class extends StandardPage {
                         <Icon type="check" style={{ fontSize: 11 }}/>
                         <div className="indicator">{circle.tasks.count}</div>
                         {circle.tasks.budget.usd > 0
-                            ? <div className="indicator no-margin">{numeral(circle.tasks.budget.usd).format('($0a)')}</div>
-                            : <div className="indicator no-margin">{numeral(circle.tasks.budget.ela).format('(0a ELA)')}</div>
+                            ? <div className="indicator no-margin">{numeral(circle.tasks.budget.usd / 100).format('($0a)')}</div>
+                            : <div className="indicator no-margin">{numeral(circle.tasks.budget.ela / 1000).format('(0a)') + ' ELA'}</div>
                         }
                     </div>
                     : null
