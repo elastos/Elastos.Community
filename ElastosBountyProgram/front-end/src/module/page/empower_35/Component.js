@@ -14,15 +14,14 @@ export default class extends StandardPage {
     }
 
     async componentDidMount() {
-        await this.props.getTeams({ type: TEAM_TYPE.CRCLE })
+        await this.props.loadAllCircles()
     }
 
     componentWillUnmount() {
-        this.props.resetAllTeams()
     }
 
     checkForLoading(followup) {
-        return this.props.loading
+        return this.props.all_circles_loading
             ? <div className="full-width halign-wrapper">
                 <Spin size="large"/>
             </div>
@@ -78,7 +77,7 @@ export default class extends StandardPage {
     }
 
     buildCircles(query) {
-        const circles = this.props.all_teams || {};
+        const circles = this.props.all_circles || {};
         const queriedCircles = _.filter(_.values(circles), query)
         return this.buildCirclesWorker(queriedCircles, 6)
     }
