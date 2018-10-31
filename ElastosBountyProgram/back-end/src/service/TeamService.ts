@@ -464,7 +464,8 @@ export default class extends Base {
             if (param.includeTasks) {
                 const db_task = this.getDBModel('Task')
                 const tasks = await db_task.list({
-                    circle: team
+                    circle: team,
+                    status: constant.TASK_STATUS.APPROVED
                 })
 
                 const count = _.size(tasks)
