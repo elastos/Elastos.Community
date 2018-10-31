@@ -28,7 +28,14 @@ export const Team = {
     owner: {type: Schema.Types.ObjectId, ref: 'users'},
     members: [{type: Schema.Types.ObjectId, ref: 'user_team'}],
     pictures: [PictureSchema],
-    comments: [[CommentSchema]]
+    comments: [[CommentSchema]],
+    tasks: {
+        count: Number,
+        budget: {
+            usd: Number,
+            ela: Number
+        }
+    }
 };
 
 export const User_Team = {

@@ -460,6 +460,25 @@ export default class extends Base {
                     })
                 }
             }
+
+            if (param.includeTasks) {
+                const db_task = this.getDBModel('Task')
+                const tasks = await db_task.list({
+                    circle: team
+                })
+
+                const count = _.size(tasks)
+                const budgetUsd = _.sum(_.map(tasks, (task) => task.reward.usd || 0))
+                const budgetEla = _.sum(_.map(tasks, (task) => task.reward.ela || 0))
+
+                team.tasks = {
+                    count,
+                    budget: {
+                        usd: budgetUsd,
+                        ela: budgetEla
+                    }
+                }
+            }
         }
 
         return teams
