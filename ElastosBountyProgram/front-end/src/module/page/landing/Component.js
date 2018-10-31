@@ -45,7 +45,7 @@ export default class extends EmptyPage {
                     <div className="logo sized">
                         <img src="assets/images/logo.svg" alt="Cyber Republic" className="dsk"/>
                         <img src="assets/images/logo-mark.svg" className="mob"/>
-                        <div class="alpha-tag">{I18N.get('0000')}</div>
+                        <div class="alpha-tag dsk">{I18N.get('0000')}</div>
                     </div>
 
                     <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
@@ -1231,7 +1231,7 @@ export default class extends EmptyPage {
 
                     <h2 className="hasStatic">{I18N.get('landing.footer.header.1')}<br/> {I18N.get('landing.footer.header.2')}</h2>
 
-                    <div className="form-wrap">
+                    <div className="form-wrap footer-email">
                         <p>{I18N.get('landing.footer.note')}</p>
                         <form id="footer-form" className="signup-form" name="mailing-list" action="https://cyberrepublic.us19.list-manage.com/subscribe/post-json?u=acb5b0ce41bfe293d881da424&id=272f303492"
                             method="get">

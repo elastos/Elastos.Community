@@ -32,7 +32,7 @@ export default createContainer(Component, (state) => {
             '5b28be2784f6f900350d30b9',
             '5b367c128f23a70035d35425',
             '5bcf21f030826d68a940b017',
-            '5bcf21f030826d68a940b018'
+            '5b4c3ba6450ff10035954c80'
 
         ].indexOf(state.user.current_user_id) >= 0
     }

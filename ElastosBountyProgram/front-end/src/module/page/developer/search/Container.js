@@ -5,6 +5,7 @@ import TeamService from '@/service/TeamService';
 import _ from 'lodash'
 
 export default createContainer(Component, (state) => {
+
     const search = state.router.location.search
     let type = null
 
@@ -19,6 +20,7 @@ export default createContainer(Component, (state) => {
         ...state,
         preselect: type
     }
+
 }, () => {
     return {
     }

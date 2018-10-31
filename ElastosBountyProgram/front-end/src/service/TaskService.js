@@ -40,6 +40,7 @@ export default class extends BaseService {
 
         const taskRedux = this.store.getRedux('task')
 
+        // sets redux store task.loading = true
         this.dispatch(taskRedux.actions.loading_update(true))
 
         const result = await api_request({
