@@ -48,7 +48,7 @@ export default class extends StandardPage {
                     className="circle-img"
                     src="/assets/images/emp35/circle_group.svg"
                 />
-                {circle.tasks &&
+                {circle.tasks && circle.tasks.count &&
                     <div className="top-indicator-container">
                         <Icon type="check" style={{ fontSize: 11 }}/>
                         <div className="indicator">{circle.tasks.count}</div>
