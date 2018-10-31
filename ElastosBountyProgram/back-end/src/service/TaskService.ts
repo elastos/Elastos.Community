@@ -1015,12 +1015,14 @@ export default class extends Base {
 
         if (task.status === constant.TASK_STATUS.PENDING) {
             subject = 'ACTION REQUIRED: ' + subject
-            body += ` and it requires approval
-                    <br/>
-                    <br/>
-                    <a href="${process.env.SERVER_URL}/admin/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
-                    `
+            body += ` and it requires approval`
         }
+
+        body += `<br/>
+            <br/>
+            <a href="${process.env.SERVER_URL}/admin/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
+            `
+
 
         const adminUsers = await this.getAdminUsers()
 
