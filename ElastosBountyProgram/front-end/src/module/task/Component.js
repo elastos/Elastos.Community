@@ -39,7 +39,7 @@ export default class extends BaseComponent {
     renderMain() {
         return (
             <div className="c_TaskDetail">
-                {this.props.page === 'ADMIN' ? this.renderAdminHeader() : this.renderHeader()}
+                {this.props.page === 'ADMIN' || this.props.is_admin ? this.renderAdminHeader() : this.renderHeader()}
                 {this.state.editing ? this.renderEditForm() : this.renderDetail()}
             </div>
         )
