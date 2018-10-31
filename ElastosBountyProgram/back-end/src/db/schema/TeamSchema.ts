@@ -31,7 +31,10 @@ export const Team = {
     comments: [[CommentSchema]],
     tasks: {
         count: Number,
-        budget: Number
+        budget: {
+            usd: Number,
+            ela: Number
+        }
     }
 };
 

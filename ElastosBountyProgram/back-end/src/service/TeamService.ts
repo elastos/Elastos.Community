@@ -468,11 +468,15 @@ export default class extends Base {
                 })
 
                 const count = _.size(tasks)
-                const budget = _.sum(_.map(tasks, (task) => task.reward.usd || 0))
+                const budgetUsd = _.sum(_.map(tasks, (task) => task.reward.usd || 0))
+                const budgetEla = _.sum(_.map(tasks, (task) => task.reward.ela || 0))
 
                 team.tasks = {
                     count,
-                    budget
+                    budget: {
+                        usd: budgetUsd,
+                        ela: budgetEla
+                    }
                 }
             }
         }
