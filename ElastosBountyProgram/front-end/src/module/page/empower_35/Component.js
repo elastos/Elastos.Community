@@ -6,6 +6,7 @@ import I18N from '@/I18N'
 import './style.scss'
 import { Col, Row, Card, Button, message, Spin, Avatar, Modal, Icon } from 'antd'
 import _ from 'lodash'
+import numeral from 'numeral'
 
 export default class extends StandardPage {
     ord_props() {
@@ -51,7 +52,7 @@ export default class extends StandardPage {
                     <div className="top-indicator-container">
                         <Icon type="check" style={{ fontSize: 11 }}/>
                         <div className="indicator">{circle.tasks.count}</div>
-                        <div className="indicator no-margin">${circle.tasks.budget}</div>
+                        <div className="indicator no-margin">{numeral(circle.tasks.budget).format('($0a)')}</div>
                     </div>
                 }
                 <div className="indicator-container">
