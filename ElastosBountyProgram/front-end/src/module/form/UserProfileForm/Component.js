@@ -69,7 +69,7 @@ class C extends BaseComponent {
         ****************************************************************************************
          */
         const firstName_fn = getFieldDecorator('firstName', {
-            rules: [{required: true, message: 'First name is required'}],
+            rules: [{required: true, message: I18N.get('from.UserProfileForm.firstName.required')}],
             initialValue: user.profile.firstName
         })
         const firstName_el = (
@@ -77,7 +77,7 @@ class C extends BaseComponent {
         )
 
         const lastName_fn = getFieldDecorator('lastName', {
-            rules: [{required: true, message: 'Last name is required'}],
+            rules: [{required: true, message: I18N.get('from.UserProfileForm.lastName.required')}],
             initialValue: user.profile.lastName
         })
         const lastName_el = (
@@ -85,7 +85,7 @@ class C extends BaseComponent {
         )
 
         const bio_fn = getFieldDecorator('bio', {
-            rules: [{required: true, message: 'Biography is required'}],
+            rules: [{required: true, message: I18N.get('from.UserProfileForm.bio.required')}],
             initialValue: user.profile.bio
         })
         const bio_el = (
@@ -127,7 +127,7 @@ class C extends BaseComponent {
         const avatar_el = (
             <Upload name="logo" className="pull-right" listType="picture" {...p_avatar}>
                 <Button loading={this.state.avatar_loading}>
-                    Upload Avatar
+                    {I18N.get('from.UserProfileForm.upload.avatar')}
                 </Button>
             </Upload>
         );
@@ -159,7 +159,7 @@ class C extends BaseComponent {
         const banner_el = (
             <Upload name="logo" className="pull-right" listType="picture" {...p_banner}>
                 <Button loading={this.state.banner_loading}>
-                    Upload Banner
+                    {I18N.get('from.UserProfileForm.upload.banner')}
                 </Button>
             </Upload>
         );
@@ -215,13 +215,13 @@ class C extends BaseComponent {
 
                     <Row gutter={16}>
                         <Col sm={{span: 24}} md={{span: 24}}>
-                            <FormItem label="First Name" {...formItemLayout}>
+                            <FormItem label={I18N.get('from.UserProfileForm.text.firstName')} {...formItemLayout}>
                                 {p.firstName}
                             </FormItem>
 
                         </Col>
                         <Col sm={{span: 24}} md={{span: 24}}>
-                            <FormItem label="Last Name" {...formItemLayout}>
+                            <FormItem label={I18N.get('from.UserProfileForm.text.lastName')} {...formItemLayout}>
                                 {p.lastName}
                             </FormItem>
                         </Col>
@@ -230,14 +230,14 @@ class C extends BaseComponent {
                         colon={false}
                         labelCol={{ sm: {span: 24}, md: {span: 8} }}
                         wrapperCol={{ sm: {span: 24}, md: {span: 16} }}
-                        label="Profile Slogan">
+                        label={I18N.get('from.UserProfileForm.text.slogan')}>
                         {p.bio}
                     </FormItem>
                     <FormItem
                         colon={false}
                         labelCol={{ sm: {span: 24}, md: {span: 8} }}
                         wrapperCol={{ sm: {span: 24}, md: {span: 16} }}
-                        label="Profile Motto">
+                        label={I18N.get('from.UserProfileForm.text.motto')}>
                         {p.motto}
                     </FormItem>
                     <br />
