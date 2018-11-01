@@ -223,13 +223,13 @@ export default class extends Base {
 
     public async findUsers(query): Promise<Document[]>{
         const db_user = this.getDBModel('User');
-        selectFields += ' -email'
+        const strictSelectFields = selectFields + ' -email'
 
         return await db_user.getDBInstance().find({
             '_id' : {
                 $in : query.userIds
             }
-        }).select(selectFields)
+        }).select(strictSelectFields)
     }
 
     /*
