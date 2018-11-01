@@ -102,7 +102,8 @@ export default createContainer(Component, (state) => {
         async getTasks(currentUserId) {
             return taskService.index({
                 profileListFor: currentUserId,
-                type: TASK_TYPE.PROJECT
+                type: TASK_TYPE.PROJECT,
+                category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.CR100]
             })
         },
 
