@@ -8,7 +8,7 @@ import {validate, utilCrypto, mail} from '../utility';
 import CommunityService from "./CommunityService";
 import CommentService from "./CommentService";
 
-let selectFields = '-salt -password -elaBudget -elaOwed -votePower -resetToken'
+const selectFields = '-salt -password -elaBudget -elaOwed -votePower -resetToken'
 
 const restrictedFields = {
     update: [
