@@ -20,7 +20,8 @@ const FILTERS = {
     ACTIVE: 'active',
     APPLIED: 'applied',
     OWNED: 'owned',
-    SUBSCRIBED: 'subscribed'
+    SUBSCRIBED: 'subscribed',
+    NEED_APPROVAL: 'need_approval'
 }
 
 export default class extends StandardPage {
@@ -133,6 +134,7 @@ export default class extends StandardPage {
         const tasksPendingData = this.props.candidate_pending_tasks
         const tasksOwnedData = this.props.owned_tasks
         const tasksSubscribedData = this.props.subscribed_tasks
+        const tasksNeedApprovalData = this.props.need_approval_tasks
         const allTasks = this.props.all_tasks
 
         const columns = [{
@@ -321,6 +323,11 @@ export default class extends StandardPage {
                                             <Button
                                                 className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
                                                 onClick={this.clearFilters.bind(this)}>All</Button>
+                                            {this.props.is_admin &&
+                                                <Button
+                                                    className={(this.state.filter === FILTERS.NEED_APPROVAL && 'selected') || ''}
+                                                    onClick={this.setNeedApprovalFilter.bind(this)}>Need Approval</Button>
+                                            }
                                             <Button
                                                 className={(this.state.filter === FILTERS.OWNED && 'selected') || ''}
                                                 onClick={this.setOwnedFilter.bind(this)}>Owned</Button>
@@ -341,6 +348,17 @@ export default class extends StandardPage {
                                                 columns={columns}
                                                 rowKey={(item) => item._id}
                                                 dataSource={allTasks}
+                                                loading={this.props.loading}
+                                            />
+                                        </div>
+                                    }
+
+                                    {this.state.filter === FILTERS.NEED_APPROVAL &&
+                                        <div>
+                                            <Table
+                                                columns={columns}
+                                                rowKey={(item) => item._id}
+                                                dataSource={tasksNeedApprovalData}
                                                 loading={this.props.loading}
                                             />
                                         </div>
@@ -405,23 +423,15 @@ export default class extends StandardPage {
     }
 
     onSelectFilter(value) {
-        switch (value) {
-            case FILTERS.ACTIVE:
-                this.setActiveFilter();
-                break;
-            case FILTERS.APPLIED:
-                this.setAppliedFilter();
-                break;
-            case FILTERS.SUBSCRIBED:
-                this.setSubscribedFilter();
-                break;
-            case FILTERS.OWNED:
-                this.setOwnedFilter();
-                break;
-            default:
-                this.clearFilters();
-                break;
-        }
+        const handlerLookupDefault = this.clearFilters
+        const filters = [ FILTERS.ACTIVE, FILTERS.APPLIED, FILTERS.SUBSCRIBED,
+            FILTERS.OWNED, FILTERS.NEED_APPROVAL ]
+        const handlers = [ this.setActiveFilter, this.setAppliedFilter, this.setSubscribedFilter,
+            this.setOwnedFilter, this.setNeedApprovalFilter]
+        const handlerLookup = _.zipObject(filters, handlers)
+        const handler = handlerLookup[value] || handlerLookupDefault
+
+        handler.call(this)
     }
 
     clearFilters() {
@@ -442,6 +452,10 @@ export default class extends StandardPage {
 
     setSubscribedFilter() {
         this.setState({ filter: FILTERS.SUBSCRIBED })
+    }
+
+    setNeedApprovalFilter() {
+        this.setState({ filter: FILTERS.NEED_APPROVAL })
     }
 
     linkTaskDetail(taskId) {
