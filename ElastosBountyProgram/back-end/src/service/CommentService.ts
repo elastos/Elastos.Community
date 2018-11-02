@@ -36,11 +36,6 @@ export default class extends Base {
             const mentions = comment.match(/@\w+/g)
             if (mentions) {
                 this.sendMentionEmails(type, param, createdBy, mentions, returnUrl, commentable.name)
-                if (type === 'Task') {
-                    this.sendMentionEmails(type, param, createdBy, mentions, returnUrl, commentable.name)
-                } else {
-                    this.sendMentionEmails(type, param, createdBy, mentions, returnUrl, null)
-                }
             }
 
             if (commentable.subscribers) {
