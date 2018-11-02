@@ -35,7 +35,7 @@ export default class extends Base {
 
             const mentions = comment.match(/@\w+/g)
             if (mentions) {
-                this.sendMentionEmails(type, param, createdBy, mentions, returnUrl)
+                this.sendMentionEmails(type, param, createdBy, mentions, returnUrl, commentable.name)
             }
 
             if (commentable.subscribers) {
@@ -169,12 +169,12 @@ export default class extends Base {
         })
     }
 
-    public async sendMentionEmails(type, param, curUser, mentions, returnUrl) {
+    public async sendMentionEmails(type, param, curUser, mentions, returnUrl, name) {
         const {
             comment
         } = param
 
-        let ownerSubject = `Someone has mentioned you in a post on a ${type}`
+        let ownerSubject = `${name} ${type}`
         let ownerBody = `
             ${curUser.profile.firstName} ${curUser.profile.lastName} says:<br/>${comment}
             <a href="${process.env.SERVER_URL}${returnUrl}">Click here to view the ${type}</a>
