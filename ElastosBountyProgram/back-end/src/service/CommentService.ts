@@ -39,19 +39,11 @@ export default class extends Base {
             }
 
             if (commentable.subscribers) {
-                if (type === 'Task') {
-                    this.sendSubscriberEmails(type, param, createdBy, commentable.subscribers, returnUrl, commentable.name)
-                } else {
-                    this.sendSubscriberEmails(type, param, createdBy, commentable.subscribers, returnUrl, null)
-                }
+                this.sendSubscriberEmails(type, param, createdBy, commentable.subscribers, returnUrl, commentable.name)
             }
 
             if (commentable.createdBy) {
-                if (type === 'Task') {
-                    this.sendNotificationEmail(type, param, createdBy, commentable.createdBy, null, returnUrl, commentable.name)
-                } else {
-                    this.sendNotificationEmail(type, param, createdBy, commentable.createdBy, null, returnUrl, null)
-                }
+                this.sendNotificationEmail(type, param, createdBy, commentable.createdBy, null, returnUrl, commentable.name)
 
                 if (!_.map(commentable.subscribers, (sub) => sub.user._id.toString()).includes(this.currentUser._id.toString())) {
 
@@ -63,11 +55,7 @@ export default class extends Base {
                     }
                 }
             } else if (commentable.owner) {
-                if (type === 'Task') {
-                    this.sendNotificationEmail(type, param, createdBy, commentable.owner, null, returnUrl, commentable.name)
-                } else {
-                    this.sendNotificationEmail(type, param, createdBy, commentable.owner, null, returnUrl, null)
-                }
+                this.sendNotificationEmail(type, param, createdBy, commentable.owner, null, returnUrl, commentable.name)
             } else if (type === 'Task_Candidate') {
                 commentable = await db_commentable.getDBInstance().findOne({_id: id})
                     .populate('createdBy')
