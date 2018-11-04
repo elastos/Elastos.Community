@@ -991,7 +991,7 @@ const en = {
     'cr-video.q1.title.1': 'Disproportional Wealth Distribution',
     'cr-video.q1.paragraph.1': 'Due to the structure of the internet, there is increased concentration of power and knowledge in a select few multi-national companies that are hard to regulate, prone to corruption, censorship and  abuse their power',
     'cr-video.q1.title.2': 'Lack of Security',
-    'cr-video.q1.paragraph.2': 'Devices, Operating systems and the internet are inseincreasinglycure by design leaving data and identity vulnerable to hackers, malware, spyware and bugs. Data and storage is centralised making it economical and easy for hackers and corruption. This makes a future with Internet of Things (loT) devices impossible.',
+    'cr-video.q1.paragraph.2': 'Devices, Operating systems and the internet are increasingly insecure by design leaving data and identity vulnerable to hackers, malware, spyware and bugs. Data and storage is centralised making it economical and easy for hackers and corruption. This makes a future with Internet of Things (loT) devices impossible.',
     'cr-video.q1.title.3': 'No Protection of Digital Assets',
     'cr-video.q1.paragraph.3': 'Content creators (musicians, artists, writers etc) and innovators do not have the capacity to own, protect or sell their work like they can in the real world. This forces advertising to be the dominant monetisation strategy so intermediaries own the value chain leaving those in creative industries chronically underpaid.',
     'cr-video.q2': 'So the Internet is Broken. How do we Fix It?',
