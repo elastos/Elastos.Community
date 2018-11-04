@@ -983,6 +983,7 @@ const en = {
     'from.UserProfileForm.text.motto': 'Profile Motto',
 
     // CR Video / Earn ELA page
+    'cr-video.here': 'here',
     'cr-video.header.1': 'Become a Cofounder of the Decentralised Internet with the Cyber Republic',
     'cr-video.header.2': 'The Cyber Republic is a global community of collaborators who are forging the path to a secure and equitable smartweb, powered by blockchain technology.',
     'cr-video.join': 'Join us now',
@@ -998,6 +999,11 @@ const en = {
     'cr-video.q3': 'Elastos: Smartweb Powered by Blockchain Technology',
     'cr-video.q3.paragraph.1': 'Elastos is the safe and reliable internet of the future. Built utilizing the blockchain, this technological breakthrough provides the first completely safe environment on the web where decentralized applications are detached from the internet while also permitting full scalability to billions of users. Elastos enables the generation of wealth through ownership and exchange of your data and digital assets.',
     'cr-video.q3.paragraph.2': 'Elastos is not a blockchain project but rather a network operating system project powered by blockchain technology so in that sense, Elastos is not directly competing with any other blockchain projects. It can work together with them to form this new ecosystem where the decentralized applications run directly on the device instead of running on the blockchain along with decentralized peer to peer network to transfer assets in a completely closed sandboxed environment, thereby solving the three pillar issues that are prevalent in the internet of today - security, scalability and decentralization.',
+    'cr-video.q3.subtitle.1': 'Learn More About Elastos with these Resources:',
+    'cr-video.q3.link.1': 'Elastos Whitepaper',
+    'cr-video.q3.link.2': 'Elastos Developer Guide',
+    'cr-video.q3.link.3': 'Elastos Non-Developer Guide',
+    'cr-video.q3.link.4': 'Elastos.org',
     'cr-video.q4': 'Where does the Cyber Republic fit in the Elastos Smartweb Framework?',
     'cr-video.q4.paragraph.1': 'While the Elastos network operating system enables the secure environment necessary to house a new and improved internet can grow, it is an infrastructure only- unable to govern or foster the ecosystem without human instruction, participation, and collaboration.',
     'cr-video.q4.paragraph.2': 'With this in mind, the Elastos foundation have created a collaborative virtual environment in which innovators from all locations, educational & professional backgrounds, skill sets, and schools-of-thought can collectively build on top of the Elastos infrastructure, write the new rules of internet governance (no more monopolies!), and ultimately shape the future of a virtual economy that serves everybody, not just a privileged few. In short, the Cyber Republic is a “Virtual Nation” that transcends borders and welcomes every member of the global community as a citizen, a contributor, and a governing entity.',
@@ -1015,6 +1021,7 @@ const en = {
     'cr-video.q6.paragraph.3': 'Say hi on the discussion board, join the discord chat, or register for the next virtual meetup with your new collaborators.',
     'cr-video.q6.title.4': 'Step 4: Browse active projects and tasks in the CR community',
     'cr-video.q6.paragraph.4': 'Apply for the ones you find most interesting, and ',
+    'cr-video.q6.paragraph.4.link': 'earn ELA for your contribution',
     'cr-video.q6.title.5': 'Step 5: As a cofounder of the new internet, the rest is up to you.',
     'cr-video.q6.paragraph.5': 'Get out there and bring your ideas to life!'
 };

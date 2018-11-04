@@ -78,7 +78,7 @@ export default class extends StandardPage {
                         {I18N.get('cr-video.header.2')}
                     </div>
                     <div>
-                        <Button className="earn-ela-btn">{I18N.get('cr-video.join')}</Button>
+                        <Button className="earn-ela-btn" onClick={this.linkRegister.bind(this)}>{I18N.get('cr-video.join')}</Button>
                     </div>
                     <div className="background-visuals">
                         <img className="upper-right" src="/assets/images/quarter-circle-connected.svg"/>
@@ -110,9 +110,16 @@ export default class extends StandardPage {
                 <div className="content">
                     <div className="title">{I18N.get('cr-video.q3')}</div>
                     <p>{I18N.get('cr-video.q3.paragraph.1')}</p>
+                    <div className="subtitle">{I18N.get('cr-video.q3.subtitle.1')}</div>
+                    <div className="links">
+                        <a href="https://www.elastos.org/wp-content/uploads/2018/White%20Papers/elastos_whitepaper_en.pdf?_t=1526235330">{I18N.get('cr-video.q3.link.1')}</a> |
+                        <a href="https://github.com/elastos/Elastos/wiki/A-Developer-Guide-to-Elastos"> {I18N.get('cr-video.q3.link.2')}</a> |
+                        <a href="https://github.com/elastos/Elastos/wiki/A-Non-Developer-Guide-to-Elastos"> {I18N.get('cr-video.q3.link.3')}</a> |
+                        <a href="http://Elastos.org/en"> {I18N.get('cr-video.q3.link.4')}</a>
+                    </div>
                 </div>
                 <div>
-                    <Button className="earn-ela-btn">{I18N.get('cr-video.join')}</Button>
+                    <Button className="earn-ela-btn" onClick={this.linkRegister.bind(this)}>{I18N.get('cr-video.join')}</Button>
                 </div>
                 <div className="content">
                     <div className="title">{I18N.get('cr-video.q4')}</div>
@@ -130,15 +137,16 @@ export default class extends StandardPage {
                     <div className="title">{I18N.get('cr-video.q6')}</div>
                     <span>{I18N.get('cr-video.q6.title.1')}</span>
                     <p>{I18N.get('cr-video.q6.paragraph.1')}
-                        <a onClick={this.linkRegister.bind(this)}> here</a>.
+                        <a onClick={this.linkRegister.bind(this)}> {I18N.get('cr-video.here')}</a>.
                     </p>
                     <span>{I18N.get('cr-video.q6.title.2')}</span>
                     <p>{I18N.get('cr-video.q6.paragraph.2')}</p>
                     <span>{I18N.get('cr-video.q6.title.3')}</span>
                     <p>{I18N.get('cr-video.q6.paragraph.3')}</p>
                     <span>{I18N.get('cr-video.q6.title.4')}</span>
-                    <p>{I18N.get('cr-video.q6.paragraph.4')}
-                        <a href='https://www.youtube.com/watch?v=D6lz889WyXQ'> earn ELA for your contribution</a>.
+                    <p>
+                        {I18N.get('cr-video.q6.paragraph.4')}
+                        <a href='https://www.youtube.com/watch?v=D6lz889WyXQ'> {I18N.get('cr-video.q6.paragraph.4.link')}</a>.
                     </p>
                     <span>{I18N.get('cr-video.q6.title.5')}</span>
                     <p>{I18N.get('cr-video.q6.paragraph.5')}</p>
