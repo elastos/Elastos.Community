@@ -9,14 +9,18 @@
 
   .header {
     position: relative;
-    width: 100%;
-    margin-top: $gap_4;
+    margin-top:  $gap_4;
+
+    .header-container {
+      width: 80%;
+      margin: 0 auto;
+    }
 
     .title {
-      padding-top: $gap_4;
-      margin-left: calc((100% - 1280px) / 2);
-      margin-bottom: $gap_4;
+      width: 50%;
       position: relative;
+      margin-bottom: $gap_4;
+      padding-top: $gap_4;
       z-index: 2;
       text-align: left;
       font-size: 80px;
@@ -24,40 +28,47 @@
       color: #031E28;
 
       @media only screen and (max-width: $mobile-width) {
+        width: 100%;
         margin-left: 0;
         margin-bottom: $gap_2;
         padding-top: $gap_2;
-        font-size: 60px;
+        font-size: 50px;
+        line-height: 60px;
       }
     }
-    .video-wrapper {
+    .videoWrapper {
       margin: 0 auto;
-      z-index: 2;
+      width: 100%;
       position: relative;
-      width: 1280px;
+      padding-bottom: 56.25%; /* 16:9 */
+      padding-top: 25px;
+      z-index: 2;
+      height: 0;
 
       iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-        height: 554px;
-        @media only screen and (max-width: $mobile-width) {
-          height: 250px;
-        }
+        height: 100%;
       }
       @media only screen and (max-width: $mobile-width) {
         width: 100%;
       }
     }
-    .earn-ela-btn {
-      margin: $gap_3 0;
-      width: 400px;
-      height: 60px;
-      font-size: 25px;
-      background: #1DE9B6;
-      color: white;
+    .sub-title {
+      width: 100%;
+      margin-bottom: $gap_2;
+      font-size: 30px;
+      line-height: 40px;
+      color: initial;
 
       @media only screen and (max-width: $mobile-width) {
-        width: 50%;
-        font-size: 16px;
+        margin-left: 0;
+        margin-bottom: $gap_2;
+        padding-top: $gap_2;
+        font-size: 40px;
+        line-height: 50px;
       }
     }
     .background-visuals {
@@ -115,10 +126,16 @@
     }
   }
   .content {
-    margin-top: $gap_2;
-    margin-left: calc((100% - 1280px) / 2);
+    width: 60%;
+    margin: $gap_2 auto;
     text-align: left;
 
+    .title {
+      margin-bottom: $gap_2;
+      font-size: 30px;
+      line-height: 40px;
+      color: initial;
+    }
     span {
       margin: $gap_1 0;
       font-weight: bold;
@@ -159,6 +176,19 @@
       position: relative;
       top: 0;
       left: 0;
+    }
+  }
+  .earn-ela-btn {
+    margin: $gap_3 0;
+    width: 400px;
+    height: 60px;
+    font-size: 25px;
+    background: #1DE9B6;
+    color: white;
+
+    @media only screen and (max-width: $mobile-width) {
+      width: 50%;
+      font-size: 16px;
     }
   }
 }

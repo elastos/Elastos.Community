@@ -64,23 +64,28 @@ export default class extends StandardPage {
     buildHeader() {
         return (
             <div className="header">
-                <div className="title komu-a">
-                    {I18N.get('cr-video.title')}
-                </div>
-                <div className="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/vaPdh35elYc"
-                        frameBorder="0"
-                        allow="autoplay; encrypted-media;"
-                        allowFullScreen></iframe>
-                </div>
-                <div>
-                    <Button className="earn-ela-btn">{I18N.get('cr-video.earn')}</Button>
-                </div>
-                <div className="background-visuals">
-                    <img className="upper-right" src="/assets/images/quarter-circle-connected.svg"/>
-                    <img className="mid-right" src="/assets/images/training_circle.png"/>
-                    <img className="mid-left" src="/assets/images/training_green_slashed_box.png"/>
-                    <img className="upper-left" src="/assets/images/training_mini_connector.png"/>
+                <div className="header-container">
+                    <div className="title komu-a">
+                        {I18N.get('cr-video.header.1')}
+                    </div>
+                    <div className="videoWrapper">
+                        <iframe src="https://www.youtube.com/embed/vaPdh35elYc"
+                            frameBorder="0"
+                            allow="autoplay; encrypted-media;"
+                            allowFullScreen></iframe>
+                    </div>
+                    <div className="title sub-title">
+                        {I18N.get('cr-video.header.2')}
+                    </div>
+                    <div>
+                        <Button className="earn-ela-btn">{I18N.get('cr-video.join')}</Button>
+                    </div>
+                    <div className="background-visuals">
+                        <img className="upper-right" src="/assets/images/quarter-circle-connected.svg"/>
+                        <img className="mid-right" src="/assets/images/training_circle.png"/>
+                        <img className="mid-left" src="/assets/images/training_green_slashed_box.png"/>
+                        <img className="upper-left" src="/assets/images/training_mini_connector.png"/>
+                    </div>
                 </div>
             </div>
         )
@@ -88,13 +93,27 @@ export default class extends StandardPage {
 
     buildContent() {
         return (
-            <div className="content">
-                <span>{I18N.get('cr-video.title.1')}</span>
-                <p>{I18N.get('cr-video.paragraph.1')}</p>
-                <span>{I18N.get('cr-video.title.2')}</span>
-                <p>{I18N.get('cr-video.paragraph.2')}</p>
-                <span>{I18N.get('cr-video.title.3')}</span>
-                <p>{I18N.get('cr-video.paragraph.3')}</p>
+            <div>
+                <div className="content">
+                    <div className="title">{I18N.get('cr-video.q1')}</div>
+                    <span>{I18N.get('cr-video.q1.title.1')}</span>
+                    <p>{I18N.get('cr-video.q1.paragraph.1')}</p>
+                    <span>{I18N.get('cr-video.q1.title.2')}</span>
+                    <p>{I18N.get('cr-video.q1.paragraph.2')}</p>
+                    <span>{I18N.get('cr-video.q1.title.3')}</span>
+                    <p>{I18N.get('cr-video.q1.paragraph.3')}</p>
+                </div>
+                <div className="content">
+                    <div className="title">{I18N.get('cr-video.q2')}</div>
+                    <p>{I18N.get('cr-video.q2.paragraph.1')}</p>
+                </div>
+                <div className="content">
+                    <div className="title">{I18N.get('cr-video.q3')}</div>
+                    <p>{I18N.get('cr-video.q3.paragraph.1')}</p>
+                </div>
+                <div>
+                    <Button className="earn-ela-btn">{I18N.get('cr-video.join')}</Button>
+                </div>
             </div>
         )
     }

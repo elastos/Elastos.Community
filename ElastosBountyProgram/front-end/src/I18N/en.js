@@ -983,14 +983,22 @@ const en = {
     'from.UserProfileForm.text.motto': 'Profile Motto',
 
     // CR Video / Earn ELA page
-    'cr-video.title': 'A New Internet',
-    'cr-video.earn': 'Earn ELA now',
-    'cr-video.title.1': 'Ipsum Lorem simply?',
-    'cr-video.paragraph.1': 'Ipsum Lorem simply Ipsum Lorem simply Ipsum Lorem simply Ipsum Lorem simply',
-    'cr-video.title.2': 'Ipsum Lorem simply?',
-    'cr-video.paragraph.2': 'Ipsum Lorem simply Ipsum Lorem simply Ipsum Lorem simply Ipsum Lorem simply',
-    'cr-video.title.3': 'Ipsum Lorem simply?',
-    'cr-video.paragraph.3': 'Ipsum Lorem simply Ipsum Lorem simply Ipsum Lorem simply Ipsum Lorem simply'
+    'cr-video.header.1': 'Become a Cofounder of the Decentralised Internet with the Cyber Republic',
+    'cr-video.header.2': 'The Cyber Republic is a global community of collaborators who are forging the path to a secure and equitable smartweb, powered by blockchain technology.',
+    'cr-video.join': 'Join us now',
+    'cr-video.q1': 'What’s Wrong With the Internet Today?',
+    'cr-video.q1.title.1': 'Disproportional Wealth Distribution',
+    'cr-video.q1.paragraph.1': 'Due to the structure of the internet, there is increased concentration of power and knowledge in a select few multi-national companies that are hard to regulate, prone to corruption, censorship and  abuse their power',
+    'cr-video.q1.title.2': 'Lack of Security',
+    'cr-video.q1.paragraph.2': 'Devices, Operating systems and the internet are inseincreasinglycure by design leaving data and identity vulnerable to hackers, malware, spyware and bugs. Data and storage is centralised making it economical and easy for hackers and corruption. This makes a future with Internet of Things (loT) devices impossible.',
+    'cr-video.q1.title.3': 'No Protection of Digital Assets',
+    'cr-video.q1.paragraph.3': 'Content creators (musicians, artists, writers etc) and innovators do not have the capacity to own, protect or sell their work like they can in the real world. This forces advertising to be the dominant monetisation strategy so intermediaries own the value chain leaving those in creative industries chronically underpaid.',
+    'cr-video.q2': 'So the Internet is Broken. How do we Fix It?',
+    'cr-video.q2.paragraph.1': 'This is exactly the question that prompted Rong Chen to leave his role as a senior software developer at Microsoft in the year 2000 and start working on a solution with the power to circumvent the barriers to security, data ownership, and allocation of wealth that continue to be either ignored, or actively exploited, by the powerful companies who monopolise today’s internet services. Today, that solution exists. It’s called Elastos, and it’s the the world’s first internet operating system.',
+    'cr-video.q3': 'Elastos: Smartweb Powered by Blockchain Technology',
+    'cr-video.q3.paragraph.1': 'Elastos is the safe and reliable internet of the future. Built utilizing the blockchain, this technological breakthrough provides the first completely safe environment on the web where decentralized applications are detached from the internet while also permitting full scalability to billions of users. Elastos enables the generation of wealth through ownership and exchange of your data and digital assets.',
+    'cr-video.q3.paragraph.2': 'Elastos is not a blockchain project but rather a network operating system project powered by blockchain technology so in that sense, Elastos is not directly competing with any other blockchain projects. It can work together with them to form this new ecosystem where the decentralized applications run directly on the device instead of running on the blockchain along with decentralized peer to peer network to transfer assets in a completely closed sandboxed environment, thereby solving the three pillar issues that are prevalent in the internet of today - security, scalability and decentralization.',
+    '': ''
 };
 
 // lang mappings
