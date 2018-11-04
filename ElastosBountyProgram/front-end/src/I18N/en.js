@@ -469,7 +469,6 @@ const en = {
     '.no': 'No',
     '.loading': 'Loading...',
     'ela': 'ELA',
-    '.edit': 'Edit',
 
     // Community
     'community.nomember': 'no members',
@@ -485,8 +484,8 @@ const en = {
     'community.guidecontainer.part1': 'Hello there! Looks like your we do not have an organizer for',
     'community.guidecontainer.part2': 'We are always looking for new organizers especially in new communities.',
     'community.guidecontainer.part3': "if you'd like to be an organizer for your region please register, we'll add your country and you can then apply to be an organizer on this page.",
-    'community.button.register': "Click to Register",
-    'community.button.selectcountry': "or you can select a country from above",
+    'community.button.register': 'Click to Register',
+    'community.button.selectcountry': 'or you can select a country from above',
     'community.link.toevent': 'See Event',
 
     // Council
@@ -981,7 +980,17 @@ const en = {
     'from.UserProfileForm.text.firstName': 'First Name',
     'from.UserProfileForm.text.lastName': 'Last Name',
     'from.UserProfileForm.text.slogan': 'Profile Slogan',
-    'from.UserProfileForm.text.motto': 'Profile Motto'
+    'from.UserProfileForm.text.motto': 'Profile Motto',
+
+    // CR Video / Earn ELA page
+    'cr-video.title': 'A New Internet',
+    'cr-video.earn': 'Earn ELA now',
+    'cr-video.title.1': 'Ipsum Lorem simply?',
+    'cr-video.paragraph.1': 'Ipsum Lorem simply Ipsum Lorem simply Ipsum Lorem simply Ipsum Lorem simply',
+    'cr-video.title.2': 'Ipsum Lorem simply?',
+    'cr-video.paragraph.2': 'Ipsum Lorem simply Ipsum Lorem simply Ipsum Lorem simply Ipsum Lorem simply',
+    'cr-video.title.3': 'Ipsum Lorem simply?',
+    'cr-video.paragraph.3': 'Ipsum Lorem simply Ipsum Lorem simply Ipsum Lorem simply Ipsum Lorem simply'
 };
 
 // lang mappings
@@ -996,6 +1005,5 @@ en[`taskStatus.${TASK_STATUS.SUCCESS}`] = 'Success'
 en[`taskStatus.${TASK_STATUS.DISTRIBUTED}`] = 'Distributed'
 en[`taskStatus.${TASK_STATUS.CANCELED}`] = 'Canceled'
 en[`taskStatus.${TASK_STATUS.EXPIRED}`] = 'Expired'
-
 
 export default en

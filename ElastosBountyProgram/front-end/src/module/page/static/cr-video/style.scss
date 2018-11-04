@@ -1,0 +1,113 @@
+
+@import "../../../../style/variable";
+@import "../../../../style/color";
+@import "../../../../style/typography";
+
+.p_crVideo {
+  width: 100%;
+  position: relative;
+
+  .header {
+    position: relative;
+    width: 100%;
+    margin-top: $gap_4;
+
+    .title {
+      padding-top: $gap_4;
+      margin-left: calc((100% - 1280px) / 2);
+      margin-bottom: $gap_4;
+      position: relative;
+      z-index: 2;
+      text-align: left;
+      font-size: 80px;
+      line-height: 80px;
+      color: #031E28;
+    }
+    .video-wrapper {
+      margin: 0 auto;
+      z-index: 2;
+      position: relative;
+      width: 1280px;
+      iframe {
+        width: 100%;
+        height: 554px;
+      }
+    }
+    .earn-ela-btn {
+      margin: $gap_3 0;
+      width: 400px;
+      height: 60px;
+      font-size: 25px;
+      background: #1DE9B6;
+      color: white;
+    }
+    .background-visuals {
+      width: calc(100% + 96px + 305px);
+      height: 50%;
+      position: absolute;
+      top: 0;
+      left: -200px;
+      z-index: 0;
+      background: rgba(23, 44, 59, 0.04);
+
+      .upper-right {
+        position: absolute;
+        top: 0;
+        right: $gap_4;
+      }
+      .mid-right {
+        position: absolute;
+        top: calc(100% - 37px);
+        right: $gap_5;
+        opacity: 0.6;
+      }
+      .upper-left {
+        position: absolute;
+        top: $gap_3;
+        left: 0;
+        opacity: 0.6;
+      }
+      .mid-left {
+        position: absolute;
+        top: 90%;
+        left: $gap_5;
+        opacity: 0.6;
+      }
+    }
+  }
+  .content {
+    margin-top: $gap_2;
+    margin-left: calc((100% - 1280px) / 2);
+    text-align: left;
+
+    span {
+      margin: $gap_1 0;
+      font-weight: bold;
+    }
+    p {
+      margin: $gap_1 0;
+    }
+  }
+  .share-icons {
+    position: absolute;
+    top: 50%;
+    left: $gap_5;
+
+    span {
+      margin-bottom: $gap_3;
+      display: block;
+      color: #1DE9B6;
+    }
+    a {
+      display: block;
+    }
+    svg {
+      margin-bottom: $gap_3;
+      padding-bottom: $gap_1;
+      width: 50px;
+      height: 50px;
+      border-bottom: 1px solid black;
+      color: black;
+    }
+  }
+}
