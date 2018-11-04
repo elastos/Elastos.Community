@@ -22,15 +22,29 @@
       font-size: 80px;
       line-height: 80px;
       color: #031E28;
+
+      @media only screen and (max-width: $mobile-width) {
+        margin-left: 0;
+        margin-bottom: $gap_2;
+        padding-top: $gap_2;
+        font-size: 60px;
+      }
     }
     .video-wrapper {
       margin: 0 auto;
       z-index: 2;
       position: relative;
       width: 1280px;
+
       iframe {
         width: 100%;
         height: 554px;
+        @media only screen and (max-width: $mobile-width) {
+          height: 250px;
+        }
+      }
+      @media only screen and (max-width: $mobile-width) {
+        width: 100%;
       }
     }
     .earn-ela-btn {
@@ -40,6 +54,11 @@
       font-size: 25px;
       background: #1DE9B6;
       color: white;
+
+      @media only screen and (max-width: $mobile-width) {
+        width: 50%;
+        font-size: 16px;
+      }
     }
     .background-visuals {
       width: calc(100% + 96px + 305px);
@@ -54,24 +73,44 @@
         position: absolute;
         top: 0;
         right: $gap_4;
+        @media only screen and (max-width: $mobile-width) {
+          top: calc(100% + 20px);
+          right: 0;
+        }
       }
       .mid-right {
         position: absolute;
         top: calc(100% - 37px);
         right: $gap_5;
         opacity: 0.6;
+
+        @media only screen and (max-width: $mobile-width) {
+          visibility: hidden;
+        }
       }
       .upper-left {
         position: absolute;
         top: $gap_3;
         left: 0;
         opacity: 0.6;
+
+        @media only screen and (max-width: $mobile-width) {
+          top: -$gap_2;
+        }
       }
       .mid-left {
         position: absolute;
         top: 90%;
         left: $gap_5;
         opacity: 0.6;
+        @media only screen and (max-width: $mobile-width) {
+          top: 90%;
+          left: 0;
+        }
+      }
+      @media only screen and (max-width: $mobile-width) {
+        width: calc(100% + 40px);
+        left: -20px; // counteract padding
       }
     }
   }
@@ -87,6 +126,9 @@
     p {
       margin: $gap_1 0;
     }
+    @media only screen and (max-width: $mobile-width) {
+      margin-left: 0;
+    }
   }
   .share-icons {
     position: absolute;
@@ -100,6 +142,10 @@
     }
     a {
       display: block;
+      @media only screen and (max-width: $mobile-width) {
+        display: inline-block;
+        margin: 0 $gap_2;
+      }
     }
     svg {
       margin-bottom: $gap_3;
@@ -108,6 +154,11 @@
       height: 50px;
       border-bottom: 1px solid black;
       color: black;
+    }
+    @media only screen and (max-width: $mobile-width) {
+      position: relative;
+      top: 0;
+      left: 0;
     }
   }
 }
