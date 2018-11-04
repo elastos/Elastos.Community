@@ -6,6 +6,7 @@ import * as uuid from 'uuid'
 import {validate, utilCrypto, mail} from '../utility';
 import * as moment from 'moment';
 
+// TODO: this needs to be improved
 const map_key = ['Kevin Zhang', 'Fay Li', 'Yipeng Su'];
 
 let tm = null;
@@ -14,19 +15,20 @@ export default class extends Base {
 
     public async create(param): Promise<Document>{
 
-        const db_cvote = this.getDBModel('CVote');
-
-        if(!this.currentUser || !this.currentUser._id){
-            throw 'cvoteservice.create - invalid current user';
+        if (!this.isLoggedIn()) {
+            throw 'cvoteservice.create - must be logged in';
         }
 
         if (!this.isCouncil()) {
             throw 'cvoteservice.create - not council'
         }
 
+        const db_cvote = this.getDBModel('CVote');
+
         const {
             title, type, content, proposedBy, motionId, isConflict, notes, vote_map, reason_map
         } = param;
+
         const doc: any = {
             title,
             type,
@@ -51,11 +53,33 @@ export default class extends Base {
         return cvote;
     }
 
+    /**
+     * List proposals, only an admin may request and view private records
+     *
+     * We expect the front-end to always call with {published: true}
+     *
+     * TODO: what's the rest way of encoding multiple values for a field?
+     *
+     * Instead of magic params, we should have just different endpoints I think,
+     * this method should be as dumb as possible
+     *
+     * @param query
+     * @returns {Promise<"mongoose".Document>}
+     */
     public async list(param): Promise<Document>{
+
         const db_cvote = this.getDBModel('CVote');
         const db_user = this.getDBModel('User');
+        const query:any = {};
 
-        const query = {};
+        // if we are not querying only published records, we need to be an admin
+        // TODO: write a test for this
+        if (param.published !== false) {
+            if (!this.isLoggedIn() || !this.isAdmin()) {
+                throw 'cvoteservice.list - unpublished proposals only visible to admin';
+            }
+        }
+
         const list = await db_cvote.list(query, {
             createdAt: -1
         }, 100);
@@ -70,6 +94,7 @@ export default class extends Base {
 
         return list;
     }
+
     public async update(param): Promise<Document>{
         const db_cvote = this.getDBModel('CVote');
 
@@ -290,4 +315,5 @@ export default class extends Base {
 
         ].indexOf(this.currentUser._id.toString()) >= 0
     }
+
 }
