@@ -14,6 +14,10 @@
     .header-container {
       width: 80%;
       margin: 0 auto;
+
+      .title {
+        width: 100%;
+      }
     }
 
     .title {
@@ -155,7 +159,7 @@
   }
   .share-icons {
     position: absolute;
-    top: 50%;
+    top: 30%;
     left: $gap_5;
 
     span {
@@ -195,6 +199,24 @@
     @media only screen and (max-width: $mobile-width) {
       width: 50%;
       font-size: 16px;
+    }
+  }
+
+  .email-contact {
+    margin-top: 60px;
+
+    #email_mailer {
+      border: 1px solid $border_gray;
+      margin: 6px 12px 0;
+      padding: 4px 8px;
+    }
+
+    .earn-ela-btn {
+      width: auto;
+      height: auto;
+      margin: 0;
+      font-size: 16px;
+      padding: 4px 8px;
     }
   }
 }

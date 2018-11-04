@@ -1018,12 +1018,23 @@ const en = {
     'cr-video.q6.title.2': 'Step 2: Join up to 2 CRcles',
     'cr-video.q6.paragraph.2': 'CRcles represent different subsets of the CR community with shared skills and willingness to contribute to a specific kind of task or project (e.g. writing, marketing, development, etc.)',
     'cr-video.q6.title.3': 'Step 3: Engage with your fellow CRcle members',
-    'cr-video.q6.paragraph.3': 'Say hi on the discussion board, join the discord chat, or register for the next virtual meetup with your new collaborators.',
+    'cr-video.q6.paragraph.3_2': 'Say hi on the discussion board, ',
+    'cr-video.q6.paragraph.3.link': 'join the discord chat, ',
+    'cr-video.q6.paragraph.3_3': 'or register for the next virtual meetup with your new collaborators.',
     'cr-video.q6.title.4': 'Step 4: Browse active projects and tasks in the CR community',
     'cr-video.q6.paragraph.4': 'Apply for the ones you find most interesting, and ',
     'cr-video.q6.paragraph.4.link': 'earn ELA for your contribution',
     'cr-video.q6.title.5': 'Step 5: As a cofounder of the new internet, the rest is up to you.',
-    'cr-video.q6.paragraph.5': 'Get out there and bring your ideas to life!'
+    'cr-video.q6.paragraph.5': 'Get out there and bring your ideas to life!',
+
+    'cr-video.q6.subtitle.1': 'Learn More About the Cyber Republic with these Resources:',
+    'cr-video.q6.link.1': 'Cyber Republic Tutorial - Become an Organizer',
+    'cr-video.q6.link.2': 'Cyber Republic Tutorial - Public Tasks',
+
+    'cr-video.q7.title': 'Have Questions? Just Want to Get In Touch?',
+    'cr-video.q7.subtitle': 'Enter your email and we will contact you personally',
+    'cr-video.q7.button_text': 'Submit',
+
 };
 
 // lang mappings
