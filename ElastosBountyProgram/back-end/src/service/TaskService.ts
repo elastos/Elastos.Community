@@ -339,10 +339,6 @@ export default class extends Base {
         // we need to set this for the end of the fn so we have the updated task
         let sendTaskPendingRequiredApprovalEmail = false
 
-        if (!this.currentUser || !this.currentUser._id) {
-            return
-        }
-
         if (param.status === constant.TASK_STATUS.ASSIGNED) {
             throw 'Assigned Status is Deprecated'
         }

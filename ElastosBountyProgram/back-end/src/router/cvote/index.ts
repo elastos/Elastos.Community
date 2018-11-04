@@ -14,6 +14,11 @@ export default Base.setRouter([
         method : 'post'
     },
     {
+        path : '/list_public',
+        router : list,
+        method : 'get'
+    },
+    {
         path : '/list',
         router : list,
         method : 'get'
