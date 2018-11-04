@@ -220,7 +220,7 @@ export default [
         page: VisionPage
     },
     {
-        path: '/earn-ela',
+        path: '/join-cr',
         page: CrVideo
     },
     /*

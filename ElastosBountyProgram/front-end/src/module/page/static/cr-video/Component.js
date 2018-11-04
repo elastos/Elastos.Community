@@ -30,8 +30,8 @@ export default class extends StandardPage {
         }
     }
 
-    showDetailModal(id) {
-        this.props.history.push(`/project-detail/${id}`)
+    linkRegister() {
+        this.props.history.push('/login')
     }
 
     // TODO: what's up with these admin CSS classes?
@@ -113,6 +113,35 @@ export default class extends StandardPage {
                 </div>
                 <div>
                     <Button className="earn-ela-btn">{I18N.get('cr-video.join')}</Button>
+                </div>
+                <div className="content">
+                    <div className="title">{I18N.get('cr-video.q4')}</div>
+                    <p>{I18N.get('cr-video.q4.paragraph.1')}</p>
+                    <p>{I18N.get('cr-video.q4.paragraph.2')}</p>
+                    <p>{I18N.get('cr-video.q4.paragraph.3')}</p>
+                    <p>{I18N.get('cr-video.q4.paragraph.4')}</p>
+                    <p>{I18N.get('cr-video.q4.paragraph.5')}</p>
+                </div>
+                <div className="content">
+                    <div className="title">{I18N.get('cr-video.q5')}</div>
+                    <p>{I18N.get('cr-video.q5.paragraph.1')}</p>
+                </div>
+                <div className="content">
+                    <div className="title">{I18N.get('cr-video.q6')}</div>
+                    <span>{I18N.get('cr-video.q6.title.1')}</span>
+                    <p>{I18N.get('cr-video.q6.paragraph.1')}
+                        <a onClick={this.linkRegister.bind(this)}> here</a>.
+                    </p>
+                    <span>{I18N.get('cr-video.q6.title.2')}</span>
+                    <p>{I18N.get('cr-video.q6.paragraph.2')}</p>
+                    <span>{I18N.get('cr-video.q6.title.3')}</span>
+                    <p>{I18N.get('cr-video.q6.paragraph.3')}</p>
+                    <span>{I18N.get('cr-video.q6.title.4')}</span>
+                    <p>{I18N.get('cr-video.q6.paragraph.4')}
+                        <a href='https://www.youtube.com/watch?v=D6lz889WyXQ'> earn ELA for your contribution</a>.
+                    </p>
+                    <span>{I18N.get('cr-video.q6.title.5')}</span>
+                    <p>{I18N.get('cr-video.q6.paragraph.5')}</p>
                 </div>
             </div>
         )

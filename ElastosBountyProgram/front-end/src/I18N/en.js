@@ -998,7 +998,25 @@ const en = {
     'cr-video.q3': 'Elastos: Smartweb Powered by Blockchain Technology',
     'cr-video.q3.paragraph.1': 'Elastos is the safe and reliable internet of the future. Built utilizing the blockchain, this technological breakthrough provides the first completely safe environment on the web where decentralized applications are detached from the internet while also permitting full scalability to billions of users. Elastos enables the generation of wealth through ownership and exchange of your data and digital assets.',
     'cr-video.q3.paragraph.2': 'Elastos is not a blockchain project but rather a network operating system project powered by blockchain technology so in that sense, Elastos is not directly competing with any other blockchain projects. It can work together with them to form this new ecosystem where the decentralized applications run directly on the device instead of running on the blockchain along with decentralized peer to peer network to transfer assets in a completely closed sandboxed environment, thereby solving the three pillar issues that are prevalent in the internet of today - security, scalability and decentralization.',
-    '': ''
+    'cr-video.q4': 'Where does the Cyber Republic fit in the Elastos Smartweb Framework?',
+    'cr-video.q4.paragraph.1': 'While the Elastos network operating system enables the secure environment necessary to house a new and improved internet can grow, it is an infrastructure only- unable to govern or foster the ecosystem without human instruction, participation, and collaboration.',
+    'cr-video.q4.paragraph.2': 'With this in mind, the Elastos foundation have created a collaborative virtual environment in which innovators from all locations, educational & professional backgrounds, skill sets, and schools-of-thought can collectively build on top of the Elastos infrastructure, write the new rules of internet governance (no more monopolies!), and ultimately shape the future of a virtual economy that serves everybody, not just a privileged few. In short, the Cyber Republic is a “Virtual Nation” that transcends borders and welcomes every member of the global community as a citizen, a contributor, and a governing entity.',
+    'cr-video.q4.paragraph.3': 'Practically speaking, the Cyber Republic (CR) is the virtual membership platform for developers, designers, entrepreneurs, organisers, and others to work together on projects that will facilitate a successful global shift onto the secure, economically viable, equal opportunity internet that the Elastos operating system makes possible.',
+    'cr-video.q4.paragraph.4': 'At this time, the majority of CR projects revolve either around building, enhancing, and testing the decentralised applications (dApps) that will run on Elastos, or around increasing the visibility of Elastos through marketing, writing, referrals, media, and a number of other promotion channels.',
+    'cr-video.q4.paragraph.5': 'Contributors can do anything from bug checking to enterprise dApp development, from writing a blog to organising an international conference. There are no parameters around your level of involvement in the Cyber Republic, there is freedom to define and execute your good ideas, and your perspective and expertise, whatever they may encompass, will be welcome in the community.',
+    'cr-video.q5': 'Why Should I Join the Cyber Republic?',
+    'cr-video.q5.paragraph.1': 'Why not? If you’re reading this text right now, perhaps you’ve already decided that you need something different from the internet you’re currently being offered. Who is in the best position to shape the way you want the new internet to look? You know the answer to that. So go ahead; Sign up. Connect. Change the World. You’re a smartweb cofounder now.',
+    'cr-video.q6': 'How to Join the Cyber Republic',
+    'cr-video.q6.title.1': 'Step 1: Register on the Cyber Republic Platform',
+    'cr-video.q6.paragraph.1': 'You can do that ',
+    'cr-video.q6.title.2': 'Step 2: Join up to 2 CRcles',
+    'cr-video.q6.paragraph.2': 'CRcles represent different subsets of the CR community with shared skills and willingness to contribute to a specific kind of task or project (e.g. writing, marketing, development, etc.)',
+    'cr-video.q6.title.3': 'Step 3: Engage with your fellow CRcle members',
+    'cr-video.q6.paragraph.3': 'Say hi on the discussion board, join the discord chat, or register for the next virtual meetup with your new collaborators.',
+    'cr-video.q6.title.4': 'Step 4: Browse active projects and tasks in the CR community',
+    'cr-video.q6.paragraph.4': 'Apply for the ones you find most interesting, and ',
+    'cr-video.q6.title.5': 'Step 5: As a cofounder of the new internet, the rest is up to you.',
+    'cr-video.q6.paragraph.5': 'Get out there and bring your ideas to life!'
 };
 
 // lang mappings
