@@ -984,7 +984,7 @@ const en = {
 
     // CR Video / Earn ELA page
     'cr-video.here': 'here',
-    'cr-video.header.1': 'Become a Cofounder of the Decentralised Internet with the Cyber Republic',
+    'cr-video.header.1': 'Reclaim Your Internet',
     'cr-video.header.2': 'The Cyber Republic is a global community of collaborators who are forging the path to a secure and equitable smartweb, powered by blockchain technology.',
     'cr-video.join': 'Join us now',
     'cr-video.q1': 'What’s Wrong With the Internet Today?',

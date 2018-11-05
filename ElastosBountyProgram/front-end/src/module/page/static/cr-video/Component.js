@@ -32,6 +32,9 @@ export default class extends StandardPage {
     }
 
     linkRegister() {
+
+        analytics.track('CR Video - register clicked')
+
         this.props.history.push('/login')
     }
 
@@ -69,15 +72,15 @@ export default class extends StandardPage {
                             {this.buildTasks()}
                             <div className="share-icons">
                                 <span>SHARE</span>
-                                <div id="twitter_share" className="share-container">
+                                <div id="twitter_share" className="share-container" onClick={() => analytics.track('CR_VIDEO - twitter share clicked')}>
                                     <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" className="twitter-share-button" data-show-count="false">Tweet</a>
                                 </div>
-                                <div id="facebook_share" className="share-container">
+                                <div id="facebook_share" className="share-container" onClick={() => analytics.track('CR_VIDEO - facebook share clicked')}>
                                     <div className="fb-share-button" data-href="https://www.facebook.com/ElastosCyberRepublic/" data-layout="button_count" data-size="small" data-mobile-iframe="true">
                                         <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.facebook.com%2FElastosCyberRepublic%2F&amp;src=sdkpreparse"
                                            className="fb-xfbml-parse-ignore">Share</a></div>
                                 </div>
-                                <div className="share-container">
+                                <div className="share-container" onClick={() => analytics.track('CR_VIDEO - telegram share clicked')}>
                                     <a href="https://t.me/elastosgroup" target="_blank">
                                         <i className="fab fa-telegram fa-2x"></i>
                                     </a>
@@ -137,13 +140,13 @@ export default class extends StandardPage {
                     <span>{I18N.get('cr-video.q6.title.3')}</span>
                     <p>
                         {I18N.get('cr-video.q6.paragraph.3_2')}
-                        <a target="_blank" href="https://discord.gg/UG9j6kh">{I18N.get('cr-video.q6.paragraph.3.link')}</a>
+                        <a target="_blank" href="https://discord.gg/UG9j6kh" onClick={() => analytics.track('CR_VIDEO - discord link clicked')}>{I18N.get('cr-video.q6.paragraph.3.link')}</a>
                         {I18N.get('cr-video.q6.paragraph.3_3')}
                     </p>
                     <span>{I18N.get('cr-video.q6.title.4')}</span>
                     <p>
                         {I18N.get('cr-video.q6.paragraph.4')}
-                        <a target="_blank" href='https://www.youtube.com/watch?v=D6lz889WyXQ'> {I18N.get('cr-video.q6.paragraph.4.link')}</a>.
+                        <a target="_blank" href='https://www.youtube.com/watch?v=D6lz889WyXQ' onClick={() => analytics.track('CR_VIDEO - earn ELA video clicked')}> {I18N.get('cr-video.q6.paragraph.4.link')}</a>.
                     </p>
                     <span>{I18N.get('cr-video.q6.title.5')}</span>
                     <p>{I18N.get('cr-video.q6.paragraph.5')}</p>
@@ -166,10 +169,10 @@ export default class extends StandardPage {
                     <p>{I18N.get('cr-video.q3.paragraph.1')}</p>
                     <div className="subtitle">{I18N.get('cr-video.q3.subtitle.1')}</div>
                     <div className="links">
-                        <a target="_blank" href="https://www.elastos.org/wp-content/uploads/2018/White%20Papers/elastos_whitepaper_en.pdf?_t=1526235330">{I18N.get('cr-video.q3.link.1')}</a> |
-                        <a target="_blank" href="https://github.com/elastos/Elastos/wiki/A-Developer-Guide-to-Elastos"> {I18N.get('cr-video.q3.link.2')}</a> |
-                        <a target="_blank" href="https://github.com/elastos/Elastos/wiki/A-Non-Developer-Guide-to-Elastos"> {I18N.get('cr-video.q3.link.3')}</a> |
-                        <a target="_blank" href="http://Elastos.org/en"> {I18N.get('cr-video.q3.link.4')}</a>
+                        <a target="_blank" onClick={() => analytics.track('CR_VIDEO - whitepaper clicked')} href="https://www.elastos.org/wp-content/uploads/2018/White%20Papers/elastos_whitepaper_en.pdf?_t=1526235330">{I18N.get('cr-video.q3.link.1')}</a> |
+                        <a target="_blank" onClick={() => analytics.track('CR_VIDEO - developer guide clicked')} href="https://github.com/elastos/Elastos/wiki/A-Developer-Guide-to-Elastos"> {I18N.get('cr-video.q3.link.2')}</a> |
+                        <a target="_blank" onClick={() => analytics.track('CR_VIDEO - non-developer guide clicked')} href="https://github.com/elastos/Elastos/wiki/A-Non-Developer-Guide-to-Elastos"> {I18N.get('cr-video.q3.link.3')}</a> |
+                        <a target="_blank" onClick={() => analytics.track('CR_VIDEO - elastos.org clicked')} href="http://Elastos.org/en"> {I18N.get('cr-video.q3.link.4')}</a>
                     </div>
                 </div>
                 {!this.props.is_login &&
@@ -192,8 +195,8 @@ export default class extends StandardPage {
                     {/* Learn more about CR with these resources */}
                     <div className="subtitle">{I18N.get('cr-video.q6.subtitle.1')}</div>
                     <div className="links">
-                        <a target="_blank" href="https://www.youtube.com/watch?v=AXtElROGXzA">{I18N.get('cr-video.q6.link.1')}</a> |
-                        <a target="_blank" href="https://www.youtube.com/watch?v=-90B2qzwOc8"> {I18N.get('cr-video.q6.link.2')}</a>
+                        <a target="_blank" onClick={() => analytics.track('CR_VIDEO - organizer video clicked')} href="https://www.youtube.com/watch?v=AXtElROGXzA">{I18N.get('cr-video.q6.link.1')}</a> |
+                        <a target="_blank" onClick={() => analytics.track('CR_VIDEO - public tasks video clicked')} href="https://www.youtube.com/watch?v=-90B2qzwOc8"> {I18N.get('cr-video.q6.link.2')}</a>
                     </div>
                 </div>
                 <div className="content email-contact">
@@ -207,9 +210,9 @@ export default class extends StandardPage {
                     </p>
                     <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"/>
                     <div className="form-wrap">
-                        <form id="footer-form" className="signup-form" name="mailing-list" action="https://cyberrepublic.us19.list-manage.com/subscribe/post?u=acb5b0ce41bfe293d881da424&amp;id=8d3dc89cff" method="post">
+                        <form id="footer-form" className="signup-form" name="mailing-list" onSubmit={() => analytics.track('CR_VIDEO - enter email submitted')} action="https://cyberrepublic.us19.list-manage.com/subscribe/post?u=acb5b0ce41bfe293d881da424&amp;id=8d3dc89cff" method="post">
                             <div className="email-wrap">
-                                <input type="email" name="EMAIL" data-type="req" placeholder={I18N.get('landing.footer.email')}/>
+                                <input type="email" name="EMAIL" data-type="req" placeholder={I18N.get('landing.footer.email')} onClick={() => analytics.track('CR_VIDEO - enter email input entered')}/>
                                 <button type="submit" className="arrow-submit">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 34">
                                         <polygon points="0 0 0 33.487 16.744 16.744 0 0" style={{fill: '#1de9b6'}}/>
