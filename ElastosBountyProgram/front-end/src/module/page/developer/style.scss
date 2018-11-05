@@ -38,10 +38,14 @@ $mobile-padding: $gap_0 0px;
   .navi-panel-item {
     height: $naviPanelItemHeight;
     line-height: $naviPanelItemHeight;
-  }
-
-  .navi-panel-item {
+    padding: 0 $gap_2;
     cursor: pointer;
+    background: $primary_dark_color;
+    color: $primary_color;
+
+    &:nth-child(even) {
+      background: $bg_obsidian;
+    }
   }
 
   .navi-panel-item-arrow {
