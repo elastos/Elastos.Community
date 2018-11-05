@@ -107,9 +107,10 @@ export default class extends StandardPage {
                     <div className="title sub-title">
                         {I18N.get('cr-video.header.2')}
                     </div>
+                    {!this.props.is_login ?
                     <div>
                         <Button className="earn-ela-btn" onClick={this.linkRegister.bind(this)}>{I18N.get('cr-video.join')}</Button>
-                    </div>
+                    </div> : <div className="vertSpacer"/>}
                     <div className="background-visuals">
                         <img className="upper-right" src="/assets/images/quarter-circle-connected.svg"/>
                         <img className="mid-right" src="/assets/images/training_circle.png"/>
@@ -126,10 +127,11 @@ export default class extends StandardPage {
             <div>
                 <div className="content">
                     <div className="title">{I18N.get('cr-video.q6')}</div>
-                    <span>{I18N.get('cr-video.q6.title.1')}</span>
+                    <span>{this.props.is_login ? I18N.get('cr-video.q6.title.1_2') : I18N.get('cr-video.q6.title.1')}</span>
+                    {!this.props.is_login ?
                     <p>{I18N.get('cr-video.q6.paragraph.1')}
                         <a target="_blank" onClick={this.linkRegister.bind(this)}> {I18N.get('cr-video.here')}</a>.
-                    </p>
+                    </p> : <p>{I18N.get('cr-video.q6.paragraph.1_2')}</p>}
                     <span>{I18N.get('cr-video.q6.title.2')}</span>
                     <p>{I18N.get('cr-video.q6.paragraph.2')}</p>
                     <span>{I18N.get('cr-video.q6.title.3')}</span>
@@ -170,9 +172,10 @@ export default class extends StandardPage {
                         <a target="_blank" href="http://Elastos.org/en"> {I18N.get('cr-video.q3.link.4')}</a>
                     </div>
                 </div>
+                {!this.props.is_login &&
                 <div>
                     <Button className="earn-ela-btn" onClick={this.linkRegister.bind(this)}>{I18N.get('cr-video.join')}</Button>
-                </div>
+                </div>}
                 <div className="content">
                     <div className="title">{I18N.get('cr-video.q4')}</div>
                     <p>{I18N.get('cr-video.q4.paragraph.1')}</p>
@@ -184,7 +187,8 @@ export default class extends StandardPage {
                 <div className="content">
                     <div className="title">{I18N.get('cr-video.q5')}</div>
                     <p>{I18N.get('cr-video.q5.paragraph.1')}</p>
-
+                </div>
+                <div className="content cr-learn-more">
                     {/* Learn more about CR with these resources */}
                     <div className="subtitle">{I18N.get('cr-video.q6.subtitle.1')}</div>
                     <div className="links">
@@ -193,11 +197,28 @@ export default class extends StandardPage {
                     </div>
                 </div>
                 <div className="content email-contact">
-                    <div className="title">{I18N.get('cr-video.q7.title')}</div>
-                    <p>
-                        Enter your email and we will personally email you: <input id="email_mailer" type="text" size="32"/>
+                    <div className="title center">{I18N.get('cr-video.q7.title')}</div>
+                    <p className="center">
+                        {I18N.get('cr-video.q7.subtitle')}
+                        {/*
+                        <input id="email_mailer" type="text" size="32"/>
                         <Button className="earn-ela-btn" onClick={this.submitEmail.bind(this)}>{I18N.get('cr-video.q7.button_text')}</Button>
+                        */}
                     </p>
+                    <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"/>
+                    <div className="form-wrap">
+                        <form id="footer-form" className="signup-form" name="mailing-list" action="https://cyberrepublic.us19.list-manage.com/subscribe/post?u=acb5b0ce41bfe293d881da424&amp;id=8d3dc89cff" method="post">
+                            <div className="email-wrap">
+                                <input type="email" name="EMAIL" data-type="req" placeholder={I18N.get('landing.footer.email')}/>
+                                <button type="submit" className="arrow-submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 34">
+                                        <polygon points="0 0 0 33.487 16.744 16.744 0 0" style={{fill: '#1de9b6'}}/>
+                                        <polygon points="0 24.579 7.835 16.744 0 8.91 0 24.579" className="small-tri"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         )

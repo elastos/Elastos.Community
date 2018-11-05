@@ -6,7 +6,8 @@ import _ from 'lodash'
 
 export default createContainer(Component, (state) => {
     return {
-        ...state.task
+        ...state.task,
+        is_login: state.user.is_login
     }
 }, () => {
     const taskService = new TaskService()

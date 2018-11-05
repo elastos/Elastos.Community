@@ -1015,6 +1015,8 @@ const en = {
     'cr-video.q6': 'How to Join the Cyber Republic',
     'cr-video.q6.title.1': 'Step 1: Register on the Cyber Republic Platform',
     'cr-video.q6.paragraph.1': 'You can do that ',
+    'cr-video.q6.title.1_2': 'Step 1: Register, looks like you already did, but have you done the rest?',
+    'cr-video.q6.paragraph.1_2': 'Join CRcles, join a team, look for tasks/projects or even be an entrepreneur and form a team for a CR100 project',
     'cr-video.q6.title.2': 'Step 2: Join up to 2 CRcles',
     'cr-video.q6.paragraph.2': 'CRcles represent different subsets of the CR community with shared skills and willingness to contribute to a specific kind of task or project (e.g. writing, marketing, development, etc.)',
     'cr-video.q6.title.3': 'Step 3: Engage with your fellow CRcle members',
