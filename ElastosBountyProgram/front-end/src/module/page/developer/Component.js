@@ -113,8 +113,12 @@ export default class extends StandardPage {
 
     buildMemberSearch() {
         return (
-            <div className="member-search">
-
+            <div className="member-panel panel">
+                <div className="member-panel-content panel-content">
+                    <h3 className="with-gizmo">
+                        Member Search
+                    </h3>
+                </div>
             </div>
         )
     }
