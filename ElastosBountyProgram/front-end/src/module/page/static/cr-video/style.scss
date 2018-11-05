@@ -68,7 +68,8 @@
     }
     .sub-title {
       width: 100%;
-      margin-bottom: $gap_2;
+      margin-bottom: $gap_5;
+      padding-top: $gap_2;
       font-size: 30px;
       line-height: 40px;
       color: initial;
@@ -168,7 +169,7 @@
   .share-icons {
     position: absolute;
     top: 30%;
-    left: $gap_5;
+    left: 12%;
 
     span {
       margin-bottom: $gap_3;
@@ -191,7 +192,6 @@
     }
 
     #twitter_share {
-      margin-bottom: 48px;
     }
 
     @media only screen and (max-width: $mobile-width) {
@@ -208,7 +208,6 @@
 
       #twitter_share {
         padding-top: 8px;
-        margin: 0 24px;
       }
 
       #facebook_share {
