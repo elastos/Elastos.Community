@@ -34,6 +34,8 @@ export default class extends BasePage {
             }
         }
 
+        analytics.page(location.pathname)
+
         return (
             <Layout className="p_standardPage">
                 {this.state.showMobile &&
