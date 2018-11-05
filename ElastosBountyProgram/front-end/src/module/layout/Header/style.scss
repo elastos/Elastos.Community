@@ -11,7 +11,7 @@
 
     .language-dropdown {
         &:not(.mobile) {
-            padding-top: 26px;
+            padding-top: 0px;
         }
 
         .ant-select-selection {
@@ -21,6 +21,10 @@
 
         .ant-select-arrow {
             display: none;
+        }
+
+        .ant-select-selection-selected-value {
+            line-height: 24px;
         }
     }
 
