@@ -289,7 +289,10 @@ export default class extends BaseComponent {
 
         } else if (key === 'logout') {
 
-            analytics.track('HEADER_MENU - logout clicked')
+            analytics.track('HEADER_CLICKED', {
+                action: 'logout',
+                url: location.href
+            })
 
             Modal.confirm({
                 title: 'Are you sure you want to logout?',
@@ -298,7 +301,9 @@ export default class extends BaseComponent {
                 okType: 'danger',
                 cancelText: 'No',
                 onOk: () => {
-                    analytics.track('HEADER_MENU - logout confirmed')
+                    analytics.track('LOGOUT', {
+                        url: location.href
+                    })
                     this.props.logout()
                 },
                 onCancel() {
@@ -309,7 +314,9 @@ export default class extends BaseComponent {
 
         } else if (key === 'blog') {
 
-            analytics.track('HEADER_MENU - blog clicked')
+            analytics.track('BLOG_CLICKED', {
+                url: location.href
+            })
 
             window.location.href = 'https://blog.cyberrepublic.org'
 
@@ -318,7 +325,10 @@ export default class extends BaseComponent {
             'zh'
         ], key)) {
 
-            analytics.track(`HEADER_MENU - language changed to ${e.key}`)
+            analytics.track('LANGUAGE_CHANGED', {
+                language: e.key,
+                url: location.href
+            })
 
             this.props.changeLanguage(e.key);
         }

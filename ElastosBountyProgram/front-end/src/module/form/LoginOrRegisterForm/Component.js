@@ -49,7 +49,11 @@ export default class extends BaseComponent {
                 {this.state.activeKey === 'post' ? this.showPostRegLogScreen() : (
                     <Tabs activeKey={this.state.activeKey}
                         onChange={(key) => {
-                            analytics.track(`CR_LOGIN - ${key} tab clicked`)
+                            analytics.track('CLICK', {
+                                linkText: key,
+                                action: `${key} tab`,
+                                url: location.href
+                            })
                             this.setState({activeKey: key})
                         }}
                         className={!this.state.hideTabBar ? '' : 'hide-tabbar'}>
