@@ -288,6 +288,9 @@ export default class extends BaseComponent {
             }
 
         } else if (key === 'logout') {
+
+            analytics.track('HEADER_MENU - logout clicked')
+
             Modal.confirm({
                 title: 'Are you sure you want to logout?',
                 content: '',
@@ -295,6 +298,7 @@ export default class extends BaseComponent {
                 okType: 'danger',
                 cancelText: 'No',
                 onOk: () => {
+                    analytics.track('HEADER_MENU - logout confirmed')
                     this.props.logout()
                 },
                 onCancel() {
@@ -304,12 +308,18 @@ export default class extends BaseComponent {
             this.props.history.push('/profile/info')
 
         } else if (key === 'blog') {
+
+            analytics.track('HEADER_MENU - blog clicked')
+
             window.location.href = 'https://blog.cyberrepublic.org'
 
         } else if (_.includes([
             'en',
             'zh'
         ], key)) {
+
+            analytics.track(`HEADER_MENU - language changed to ${e.key}`)
+
             this.props.changeLanguage(e.key);
         }
     }

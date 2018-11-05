@@ -61,7 +61,51 @@ export default class extends StandardPage {
                         js = d.createElement(s); js.id = id;
                         js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2';
                         fjs.parentNode.insertBefore(js, fjs);
-                    }(document, 'script', 'facebook-jssdk'))`}</script>
+                    }(document, 'script', 'facebook-jssdk'))`}
+                    </script>
+                    <script>{`
+                        var tag = document.createElement('script');
+                        tag.src = "https://www.youtube.com/iframe_api";
+                        var firstScriptTag = document.getElementsByTagName('script')[0];
+                        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+                        var player;
+                        function onYouTubeIframeAPIReady() {
+                          player = new YT.Player('main_player', {
+                            events: {
+                              'onStateChange': onPlayerStateChange
+                            }
+                          });
+                        }
+
+                        function onPlayerStateChange(event) {
+                          switch(event.data) {
+                            case YT.PlayerState.PLAYING:
+                              analytics.track('CR_VIDEO - Video Played', {
+                                video: player.getVideoData().title,
+                                id: player.getVideoData().video_id,
+                                duration: player.getDuration()
+                              })
+                              break;
+                            case YT.PlayerState.PAUSED:
+                              analytics.track('CR_VIDEO - Video Paused', {
+                                video: player.getVideoData().title,
+                                id: player.getVideoData().video_id,
+                                pausedAt: player.getCurrentTime()
+                              })
+                              break;
+                            case YT.PlayerState.ENDED:
+                              analytics.track('CR_VIDEO - Video Finished', {
+                                video: player.getVideoData().title,
+                                id: player.getVideoData().video_id,
+                                duration: player.getDuration()
+                              })
+                              break;
+                            default:
+                              return;
+                          }
+                        }`}
+                    </script>
                 </Helmet>
                 <div className="ebp-header-divider" />
                 <div className="p_admin_index ebp-wrap">
@@ -102,7 +146,7 @@ export default class extends StandardPage {
                         {I18N.get('cr-video.header.1')}
                     </div>
                     <div className="videoWrapper">
-                        <iframe src="https://www.youtube.com/embed/vaPdh35elYc"
+                        <iframe id="main_player" src={`https://www.youtube.com/embed/vaPdh35elYc?enablejsapi=1&origin=${location.protocol}//${location.host}`}
                             frameBorder="0"
                             allow="autoplay; encrypted-media;"
                             allowFullScreen></iframe>
