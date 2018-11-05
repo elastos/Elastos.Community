@@ -5,24 +5,15 @@ import I18N from '@/I18N'
 import { Link } from 'react-router-dom'
 import './style.scss'
 import MediaQuery from 'react-responsive'
-import { Col, Row, Card, Button, Breadcrumb, Icon } from 'antd'
+import { Col, Row, Card, Button, Breadcrumb, Icon, Table } from 'antd'
 import {MAX_WIDTH_MOBILE} from "../../../config/constant"
 
 export default class extends StandardPage {
-    navigateToLearn() {
-        this.props.history.push('/developer/learn');
+    async componentDidMount() {
+        this.props.listUsers()
     }
 
-    navigateToTeamSearch() {
-        this.props.history.push('/developer/search');
-    }
-
-    navigateToProjectSearch() {
-        this.props.history.push('/developer/search?type=PROJECT');
-    }
-
-    navigateToTaskSearch() {
-        this.props.history.push('/developer/search?type=TASK');
+    componentWillUnmount() {
     }
 
     ord_renderContent () {
@@ -111,13 +102,51 @@ export default class extends StandardPage {
         )
     }
 
+    getUserNameWithFallback(user) {
+        if (_.isEmpty(user.profile.firstName) && _.isEmpty(user.profile.lastName)) {
+            return user.username
+        }
+
+        return _.trim([user.profile.firstName, user.profile.lastName].join(' '))
+    }
+
+    getUserCircles(user) {
+        if (_.isEmpty(user.circles)) {
+            return ''
+        }
+
+        return _.map(user.circles, (circle) => circle.name).join(' ')
+    }
+
     buildMemberSearch() {
+        const columns = [
+            {
+                title: 'Name',
+                dataIndex: 'name',
+                render: (name, user) => this.getUserNameWithFallback(user)
+            },
+            {
+                title: 'Circles',
+                dataIndex: 'circles',
+                render: (circles, user) => this.getUserCircles(user)
+            }
+        ]
+
         return (
             <div className="member-panel panel">
                 <div className="member-panel-content panel-content">
                     <h3 className="with-gizmo">
                         Member Search
                     </h3>
+                    <Table
+                        className="no-borders"
+                        dataSource={this.props.users}
+                        loading={this.props.loading}
+                        columns={columns}
+                        bordered={false}
+                        rowKey="_id"
+                        pagination={{showTotal: total => `Total ${total} users`, pageSize: 5}}>
+                    </Table>
                 </div>
             </div>
         )

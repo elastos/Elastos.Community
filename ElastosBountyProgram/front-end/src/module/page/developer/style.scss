@@ -62,5 +62,38 @@ $mobile-padding: $gap_0 0px;
       font-size: 18px;
     }
   }
+
+  .member-panel {
+    .ant-table-wrapper {
+      background: $modal_bg;
+      padding-bottom: $gap_0;
+
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
+
+    .ant-spin-container {
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
+
+    .ant-table table {
+      border-radius: 0;
+    }
+
+    .ant-table-thead {
+      background: $primary_dark_color;
+
+      th {
+        color: white;
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+      }
+    }
+  }
 }
 
