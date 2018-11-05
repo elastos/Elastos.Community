@@ -1268,11 +1268,11 @@ export default class extends EmptyPage {
 
                         <div className="col contact" data-num="3">
                             <ul>
-                                <li className="title">{I18N.get('landing.footer.contract')}</li>
+                                <li className="title">{I18N.get('landing.footer.contact')}</li>
                                 <li>{I18N.get('landing.cr')}: <a href="mailto:cyberrepublic@elastos.org">cyberrepublic@elastos.org</a></li>
                                 <li>{I18N.get('landing.footer.community')}: <a href="mailto:global-community@elastos.org">global-community@elastos.org</a></li>
                                 <li>{I18N.get('landing.footer.support')}: <a href="mailto:support@elastos.org">support@elastos.org</a></li>
-                                <li>{I18N.get('landing.footer.contracts')}: <a href="mailto:contact@elastos.org">contact@elastos.org</a></li>
+                                <li>{I18N.get('landing.footer.contacts')}: <a href="mailto:contact@elastos.org">contact@elastos.org</a></li>
                             </ul>
                         </div>
 

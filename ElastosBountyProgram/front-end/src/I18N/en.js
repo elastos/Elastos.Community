@@ -638,10 +638,10 @@ const en = {
     'landing.footer.github': 'Github',
     'landing.footer.assets': 'Logo Assets',
     'landing.footer.elaNews': 'ELA News',
-    'landing.footer.contract': 'Contract',
+    'landing.footer.contact': 'Contact',
     'landing.footer.community': 'Global Community',
     'landing.footer.support': 'Support',
-    'landing.footer.contracts': 'Other Contracts',
+    'landing.footer.contacts': 'Other',
     'landing.footer.join': 'Join Us On',
 
     'landing.0220': 'ELA tokens will be used to register IDs on the blockchain, opening the door to the Elastos ecosystem. Once inside, countless exchange opportunities will be available.',
