@@ -204,7 +204,7 @@ export default class extends StandardPage {
                                 <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"/>
                                 <form id="footer-form" className="signup-form" name="mailing-list" action="https://cyberrepublic.us19.list-manage.com/subscribe/post?u=acb5b0ce41bfe293d881da424&amp;id=e6afbb4dba" method="post">
                                     <div className="email-wrap">
-                                        <input type="email" name="EMAIL" data-type="req" placeholder="Enter Email"/>
+                                        <input type="email" name="EMAIL" data-type="req" placeholder={I18N.get('landing.footer.email')}/>
                                         <button type="submit" className="arrow-submit">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 34">
                                                 <polygon points="0 0 0 33.487 16.744 16.744 0 0" style={{fill: '#1de9b6'}}/>

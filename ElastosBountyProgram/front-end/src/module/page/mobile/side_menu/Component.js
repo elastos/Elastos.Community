@@ -32,7 +32,7 @@ export default class extends BaseComponent {
             'faq',
             'contact',
             'slack',
-            'council/list'
+            'council'
         ], key)) {
             this.props.history.push('/' + ev.key)
         }
@@ -49,6 +49,8 @@ export default class extends BaseComponent {
                 onCancel() {
                 }
             })
+        } else if (key === 'blog') {
+            window.location.href = 'https://blog.cyberrepublic.org'
         }
     }
 
@@ -79,8 +81,11 @@ export default class extends BaseComponent {
                         <Menu.Item key="developer">
                             {I18N.get('0102')}
                         </Menu.Item>
-                        <Menu.Item key="council/list">
+                        <Menu.Item key="council">
                             {I18N.get('council.0001')}
+                        </Menu.Item>
+                        <Menu.Item key="blog">
+                            {I18N.get('0110')}
                         </Menu.Item>
                         <Menu.Item key="ambassadors">
                             {I18N.get('0107')}
@@ -98,14 +103,11 @@ export default class extends BaseComponent {
                         mode="inline"
                     >
                         {isLogin &&
-                            <Menu.Item key="profile/teams">
+                            <Menu.Item key="profile/info">
                                 {I18N.get('0104')}
                             </Menu.Item>
                         }
-                        {isLogin ?
-                            <Menu.Item key="profile/info">
-                                {I18N.get('0200')}
-                            </Menu.Item> :
+                        {!isLogin &&
                             <Menu.Item key="login">
                                 {I18N.get('0201')}
                             </Menu.Item>
@@ -137,14 +139,6 @@ export default class extends BaseComponent {
                         <Menu.Item key="help">
                             {I18N.get('0007')}
                         </Menu.Item>
-                        <Menu.Item key="about">
-                            {I18N.get('0008')}
-                        </Menu.Item>
-
-                        <Menu.Item key="faq">
-                            {I18N.get('0009')}
-                        </Menu.Item>
-
                         <Menu.Item key="slack">
                             {I18N.get('0011')}
                         </Menu.Item>

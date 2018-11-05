@@ -48,7 +48,14 @@ export default class extends BaseComponent {
             <div className="c_LoginOrRegister">
                 {this.state.activeKey === 'post' ? this.showPostRegLogScreen() : (
                     <Tabs activeKey={this.state.activeKey}
-                        onChange={(key) => { this.setState({activeKey: key}) }}
+                        onChange={(key) => {
+                            analytics.track('CLICK', {
+                                linkText: key,
+                                action: `${key} tab`,
+                                url: location.href
+                            })
+                            this.setState({activeKey: key})
+                        }}
                         className={!this.state.hideTabBar ? '' : 'hide-tabbar'}>
                         <TabPane tab="Login" key="login">
                             <LoginForm onHideModal={this.props.onHideModal}/>

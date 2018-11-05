@@ -505,10 +505,10 @@ const zh = {
      'landing.footer.github': 'Github',
      'landing.footer.assets': 'Logo资源',
      'landing.footer.elaNews': 'ELA 新闻',
-     'landing.footer.contract': '合同',
+     'landing.footer.contact': '合同',
      'landing.footer.community': '全球社区:',
      'landing.footer.support': '支持:',
-     'landing.footer.contracts': '其他合同:',
+     'landing.footer.contacts': '其他合同:',
      'landing.footer.join': '加入我们',
 
      'landing.0220': 'ELA令牌将用于在区块链上注册id，打开通往Elastos生态系统的门。 一旦加入，将会有无数的交流机会。',

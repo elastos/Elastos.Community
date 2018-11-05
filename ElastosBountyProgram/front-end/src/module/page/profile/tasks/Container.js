@@ -4,15 +4,16 @@ import TaskService from '@/service/TaskService'
 import TeamService from '@/service/TeamService'
 import _ from 'lodash'
 
-import {USER_ROLE, TASK_TYPE, TASK_CANDIDATE_STATUS, TASK_CATEGORY} from '@/constant'
+import {USER_ROLE, TASK_TYPE, TASK_CANDIDATE_STATUS, TASK_CATEGORY, TASK_STATUS} from '@/constant'
 
 export default createContainer(Component, (state) => {
     const currentUserId = state.user.current_user_id
+    const isAdmin = state.user.role === USER_ROLE.ADMIN
     const taskState = {
         ...state.task,
         currentUserId,
         is_leader: state.user.role === USER_ROLE.LEADER,
-        is_admin: state.user.role === USER_ROLE.ADMIN
+        is_admin: isAdmin
     }
 
     if (!_.isArray(taskState.all_tasks)) {
@@ -28,6 +29,9 @@ export default createContainer(Component, (state) => {
 
     // tasks I am candidate of and approved
     taskState.candidate_active_tasks = []
+
+    // tasks which need my approval if I'm admin
+    taskState.need_approval_tasks = []
 
     if (taskState.all_tasks.length) {
         for (let task of taskState.all_tasks) {
@@ -60,6 +64,10 @@ export default createContainer(Component, (state) => {
                         taskState.candidate_pending_tasks.push(task)
                     }
                 }
+            }
+
+            if (isAdmin && task.status === TASK_STATUS.PENDING) {
+                taskState.need_approval_tasks.push(task)
             }
         }
     }

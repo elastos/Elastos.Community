@@ -307,7 +307,6 @@ $('#lbvid').click(function(e){
 })
 
 $('.video-btn').click(function(){
-    mixpanel.track("Video play");
 	openVideoOverlay();
 	return false;
 })

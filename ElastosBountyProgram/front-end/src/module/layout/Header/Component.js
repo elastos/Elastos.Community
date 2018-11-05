@@ -143,8 +143,7 @@ export default class extends BaseComponent {
                 <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu pull-left"
                     selectedKeys={this.getSelectedKeys()} mode="horizontal">
                     <Menu.Item className="c_MenuItem logo" key="landing">
-                        <img src="/assets/images/logo.svg" alt="Cyber Republic" className="dsk"/>
-                        <img src="/assets/images/logo-mark.svg" className="mob"/>
+                        <img src="/assets/images/logo.svg" alt="Cyber Republic"/>
                         <div className="alpha-tag dsk">ALPHA</div>
                     </Menu.Item>
                 </Menu>
@@ -164,7 +163,7 @@ export default class extends BaseComponent {
                     <Menu.Item className="c_MenuItem mobile" key="mobileMenu" onClick={this.props.toggleMobileMenu}>
                         <Icon type="menu-fold"/>
                     </Menu.Item>
-                    <Menu.Item style={{marginTop: 13}}>
+                    <Menu.Item className="mobile-language-dropdown" style={{marginTop: 13}}>
                         <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
                             <div className="pull-right language-dropdown mobile">
                                 {this.buildLanguageDropdown()}
@@ -289,6 +288,12 @@ export default class extends BaseComponent {
             }
 
         } else if (key === 'logout') {
+
+            analytics.track('HEADER_CLICKED', {
+                action: 'logout',
+                url: location.href
+            })
+
             Modal.confirm({
                 title: 'Are you sure you want to logout?',
                 content: '',
@@ -296,6 +301,9 @@ export default class extends BaseComponent {
                 okType: 'danger',
                 cancelText: 'No',
                 onOk: () => {
+                    analytics.track('LOGOUT', {
+                        url: location.href
+                    })
                     this.props.logout()
                 },
                 onCancel() {
@@ -305,12 +313,23 @@ export default class extends BaseComponent {
             this.props.history.push('/profile/info')
 
         } else if (key === 'blog') {
+
+            analytics.track('BLOG_CLICKED', {
+                url: location.href
+            })
+
             window.location.href = 'https://blog.cyberrepublic.org'
 
         } else if (_.includes([
             'en',
             'zh'
         ], key)) {
+
+            analytics.track('LANGUAGE_CHANGED', {
+                language: e.key,
+                url: location.href
+            })
+
             this.props.changeLanguage(e.key);
         }
     }
