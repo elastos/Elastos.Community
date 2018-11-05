@@ -1,4 +1,5 @@
 import React from 'react'
+import {Helmet} from "react-helmet"
 import StandardPage from '../../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import I18N from '@/I18N'
@@ -38,6 +39,27 @@ export default class extends StandardPage {
     ord_renderContent () {
         return (
             <div className="p_crVideo">
+                <div id="fb-root"></div>
+                <Helmet>
+                    <script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></script>
+                    <script>
+                        {`window.fbAsyncInit = function() {
+                            FB.init({
+                                appId            : '2317676415144125',
+                                autoLogAppEvents : true,
+                                xfbml            : true,
+                                version          : 'v3.2'
+                            });
+                        }`}
+                    </script>
+                    <script>{`(function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s); js.id = id;
+                        js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2';
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }(document, 'script', 'facebook-jssdk'))`}</script>
+                </Helmet>
                 <div className="ebp-header-divider" />
                 <div className="p_admin_index ebp-wrap">
                     <div className="d_box">
@@ -47,11 +69,19 @@ export default class extends StandardPage {
                             {this.buildTasks()}
                             <div className="share-icons">
                                 <span>SHARE</span>
-                                <a href="https://twitter.com/Elastos_org" target="_blank"><i
-                                    className="fab fa-twitter fa-2x"></i></a>
-                                <a href="https://www.facebook.com/ElastosCyberRepublic" target="_blank"><i className="fab fa-facebook fa-2x"/></a>
-                                <a href="https://t.me/elastosgroup" target="_blank"><i
-                                    className="fab fa-telegram fa-2x"></i></a>
+                                <div id="twitter_share" className="share-container">
+                                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" className="twitter-share-button" data-show-count="false">Tweet</a>
+                                </div>
+                                <div id="facebook_share" className="share-container">
+                                    <div className="fb-share-button" data-href="https://www.facebook.com/ElastosCyberRepublic/" data-layout="button_count" data-size="small" data-mobile-iframe="true">
+                                        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.facebook.com%2FElastosCyberRepublic%2F&amp;src=sdkpreparse"
+                                           className="fb-xfbml-parse-ignore">Share</a></div>
+                                </div>
+                                <div className="share-container">
+                                    <a href="https://t.me/elastosgroup" target="_blank">
+                                        <i className="fab fa-telegram fa-2x"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -32,7 +32,7 @@ export default class extends BaseComponent {
             'faq',
             'contact',
             'slack',
-            'council/list'
+            'council'
         ], key)) {
             this.props.history.push('/' + ev.key)
         }

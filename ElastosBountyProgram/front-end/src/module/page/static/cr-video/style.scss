@@ -173,7 +173,7 @@
     span {
       margin-bottom: $gap_3;
       display: block;
-      color: #1DE9B6;
+      color: $cr_primary_color;
     }
     a {
       display: block;
@@ -187,18 +187,35 @@
       padding-bottom: $gap_1;
       width: 50px;
       height: 50px;
-      border-bottom: 1px solid black;
       color: black;
-
-      @media only screen and (max-width: $mobile-width) {
-        border-width: 0;
-      }
     }
+
+    #twitter_share {
+      margin-bottom: 48px;
+    }
+
     @media only screen and (max-width: $mobile-width) {
       position: relative;
       top: 0;
       left: 0;
+
+      .share-container {
+        display: inline-block;
+        height: 100px;
+        margin-bottom: 48px;
+        vertical-align: top;
+      }
+
+      #twitter_share {
+        padding-top: 8px;
+        margin: 0 24px;
+      }
+
+      #facebook_share {
+        padding-top: 8px;
+      }
     }
+
   }
   .earn-ela-btn {
     margin: $gap_3 0;
