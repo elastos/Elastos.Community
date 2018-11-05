@@ -199,6 +199,10 @@ export default class extends StandardPage {
                             allow="autoplay; encrypted-media;"
                             allowFullScreen></iframe>
                     </div>
+                    {!this.props.is_login ?
+                        <div>
+                            <Button className="earn-ela-btn" onClick={this.linkRegister.bind(this)}>{I18N.get('cr-video.join')}</Button>
+                        </div> : <div className="vertSpacer"/>}
                     <div className="title sub-title">
                         {I18N.get('cr-video.header.2')}
                     </div>
