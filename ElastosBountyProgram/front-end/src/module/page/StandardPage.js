@@ -1,3 +1,4 @@
+/*global location, analytics*/
 import React from 'react';
 import BasePage from '@/model/BasePage';
 import {Layout} from 'antd';
@@ -14,6 +15,8 @@ export default class extends BasePage {
         this.state = {
             showMobile: false
         }
+
+        analytics.page(location.pathname)
     }
 
     toggleMobileMenu() {

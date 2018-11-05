@@ -14,10 +14,10 @@ export default class extends BaseComponent {
                 </div>
                 <div className="footer-box">
                     <Row className="d_rowFooter d_footerSection">
-                        <Col xs={24} sm={12} md={5}>
+                        <Col className="shield" xs={24} sm={12} md={5}>
                             <img className="logo_own" src="/assets/images/footer-shield.svg"/>
                         </Col>
-                        <Col xs={24} sm={12} md={5}>
+                        <Col className="resources" xs={24} sm={12} md={5}>
                             <div className="links footer-vertical-section">
                                 <div className="title brand-color">
                                     {I18N.get('landing.footer.resources')}
@@ -30,15 +30,15 @@ export default class extends BaseComponent {
                                 <div><a href="https://elanews.net/">{I18N.get('landing.footer.elaNews')}</a></div>
                             </div>
                         </Col>
-                        <Col xs={24} sm={24} md={7}>
+                        <Col className="contact-container" xs={24} sm={24} md={7}>
                             <div className="contact footer-vertical-section">
                                 <div className="title brand-color">
-                                    {I18N.get('landing.footer.contract')}
+                                    {I18N.get('landing.footer.contact')}
                                 </div>
                                 <div className="footer-color-dark">{I18N.get('landing.cr')}: <a href="mailto:cyberrepublic@elastos.org">cyberrepublic@elastos.org</a></div>
                                 <div className="footer-color-dark">{I18N.get('landing.footer.community')}: <a href="mailto:global-community@elastos.org">global-community@elastos.org</a></div>
                                 <div className="footer-color-dark">{I18N.get('landing.footer.support')}: <a href="mailto:support@elastos.org">support@elastos.org</a></div>
-                                <div className="footer-color-dark">{I18N.get('landing.footer.contracts')}: <a href="mailto:contact@elastos.org">contact@elastos.org</a></div>
+                                <div className="footer-color-dark">{I18N.get('landing.footer.contacts')}: <a href="mailto:contact@elastos.org">contact@elastos.org</a></div>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={7}>

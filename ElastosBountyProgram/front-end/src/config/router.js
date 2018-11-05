@@ -8,6 +8,7 @@ import LeaderPage from '@/module/page/leader/Container'
 import Cr100Page from '@/module/page/cr_100/Container'
 import Emp35Page from '@/module/page/empower_35/Container'
 import Ambassadors from '@/module/page/ambassadors/Container'
+import CrVideo from '@/module/page/static/cr-video/Container'
 
 // this is the leaders link in the header
 import DirectoryPage from '@/module/page/directory/Container'
@@ -217,6 +218,10 @@ export default [
     {
         path: '/vision',
         page: VisionPage
+    },
+    {
+        path: '/join-cr',
+        page: CrVideo
     },
     /*
     ********************************************************************************

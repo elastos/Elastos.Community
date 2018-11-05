@@ -23,9 +23,17 @@ class C extends BaseComponent {
     handleSubmit(e) {
         e.preventDefault()
 
+        analytics.track('CR_LOGIN - register submitted')
+
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
                 if (this.state.requestedCode) {
+
+                    analytics.track('CR_LOGIN - register code successful', {
+                        username: this.state.savedValues.username,
+                        email: this.state.savedValues.email
+                    })
+
                     this.props.register(this.state.savedValues.username,
                         this.state.savedValues.password, _.omit(this.state.savedValues, ['username', 'password']))
                         .then((shouldShowWelcome) => {
@@ -38,6 +46,11 @@ class C extends BaseComponent {
                             }
                         })
                 } else {
+
+                    analytics.track('CR_LOGIN - register code sent', {
+                        username: values.username,
+                        email: values.email
+                    })
 
                     // step 1 - check username, if valid send registration code
                     const code = this.generateRegCode()

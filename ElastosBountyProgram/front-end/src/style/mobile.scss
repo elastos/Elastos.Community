@@ -9,12 +9,8 @@
   display: none;
 }
 
-/*
-************************************************************************
-CR 100, Empower 35, Training
-************************************************************************
- */
-@media screen and (max-width: $mobile-width) {
+@media only screen and (max-width: $mobile-width) {
+
   .c_Header .logo .dsk {
     display: none;
   }
@@ -50,10 +46,10 @@ CR 100, Empower 35, Training
       width: 5px;
     }
   }
-}
 
-// mobile
-@media only screen and (max-width: $mobile-width) {
+  .ant-menu-vertical .ant-menu-item.mobile-language-dropdown {
+    padding-right: 0;
+  }
 
   .mobile-hide {
     display: none;
@@ -88,7 +84,7 @@ CR 100, Empower 35, Training
         }
 
         &.mobile {
-          padding: 24px;
+          padding: 24px 24px 0 12px;
           display: block;
           float: right;
           font-size: 150%;
@@ -317,5 +313,36 @@ CR 100, Empower 35, Training
       width: fit-content;
     }
 
+  }
+
+  /*
+  ****************************************************************************
+  Footer
+  - note this is independent of the landing page footer
+  ****************************************************************************
+  */
+  .c_Footer {
+
+
+
+    .d_rowFooter {
+      .shield,
+      .resources {
+        display: none;
+      }
+    }
+
+    .contact-container, .join {
+      padding-left: 48px;
+    }
+
+    .contact-container > .footer-vertical-section {
+      line-height: 2;
+      font-weight: 400;
+    }
+
+    .join {
+      margin: 50px 0;
+    }
   }
 }

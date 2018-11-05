@@ -68,7 +68,10 @@ module.exports = merge(common, {
         contentBase: 'dev_dist',
         port: 3001,
         hot: true,
-
+        /*
+        headers: {
+            'X-Frame-Options': 'allow-from https://www.facebook.com/'
+        },*/
         watchOptions: {
             ignored: /node_modules/,
         },
