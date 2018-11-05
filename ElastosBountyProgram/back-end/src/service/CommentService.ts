@@ -150,12 +150,13 @@ export default class extends Base {
         } = param
 
         let ownerSubject = `Someone has commented on your ${type}`
+        let ownerBody = ''
 
         if (name) {
-            ownerSubject = `${name} ${type}`
+            ownerBody = `In ${name}, `
         }
 
-        let ownerBody = `
+        ownerBody += `
             ${curUser.profile.firstName} ${curUser.profile.lastName} says:<br/>${comment}
             <br/>
             <br/>
@@ -180,15 +181,14 @@ export default class extends Base {
         } = param
 
         let ownerSubject = `Someone has commented on your ${type}`
+        let ownerBody = ''
 
         if (name) {
-            ownerSubject = `${name} ${type}`
+            ownerBody = `In ${name}, `
         }
 
-        let ownerBody = `
-            ${curUser.profile.firstName} ${curUser.profile.lastName} says:<br/>${comment}
-            <a href="${process.env.SERVER_URL}${returnUrl}">Click here to view the ${type}</a>
-        `
+        ownerBody += `${curUser.profile.firstName} ${curUser.profile.lastName} says:<br/>${comment}
+            <a href="${process.env.SERVER_URL}${returnUrl}">Click here to view the ${type}</a>`
 
         // hack for now, don't send more than 1 email to an individual subscriber
         const seenEmails = {}
@@ -227,12 +227,13 @@ export default class extends Base {
         } = param
 
         let ownerSubject = `Someone has commented on a ${type} you subscribed to`
+        let ownerBody = ''
 
         if (name) {
-            ownerSubject = `${name} ${type}`
+            ownerBody = `In ${name}, `
         }
 
-        let ownerBody = `
+        ownerBody += `
             ${curUser.profile.firstName} ${curUser.profile.lastName} says:<br/>${comment}
             <br/>
             <br/>
