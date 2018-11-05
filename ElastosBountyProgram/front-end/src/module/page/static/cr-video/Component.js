@@ -189,6 +189,8 @@ export default class extends StandardPage {
     buildHeader() {
         return (
             <div className="header">
+                <div className="background-box">
+                </div>
                 <div className="header-container">
                     <div className="title komu-a">
                         {I18N.get('cr-video.header.1')}

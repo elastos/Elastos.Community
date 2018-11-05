@@ -10,6 +10,16 @@
   .header {
     position: relative;
 
+    .background-box {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: -25%;
+      width: calc(100% + 100%);
+      height: 50%;
+      background: rgba(13, 17, 27, 0.1);
+    }
+
     .header-container {
       width: 80%;
       margin: 0 auto;
