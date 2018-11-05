@@ -33,7 +33,7 @@ export default class extends StandardPage {
 
     linkRegister() {
 
-        analytics.track('CR Video - register clicked')
+        analytics.track('CR_VIDEO - register clicked')
 
         this.props.history.push('/login')
     }
