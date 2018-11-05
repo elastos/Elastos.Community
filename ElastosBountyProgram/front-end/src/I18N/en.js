@@ -1,8 +1,10 @@
 import {TASK_STATUS} from '@/constant'
 import council from './en/council';
+import getting_started from './en/getting_started';
 
 const en = {
     council,
+    getting_started,
     // Header
     '0000': 'ALPHA',
     '0001': 'Bounty Programs',
@@ -467,7 +469,6 @@ const en = {
     '.no': 'No',
     '.loading': 'Loading...',
     'ela': 'ELA',
-    '.edit': 'Edit',
 
     // Community
     'community.nomember': 'no members',
@@ -483,8 +484,8 @@ const en = {
     'community.guidecontainer.part1': 'Hello there! Looks like your we do not have an organizer for',
     'community.guidecontainer.part2': 'We are always looking for new organizers especially in new communities.',
     'community.guidecontainer.part3': "if you'd like to be an organizer for your region please register, we'll add your country and you can then apply to be an organizer on this page.",
-    'community.button.register': "Click to Register",
-    'community.button.selectcountry': "or you can select a country from above",
+    'community.button.register': 'Click to Register',
+    'community.button.selectcountry': 'or you can select a country from above',
     'community.link.toevent': 'See Event',
 
     // Council
@@ -637,10 +638,10 @@ const en = {
     'landing.footer.github': 'Github',
     'landing.footer.assets': 'Logo Assets',
     'landing.footer.elaNews': 'ELA News',
-    'landing.footer.contract': 'Contract',
+    'landing.footer.contact': 'Contact',
     'landing.footer.community': 'Global Community',
     'landing.footer.support': 'Support',
-    'landing.footer.contracts': 'Other Contracts',
+    'landing.footer.contacts': 'Other',
     'landing.footer.join': 'Join Us On',
 
     'landing.0220': 'ELA tokens will be used to register IDs on the blockchain, opening the door to the Elastos ecosystem. Once inside, countless exchange opportunities will be available.',
@@ -918,6 +919,124 @@ const en = {
     'from.TeamCreateForm.label.pictures': 'Pictures',
     'from.TeamCreateForm.button.save': 'Save',
     'from.TeamCreateForm.button.create': 'Create',
+
+    'from.TeamEditForm.field.required': 'This field is required',
+    'from.TeamEditForm.radio.yes': 'Yes',
+    'from.TeamEditForm.radio.no': 'No',
+    'from.TeamEditForm.label.name': 'Name',
+    'from.TeamEditForm.label.type': 'Type',
+    'from.TeamEditForm.label.recrui': 'Recruiting',
+    'from.TeamEditForm.label.des': 'Description',
+    'from.TeamEditForm.label.tags': 'Tags',
+    'from.TeamEditForm.label.save': 'Save Changes',
+
+    'from.Training1Form.field.required': 'This field is required',
+    'from.Training1Form.field.email.invalid': 'Invalid email',
+    'from.Training1Form.field.min': 'This field too short',
+    'from.Training1Form.field.max': 'This field too long',
+    'from.Training1Form.button.upload': 'Click to upload',
+    'from.Training1Form.label.email': 'Email',
+    'from.Training1Form.label.fullllegal': 'Full Legal Name',
+    'from.Training1Form.label.occupation': 'Occupation',
+    'from.Training1Form.label.education': 'Education',
+    'from.Training1Form.text.nativelanguage': 'What is your native language, who is your audience and where are they located? What are the language(s) you plan to use to present Elastos.',
+    'from.Training1Form.text.describeyour': 'Please describe your public speaking experience and provide any examples.',
+    'from.Training1Form.text.listanycurrent': 'Please list any current or past contributions promoting Elastos.',
+    'from.Training1Form.text.adeveloper': 'Are you a developer?',
+    'from.Training1Form.text.explain': 'If you are not a developer, please explain how you are familiar with Elastos technology and what problems we solve.',
+    'from.Training1Form.text.describe': 'Describe Elastos in your own words.',
+    'from.Training1Form.text.tellfeword': 'Tell us in a few words what inspired you to join Cyber Republic.',
+    'from.Training1Form.text.submitvideo': 'Please submit a video of your introduction to Cyber Republic.',
+    'from.Training1Form.label.attachment': 'Attachment',
+    'from.Training1Form.button.submit': 'Submit',
+
+    'from.UserContactForm.message.success': 'Email sent successfully',
+    'from.UserContactForm.field.required': 'This field is required',
+    'from.UserContactForm.placeholder.message': 'Message',
+    'from.UserContactForm.text.emailreply': "The email reply-to address will be set to your account's email, responses will go directly to your email",
+    'from.UserContactForm.button.send': 'Send Message',
+
+    'from.UserEditForm.username.required': 'Username is required',
+    'from.UserEditForm.firstName.required': 'First name is required',
+    'from.UserEditForm.lastName.required': 'Last name is required',
+    'from.UserEditForm.country.required': 'Please select your country',
+    'from.UserEditForm.walletAddress.len': 'Address length error',
+    'from.UserEditForm.timezone.placeholder': 'Select Timezone...',
+    'from.UserEditForm.telegram.min': 'please enter at least 4 characters',
+    'from.UserEditForm.label.firstName': 'First Name',
+    'from.UserEditForm.label.lastName': 'Last Name',
+    'from.UserEditForm.label.password': 'Password',
+    'from.UserEditForm.label.confirm': 'Confirm Password',
+    'from.UserEditForm.label.gender': 'Gender',
+    'from.UserEditForm.label.wallet': 'Wallet',
+    'from.UserEditForm.label.country': 'Country',
+    'from.UserEditForm.label.timezone': 'Timezone',
+
+    'from.UserProfileForm.firstName.required': 'First name is required',
+    'from.UserProfileForm.lastName.required': 'Last name is required',
+    'from.UserProfileForm.bio.required': 'Biography is required',
+    'from.UserProfileForm.upload.avatar': 'Upload Avatar',
+    'from.UserProfileForm.upload.banner': 'Upload Banner',
+    'from.UserProfileForm.text.firstName': 'First Name',
+    'from.UserProfileForm.text.lastName': 'Last Name',
+    'from.UserProfileForm.text.slogan': 'Profile Slogan',
+    'from.UserProfileForm.text.motto': 'Profile Motto',
+
+    // CR Video / Earn ELA page
+    'cr-video.here': 'here',
+    'cr-video.header.1': 'Reclaim Your Internet',
+    'cr-video.header.2': 'The Cyber Republic is a global community of collaborators who are forging the path to a secure and equitable smartweb, powered by blockchain technology.',
+    'cr-video.join': 'Join us now',
+    'cr-video.q1': 'What’s Wrong With the Internet Today?',
+    'cr-video.q1.title.1': 'Disproportional Wealth Distribution',
+    'cr-video.q1.paragraph.1': 'Due to the structure of the internet, there is increased concentration of power and knowledge in a select few multi-national companies that are hard to regulate, prone to corruption, censorship and  abuse their power',
+    'cr-video.q1.title.2': 'Lack of Security',
+    'cr-video.q1.paragraph.2': 'Devices, Operating systems and the internet are increasingly insecure by design leaving data and identity vulnerable to hackers, malware, spyware and bugs. Data and storage is centralised making it economical and easy for hackers and corruption. This makes a future with Internet of Things (loT) devices impossible.',
+    'cr-video.q1.title.3': 'No Protection of Digital Assets',
+    'cr-video.q1.paragraph.3': 'Content creators (musicians, artists, writers etc) and innovators do not have the capacity to own, protect or sell their work like they can in the real world. This forces advertising to be the dominant monetisation strategy so intermediaries own the value chain leaving those in creative industries chronically underpaid.',
+    'cr-video.q2': 'So the Internet is Broken. How do we Fix It?',
+    'cr-video.q2.paragraph.1': 'This is exactly the question that prompted Rong Chen to leave his role as a senior software developer at Microsoft in the year 2000 and start working on a solution with the power to circumvent the barriers to security, data ownership, and allocation of wealth that continue to be either ignored, or actively exploited, by the powerful companies who monopolise today’s internet services. Today, that solution exists. It’s called Elastos, and it’s the the world’s first internet operating system.',
+    'cr-video.q3': 'Elastos: Smartweb Powered by Blockchain Technology',
+    'cr-video.q3.paragraph.1': 'Elastos is the safe and reliable internet of the future. Built utilizing the blockchain, this technological breakthrough provides the first completely safe environment on the web where decentralized applications are detached from the internet while also permitting full scalability to billions of users. Elastos enables the generation of wealth through ownership and exchange of your data and digital assets.',
+    'cr-video.q3.paragraph.2': 'Elastos is not a blockchain project but rather a network operating system project powered by blockchain technology so in that sense, Elastos is not directly competing with any other blockchain projects. It can work together with them to form this new ecosystem where the decentralized applications run directly on the device instead of running on the blockchain along with decentralized peer to peer network to transfer assets in a completely closed sandboxed environment, thereby solving the three pillar issues that are prevalent in the internet of today - security, scalability and decentralization.',
+    'cr-video.q3.subtitle.1': 'Learn More About Elastos with these Resources:',
+    'cr-video.q3.link.1': 'Elastos Whitepaper',
+    'cr-video.q3.link.2': 'Elastos Developer Guide',
+    'cr-video.q3.link.3': 'Elastos Non-Developer Guide',
+    'cr-video.q3.link.4': 'Elastos.org',
+    'cr-video.q4': 'Where does the Cyber Republic fit in the Elastos Smartweb Framework?',
+    'cr-video.q4.paragraph.1': 'While the Elastos network operating system enables the secure environment necessary to house a new and improved internet can grow, it is an infrastructure only- unable to govern or foster the ecosystem without human instruction, participation, and collaboration.',
+    'cr-video.q4.paragraph.2': 'With this in mind, the Elastos foundation have created a collaborative virtual environment in which innovators from all locations, educational & professional backgrounds, skill sets, and schools-of-thought can collectively build on top of the Elastos infrastructure, write the new rules of internet governance (no more monopolies!), and ultimately shape the future of a virtual economy that serves everybody, not just a privileged few. In short, the Cyber Republic is a “Virtual Nation” that transcends borders and welcomes every member of the global community as a citizen, a contributor, and a governing entity.',
+    'cr-video.q4.paragraph.3': 'Practically speaking, the Cyber Republic (CR) is the virtual membership platform for developers, designers, entrepreneurs, organisers, and others to work together on projects that will facilitate a successful global shift onto the secure, economically viable, equal opportunity internet that the Elastos operating system makes possible.',
+    'cr-video.q4.paragraph.4': 'At this time, the majority of CR projects revolve either around building, enhancing, and testing the decentralised applications (dApps) that will run on Elastos, or around increasing the visibility of Elastos through marketing, writing, referrals, media, and a number of other promotion channels.',
+    'cr-video.q4.paragraph.5': 'Contributors can do anything from bug checking to enterprise dApp development, from writing a blog to organising an international conference. There are no parameters around your level of involvement in the Cyber Republic, there is freedom to define and execute your good ideas, and your perspective and expertise, whatever they may encompass, will be welcome in the community.',
+    'cr-video.q5': 'Why Should I Join the Cyber Republic?',
+    'cr-video.q5.paragraph.1': 'Why not? If you’re reading this text right now, perhaps you’ve already decided that you need something different from the internet you’re currently being offered. Who is in the best position to shape the way you want the new internet to look? You know the answer to that. So go ahead; Sign up. Connect. Change the World. You’re a smartweb cofounder now.',
+    'cr-video.q6': 'How to Join the Cyber Republic',
+    'cr-video.q6.title.1': 'Step 1: Register on the Cyber Republic Platform',
+    'cr-video.q6.paragraph.1': 'You can do that ',
+    'cr-video.q6.title.1_2': 'Step 1: Register, looks like you already did, but have you done the rest?',
+    'cr-video.q6.paragraph.1_2': 'Join CRcles, join a team, look for tasks/projects or even be an entrepreneur and form a team for a CR100 project',
+    'cr-video.q6.title.2': 'Step 2: Join up to 2 CRcles',
+    'cr-video.q6.paragraph.2': 'CRcles represent different subsets of the CR community with shared skills and willingness to contribute to a specific kind of task or project (e.g. writing, marketing, development, etc.)',
+    'cr-video.q6.title.3': 'Step 3: Engage with your fellow CRcle members',
+    'cr-video.q6.paragraph.3_2': 'Say hi on the discussion board, ',
+    'cr-video.q6.paragraph.3.link': 'join the discord chat, ',
+    'cr-video.q6.paragraph.3_3': 'or register for the next virtual meetup with your new collaborators.',
+    'cr-video.q6.title.4': 'Step 4: Browse active projects and tasks in the CR community',
+    'cr-video.q6.paragraph.4': 'Apply for the ones you find most interesting, and ',
+    'cr-video.q6.paragraph.4.link': 'earn ELA for your contribution',
+    'cr-video.q6.title.5': 'Step 5: As a cofounder of the new internet, the rest is up to you.',
+    'cr-video.q6.paragraph.5': 'Get out there and bring your ideas to life!',
+
+    'cr-video.q6.subtitle.1': 'Learn More About the Cyber Republic with these Resources:',
+    'cr-video.q6.link.1': 'Cyber Republic Tutorial - Become an Organizer',
+    'cr-video.q6.link.2': 'Cyber Republic Tutorial - Public Tasks',
+
+    'cr-video.q7.title': 'Have Questions? Just Want to Get In Touch?',
+    'cr-video.q7.subtitle': 'Enter your email and we will contact you personally',
+    'cr-video.q7.button_text': 'Submit',
+
 };
 
 // lang mappings
@@ -932,6 +1051,5 @@ en[`taskStatus.${TASK_STATUS.SUCCESS}`] = 'Success'
 en[`taskStatus.${TASK_STATUS.DISTRIBUTED}`] = 'Distributed'
 en[`taskStatus.${TASK_STATUS.CANCELED}`] = 'Canceled'
 en[`taskStatus.${TASK_STATUS.EXPIRED}`] = 'Expired'
-
 
 export default en

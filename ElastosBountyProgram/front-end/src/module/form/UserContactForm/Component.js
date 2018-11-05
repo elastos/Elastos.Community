@@ -9,6 +9,7 @@ import {
 } from 'antd'
 
 import {upload_file} from "@/util";
+import I18N from '@/I18N'
 import './style.scss'
 
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS} from '@/constant'
@@ -23,7 +24,7 @@ class C extends BaseComponent {
         this.props.form.validateFields((err, formData) => {
             if (!err) {
                 this.props.sendEmail(this.props.recipient._id, formData).then(() => {
-                    message.success('Email sent successfully')
+                    message.success(I18N.get('from.UserContactForm.message.success'))
                 })
             }
         })
@@ -34,17 +35,17 @@ class C extends BaseComponent {
         const {getFieldDecorator} = this.props.form
 
         const subject_fn = getFieldDecorator('subject', {
-            rules: [{required: true, message: 'Please enter a subject'}]
+            rules: [{required: true, message: I18N.get('from.UserContactForm.field.required')}]
         })
         const subject_el = (
             <Input size="large" placeholder="subject"/>
         )
 
         const message_fn = getFieldDecorator('message', {
-            rules: [{required: true, message: 'You must have a message'}]
+            rules: [{required: true, message: I18N.get('from.UserContactForm.field.required')}]
         })
         const message_el = (
-            <TextArea rows={4} name="message" placeholder="message"></TextArea>
+            <TextArea rows={4} name="message" placeholder={I18N.get('from.UserContactForm.placeholder.message')}></TextArea>
         )
 
         return {
@@ -63,8 +64,7 @@ class C extends BaseComponent {
             <div className="c_taskCreateFormContainer">
 
                 <span class="no-info">
-                    The email reply-to address will be set to your account's email, responses
-                    will go directly to your email
+                    {I18N.get('from.UserContactForm.text.emailreply')}
                 </span>
                 <br/>
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_userContactForm">
@@ -78,7 +78,7 @@ class C extends BaseComponent {
 
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 0}}}>
                             <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
-                                Send Message
+                                {I18N.get('from.UserContactForm.button.send')}
                             </Button>
                         </FormItem>
                     </div>

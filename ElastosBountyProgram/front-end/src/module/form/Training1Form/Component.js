@@ -1,5 +1,6 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
+import I18N from '@/I18N'
 import {
     Form,
     Icon,
@@ -54,9 +55,9 @@ class C extends BaseComponent {
         // email
         const email_fn = getFieldDecorator('email', {
             rules: [
-                {required: true, message: 'Please input an email'},
-                {type: 'email', message: 'Invalid email'},
-                {min: 6, message: 'Email too short'}
+                {required: true, message: I18N.get('from.Training1Form.field.required')},
+                {type: 'email', message: I18N.get('from.Training1Form.field.email.invalid')},
+                {min: 6, message: I18N.get('from.Training1Form.field.min')}
             ]
         })
         const email_el = (
@@ -66,8 +67,8 @@ class C extends BaseComponent {
         // name
         const fullLegalName_fn = getFieldDecorator('fullLegalName', {
             rules: [
-                {required: true, message: 'Please input an name'},
-                {min: 6, message: 'name too short'}
+                {required: true, message: I18N.get('from.Training1Form.field.required')},
+                {min: 6, message: I18N.get('from.Training1Form.field.min')}
             ]
         })
         const fullLegalName_el = (
@@ -77,8 +78,8 @@ class C extends BaseComponent {
         // occupation
         const occupation_fn = getFieldDecorator('occupation', {
             rules: [
-                {required: true, message: 'Please input an occupation'},
-                {min: 4, message: 'occupation too short'}
+                {required: true, message: I18N.get('from.Training1Form.field.required')},
+                {min: 4, message: I18N.get('from.Training1Form.field.min')}
             ]
         })
         const occupation_el = (
@@ -88,8 +89,8 @@ class C extends BaseComponent {
         // education
         const education_fn = getFieldDecorator('education', {
             rules: [
-                {required: true, message: 'Please input an education'},
-                {min: 8, message: 'education too short'}
+                {required: true, message: I18N.get('from.Training1Form.field.required')},
+                {min: 8, message: I18N.get('from.Training1Form.field.min')}
             ]
         })
         const education_el = (
@@ -99,8 +100,8 @@ class C extends BaseComponent {
         // audienceInfo
         const audienceInfo_fn = getFieldDecorator('audienceInfo', {
             rules: [
-                {required: true, message: 'this is a required field'},
-                {max: 256, message: 'text too long'}
+                {required: true, message: I18N.get('from.Training1Form.field.required')},
+                {max: 256, message: I18N.get('from.Training1Form.field.max')}
             ]
         })
         const audienceInfo_el = (
@@ -110,8 +111,8 @@ class C extends BaseComponent {
         // publicSpeakingExp
         const publicSpeakingExp_fn = getFieldDecorator('publicSpeakingExp', {
             rules: [
-                {required: true, message: 'this is a required field'},
-                {max: 1024, message: 'text too long'}
+                {required: true, message: I18N.get('from.Training1Form.field.required')},
+                {max: 1024, message: I18N.get('from.Training1Form.field.max')}
             ]
         })
         const publicSpeakingExp_el = (
@@ -121,8 +122,8 @@ class C extends BaseComponent {
         // previousExp
         const previousExp_fn = getFieldDecorator('previousExp', {
             rules: [
-                {required: true, message: 'this is a required field'},
-                {max: 1024, message: 'text too long'}
+                {required: true, message: I18N.get('from.Training1Form.field.required')},
+                {max: 1024, message: I18N.get('from.Training1Form.field.max')}
             ]
         })
         const previousExp_el = (
@@ -138,7 +139,7 @@ class C extends BaseComponent {
         // devBackground
         const devBackground_fn = getFieldDecorator('devBackground', {
             rules: [
-                {max: 1024, message: 'text too long'}
+                {max: 1024, message: I18N.get('from.Training1Form.field.max')}
             ]
         })
         const devBackground_el = (
@@ -148,8 +149,8 @@ class C extends BaseComponent {
         // description
         const description_fn = getFieldDecorator('description', {
             rules: [
-                {required: true, message: 'this is a required field'},
-                {max: 512, message: 'text too long'}
+                {required: true, message: I18N.get('from.Training1Form.field.required')},
+                {max: 512, message: I18N.get('from.Training1Form.field.max')}
             ]
         })
         const description_el = (
@@ -159,8 +160,8 @@ class C extends BaseComponent {
         // reason
         const reason_fn = getFieldDecorator('reason', {
             rules: [
-                {required: true, message: 'this is a required field'},
-                {max: 256, message: 'text too long'}
+                {required: true, message: I18N.get('from.Training1Form.field.required')},
+                {max: 256, message: I18N.get('from.Training1Form.field.max')}
             ]
         })
         const reason_el = (
@@ -198,7 +199,7 @@ class C extends BaseComponent {
                         </a>
                     ) : (
                         <Button loading={this.state.attachment_loading}>
-                            <Icon type="upload" /> Click to upload
+                            <Icon type="upload" /> {I18N.get('from.Training1Form.button.upload')}
                         </Button>
                     )
                 }
@@ -263,22 +264,22 @@ class C extends BaseComponent {
 
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_training1Form">
                     <div>
-                        <FormItem label="Email" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.Training1Form.label.email')} {...formItemLayout}>
                             {p.email}
                         </FormItem>
-                        <FormItem label="Full Legal Name" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.Training1Form.label.fullllegal')} {...formItemLayout}>
                             {p.fullLegalName}
                         </FormItem>
-                        <FormItem label="Occupation" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.Training1Form.label.occupation')} {...formItemLayout}>
                             {p.occupation}
                         </FormItem>
-                        <FormItem label="Education" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.Training1Form.label.education')} {...formItemLayout}>
                             {p.education}
                         </FormItem>
                         <Divider></Divider>
                         <Row>
                             <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
-                                What is your native language, who is your audience and where are they located? What are the language(s) you plan to use to present Elastos.
+                                {I18N.get('from.Training1Form.text.nativelanguage')}
                             </Col>
                         </Row>
                         <FormItem {...formItemNoLabelLayout}>
@@ -287,7 +288,7 @@ class C extends BaseComponent {
 
                         <Row>
                             <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
-                                Please describe your public speaking experience and provide any examples.
+                                {I18N.get('from.Training1Form.text.describeyour')}
                             </Col>
                         </Row>
                         <FormItem {...formItemNoLabelLayout}>
@@ -296,20 +297,20 @@ class C extends BaseComponent {
 
                         <Row>
                             <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
-                                Please list any current or past contributions promoting Elastos.
+                                {I18N.get('from.Training1Form.text.listanycurrent')}
                             </Col>
                         </Row>
                         <FormItem {...formItemNoLabelLayout}>
                             {p.previousExp}
                         </FormItem>
 
-                        <FormItem label="Are you a developer?" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.Training1Form.text.adeveloper')} {...formItemLayout}>
                             {p.isDeveloper}
                         </FormItem>
 
                         <Row>
                             <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
-                                If you are not a developer, please explain how you are familiar with Elastos technology and what problems we solve.
+                                {I18N.get('from.Training1Form.text.explain')}
                             </Col>
                         </Row>
                         <FormItem {...formItemNoLabelLayout}>
@@ -318,7 +319,7 @@ class C extends BaseComponent {
 
                         <Row>
                             <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
-                                Describe Elastos in your own words.
+                                {I18N.get('from.Training1Form.text.describe')}
                             </Col>
                         </Row>
                         <FormItem {...formItemNoLabelLayout}>
@@ -327,22 +328,22 @@ class C extends BaseComponent {
 
                         <Row>
                             <Col xs={{span: 24}} md={{offset: 8, span: 12}}>
-                                Tell us in a few words what inspired you to join Cyber Republic.
+                                {I18N.get('from.Training1Form.text.tellfeword')}
                             </Col>
                         </Row>
                         <FormItem {...formItemNoLabelLayout}>
                             {p.reason}
                         </FormItem>
 
-                        <Divider>Please submit a video of your introduction to Cyber Republic.</Divider>
+                        <Divider>{I18N.get('from.Training1Form.text.submitvideo')}</Divider>
 
-                        <FormItem label="Attachment" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.Training1Form.label.attachment')} {...formItemLayout}>
                             {p.attachment}
                         </FormItem>
 
                         <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 8}}}>
                             <Button loading={this.props.loading} type="ebp" htmlType="submit" className="d_btn">
-                                Submit
+                                {I18N.get('from.Training1Form.button.submit')}
                             </Button>
                         </FormItem>
                     </div>

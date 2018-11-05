@@ -100,7 +100,7 @@ class C extends BaseComponent {
         ****************************************************************************************
          */
         const username_fn = getFieldDecorator('username', {
-            rules: [{required: true, message: 'Username is required'}],
+            rules: [{required: true, message: I18N.get('from.UserEditForm.username.required')}],
             initialValue: user.username
         })
         const username_el = (
@@ -156,7 +156,7 @@ class C extends BaseComponent {
         )
 
         const firstName_fn = getFieldDecorator('firstName', {
-            rules: [{required: true, message: 'First name is required'}],
+            rules: [{required: true, message: I18N.get('from.UserEditForm.firstName.required')}],
             initialValue: user.profile.firstName
         })
         const firstName_el = (
@@ -164,7 +164,7 @@ class C extends BaseComponent {
         )
 
         const lastName_fn = getFieldDecorator('lastName', {
-            rules: [{required: true, message: 'Last name is required'}],
+            rules: [{required: true, message: I18N.get('from.UserEditForm.lastName.required')}],
             initialValue: user.profile.lastName
         })
         const lastName_el = (
@@ -187,7 +187,7 @@ class C extends BaseComponent {
         )
 
         const country_fn = getFieldDecorator('country', {
-            rules: [{required: true, message: 'Please select your country'}],
+            rules: [{required: true, message: I18N.get('from.UserEditForm.country.required')}],
             initialValue: user.profile.country
         })
         const country_el = (
@@ -205,7 +205,7 @@ class C extends BaseComponent {
 
         const walletAddress_fn = getFieldDecorator('walletAddress', {
             rules: [
-                {len: 34, message: 'address length error'}
+                {len: 34, message: I18N.get('from.UserEditForm.walletAddress.len')}
             ],
             initialValue: user.profile.walletAddress
         })
@@ -222,7 +222,7 @@ class C extends BaseComponent {
            <TimezonePicker
                 className="timezone-picker"
                 inputProps={{
-                   placeholder: 'Select Timezone...'
+                   placeholder: I18N.get('from.UserEditForm.timezone.placeholder')
                 }}
             />
         )
@@ -234,7 +234,7 @@ class C extends BaseComponent {
          */
         const telegram_fn = getFieldDecorator('telegram', {
             rules: [
-                {min: 4, message: 'please enter at least 4 characters'}
+                {min: 4, message: I18N.get('from.UserEditForm.telegram.min')}
             ],
             initialValue: user.profile.telegram
         })
@@ -244,7 +244,7 @@ class C extends BaseComponent {
 
         const reddit_fn = getFieldDecorator('reddit', {
             rules: [
-                {min: 4, message: 'please enter at least 4 characters'}
+                {min: 4, message: I18N.get('from.UserEditForm.telegram.min')}
             ],
             initialValue: user.profile.reddit
         })
@@ -254,7 +254,7 @@ class C extends BaseComponent {
 
         const wechat_fn = getFieldDecorator('wechat', {
             rules: [
-                {min: 4, message: 'please enter at least 4 characters'}
+                {min: 4, message: I18N.get('from.UserEditForm.telegram.min')}
             ],
             initialValue: user.profile.wechat
         })
@@ -264,7 +264,7 @@ class C extends BaseComponent {
 
         const twitter_fn = getFieldDecorator('twitter', {
             rules: [
-                {min: 4, message: 'please enter at least 4 characters'}
+                {min: 4, message: I18N.get('from.UserEditForm.telegram.min')}
             ],
             initialValue: user.profile.twitter
         })
@@ -274,7 +274,7 @@ class C extends BaseComponent {
 
         const facebook_fn = getFieldDecorator('facebook', {
             rules: [
-                {min: 4, message: 'please enter at least 4 characters'}
+                {min: 4, message: I18N.get('from.UserEditForm.telegram.min')}
             ],
             initialValue: user.profile.facebook
         })
@@ -284,7 +284,7 @@ class C extends BaseComponent {
 
         const linkedin_fn = getFieldDecorator('linkedin', {
             rules: [
-                {min: 4, message: 'please enter at least 4 characters'}
+                {min: 4, message: I18N.get('from.UserEditForm.telegram.min')}
             ],
             initialValue: user.profile.linkedin
         })
@@ -294,7 +294,7 @@ class C extends BaseComponent {
 
         const github_fn = getFieldDecorator('github', {
             rules: [
-                {min: 4, message: 'please enter at least 4 characters'}
+                {min: 4, message: I18N.get('from.UserEditForm.telegram.min')}
             ],
             initialValue: user.profile.github
         })
@@ -366,10 +366,10 @@ class C extends BaseComponent {
                         <FormItem label={I18N.get('1202')} {...formItemLayout}>
                             {p.email}
                         </FormItem>
-                        <FormItem label="First Name" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.UserEditForm.label.firstName')} {...formItemLayout}>
                             {p.firstName}
                         </FormItem>
-                        <FormItem label="Last Name" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.UserEditForm.label.lastName')} {...formItemLayout}>
                             {p.lastName}
                         </FormItem>
                         {this.props.is_admin &&
@@ -377,22 +377,22 @@ class C extends BaseComponent {
                             {p.role}
                         </FormItem>
                         }
-                        <FormItem label="Password" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.UserEditForm.label.password')} {...formItemLayout}>
                             {p.password}
                         </FormItem>
-                        <FormItem label="Confirm Password" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.UserEditForm.label.confirm')} {...formItemLayout}>
                             {p.passwordConfirm}
                         </FormItem>
-                        <FormItem label="Gender" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.UserEditForm.label.gender')} {...formItemLayout}>
                             {p.gender}
                         </FormItem>
-                        <FormItem label="Wallet" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.UserEditForm.label.wallet')} {...formItemLayout}>
                             {p.walletAddress}
                         </FormItem>
-                        <FormItem label="Country" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.UserEditForm.label.country')} {...formItemLayout}>
                             {p.country}
                         </FormItem>
-                        <FormItem label="Timezone" {...formItemLayout}>
+                        <FormItem label={I18N.get('from.UserEditForm.label.timezone')} {...formItemLayout}>
                             {p.timezone}
                         </FormItem>
 
