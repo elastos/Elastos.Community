@@ -47,9 +47,31 @@ export default class extends StandardPage {
         return (
             <div className="info-panel">
                 <div className="info-panel-content">
-                    <h3 className="with-gizmo">
-                        {I18N.get('0002')}
-                    </h3>
+                    <div className="info-panel-left pull-left">
+                        <h3 className="with-gizmo">
+                            {I18N.get('0002')}
+                        </h3>
+                        <div className="info-panel-link">
+                            <a href="https://t.me/elastosgroup" target="_blank">
+                                Telegram
+                            </a>
+                        </div>
+                        <div className="info-panel-link">
+                            <a href="https://twitter.com/cyber__republic" target="_blank">
+                                Twitter
+                            </a>
+                        </div>
+                        <div className="info-panel-link">
+                            <a href="https://github.com/cyber-republic" target="_blank">
+                                GitHub
+                            </a>
+                        </div>
+                        <div className="info-panel-link">
+                            <a href="https://discord.gg/bKcPf8R" target="_blank">
+                                Discord
+                            </a>
+                        </div>
+                    </div>
                     <div className="pull-right">
                         <img src="/assets/images/community-world.png"/>
                     </div>
