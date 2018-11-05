@@ -16,17 +16,36 @@ $mobile-padding: $gap_0 0px;
     padding: 0 24px;
   }
 
-  .info-panel {
+  .panel {
     background: $primary_dark_color;
   }
 
-  .info-panel-content {
+  .navi-panel {
+    background: $bg_navy;
+  }
+
+  .panel-content {
     max-width: 1200px;
     margin: 0 auto;
     padding: $gap_4;
   }
 
-  .p_admin_content {
+  .navi-panel-content {
+    max-width: 800px;
+  }
+
+  $naviPanelItemHeight: 72px;
+  .navi-panel-item {
+    height: $naviPanelItemHeight;
+    line-height: $naviPanelItemHeight;
+  }
+
+  .navi-panel-item {
+    cursor: pointer;
+  }
+
+  .navi-panel-item-arrow {
+    text-align: right;
   }
 
   .c_Footer {

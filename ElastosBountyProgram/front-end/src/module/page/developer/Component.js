@@ -45,8 +45,8 @@ export default class extends StandardPage {
 
     buildInfoPanel() {
         return (
-            <div className="info-panel">
-                <div className="info-panel-content">
+            <div className="info-panel panel">
+                <div className="info-panel-content panel-content">
                     <div className="info-panel-left pull-left">
                         <h3 className="with-gizmo">
                             {I18N.get('0002')}
@@ -82,9 +82,31 @@ export default class extends StandardPage {
     }
 
     buildNavi() {
-        return (
-            <div className="navi-panel">
+        const buildNaviItem = (title, description, link) => {
+            return (
+                <Row className="navi-panel-item"
+                    onClick={() => this.props.history.push(link)}>
+                    <Col span={4} className="navi-panel-item-title">
+                        {title}
+                    </Col>
+                    <Col span={16} className="navi-panel-item-description">
+                        {description}
+                    </Col>
+                    <Col span={4} className="navi-panel-item-arrow">
+                        <img src="/assets/images/arrow-right.png"/>
+                    </Col>
+                </Row>
+            )
+        }
 
+        return (
+            <div className="navi-panel panel">
+                <div className="navi-panel-content panel-content">
+                    {buildNaviItem('Learn', 'Tutorials, Resources and more', '/developer/learn')}
+                    {buildNaviItem('Teams', 'Connect, Form Teams and work on projects', '/developer/search')}
+                    {buildNaviItem('Projects', 'Overview of Cyber Republic Projects', '/developer/search?type=PROJECT')}
+                    {buildNaviItem('Tasks', 'Overview of Cyber Republic Tasks', '/developer/search?type=TASK')}
+                </div>
             </div>
         )
     }
