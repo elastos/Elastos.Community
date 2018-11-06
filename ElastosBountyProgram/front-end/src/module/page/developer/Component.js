@@ -179,11 +179,10 @@ export default class extends StandardPage {
             key: 'name',
             render: user => {
                 return (
-                    <div key={user._id}>
+                    <div>
                         <Avatar className={'gap-right ' + (user.role === 'LEADER' ? 'avatar-leader' : 'avatar-member')}
                             src={this.getAvatarWithFallback(user.profile.avatar)}/>
-                        <a className="row-name-link" onClick={this.showUserProfile.bind(this, user)}>
-                            {this.getUserNameWithFallback(user)}</a>
+                        {this.getUserNameWithFallback(user)}
                     </div>
                 )
             }
