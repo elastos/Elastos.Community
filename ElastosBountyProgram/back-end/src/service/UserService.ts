@@ -253,11 +253,15 @@ export default class extends Base {
         }
 
         if (query.search) {
-            finalQuery.$or = [
-                { 'profile.firstName': { $regex: query.search, $options: 'i' }},
-                { 'profile.lastName': { $regex: query.search, $options: 'i' }},
-                { username: { $regex: query.search, $options: 'i' }}
-            ]
+            finalQuery.$and = _.map(query.search.split(' '), (part) => {
+                return {
+                    $or: [
+                        { 'profile.firstName': { $regex: part, $options: 'i' }},
+                        { 'profile.lastName': { $regex: part, $options: 'i' }},
+                        { username: { $regex: part, $options: 'i' }}
+                    ]
+                }
+            })
         }
 
         if (query.empower) {
