@@ -5,15 +5,27 @@ import I18N from '@/I18N'
 import { Link } from 'react-router-dom'
 import './style.scss'
 import MediaQuery from 'react-responsive'
-import { Col, Row, Card, Button, Breadcrumb, Icon, Table } from 'antd'
+import { Col, Row, Card, Button, Breadcrumb, Icon, Table, Input } from 'antd'
 import {MAX_WIDTH_MOBILE} from "../../../config/constant"
 
 export default class extends StandardPage {
     async componentDidMount() {
-        this.props.listUsers()
+        this.refetch()
     }
 
     componentWillUnmount() {
+    }
+
+    refetch() {
+        this.props.listUsers({
+            search: this.state.search || ''
+        })
+    }
+
+    ord_states() {
+        return {
+            search: ''
+        }
     }
 
     ord_renderContent () {
@@ -126,11 +138,20 @@ export default class extends StandardPage {
                 render: (name, user) => this.getUserNameWithFallback(user)
             },
             {
+                title: 'Username',
+                dataIndex: 'username',
+            },
+            {
                 title: 'Circles',
                 dataIndex: 'circles',
                 render: (circles, user) => this.getUserCircles(user)
             }
         ]
+
+        const searchChangedHandler = (e) => {
+            const search = e.target.value
+            this.setState({ search }, _.debounce(this.refetch.bind(this), 333))
+        }
 
         return (
             <div className="member-panel panel">
@@ -138,6 +159,12 @@ export default class extends StandardPage {
                     <h3 className="with-gizmo">
                         Member Search
                     </h3>
+                    <Row className="member-panel-search">
+                        <Col span={9}>
+                            <Input placeholder={I18N.get('developer.breadcrumb.search')}
+                                onChange={searchChangedHandler.bind(this)}/>
+                        </Col>
+                    </Row>
                     <Table
                         className="no-borders"
                         dataSource={this.props.users}

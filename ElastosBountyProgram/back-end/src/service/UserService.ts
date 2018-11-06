@@ -252,6 +252,14 @@ export default class extends Base {
             archived: {$ne: true}
         }
 
+        if (query.search) {
+            finalQuery.$or = [
+                { 'profile.firstName': { $regex: query.search, $options: 'i' }},
+                { 'profile.lastName': { $regex: query.search, $options: 'i' }},
+                { username: { $regex: query.search, $options: 'i' }}
+            ]
+        }
+
         if (query.empower) {
             finalQuery.empower = JSON.parse(query.empower)
         }

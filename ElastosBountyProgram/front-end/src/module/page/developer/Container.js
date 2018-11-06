@@ -13,9 +13,9 @@ export default createContainer(Component, (state) => {
     const userService = new UserService()
 
     return {
-        async listUsers () {
+        async listUsers (query) {
             try {
-                return await userService.getAll()
+                return await userService.getAll(query)
             } catch (err) {
                 console.error(err)
                 message.error(err.message)
