@@ -175,7 +175,7 @@ export default class extends StandardPage {
     buildMemberSearch() {
 
         const columns = [{
-            title: I18N.get('developer.member.table.column.title'),
+            title: I18N.get('developer.member.table.column.member'),
             key: 'name',
             render: user => {
                 return (
@@ -187,6 +187,16 @@ export default class extends StandardPage {
                     </div>
                 )
             }
+        }, {
+            title: I18N.get('developer.member.table.column.username'),
+            dataIndex: 'username',
+            width: '33%',
+            render: (username, user) => this.getUserClickableLink(user, user.username)
+        }, {
+            title: I18N.get('developer.member.table.column.circles'),
+            dataIndex: 'circles',
+            width: '33%',
+            render: (circles, user) => this.getUserCircles(user)
         }]
 
         const searchChangedHandler = (e) => {
