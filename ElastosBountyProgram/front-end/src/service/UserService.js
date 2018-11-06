@@ -219,11 +219,10 @@ export default class extends BaseService {
         const memberRedux = this.store.getRedux('member')
         await this.dispatch(memberRedux.actions.users_loading_update(true))
 
-        let result
-
         const path = '/api/user/list'
         this.abortFetch(path)
 
+        let result
         try {
             result = await api_request({
                 path,
