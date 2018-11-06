@@ -160,7 +160,7 @@ export default class extends StandardPage {
         }
 
         return _.map(user.circles, (circle) =>
-            <a key={circle._id} href={`/team-detail/${circle._id}`}>{circle.name} </a>
+            <a key={circle._id} href={`/crcles-detail/${circle._id}`}>{circle.name} </a>
         )
     }
 
