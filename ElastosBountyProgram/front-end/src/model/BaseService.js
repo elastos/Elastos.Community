@@ -28,10 +28,10 @@ export default class {
 
     abortFetch(path) {
         const controller = this.abortControllers[path]
-        controller && controller.abort()
-    }
 
-    resetAbortController(path) {
-        delete this.abortControllers[path]
+        if (controller) {
+            controller.abort()
+            delete this.abortControllers[path]
+        }
     }
 };

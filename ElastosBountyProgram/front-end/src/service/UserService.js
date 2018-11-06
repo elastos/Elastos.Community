@@ -223,7 +223,6 @@ export default class extends BaseService {
 
         const path = '/api/user/list'
         this.abortFetch(path)
-        this.resetAbortController(path)
 
         try {
             result = await api_request({
