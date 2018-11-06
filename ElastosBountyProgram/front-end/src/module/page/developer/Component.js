@@ -173,31 +173,32 @@ export default class extends StandardPage {
     }
 
     buildMemberSearch() {
-
-        const columns = [{
-            title: I18N.get('developer.member.table.column.member'),
-            key: 'name',
-            width: '33%',
-            render: user => {
-                return (
-                    <div>
-                        <Avatar className={'gap-right ' + (user.role === 'LEADER' ? 'avatar-leader' : 'avatar-member')}
-                            src={this.getAvatarWithFallback(user.profile.avatar)}/>
-                        {this.getUserNameWithFallback(user)}
-                    </div>
-                )
+        const columns = [
+            {
+                title: I18N.get('developer.member.table.column.member'),
+                key: 'name',
+                width: '33%',
+                render: user => {
+                    return (
+                        <div>
+                            <Avatar className={'gap-right ' + (user.role === 'LEADER' ? 'avatar-leader' : 'avatar-member')}
+                                src={this.getAvatarWithFallback(user.profile.avatar)}/>
+                            {this.getUserNameWithFallback(user)}
+                        </div>
+                    )
+                }
+            }, {
+                title: I18N.get('developer.member.table.column.username'),
+                dataIndex: 'username',
+                width: '33%',
+                render: (username, user) => this.getUserClickableLink(user, user.username)
+            }, {
+                title: I18N.get('developer.member.table.column.circles'),
+                dataIndex: 'circles',
+                width: '33%',
+                render: (circles, user) => this.getUserCircles(user)
             }
-        }, {
-            title: I18N.get('developer.member.table.column.username'),
-            dataIndex: 'username',
-            width: '33%',
-            render: (username, user) => this.getUserClickableLink(user, user.username)
-        }, {
-            title: I18N.get('developer.member.table.column.circles'),
-            dataIndex: 'circles',
-            width: '33%',
-            render: (circles, user) => this.getUserCircles(user)
-        }]
+        ]
 
         const searchChangedHandler = (e) => {
             const search = e.target.value
