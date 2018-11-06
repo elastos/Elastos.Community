@@ -22,9 +22,14 @@ $mobile-padding: $gap_0 0px;
   }
 
   .panel-content {
-    max-width: 928px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: $gap_4;
+
+    @media only screen and (max-width: $mobile-width) {
+      max-width: 928px;
+      padding: $gap_4 $gap_3;
+    }
 
     .pull-right {
       img {
