@@ -169,16 +169,19 @@ export default class extends StandardPage {
             {
                 title: 'Name',
                 dataIndex: 'name',
+                width: '33%',
                 render: (name, user) => this.getUserNameWithFallback(user)
             },
             {
                 title: 'Username',
                 dataIndex: 'username',
+                width: '33%',
                 render: (username, user) => this.getUserClickableLink(user, user.username)
             },
             {
                 title: 'Circles',
                 dataIndex: 'circles',
+                width: '33%',
                 render: (circles, user) => this.getUserCircles(user)
             }
         ]
