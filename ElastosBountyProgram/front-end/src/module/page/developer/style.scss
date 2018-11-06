@@ -48,10 +48,16 @@ $mobile-padding: $gap_0 0px;
     max-width: 800px;
   }
 
-  $naviPanelItemHeight: 26px;
+  $naviPanelItemHeight: 72px;
   .navi-panel-item {
     line-height: $naviPanelItemHeight;
-    padding: 21px 26px;
+    padding: 0 $gap_2;
+
+    @media only screen and (max-width: $mobile-width) {
+      line-height: 26px;
+      padding: 21px 26px;
+    }
+
     cursor: pointer;
     background: $primary_dark_color;
     color: $primary_color;
