@@ -11,7 +11,7 @@ export default createContainer(Component, (state) => {
     }
 
     return {
-        loading: state.member.loading,
+        loading: state.member.users_loading,
         is_admin: state.user.is_admin,
         users: state.member.users || []
     }
