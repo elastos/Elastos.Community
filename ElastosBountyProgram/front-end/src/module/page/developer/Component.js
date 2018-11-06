@@ -5,8 +5,9 @@ import I18N from '@/I18N'
 import { Link } from 'react-router-dom'
 import './style.scss'
 import MediaQuery from 'react-responsive'
-import { Col, Row, Card, Button, Breadcrumb, Icon, Table, Input, Modal } from 'antd'
+import { Col, Row, Card, Button, Breadcrumb, Icon, Table, Input, Modal, Avatar } from 'antd'
 import {MAX_WIDTH_MOBILE} from "../../../config/constant"
+import { USER_AVATAR_DEFAULT } from '@/constant'
 import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 
 export default class extends StandardPage {
@@ -100,7 +101,7 @@ export default class extends StandardPage {
                         </div>
                     </div>
                     <div className="pull-right">
-                        <img src="/assets/images/community-world.png"/>
+                        <img src="/assets/images/community-world.svg"/>
                     </div>
                     <div className="clearfix"/>
                 </div>
@@ -111,15 +112,15 @@ export default class extends StandardPage {
     buildNavi() {
         const buildNaviItem = (title, description, link) => {
             return (
-                <Row className="navi-panel-item"
+                <Row gutter={24} className="navi-panel-item"
                     onClick={() => this.props.history.push(link)}>
-                    <Col span={4} className="navi-panel-item-title">
+                    <Col md={4} xs={24} className="navi-panel-item-title">
                         {title}
                     </Col>
-                    <Col span={16} className="navi-panel-item-description">
+                    <Col md={16} xs={24} className="navi-panel-item-description">
                         {description}
                     </Col>
-                    <Col span={4} className="navi-panel-item-arrow">
+                    <Col md={4} xs={24} className="navi-panel-item-arrow">
                         <img src="/assets/images/arrow-right.png"/>
                     </Col>
                 </Row>
@@ -165,22 +166,34 @@ export default class extends StandardPage {
         )
     }
 
+    getAvatarWithFallback(avatar) {
+        return _.isEmpty(avatar)
+            ? USER_AVATAR_DEFAULT
+            : avatar
+    }
+
     buildMemberSearch() {
         const columns = [
             {
-                title: 'Name',
-                dataIndex: 'name',
+                title: I18N.get('developer.member.table.column.member'),
+                key: 'name',
                 width: '33%',
-                render: (name, user) => this.getUserNameWithFallback(user)
-            },
-            {
-                title: 'Username',
+                render: user => {
+                    return (
+                        <div>
+                            <Avatar className={'gap-right ' + (user.role === 'LEADER' ? 'avatar-leader' : 'avatar-member')}
+                                src={this.getAvatarWithFallback(user.profile.avatar)}/>
+                            {this.getUserNameWithFallback(user)}
+                        </div>
+                    )
+                }
+            }, {
+                title: I18N.get('developer.member.table.column.username'),
                 dataIndex: 'username',
                 width: '33%',
                 render: (username, user) => this.getUserClickableLink(user, user.username)
-            },
-            {
-                title: 'Circles',
+            }, {
+                title: I18N.get('developer.member.table.column.circles'),
                 dataIndex: 'circles',
                 width: '33%',
                 render: (circles, user) => this.getUserCircles(user)
@@ -196,10 +209,10 @@ export default class extends StandardPage {
             <div className="member-panel panel">
                 <div className="member-panel-content panel-content">
                     <h3 className="with-gizmo">
-                        Member Search
+                        {I18N.get('developer.member.search.title')}
                     </h3>
                     <Row className="member-panel-search">
-                        <Col span={9}>
+                        <Col md={9} xs={24}>
                             <Input placeholder={I18N.get('developer.breadcrumb.search')}
                                 onChange={searchChangedHandler.bind(this)}/>
                         </Col>
@@ -211,7 +224,8 @@ export default class extends StandardPage {
                         columns={columns}
                         bordered={false}
                         rowKey="_id"
-                        pagination={{showTotal: total => `Total ${total} users`, pageSize: 5}}>
+                        pagination={false}
+                        scroll={{ y: 400 }}>
                     </Table>
                 </div>
             </div>
