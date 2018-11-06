@@ -22,16 +22,24 @@ export default class extends BaseService {
 
         this.dispatch(taskRedux.actions.loading_update(true))
 
-        const result = await api_request({
-            path: '/api/task/list',
-            method: 'get',
-            data: qry
-        })
+        const path = '/api/task/list'
+        this.abortFetch(path)
 
-        // TODO: why does this set it as a struct?
-        this.dispatch(taskRedux.actions.loading_update(false))
-        this.dispatch(taskRedux.actions.all_tasks_reset())
-        this.dispatch(taskRedux.actions.all_tasks_update(_.values(result.list)))
+        let result
+        try {
+            result = await api_request({
+                path,
+                method: 'get',
+                data: qry,
+                signal: this.getAbortSignal(path)
+            })
+
+            this.dispatch(taskRedux.actions.loading_update(false))
+            this.dispatch(taskRedux.actions.all_tasks_reset())
+            this.dispatch(taskRedux.actions.all_tasks_update(_.values(result.list)))
+        } catch (e) {
+            // Do nothing
+        }
 
         return result
     }

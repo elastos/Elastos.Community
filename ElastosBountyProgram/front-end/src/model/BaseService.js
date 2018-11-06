@@ -1,11 +1,13 @@
+/*global AbortController*/
 import store from '@/store';
 
 export default class {
-    constructor(){
-        this.store = store;
-        this.path = store.history;
+    constructor() {
+        this.store = store
+        this.path = store.history
+        this.abortControllers = []
 
-        this.init();
+        this.init()
     }
 
     init(){
@@ -16,7 +18,20 @@ export default class {
     }
 
     dispatch(action){
-        return this.store.dispatch(action);
+        return this.store.dispatch(action)
     }
 
+    getAbortSignal(path) {
+        this.abortControllers[path] = this.abortControllers[path] || new AbortController()
+        return this.abortControllers[path].signal
+    }
+
+    abortFetch(path) {
+        const controller = this.abortControllers[path]
+
+        if (controller) {
+            controller.abort()
+            delete this.abortControllers[path]
+        }
+    }
 };
