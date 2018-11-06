@@ -12,6 +12,7 @@ import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 export default class extends StandardPage {
     async componentDidMount() {
         this.refetch()
+        this.debouncedRefetch = _.debounce(this.refetch.bind(this), 500)
     }
 
     componentWillUnmount() {
@@ -188,7 +189,7 @@ export default class extends StandardPage {
 
         const searchChangedHandler = (e) => {
             const search = e.target.value
-            this.setState({ search }, _.debounce(this.refetch.bind(this), 500))
+            this.setState({ search }, this.debouncedRefetch)
         }
 
         return (
