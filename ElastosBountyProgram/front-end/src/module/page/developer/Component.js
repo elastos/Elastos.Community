@@ -177,6 +177,7 @@ export default class extends StandardPage {
         const columns = [{
             title: I18N.get('developer.member.table.column.member'),
             key: 'name',
+            width: '33%',
             render: user => {
                 return (
                     <div>
