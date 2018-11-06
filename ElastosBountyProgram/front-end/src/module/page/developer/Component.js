@@ -12,7 +12,7 @@ import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 export default class extends StandardPage {
     async componentDidMount() {
         this.refetch()
-        this.debouncedRefetch = _.debounce(this.refetch.bind(this), 500)
+        this.debouncedRefetch = _.debounce(this.refetch.bind(this), 1000)
     }
 
     componentWillUnmount() {
