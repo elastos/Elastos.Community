@@ -5,8 +5,9 @@ import I18N from '@/I18N'
 import { Link } from 'react-router-dom'
 import './style.scss'
 import MediaQuery from 'react-responsive'
-import { Col, Row, Card, Button, Breadcrumb, Icon, Table, Input } from 'antd'
+import { Col, Row, Card, Button, Breadcrumb, Icon, Table, Input, Modal } from 'antd'
 import {MAX_WIDTH_MOBILE} from "../../../config/constant"
+import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 
 export default class extends StandardPage {
     async componentDidMount() {
@@ -24,7 +25,8 @@ export default class extends StandardPage {
 
     ord_states() {
         return {
-            search: ''
+            search: '',
+            showUserInfo: null
         }
     }
 
@@ -41,9 +43,30 @@ export default class extends StandardPage {
                         </div>
                     </div>
                 </div>
+                {this.renderProfileModal()}
                 <Footer/>
             </div>
         )
+    }
+
+    renderProfileModal() {
+        return (
+            <Modal
+                className="profile-overview-popup-modal"
+                visible={!!this.state.showUserInfo}
+                onCancel={this.handleCancelProfilePopup.bind(this)}
+                footer={null}>
+                { this.state.showUserInfo &&
+                    <ProfilePopup showUserInfo={this.state.showUserInfo}/>
+                }
+            </Modal>
+        )
+    }
+
+    handleCancelProfilePopup() {
+        this.setState({
+            showUserInfo: null
+        })
     }
 
     buildInfoPanel() {
@@ -114,12 +137,21 @@ export default class extends StandardPage {
         )
     }
 
-    getUserNameWithFallback(user) {
-        if (_.isEmpty(user.profile.firstName) && _.isEmpty(user.profile.lastName)) {
-            return user.username
-        }
+    showUserProfile(user) {
+        this.setState({
+            showUserInfo: user
+        })
+    }
 
-        return _.trim([user.profile.firstName, user.profile.lastName].join(' '))
+    getUserClickableLink(user, name) {
+        return <a onClick={this.showUserProfile.bind(this, user)}>{name}</a>
+    }
+
+    getUserNameWithFallback(user) {
+        const name = _.isEmpty(user.profile.firstName) && _.isEmpty(user.profile.lastName)
+            ? user.username
+            : _.trim([user.profile.firstName, user.profile.lastName].join(' '))
+        return this.getUserClickableLink(user, name)
     }
 
     getUserCircles(user) {
@@ -127,7 +159,9 @@ export default class extends StandardPage {
             return ''
         }
 
-        return _.map(user.circles, (circle) => circle.name).join(' ')
+        return _.map(user.circles, (circle) =>
+            <a key={circle._id} href={`/team-detail/${circle._id}`}>{circle.name} </a>
+        )
     }
 
     buildMemberSearch() {
@@ -140,6 +174,7 @@ export default class extends StandardPage {
             {
                 title: 'Username',
                 dataIndex: 'username',
+                render: (username, user) => this.getUserClickableLink(user, user.username)
             },
             {
                 title: 'Circles',
@@ -150,7 +185,7 @@ export default class extends StandardPage {
 
         const searchChangedHandler = (e) => {
             const search = e.target.value
-            this.setState({ search }, _.debounce(this.refetch.bind(this), 333))
+            this.setState({ search }, _.debounce(this.refetch.bind(this), 500))
         }
 
         return (
