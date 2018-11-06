@@ -5,197 +5,214 @@ import I18N from '@/I18N'
 import { Link } from 'react-router-dom'
 import './style.scss'
 import MediaQuery from 'react-responsive'
-import { Col, Row, Card, Button, Breadcrumb, Icon } from 'antd'
+import { Col, Row, Card, Button, Breadcrumb, Icon, Table, Input, Modal } from 'antd'
 import {MAX_WIDTH_MOBILE} from "../../../config/constant"
+import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 
 export default class extends StandardPage {
-    navigateToLearn() {
-        this.props.history.push('/developer/learn');
+    async componentDidMount() {
+        this.refetch()
     }
 
-    navigateToTeamSearch() {
-        this.props.history.push('/developer/search');
+    componentWillUnmount() {
     }
 
-    navigateToProjectSearch() {
-        this.props.history.push('/developer/search?type=PROJECT');
+    refetch() {
+        this.props.listUsers({
+            search: this.state.search || ''
+        })
     }
 
-    navigateToTaskSearch() {
-        this.props.history.push('/developer/search?type=TASK');
-    }
-
-    buildTopRow () {
-        return (
-            <Row className="d_row d_rowTop" type="flex" justify="center">
-                <Col sm={{span: 24}} md={{span: 6}} className="d_box" onClick={() => this.navigateToLearn()}>
-                    <Card hoverable className="feature-box">
-                        <div className="title">
-                            <span>{I18N.get('developer.learn')}</span>
-                            <img src="/assets/images/mortarboard.svg"/>
-                        </div>
-                        <hr className="feature-box-divider"/>
-                        <div className="content">
-                            <div>- {I18N.get('developer.learn.basics')}</div>
-                            <div>- {I18N.get('developer.learn.concepts')}</div>
-                            <div>- {I18N.get('developer.learn.start')}</div>
-                            <div>- {I18N.get('developer.learn.tutorials')}</div>
-                            <div>- {I18N.get('developer.learn.resources')}</div>
-                        </div>
-                    </Card>
-                </Col>
-                <Col sm={{span: 24}} md={{span: 6}} className="d_box" onClick={() => this.navigateToTeamSearch()}>
-                    <Card hoverable className="feature-box">
-                        <div className="title">
-                            <span>{I18N.get('developer.team')}</span>
-                            <img src="/assets/images/connection.svg"/>
-                        </div>
-                        <hr className="feature-box-divider"/>
-                        <div className="content">
-                            <div>- {I18N.get('developer.team.join')}</div>
-                            <div>- {I18N.get('developer.team.create_profile')}</div>
-                            <div>- {I18N.get('developer.team.create_project')}</div>
-                        </div>
-                    </Card>
-                </Col>
-                <Col sm={{span: 24}} md={{span: 6}} className="d_box" onClick={() => this.navigateToProjectSearch()}>
-                    <Card hoverable className="feature-box">
-                        <div className="title">
-                            <span>{I18N.get('developer.project')}</span>
-                            <img src="/assets/images/start.svg"/>
-                        </div>
-                        <hr className="feature-box-divider"/>
-                        <div className="content">
-                            <div>- {I18N.get('developer.project.top')}</div>
-                            <div>- {I18N.get('developer.project.join')}</div>
-                            <div>- {I18N.get('developer.project.issue')}</div>
-                        </div>
-                    </Card>
-                </Col>
-                <Col sm={{span: 24}} md={{span: 6}} className="d_box" onClick={() => this.navigateToTaskSearch()}>
-                    <Card hoverable className="feature-box">
-                        <div className="title">
-                            <span>{I18N.get('developer.task')}</span>
-                            <img src="/assets/images/start.svg"/>
-                        </div>
-                        <hr className="feature-box-divider"/>
-                        <div className="content">
-                            <div>- {I18N.get('developer.task.top')}</div>
-                            <div>- {I18N.get('developer.task.join')}</div>
-                            <div>- {I18N.get('developer.task.issue')}</div>
-                        </div>
-                    </Card>
-                </Col>
-            </Row>
-        );
-    }
-
-    buildMidRow() {
-        return (
-            <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
-                {(matches) => {
-                    return (
-                        <div className="d_midRow">
-                            {/*<Button block={matches} className="info-button">
-                                {I18N.get('developer.action')}
-                            </Button>*/}
-                        </div>
-                    )
-                }}
-            </MediaQuery>
-        );
-    }
-
-    buildBottomRow() {
-        return (
-            <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
-                {(matches) => {
-                    return (
-                        <div className="d_bottomRow">
-                            <span className="title">{I18N.get('developer.components')}</span>
-                            <Row className="component-box">
-                                <Col sm={{span: 24}} md={{span: 18}} className="d_leftCol">
-                                    <div className="component-name">
-                                        {I18N.get('developer.components.core.title')} - <span className="languages">{I18N.get('developer.components.core.languages')}</span>
-                                    </div>
-                                    <hr className="component-divider"/>
-                                    <div className="component-description">
-                                        {I18N.get('developer.components.core.description')}
-                                    </div>
-                                </Col>
-                                <Col sm={{span: 24}} md={{span: 6}}>
-                                    <div className="button-container">
-                                        <Button block={matches} className="top-button">
-                                            <a target="_blank" href="https://github.com/elastos/Elastos.RT/issues">
-                                                {I18N.get('developer.components.issues')}
-                                            </a>
-                                        </Button>
-                                    </div>
-                                    <div className="button-container">
-                                        <Button block={matches}>
-                                            <a target="_blank" href="https://github.com/elastos/Elastos.RT">
-                                                {I18N.get('developer.components.docs')}
-                                            </a>
-                                        </Button>
-                                    </div>
-                                    {/*<div className="button-container">
-                                        <Button block={matches}>{I18N.get('developer.components.info')}</Button>
-                                    </div>*/}
-                                </Col>
-                            </Row>
-                            <Row className="component-box">
-                                <Col sm={{span: 24}} md={{span: 18}} className="d_leftCol">
-                                    <div className="component-name">
-                                        {I18N.get('developer.components.spv')} - <span className="languages">{I18N.get('developer.components.spv.languages')}</span>
-                                    </div>
-                                    <hr className="component-divider"/>
-                                    <div className="component-description">
-                                        {I18N.get('developer.components.spv.description')}
-                                    </div>
-                                </Col>
-                                <Col sm={{span: 24}} md={{span: 6}}>
-                                    <div className="button-container">
-                                        <Button block={matches} className="top-button">
-                                            <a target="_blank" href="https://github.com/elastos/Elastos.ELA.SPV/issues">
-                                                {I18N.get('developer.components.issues')}
-                                            </a>
-                                        </Button>
-                                    </div>
-                                    <div className="button-container">
-                                        <a target="_blank" href="https://github.com/elastos/Elastos.ELA.SPV">
-                                            <Button block={matches}>{I18N.get('developer.components.docs')}</Button>
-                                        </a>
-                                    </div>
-                                    {/*<div className="button-container">
-                                        <Button block={matches}>{I18N.get('developer.components.info')}</Button>
-                                    </div>*/}
-                                </Col>
-                            </Row>
-                        </div>
-                    );
-                }}
-            </MediaQuery>
-        );
+    ord_states() {
+        return {
+            search: '',
+            showUserInfo: null
+        }
     }
 
     ord_renderContent () {
         return (
             <div className="p_Developer">
                 <div className="ebp-header-divider" />
-                <Breadcrumb className="p_admin_breadcrumb">
-                    <Breadcrumb.Item><Icon type="home"/></Breadcrumb.Item>
-                    <Breadcrumb.Item>{I18N.get('developer.breadcrumb.developers')}</Breadcrumb.Item>
-                </Breadcrumb>
-                <div className="p_admin_index ebp-wrap">
+                <div className="p_admin_index">
                     <div className="d_box">
                         <div className="p_admin_content">
-                            {this.buildTopRow()}
-                            {this.buildMidRow()}
-                            {this.buildBottomRow()}
+                            {this.buildInfoPanel()}
+                            {this.buildNavi()}
+                            {this.buildMemberSearch()}
                         </div>
                     </div>
                 </div>
+                {this.renderProfileModal()}
                 <Footer/>
+            </div>
+        )
+    }
+
+    renderProfileModal() {
+        return (
+            <Modal
+                className="profile-overview-popup-modal"
+                visible={!!this.state.showUserInfo}
+                onCancel={this.handleCancelProfilePopup.bind(this)}
+                footer={null}>
+                { this.state.showUserInfo &&
+                    <ProfilePopup showUserInfo={this.state.showUserInfo}/>
+                }
+            </Modal>
+        )
+    }
+
+    handleCancelProfilePopup() {
+        this.setState({
+            showUserInfo: null
+        })
+    }
+
+    buildInfoPanel() {
+        return (
+            <div className="info-panel panel">
+                <div className="info-panel-content panel-content">
+                    <div className="info-panel-left pull-left">
+                        <h3 className="with-gizmo">
+                            {I18N.get('0002')}
+                        </h3>
+                        <div className="info-panel-link">
+                            <a href="https://t.me/elastosgroup" target="_blank">
+                                Telegram
+                            </a>
+                        </div>
+                        <div className="info-panel-link">
+                            <a href="https://twitter.com/cyber__republic" target="_blank">
+                                Twitter
+                            </a>
+                        </div>
+                        <div className="info-panel-link">
+                            <a href="https://github.com/cyber-republic" target="_blank">
+                                GitHub
+                            </a>
+                        </div>
+                        <div className="info-panel-link">
+                            <a href="https://discord.gg/bKcPf8R" target="_blank">
+                                Discord
+                            </a>
+                        </div>
+                    </div>
+                    <div className="pull-right">
+                        <img src="/assets/images/community-world.png"/>
+                    </div>
+                    <div className="clearfix"/>
+                </div>
+            </div>
+        )
+    }
+
+    buildNavi() {
+        const buildNaviItem = (title, description, link) => {
+            return (
+                <Row className="navi-panel-item"
+                    onClick={() => this.props.history.push(link)}>
+                    <Col span={4} className="navi-panel-item-title">
+                        {title}
+                    </Col>
+                    <Col span={16} className="navi-panel-item-description">
+                        {description}
+                    </Col>
+                    <Col span={4} className="navi-panel-item-arrow">
+                        <img src="/assets/images/arrow-right.png"/>
+                    </Col>
+                </Row>
+            )
+        }
+
+        return (
+            <div className="navi-panel panel">
+                <div className="navi-panel-content panel-content">
+                    {buildNaviItem('Learn', 'Tutorials, Resources and more', '/developer/learn')}
+                    {buildNaviItem('Teams', 'Connect, Form Teams and work on projects', '/developer/search')}
+                    {buildNaviItem('Projects', 'Overview of Cyber Republic Projects', '/developer/search?type=PROJECT')}
+                    {buildNaviItem('Tasks', 'Overview of Cyber Republic Tasks', '/developer/search?type=TASK')}
+                </div>
+            </div>
+        )
+    }
+
+    showUserProfile(user) {
+        this.setState({
+            showUserInfo: user
+        })
+    }
+
+    getUserClickableLink(user, name) {
+        return <a onClick={this.showUserProfile.bind(this, user)}>{name}</a>
+    }
+
+    getUserNameWithFallback(user) {
+        const name = _.isEmpty(user.profile.firstName) && _.isEmpty(user.profile.lastName)
+            ? user.username
+            : _.trim([user.profile.firstName, user.profile.lastName].join(' '))
+        return this.getUserClickableLink(user, name)
+    }
+
+    getUserCircles(user) {
+        if (_.isEmpty(user.circles)) {
+            return ''
+        }
+
+        return _.map(user.circles, (circle) =>
+            <a key={circle._id} href={`/team-detail/${circle._id}`}>{circle.name} </a>
+        )
+    }
+
+    buildMemberSearch() {
+        const columns = [
+            {
+                title: 'Name',
+                dataIndex: 'name',
+                width: '33%',
+                render: (name, user) => this.getUserNameWithFallback(user)
+            },
+            {
+                title: 'Username',
+                dataIndex: 'username',
+                width: '33%',
+                render: (username, user) => this.getUserClickableLink(user, user.username)
+            },
+            {
+                title: 'Circles',
+                dataIndex: 'circles',
+                width: '33%',
+                render: (circles, user) => this.getUserCircles(user)
+            }
+        ]
+
+        const searchChangedHandler = (e) => {
+            const search = e.target.value
+            this.setState({ search }, _.debounce(this.refetch.bind(this), 500))
+        }
+
+        return (
+            <div className="member-panel panel">
+                <div className="member-panel-content panel-content">
+                    <h3 className="with-gizmo">
+                        Member Search
+                    </h3>
+                    <Row className="member-panel-search">
+                        <Col span={9}>
+                            <Input placeholder={I18N.get('developer.breadcrumb.search')}
+                                onChange={searchChangedHandler.bind(this)}/>
+                        </Col>
+                    </Row>
+                    <Table
+                        className="no-borders"
+                        dataSource={this.props.users}
+                        loading={this.props.loading}
+                        columns={columns}
+                        bordered={false}
+                        rowKey="_id"
+                        pagination={{showTotal: total => `Total ${total} users`, pageSize: 5}}>
+                    </Table>
+                </div>
             </div>
         )
     }
