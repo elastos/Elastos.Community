@@ -122,7 +122,8 @@
         margin: $gap_4 auto $gap_2 auto;
 
         @media only screen and (max-width: $mobile-width) {
-            padding: $gap_5 $gap_2;
+            margin: $gap_2 auto $gap_2 auto;
+            padding: $gap_2 $gap_2;
         }
 
         .member-header {
@@ -173,6 +174,7 @@
     }
     .c_Comments {
         @media only screen and (max-width: $mobile-width) {
+
             .commenter-info {
                 .date {
                     display: block;

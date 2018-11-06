@@ -167,9 +167,10 @@ class C extends BaseComponent {
     }
 
     renderFooter() {
+        const detailUrl = `/task-detail/${this.props.detail._id}`
         return (
             <div className="app-footer valign-wrapper halign-wrapper">
-                <Button onClick={this.showTaskDetail.bind(this)}>
+                <Button href={detailUrl}>
                     {this.isAssigned() ? I18N.get('project.detail.view') : I18N.get('task.applyMessage')}
                 </Button>
             </div>

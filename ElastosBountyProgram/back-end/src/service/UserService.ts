@@ -252,15 +252,39 @@ export default class extends Base {
             archived: {$ne: true}
         }
 
+        if (query.search) {
+            finalQuery.$and = _.map(query.search.split(' '), (part) => {
+                return {
+                    $or: [
+                        { 'profile.firstName': { $regex: part, $options: 'i' }},
+                        { 'profile.lastName': { $regex: part, $options: 'i' }},
+                        { username: { $regex: part, $options: 'i' }}
+                    ]
+                }
+            })
+        }
+
         if (query.empower) {
             finalQuery.empower = JSON.parse(query.empower)
         }
 
-        return await db_user
+        const users = await db_user
             .getDBInstance()
             .find(finalQuery)
             .select(excludeFields)
             .sort({username: 1});
+
+        if (users.length) {
+            const db_team = this.getDBModel('Team')
+
+            for (let user of users) {
+                await db_team.getDBInstance().populate(user, {
+                    path: 'circles'
+                })
+            }
+        }
+
+        return users
     }
 
     public async changePassword(param): Promise<boolean>{

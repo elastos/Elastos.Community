@@ -49,6 +49,8 @@ export default class extends BaseComponent {
                 onCancel() {
                 }
             })
+        } else if (key === 'blog') {
+            window.location.href = 'https://blog.cyberrepublic.org'
         }
     }
 
@@ -81,6 +83,9 @@ export default class extends BaseComponent {
                         </Menu.Item>
                         <Menu.Item key="council">
                             {I18N.get('council.0001')}
+                        </Menu.Item>
+                        <Menu.Item key="blog">
+                            {I18N.get('0110')}
                         </Menu.Item>
                         <Menu.Item key="ambassadors">
                             {I18N.get('0107')}

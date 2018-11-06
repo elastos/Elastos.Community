@@ -258,6 +258,10 @@ const en = {
     'developer.form.submission.placeholder.subject': 'Subject',
     'developer.form.submission.placeholder.description': 'Describe your issue',
     'developer.form.submission.message.success': 'Your issue has been submitted. Thanks!',
+    'developer.member.search.title': 'Member Search',
+    'developer.member.table.column.member': 'Member',
+    'developer.member.table.column.username': 'Username',
+    'developer.member.table.column.circles': 'Circles',
 
     'myrepublic.teams': 'Teams',
     'myrepublic.teams.all': 'All',
@@ -1036,7 +1040,6 @@ const en = {
     'cr-video.q7.title': 'Have Questions? Just Want to Get In Touch?',
     'cr-video.q7.subtitle': 'Enter your email and we will contact you personally',
     'cr-video.q7.button_text': 'Submit',
-
 };
 
 // lang mappings

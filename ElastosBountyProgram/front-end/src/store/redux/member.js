@@ -10,7 +10,8 @@ class MemberRedux extends BaseRedux {
             loading: false,
             subscribing: false,
             detail: {},
-            users: []
+            users: [],
+            users_loading: false
         };
     }
 }

@@ -41,6 +41,7 @@ export const api_request = (opts = {})=>{
         },
         cache: opts.cache,
         method : opts.method,
+        signal: opts.signal,
         mode: 'cors'
     };
     if(method === 'post' && option.headers['Content-Type'] === 'multipart/form-data'){

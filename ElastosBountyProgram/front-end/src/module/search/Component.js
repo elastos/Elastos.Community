@@ -206,7 +206,7 @@ export default class extends BaseComponent {
         })
 
         return (
-            <RadioGroup disabled={this.props.loading} onChange={this.onChangeLookingFor.bind(this)} value={this.state.lookingFor}>
+            <RadioGroup onChange={this.onChangeLookingFor.bind(this)} value={this.state.lookingFor}>
                 {elements}
             </RadioGroup>
         )
@@ -218,7 +218,7 @@ export default class extends BaseComponent {
         const elements = _.map(filtered, (option) => {
             return (
                 <div className="checkbox" key={option.value}>
-                    <Checkbox value={option.value} disabled={this.props.loading}>
+                    <Checkbox value={option.value}>
                         {option.label}
                     </Checkbox>
                 </div>
@@ -238,7 +238,7 @@ export default class extends BaseComponent {
         const elements = _.map(filtered, (option) => {
             return (
                 <div className="checkbox" key={option.value}>
-                    <Checkbox value={option.value} disabled={this.props.loading}>
+                    <Checkbox value={option.value}>
                         {option.label}
                     </Checkbox>
                 </div>
@@ -258,7 +258,7 @@ export default class extends BaseComponent {
         const elements = _.map(filtered, (circle) => {
             return (
                 <div className="checkbox" key={circle._id}>
-                    <Checkbox value={circle._id} disabled={this.props.loading}>
+                    <Checkbox value={circle._id}>
                         {circle.name}
                     </Checkbox>
                 </div>
