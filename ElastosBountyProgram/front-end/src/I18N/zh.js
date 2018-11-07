@@ -368,9 +368,9 @@ const zh = {
     'landing.whatIs.content.1': 'Elastos是第一个完全安全和去中心化环境互联网。使用区块链构建，它提供了一个虚拟生态系统，它保护去中心化式应用程序不受互联网的直接访问，同时允许数十亿用户具有近乎无限的可扩展性。',
     'landing.whatIs.content.2': 'Elastos是一个“Cyber Republic”，其通过拥有和交换数据和数字资产来产生财富。',
 
-    'landing.cr100.content.1': '欢迎来到万物互联',
-    'landing.cr100.content.2': '这里是为安全与自由',
-    'landing.cr100.content.3': '由设计而来。',
+    'landing.cr100.content.1': '欢迎来到万物互联的世界，',
+    'landing.cr100.content.2': '在这里，',
+    'landing.cr100.content.3': '安全和自由天然存在。',
     'landing.cr100.content.4': '加入我们的构建前100个项目。',
 
     'landing.solution.explained.1': '主链处理基本的支付和散列存储。其他所有东西，包括智能合约，都运行在侧链上，其中应用程序能够创建额外的侧链。',
