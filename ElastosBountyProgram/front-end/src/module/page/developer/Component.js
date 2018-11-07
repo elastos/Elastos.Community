@@ -95,7 +95,7 @@ export default class extends StandardPage {
                             </a>
                         </div>
                         <div className="info-panel-link">
-                            <a href="https://discord.gg/bKcPf8R" target="_blank">
+                            <a href="https://discord.gg/UG9j6kh" target="_blank">
                                 Discord
                             </a>
                         </div>

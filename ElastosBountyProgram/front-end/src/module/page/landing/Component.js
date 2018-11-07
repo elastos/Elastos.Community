@@ -1286,7 +1286,7 @@ export default class extends EmptyPage {
                             <div className="social-icons">
                                 <a href="https://t.me/elastosgroup" target="_blank"><i className="fab fa-telegram fa-2x"/></a>
                                 <a href="https://github.com/cyber-republic" target="_blank"><i className="fab fa-github fa-2x"/></a>
-                                <a href="https://discord.gg/bKcPf8R" target="_blank"><i className="fab fa-discord fa-2x"/></a>
+                                <a href="https://discord.gg/UG9j6kh" target="_blank"><i className="fab fa-discord fa-2x"/></a>
                                 <br/>
                                 <a href="https://twitter.com/cyber__republic" target="_blank"><i className="fab fa-twitter fa-2x"/></a>
                                 <a href="https://www.facebook.com/ElastosCyberRepublic" target="_blank"><i className="fab fa-facebook fa-2x"/></a>
