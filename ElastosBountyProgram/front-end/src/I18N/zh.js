@@ -351,6 +351,8 @@ const zh = {
     'team.skillset.java': 'Java',
     'team.skillset.swift': 'Swift',
 
+    'task.reward.explain': '劳务奖励将以与美元等值的 ELA 形式发放',
+
     // General
     'select.placeholder': '请选择',
     '.ok': '确定',
