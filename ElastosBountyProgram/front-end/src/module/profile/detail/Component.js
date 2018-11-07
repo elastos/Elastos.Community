@@ -24,13 +24,13 @@ export default class extends BaseComponent {
     async componentDidMount() {
         this.props.getMember(this.props.match.params.userId || this.props.currentUserId)
         this.props.getUserTeams(this.props.match.params.userId || this.props.currentUserId)
-        this.props.getTasks(this.props.match.params.userId || this.props.currentUserId)
+        // this.props.getTasks(this.props.match.params.userId || this.props.currentUserId)
     }
 
     componentWillUnmount() {
         this.props.resetMemberDetail()
         this.props.resetTeams()
-        this.props.resetTasks()
+        // this.props.resetTasks()
     }
 
     // TODO: add twitter, telegram, linkedIn, FB
