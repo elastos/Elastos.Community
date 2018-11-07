@@ -16,7 +16,8 @@ export default createContainer(Component, (state) => {
         myCircles,
         user: state.user,
         is_login: state.user.is_login,
-        currentUserId: state.user.current_user_id
+        currentUserId: state.user.current_user_id,
+        language: state.language.language
     }
 }, () => {
     // const userService = new UserService()

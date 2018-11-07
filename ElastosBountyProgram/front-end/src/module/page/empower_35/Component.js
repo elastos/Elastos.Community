@@ -66,7 +66,7 @@ export default class extends StandardPage {
                     <div className="indicator">{circle.members.length}</div>
                 </div>
                 <span className="title"
-                    onClick={() => this.props.history.push(`/crcles-detail/${circle._id}`)}>{circle.name}</span>
+                    onClick={() => this.props.history.push(`/crcles-detail/${circle._id}`)}>{this.props.language === 'zh' ? circle.name_zh : circle.name}</span>
             </div>
         );
     }
