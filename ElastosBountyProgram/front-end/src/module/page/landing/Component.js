@@ -234,8 +234,14 @@ export default class extends EmptyPage {
                     <div className="contentContainer">
                         <div className="bg-square"></div>
                         <div className="txt">
-                            <h2 className="hasStatic">{I18N.get('landing.cr100.content.1')}<br/>
-                                {I18N.get('landing.cr100.content.2')}<br/> {I18N.get('landing.cr100.content.3')}</h2>
+                            {this.props.language === 'zh' ?
+                                <h2 className="hasStatic cr100content zh">
+                                    {I18N.get('landing.cr100.content.1')}<br/>{I18N.get('landing.cr100.content.2')}{I18N.get('landing.cr100.content.3')}
+                                </h2> :
+                                <h2 className="hasStatic cr100content">
+                                    {I18N.get('landing.cr100.content.1')}<br/>{I18N.get('landing.cr100.content.2')}<br/>{I18N.get('landing.cr100.content.3')}
+                                </h2>
+                            }
 
                             <div className="strike-text dsk">
                                 <div className="strike-line"></div>

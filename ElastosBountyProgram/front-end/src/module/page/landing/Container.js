@@ -4,9 +4,10 @@ import LanguageService from '@/service/LanguageService';
 import _ from 'lodash'
 
 export default createContainer(Component, (state) => {
+
     return {
         is_login: state.user.is_login,
-        language: state.language
+        language: state.language.language
     }
 }, () => {
     const languageService = new LanguageService();

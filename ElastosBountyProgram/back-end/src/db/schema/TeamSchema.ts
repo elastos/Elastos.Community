@@ -12,6 +12,7 @@ export const Team = {
         type : String,
         required : true
     },
+    name_zh: String,
     metadata: {
         type: Map,
         of: String
