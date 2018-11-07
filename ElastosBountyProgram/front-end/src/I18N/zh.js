@@ -573,7 +573,59 @@ const zh = {
      // Profile
      'profile.localTime': '本地时间',
      'profile.sendMessage': '发送消息',
-     'profile.viewProfile': '查看履历'
+     'profile.viewProfile': '查看履历',
+   
+    //Tasks
+    'task.owner': '负责人',
+    'task.circle': '圈子',
+    'task.type': '类型',
+    'task.description': '描述',
+    'task.category': '目录',
+    'task.applyDeadline': '申请截止日期',
+    'task.completionDeadline': '截止日期',
+    'task.applyMessage': '查看任务详情并申请',
+    'task.referenceBid': '参考标价',
+    'task.referenceBid.none': '竞标开放中',
+    'task.budget': '预算',
+    'task.reward': '奖励',
+    'task.infoLink': '更多信息',
+    'task.goals': '目标',
+    'task.eventStart': '活动开始',
+    'task.eventEnd': '活动结束',
+    'task.descBreakdown': '预算分解',
+    'task.location': '活动地址',
+    'task.community': '社区',
+    'task.attachment': '附件',
+    'task.budget.explain': '预算是针对活动的成本/花销',
+    'task.reward.explain': '奖励是针对劳动和时间的付出',
+    'task.bid': '竞标',
+    'task.approvedBy': '批准人',
+    'task.application': '申请',
+    'task.appliedOn': '申请中',
+    'task.soloApply': '以个人名义申请',
+    'task.teamApply': '以团队名义申请',
+    'task.applyReason': '为什么你想加入这个任务',
+    'task.createNew': '提交一个新任务',
+
+    'project.detail.popup.join_task': '申请任务',
+    'project.detail.popup.bid_project': '竞标项目',
+    'project.detail.popup.bid_task': '竞标任务',
+    'project.detail.bidding': '竞标开放中',
+    'project.detail.bidding_closed': '竞标已结束',
+    'project.detail.tell_us_why_join': '你为什么想加入？',
+    'project.detail.tell_us_why_bid': '你为什么想竞标？',
+    'project.detail.no_attachments': '没有附件',
+    'project.detail.bid_updated': '竞标已更新',
+    'project.detail.bidding_winner': '中标者',
+    'project.detail.bidding_cur_1': '目前有',
+    'project.detail.bidding_cur_2': '其他竞标',
+    'project.detail.budget': '预算',
+    'project.detail.reward': '奖励',
+    'project.detail.reference_bid': '参考标价',
+    'project.detail.noapplications': '暂时还没有申请',
+
+    
+    
  };
 
 // lang mappings
