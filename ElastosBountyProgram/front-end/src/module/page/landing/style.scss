@@ -8824,10 +8824,43 @@
   // language specific
 
   // zh
-  .zh.cr100content {
+  #what .hasStatic.zh.cr100content {
     padding-left: 36px;
     text-align: center;
     font-size: 80px;
     white-space: nowrap;
+
+    @media screen and (max-width: 1250px) {
+      padding-left: 0;
+      white-space: normal;
+    }
+
+    @media screen and (max-width: 980px) {
+      font-size: 60px;
+    }
+
+    @media screen and (max-width: 650px) {
+      font-size: 30px;
+      line-height: 1.125;
+      letter-spacing: .05em;
+    }
+
+    @media screen and (max-width: 550px) {
+      max-width:  95%;
+    }
+  }
+
+  #what .callout-text .txt,
+  #model .callout-text .txt {
+    @media screen and (max-width: 550px) {
+      margin: 0 auto;
+      max-width:  95%;
+    }
+
+    @media screen and (max-width: 1250px) {
+      padding-left: 0;
+      white-space: normal;
+    }
   }
 }
+

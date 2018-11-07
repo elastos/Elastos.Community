@@ -236,7 +236,7 @@ export default class extends EmptyPage {
                         <div className="txt">
                             {this.props.language === 'zh' ?
                                 <h2 className="hasStatic cr100content zh">
-                                    {I18N.get('landing.cr100.content.1')}<br/>{I18N.get('landing.cr100.content.2')}{I18N.get('landing.cr100.content.3')}
+                                    {I18N.get('landing.cr100.content.1')}<br/><span>{I18N.get('landing.cr100.content.2')}</span><span>{I18N.get('landing.cr100.content.3')}</span>
                                 </h2> :
                                 <h2 className="hasStatic cr100content">
                                     {I18N.get('landing.cr100.content.1')}<br/>{I18N.get('landing.cr100.content.2')}<br/>{I18N.get('landing.cr100.content.3')}
@@ -677,8 +677,19 @@ export default class extends EmptyPage {
                             <div className="bg-square"></div>
                             <div className="txt">
                                 <p>{I18N.get('landing.vision.header')}</p>
-                                <h2 className="hasStatic">{I18N.get('landing.vision.content.1')}<br/>
-                                    {I18N.get('landing.vision.content.2')}<br/> {I18N.get('landing.vision.content.3')}</h2>
+
+                                {this.props.language === 'zh' ?
+                                    <h2 className="hasStatic">
+                                        {I18N.get('landing.vision.content.1')}
+                                        {I18N.get('landing.vision.content.2')}
+                                        {I18N.get('landing.vision.content.3')}
+                                    </h2>
+                                    : <h2 className="hasStatic">
+                                        {I18N.get('landing.vision.content.1')}<br/>
+                                        {I18N.get('landing.vision.content.2')}<br/>
+                                        {I18N.get('landing.vision.content.3')}
+                                    </h2>
+                                }
                                 <div className="arrow arrow-next sized"><img src="assets/images/arrow.svg"/></div>
                             </div>
                         </div>

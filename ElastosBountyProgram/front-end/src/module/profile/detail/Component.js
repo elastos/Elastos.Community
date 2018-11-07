@@ -111,7 +111,7 @@ export default class extends BaseComponent {
                     {this.renderDescription()}
                 </div>
 
-                {this.renderProjectsTasks()}
+                {/*this.renderProjectsTasks()*/}
 
                 <Row>
                     <Col span={24} className="gridCol">
