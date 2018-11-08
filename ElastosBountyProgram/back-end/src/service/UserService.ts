@@ -239,7 +239,7 @@ export default class extends Base {
     * - TODO: may need sorting by full name for Empower 35? Or something else?
     ************************************************************************************
      */
-    public async findAll(query): Promise<Document[]>{
+    public async findAll(query): Promise<Object>{
         const db_user = this.getDBModel('User');
         let excludeFields = selectFields;
 
@@ -268,11 +268,19 @@ export default class extends Base {
             finalQuery.empower = JSON.parse(query.empower)
         }
 
-        const users = await db_user
-            .getDBInstance()
-            .find(finalQuery)
-            .select(excludeFields)
-            .sort({username: 1});
+        const cursor = db_user.getDBInstance().find(finalQuery)
+        const totalCursor = db_user.getDBInstance().find(finalQuery).count()
+
+        if (query.results) {
+            const results = parseInt(query.results, 10)
+            const page = parseInt(query.page, 10)
+            cursor.skip(results * (page - 1)).limit(results)
+        }
+
+        cursor.select(excludeFields).sort({username: 1})
+
+        const users = await cursor
+        const total = await totalCursor
 
         if (users.length) {
             const db_team = this.getDBModel('Team')
@@ -284,7 +292,10 @@ export default class extends Base {
             }
         }
 
-        return users
+        return {
+            list: users,
+            total
+        }
     }
 
     public async changePassword(param): Promise<boolean>{
