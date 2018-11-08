@@ -11,6 +11,19 @@ import { USER_AVATAR_DEFAULT } from '@/constant'
 import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 
 export default class extends StandardPage {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            search: '',
+            showUserInfo: null,
+            userListPagination: {
+                pageSize: 5,
+                page: 1
+            }
+        }
+    }
+
     async componentDidMount() {
         this.refetch()
         this.debouncedRefetch = _.debounce(this.refetch.bind(this), 300)
@@ -21,15 +34,10 @@ export default class extends StandardPage {
 
     refetch() {
         this.props.listUsers({
-            search: this.state.search || ''
+            search: this.state.search || '',
+            results: (this.state.userListPagination || {}).pageSize || 5,
+            page: (this.state.userListPagination || {}).current || 1
         })
-    }
-
-    ord_states() {
-        return {
-            search: '',
-            showUserInfo: null
-        }
     }
 
     ord_renderContent () {
@@ -172,6 +180,14 @@ export default class extends StandardPage {
             : avatar
     }
 
+    handleTableChange(pagination, filters, sorter) {
+        const pager = { ...this.state.userListPagination }
+        pager.current = pagination.current
+        this.setState({
+            userListPagination: pager
+        }, this.refetch.bind(this))
+    }
+
     buildMemberSearch() {
         const columns = [
             {
@@ -224,8 +240,12 @@ export default class extends StandardPage {
                         columns={columns}
                         bordered={false}
                         rowKey="_id"
-                        pagination={false}
-                        scroll={{ y: 400 }}>
+                        pagination={{
+                            ...this.state.userListPagination,
+                            total: this.props.users_total,
+                            showTotal: total => `Total ${total} users`
+                        }}
+                        onChange={this.handleTableChange.bind(this)}>
                     </Table>
                 </div>
             </div>

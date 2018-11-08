@@ -231,7 +231,8 @@ export default class extends BaseService {
                 signal: this.getAbortSignal(path)
             });
 
-            await this.dispatch(memberRedux.actions.users_update(result))
+            await this.dispatch(memberRedux.actions.users_update(result.list))
+            await this.dispatch(memberRedux.actions.users_total_update(result.total))
             await this.dispatch(memberRedux.actions.users_loading_update(false))
         } catch (e) {
             // Do nothing
