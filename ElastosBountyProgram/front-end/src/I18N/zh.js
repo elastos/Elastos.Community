@@ -5,6 +5,7 @@ const zh = {
     council,
 
     // Header
+    '0000': 'ALPHA版本',
     '0001': '奖励计划',
     '0002': '社区',
     '0003': '主办单位',
@@ -21,10 +22,13 @@ const zh = {
     '0100': '开发者',
     '0101': '活动',
     '0102': '社区',
-    '0104': '我的',
+    '0104': '我的Republic',
     '0105': 'CR100',
     '0106': 'CRcles',
     '0107': '大使计划',
+    '0108': '共治委员会',
+    '0109': '提交',
+    '0110': '博客',
 
     '0200': '简介',
     '0201': '登录',
@@ -40,7 +44,7 @@ const zh = {
     '1100': '管理员',
 
     // Admin users
-    '1200': '没有',
+    '1200': '编号',
     '1201': '用户名',
     '1202': '电子邮件',
     '1203': '默认语言',
@@ -56,16 +60,16 @@ const zh = {
     '1301': '社区',
     '1302': '用户',
     '1303': '小组',
-    '1304': '提交',
+    '1304': '问题',
     '1305': '表格',
 
     // Profile navigator
-    '2300': '信息',
-    '2301': '任务',
-    '2302': '小组',
-    '2303': '提交',
-    '2304': '社区',
-    '2305': '项目',
+    '2300': '我的资讯',
+    '2301': '我的任务',
+    '2302': '我的小组',
+    '2303': '我的问题',
+    '2304': '我的社区',
+    '2305': '我的项目',
 
     'mentions.notFound': '用户不存在',
 
@@ -79,7 +83,7 @@ const zh = {
     'home.title': 'Elastos - 网络共享',
     'home.developers': '开发者',
     'home.developers.help_1': '编写代码，找出错误，获得ELA',
-    'home.developers.help_2': '通过点点滴滴获得ELA为Elastos生态系统做贡献',
+    'home.developers.help_2': '通过为Elastos生态系统做点点滴滴贡献以获取ELA',
     'home.developers.help_3': '从示例应用程序到企业App开发。',
     'home.developers.help_4': '您还可以通过发现错误和提交问题赚取ELA。',
     'home.developers.action': '是的，我对Elastos的开发很感兴趣。',
@@ -87,18 +91,18 @@ const zh = {
     'home.organizers.help_1': '帮助组织聚会和推广Elastos',
     'home.organizers.help_2': '无论您是否已成为社区的一员或者想要加入，',
     'home.organizers.help_3':
-        '我们会奖励您在网络上，本地或全球中推广Elastos所做出贡献。',
-    'home.organizers.help_4': '您也可以通过推荐贡献者获得ELA。',
+        '我们会奖励您在网络上、您身处的地区或者全球推广Elastos所做出贡献。',
+    'home.organizers.help_4': '您也可以通过推荐贡献者以获取ELA。',
     'home.organizers.action_1': '申请成为组织者',
     'home.organizers.action_2': '查看我可以参与的活动和任务',
     'home.summary_1':
         '我们是由领导者，开发者，组织者和设计师组成的一个多元化民主团体',
-    'home.summary_2': '社区的宗旨是在我们的社区推广Elastos，我们向所有人开放。',
+    'home.summary_2': '宗旨是在我们的社区推广Elastos，我们欢迎所有人加入。',
 
     // LoginForm
-    'login.label_username': '请输入您的用户名或邮箱!',
+    'login.label_username': '请输入用户名或邮箱',
     'login.username': '用户名或邮箱',
-    'login.label_password': '请输入您的密码!',
+    'login.label_password': '请输入您的密码',
     'login.password': '密码',
     'login.logged': '保持登录状态',
     'login.forget': '忘记密码',
@@ -106,9 +110,11 @@ const zh = {
     'login.reset': '重置密码',
     'login.title': '登录 Cyber Republic',
     'login.description_1': '输入密码',
+    // Logout
+    'logout.title': '确定登出吗?',
 
     // ApplyForm
-    'apply.form.attachment': '支持附件上传',
+    'apply.form.attachment': '附加档案上传',
     'apply.form.suited': '你觉得你比较适合的理由是什么?',
     'apply.form.prompt': '你最想申请的目的是什么?',
 
