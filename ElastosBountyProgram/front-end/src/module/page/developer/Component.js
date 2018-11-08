@@ -11,6 +11,19 @@ import { USER_AVATAR_DEFAULT } from '@/constant'
 import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 
 export default class extends StandardPage {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            search: '',
+            showUserInfo: null,
+            userListPagination: {
+                pageSize: 5,
+                page: 1
+            }
+        }
+    }
+
     async componentDidMount() {
         this.refetch()
         this.debouncedRefetch = _.debounce(this.refetch.bind(this), 300)
@@ -25,17 +38,6 @@ export default class extends StandardPage {
             results: (this.state.userListPagination || {}).pageSize || 5,
             page: (this.state.userListPagination || {}).current || 1
         })
-    }
-
-    ord_states() {
-        return {
-            search: '',
-            showUserInfo: null,
-            userListPagination: {
-                results: 5,
-                page: 1
-            }
-        }
     }
 
     ord_renderContent () {
@@ -240,7 +242,8 @@ export default class extends StandardPage {
                         rowKey="_id"
                         pagination={{
                             ...this.state.userListPagination,
-                            total: this.props.users_total
+                            total: this.props.users_total,
+                            showTotal: total => `Total ${total} users`
                         }}
                         onChange={this.handleTableChange.bind(this)}>
                     </Table>
