@@ -19,7 +19,7 @@ export default class extends StandardPage {
             showUserInfo: null,
             userListPagination: {
                 pageSize: 5,
-                page: 1
+                current: 1
             }
         }
     }
@@ -218,7 +218,13 @@ export default class extends StandardPage {
 
         const searchChangedHandler = (e) => {
             const search = e.target.value
-            this.setState({ search }, this.debouncedRefetch)
+            this.setState({
+                search,
+                userListPagination: {
+                    ...this.state.userListPagination,
+                    current: 1
+                }
+            }, this.debouncedRefetch)
         }
 
         return (
