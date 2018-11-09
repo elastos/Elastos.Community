@@ -726,6 +726,8 @@ const en = {
     'profile.detail.table.action': 'Action',
     'profile.detail.noapplications': 'No applications yet',
     'profile.detail.finding': 'Funding: 100k for 5% of the equity or coins/tokens',
+    'profile.detail.sendmessage': 'Send Message',
+    'profile.detail.comingsoon': 'Coming soon...',
 
     // Validate Form
     'ambassadors.form.required': 'This must be filled out',
