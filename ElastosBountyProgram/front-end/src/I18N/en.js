@@ -189,6 +189,7 @@ const en = {
     'developer.project.title': 'Projects',
     'developer.tasks.title': 'Tasks',
     'developer.learn.description': 'Tutorials, Resources and more',
+    'developer.teams.title': 'Teams',
     'developer.teams.description': 'Connect, Form Teams and work on projects',
     'developer.projects.description': 'Overview of Cyber Republic Projects',
     'developer.tasks.description': 'Overview of Cyber Republic Tasks',
