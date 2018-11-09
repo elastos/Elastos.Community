@@ -3,7 +3,7 @@ import BaseComponent from '@/model/BaseComponent'
 import UserContactForm from '@/module/form/UserContactForm/Container'
 import moment from 'moment-timezone'
 import Comments from '@/module/common/comments/Container'
-import {Col, Row, Tabs, Icon, Button, Spin, Table} from 'antd'
+import {Col, Row, Tabs, Icon, Button, Spin, Table, Tooltip} from 'antd'
 import I18N from '@/I18N'
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE, USER_AVATAR_DEFAULT, TEAM_TYPE} from '@/constant'
 import './style.scss'
@@ -162,7 +162,10 @@ export default class extends BaseComponent {
     }
 
     renderSendMessage() {
-        return <Button type="primary" className="profile-send-msg">Send Message</Button>
+        return (
+            <Tooltip title="Coming soon">
+                <Button type="primary" className="profile-send-msg">Send Message</Button>
+            </Tooltip>)
     }
 
     renderFollow() {
