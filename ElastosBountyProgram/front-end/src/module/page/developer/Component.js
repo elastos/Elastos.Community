@@ -138,10 +138,10 @@ export default class extends StandardPage {
         return (
             <div className="navi-panel panel">
                 <div className="navi-panel-content panel-content">
-                    {buildNaviItem('Learn', 'Tutorials, Resources and more', '/developer/learn')}
-                    {buildNaviItem('Teams', 'Connect, Form Teams and work on projects', '/developer/search')}
-                    {buildNaviItem('Projects', 'Overview of Cyber Republic Projects', '/developer/search?type=PROJECT')}
-                    {buildNaviItem('Tasks', 'Overview of Cyber Republic Tasks', '/developer/search?type=TASK')}
+                    {buildNaviItem(I18N.get('developer.learn'), I18N.get('developer.learn.description'), '/developer/learn')}
+                    {buildNaviItem(I18N.get('developer.teams.title'), I18N.get('developer.teams.description'), '/developer/search')}
+                    {buildNaviItem(I18N.get('developer.project.title'), I18N.get('developer.projects.description'), '/developer/search?type=PROJECT')}
+                    {buildNaviItem(I18N.get('developer.tasks.title'), I18N.get('developer.tasks.description'), '/developer/search?type=TASK')}
                 </div>
             </div>
         )
