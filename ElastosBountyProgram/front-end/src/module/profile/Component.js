@@ -262,7 +262,7 @@ export default class extends BaseComponent {
             <div className={`profile-general-info ${isMobile ? 'profile-general-info-mobile' : ''}`}>
                 <Icon type="clock-circle"/>
                 <span>
-                    Local time {localTime}
+                    {I18N.get('profile.localTime')} {localTime}
                 </span>
             </div>
         )
