@@ -163,8 +163,8 @@ export default class extends BaseComponent {
 
     renderSendMessage() {
         return (
-            <Tooltip title="Coming soon">
-                <Button disabled type="primary" className="profile-send-msg">Send Message</Button>
+            <Tooltip title={I18N.get('profile.detail.comingsoon')}>
+                <Button disabled type="primary" className="profile-send-msg">{I18N.get('profile.detail.sendmessage')}</Button>
             </Tooltip>)
     }
 
