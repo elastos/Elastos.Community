@@ -9,17 +9,20 @@ import { Col, Row, Card, Button, Breadcrumb, Icon, Table, Input, Modal, Avatar }
 import {MAX_WIDTH_MOBILE} from "../../../config/constant"
 import { USER_AVATAR_DEFAULT } from '@/constant'
 import ProfilePopup from '@/module/profile/OverviewPopup/Container'
+import URI from 'urijs'
 
 export default class extends StandardPage {
     constructor(props) {
         super(props)
 
+        const params = new URI(props.location.search || '').search(true)
+
         this.state = {
-            search: '',
+            search: params.search || '',
             showUserInfo: null,
             userListPagination: {
                 pageSize: 5,
-                current: 1
+                current: parseInt(params.page || 1, 10)
             }
         }
     }
@@ -238,7 +241,7 @@ export default class extends StandardPage {
                     </h3>
                     <Row className="member-panel-search">
                         <Col md={9} xs={24}>
-                            <Input placeholder={I18N.get('developer.breadcrumb.search')}
+                            <Input defaultValue={this.state.search} placeholder={I18N.get('developer.breadcrumb.search')}
                                 onChange={searchChangedHandler.bind(this)}/>
                         </Col>
                     </Row>
