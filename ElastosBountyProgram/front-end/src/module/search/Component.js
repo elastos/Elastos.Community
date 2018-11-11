@@ -16,6 +16,7 @@ import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
 import I18N from '@/I18N'
 import moment from 'moment'
 import ProfilePopup from '@/module/profile/OverviewPopup/Container'
+import URI from 'urijs'
 
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
@@ -35,11 +36,13 @@ export default class extends BaseComponent {
     }
 
     ord_states() {
+        const params = new URI(this.props.location.search || '').search(true)
+
         return {
-            lookingFor: this.props.preselect || 'TEAM', // TEAM, PROJECT, TASK
-            skillset: [],
-            domain: [],
-            circle: [],
+            lookingFor: params.lookingFor || 'TEAM', // TEAM, PROJECT, TASK
+            skillset: (params.skillset && params.skillset.split(',')) || [],
+            domain: (params.domain && params.domain.split(',')) || [],
+            circle: (params.circle && params.circle.split(',')) || [],
             entryCount: 3,
             skillsetShowAllEntries: false,
             categoryShowAllEntries: false,
@@ -74,8 +77,18 @@ export default class extends BaseComponent {
         return query
     }
 
+    getUrlForQuery(query) {
+        const skillset = (query.skillset || []).join(',')
+        const domain = (query.domain || []).join(',')
+        const circle = (query.circle || []).join(',')
+        const lookingFor = this.state.lookingFor
+
+        return `/developer/search?lookingFor=${lookingFor}&skillset=${skillset}&domain=${domain}&circle=${circle}`
+    }
+
     refetch() {
         const query = this.getQuery()
+        const url = this.getUrlForQuery(query)
         const lookup = {
             TEAM: this.props.getTeams,
             PROJECT: this.props.getProjects,
@@ -84,6 +97,8 @@ export default class extends BaseComponent {
 
         const getter = lookup[this.state.lookingFor]
         getter.call(this, query)
+
+        this.props.history.replace(url)
     }
 
     // this needs to be used when it's a project to hide certain UI
@@ -226,7 +241,7 @@ export default class extends BaseComponent {
         })
 
         return (
-            <CheckboxGroup onChange={this.onChangeSkillset.bind(this)}>
+            <CheckboxGroup onChange={this.onChangeSkillset.bind(this)} value={this.state.skillset}>
                 {elements}
             </CheckboxGroup>
         )
@@ -246,7 +261,7 @@ export default class extends BaseComponent {
         })
 
         return (
-            <CheckboxGroup onChange={this.onChangeDomain.bind(this)}>
+            <CheckboxGroup onChange={this.onChangeDomain.bind(this)} value={this.state.domain}>
                 {elements}
             </CheckboxGroup>
         )
@@ -266,7 +281,7 @@ export default class extends BaseComponent {
         })
 
         return (
-            <CheckboxGroup onChange={this.onChangeCircle.bind(this)}>
+            <CheckboxGroup onChange={this.onChangeCircle.bind(this)} value={this.state.circle}>
                 { this.props.all_circles_loading
                     ? <Spin/>
                     : elements
@@ -312,11 +327,14 @@ export default class extends BaseComponent {
 
     getCircleTree() {
         const elements = _.map(this.props.all_circles, (option) => {
-            return (
-                <TreeNode value={option._id} title={option.name} key={option._id}/>
-            )
+            return {
+                title: option.name,
+                value: option._id,
+                key: option._id
+            }
         })
-        return elements;
+
+        return elements
     }
 
     handleOnFiltersChange(e) {
@@ -528,13 +546,10 @@ export default class extends BaseComponent {
                         allowClear
                         multiple
                         treeDefaultExpandAll
+                        treeData={this.getCircleTree()}
                         treeCheckable={!this.props.all_circles_loading}
                         onChange={this.onChangeCircle.bind(this)}
-                    >
-                        <TreeNode icon="" value="0" title={this.props.all_circles_loading ? I18N.get('.loading') : I18N.get('developer.search.circle')} key="0">
-                            {this.getCircleTree()}
-                        </TreeNode>
-                    </TreeSelect>
+                    />
                     }
                 </MediaQuery>
             </div>)
