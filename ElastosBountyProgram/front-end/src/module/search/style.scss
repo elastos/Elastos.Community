@@ -26,13 +26,8 @@
       margin: $gap_0 0;
       .ant-list-item-main {
         .ant-list-item-content {
-          > .description-content {
-
-            white-space: pre-line;
-
-            ul, ol {
-              margin-left: 16px;
-            }
+          .ql-editor {
+            padding: 0;
           }
         }
       }

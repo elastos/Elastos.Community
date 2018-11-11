@@ -21,10 +21,11 @@ import {
 } from 'antd'
 import I18N from '@/I18N'
 import InputTags from '@/module/shared/InputTags/Component'
-import ReactQuill from 'react-quill';
+import ReactQuill from 'react-quill'
 import {TEAM_TASK_DOMAIN, SKILLSET_TYPE} from '@/constant'
-import {upload_file} from '@/util';
-import sanitizeHtml from 'sanitize-html';
+import {upload_file} from '@/util'
+import sanitizeHtml from 'sanitize-html'
+import './style.scss'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
