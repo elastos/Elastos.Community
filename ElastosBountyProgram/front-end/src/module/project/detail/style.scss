@@ -14,14 +14,9 @@
     margin: $gap_1 $gap_2 $gap_3 $gap_2;
   }
 
-  .html-text {
-    white-space: pre-line;
-    p {
-      padding-bottom: 0;
-    }
-    ul, ol {
-      margin-left: 20px;
-    }
+  .ql-editor {
+    padding: 0;
+    font-size: 14px;
   }
 
   .detail-container {

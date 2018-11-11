@@ -107,7 +107,7 @@ class C extends BaseComponent {
                     {key}
                 </Col>
                 <Col span={16}>
-                    <div className="html-text" dangerouslySetInnerHTML={{__html: value}} />
+                    <div className="ql-editor" dangerouslySetInnerHTML={{__html: value}} />
                 </Col>
             </Row>
         )
