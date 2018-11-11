@@ -1284,6 +1284,8 @@ export default class extends EmptyPage {
                                 <li><a href="https://github.com/elastos" target="_blank">{I18N.get('landing.footer.github')}</a></li>
                                 <li><a href="https://github.com/elastos/Elastos.Community/tree/master/CyberRepublicLogoAssets" target="_blank">{I18N.get('landing.footer.assets')}</a></li>
                                 <li><a href="https://elanews.net/">{I18N.get('landing.footer.elaNews')}</a></li>
+                                <li><a href="/privacy">{I18N.get('landing.footer.privacyPolicy')}</a></li>
+                                <li><a href="/terms">{I18N.get('landing.footer.termsAndConditions')}</a></li>
                             </ul>
                         </div>
 

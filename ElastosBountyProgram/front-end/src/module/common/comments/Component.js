@@ -86,7 +86,7 @@ class C extends BaseComponent {
                 style={{ width: '100%', height: 100 }}
                 suggestions={allUsers}
                 notFoundContent={I18N.get('mentions.notFound')}
-                placeholder="Comments or updates"/>
+                placeholder={I18N.get('comments.commentsOrUpdates')}/>
         )
 
         const headline_fn = getFieldDecorator('headline', {
@@ -159,7 +159,7 @@ class C extends BaseComponent {
                     {subscribeButton}
                     <Button className="ant-btn-ebp pull-right" type="primary" size="small"
                         htmlType="submit" loading={this.isLoading()}>
-                        Post
+                        {I18N.get('comments.post')}
                     </Button>
                 </FormItem>
             </Form>) : null;
