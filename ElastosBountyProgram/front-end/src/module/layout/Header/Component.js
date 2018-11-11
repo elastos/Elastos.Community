@@ -6,7 +6,7 @@ import I18N from '@/I18N'
 import MediaQuery from 'react-responsive'
 import Flyout from './Flyout';
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
-import {USER_ROLE} from '@/constant'
+import {USER_ROLE, USER_LANGUAGE} from '@/constant'
 import Flag from 'react-flags'
 
 const {Header} = Layout
@@ -318,7 +318,13 @@ export default class extends BaseComponent {
                 url: location.href
             })
 
-            window.location.href = 'https://blog.cyberrepublic.org'
+            let linkToBlog = 'https://blog.cyberrepublic.org'
+
+            if (I18N.getLang() === USER_LANGUAGE.zh) {
+                linkToBlog += `/${USER_LANGUAGE.zh}`
+            }
+
+            window.location.href = linkToBlog
 
         } else if (_.includes([
             'en',
