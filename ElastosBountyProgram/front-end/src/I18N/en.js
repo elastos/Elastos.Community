@@ -1068,6 +1068,27 @@ const en = {
     'cr-video.q7.title': 'Have Questions? Just Want to Get In Touch?',
     'cr-video.q7.subtitle': 'Enter your email and we will contact you personally',
     'cr-video.q7.button_text': 'Submit',
+
+    'crcle.product': 'Product',
+    'crcle.support': 'Support',
+    'crcle.media': 'Media',
+    'crcle.dAppAnalyst': 'dApp Analyst',
+    'crcle.administration': 'Administration',
+    'crcle.projectManager': 'Project Manager',
+    'crcle.design': 'Design',
+    'crcle.dAppConsultant': 'dApp Consultant',
+    'crcle.operations': 'Operations',
+    'crcle.security': 'Security',
+    'crcle.translation': 'Translation',
+    'crcle.finance': 'Finance',
+    'crcle.businessDevelopment': 'Business Development',
+    'crcle.partnership': 'Partnership',
+    'crcle.investment': 'Investment',
+    'crcle.marketing': 'Marketing',
+    'crcle.qa': 'QA',
+    'crcle.writing': 'Writing',
+    'crcle.hr': 'HR',
+    'crcle.legal': 'Legal'
 };
 
 // lang mappings

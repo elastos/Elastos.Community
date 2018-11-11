@@ -1068,6 +1068,27 @@ const zh = {
     'cr-video.q7.title': 'Have Questions? Just Want to Get In Touch?',
     'cr-video.q7.subtitle': 'Enter your email and we will contact you personally',
     'cr-video.q7.button_text': 'Submit',
+
+    'crcle.product': '产品',
+    'crcle.support': '技术支持',
+    'crcle.media': '媒体',
+    'crcle.dAppAnalyst': 'dApp分析师',
+    'crcle.administration': '行政管理',
+    'crcle.projectManager': '项目管理',
+    'crcle.design': '设计',
+    'crcle.dAppConsultant': 'dApp咨询师',
+    'crcle.operations': '运维',
+    'crcle.security': '安全',
+    'crcle.translation': '多国语言翻译',
+    'crcle.finance': '财务',
+    'crcle.businessDevelopment': '商业开拓',
+    'crcle.partnership': '商务合作',
+    'crcle.investment': '投资',
+    'crcle.marketing': '市场营销',
+    'crcle.qa': 'QA',
+    'crcle.writing': '法律',
+    'crcle.hr': '人力资源',
+    'crcle.legal': '法律咨询'
 }
 
 // lang mappings
