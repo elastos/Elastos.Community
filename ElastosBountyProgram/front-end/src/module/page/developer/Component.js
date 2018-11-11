@@ -33,11 +33,14 @@ export default class extends StandardPage {
     }
 
     refetch() {
-        this.props.listUsers({
+        const options = {
             search: this.state.search || '',
             results: (this.state.userListPagination || {}).pageSize || 5,
             page: (this.state.userListPagination || {}).current || 1
-        })
+        }
+
+        this.props.history.replace(`/developer?search=${options.search}&page=${options.page}`)
+        this.props.listUsers(options)
     }
 
     ord_renderContent () {
