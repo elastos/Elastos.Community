@@ -75,7 +75,9 @@ const zh = {
 
     'comments': '评论',
     'comments.posts': '动态',
+    'comments.post': 'Post',
     'comments.noComments': '还没有评论，抢沙发！',
+    'comments.commentsOrUpdates': 'Comments or updates',
     // Admin tasks
     'admin.tasks.status': '状态',
 
@@ -413,6 +415,20 @@ const zh = {
 
     'project.detail.comments_disabled': '不能对已经关闭的竞标项目或任务发表评论',
 
+    'project.admin.statusHelp.created': 'this task does not require approval',
+    'project.admin.statusHelp.pending': 'this task is awaiting approval',
+    'project.admin.statusHelp.successReward': 'this task is awaiting ELA disbursement',
+    'project.admin.statusHelp.successNoReward': 'this task does not require ELA, no further action is needed',
+    'project.admin.statusHelp.approvedBy': 'this task is approved by',
+    'project.admin.statusHelp.approvedOn': 'on',
+
+    'project.public.statusHelp.pending': 'this task is awaiting approval by an admin',
+    'project.public.statusHelp.submitted': 'this task is awaiting council sign off',
+    'project.public.statusHelp.success': 'an admin will review and disburse the ELA reward if any',
+
+    'project.public.statusHelp.markAsComplete': 'Mark as Complete',
+    'project.public.statusHelp.markAsCompleteConfirm': 'Are you sure you want to mark this task as complete?',
+
     'team.detail.team_active': '你的团队已经激活',
 
     'team.create.error.nameRequired': 'Team name is required',
@@ -654,6 +670,10 @@ const zh = {
     'landing.footer.contacts': '其他合同:',
     'landing.footer.join': '加入我们',
 
+    'landing.footer.other': 'Other',
+    'landing.footer.privacyPolicy': 'Privacy Policy',
+    'landing.footer.termsAndConditions': 'Terms & Conditions',
+
     'landing.0220': 'ELA令牌将用于在区块链上注册id，打开通往Elastos生态系统的门。 一旦加入，将会有无数的交流机会。',
     'landing.0221': '您可以购买去中心化应用程序，获得云存储，购买和销售数字产品和资产，如歌曲、电影、书籍和视频，以及无限的其他资源。',
     'landing.0222': '此外，ELA令牌持有者将有机会投资于众多项目。对于在Elastos上运行的每一个dApp，拥有ELA来注册数字资产将是非常重要的，从而为令牌创造持续的必要性。',
@@ -725,6 +745,8 @@ const zh = {
     'profile.detail.table.action': 'Action',
     'profile.detail.noapplications': 'No applications yet',
     'profile.detail.finding': 'Funding: 100k for 5% of the equity or coins/tokens',
+    'profile.detail.sendmessage': 'Send Message',
+    'profile.detail.comingsoon': 'Coming soon...',
 
     // Validate Form
     'ambassadors.form.required': 'This must be filled out',

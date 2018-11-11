@@ -75,7 +75,9 @@ const en = {
 
     'comments': 'Comments',
     'comments.posts': 'Posts',
+    'comments.post': 'Post',
     'comments.noComments': 'No comments yet. Be the first to post!',
+    'comments.commentsOrUpdates': 'Comments or updates',
     // Admin tasks
     'admin.tasks.status': 'Status',
 
@@ -413,6 +415,20 @@ const en = {
 
     'project.detail.comments_disabled': 'Comments are disabled for closed bidding projects/tasks',
 
+    'project.admin.statusHelp.created': 'this task does not require approval',
+    'project.admin.statusHelp.pending': 'this task is awaiting approval',
+    'project.admin.statusHelp.successReward': 'this task is awaiting ELA disbursement',
+    'project.admin.statusHelp.successNoReward': 'this task does not require ELA, no further action is needed',
+    'project.admin.statusHelp.approvedBy': 'this task is approved by',
+    'project.admin.statusHelp.approvedOn': 'on',
+
+    'project.public.statusHelp.pending': 'this task is awaiting approval by an admin',
+    'project.public.statusHelp.submitted': 'this task is awaiting council sign off',
+    'project.public.statusHelp.success': 'an admin will review and disburse the ELA reward if any',
+
+    'project.public.statusHelp.markAsComplete': 'Mark as Complete',
+    'project.public.statusHelp.markAsCompleteConfirm': 'Are you sure you want to mark this task as complete?',
+
     'team.detail.team_active': 'Your team is currently active',
 
     'team.create.error.nameRequired': 'Team name is required',
@@ -653,6 +669,10 @@ const en = {
     'landing.footer.support': 'Support',
     'landing.footer.contacts': 'Other',
     'landing.footer.join': 'Join Us On',
+
+    'landing.footer.legal': 'Legal',
+    'landing.footer.privacyPolicy': 'Privacy Policy',
+    'landing.footer.termsAndConditions': 'Terms & Conditions',
 
     'landing.0220': 'ELA tokens will be used to register IDs on the blockchain, opening the door to the Elastos ecosystem. Once inside, countless exchange opportunities will be available.',
     'landing.0221': 'You can purchase Decentralized Applications, acquire Cloud storage, buy and sell digital products and assets like songs, movies, books, and videos, and limitless other resources.',
