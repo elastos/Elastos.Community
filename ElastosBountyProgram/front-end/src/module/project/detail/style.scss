@@ -15,8 +15,12 @@
   }
 
   .html-text {
+    white-space: pre-line;
     p {
       padding-bottom: 0;
+    }
+    ul, ol {
+      margin-left: 20px;
     }
   }
 
