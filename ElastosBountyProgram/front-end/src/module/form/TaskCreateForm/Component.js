@@ -149,7 +149,6 @@ class C extends BaseComponent {
                 props.circleId || null,
             removeAttachment: false,
             editing: !!props.existingTask,
-            isUsd: (props.existingTask && props.existingTask.reward.isUsd) || false,
             fileList: (props.existingTask && props.existingTask.pictures) || [],
             previewVisible: false,
             previewImage: '',
@@ -1031,33 +1030,16 @@ class C extends BaseComponent {
                             <div>
                                 {this.state.assignSelf && <br/>}
 
-                                <FormItem label={I18N.get('from.TaskCreateForm.label.fiat')} {...formItemLayout}>
-                                    <Checkbox name="isUsd" checked={this.state.isUsd}
-                                        disabled={this.hasLeaderEditRestrictions()}
-                                        onChange={() => {this.setState({isUsd: !this.state.isUsd})}}/>
-                                </FormItem>
-
-                                {this.state.isUsd ?
-                                    <Row>
-                                        <Col>
-                                            <FormItem label={I18N.get('from.TaskCreateForm.label.usdbudget')} {...formItemLayout}>
-                                                {p.taskRewardUpfrontUsd}
-                                            </FormItem>
-                                            <FormItem label={I18N.get('from.TaskCreateForm.label.usdreward')} {...formItemLayout}>
-                                                {p.taskRewardUsd}
-                                            </FormItem>
-                                        </Col>
-                                    </Row> :
-                                    <Row>
-                                        <Col>
-                                            <FormItem label={I18N.get('from.TaskCreateForm.label.elabudget')} {...formItemLayout}>
-                                                {p.taskRewardUpfront}
-                                            </FormItem>
-                                            <FormItem label={I18N.get('from.TaskCreateForm.label.elareward')} {...formItemLayout}>
-                                                {p.taskReward}
-                                            </FormItem>
-                                        </Col>
-                                    </Row>
+                                <Row>
+                                    <Col>
+                                        <FormItem label={I18N.get('from.TaskCreateForm.label.usdbudget')} {...formItemLayout}>
+                                            {p.taskRewardUpfrontUsd}
+                                        </FormItem>
+                                        <FormItem label={I18N.get('from.TaskCreateForm.label.usdreward')} {...formItemLayout}>
+                                            {p.taskRewardUsd}
+                                        </FormItem>
+                                    </Col>
+                                </Row>
 
                                 }
 
