@@ -25,6 +25,7 @@ import {
 
 import I18N from '@/I18N'
 import {upload_file} from "@/util";
+import ReactQuill from 'react-quill';
 import './style.scss'
 import moment from 'moment'
 import _ from 'lodash'
@@ -277,7 +278,14 @@ class C extends BaseComponent {
             initialValue: this.state.editing ? existingTask.description : ''
         })
         const taskDesc_el = (
-            <TextArea rows={6}></TextArea>
+            <ReactQuill
+                modules={{
+                    toolbar: [
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{'list': 'ordered'}, {'list': 'bullet'}]
+                    ]
+                }}
+            />
         )
 
         const taskDescBreakdown_fn = getFieldDecorator('taskDescBreakdown', {
@@ -287,7 +295,14 @@ class C extends BaseComponent {
             initialValue: this.state.editing ? existingTask.descBreakdown : ''
         })
         const taskDescBreakdown_el = (
-            <TextArea rows={4}></TextArea>
+            <ReactQuill
+                modules={{
+                    toolbar: [
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{'list': 'ordered'}, {'list': 'bullet'}]
+                    ]
+                }}
+            />
         )
         const taskGoals_fn = getFieldDecorator('taskGoals', {
             rules: [

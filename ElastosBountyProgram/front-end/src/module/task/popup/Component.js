@@ -95,6 +95,16 @@ class C extends BaseComponent {
                 </Col>
             </Row>
         )
+        const generateHtmlRow = (key, value, cssRowClass) => (
+            <Row className={[cssRowClass, 'app-meta-row'].join(' ')}>
+                <Col span={8}>
+                    {key}
+                </Col>
+                <Col span={16}>
+                    <div className="ql-editor" dangerouslySetInnerHTML={{__html: value}} />
+                </Col>
+            </Row>
+        )
 
         const detail = this.props.detail
         const budget = this.getBudgetFormatted()
@@ -148,7 +158,7 @@ class C extends BaseComponent {
 
                 {detail.goals && generateRow(I18N.get('task.goals'), detail.goals, 'task-goals')}
 
-                {detail.descBreakdown && generateRow(I18N.get('task.descBreakdown'),
+                {detail.descBreakdown && generateHtmlRow(I18N.get('task.descBreakdown'),
                     detail.descBreakdown, 'task-breakdown')}
 
                 {detail.eventDateRangeStart && generateRow(I18N.get('task.eventStart'),
@@ -158,7 +168,7 @@ class C extends BaseComponent {
                 {detail.eventDateRangeEnd && generateRow(I18N.get('task.eventEnd'),
                     moment(detail.eventDateRangeEnd).format(EVENT_DATE_FORMAT))}
 
-                {generateRow(I18N.get('task.description'), detail.description, 'task-description')}
+                {generateHtmlRow(I18N.get('task.description'), detail.description, 'task-description')}
 
                 {detail.infoLink && generateRow(I18N.get('task.infoLink'),
                     <a href={detail.infoLink} target="_blank">{detail.infoLink}</a>)}
