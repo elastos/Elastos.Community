@@ -47,7 +47,8 @@
     "react-transition-group": "^2.3.1",
     "redux": "4.0.0",
     "redux-thunk": "^2.2.0",
-    "sanitize-html": "^1.18.5"
+    "sanitize-html": "^1.18.5",
+    "urijs": "^1.19.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
