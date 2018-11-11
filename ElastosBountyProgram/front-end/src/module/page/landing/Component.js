@@ -64,7 +64,7 @@ export default class extends EmptyPage {
                             <li><a href="/ambassadors">{I18N.get('0107')}</a></li>
 
                             {this.props.is_login
-                                ? <li><a href="/profile/teams">{I18N.get('0104')}</a></li>
+                                ? <li><a href="/profile/info">{I18N.get('0104')}</a></li>
                                 : <li><a href="/login">{I18N.get('0201')}</a></li>
                             }
 
@@ -100,7 +100,7 @@ export default class extends EmptyPage {
                             <li><a href="/ambassadors">{I18N.get('0107')}</a></li>
 
                             {this.props.is_login
-                                ? <li><a href="/profile/teams">{I18N.get('0104')}</a></li>
+                                ? <li><a href="/profile/info">{I18N.get('0104')}</a></li>
                                 : <li><a href="/login">{I18N.get('0201')}</a></li>
                             }
 
