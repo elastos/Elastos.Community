@@ -14,6 +14,12 @@
     margin: $gap_1 $gap_2 $gap_3 $gap_2;
   }
 
+  .html-text {
+    p {
+      padding-bottom: 0;
+    }
+  }
+
   .detail-container {
     padding-bottom: $gap_3;
     position: relative;
