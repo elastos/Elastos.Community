@@ -697,8 +697,15 @@ class C extends BaseComponent {
     }
 
     getReward() {
-        return this.props.task.reward &&
-            ((this.props.task.reward.usd / 100) || (this.props.task.reward.ela / 1000))
+        if (!this.props.task.reward) {
+            return null
+        }
+
+        return this.props.task.reward
+            ? this.props.task.reward.isUsd
+                ? this.props.task.reward.usd / 100
+                : this.props.task.reward.ela / 1000
+            : null
     }
 
     getRewardElaPerUsd() {
@@ -728,8 +735,15 @@ class C extends BaseComponent {
     }
 
     getBudget() {
-        return this.props.task.rewardUpfront &&
-            ((this.props.task.rewardUpfront.usd / 100) || (this.props.task.rewardUpfront.ela / 1000))
+        if (!this.props.task.rewardUpfront) {
+            return null
+        }
+
+        return this.props.task.rewardUpfront
+            ? this.props.task.rewardUpfront.isUsd
+                ? this.props.task.rewardUpfront.usd / 100
+                : this.props.task.rewardUpfront.ela / 1000
+            : null
     }
 
     getBudgetElaPerUsd() {
