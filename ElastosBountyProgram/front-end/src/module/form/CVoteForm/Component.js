@@ -102,6 +102,7 @@ class C extends BaseComponent {
 
         if(!isCouncil){
             publicReadonly.readOnly = true
+            publicDisabled.disabled = true
         }
         else{
             if(edit && (data.createdBy !== this.user.current_user_id || _.includes(['FINAL', 'DEFERRED'], data.status))){
@@ -244,7 +245,7 @@ class C extends BaseComponent {
             initialValue : edit ? data.isConflict : 'NO'
         })
         const isConflict_el = (
-            <Select {...publicReadonly} {...councilNotOwnerReadOnly} size="large">
+            <Select {...publicDisabled} {...councilNotOwnerDisabled} size="large">
                 <Select.Option value={'NO'}>{I18N.get('from.CVoteForm.yes')}</Select.Option>
                 <Select.Option value={'YES'}>{I18N.get('from.CVoteForm.no')}</Select.Option>
             </Select>
