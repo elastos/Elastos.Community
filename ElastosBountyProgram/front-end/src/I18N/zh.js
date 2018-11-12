@@ -1,5 +1,6 @@
-import { TASK_STATUS } from '@/constant'
+import {TASK_STATUS, CVOTE_STATUS} from '@/constant'
 import council from './zh/council'
+import en from './en'
 
 const zh = {
     council,
@@ -515,7 +516,25 @@ const zh = {
     'community.link.toevent': 'See Event',
 
     // Council
+    'council.list': 'List',
+    'council.voting': 'Voting',
     'council.list.proposals': 'Any suggestions, proposals can be sent to',
+    'council.voting.proposalList': 'Proposal List',
+    'council.voting.number': 'No.',
+    'council.voting.title': 'Title',
+    'council.voting.type': 'Type.',
+    'council.voting.author': 'Author',
+    'council.voting.voteBy': 'Vote By',
+    'council.voting.status': 'Status',
+    'council.voting.createdAt': 'Created',
+
+    'council.voting.type.newMotion': 'New Motion',
+    'council.voting.type.motionAgainst': 'Motion Against',
+    'council.voting.type.anythingElse': 'Anything Else',
+
+    'council.voting.type.support': 'Support',
+    'council.voting.type.reject': 'Reject',
+    'council.voting.type.abstention': 'Abstention',
 
     // Landing
     'landing.elastos': 'Elastos',
@@ -697,7 +716,6 @@ const zh = {
     'vision.06': '关于如何申请个人项目的更多信息和更多细节很快将会出现。',
     'vision.07': '我们期待着为新型互联网建立一个创业和创新的国际天堂。',
 
-
     // Role
     'role.member': '普通会员',
     'role.organizer': '组织者',
@@ -811,7 +829,8 @@ const zh = {
     'from.CVoteForm.yes': 'YES',
     'from.CVoteForm.no': 'NO',
     'from.CVoteForm.proposal.title': 'Cyber Republic Council Members Proposal Form',
-    'from.CVoteForm.proposal.content': 'Cyber Republic Council members can use this form to propose motion. All Cyber Republic citizen can view and share their own idea (offline). All proposals will be discussed in regular council meetings. All results will be disclosed to the public. This is a temporary solution before our Cyber Republic website has such a feature.',
+    'from.CVoteForm.proposal.content': 'Cyber Republic Council members can use this form to propose motion. All Cyber Republic citizen can view and share their own idea (offline). All proposals will be discussed in regular council meetings. All results will be disclosed to the public.',
+    'from.CVoteForm.label.voteStatus': 'Vote Status',
     'from.CVoteForm.label.title': 'Title',
     'from.CVoteForm.label.type': 'Type',
     'from.CVoteForm.label.content': 'Content',
@@ -1103,5 +1122,13 @@ zh[`taskStatus.${TASK_STATUS.SUCCESS}`] = '成功'
 zh[`taskStatus.${TASK_STATUS.DISTRIBUTED}`] = '已结算'
 zh[`taskStatus.${TASK_STATUS.CANCELED}`] = '取消的'
 zh[`taskStatus.${TASK_STATUS.EXPIRED}`] = '过期的'
+
+zh[`cvoteStatus.${CVOTE_STATUS.DRAFT}`] = 'DRAFT'
+zh[`cvoteStatus.${CVOTE_STATUS.PROPOSED}`] = 'PROPOSED'
+zh[`cvoteStatus.${CVOTE_STATUS.ACTIVE}`] = 'ACTIVE'
+zh[`cvoteStatus.${CVOTE_STATUS.REJECT}`] = 'REJECT'
+zh[`cvoteStatus.${CVOTE_STATUS.FINAL}`] = 'FINAL'
+zh[`cvoteStatus.${CVOTE_STATUS.DEFERRED}`] = 'DEFERRED'
+
 
 export default zh

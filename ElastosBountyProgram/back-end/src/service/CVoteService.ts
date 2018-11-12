@@ -70,15 +70,22 @@ export default class extends Base {
 
         const db_cvote = this.getDBModel('CVote');
         const db_user = this.getDBModel('User');
-        const query:any = {};
+        let query:any = {};
 
         // if we are not querying only published records, we need to be an admin
         // TODO: write a test for this
-        if (param.published !== false) {
+        if (param.published !== true) {
             if (!this.isLoggedIn() || !this.isAdmin()) {
                 throw 'cvoteservice.list - unpublished proposals only visible to admin';
             }
+        } else {
+            if (param.published === true) {
+                query.published = param.published
+            }
         }
+
+        // we should map over allowed filters manually
+        // console.log(query)
 
         const list = await db_cvote.list(query, {
             createdAt: -1
@@ -271,16 +278,19 @@ export default class extends Base {
         // });
     }
 
-    private async eachJob(){
+    private async eachJob() {
+
         const db_cvote = this.getDBModel('CVote');
 
         const list = await db_cvote.find({
             'status' : {
-                '$in' : [constant.CVOTE_STATUS.PROPOSED]
+                '$in' : [constant.CVOTE_STATUS.PROPOSED, constant.CVOTE_STATUS.ACTIVE]
             }
         });
         const ids = [];
-        console.log(ids);
+
+        ids.length && console.log(ids);
+
         _.each(list, (item)=>{
             if(this.isExpired(item)){
                 ids.push(item._id);

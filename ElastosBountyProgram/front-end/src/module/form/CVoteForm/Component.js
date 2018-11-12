@@ -2,13 +2,13 @@ import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
 import {Form, Icon, Input, Button, Checkbox, Select, Row, Col, message, Steps, Modal} from 'antd'
 import I18N from '@/I18N'
-import _ from 'lodash';
+import _ from 'lodash'
 
 import './style.scss'
 
-const FormItem = Form.Item;
-const TextArea = Input.TextArea;
-const Step = Steps.Step;
+const FormItem = Form.Item
+const TextArea = Input.TextArea
+const Step = Steps.Step
 
 class C extends BaseComponent {
 
@@ -20,21 +20,21 @@ class C extends BaseComponent {
             loading : false
         }
 
-        this.isLogin = this.props.isLogin;
-        this.user = this.props.user;
+        this.isLogin = this.props.isLogin
+        this.user = this.props.user
     }
 
     ord_loading(f=false){
-        this.setState({loading : f});
+        this.setState({loading : f})
     }
 
     async handleSubmit(e) {
         e.preventDefault()
 
-        const s = this.props.static;
+        const s = this.props.static
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
-                console.log(' ===> ', values)
+                // console.log(' ===> ', values)
 
                 const param = {
                     title : values.title,
@@ -44,41 +44,41 @@ class C extends BaseComponent {
                     isConflict : values.isConflict,
                     proposedBy : values.proposedBy,
                     content : values.content
-                };
-                var x1 = [];
-                var x2 = [];
+                }
+                var x1 = []
+                var x2 = []
                 _.each(s.voter, (n)=>{
-                    const name = n.value;
-                    x1.push(name+'|'+values['vote_'+name]);
-                    x2.push(name+'|'+values['reason_'+name]);
-                });
-                param.vote_map = x1.join(',');
-                param.reason_map = x2.join(',');
+                    const name = n.value
+                    x1.push(name+'|'+values['vote_'+name])
+                    x2.push(name+'|'+values['reason_'+name])
+                })
+                param.vote_map = x1.join(',')
+                param.reason_map = x2.join(',')
 
-                console.log(param);
-                this.ord_loading(true);
+                // console.log(param)
+                this.ord_loading(true)
                 if(this.props.edit){
                     try{
-                        param._id = this.props.edit;
-                        await this.props.updateCVote(param);
-                        message.success(I18N.get('from.CVoteForm.message.updated.success'));
-                        this.ord_loading(false);
-                        this.props.history.push('/council');
+                        param._id = this.props.edit
+                        await this.props.updateCVote(param)
+                        message.success(I18N.get('from.CVoteForm.message.updated.success'))
+                        this.ord_loading(false)
+                        this.props.history.push('/council')
                     }catch(e){
-                        message.error(e.message);
-                        this.ord_loading(false);
+                        message.error(e.message)
+                        this.ord_loading(false)
                     }
 
                 }
                 else{
                     try{
-                        await this.props.createCVote(param);
-                        message.success(I18N.get('from.CVoteForm.message.create.success'));
-                        this.ord_loading(false);
-                        this.props.history.push('/council');
+                        await this.props.createCVote(param)
+                        message.success(I18N.get('from.CVoteForm.message.create.success'))
+                        this.ord_loading(false)
+                        this.props.history.push('/council')
                     }catch(e){
-                        message.error(e.message);
-                        this.ord_loading(false);
+                        message.error(e.message)
+                        this.ord_loading(false)
                     }
 
                 }
@@ -88,126 +88,130 @@ class C extends BaseComponent {
     }
 
     getInputProps(data) {
-        const edit = this.props.edit;
-        const role = this.props.user.role;
-        const isCouncil = this.props.isCouncil;
 
-        const fullName = this.user.profile.firstName + ' ' + this.user.profile.lastName;
+        const edit = this.props.edit
+        const role = this.props.user.role
+        const isCouncil = this.props.isCouncil
 
-        const dis = {};
-        const dis1 = {};
+        const fullName = this.user.profile.firstName + ' ' + this.user.profile.lastName
+
+        const publicReadonly = {}
+        const publicDisabled = {}
+        const councilNotOwnerReadOnly = {}
+        const councilNotOwnerDisabled = {}
 
         if(!isCouncil){
-            dis.disabled = true;
+            publicReadonly.readOnly = true
         }
         else{
             if(edit && (data.createdBy !== this.user.current_user_id || _.includes(['FINAL', 'DEFERRED'], data.status))){
-                dis1.disabled = true;
+                councilNotOwnerReadOnly.readOnly = true
+                councilNotOwnerDisabled.disabled = true
             }
         }
 
-        const secretaryDis2 = {disabled: true};
+        const secretaryDisabled = {readOnly: true}
         if (this.props.user.current_user_id === '5b4c3ba6450ff10035954c80') {
-            delete secretaryDis2.disabled
+            delete secretaryDisabled.readOnly
         }
 
 
-        const s = this.props.static;
-        const {getFieldDecorator} = this.props.form;
+        const s = this.props.static
+        const {getFieldDecorator} = this.props.form
         const type_fn = getFieldDecorator('type', {
             rules: [{required: true}],
-            disabled: true,
+            readOnly: true,
             initialValue: edit ? parseInt(data.type, 10) : ''
         })
         const type_el = (
-            <Select size="large" {...dis} {...dis1}>
+            <Select size="large" {...publicDisabled} {...councilNotOwnerDisabled}>
                 {/* <Select.Option key={-1} value={-1}>please select type</Select.Option> */}
                 {
                     _.map(s.select_type, (item, i)=>{
                         return (
                             <Select.Option key={i} value={item.code}>{item.name}</Select.Option>
-                        );
+                        )
                     })
                 }
             </Select>
-        );
+        )
 
         const title_fn = getFieldDecorator('title', {
             rules : [{required : true}],
             initialValue : edit ? data.title : ''
-        });
+        })
         const title_el = (
-            <Input {...dis} {...dis1} size="large" type="text" />
-        );
+            <Input {...publicReadonly} {...councilNotOwnerReadOnly} size="large" type="text" />
+        )
 
         const content_fn = getFieldDecorator('content', {
             rules : [{required : true}],
             initialValue : edit ? data.content : ''
-        });
+        })
         const content_el = (
-            <TextArea {...dis} {...dis1} rows={6}></TextArea>
-        );
+            <TextArea {...publicReadonly} {...councilNotOwnerReadOnly} rows={6}></TextArea>
+        )
 
         const proposedBy_fn = getFieldDecorator('proposedBy', {
             rules : [{required : true}],
             initialValue : edit ? data.proposedBy : fullName
-        });
+        })
         const proposedBy_el = (
-            <Select {...dis} {...dis1} size="large">
+            <Select {...publicDisabled} {...councilNotOwnerDisabled} size="large">
                 {/* <Select.Option key={-1} value={-1}>please select</Select.Option> */}
                 {
                     _.map(s.voter, (item, i)=>{
                         return (
                             <Select.Option key={i} value={item.value}>{item.value}</Select.Option>
-                        );
+                        )
                     })
                 }
             </Select>
-        );
+        )
 
         const motionId_fn = getFieldDecorator('motionId', {
             initialValue : edit ? data.motionId : ''
-        });
+        })
         const motionId_el = (
-            <Input {...dis} {...dis1} size="large" type="text" />
-        );
+            <Input {...publicReadonly} {...councilNotOwnerReadOnly} size="large" type="text" />
+        )
 
-        const vtt = {};
+        const vtt = {}
         _.each(s.voter, (item)=>{
-            const name = item.value;
+            const name = item.value
 
-            let tmp = {};
+            let tmp = {}
             // if(edit && fullName !== name && data.createdBy !== this.user.current_user_id){
             if(fullName !== name){
-                tmp.disabled = true;
+                tmp.disabled = true
             }
 
             const fn = getFieldDecorator('vote_'+name, {
                 initialValue : edit ? data.vote_map[name] : (fullName !== name ? '-1' : 'support')
-            });
+            })
             const el = (
-                <Select {...dis} {...tmp} size="large">
+                <Select {...publicDisabled} {...tmp} size="large">
                     <Select.Option key={'-1'} value={'-1'}>please select</Select.Option>
                     {
                         _.map(s.select_vote, (item, i)=>{
                             return (
                                 <Select.Option key={i} value={item.value}>{item.name}</Select.Option>
-                            );
+                            )
                         })
                     }
                 </Select>
-            );
-            vtt['vote_'+name] = fn(el);
-        });
+            )
+            vtt['vote_'+name] = fn(el)
+        })
 
-        const vts = {};
+        const vts = {}
         _.each(s.voter, (item)=>{
-            const name = item.value;
+            const name = item.value
 
-            let tmp = {};
+            let tmp = {}
             // if(edit && fullName !== name && data.createdBy !== this.user.current_user_id){
             if(fullName !== name){
-                tmp.disabled = true;
+                tmp.disabled = true
             }
 
             const fn = getFieldDecorator('reason_'+name, {
@@ -216,42 +220,42 @@ class C extends BaseComponent {
                     {},
                     {
                         validator : (rule, value, callback)=>{
-                            const form = this.props.form;
-                            const tmp = form.getFieldValue('vote_'+name);
+                            const form = this.props.form
+                            const tmp = form.getFieldValue('vote_'+name)
                             if(tmp === 'reject' && !value){
-                                callback('please input your reject reason');
+                                callback('please input your reject reason')
                             }
                             else{
-                                callback();
+                                callback()
                             }
 
                         }
                     }
                 ]
 
-            });
+            })
             const el = (
-                <TextArea {...dis} {...tmp} rows={4}></TextArea>
-            );
-            vts['reason_'+name] = fn(el);
-        });
+                <TextArea {...publicReadonly} {...tmp} rows={4}></TextArea>
+            )
+            vts['reason_'+name] = fn(el)
+        })
 
         const isConflict_fn = getFieldDecorator('isConflict', {
             initialValue : edit ? data.isConflict : 'NO'
-        });
+        })
         const isConflict_el = (
-            <Select {...dis} {...dis1} size="large">
+            <Select {...publicReadonly} {...councilNotOwnerReadOnly} size="large">
                 <Select.Option value={'NO'}>{I18N.get('from.CVoteForm.yes')}</Select.Option>
                 <Select.Option value={'YES'}>{I18N.get('from.CVoteForm.no')}</Select.Option>
             </Select>
-        );
+        )
 
         const notes_fn = getFieldDecorator('notes', {
             initialValue : edit ? data.notes : ''
-        });
+        })
         const notes_el = (
-            <TextArea {...secretaryDis2} rows={4}></TextArea>
-        );
+            <TextArea {...secretaryDisabled} rows={4}></TextArea>
+        )
 
         return {
             type : type_fn(type_el),
@@ -271,17 +275,17 @@ class C extends BaseComponent {
     }
 
     ord_render() {
-        let p = null;
+        let p = null
         if(this.props.edit && !this.props.data){
-            return null;
+            return null
         }
         if(this.props.edit && this.props.data){
-            p = this.getInputProps(this.props.data);
+            p = this.getInputProps(this.props.data)
         }
         else{
-            p = this.getInputProps();
+            p = this.getInputProps()
         }
-        const s = this.props.static;
+        const s = this.props.static
         const formItemLayout = {
             labelCol: {
                 xs: {span: 24},
@@ -293,7 +297,7 @@ class C extends BaseComponent {
             },
         }
         return (
-            <Form onSubmit={this.handleSubmit.bind(this)} className="c_loginForm">
+            <Form onSubmit={this.handleSubmit.bind(this)} className="c_CVoteForm">
                 <h2>
                     {I18N.get('from.CVoteForm.proposal.title')}
                 </h2>
@@ -317,19 +321,19 @@ class C extends BaseComponent {
 
                 {
                     _.map(s.voter, (item, i)=>{
-                        const name = item.value;
+                        const name = item.value
                         return (
                             <FormItem key={i} label={`Online Voting by ${name}`} {...formItemLayout}>{p['vote_'+name]}</FormItem>
-                        );
+                        )
                     })
                 }
 
                 {
                     _.map(s.voter, (item, i)=>{
-                        const name = item.value;
+                        const name = item.value
                         return (
                             <FormItem key={i} label={`Reasons from ${name} if against`} {...formItemLayout}>{p['reason_'+name]}</FormItem>
-                        );
+                        )
                     })
                 }
 
@@ -350,9 +354,9 @@ class C extends BaseComponent {
     }
 
     renderUpdateNoteButton(){
-        const edit = this.props.edit;
-        const role = this.props.user.role;
-        const data = this.props.data;
+        const edit = this.props.edit
+        const role = this.props.user.role
+        const data = this.props.data
         if(edit && this.isLogin && role === 'SECRETARY' && _.includes(['FINAL', 'DEFERRED'], data.status)){
             return (
                 <FormItem style={{marginTop:40}}>
@@ -360,37 +364,37 @@ class C extends BaseComponent {
                         Update Notes
                     </Button>
                 </FormItem>
-            );
+            )
         }
-        return null;
+        return null
     }
 
     updateNote(id){
-        const notes = this.props.form.getFieldValue('notes');
-        this.ord_loading(true);
+        const notes = this.props.form.getFieldValue('notes')
+        this.ord_loading(true)
         this.props.updateNotes({
             _id : id,
             notes
         }).then(()=>{
-            message.success(I18N.get('from.CVoteForm.message.note.update.success'));
-            this.ord_loading(false);
+            message.success(I18N.get('from.CVoteForm.message.note.update.success'))
+            this.ord_loading(false)
         }).catch((e)=>{
-            message.error(e.message);
-            this.ord_loading(false);
+            message.error(e.message)
+            this.ord_loading(false)
         })
     }
 
     renderSubmitButton(){
-        const edit = this.props.edit;
-        const role = this.props.user.role;
-        const data = this.props.data;
+        const edit = this.props.edit
+        const role = this.props.user.role
+        const data = this.props.data
         if(!this.isLogin || !_.includes(['ADMIN', 'SECRETARY'], role)){
             return (
                 <h4 style={{color:'#f00'}}>{I18N.get('from.CVoteForm.text.onlycouncil')}</h4>
-            );
+            )
         }
         else if(this.isLogin && edit && _.includes(['FINAL', 'DEFERRED'], data.status)){
-            return null;
+            return null
         }
         else{
             return (
@@ -403,9 +407,9 @@ class C extends BaseComponent {
         }
     }
     renderFinishButton(){
-        const edit = this.props.edit;
-        const role = this.props.user.role;
-        const data = this.props.data;
+        const edit = this.props.edit
+        const role = this.props.user.role
+        const data = this.props.data
         if(edit && this.isLogin && role === 'SECRETARY' && data.status !== 'FINAL'){
             return (
                 <FormItem style={{marginTop:40}}>
@@ -413,9 +417,9 @@ class C extends BaseComponent {
                         {I18N.get('from.CVoteForm.button.complete.proposal')}
                     </Button>
                 </FormItem>
-            );
+            )
         }
-        return null;
+        return null
     }
     finishClick(id){
         Modal.confirm({
@@ -425,16 +429,16 @@ class C extends BaseComponent {
             okType: 'danger',
             cancelText: I18N.get('from.CVoteForm.modal.cancel'),
             onOk: ()=>{
-                this.ord_loading(true);
+                this.ord_loading(true)
                 this.props.finishCVote({
                     id : id
                 }).then(()=>{
-                    message.success(I18N.get('from.CVoteForm.message.proposal.update.success'));
-                    this.ord_loading(false);
-                    this.props.history.push('/council');
+                    message.success(I18N.get('from.CVoteForm.message.proposal.update.success'))
+                    this.ord_loading(false)
+                    this.props.history.push('/council')
                 }).catch((e)=>{
-                    message.error(e.message);
-                    this.ord_loading(false);
+                    message.error(e.message)
+                    this.ord_loading(false)
                 })
             },
             onCancel(){
@@ -444,37 +448,37 @@ class C extends BaseComponent {
 
     renderVoteStep(data){
         if(!this.props.edit){
-            return null;
+            return null
         }
 
-        const s = this.props.static;
-        let n = 0;
-        let en = 0;
-        let an = 0;
-        let status = 'process';
-        let ss = data.status || 'processing...';
+        const s = this.props.static
+        let n = 0
+        let en = 0
+        let an = 0
+        let status = 'process'
+        let ss = data.status || 'processing...'
         _.each(s.voter, (item)=>{
-            const name = item.value;
+            const name = item.value
             if(data.vote_map[name] === 'support'){
-                n++;
+                n++
             }
             else if(data.vote_map[name] === 'reject'){
-                en++;
+                en++
             }
             else{
-                an++;
+                an++
             }
-        });
+        })
         if(an > 0){
 
         }
         else if(en > 1){
-            status = 'error';
+            status = 'error'
             // ss = 'not pass'
         }
 
         if(n > 1){
-            status = 'finish';
+            status = 'finish'
             // ss = 'pass'
         }
 
@@ -492,26 +496,28 @@ class C extends BaseComponent {
                 display : 'flex',
                 borderRight : '1px solid #ccc'
             }
-        };
+        }
         const fn = (step)=>{
-            const xx = step - n;
+            const xx = step - n
             if(n>=step){
                 return {
-                    background : 'green'
+                    background : '#009999'
                 }
             }
             else if(en >= xx){
                 return {
-                    background : '#f5222d'
+                    background : '#ff4d4f'
                 }
             }
-        };
-        sy.a1 = _.extend(fn(1), sy.b);
-        sy.a2 = _.extend(fn(2), sy.b);
-        sy.a3 = _.extend(fn(3), sy.b);
+        }
+        sy.a1 = _.extend(fn(1), sy.b)
+        sy.a2 = _.extend(fn(2), sy.b)
+        sy.a3 = _.extend(fn(3), sy.b)
         return (
             <div>
-                <h4 style={{paddingBottom:'5px'}}>vote status : {ss}</h4>
+                <h4 style={{paddingBottom:'5px'}}>
+                    {I18N.get('from.CVoteForm.label.voteStatus')} : <span className="cvoteStatus">{I18N.get(`cvoteStatus.${ss}`)}</span>
+                </h4>
                 <div style={sy.a}>
                     <div style={sy.a1}></div>
                     <div style={sy.a2}></div>
@@ -524,7 +530,7 @@ class C extends BaseComponent {
                 </Steps> */}
             </div>
 
-        );
+        )
     }
 }
 
