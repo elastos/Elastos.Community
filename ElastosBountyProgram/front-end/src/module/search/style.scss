@@ -9,6 +9,7 @@
   }
 
   .admin-left-column {
+    padding: 0 !important;
     .filter-select-container {
       padding-bottom: $gap_0;
 
@@ -16,6 +17,10 @@
         width: 100%;
       }
     }
+  }
+
+  .ant-affix {
+    background: rgba(255, 255, 255, 0.8);
   }
 
   .loadmore {
