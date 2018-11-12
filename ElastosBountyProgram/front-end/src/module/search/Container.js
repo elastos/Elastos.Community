@@ -37,6 +37,14 @@ export default createContainer(Component, (state) => {
             })
         },
 
+        async loadMoreTasks(filters) {
+            return taskService.loadMore({
+                ...filters,
+                type: [TASK_TYPE.TASK, TASK_TYPE.EVENT],
+                category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.SOCIAL]
+            })
+        },
+
         async loadAllCircles() {
             return teamService.loadAllCircles()
         },

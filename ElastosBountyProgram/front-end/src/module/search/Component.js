@@ -7,6 +7,7 @@ import {
 import _ from 'lodash'
 import './style.scss'
 import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT} from '@/constant'
+import InfiniteScroll from 'react-infinite-scroller'
 import TeamDetail from '@/module/team/detail/Container'
 import TaskDetail from '@/module/task/popup/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
@@ -53,7 +54,9 @@ export default class extends BaseComponent {
             teamDetailId: 0,
             showMobile: false,
             filtersTree: ['TEAM'],
-            showUserInfo: null
+            showUserInfo: null,
+            page: 1,
+            results: 5
         }
     }
 
@@ -73,6 +76,9 @@ export default class extends BaseComponent {
                 query.circle = this.state.circle
             }
         }
+
+        query.page = this.state.page || 1
+        query.results = this.state.results || 5
 
         return query
     }
@@ -101,6 +107,39 @@ export default class extends BaseComponent {
         this.props.history.replace(url)
     }
 
+    loadMore() {
+        const query = {
+            ...this.getQuery(),
+            page: this.state.page,
+            results: this.state.results
+        }
+
+        this.setState({ page: this.state.page + 1 })
+
+        const lookup = {
+            TASK: this.props.loadMoreTasks,
+            // TEAM: this.props.getTeams,
+            // PROJECT: this.props.getProjects
+        }
+
+        const getter = lookup[this.state.lookingFor]
+        getter && getter.call(this, query)
+    }
+
+    hasMoreTasks() {
+        const total = this.props.all_tasks_total
+        return _.size(this.props.all_tasks) >= total
+    }
+
+    hasMore() {
+        const lookup = {
+            TASK: this.hasMoreTasks
+        }
+
+        const getter = lookup[this.state.lookingFor]
+        return getter && getter.call(this)
+    }
+
     // this needs to be used when it's a project to hide certain UI
     isLookingForTeam() {
         return this.state.lookingFor === 'TEAM'
@@ -112,31 +151,36 @@ export default class extends BaseComponent {
 
     onChangeLookingFor(e) {
         this.setState({
-            lookingFor: e.target.value
+            lookingFor: e.target.value,
+            page: 1
         }, this.refetch.bind(this))
     }
 
     onChangeSkillset(value) {
         this.setState({
-            skillset: value
+            skillset: value,
+            page: 1
         }, this.refetch.bind(this))
     }
 
     onChangeDomain(value) {
         this.setState({
-            domain: value
+            domain: value,
+            page: 1
         }, this.refetch.bind(this))
     }
 
     onChangeCircle(value) {
         this.setState({
-            circle: value
+            circle: value,
+            page: 1
         }, this.refetch.bind(this))
     }
 
     onChangeLookingForSelect(value) {
         this.setState({
-            lookingFor: value
+            lookingFor: value,
+            page: 1
         }, this.refetch.bind(this))
     }
 
@@ -353,7 +397,8 @@ export default class extends BaseComponent {
         this.setState({
             filtersTree: e,
             skillset: skillset,
-            domain: domain
+            domain: domain,
+            page: 1
         }, this.refetch.bind(this))
     }
 
@@ -671,7 +716,6 @@ export default class extends BaseComponent {
             : this.props.all_tasks
 
         const description_fn = (entity) => {
-
             return (
                 <div>
                     {!_.isEmpty(entity.recruitedSkillsets) &&
@@ -751,66 +795,74 @@ export default class extends BaseComponent {
             : handlersLookup[this.state.lookingFor] || _.noop
 
         return (
-            <List loading={this.props.loading} itemLayout='vertical' size='large'
-                className="with-right-box" dataSource={data}
-                renderItem={item => (
-                    <div>
-                        <MediaQuery minWidth={MIN_WIDTH_PC}>
-                            <List.Item
-                                key={item.id}
-                                extra={this.getCarousel(item)}
-                            >
-                                <h3 className="no-margin no-padding one-line brand-color">
-                                    <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
-                                </h3>
-                                {item.applicationDeadlinePassed &&
-                                <span className="subtitle">
-                                    {I18N.get('developer.search.subtitle_prefix')} {I18N.get('developer.search.subtitle_applications')}
-                                </span>
-                                }
-                                <h5 className="no-margin">
-                                    {item.description}
-                                </h5>
-                                <div className="ql-editor" dangerouslySetInnerHTML={{__html: item.content}}/>
-                                <div className="ant-list-item-right-box">
-                                    <a className="pull-up" onClick={() => this.setState({ showUserInfo: item.owner })}>
-                                        <Avatar size="large" className="pull-right"
-                                            src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
-                                        <div className="clearfix"/>
-                                        <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
-                                    </a>
+            <InfiniteScroll
+                initialLoad={false}
+                pageStart={1}
+                loadMore={this.loadMore.bind(this)}
+                hasMore={this.hasMore()}
+                useWindow={false}
+            >
+                <List loading={this.props.loading} itemLayout='vertical' size='large'
+                    className="with-right-box" dataSource={data}
+                    renderItem={item => (
+                        <div>
+                            <MediaQuery minWidth={MIN_WIDTH_PC}>
+                                <List.Item
+                                    key={item.id}
+                                    extra={this.getCarousel(item)}
+                                >
+                                    <h3 className="no-margin no-padding one-line brand-color">
+                                        <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
+                                    </h3>
+                                    {item.applicationDeadlinePassed &&
+                                    <span className="subtitle">
+                                        {I18N.get('developer.search.subtitle_prefix')} {I18N.get('developer.search.subtitle_applications')}
+                                    </span>
+                                    }
+                                    <h5 className="no-margin">
+                                        {item.description}
+                                    </h5>
+                                    <div className="ql-editor" dangerouslySetInnerHTML={{__html: item.content}}/>
+                                    <div className="ant-list-item-right-box">
+                                        <a className="pull-up" onClick={() => this.setState({ showUserInfo: item.owner })}>
+                                            <Avatar size="large" className="pull-right"
+                                                src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
+                                            <div className="clearfix"/>
+                                            <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
+                                        </a>
 
-                                    {this.renderApplyButton(item, clickHandler)}
+                                        {this.renderApplyButton(item, clickHandler)}
 
-                                </div>
-                            </List.Item>
-                        </MediaQuery>
-                        <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
-                            <List.Item
-                                key={item.id}
-                                className="ignore-right-box"
-                            >
-                                <h3 className="no-margin no-padding one-line brand-color">
-                                    <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
-                                </h3>
-                                <h5 className="no-margin">
-                                    {item.description}
-                                </h5>
-                                <div>
-                                    <a onClick={() => this.setState({ showUserInfo: item.owner })}>
-                                        <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
-                                        <Divider type="vertical"/>
-                                        <Avatar size="large"
-                                            src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
-                                    </a>
-                                    <Button onClick={clickHandler.bind(this, item.id)}
-                                        type="primary" className="pull-right">{I18N.get('developer.search.apply')}</Button>
-                                </div>
-                            </List.Item>
-                        </MediaQuery>
-                    </div>
-                )}
-            />
+                                    </div>
+                                </List.Item>
+                            </MediaQuery>
+                            <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                                <List.Item
+                                    key={item.id}
+                                    className="ignore-right-box"
+                                >
+                                    <h3 className="no-margin no-padding one-line brand-color">
+                                        <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
+                                    </h3>
+                                    <h5 className="no-margin">
+                                        {item.description}
+                                    </h5>
+                                    <div>
+                                        <a onClick={() => this.setState({ showUserInfo: item.owner })}>
+                                            <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
+                                            <Divider type="vertical"/>
+                                            <Avatar size="large"
+                                                src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
+                                        </a>
+                                        <Button onClick={clickHandler.bind(this, item.id)}
+                                            type="primary" className="pull-right">{I18N.get('developer.search.apply')}</Button>
+                                    </div>
+                                </List.Item>
+                            </MediaQuery>
+                        </div>
+                    )}
+                />
+            </InfiniteScroll>
         )
     }
 

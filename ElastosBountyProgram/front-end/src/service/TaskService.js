@@ -16,8 +16,33 @@ export default class extends BaseService {
         return result;
     }
 
-    async index(qry) {
+    async loadMore(qry) {
+        const taskRedux = this.store.getRedux('task')
 
+        this.dispatch(taskRedux.actions.loading_update(true))
+
+        const path = '/api/task/list'
+        this.abortFetch(path)
+
+        let result
+        try {
+            result = await api_request({
+                path,
+                method: 'get',
+                data: qry
+            })
+
+            this.dispatch(taskRedux.actions.loading_update(false))
+            this.dispatch(taskRedux.actions.all_tasks_total_update(result.total))
+            this.dispatch(taskRedux.actions.all_tasks_update(_.values(result.list)))
+        } catch (e) {
+            // Do nothing
+        }
+
+        return result
+    }
+
+    async index(qry) {
         const taskRedux = this.store.getRedux('task')
 
         this.dispatch(taskRedux.actions.loading_update(true))
