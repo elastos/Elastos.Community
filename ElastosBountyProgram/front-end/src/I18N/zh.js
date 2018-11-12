@@ -1,6 +1,6 @@
 import {TASK_STATUS, CVOTE_STATUS} from '@/constant'
 import council from './zh/council'
-import en from './en'
+import getting_started from './en/getting_started';
 
 const zh = {
     council,
@@ -18,7 +18,6 @@ const zh = {
     '0009': '常见问题',
     '0010': '联系方式',
     '0011': '加入Discord',
-    '0012': '语言',
 
     '0100': '开发者',
     '0101': '活动',
@@ -521,8 +520,9 @@ const zh = {
     'council.list.proposals': 'Any suggestions, proposals can be sent to',
     'council.voting.proposalList': 'Proposal List',
     'council.voting.number': 'No.',
+    'council.voting.published': 'Published',
     'council.voting.title': 'Title',
-    'council.voting.type': 'Type.',
+    'council.voting.type': 'Type',
     'council.voting.author': 'Author',
     'council.voting.voteBy': 'Vote By',
     'council.voting.status': 'Status',
@@ -831,6 +831,7 @@ const zh = {
     'from.CVoteForm.proposal.title': 'Cyber Republic Council Members Proposal Form',
     'from.CVoteForm.proposal.content': 'Cyber Republic Council members can use this form to propose motion. All Cyber Republic citizen can view and share their own idea (offline). All proposals will be discussed in regular council meetings. All results will be disclosed to the public.',
     'from.CVoteForm.label.voteStatus': 'Vote Status',
+    'from.CVoteForm.label.publish': 'Publish',
     'from.CVoteForm.label.title': 'Title',
     'from.CVoteForm.label.type': 'Type',
     'from.CVoteForm.label.content': 'Content',

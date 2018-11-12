@@ -43,7 +43,8 @@ class C extends BaseComponent {
                     motionId : values.motionId,
                     isConflict : values.isConflict,
                     proposedBy : values.proposedBy,
-                    content : values.content
+                    content : values.content,
+                    published: values.published === 'YES'
                 }
                 var x1 = []
                 var x2 = []
@@ -119,6 +120,25 @@ class C extends BaseComponent {
 
         const s = this.props.static
         const {getFieldDecorator} = this.props.form
+
+        const published_fn = getFieldDecorator('published', {
+            initialValue : edit ? (data.published ? 'YES' : 'NO') : 'NO'
+        })
+        const published_el = (
+            <Select {...publicDisabled} size="large">
+                <Select.Option value={'NO'}>{I18N.get('from.CVoteForm.no')}</Select.Option>
+                <Select.Option value={'YES'}>{I18N.get('from.CVoteForm.yes')}</Select.Option>
+            </Select>
+        )
+
+        const title_fn = getFieldDecorator('title', {
+            rules : [{required : true}],
+            initialValue : edit ? data.title : ''
+        })
+        const title_el = (
+            <Input {...publicReadonly} {...councilNotOwnerReadOnly} size="large" type="text" />
+        )
+
         const type_fn = getFieldDecorator('type', {
             rules: [{required: true}],
             readOnly: true,
@@ -135,14 +155,6 @@ class C extends BaseComponent {
                     })
                 }
             </Select>
-        )
-
-        const title_fn = getFieldDecorator('title', {
-            rules : [{required : true}],
-            initialValue : edit ? data.title : ''
-        })
-        const title_el = (
-            <Input {...publicReadonly} {...councilNotOwnerReadOnly} size="large" type="text" />
         )
 
         const content_fn = getFieldDecorator('content', {
@@ -259,8 +271,9 @@ class C extends BaseComponent {
         )
 
         return {
-            type : type_fn(type_el),
+            published: published_fn(published_el),
             title : title_fn(title_el),
+            type : type_fn(type_el),
             content : content_fn(content_el),
             proposedBy : proposedBy_fn(proposedBy_el),
             motionId : motionId_fn(motionId_el),
@@ -299,6 +312,7 @@ class C extends BaseComponent {
         }
         return (
             <Form onSubmit={this.handleSubmit.bind(this)} className="c_CVoteForm">
+
                 <h2>
                     {I18N.get('from.CVoteForm.proposal.title')}
                 </h2>
@@ -312,6 +326,9 @@ class C extends BaseComponent {
                         {this.renderVoteStep(this.props.data)}
                     </Col>
                 </Row>
+                <FormItem style={{marginBottom:'12px', marginTop: '12px'}} label={I18N.get('from.CVoteForm.label.publish')} {...formItemLayout}>
+                    {p.published}
+                </FormItem>
                 <FormItem style={{marginTop: '24px'}} label={I18N.get('from.CVoteForm.label.title')} {...formItemLayout}>{p.title}</FormItem>
                 <FormItem label={I18N.get('from.CVoteForm.label.type')} {...formItemLayout}>{p.type}</FormItem>
 
@@ -389,13 +406,10 @@ class C extends BaseComponent {
         const edit = this.props.edit
         const role = this.props.user.role
         const data = this.props.data
-        if(!this.isLogin || !_.includes(['ADMIN', 'SECRETARY'], role)){
+        if (!this.isLogin || !_.includes(['ADMIN', 'SECRETARY'], role)){
             return (
                 <h4 style={{color:'#f00'}}>{I18N.get('from.CVoteForm.text.onlycouncil')}</h4>
             )
-        }
-        else if(this.isLogin && edit && _.includes(['FINAL', 'DEFERRED'], data.status)){
-            return null
         }
         else{
             return (
