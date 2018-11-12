@@ -107,14 +107,16 @@ export default class extends BaseComponent {
         this.props.history.replace(url)
     }
 
-    loadMore() {
+    async loadMore() {
+        const page = this.state.page + 1
+
         const query = {
             ...this.getQuery(),
-            page: this.state.page,
+            page,
             results: this.state.results
         }
 
-        this.setState({ page: this.state.page + 1 })
+        this.setState({ page, loadingMore: true })
 
         const lookup = {
             TASK: this.props.loadMoreTasks,
@@ -123,12 +125,13 @@ export default class extends BaseComponent {
         }
 
         const getter = lookup[this.state.lookingFor]
-        getter && getter.call(this, query)
+        getter && await getter.call(this, query)
+
+        this.setState({ loadingMore: false })
     }
 
     hasMoreTasks() {
-        const total = this.props.all_tasks_total
-        return _.size(this.props.all_tasks) >= total
+        return _.size(this.props.all_tasks) < this.props.all_tasks_total
     }
 
     hasMore() {
@@ -799,8 +802,8 @@ export default class extends BaseComponent {
                 initialLoad={false}
                 pageStart={1}
                 loadMore={this.loadMore.bind(this)}
-                hasMore={this.hasMore()}
-                useWindow={false}
+                hasMore={!this.state.loadingMore && !this.props.loading && this.hasMore()}
+                useWindow={true}
             >
                 <List loading={this.props.loading} itemLayout='vertical' size='large'
                     className="with-right-box" dataSource={data}
@@ -861,7 +864,13 @@ export default class extends BaseComponent {
                             </MediaQuery>
                         </div>
                     )}
-                />
+                >
+                    {this.state.loadingMore && this.hasMore() &&
+                        <div className="loadmore full-width halign-wrapper">
+                            <Spin />
+                        </div>
+                    }
+                </List>
             </InfiniteScroll>
         )
     }
