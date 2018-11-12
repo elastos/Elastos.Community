@@ -25,10 +25,10 @@ const TreeNode = TreeSelect.TreeNode;
 const Option = Select.Option;
 
 export default class extends BaseComponent {
-
     componentDidMount() {
         this.props.loadAllCircles()
         this.refetch()
+        this.debouncedRefetch = _.debounce(this.refetch.bind(this), 300)
     }
 
     componentWillUnmount() {
@@ -44,6 +44,7 @@ export default class extends BaseComponent {
             skillset: (params.skillset && params.skillset.split(',')) || [],
             domain: (params.domain && params.domain.split(',')) || [],
             circle: (params.circle && params.circle.split(',')) || [],
+            search: params.search || '',
             entryCount: 3,
             skillsetShowAllEntries: false,
             categoryShowAllEntries: false,
@@ -62,6 +63,10 @@ export default class extends BaseComponent {
 
     getQuery() {
         let query = {}
+
+        if (!_.isEmpty(this.state.search)) {
+            query.search = this.state.search
+        }
 
         if (!_.isEmpty(this.state.skillset)) {
             query.skillset = this.state.skillset
@@ -88,8 +93,16 @@ export default class extends BaseComponent {
         const domain = (query.domain || []).join(',')
         const circle = (query.circle || []).join(',')
         const lookingFor = this.state.lookingFor
+        const search = this.state.search
 
-        return `/developer/search?lookingFor=${lookingFor}&skillset=${skillset}&domain=${domain}&circle=${circle}`
+        const url = new URI('/developer/search')
+        lookingFor && url.addSearch('lookingFor', lookingFor)
+        skillset && url.addSearch('skillset', skillset)
+        domain && url.addSearch('domain', domain)
+        circle && url.addSearch('circle', circle)
+        search && url.addSearch('search', search)
+
+        return url.toString()
     }
 
     refetch() {
@@ -120,8 +133,8 @@ export default class extends BaseComponent {
 
         const lookup = {
             TASK: this.props.loadMoreTasks,
-            // TEAM: this.props.getTeams,
-            // PROJECT: this.props.getProjects
+            TEAM: this.props.loadMoreTeams,
+            PROJECT: this.props.loadMoreProjects
         }
 
         const getter = lookup[this.state.lookingFor]
@@ -134,9 +147,15 @@ export default class extends BaseComponent {
         return _.size(this.props.all_tasks) < this.props.all_tasks_total
     }
 
+    hasMoreTeams() {
+        return _.size(this.props.all_teams) < this.props.all_teams_total
+    }
+
     hasMore() {
         const lookup = {
-            TASK: this.hasMoreTasks
+            TASK: this.hasMoreTasks,
+            TEAM: this.hasMoreTeams,
+            PROJECT: this.hasMoreTasks
         }
 
         const getter = lookup[this.state.lookingFor]
@@ -156,35 +175,35 @@ export default class extends BaseComponent {
         this.setState({
             lookingFor: e.target.value,
             page: 1
-        }, this.refetch.bind(this))
+        }, this.debouncedRefetch.bind(this))
     }
 
     onChangeSkillset(value) {
         this.setState({
             skillset: value,
             page: 1
-        }, this.refetch.bind(this))
+        }, this.debouncedRefetch.bind(this))
     }
 
     onChangeDomain(value) {
         this.setState({
             domain: value,
             page: 1
-        }, this.refetch.bind(this))
+        }, this.debouncedRefetch.bind(this))
     }
 
     onChangeCircle(value) {
         this.setState({
             circle: value,
             page: 1
-        }, this.refetch.bind(this))
+        }, this.debouncedRefetch.bind(this))
     }
 
     onChangeLookingForSelect(value) {
         this.setState({
             lookingFor: value,
             page: 1
-        }, this.refetch.bind(this))
+        }, this.debouncedRefetch.bind(this))
     }
 
     showTaskModal(id) {
@@ -402,7 +421,7 @@ export default class extends BaseComponent {
             skillset: skillset,
             domain: domain,
             page: 1
-        }, this.refetch.bind(this))
+        }, this.debouncedRefetch.bind(this))
     }
 
     getLookingForOptions() {
@@ -497,10 +516,24 @@ export default class extends BaseComponent {
         const skillsetOptions = this.getSkillsetOptions()
         const categoryOptions = this.getCategoryOptions()
 
+        const searchChangedHandler = (e) => {
+            const search = e.target.value
+            this.setState({
+                search,
+                page: 1
+            }, this.debouncedRefetch)
+        }
+
         return (
             <div>
                 <MediaQuery minWidth={MIN_WIDTH_PC}>
                     <Affix offsetTop={15}>
+                        <div className="group">
+                            <div className="content">
+                                <Input defaultValue={this.state.search} onChange={searchChangedHandler.bind(this)}
+                                    placeholder={I18N.get('developer.search.search.placeholder')}/>
+                            </div>
+                        </div>
                         <div className="group">
                             <div className="title">{I18N.get('developer.search.lookingFor')}</div>
                             <div className="content">

@@ -28,6 +28,10 @@ export default class extends Base{
             archived: {$ne: true}
         };
 
+        if (param.search) {
+            query.name = { $regex: _.trim(param.search), $options: 'i' }
+        }
+
         if (param.type) {
             const types = param.type.split(',')
             const valid = _.intersection(_.values(constant.TASK_TYPE), types).length ===
@@ -149,12 +153,13 @@ export default class extends Base{
 
         }
 
-        const list = await taskService.list(query);
-        const count = await taskService.getDBModel('Task').count(_.omit(query, ['results', 'page']));
+        const list = await taskService.list(query)
+        const count = await taskService.getDBModel('Task')
+            .count(_.omit(query, ['results', 'page']))
 
         return this.result(1, {
             list,
             total: count
-        });
+        })
     }
 }

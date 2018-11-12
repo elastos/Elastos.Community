@@ -21,9 +21,35 @@ export default class extends BaseService {
                 signal: this.getAbortSignal(path)
             })
 
-            this.dispatch(teamRedux.actions.all_teams_reset())
-            this.dispatch(teamRedux.actions.all_teams_update(result))
-            this.dispatch(teamRedux.actions.loading_update(false))
+            await this.dispatch(teamRedux.actions.all_teams_reset())
+            await this.dispatch(teamRedux.actions.all_teams_total_update(result.total))
+            await this.dispatch(teamRedux.actions.all_teams_update(result.list))
+            await this.dispatch(teamRedux.actions.loading_update(false))
+        } catch (e) {
+            // Do nothing
+        }
+
+        return result
+    }
+
+    async loadMore(qry = {}) {
+        const teamRedux = this.store.getRedux('team')
+        const path = '/api/team/list'
+        this.abortFetch(path)
+
+        let result
+        try {
+            result = await api_request({
+                path,
+                method: 'get',
+                data: qry,
+                signal: this.getAbortSignal(path)
+            })
+
+            const oldTeams = this.store.getState().team.all_teams || []
+
+            await this.dispatch(teamRedux.actions.all_teams_total_update(result.total))
+            await this.dispatch(teamRedux.actions.all_teams_update(oldTeams.concat(_.values(result.list))))
         } catch (e) {
             // Do nothing
         }
@@ -47,7 +73,7 @@ export default class extends BaseService {
         })
 
         this.dispatch(teamRedux.actions.all_circles_reset())
-        this.dispatch(teamRedux.actions.all_circles_update(result))
+        this.dispatch(teamRedux.actions.all_circles_update(result.list))
         this.dispatch(teamRedux.actions.all_circles_loading_update(false))
 
         return result
@@ -67,7 +93,7 @@ export default class extends BaseService {
         });
 
         this.dispatch(teamRedux.actions.all_teams_reset())
-        this.dispatch(teamRedux.actions.all_teams_update(result))
+        this.dispatch(teamRedux.actions.all_teams_update(result.list))
         this.dispatch(teamRedux.actions.loading_update(false))
 
         return result
