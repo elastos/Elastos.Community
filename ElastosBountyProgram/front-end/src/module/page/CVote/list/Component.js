@@ -1,6 +1,6 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import { Table, Icon, Row, Col, Button} from 'antd'
+import { Table, Tooltip, Row, Col, Button} from 'antd'
 import I18N from '@/I18N'
 import config from '@/config'
 
@@ -34,6 +34,7 @@ export default class extends BaseComponent {
             {
                 title : I18N.get('council.voting.title'),
                 dataIndex : 'title',
+                width: '30%',
                 render: (title, item) => {
                     return (<a onClick={this.toDetail.bind(this, item._id)} className="tableLink">
                         {title}</a>
@@ -82,6 +83,16 @@ export default class extends BaseComponent {
             }
         ]
 
+        if (this.props.isCouncil) {
+
+            columns.splice(1, 0, {
+                dataIndex: 'published',
+                render: (published, item, index) => {
+                    return published ? <i className="fas fa-eye"></i> : <i className="far fa-eye-slash"></i>
+                }
+            })
+
+        }
 
 
         return (

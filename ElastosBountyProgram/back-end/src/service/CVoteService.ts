@@ -118,26 +118,40 @@ export default class extends Base {
             throw 'cvoteservice.update - invalid proposal id';
         }
 
-        if(this.isExpired(cur) || _.includes([constant.CVOTE_STATUS.FINAL, constant.CVOTE_STATUS.DEFERRED], cur.status)){
-            throw 'cvoteservice.update - proposal finished or deferred, can not edit anymore';
-        }
-
         const {
-            title, type, content, proposedBy, motionId, isConflict, notes, vote_map, reason_map
+            title, type, content, proposedBy, motionId, isConflict, notes, vote_map, reason_map, published
         } = param;
-        const doc: any= {
-            title,
-            type,
-            content,
-            proposedBy,
-            motionId,
-            isConflict,
-            notes,
-            vote_map : this.param_metadata(vote_map),
-            reason_map : this.param_metadata(reason_map)
-        };
+        let doc:any = {}
 
-        doc.status = this.getNewStatus(doc.vote_map, cur);
+        if (this.isExpired(cur) || _.includes([constant.CVOTE_STATUS.FINAL, constant.CVOTE_STATUS.DEFERRED], cur.status)) {
+
+            if (cur.published === param.published) {
+                throw 'cvoteservice.update - proposal finished or deferred, can not edit anymore';
+
+            } else {
+
+                // if published is changed, we let it pass if published is changed, but only that field
+                doc = {
+                    published
+                }
+            }
+
+        } else {
+            doc = {
+                title,
+                type,
+                content,
+                proposedBy,
+                motionId,
+                isConflict,
+                notes,
+                published,
+                vote_map: this.param_metadata(vote_map),
+                reason_map: this.param_metadata(reason_map)
+            };
+
+            doc.status = this.getNewStatus(doc.vote_map, cur);
+        }
 
         const cvote = await db_cvote.update({_id : param._id}, doc);
 
