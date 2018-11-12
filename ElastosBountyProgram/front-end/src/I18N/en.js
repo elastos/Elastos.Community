@@ -1,4 +1,4 @@
-import {TASK_STATUS} from '@/constant'
+import {TASK_STATUS, CVOTE_STATUS} from '@/constant'
 import council from './en/council';
 import getting_started from './en/getting_started';
 
@@ -515,7 +515,25 @@ const en = {
     'community.link.toevent': 'See Event',
 
     // Council
+    'council.list': 'List',
+    'council.voting': 'Voting',
     'council.list.proposals': 'Any suggestions, proposals can be sent to',
+    'council.voting.proposalList': 'Proposal List',
+    'council.voting.number': 'No.',
+    'council.voting.title': 'Title',
+    'council.voting.type': 'Type.',
+    'council.voting.author': 'Author',
+    'council.voting.voteBy': 'Vote By',
+    'council.voting.status': 'Status',
+    'council.voting.createdAt': 'Created',
+
+    'council.voting.type.newMotion': 'New Motion',
+    'council.voting.type.motionAgainst': 'Motion Against',
+    'council.voting.type.anythingElse': 'Anything Else',
+
+    'council.voting.type.support': 'Support',
+    'council.voting.type.reject': 'Reject',
+    'council.voting.type.abstention': 'Abstention',
 
     // Landing
     'landing.elastos': 'Elastos',
@@ -811,7 +829,8 @@ const en = {
     'from.CVoteForm.yes': 'YES',
     'from.CVoteForm.no': 'NO',
     'from.CVoteForm.proposal.title': 'Cyber Republic Council Members Proposal Form',
-    'from.CVoteForm.proposal.content': 'Cyber Republic Council members can use this form to propose motion. All Cyber Republic citizen can view and share their own idea (offline). All proposals will be discussed in regular council meetings. All results will be disclosed to the public. This is a temporary solution before our Cyber Republic website has such a feature.',
+    'from.CVoteForm.proposal.content': 'Cyber Republic Council members can use this form to propose motion. All Cyber Republic citizen can view and share their own idea (offline). All proposals will be discussed in regular council meetings. All results will be disclosed to the public.',
+    'from.CVoteForm.label.voteStatus': 'Vote Status',
     'from.CVoteForm.label.title': 'Title',
     'from.CVoteForm.label.type': 'Type',
     'from.CVoteForm.label.content': 'Content',
@@ -1103,5 +1122,12 @@ en[`taskStatus.${TASK_STATUS.SUCCESS}`] = 'Success'
 en[`taskStatus.${TASK_STATUS.DISTRIBUTED}`] = 'Distributed'
 en[`taskStatus.${TASK_STATUS.CANCELED}`] = 'Canceled'
 en[`taskStatus.${TASK_STATUS.EXPIRED}`] = 'Expired'
+
+en[`cvoteStatus.${CVOTE_STATUS.DRAFT}`] = 'DRAFT'
+en[`cvoteStatus.${CVOTE_STATUS.PROPOSED}`] = 'PROPOSED'
+en[`cvoteStatus.${CVOTE_STATUS.ACTIVE}`] = 'ACTIVE'
+en[`cvoteStatus.${CVOTE_STATUS.REJECT}`] = 'REJECT'
+en[`cvoteStatus.${CVOTE_STATUS.FINAL}`] = 'FINAL'
+en[`cvoteStatus.${CVOTE_STATUS.DEFERRED}`] = 'DEFERRED'
 
 export default en

@@ -175,3 +175,12 @@ export const TEAM_SUBCATEGORY = create(['ESSENTIAL', 'ADVANCED', 'SERVICES'])
 export const USER_AVATAR_DEFAULT = '/assets/images/user_blurred_white.png'
 export const TASK_AVATAR_DEFAULT = '/assets/images/Elastos_Logo.png'
 export const TEAM_AVATAR_DEFAULT = '/assets/images/team_blurred.svg'
+
+export const CVOTE_STATUS = {
+    DRAFT: 'DRAFT',
+    PROPOSED: 'PROPOSED',
+    ACTIVE: 'ACTIVE',
+    REJECT: 'REJECT',
+    FINAL: 'FINAL',
+    DEFERRED: 'DEFERRED'
+}

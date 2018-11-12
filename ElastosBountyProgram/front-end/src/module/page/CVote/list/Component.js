@@ -18,72 +18,68 @@ export default class extends BaseComponent {
 
     ord_render() {
         const map = {
-            '1' : 'New Motion',
-            '2' : 'Motion against any existing motion',
-            '3' : 'Anything else'
+            '1' : I18N.get('council.voting.type.newMotion'),
+            '2' : I18N.get('council.voting.type.motionAgainst'),
+            '3' : I18N.get('council.voting.type.anythingElse')
         };
 
         const columns = [
-        {
-            title: 'No.',
-            dataIndex: 'vid',
-            render: (vid, item, index) => {
-                return (<a className="tableLink" onClick={this.toDetail.bind(this, item._id)}>#{vid}</a>)
+            {
+                title: I18N.get('council.voting.number'),
+                dataIndex: 'vid',
+                render: (vid, item, index) => {
+                    return (<a className="tableLink" onClick={this.toDetail.bind(this, item._id)}>#{vid}</a>)
+                }
+            },
+            {
+                title : I18N.get('council.voting.title'),
+                dataIndex : 'title',
+                render: (title, item) => {
+                    return (<a onClick={this.toDetail.bind(this, item._id)} className="tableLink">
+                        {title}</a>
+                    )
+                }
+            },
+            {
+                title : I18N.get('council.voting.type'),
+                dataIndex : 'type',
+                render: (type, item) => {
+                    return map[type];
+                }
+            },
+            {
+                title : I18N.get('council.voting.author'),
+                dataIndex : 'proposedBy'
+            },
+            {
+                title : `${I18N.get('council.voting.voteBy')} Kevin Zhang`,
+                render: (id, item)=>{
+                    return this.voteDataByUser('Kevin Zhang', item);
+                }
+            },
+            {
+                title : `${I18N.get('council.voting.voteBy')} Fay Li`,
+                render: (id, item)=>{
+                    return this.voteDataByUser('Fay Li', item);
+                }
+            },
+            {
+                title : `${I18N.get('council.voting.voteBy')} Yipeng Su`,
+                render: (id, item)=>{
+                    return this.voteDataByUser('Yipeng Su', item);
+                }
+            },
+            {
+                title : I18N.get('council.voting.status'),
+                render: (id, item)=>{
+                    return item.status || ''
+                }
+            },
+            {
+                title : I18N.get('council.voting.createdAt'),
+                dataIndex : 'createdAt',
+                render: (createdAt) => moment(createdAt).format('MMM D, YYYY'),
             }
-        },
-        {
-            title : 'Title',
-            dataIndex : 'title',
-            render: (title, item) => {
-                return (<a onClick={this.toDetail.bind(this, item._id)} className="tableLink">{title}</a>)
-            }
-        },
-        {
-            title : 'Type',
-            dataIndex : 'type',
-            render: (type, item) => {
-                return map[type];
-            }
-        },
-
-        {
-            title : 'Author',
-            dataIndex : 'proposedBy'
-        },
-
-        {
-            title : 'Vote by Kevin Zhang',
-            // dataIndex : '_id',
-            render: (id, item)=>{
-                return this.voteDataByUser('Kevin Zhang', item);
-            }
-        },
-        {
-            title : 'Vote by Fay Li',
-            // dataIndex : '_id',
-            render: (id, item)=>{
-                return this.voteDataByUser('Fay Li', item);
-            }
-        },
-        {
-            title : 'Vote by Yipeng Su',
-            // dataIndex : '_id',
-            render: (id, item)=>{
-                return this.voteDataByUser('Yipeng Su', item);
-            }
-        },
-        {
-            title : 'Status',
-            render: (id, item)=>{
-                return item.status || ''
-            }
-        },
-
-        {
-            title : 'Create Time',
-            dataIndex : 'createdAt',
-            render: (createdAt) => moment(createdAt).format('MM/DD/YYYY hh:mm'),
-        }
         ]
 
 
@@ -93,7 +89,9 @@ export default class extends BaseComponent {
                 <div className="d_box">
                     <Row>
                         <Col span={8}>
-                            <h3 style={{textAlign:'left'}}>Proposal List</h3>
+                            <h3 style={{textAlign:'left'}}>
+                                {I18N.get('council.voting.proposalList')}
+                            </h3>
                         </Col>
                         <Col span={8} offset={8}>
                             {this.props.isCouncil &&
@@ -125,7 +123,7 @@ export default class extends BaseComponent {
 
         this.ord_loading(true);
 
-        const list = await this.props.listData({});
+        const list = await this.props.listData({}, this.props.isCouncil);
 
         this.setState({list});
 
