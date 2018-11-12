@@ -46,6 +46,14 @@ export default class extends Base{
             }
         }
 
+        if (param.results) {
+            query.results = param.results
+        }
+
+        if (param.page) {
+            query.page = param.page
+        }
+
         if (param.domain) {
             query.domain = { $in: param.domain.split(',') }
         }
@@ -140,7 +148,7 @@ export default class extends Base{
         }
 
         const list = await taskService.list(query);
-        const count = await taskService.getDBModel('Task').count(query);
+        const count = await taskService.getDBModel('Task').count(_.omit(query, ['results', 'page']));
 
         return this.result(1, {
             list,
