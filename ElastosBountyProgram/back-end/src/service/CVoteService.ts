@@ -298,7 +298,7 @@ export default class extends Base {
 
         const list = await db_cvote.find({
             'status' : {
-                '$in' : [constant.CVOTE_STATUS.PROPOSED]
+                '$in' : [constant.CVOTE_STATUS.PROPOSED, constant.CVOTE_STATUS.ACTIVE]
             }
         });
         const ids = [];
