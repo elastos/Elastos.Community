@@ -1,4 +1,4 @@
-import {TASK_STATUS} from '@/constant'
+import {TASK_STATUS, CVOTE_STATUS} from '@/constant'
 import council from './en/council';
 import getting_started from './en/getting_started';
 
@@ -75,7 +75,9 @@ const en = {
 
     'comments': 'Comments',
     'comments.posts': 'Posts',
+    'comments.post': 'Post',
     'comments.noComments': 'No comments yet. Be the first to post!',
+    'comments.commentsOrUpdates': 'Comments or updates',
     // Admin tasks
     'admin.tasks.status': 'Status',
 
@@ -413,6 +415,20 @@ const en = {
 
     'project.detail.comments_disabled': 'Comments are disabled for closed bidding projects/tasks',
 
+    'project.admin.statusHelp.created': 'this task does not require approval',
+    'project.admin.statusHelp.pending': 'this task is awaiting approval',
+    'project.admin.statusHelp.successReward': 'this task is awaiting ELA disbursement',
+    'project.admin.statusHelp.successNoReward': 'this task does not require ELA, no further action is needed',
+    'project.admin.statusHelp.approvedBy': 'this task is approved by',
+    'project.admin.statusHelp.approvedOn': 'on',
+
+    'project.public.statusHelp.pending': 'this task is awaiting approval by an admin',
+    'project.public.statusHelp.submitted': 'this task is awaiting council sign off',
+    'project.public.statusHelp.success': 'an admin will review and disburse the ELA reward if any',
+
+    'project.public.statusHelp.markAsComplete': 'Mark as Complete',
+    'project.public.statusHelp.markAsCompleteConfirm': 'Are you sure you want to mark this task as complete?',
+
     'team.detail.team_active': 'Your team is currently active',
 
     'team.create.error.nameRequired': 'Team name is required',
@@ -499,7 +515,26 @@ const en = {
     'community.link.toevent': 'See Event',
 
     // Council
+    'council.list': 'List',
+    'council.voting': 'Voting',
     'council.list.proposals': 'Any suggestions, proposals can be sent to',
+    'council.voting.proposalList': 'Proposal List',
+    'council.voting.number': 'No.',
+    'council.voting.published': 'Published',
+    'council.voting.title': 'Title',
+    'council.voting.type': 'Type',
+    'council.voting.author': 'Author',
+    'council.voting.voteBy': 'Vote By',
+    'council.voting.status': 'Status',
+    'council.voting.createdAt': 'Created',
+
+    'council.voting.type.newMotion': 'New Motion',
+    'council.voting.type.motionAgainst': 'Motion Against',
+    'council.voting.type.anythingElse': 'Anything Else',
+
+    'council.voting.type.support': 'Support',
+    'council.voting.type.reject': 'Reject',
+    'council.voting.type.abstention': 'Abstention',
 
     // Landing
     'landing.elastos': 'Elastos',
@@ -654,6 +689,10 @@ const en = {
     'landing.footer.contacts': 'Other',
     'landing.footer.join': 'Join Us On',
 
+    'landing.footer.legal': 'Legal',
+    'landing.footer.privacyPolicy': 'Privacy Policy',
+    'landing.footer.termsAndConditions': 'Terms & Conditions',
+
     'landing.0220': 'ELA tokens will be used to register IDs on the blockchain, opening the door to the Elastos ecosystem. Once inside, countless exchange opportunities will be available.',
     'landing.0221': 'You can purchase Decentralized Applications, acquire Cloud storage, buy and sell digital products and assets like songs, movies, books, and videos, and limitless other resources.',
     'landing.0222': 'In addition, holders of ELA tokens will be provided the opportunity to invest in numerous projects. For every DApp operating on Elastos, it will be essential to have ELA for registering digital assets thus creating a continuous necessity for the token.',
@@ -791,7 +830,9 @@ const en = {
     'from.CVoteForm.yes': 'YES',
     'from.CVoteForm.no': 'NO',
     'from.CVoteForm.proposal.title': 'Cyber Republic Council Members Proposal Form',
-    'from.CVoteForm.proposal.content': 'Cyber Republic Council members can use this form to propose motion. All Cyber Republic citizen can view and share their own idea (offline). All proposals will be discussed in regular council meetings. All results will be disclosed to the public. This is a temporary solution before our Cyber Republic website has such a feature.',
+    'from.CVoteForm.proposal.content': 'Cyber Republic Council members can use this form to propose motion. All Cyber Republic citizen can view and share their own idea (offline). All proposals will be discussed in regular council meetings. All results will be disclosed to the public.',
+    'from.CVoteForm.label.voteStatus': 'Vote Status',
+    'from.CVoteForm.label.publish': 'Publish',
     'from.CVoteForm.label.title': 'Title',
     'from.CVoteForm.label.type': 'Type',
     'from.CVoteForm.label.content': 'Content',
@@ -1048,6 +1089,27 @@ const en = {
     'cr-video.q7.title': 'Have Questions? Just Want to Get In Touch?',
     'cr-video.q7.subtitle': 'Enter your email and we will contact you personally',
     'cr-video.q7.button_text': 'Submit',
+
+    'crcle.product': 'Product',
+    'crcle.support': 'Support',
+    'crcle.media': 'Media',
+    'crcle.dAppAnalyst': 'dApp Analyst',
+    'crcle.administration': 'Administration',
+    'crcle.projectManager': 'Project Manager',
+    'crcle.design': 'Design',
+    'crcle.dAppConsultant': 'dApp Consultant',
+    'crcle.operations': 'Operations',
+    'crcle.security': 'Security',
+    'crcle.translation': 'Translation',
+    'crcle.finance': 'Finance',
+    'crcle.businessDevelopment': 'Business Development',
+    'crcle.partnership': 'Partnership',
+    'crcle.investment': 'Investment',
+    'crcle.marketing': 'Marketing',
+    'crcle.qa': 'QA',
+    'crcle.writing': 'Writing',
+    'crcle.hr': 'HR',
+    'crcle.legal': 'Legal'
 };
 
 // lang mappings
@@ -1062,5 +1124,12 @@ en[`taskStatus.${TASK_STATUS.SUCCESS}`] = 'Success'
 en[`taskStatus.${TASK_STATUS.DISTRIBUTED}`] = 'Distributed'
 en[`taskStatus.${TASK_STATUS.CANCELED}`] = 'Canceled'
 en[`taskStatus.${TASK_STATUS.EXPIRED}`] = 'Expired'
+
+en[`cvoteStatus.${CVOTE_STATUS.DRAFT}`] = 'DRAFT'
+en[`cvoteStatus.${CVOTE_STATUS.PROPOSED}`] = 'PROPOSED'
+en[`cvoteStatus.${CVOTE_STATUS.ACTIVE}`] = 'ACTIVE'
+en[`cvoteStatus.${CVOTE_STATUS.REJECT}`] = 'REJECT'
+en[`cvoteStatus.${CVOTE_STATUS.FINAL}`] = 'FINAL'
+en[`cvoteStatus.${CVOTE_STATUS.DEFERRED}`] = 'DEFERRED'
 
 export default en

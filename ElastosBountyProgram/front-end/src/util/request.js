@@ -13,8 +13,10 @@ import _ from 'lodash';
 * opts.error
 *
 * TODO: add limit to qry
+* TODO: doesn't this exist already somewhere?
 * */
 export const api_request = (opts = {})=>{
+
     const apiToken = sessionStorage.getItem('api-token');
     const headers = {};
     if(apiToken){
@@ -44,6 +46,7 @@ export const api_request = (opts = {})=>{
         signal: opts.signal,
         mode: 'cors'
     };
+
     if(method === 'post' && option.headers['Content-Type'] === 'multipart/form-data'){
         const formData = new FormData();
         _.each(opts.data, (v, k)=>{

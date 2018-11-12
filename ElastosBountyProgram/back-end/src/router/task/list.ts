@@ -9,6 +9,8 @@ const ObjectId = Types.ObjectId;
 export default class extends Base{
 
     /**
+     * The router is where we should put logic for defaults and assumptions
+     *
      * If the status is not provided, we default to
      * returning only CREATED, APPROVED statuses
      *

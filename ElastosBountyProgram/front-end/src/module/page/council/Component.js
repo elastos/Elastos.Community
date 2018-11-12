@@ -40,10 +40,10 @@ export default class extends StandardPage {
                         <CouncilBoard/>
                     </TabPane>
                     */}
-                    <TabPane key="list" tab="list">
+                    <TabPane key="list" tab={I18N.get('council.list')}>
                         <CouncilList/>
                     </TabPane>
-                    <TabPane key="vote" tab="voting">
+                    <TabPane key="vote" tab={I18N.get('council.voting')}>
                         <CVoteList/>
                     </TabPane>
                 </Tabs>

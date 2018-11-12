@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import {constant} from "../constant";
 
 export default class Base {
     protected db;
@@ -44,5 +45,26 @@ export default class Base {
                 lastCommentSeenByOwner: commentable.lastCommentSeenByOwner
             })
         }
+    }
+
+    /**
+     * We trust this.currentUser because it was fetched during each request in the middleware
+     * via a back-end encrypted token of the userId
+     *
+     * @returns {boolean}
+     */
+    protected isLoggedIn() {
+
+        let isLoggedIn = false
+
+        if (this.currentUser && this.currentUser._id){
+            isLoggedIn = true
+        }
+
+        return isLoggedIn
+    }
+
+    protected isAdmin() {
+        return this.currentUser.role === constant.USER_ROLE.ADMIN
     }
 }

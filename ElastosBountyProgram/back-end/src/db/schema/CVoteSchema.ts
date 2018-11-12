@@ -1,4 +1,5 @@
 import {Schema} from "mongoose";
+import {constant} from "../../constant";
 
 
 export const CVote = {
@@ -35,6 +36,12 @@ export const CVote = {
     vote_map : Object,
     reason_map : Object,
     createdBy: {type: Schema.Types.ObjectId, ref: 'users'},
+
+    published: {
+        type: Boolean,
+        default: false,
+        required: true
+    },
 
     status : {
         type : String

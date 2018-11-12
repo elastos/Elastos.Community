@@ -2,6 +2,7 @@ import Base from '../Base';
 
 import create from './create';
 import list from './list';
+import list_public from './list_public';
 import get from './get';
 import update from './update';
 import finish from './finish';
@@ -12,6 +13,11 @@ export default Base.setRouter([
         path : '/create',
         router : create,
         method : 'post'
+    },
+    {
+        path : '/list_public',
+        router : list_public,
+        method : 'get'
     },
     {
         path : '/list',

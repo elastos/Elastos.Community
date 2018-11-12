@@ -10,17 +10,18 @@
   background-color: rgb(229, 229, 229);
 }
 
-.footer-color-dark {
-  color: $cr_light_color;
-}
-
 .c_Footer {
   background: $bg_dark;
   position: relative;
   padding: 0 $gap_4;
   margin-top: $gap_3;
 
+  font-size: 13px;
+  font-weight: 300;
+
   text-align: left;
+
+  line-height: 1;
 
   .logo_own {
     width: 165px;
@@ -32,10 +33,11 @@
   }
 
   .footer-vertical-section {
-    line-height: 40px;
+
+    margin-top: 8px;
+
     .title {
-      font-weight: 600;
-      margin-bottom: $gap_0;
+      margin-bottom: $gap_1;
     }
 
     .ant-avatar {
@@ -46,10 +48,24 @@
   .social-icons > a {
     color: #fff !important;
     display: inline-block;
-    padding: 0 $gap_3 $gap_3 0;
+    padding: 0 $gap_2 $gap_2 0;
   }
 
   .join {
     padding-left: 24px;
   }
+
+  .footer-color-dark {
+    margin-top: 8px;
+    color: $cr_light_color;
+
+    > a {
+      color: $cr_light_color;
+    }
+  }
+
+  .contact-container .footer-color-dark > a {
+    text-decoration: underline;
+  }
+
 }
