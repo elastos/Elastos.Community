@@ -49,7 +49,7 @@ export default class extends Base {
 
         const salt = uuid.v4();
 
-        const doc = {
+        const doc:any = {
             username,
             password : this.getPassword(param.password, salt),
             email,
@@ -68,6 +68,12 @@ export default class extends Base {
             role : constant.USER_ROLE.MEMBER,
             active: true
         };
+
+        if (process.env.NODE_ENV === 'test') {
+            if (param._id) {
+                doc._id = param._id.$oid
+            }
+        }
 
         const newUser = await db_user.save(doc);
 
