@@ -176,11 +176,11 @@ export const USER_AVATAR_DEFAULT = '/assets/images/user_blurred_white.png'
 export const TASK_AVATAR_DEFAULT = '/assets/images/Elastos_Logo.png'
 export const TEAM_AVATAR_DEFAULT = '/assets/images/team_blurred.svg'
 
-export const CVOTE_STATUS = {
-    DRAFT: 'DRAFT',
-    PROPOSED: 'PROPOSED',
-    ACTIVE: 'ACTIVE',
-    REJECT: 'REJECT',
-    FINAL: 'FINAL',
-    DEFERRED: 'DEFERRED'
+export const CVOTE_STATUS = create(['DRAFT', 'PROPOSED', 'ACTIVE', 'REJECT', 'FINAL', 'DEFERRED'])
+
+export const USER_SKILLSET = {
+    ...SKILLSET_TYPE,
+    ...create(['UX_DESIGN', 'UI_DESIGN', 'PRINT_DESIGN', 'MANUAL_TESTING', 'AUTOMATED_TESTING', 'DEVOPS',
+        'OFFLINE_MARKETING', 'ONLINE_MARKETING', 'SEO', 'EVENT_ORGANIZE', 'LOGISTICS', 'TRANSLATION',
+        'PROJECT_MANAGEMENT', 'PRODUCT_MANAGEMENT', 'HR', 'SALES' ])
 }

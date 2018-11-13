@@ -1024,6 +1024,7 @@ const en = {
     'from.UserEditForm.label.wallet': 'Wallet',
     'from.UserEditForm.label.country': 'Country',
     'from.UserEditForm.label.timezone': 'Timezone',
+    'from.UserEditForm.label.skillset': 'Skillset',
 
     'from.UserProfileForm.firstName.required': 'First name is required',
     'from.UserProfileForm.lastName.required': 'Last name is required',
@@ -1109,7 +1110,30 @@ const en = {
     'crcle.qa': 'QA',
     'crcle.writing': 'Writing',
     'crcle.hr': 'HR',
-    'crcle.legal': 'Legal'
+    'crcle.legal': 'Legal',
+
+    'user.skillset.CPP': 'C++',
+    'user.skillset.JAVASCRIPT': 'JavaScript',
+    'user.skillset.GO': 'GO',
+    'user.skillset.PYTHON': 'Python',
+    'user.skillset.JAVA': 'Java',
+    'user.skillset.SWIFT': 'Swift',
+    'user.skillset.UX_DESIGN': 'UX Design',
+    'user.skillset.UI_DESIGN': 'UI Design',
+    'user.skillset.PRINT_DESIGN': 'Print Design',
+    'user.skillset.MANUAL_TESTING': 'Manual Testing',
+    'user.skillset.AUTOMATED_TESTING': 'Automated Testing',
+    'user.skillset.DEVOPS': 'DevOps',
+    'user.skillset.OFFLINE_MARKETING': 'Offline Marketing',
+    'user.skillset.ONLINE_MARKETING': 'Online Marketing',
+    'user.skillset.SEO': 'SEO',
+    'user.skillset.EVENT_ORGANIZE': 'Event Organizing',
+    'user.skillset.LOGISTICS': 'Logistics',
+    'user.skillset.TRANSLATION': 'Translation',
+    'user.skillset.PROJECT_MANAGEMENT': 'Project Management',
+    'user.skillset.PRODUCT_MANAGEMENT': 'Product Management',
+    'user.skillset.HR': 'HR',
+    'user.skillset.SALES': 'Sales',
 };
 
 // lang mappings
