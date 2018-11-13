@@ -6,9 +6,9 @@ import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import { Breadcrumb, Col, Icon, Row, Spin } from 'antd';
 import TeamDetail from '@/module/team/Container';
 import I18N from '@/I18N'
-import StandardPage from '../../StandardPage';
+import ProfilePage from '../../ProfilePage';
 
-export default class extends StandardPage {
+export default class extends ProfilePage {
     state = {
         editing: false
     }
