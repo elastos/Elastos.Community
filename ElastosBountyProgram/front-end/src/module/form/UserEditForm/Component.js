@@ -23,7 +23,7 @@ import TimezonePicker from 'react-timezone'
 import I18N from '@/I18N'
 import {upload_file} from '@/util'
 import './style.scss'
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, USER_GENDER, SKILLSET_TYPE} from '@/constant'
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, USER_GENDER, USER_SKILLSET} from '@/constant'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
@@ -106,7 +106,7 @@ class C extends BaseComponent {
     }
 
     getSkillsets() {
-        return _.map(SKILLSET_TYPE, (skillset) => {
+        return _.map(USER_SKILLSET, (skillset) => {
             return {
                 title: I18N.get(`user.skillset.${skillset}`),
                 value: skillset,
