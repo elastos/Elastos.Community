@@ -2,7 +2,6 @@ import Base from './Base';
 import {Document} from 'mongoose';
 import * as _ from 'lodash';
 import {constant} from '../constant';
-import * as _ from 'lodash'
 import {validate, utilCrypto, mail} from '../utility';
 import * as moment from 'moment';
 
