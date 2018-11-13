@@ -9,17 +9,20 @@ import { Col, Row, Card, Button, Breadcrumb, Icon, Table, Input, Modal, Avatar }
 import {MAX_WIDTH_MOBILE} from "../../../config/constant"
 import { USER_AVATAR_DEFAULT } from '@/constant'
 import ProfilePopup from '@/module/profile/OverviewPopup/Container'
+import URI from 'urijs'
 
 export default class extends StandardPage {
     constructor(props) {
         super(props)
 
+        const params = new URI(props.location.search || '').search(true)
+
         this.state = {
-            search: '',
+            search: params.search || '',
             showUserInfo: null,
             userListPagination: {
                 pageSize: 5,
-                current: 1
+                current: parseInt(params.page || 1, 10)
             }
         }
     }
@@ -33,11 +36,14 @@ export default class extends StandardPage {
     }
 
     refetch() {
-        this.props.listUsers({
+        const options = {
             search: this.state.search || '',
             results: (this.state.userListPagination || {}).pageSize || 5,
             page: (this.state.userListPagination || {}).current || 1
-        })
+        }
+
+        this.props.history.replace(`/developer?search=${options.search}&page=${options.page}`)
+        this.props.listUsers(options)
     }
 
     ord_renderContent () {
@@ -140,8 +146,8 @@ export default class extends StandardPage {
                 <div className="navi-panel-content panel-content">
                     {buildNaviItem(I18N.get('developer.learn'), I18N.get('developer.learn.description'), '/developer/learn')}
                     {buildNaviItem(I18N.get('developer.teams.title'), I18N.get('developer.teams.description'), '/developer/search')}
-                    {buildNaviItem(I18N.get('developer.project.title'), I18N.get('developer.projects.description'), '/developer/search?type=PROJECT')}
-                    {buildNaviItem(I18N.get('developer.tasks.title'), I18N.get('developer.tasks.description'), '/developer/search?type=TASK')}
+                    {buildNaviItem(I18N.get('developer.project.title'), I18N.get('developer.projects.description'), '/developer/search?lookingFor=PROJECT')}
+                    {buildNaviItem(I18N.get('developer.tasks.title'), I18N.get('developer.tasks.description'), '/developer/search?lookingFor=TASK')}
                 </div>
             </div>
         )
@@ -235,7 +241,7 @@ export default class extends StandardPage {
                     </h3>
                     <Row className="member-panel-search">
                         <Col md={9} xs={24}>
-                            <Input placeholder={I18N.get('developer.breadcrumb.search')}
+                            <Input defaultValue={this.state.search} placeholder={I18N.get('developer.breadcrumb.search')}
                                 onChange={searchChangedHandler.bind(this)}/>
                         </Col>
                     </Row>

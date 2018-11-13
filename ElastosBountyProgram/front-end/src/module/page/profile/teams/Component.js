@@ -181,7 +181,7 @@ export default class extends ProfilePage {
                         <h5 class="no-margin">
                             {item.description}
                         </h5>
-                        <div className="description-content" dangerouslySetInnerHTML={{__html: item.content}} />
+                        <div className="description-content ql-editor" dangerouslySetInnerHTML={{__html: item.content}} />
                         <div className="ant-list-item-right-box">
                             <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
                                 <Avatar size="large" icon="user" className="pull-right" src={ownerProfile.avatar}/>

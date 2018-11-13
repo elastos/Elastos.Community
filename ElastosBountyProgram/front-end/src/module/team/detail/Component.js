@@ -113,7 +113,7 @@ class C extends BaseComponent {
                     <hr className="divider"/>
                     <div className="description-title">{recruiting_el}</div>
                     <hr className="divider"/>
-                    <div className="description-content" dangerouslySetInnerHTML={{__html: description}} />
+                    <div className="description-content ql-editor" dangerouslySetInnerHTML={{__html: description}} />
                 </div>
             </div>
         )

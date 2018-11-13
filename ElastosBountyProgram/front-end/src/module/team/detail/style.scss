@@ -182,13 +182,13 @@
       }
 
       .description-content {
-        white-space: pre-line;
         margin: $gap_0 $gap_2 $gap_0 0;
         overflow-y: auto;
         max-height: 175px;
-        ul, ol {
-          margin-left: 16px;
-        }
+      }
+      .ql-editor {
+        padding: 0;
+        font-size: 14px;
       }
     }
   }

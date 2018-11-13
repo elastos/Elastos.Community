@@ -9,6 +9,8 @@ const ObjectId = Types.ObjectId;
 export default class extends Base{
 
     /**
+     * The router is where we should put logic for defaults and assumptions
+     *
      * If the status is not provided, we default to
      * returning only CREATED, APPROVED statuses
      *
@@ -25,6 +27,10 @@ export default class extends Base{
         const query: any = {
             archived: {$ne: true}
         };
+
+        if (param.search) {
+            query.name = { $regex: _.trim(param.search), $options: 'i' }
+        }
 
         if (param.type) {
             const types = param.type.split(',')
@@ -44,6 +50,14 @@ export default class extends Base{
             if (valid) {
                 query.category = { $in: categories }
             }
+        }
+
+        if (param.results) {
+            query.results = param.results
+        }
+
+        if (param.page) {
+            query.page = param.page
         }
 
         if (param.domain) {
@@ -139,12 +153,13 @@ export default class extends Base{
 
         }
 
-        const list = await taskService.list(query);
-        const count = await taskService.getDBModel('Task').count(query);
+        const list = await taskService.list(query)
+        const count = await taskService.getDBModel('Task')
+            .count(_.omit(query, ['results', 'page']))
 
         return this.result(1, {
             list,
             total: count
-        });
+        })
     }
 }

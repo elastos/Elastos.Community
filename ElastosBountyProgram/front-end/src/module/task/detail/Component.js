@@ -92,7 +92,7 @@ export default class extends BaseComponent {
                                     </Col>
                                     <Col span={20}>
                                         <p>
-                                            {this.props.task.category}
+                                            {I18N.get(`developer.search.${this.props.task.category.toLowerCase()}`)}
                                         </p>
                                     </Col>
                                 </Row>

@@ -21,6 +21,7 @@ class TaskRedux extends BaseRedux {
             },
 
             all_tasks: [],
+            all_tasks_total: 0,
 
             // if we select a detail
             detail: {},
