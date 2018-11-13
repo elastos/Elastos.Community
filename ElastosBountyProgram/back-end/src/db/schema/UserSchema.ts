@@ -6,11 +6,12 @@ export const Region = {
     country: String,
     state: String,
     city: String
-};
+}
+
 export const Contact = {
     type : Map,
     of : String
-};
+}
 
 export const Profile = {
     firstName : String,
@@ -41,6 +42,8 @@ export const Profile = {
     github: String,
     linkedin: String,
 
+    skillset: [String],
+
     bio: String,
     motto: String,
     beOrganizer : Boolean,
@@ -48,14 +51,14 @@ export const Profile = {
 
     source : String,
     walletAddress : String
-};
+}
 
 export const WorkProject = {
     startTime : Date,
     endTime : Date,
     description : String,
     name : String
-};
+}
 
 export const WorkAbout = {
     status: String, // employed, student, etc
@@ -65,17 +68,18 @@ export const WorkAbout = {
     resume : String,
 
     notes: String // private internal notes visible only to admin/council
-};
+}
 
 // amount is ELA * 1000
 export const ELA = {
     address: String,
     amount: Schema.Types.Number
-};
+}
+
 export const VotePower = {
     amount: Number,
     expired: Date
-};
+}
 
 export const User = {
     username : {
@@ -127,4 +131,4 @@ export const User = {
     circles: [{type: Schema.Types.ObjectId, ref: 'team'}],
     comments: [[CommentSchema]],
     subscribers: [SubscriberSchema]
-};
+}

@@ -14,8 +14,8 @@ import {
     Col,
     Upload,
     Cascader,
-    Divider
-
+    Divider,
+    TreeSelect
 } from 'antd'
 import config from '@/config'
 import { MIN_LENGTH_PASSWORD } from '@/config/constant'
@@ -23,7 +23,7 @@ import TimezonePicker from 'react-timezone'
 import I18N from '@/I18N'
 import {upload_file} from '@/util'
 import './style.scss'
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, USER_GENDER} from '@/constant'
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, USER_GENDER, SKILLSET_TYPE} from '@/constant'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
@@ -103,6 +103,16 @@ class C extends BaseComponent {
             callback(`${I18N.get('register.error.password_length_1')} ${MIN_LENGTH_PASSWORD} ${I18N.get('register.error.password_length_2')}`)
         }
         callback()
+    }
+
+    getSkillsets() {
+        return _.map(SKILLSET_TYPE, (skillset) => {
+            return {
+                title: I18N.get(`user.skillset.${skillset}`),
+                value: skillset,
+                key: skillset
+            }
+        })
     }
 
     getInputProps () {
@@ -206,6 +216,16 @@ class C extends BaseComponent {
                     {config.data.mappingGenderKeyToName[USER_GENDER.FEMALE]}
                 </Radio>
             </RadioGroup>
+        )
+
+        const skillsets = this.getSkillsets()
+        const skillset_fn = getFieldDecorator('skillset', {
+            rules: [],
+            initialValue: user.profile.skillset || []
+        })
+
+        const skillset_el = (
+            <TreeSelect treeData={skillsets} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
         )
 
         const country_fn = getFieldDecorator('country', {
@@ -337,6 +357,7 @@ class C extends BaseComponent {
             gender: gender_fn(gender_el),
             country: country_fn(country_el),
             timezone: timezone_fn(timezone_el),
+            skillset: skillset_fn(skillset_el),
 
             walletAddress: walletAddress_fn(walletAddress_el),
 
@@ -417,9 +438,9 @@ class C extends BaseComponent {
                         <FormItem label={I18N.get('from.UserEditForm.label.timezone')} {...formItemLayout}>
                             {p.timezone}
                         </FormItem>
-
-                        <div className="label">{I18N.get('user.edit.form.section.social')}</div>
-
+                        <FormItem label={I18N.get('from.UserEditForm.label.skillset')} {...formItemLayout}>
+                            {p.skillset}
+                        </FormItem>
                         <FormItem label="LinkedIn" {...formItemLayout}>
                             {p.linkedin}
                         </FormItem>

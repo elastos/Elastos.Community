@@ -1024,6 +1024,7 @@ const en = {
     'from.UserEditForm.label.wallet': 'Wallet',
     'from.UserEditForm.label.country': 'Country',
     'from.UserEditForm.label.timezone': 'Timezone',
+    'from.UserEditForm.label.skillset': 'Skillset',
 
     'from.UserProfileForm.firstName.required': 'First name is required',
     'from.UserProfileForm.lastName.required': 'Last name is required',

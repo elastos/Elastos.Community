@@ -41,6 +41,7 @@ export default createContainer(Component, (state)=>{
                     gender: formData.gender,
                     country: formData.country,
                     timezone: formData.timezone,
+                    skillset: formData.skillset,
                     avatar: state.avatar_url,
                     walletAddress: formData.walletAddress,
 
