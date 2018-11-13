@@ -76,6 +76,15 @@ export default createContainer(Component, (state)=>{
                 // message.error('There was an error creating this task')
                 message.error(err.message) // TODO: add rollbar?
             }
+        },
+
+        async checkEmail(email) {
+            try {
+                await userService.checkEmail(email)
+                return false
+            } catch (err) {
+                return true
+            }
         }
     };
 });

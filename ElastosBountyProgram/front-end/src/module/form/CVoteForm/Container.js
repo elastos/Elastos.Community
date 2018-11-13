@@ -1,5 +1,6 @@
 import {createContainer, goPath, api_request} from "@/util"
 import Component from './Component'
+import I18N from '@/I18N'
 import UserService from '@/service/UserService'
 import {message} from 'antd'
 
@@ -17,9 +18,9 @@ export default createContainer(Component, (state) => {
                 {value : 'Kevin Zhang'}
             ],
             select_type : [
-                {name : 'New Motion', code : 1},
-                {name : 'Motion against any existing motion', code : 2},
-                {name : 'Anything else', code : 3}
+                {name : I18N.get('council.voting.type.newMotion'), code : 1},
+                {name : I18N.get('council.voting.type.motionAgainst'), code : 2},
+                {name : I18N.get('council.voting.type.anythingElse'), code : 3}
             ],
             select_vote : [
                 {name : 'Support', value : 'support'},
@@ -44,7 +45,6 @@ export default createContainer(Component, (state) => {
                 method : 'post',
                 data : param
             });
-            console.log(rs);
             return rs;
         },
         async updateCVote(param){

@@ -1,5 +1,6 @@
-import { TASK_STATUS } from '@/constant'
+import {TASK_STATUS, CVOTE_STATUS} from '@/constant'
 import council from './zh/council'
+import getting_started from './en/getting_started';
 
 const zh = {
     council,
@@ -17,7 +18,6 @@ const zh = {
     '0009': '常见问题',
     '0010': '联系方式',
     '0011': '加入Discord',
-    '0012': '语言',
 
     '0100': '开发者',
     '0101': '活动',
@@ -75,7 +75,9 @@ const zh = {
 
     'comments': '评论',
     'comments.posts': '动态',
+    'comments.post': 'Post',
     'comments.noComments': '还没有评论，抢沙发！',
+    'comments.commentsOrUpdates': 'Comments or updates',
     // Admin tasks
     'admin.tasks.status': '状态',
 
@@ -413,6 +415,20 @@ const zh = {
 
     'project.detail.comments_disabled': '不能对已经关闭的竞标项目或任务发表评论',
 
+    'project.admin.statusHelp.created': 'this task does not require approval',
+    'project.admin.statusHelp.pending': 'this task is awaiting approval',
+    'project.admin.statusHelp.successReward': 'this task is awaiting ELA disbursement',
+    'project.admin.statusHelp.successNoReward': 'this task does not require ELA, no further action is needed',
+    'project.admin.statusHelp.approvedBy': 'this task is approved by',
+    'project.admin.statusHelp.approvedOn': 'on',
+
+    'project.public.statusHelp.pending': 'this task is awaiting approval by an admin',
+    'project.public.statusHelp.submitted': 'this task is awaiting council sign off',
+    'project.public.statusHelp.success': 'an admin will review and disburse the ELA reward if any',
+
+    'project.public.statusHelp.markAsComplete': 'Mark as Complete',
+    'project.public.statusHelp.markAsCompleteConfirm': 'Are you sure you want to mark this task as complete?',
+
     'team.detail.team_active': '你的团队已经激活',
 
     'team.create.error.nameRequired': 'Team name is required',
@@ -499,7 +515,26 @@ const zh = {
     'community.link.toevent': 'See Event',
 
     // Council
+    'council.list': 'List',
+    'council.voting': 'Voting',
     'council.list.proposals': 'Any suggestions, proposals can be sent to',
+    'council.voting.proposalList': 'Proposal List',
+    'council.voting.number': 'No.',
+    'council.voting.published': 'Published',
+    'council.voting.title': 'Title',
+    'council.voting.type': 'Type',
+    'council.voting.author': 'Author',
+    'council.voting.voteBy': 'Vote By',
+    'council.voting.status': 'Status',
+    'council.voting.createdAt': 'Created',
+
+    'council.voting.type.newMotion': 'New Motion',
+    'council.voting.type.motionAgainst': 'Motion Against',
+    'council.voting.type.anythingElse': 'Anything Else',
+
+    'council.voting.type.support': 'Support',
+    'council.voting.type.reject': 'Reject',
+    'council.voting.type.abstention': 'Abstention',
 
     // Landing
     'landing.elastos': 'Elastos',
@@ -654,6 +689,10 @@ const zh = {
     'landing.footer.contacts': '其他合同:',
     'landing.footer.join': '加入我们',
 
+    'landing.footer.other': 'Other',
+    'landing.footer.privacyPolicy': 'Privacy Policy',
+    'landing.footer.termsAndConditions': 'Terms & Conditions',
+
     'landing.0220': 'ELA令牌将用于在区块链上注册id，打开通往Elastos生态系统的门。 一旦加入，将会有无数的交流机会。',
     'landing.0221': '您可以购买去中心化应用程序，获得云存储，购买和销售数字产品和资产，如歌曲、电影、书籍和视频，以及无限的其他资源。',
     'landing.0222': '此外，ELA令牌持有者将有机会投资于众多项目。对于在Elastos上运行的每一个dApp，拥有ELA来注册数字资产将是非常重要的，从而为令牌创造持续的必要性。',
@@ -676,7 +715,6 @@ const zh = {
     'vision.05': 'Elastos的愿景改变互联网，同时Cyber Republic愿景去改变人与人的组织方式和构建一个全球项目。Alpha版本是我们向一个完全现代和独特的共和国目标的模板和框架。你的投入和积极的参与是这个愿景得以继续形成是非常必要。',
     'vision.06': '关于如何申请个人项目的更多信息和更多细节很快将会出现。',
     'vision.07': '我们期待着为新型互联网建立一个创业和创新的国际天堂。',
-
 
     // Role
     'role.member': '普通会员',
@@ -725,6 +763,8 @@ const zh = {
     'profile.detail.table.action': 'Action',
     'profile.detail.noapplications': 'No applications yet',
     'profile.detail.finding': 'Funding: 100k for 5% of the equity or coins/tokens',
+    'profile.detail.sendmessage': 'Send Message',
+    'profile.detail.comingsoon': 'Coming soon...',
 
     // Validate Form
     'ambassadors.form.required': 'This must be filled out',
@@ -789,7 +829,9 @@ const zh = {
     'from.CVoteForm.yes': 'YES',
     'from.CVoteForm.no': 'NO',
     'from.CVoteForm.proposal.title': 'Cyber Republic Council Members Proposal Form',
-    'from.CVoteForm.proposal.content': 'Cyber Republic Council members can use this form to propose motion. All Cyber Republic citizen can view and share their own idea (offline). All proposals will be discussed in regular council meetings. All results will be disclosed to the public. This is a temporary solution before our Cyber Republic website has such a feature.',
+    'from.CVoteForm.proposal.content': 'Cyber Republic Council members can use this form to propose motion. All Cyber Republic citizen can view and share their own idea (offline). All proposals will be discussed in regular council meetings. All results will be disclosed to the public.',
+    'from.CVoteForm.label.voteStatus': 'Vote Status',
+    'from.CVoteForm.label.publish': 'Publish',
     'from.CVoteForm.label.title': 'Title',
     'from.CVoteForm.label.type': 'Type',
     'from.CVoteForm.label.content': 'Content',
@@ -1046,6 +1088,27 @@ const zh = {
     'cr-video.q7.title': 'Have Questions? Just Want to Get In Touch?',
     'cr-video.q7.subtitle': 'Enter your email and we will contact you personally',
     'cr-video.q7.button_text': 'Submit',
+
+    'crcle.product': '产品',
+    'crcle.support': '技术支持',
+    'crcle.media': '媒体',
+    'crcle.dAppAnalyst': 'dApp分析师',
+    'crcle.administration': '行政管理',
+    'crcle.projectManager': '项目管理',
+    'crcle.design': '设计',
+    'crcle.dAppConsultant': 'dApp咨询师',
+    'crcle.operations': '运维',
+    'crcle.security': '安全',
+    'crcle.translation': '多国语言翻译',
+    'crcle.finance': '财务',
+    'crcle.businessDevelopment': '商业开拓',
+    'crcle.partnership': '商务合作',
+    'crcle.investment': '投资',
+    'crcle.marketing': '市场营销',
+    'crcle.qa': 'QA',
+    'crcle.writing': '法律',
+    'crcle.hr': '人力资源',
+    'crcle.legal': '法律咨询'
 }
 
 // lang mappings
@@ -1060,5 +1123,13 @@ zh[`taskStatus.${TASK_STATUS.SUCCESS}`] = '成功'
 zh[`taskStatus.${TASK_STATUS.DISTRIBUTED}`] = '已结算'
 zh[`taskStatus.${TASK_STATUS.CANCELED}`] = '取消的'
 zh[`taskStatus.${TASK_STATUS.EXPIRED}`] = '过期的'
+
+zh[`cvoteStatus.${CVOTE_STATUS.DRAFT}`] = 'DRAFT'
+zh[`cvoteStatus.${CVOTE_STATUS.PROPOSED}`] = 'PROPOSED'
+zh[`cvoteStatus.${CVOTE_STATUS.ACTIVE}`] = 'ACTIVE'
+zh[`cvoteStatus.${CVOTE_STATUS.REJECT}`] = 'REJECT'
+zh[`cvoteStatus.${CVOTE_STATUS.FINAL}`] = 'FINAL'
+zh[`cvoteStatus.${CVOTE_STATUS.DEFERRED}`] = 'DEFERRED'
+
 
 export default zh

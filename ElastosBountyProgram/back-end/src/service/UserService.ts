@@ -253,7 +253,7 @@ export default class extends Base {
         }
 
         if (query.search) {
-            finalQuery.$and = _.map(query.search.split(' '), (part) => {
+            finalQuery.$and = _.map(_.trim(query.search).split(' '), (part) => {
                 return {
                     $or: [
                         { 'profile.firstName': { $regex: part, $options: 'i' }},

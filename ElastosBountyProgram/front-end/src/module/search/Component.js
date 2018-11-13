@@ -7,6 +7,7 @@ import {
 import _ from 'lodash'
 import './style.scss'
 import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT} from '@/constant'
+import InfiniteScroll from 'react-infinite-scroller'
 import TeamDetail from '@/module/team/detail/Container'
 import TaskDetail from '@/module/task/popup/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
@@ -16,6 +17,7 @@ import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
 import I18N from '@/I18N'
 import moment from 'moment'
 import ProfilePopup from '@/module/profile/OverviewPopup/Container'
+import URI from 'urijs'
 
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
@@ -23,10 +25,10 @@ const TreeNode = TreeSelect.TreeNode;
 const Option = Select.Option;
 
 export default class extends BaseComponent {
-
     componentDidMount() {
         this.props.loadAllCircles()
         this.refetch()
+        this.debouncedRefetch = _.debounce(this.refetch.bind(this), 300)
     }
 
     componentWillUnmount() {
@@ -35,11 +37,14 @@ export default class extends BaseComponent {
     }
 
     ord_states() {
+        const params = new URI(this.props.location.search || '').search(true)
+
         return {
-            lookingFor: this.props.preselect || 'TEAM', // TEAM, PROJECT, TASK
-            skillset: [],
-            domain: [],
-            circle: [],
+            lookingFor: params.lookingFor || 'TEAM', // TEAM, PROJECT, TASK
+            skillset: (params.skillset && params.skillset.split(',')) || [],
+            domain: (params.domain && params.domain.split(',')) || [],
+            circle: (params.circle && params.circle.split(',')) || [],
+            search: params.search || '',
             entryCount: 3,
             skillsetShowAllEntries: false,
             categoryShowAllEntries: false,
@@ -50,12 +55,18 @@ export default class extends BaseComponent {
             teamDetailId: 0,
             showMobile: false,
             filtersTree: ['TEAM'],
-            showUserInfo: null
+            showUserInfo: null,
+            page: 1,
+            results: 5
         }
     }
 
     getQuery() {
         let query = {}
+
+        if (!_.isEmpty(this.state.search)) {
+            query.search = this.state.search
+        }
 
         if (!_.isEmpty(this.state.skillset)) {
             query.skillset = this.state.skillset
@@ -71,11 +82,32 @@ export default class extends BaseComponent {
             }
         }
 
+        query.page = this.state.page || 1
+        query.results = this.state.results || 5
+
         return query
+    }
+
+    getUrlForQuery(query) {
+        const skillset = (query.skillset || []).join(',')
+        const domain = (query.domain || []).join(',')
+        const circle = (query.circle || []).join(',')
+        const lookingFor = this.state.lookingFor
+        const search = this.state.search
+
+        const url = new URI('/developer/search')
+        lookingFor && url.addSearch('lookingFor', lookingFor)
+        skillset && url.addSearch('skillset', skillset)
+        domain && url.addSearch('domain', domain)
+        circle && url.addSearch('circle', circle)
+        search && url.addSearch('search', search)
+
+        return url.toString()
     }
 
     refetch() {
         const query = this.getQuery()
+        const url = this.getUrlForQuery(query)
         const lookup = {
             TEAM: this.props.getTeams,
             PROJECT: this.props.getProjects,
@@ -84,6 +116,50 @@ export default class extends BaseComponent {
 
         const getter = lookup[this.state.lookingFor]
         getter.call(this, query)
+
+        this.props.history.replace(url)
+    }
+
+    async loadMore() {
+        const page = this.state.page + 1
+
+        const query = {
+            ...this.getQuery(),
+            page,
+            results: this.state.results
+        }
+
+        this.setState({ page, loadingMore: true })
+
+        const lookup = {
+            TASK: this.props.loadMoreTasks,
+            TEAM: this.props.loadMoreTeams,
+            PROJECT: this.props.loadMoreProjects
+        }
+
+        const getter = lookup[this.state.lookingFor]
+        getter && await getter.call(this, query)
+
+        this.setState({ loadingMore: false })
+    }
+
+    hasMoreTasks() {
+        return _.size(this.props.all_tasks) < this.props.all_tasks_total
+    }
+
+    hasMoreTeams() {
+        return _.size(this.props.all_teams) < this.props.all_teams_total
+    }
+
+    hasMore() {
+        const lookup = {
+            TASK: this.hasMoreTasks,
+            TEAM: this.hasMoreTeams,
+            PROJECT: this.hasMoreTasks
+        }
+
+        const getter = lookup[this.state.lookingFor]
+        return getter && getter.call(this)
     }
 
     // this needs to be used when it's a project to hide certain UI
@@ -97,32 +173,37 @@ export default class extends BaseComponent {
 
     onChangeLookingFor(e) {
         this.setState({
-            lookingFor: e.target.value
-        }, this.refetch.bind(this))
+            lookingFor: e.target.value,
+            page: 1
+        }, this.debouncedRefetch.bind(this))
     }
 
     onChangeSkillset(value) {
         this.setState({
-            skillset: value
-        }, this.refetch.bind(this))
+            skillset: value,
+            page: 1
+        }, this.debouncedRefetch.bind(this))
     }
 
     onChangeDomain(value) {
         this.setState({
-            domain: value
-        }, this.refetch.bind(this))
+            domain: value,
+            page: 1
+        }, this.debouncedRefetch.bind(this))
     }
 
     onChangeCircle(value) {
         this.setState({
-            circle: value
-        }, this.refetch.bind(this))
+            circle: value,
+            page: 1
+        }, this.debouncedRefetch.bind(this))
     }
 
     onChangeLookingForSelect(value) {
         this.setState({
-            lookingFor: value
-        }, this.refetch.bind(this))
+            lookingFor: value,
+            page: 1
+        }, this.debouncedRefetch.bind(this))
     }
 
     showTaskModal(id) {
@@ -226,7 +307,7 @@ export default class extends BaseComponent {
         })
 
         return (
-            <CheckboxGroup onChange={this.onChangeSkillset.bind(this)}>
+            <CheckboxGroup onChange={this.onChangeSkillset.bind(this)} value={this.state.skillset}>
                 {elements}
             </CheckboxGroup>
         )
@@ -246,7 +327,7 @@ export default class extends BaseComponent {
         })
 
         return (
-            <CheckboxGroup onChange={this.onChangeDomain.bind(this)}>
+            <CheckboxGroup onChange={this.onChangeDomain.bind(this)} value={this.state.domain}>
                 {elements}
             </CheckboxGroup>
         )
@@ -266,7 +347,7 @@ export default class extends BaseComponent {
         })
 
         return (
-            <CheckboxGroup onChange={this.onChangeCircle.bind(this)}>
+            <CheckboxGroup onChange={this.onChangeCircle.bind(this)} value={this.state.circle}>
                 { this.props.all_circles_loading
                     ? <Spin/>
                     : elements
@@ -312,11 +393,14 @@ export default class extends BaseComponent {
 
     getCircleTree() {
         const elements = _.map(this.props.all_circles, (option) => {
-            return (
-                <TreeNode value={option._id} title={option.name} key={option._id}/>
-            )
+            return {
+                title: option.name,
+                value: option._id,
+                key: option._id
+            }
         })
-        return elements;
+
+        return elements
     }
 
     handleOnFiltersChange(e) {
@@ -335,8 +419,9 @@ export default class extends BaseComponent {
         this.setState({
             filtersTree: e,
             skillset: skillset,
-            domain: domain
-        }, this.refetch.bind(this))
+            domain: domain,
+            page: 1
+        }, this.debouncedRefetch.bind(this))
     }
 
     getLookingForOptions() {
@@ -431,10 +516,24 @@ export default class extends BaseComponent {
         const skillsetOptions = this.getSkillsetOptions()
         const categoryOptions = this.getCategoryOptions()
 
+        const searchChangedHandler = (e) => {
+            const search = e.target.value
+            this.setState({
+                search,
+                page: 1
+            }, this.debouncedRefetch)
+        }
+
         return (
             <div>
                 <MediaQuery minWidth={MIN_WIDTH_PC}>
                     <Affix offsetTop={15}>
+                        <div className="group">
+                            <div className="content">
+                                <Input defaultValue={this.state.search} onChange={searchChangedHandler.bind(this)}
+                                    placeholder={I18N.get('developer.search.search.placeholder')}/>
+                            </div>
+                        </div>
                         <div className="group">
                             <div className="title">{I18N.get('developer.search.lookingFor')}</div>
                             <div className="content">
@@ -528,13 +627,10 @@ export default class extends BaseComponent {
                         allowClear
                         multiple
                         treeDefaultExpandAll
+                        treeData={this.getCircleTree()}
                         treeCheckable={!this.props.all_circles_loading}
                         onChange={this.onChangeCircle.bind(this)}
-                    >
-                        <TreeNode icon="" value="0" title={this.props.all_circles_loading ? I18N.get('.loading') : I18N.get('developer.search.circle')} key="0">
-                            {this.getCircleTree()}
-                        </TreeNode>
-                    </TreeSelect>
+                    />
                     }
                 </MediaQuery>
             </div>)
@@ -656,7 +752,6 @@ export default class extends BaseComponent {
             : this.props.all_tasks
 
         const description_fn = (entity) => {
-
             return (
                 <div>
                     {!_.isEmpty(entity.recruitedSkillsets) &&
@@ -736,66 +831,80 @@ export default class extends BaseComponent {
             : handlersLookup[this.state.lookingFor] || _.noop
 
         return (
-            <List loading={this.props.loading} itemLayout='vertical' size='large'
-                className="with-right-box" dataSource={data}
-                renderItem={item => (
-                    <div>
-                        <MediaQuery minWidth={MIN_WIDTH_PC}>
-                            <List.Item
-                                key={item.id}
-                                extra={this.getCarousel(item)}
-                            >
-                                <h3 className="no-margin no-padding one-line brand-color">
-                                    <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
-                                </h3>
-                                {item.applicationDeadlinePassed &&
-                                <span className="subtitle">
-                                    {I18N.get('developer.search.subtitle_prefix')} {I18N.get('developer.search.subtitle_applications')}
-                                </span>
-                                }
-                                <h5 className="no-margin">
-                                    {item.description}
-                                </h5>
-                                <div className="description-content" dangerouslySetInnerHTML={{__html: item.content}}/>
-                                <div className="ant-list-item-right-box">
-                                    <a className="pull-up" onClick={() => this.setState({ showUserInfo: item.owner })}>
-                                        <Avatar size="large" className="pull-right"
-                                            src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
-                                        <div className="clearfix"/>
-                                        <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
-                                    </a>
+            <InfiniteScroll
+                initialLoad={false}
+                pageStart={1}
+                loadMore={this.loadMore.bind(this)}
+                hasMore={!this.state.loadingMore && !this.props.loading && this.hasMore()}
+                useWindow={true}
+            >
+                <List loading={this.props.loading} itemLayout='vertical' size='large'
+                    className="with-right-box" dataSource={data}
+                    renderItem={item => (
+                        <div>
+                            <MediaQuery minWidth={MIN_WIDTH_PC}>
+                                <List.Item
+                                    key={item.id}
+                                    extra={this.getCarousel(item)}
+                                >
+                                    <h3 className="no-margin no-padding one-line brand-color">
+                                        <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
+                                    </h3>
+                                    {item.applicationDeadlinePassed &&
+                                    <span className="subtitle">
+                                        {I18N.get('developer.search.subtitle_prefix')} {I18N.get('developer.search.subtitle_applications')}
+                                    </span>
+                                    }
+                                    <h5 className="no-margin">
+                                        {item.description}
+                                    </h5>
+                                    <div className="ql-editor" dangerouslySetInnerHTML={{__html: item.content}}/>
+                                    <div className="ant-list-item-right-box">
+                                        <a className="pull-up" onClick={() => this.setState({ showUserInfo: item.owner })}>
+                                            <Avatar size="large" className="pull-right"
+                                                src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
+                                            <div className="clearfix"/>
+                                            <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
+                                        </a>
 
-                                    {this.renderApplyButton(item, clickHandler)}
+                                        {this.renderApplyButton(item, clickHandler)}
 
-                                </div>
-                            </List.Item>
-                        </MediaQuery>
-                        <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
-                            <List.Item
-                                key={item.id}
-                                className="ignore-right-box"
-                            >
-                                <h3 className="no-margin no-padding one-line brand-color">
-                                    <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
-                                </h3>
-                                <h5 className="no-margin">
-                                    {item.description}
-                                </h5>
-                                <div>
-                                    <a onClick={() => this.setState({ showUserInfo: item.owner })}>
-                                        <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
-                                        <Divider type="vertical"/>
-                                        <Avatar size="large"
-                                            src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
-                                    </a>
-                                    <Button onClick={clickHandler.bind(this, item.id)}
-                                        type="primary" className="pull-right">{I18N.get('developer.search.apply')}</Button>
-                                </div>
-                            </List.Item>
-                        </MediaQuery>
-                    </div>
-                )}
-            />
+                                    </div>
+                                </List.Item>
+                            </MediaQuery>
+                            <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                                <List.Item
+                                    key={item.id}
+                                    className="ignore-right-box"
+                                >
+                                    <h3 className="no-margin no-padding one-line brand-color">
+                                        <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
+                                    </h3>
+                                    <h5 className="no-margin">
+                                        {item.description}
+                                    </h5>
+                                    <div>
+                                        <a onClick={() => this.setState({ showUserInfo: item.owner })}>
+                                            <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
+                                            <Divider type="vertical"/>
+                                            <Avatar size="large"
+                                                src={this.getAvatarWithFallback(item.owner.profile.avatar)}/>
+                                        </a>
+                                        <Button onClick={clickHandler.bind(this, item.id)}
+                                            type="primary" className="pull-right">{I18N.get('developer.search.apply')}</Button>
+                                    </div>
+                                </List.Item>
+                            </MediaQuery>
+                        </div>
+                    )}
+                >
+                    {this.state.loadingMore && this.hasMore() &&
+                        <div className="loadmore full-width halign-wrapper">
+                            <Spin />
+                        </div>
+                    }
+                </List>
+            </InfiniteScroll>
         )
     }
 

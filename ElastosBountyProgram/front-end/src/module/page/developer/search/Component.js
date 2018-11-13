@@ -33,7 +33,7 @@ export default class extends StandardPage {
                         </div>
                     </Row>
                     <Row className="d_row">
-                        <Search preselect={this.props.preselect}/>
+                        <Search/>
                     </Row>
                 </div>
             </div>

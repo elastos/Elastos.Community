@@ -5,6 +5,7 @@ import BaseComponent from '@/model/BaseComponent'
 import TaskCreateForm from '@/module/form/TaskCreateForm/Container'
 import { Col, Icon, Popconfirm, Menu, Button, Spin, Dropdown } from 'antd'
 import Comments from '@/module/common/comments/Container'
+import I18N from '@/I18N'
 
 // TODO: admin detail should also be in a new component too to be consistent
 import ProjectPublicDetail from '@/module/project/detail/Container'
@@ -63,28 +64,28 @@ export default class extends BaseComponent {
         return <div className="l_banner">
             {this.props.task.category !== 'CR100' ?
             <div className="pull-left">
-                Status: <span className="status">{this.props.task.status}</span>
+                {I18N.get('admin.tasks.status')}: <span className="status">{I18N.get(`taskStatus.${this.props.task.status}`)}</span>
                 {this.props.task.status === TASK_STATUS.CREATED &&
-                <span className="help-text">&nbsp; - this task does not require approval</span>
+                <span className="help-text">&nbsp; - {I18N.get('project.admin.statusHelp.created')}</span>
                 }
                 {this.props.task.status === TASK_STATUS.PENDING &&
-                <span className="help-text">&nbsp; - this task is awaiting approval</span>
+                <span className="help-text">&nbsp; - {I18N.get('project.admin.statusHelp.pending')}</span>
                 }
                 {(this.props.task.status === TASK_STATUS.APPROVED || this.props.task.status === TASK_STATUS.ASSIGNED) && this.props.task.approvedBy &&
                 <span className="help-text">
-                    &nbsp; - this task is approved by {this.props.task.approvedBy.username}
-                    {this.props.task.approvedDate && ` on ${moment(this.props.task.approvedDate).format('MMM D')}`}
+                    &nbsp; - {I18N.get('project.detail.statusHelp.approvedBy')} {this.props.task.approvedBy.username}
+                    {this.props.task.approvedDate && ` ${I18N.get('project.admin.statusHelp.approvedOn')} ${moment(this.props.task.approvedDate).format('MMM D')}`}
                 </span>
                 }
                 {this.props.task.status === TASK_STATUS.SUCCESS &&
                 ((this.props.task.reward.ela > 0 || this.props.task.reward.usd > 0) ?
-                    <span className="help-text">&nbsp; - this task is awaiting ELA disbursement</span> :
-                    <span className="help-text">&nbsp; - this task does not require ELA, no further action is needed</span>
+                    <span className="help-text">&nbsp; - {I18N.get('project.admin.statusHelp.successReward')}</span> :
+                    <span className="help-text">&nbsp; - {I18N.get('project.admin.statusHelp.successNoReward')}</span>
                 )
                 }
             </div> :
             <div className="pull-left">
-                CR100 Project
+                CR100 {I18N.get('developer.search.project')}
             </div>
             }
             {this.props.task.category !== 'CR100' &&
@@ -139,16 +140,16 @@ export default class extends BaseComponent {
         return <div className="l_banner">
             {this.props.task.category !== 'CR100' ?
                 <div className="pull-left">
-                    Status: <span className="status">{this.props.task.status}</span>
+                    {I18N.get('admin.tasks.status')}: <span className="status">{I18N.get(`taskStatus.${this.props.task.status}`)}</span>
 
                     {this.props.task.status === TASK_STATUS.PENDING &&
-                    <span className="help-text">&nbsp; - this task is awaiting approval by an admin</span>
+                    <span className="help-text">&nbsp; - {I18N.get('project.public.statusHelp.pending')}</span>
                     }
                     {this.props.task.status === TASK_STATUS.SUBMITTED &&
-                    <span className="help-text">&nbsp; - this task is awaiting council sign off</span>
+                    <span className="help-text">&nbsp; - {I18N.get('project.public.statusHelp.submitted')}</span>
                     }
                     {this.props.task.status === TASK_STATUS.SUCCESS &&
-                    <span className="help-text">&nbsp; - an admin will review and disburse the ELA reward if any</span>
+                    <span className="help-text">&nbsp; - {I18N.get('project.public.statusHelp.success')}</span>
                     }
                 </div> :
                 <div className="pull-left">
@@ -159,13 +160,13 @@ export default class extends BaseComponent {
             <div className="pull-right right-align">
                 {/* Admin & Task Owner CAN Mark as Complete */}
                 {(this.props.task.status === TASK_STATUS.APPROVED || this.props.task.status === TASK_STATUS.ASSIGNED) && isTaskOwner &&
-                <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsSubmitted.bind(this)}>
-                    <Button>Mark as Complete</Button>
+                <Popconfirm title={I18N.get('project.public.statusHelp.markAsCompleteConfirm')} placement="left" okText={I18N.get('.yes')} onConfirm={this.markAsSubmitted.bind(this)}>
+                    <Button>{I18N.get('project.public.statusHelp.markAsComplete')}</Button>
                 </Popconfirm>
                 }
                 {this.props.task.status !== TASK_STATUS.SUCCESS && isTaskOwner &&
                 <Button onClick={this.switchEditMode.bind(this)}>
-                    {this.state.editing ? 'Cancel' : 'Edit'}
+                    {this.state.editing ? I18N.get('.cancel') : I18N.get('.edit')}
                 </Button>
                 }
             </div>

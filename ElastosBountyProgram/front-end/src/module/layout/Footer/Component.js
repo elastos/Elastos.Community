@@ -22,14 +22,17 @@ export default class extends BaseComponent {
                                 <div className="title brand-color">
                                     {I18N.get('landing.footer.resources')}
                                 </div>
-                                <div><a href="/vision" target="_blank">{I18N.get('vision.00')}</a></div>
-                                <div><a href="https://wallet.elastos.org/">{I18N.get('landing.footer.wallet')}</a></div>
-                                <div><a href="https://blockchain.elastos.org/status">{I18N.get('landing.footer.explorer')}</a></div>
-                                <div><a href="https://github.com/elastos" target="_blank">{I18N.get('landing.footer.github')}</a></div>
-                                <div><a href="https://github.com/elastos/Elastos.Community/tree/master/CyberRepublicLogoAssets" target="_blank">{I18N.get('landing.footer.assets')}</a></div>
-                                <div><a href="https://elanews.net/">{I18N.get('landing.footer.elaNews')}</a></div>
+                                <div className="footer-color-dark"><a href="/vision" target="_blank">{I18N.get('vision.00')}</a></div>
+                                <div className="footer-color-dark"><a href="https://wallet.elastos.org/">{I18N.get('landing.footer.wallet')}</a></div>
+                                <div className="footer-color-dark"><a href="https://blockchain.elastos.org/status">{I18N.get('landing.footer.explorer')}</a></div>
+                                <div className="footer-color-dark"><a href="https://github.com/elastos" target="_blank">{I18N.get('landing.footer.github')}</a></div>
+                                <div className="footer-color-dark"><a href="https://github.com/elastos/Elastos.Community/tree/master/CyberRepublicLogoAssets" target="_blank">{I18N.get('landing.footer.assets')}</a></div>
+                                <div className="footer-color-dark"><a href="https://elanews.net/">{I18N.get('landing.footer.elaNews')}</a></div>
+                                <div className="footer-color-dark"><a href="/privacy">{I18N.get('landing.footer.privacyPolicy')}</a></div>
+                                <div className="footer-color-dark"><a href="/terms">{I18N.get('landing.footer.termsAndConditions')}</a></div>
                             </div>
                         </Col>
+                        <Col className="vdiv"></Col>
                         <Col className="contact-container" xs={24} sm={24} md={7}>
                             <div className="contact footer-vertical-section">
                                 <div className="title brand-color">

@@ -9,6 +9,7 @@ import Footer from '@/module/layout/Footer/Container'
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
 import Flag from 'react-flags'
+import {USER_LANGUAGE} from '@/constant'
 
 export default class extends EmptyPage {
     buildLanguageDropdown() {
@@ -31,6 +32,11 @@ export default class extends EmptyPage {
     }
 
     ord_renderContent () {
+        let linkToBlog = 'https://blog.cyberrepublic.org'
+
+        if (I18N.getLang() === USER_LANGUAGE.zh) {
+            linkToBlog += `/${USER_LANGUAGE.zh}`
+        }
 
         return <div className="p_landingBg">
             <div id="loader">
@@ -60,11 +66,11 @@ export default class extends EmptyPage {
                             <li><a href="/crcles">{I18N.get('0106')}</a></li>
                             <li><a href="/developer">{I18N.get('0102')}</a></li>
                             <li><a href="/council">{I18N.get('council.0001')}</a></li>
-                            <li><a href="https://blog.cyberrepublic.org">{I18N.get('0110')}</a></li>
+                            <li><a href={linkToBlog}>{I18N.get('0110')}</a></li>
                             <li><a href="/ambassadors">{I18N.get('0107')}</a></li>
 
                             {this.props.is_login
-                                ? <li><a href="/profile/teams">{I18N.get('0104')}</a></li>
+                                ? <li><a href="/profile/info">{I18N.get('0104')}</a></li>
                                 : <li><a href="/login">{I18N.get('0201')}</a></li>
                             }
 
@@ -100,7 +106,7 @@ export default class extends EmptyPage {
                             <li><a href="/ambassadors">{I18N.get('0107')}</a></li>
 
                             {this.props.is_login
-                                ? <li><a href="/profile/teams">{I18N.get('0104')}</a></li>
+                                ? <li><a href="/profile/info">{I18N.get('0104')}</a></li>
                                 : <li><a href="/login">{I18N.get('0201')}</a></li>
                             }
 
@@ -1278,6 +1284,8 @@ export default class extends EmptyPage {
                                 <li><a href="https://github.com/elastos" target="_blank">{I18N.get('landing.footer.github')}</a></li>
                                 <li><a href="https://github.com/elastos/Elastos.Community/tree/master/CyberRepublicLogoAssets" target="_blank">{I18N.get('landing.footer.assets')}</a></li>
                                 <li><a href="https://elanews.net/">{I18N.get('landing.footer.elaNews')}</a></li>
+                                <li><a href="/privacy">{I18N.get('landing.footer.privacyPolicy')}</a></li>
+                                <li><a href="/terms">{I18N.get('landing.footer.termsAndConditions')}</a></li>
                             </ul>
                         </div>
 
