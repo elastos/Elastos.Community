@@ -1,5 +1,5 @@
 import React from 'react';
-import StandardPage from '../../StandardPage';
+import ProfilePage from '../../ProfilePage';
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import config from '@/config';
 import TeamCreateForm from '@/module/form/TeamCreateForm/Container'
@@ -10,7 +10,7 @@ import { Col, Row, Icon, Form, Input, Button, Divider, Table } from 'antd'
 import moment from "moment/moment";
 const FormItem = Form.Item;
 
-export default class extends StandardPage {
+export default class extends ProfilePage {
     ord_states(){
         return {
             loading : true,

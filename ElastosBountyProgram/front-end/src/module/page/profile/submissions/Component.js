@@ -1,5 +1,5 @@
 import React from 'react';
-import StandardPage from '../../StandardPage';
+import ProfilePage from '../../ProfilePage';
 import Footer from '@/module/layout/Footer/Container'
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import _ from 'lodash'
@@ -21,19 +21,13 @@ const FILTERS = {
     SUBSCRIBED: 'subscribed'
 };
 
-export default class extends StandardPage {
+export default class extends ProfilePage {
     constructor(props) {
         super(props);
 
         this.state = {
             showMobile: false,
             filter: FILTERS.ALL
-        }
-    }
-
-    ord_checkLogin(isLogin) {
-        if (!isLogin) {
-            this.props.history.replace('/profile/teams')
         }
     }
 

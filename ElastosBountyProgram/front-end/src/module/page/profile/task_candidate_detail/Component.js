@@ -1,5 +1,5 @@
 import React from 'react'
-import StandardPage from '../../StandardPage'
+import ProfilePage from '../../ProfilePage'
 
 import TaskApplicationDetail from '@/module/task/application/Container'
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
@@ -11,7 +11,7 @@ import '../../admin/admin.scss'
 
 import { Col, Row, Breadcrumb, Icon } from 'antd'
 
-export default class extends StandardPage {
+export default class extends ProfilePage {
 
     state = {
         editing: false
