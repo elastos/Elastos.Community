@@ -1,17 +1,17 @@
 import React from 'react'
-import EmptyPage from '../EmptyPage'
+import StandardPage from '../StandardPage'
 import _ from 'lodash'
 import I18N from '@/I18N'
 import './style.scss'
 import { MAX_WIDTH_MOBILE, MIN_WIDTH_PC } from '@/config/constant'
-import { Col, Row, List, Button, Select } from 'antd'
+import { Col, Row, List, Button, Select, Icon } from 'antd'
 import Footer from '@/module/layout/Footer/Container'
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
 import Flag from 'react-flags'
 import {USER_LANGUAGE} from '@/constant'
 
-export default class extends EmptyPage {
+export default class extends StandardPage {
     buildLanguageDropdown() {
         return (
             <div className="language-dropdown">
@@ -45,52 +45,6 @@ export default class extends EmptyPage {
                     <div className="logo-mark part"><img src="assets/images/logo-mark.svg"/></div>
                 </div>
             </div>
-
-            <header id="globalHeader">
-                <div className="contentContainer">
-                    <div className="logo sized">
-                        <img src="assets/images/logo.svg" alt="Cyber Republic" className="dsk"/>
-                        <img src="assets/images/logo-mark.svg" className="mob"/>
-                        <div class="alpha-tag dsk">{I18N.get('0000')}</div>
-                    </div>
-
-                    <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
-                        <div className="pull-right" style={{marginTop: 20}}>
-                            {this.buildLanguageDropdown()}
-                        </div>
-                    </MediaQuery>
-
-                    <nav className="toplinks">
-                        <ul>
-                            <li><a href="/cr100">{I18N.get('0105')}</a></li>
-                            <li><a href="/crcles">{I18N.get('0106')}</a></li>
-                            <li><a href="/developer">{I18N.get('0102')}</a></li>
-                            <li><a href="/council">{I18N.get('council.0001')}</a></li>
-                            <li><a href={linkToBlog}>{I18N.get('0110')}</a></li>
-                            <li><a href="/ambassadors">{I18N.get('0107')}</a></li>
-
-                            {this.props.is_login
-                                ? <li><a href="/profile/info">{I18N.get('0104')}</a></li>
-                                : <li><a href="/login">{I18N.get('0201')}</a></li>
-                            }
-
-                            <li className="hasIcon">
-                                <span className="txt">{I18N.get('landing.playVideo')}</span>
-                                <div className="arrow-btn">
-                                    <div className="arrow-circle"><img src="assets/images/arrow-submit.svg"/></div>
-                                    <div className="arrow-border"></div>
-                                </div>
-                                <a href="#" className="video-btn"></a>
-                            </li>
-
-                            <li>
-                                {this.buildLanguageDropdown()}
-                            </li>
-                        </ul>
-                    </nav>
-
-                </div>
-            </header>
 
             <div className="sticky">
                 <div className="bg"></div>

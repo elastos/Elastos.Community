@@ -1602,7 +1602,7 @@
   }
   #hero .bg-wrap {
     height: 630px;
-    top: 104px;
+    top: 0px;
   }
   #hero .bg-wrap h1 {
     position: absolute;
@@ -3771,11 +3771,11 @@
   /*! mq: 1300 */
   @media screen and (max-width: 1300px) {
     #hero {
-      padding-top: 510px;
+      padding-top: 408px;
       padding-bottom: 50px;
     }
     #hero .bg-wrap {
-      top: 50%;
+      top: 42%;
       height: 504px;
       margin-top: -252px;
     }
@@ -3993,7 +3993,7 @@
       margin-left: -225px;
     }
     #hero .bg-wrap {
-      top: 50%;
+      top: 42%;
       height: 378px;
       margin-top: -190px;
     }
