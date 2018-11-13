@@ -1110,7 +1110,17 @@ const en = {
     'crcle.qa': 'QA',
     'crcle.writing': 'Writing',
     'crcle.hr': 'HR',
-    'crcle.legal': 'Legal'
+    'crcle.legal': 'Legal',
+
+    'user.skillset.CPP': 'C++',
+    'user.skillset.JAVASCRIPT': 'JavaScript',
+    'user.skillset.GO': 'GO',
+    'user.skillset.PYTHON': 'Python',
+    'user.skillset.JAVA': 'Java',
+    'user.skillset.SWIFT': 'Swift',
+    'user.skillset.DESIGN': 'Design',
+    'user.skillset.FINANCE': 'Finance',
+    'user.skillset.MARKETING': 'Marketing',
 };
 
 // lang mappings
