@@ -151,7 +151,7 @@ export default class extends Base {
         });
 
         if (tmp) {
-            throw 'user already belongs to community';
+            return
         }
 
         await db_user_community.save({

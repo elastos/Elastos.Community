@@ -2,7 +2,7 @@ import Base from './Base';
 import {Document} from 'mongoose';
 import * as _ from 'lodash';
 import {constant} from '../constant';
-import * as uuid from 'uuid'
+import * as _ from 'lodash'
 import {validate, utilCrypto, mail} from '../utility';
 import * as moment from 'moment';
 
@@ -10,6 +10,14 @@ import * as moment from 'moment';
 const map_key = ['Kevin Zhang', 'Fay Li', 'Yipeng Su'];
 
 let tm = null;
+
+const restrictedFields = {
+    update: [
+        '_id',
+        'createdBy',
+        'createdAt'
+    ]
+}
 
 export default class extends Base {
 
@@ -102,6 +110,11 @@ export default class extends Base {
         return list;
     }
 
+    /**
+     *
+     * @param param
+     * @returns {Promise<"mongoose".Document>}
+     */
     public async update(param): Promise<Document>{
         const db_cvote = this.getDBModel('CVote');
 
@@ -118,9 +131,6 @@ export default class extends Base {
             throw 'cvoteservice.update - invalid proposal id';
         }
 
-        const {
-            title, type, content, proposedBy, motionId, isConflict, notes, vote_map, reason_map, published
-        } = param;
         let doc:any = {}
 
         if (this.isExpired(cur) || _.includes([constant.CVOTE_STATUS.FINAL, constant.CVOTE_STATUS.DEFERRED], cur.status)) {
@@ -132,31 +142,28 @@ export default class extends Base {
 
                 // if published is changed, we let it pass if published is changed, but only that field
                 doc = {
-                    published
+                    published: param.published
                 }
             }
 
         } else {
-            doc = {
-                title,
-                type,
-                content,
-                proposedBy,
-                motionId,
-                isConflict,
-                notes,
-                published,
-                vote_map: this.param_metadata(vote_map),
-                reason_map: this.param_metadata(reason_map)
-            };
+            doc = _.omit(param, restrictedFields.update)
 
-            doc.status = this.getNewStatus(doc.vote_map, cur);
+            if (param.vote_map) {
+                doc.vote_map = this.param_metadata(param.vote_map)
+                doc.status = this.getNewStatus(doc.vote_map, cur);
+            }
+
+            if (param.reason_map) {
+                doc.reason_map = this.param_metadata(param.reason_map)
+            }
         }
 
         const cvote = await db_cvote.update({_id : param._id}, doc);
 
         this.sendEmailNotification({_id : param._id}, 'update');
 
+        // this is wrong, update call doesn't return doc
         return cvote;
     }
 
