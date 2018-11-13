@@ -1108,7 +1108,30 @@ const zh = {
     'crcle.qa': 'QA',
     'crcle.writing': '法律',
     'crcle.hr': '人力资源',
-    'crcle.legal': '法律咨询'
+    'crcle.legal': '法律咨询',
+
+    'user.skillset.CPP': 'C++',
+    'user.skillset.JAVASCRIPT': 'JavaScript',
+    'user.skillset.GO': 'GO',
+    'user.skillset.PYTHON': 'Python',
+    'user.skillset.JAVA': 'Java',
+    'user.skillset.SWIFT': 'Swift',
+    'user.skillset.UX_DESIGN': 'UX Design',
+    'user.skillset.UI_DESIGN': 'UI Design',
+    'user.skillset.PRINT_DESIGN': 'Print Design',
+    'user.skillset.MANUAL_TESTING': 'Manual Testing',
+    'user.skillset.AUTOMATED_TESTING': 'Automated Testing',
+    'user.skillset.DEVOPS': 'DevOps',
+    'user.skillset.OFFLINE_MARKETING': 'Offline Marketing',
+    'user.skillset.ONLINE_MARKETING': 'Online Marketing',
+    'user.skillset.SEO': 'SEO',
+    'user.skillset.EVENT_ORGANIZE': 'Event Organizing',
+    'user.skillset.LOGISTICS': 'Logistics',
+    'user.skillset.TRANSLATION': 'Translation',
+    'user.skillset.PROJECT_MANAGEMENT': 'Project Management',
+    'user.skillset.PRODUCT_MANAGEMENT': 'Product Management',
+    'user.skillset.HR': 'HR',
+    'user.skillset.SALES': 'Sales',
 }
 
 // lang mappings
