@@ -1,5 +1,5 @@
 import React from 'react';
-import StandardPage from '../../StandardPage';
+import ProfilePage from '../../ProfilePage';
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import I18N from '@/I18N'
 import SubmissionCreateForm from '@/module/form/SubmissionCreateForm/Container'
@@ -8,7 +8,7 @@ import '../../admin/admin.scss'
 
 import { Col, Row } from 'antd'
 
-export default class extends StandardPage {
+export default class extends ProfilePage {
     ord_renderContent () {
         return (
             <div className="c_ProfileContainer">

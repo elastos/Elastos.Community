@@ -1,5 +1,5 @@
 import React from 'react';
-import StandardPage from '../../StandardPage';
+import ProfilePage from '../../ProfilePage';
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import config from '@/config';
 import _ from 'lodash'
@@ -24,7 +24,7 @@ const FILTERS = {
     REJECTED: 'rejected'
 }
 
-export default class extends StandardPage {
+export default class extends ProfilePage {
     constructor(props) {
         super(props)
 

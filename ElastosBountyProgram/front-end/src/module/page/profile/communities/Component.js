@@ -1,5 +1,5 @@
 import React from 'react';
-import StandardPage from '../../StandardPage';
+import ProfilePage from '../../ProfilePage';
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import I18N from '@/I18N'
 import { message } from 'antd'
@@ -12,13 +12,7 @@ import moment from 'moment/moment'
 
 import MediaQuery from 'react-responsive'
 
-export default class extends StandardPage {
-
-    ord_checkLogin(isLogin) {
-        if (!isLogin) {
-            this.props.history.replace('/profile/teams')
-        }
-    }
+export default class extends ProfilePage {
 
     componentDidMount() {
         super.componentDidMount()

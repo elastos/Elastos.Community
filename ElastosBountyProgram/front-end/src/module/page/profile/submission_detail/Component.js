@@ -1,5 +1,5 @@
 import React from 'react'
-import StandardPage from '../../StandardPage'
+import ProfilePage from '../../ProfilePage'
 
 import SubmissionDetail from '@/module/submission/Container'
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
@@ -11,7 +11,7 @@ import '../../admin/admin.scss'
 
 import { Col, Row, Breadcrumb, Icon } from 'antd'
 
-export default class extends StandardPage {
+export default class extends ProfilePage {
 
     state = {
         editing: false
@@ -19,7 +19,7 @@ export default class extends StandardPage {
 
     ord_checkLogin(isLogin) {
         if (!isLogin) {
-            this.props.history.replace('/profile/teams')
+            this.props.history.replace('/login')
         }
     }
 

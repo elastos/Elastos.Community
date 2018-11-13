@@ -1,5 +1,5 @@
 import React from 'react';
-import StandardPage from '../../StandardPage';
+import ProfilePage from '../../ProfilePage';
 import Footer from '@/module/layout/Footer/Container'
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import _ from 'lodash'
@@ -27,7 +27,7 @@ const FILTERS = {
     CR100: 'cr100'
 }
 
-export default class extends StandardPage {
+export default class extends ProfilePage {
     constructor(props) {
         super(props)
 
@@ -35,12 +35,6 @@ export default class extends StandardPage {
             showMobile: false,
             filter: FILTERS.ALL,
             showUserInfo: null
-        }
-    }
-
-    ord_checkLogin(isLogin) {
-        if (!isLogin) {
-            this.props.history.replace('/profile/teams')
         }
     }
 
