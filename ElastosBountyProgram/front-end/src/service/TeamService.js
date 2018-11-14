@@ -35,15 +35,13 @@ export default class extends BaseService {
     async loadMore(qry = {}) {
         const teamRedux = this.store.getRedux('team')
         const path = '/api/team/list'
-        this.abortFetch(path)
 
         let result
         try {
             result = await api_request({
                 path,
                 method: 'get',
-                data: qry,
-                signal: this.getAbortSignal(path)
+                data: qry
             })
 
             const oldTeams = this.store.getState().team.all_teams || []
