@@ -99,7 +99,7 @@ $mobile-padding: $gap_0 0px;
     .video-img {
       position: absolute;
       right: -30px;
-      top: -2px;
+      top: -5px;
     }
   }
 
@@ -138,5 +138,11 @@ $mobile-padding: $gap_0 0px;
     .member-panel-search {
       margin-bottom: $gap_2;
     }
+  }
+}
+
+.video-popup-modal {
+  .ant-modal-body {
+    padding: 0px !important;
   }
 }

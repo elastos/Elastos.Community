@@ -2,6 +2,7 @@ import React from 'react'
 import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import I18N from '@/I18N'
+import Video from '@/module/shared/video/Container'
 import { Link } from 'react-router-dom'
 import './style.scss'
 import MediaQuery from 'react-responsive'
@@ -60,30 +61,25 @@ export default class extends StandardPage {
                             {this.buildMemberSearch()}
                         </div>
                     </div>
-                    <div id="video-overlay">
-                        <div className="blanket"></div>
-
-                        <div className="overlayWrap">
-                            <div className="contentContainer">
-                                <div id="video-contents">
-                                    <img src="assets/images/lbvideo-spacer.png" className="video-spacer"/>
-                                    <div className="close-btn">
-                                        <div className="close-line right"></div>
-                                        <div className="close-line left">
-                                            <div className="close-hover"></div>
-                                        </div>
-                                    </div>
-
-                                    <video controls id="lbvid"></video>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
+                {this.rederVideoModal()}
                 {this.renderProfileModal()}
                 <Footer/>
             </div>
+        )
+    }
+
+    rederVideoModal() {
+        return (
+            <Modal
+                className="video-popup-modal"
+                visible={!!this.state.showVideo}
+                onCancel={this.handleCancelVideo.bind(this)}
+                footer={null}
+                width="76%"
+                style={{ top: 35 }}>
+                <Video showVideo={this.state.showVideo} />
+            </Modal>
         )
     }
 
@@ -99,6 +95,18 @@ export default class extends StandardPage {
                 }
             </Modal>
         )
+    }
+
+    handleCancelVideo() {
+        this.setState({
+            showVideo: false
+        })
+    }
+
+    handleShowVideo() {
+        this.setState({
+            showVideo: true
+        })
     }
 
     handleCancelProfilePopup() {
@@ -136,7 +144,7 @@ export default class extends StandardPage {
                             </a>
                         </div>
                     </div>
-                    <div className="video">
+                    <div className="video" onClick={this.handleShowVideo.bind(this)}>
                         <a className="video-btn">
                             <p className="video-title">Cyber Republic Video</p>
                             <p className="video-more">Watch it now and learn more</p>
