@@ -176,6 +176,10 @@ export default class extends Base {
 
         if (param.profile) {
             updateObj.profile = Object.assign(user.profile, param.profile)
+
+            if (param.profile.skillset) {
+                updateObj.profile.skillset = param.profile.skillset
+            }
         }
 
         if (param.timezone) {
