@@ -20,21 +20,16 @@ export default class extends BaseService {
         const taskRedux = this.store.getRedux('task')
         const path = '/api/task/list'
 
-        let result
-        try {
-            result = await api_request({
-                path,
-                method: 'get',
-                data: qry
-            })
+        const result = await api_request({
+            path,
+            method: 'get',
+            data: qry
+        })
 
-            const oldTasks = this.store.getState().task.all_tasks || []
+        const oldTasks = this.store.getState().task.all_tasks || []
 
-            this.dispatch(taskRedux.actions.all_tasks_total_update(result.total))
-            this.dispatch(taskRedux.actions.all_tasks_update(oldTasks.concat(_.values(result.list))))
-        } catch (e) {
-            // Do nothing
-        }
+        this.dispatch(taskRedux.actions.all_tasks_total_update(result.total))
+        this.dispatch(taskRedux.actions.all_tasks_update(oldTasks.concat(_.values(result.list))))
 
         return result
     }
