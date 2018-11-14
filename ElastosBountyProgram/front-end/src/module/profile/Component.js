@@ -138,7 +138,8 @@ export default class extends BaseComponent {
                         <div className="pull-left">
                             {this.renderLocalTime()}
                         </div>
-                        <div className="pull-right">
+                        <div className="clearfix"/>
+                        <div>
                             {this.renderSocialMedia()}
                         </div>
                     </div>

@@ -727,7 +727,7 @@ const en = {
     'profile.sendMessage': 'Send Direct Message',
     'profile.viewProfile': 'View Profile',
     'profile.editProfile': 'Edit Profile',
-    'profile.showPublicProfile': 'Show Public Profile',
+    'profile.showPublicProfile': 'Public Profile',
     'profile.crContributors': 'CR Contributors',
     'profile.followers': 'Followers',
     'profile.edit': 'Edit',
