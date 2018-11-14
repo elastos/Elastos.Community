@@ -71,6 +71,8 @@ const en = {
     '2304': 'My Communities',
     '2305': 'My Projects',
 
+    'profile.skillsets': 'My Skillsets',
+
     'mentions.notFound': 'User not found',
 
     'comments': 'Comments',
