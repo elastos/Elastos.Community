@@ -60,6 +60,26 @@ export default class extends StandardPage {
                             {this.buildMemberSearch()}
                         </div>
                     </div>
+                    <div id="video-overlay">
+                        <div className="blanket"></div>
+
+                        <div className="overlayWrap">
+                            <div className="contentContainer">
+                                <div id="video-contents">
+                                    <img src="assets/images/lbvideo-spacer.png" className="video-spacer"/>
+                                    <div className="close-btn">
+                                        <div className="close-line right"></div>
+                                        <div className="close-line left">
+                                            <div className="close-hover"></div>
+                                        </div>
+                                    </div>
+
+                                    <video controls id="lbvid"></video>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
                 {this.renderProfileModal()}
                 <Footer/>
@@ -115,6 +135,13 @@ export default class extends StandardPage {
                                 Discord
                             </a>
                         </div>
+                    </div>
+                    <div className="video">
+                        <a className="video-btn">
+                            <p className="video-title">Cyber Republic Video</p>
+                            <p className="video-more">Watch it now and learn more</p>
+                            <img className="video-img" src="/assets/images/arrow-right.png"/>
+                        </a>
                     </div>
                     <div className="pull-right">
                         <img src="/assets/images/community-world.svg"/>

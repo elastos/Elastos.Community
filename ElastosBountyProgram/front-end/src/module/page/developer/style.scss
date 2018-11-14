@@ -14,6 +14,7 @@ $mobile-padding: $gap_0 0px;
 
   .panel {
     background: $primary_dark_color;
+    position: relative;
   }
 
   .navi-panel,
@@ -28,6 +29,7 @@ $mobile-padding: $gap_0 0px;
 
     @media only screen and (max-width: $mobile-width) {
       max-width: 928px;
+      min-width: 580px;
       padding: $gap_4 $gap_3;
     }
 
@@ -81,6 +83,26 @@ $mobile-padding: $gap_0 0px;
     }
   }
 
+  .video {
+    position: absolute;
+    line-height: 0px;
+    color: #43af92;
+    bottom: 35px;
+    cursor: pointer;
+
+    .video-title {
+      font-size: 18px;
+    }
+    .video-more {
+      font-size: 12px;
+    }
+    .video-img {
+      position: absolute;
+      right: -30px;
+      top: -2px;
+    }
+  }
+
   .member-panel {
     .ant-table-wrapper {
       background: $modal_bg;
@@ -118,4 +140,3 @@ $mobile-padding: $gap_0 0px;
     }
   }
 }
-
