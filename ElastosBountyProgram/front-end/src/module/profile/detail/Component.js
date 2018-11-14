@@ -92,7 +92,7 @@ export default class extends BaseComponent {
     renderSkillsets(isMobile) {
         return (
             <div className={`profile-skillset-info ${isMobile ? 'profile-skillset-info-mobile' : ''}`}>
-                {_.map(this.props.user.profile.skillset || [], (skillset) =>
+                {_.map(this.props.member.profile.skillset || [], (skillset) =>
                     <Tag color="blue" key={skillset}>
                         {I18N.get(`user.skillset.${skillset}`)}
                     </Tag>
