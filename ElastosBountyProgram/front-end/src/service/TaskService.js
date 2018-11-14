@@ -19,15 +19,13 @@ export default class extends BaseService {
     async loadMore(qry) {
         const taskRedux = this.store.getRedux('task')
         const path = '/api/task/list'
-        this.abortFetch(path)
 
         let result
         try {
             result = await api_request({
                 path,
                 method: 'get',
-                data: qry,
-                signal: this.getAbortSignal(path)
+                data: qry
             })
 
             const oldTasks = this.store.getState().task.all_tasks || []
