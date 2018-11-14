@@ -5,6 +5,14 @@
 $avatar-size: 160px;
 
 .c_Member {
+  .profile-skillset-info {
+    text-align: right;
+
+    .ant-tag {
+      margin-top: 1px;
+      margin-bottom: 1px;
+    }
+  }
 
   .header {
     width: 100%;
