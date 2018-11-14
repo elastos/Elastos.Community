@@ -88,6 +88,18 @@ export default class extends BaseComponent {
         )
     }
 
+    renderSkillsets(isMobile) {
+        return (
+            <div className={`profile-skillset-info ${isMobile ? 'profile-skillset-info-mobile' : ''}`}>
+                {_.map(this.props.user.profile.skillset || [], (skillset) =>
+                    <Tag color="blue" key={skillset}>
+                        {I18N.get(`user.skillset.${skillset}`)}
+                    </Tag>
+                )}
+            </div>
+        )
+    }
+
     renderDesktop() {
         return (
             <div>
@@ -99,6 +111,9 @@ export default class extends BaseComponent {
                     </div>
                     <div className="profile-right pull-left">
                         {this.renderFullName()}
+                        <div className="pull-right">
+                            {this.renderSkillsets()}
+                        </div>
                         {this.renderLocation()}
                         <div className="pull-left">
                             {this.renderLocalTime()}
