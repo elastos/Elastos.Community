@@ -129,7 +129,7 @@ export default class extends BaseComponent {
             results: this.state.results
         }
 
-        this.setState({ page, loadingMore: true })
+        this.setState({ loadingMore: true })
 
         const lookup = {
             TASK: this.props.loadMoreTasks,
@@ -138,7 +138,13 @@ export default class extends BaseComponent {
         }
 
         const getter = lookup[this.state.lookingFor]
-        getter && await getter.call(this, query)
+
+        try {
+            getter && await getter.call(this, query)
+            this.setState({ page })
+        } catch (e) {
+            // Do not update page in state if the call fails
+        }
 
         this.setState({ loadingMore: false })
     }

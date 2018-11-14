@@ -36,21 +36,16 @@ export default class extends BaseService {
         const teamRedux = this.store.getRedux('team')
         const path = '/api/team/list'
 
-        let result
-        try {
-            result = await api_request({
+        const result = await api_request({
                 path,
                 method: 'get',
                 data: qry
             })
 
-            const oldTeams = this.store.getState().team.all_teams || []
+        const oldTeams = this.store.getState().team.all_teams || []
 
-            await this.dispatch(teamRedux.actions.all_teams_total_update(result.total))
-            await this.dispatch(teamRedux.actions.all_teams_update(oldTeams.concat(_.values(result.list))))
-        } catch (e) {
-            // Do nothing
-        }
+        await this.dispatch(teamRedux.actions.all_teams_total_update(result.total))
+        await this.dispatch(teamRedux.actions.all_teams_update(oldTeams.concat(_.values(result.list))))
 
         return result
     }
