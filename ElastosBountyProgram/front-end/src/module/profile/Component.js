@@ -3,7 +3,7 @@ import BaseComponent from '@/model/BaseComponent'
 import UserEditForm from '@/module/form/UserEditForm/Container'
 import UserProfileForm from '@/module/form/UserProfileForm/Container'
 import I18N from '@/I18N'
-import { Col, Row, Icon, Popover, Button, Spin, Tabs } from 'antd'
+import { Col, Row, Icon, Popover, Button, Spin, Tabs, Tag } from 'antd'
 import moment from 'moment-timezone'
 
 import UserPublicDetail from './detail/Container'
@@ -134,11 +134,15 @@ export default class extends BaseComponent {
                     </div>
                     <div className="profile-right pull-left">
                         {this.renderFullName()}
+                        <div className="pull-right">
+                            {this.renderSkillsets()}
+                        </div>
                         {this.renderLocation()}
                         <div className="pull-left">
                             {this.renderLocalTime()}
                         </div>
-                        <div className="pull-right">
+                        <div className="clearfix"/>
+                        <div>
                             {this.renderSocialMedia()}
                         </div>
                     </div>
@@ -235,6 +239,18 @@ export default class extends BaseComponent {
                 <span>
                     {this.getCountryName(this.props.user.profile.country)}
                 </span>
+            </div>
+        )
+    }
+
+    renderSkillsets(isMobile) {
+        return (
+            <div className={`profile-skillset-info ${isMobile ? 'profile-skillset-info-mobile' : ''}`}>
+                {_.map(this.props.user.profile.skillset || [], (skillset) =>
+                    <Tag color="blue" key={skillset}>
+                        {I18N.get(`user.skillset.${skillset}`)}
+                    </Tag>
+                )}
             </div>
         )
     }

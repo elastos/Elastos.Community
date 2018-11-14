@@ -5,6 +5,14 @@
 $avatar-size: 160px;
 
 .c_Member {
+  .profile-skillset-info {
+    text-align: right;
+
+    .ant-tag {
+      margin-top: 1px;
+      margin-bottom: 1px;
+    }
+  }
 
   .header {
     width: 100%;
@@ -187,7 +195,7 @@ $avatar-size: 160px;
   }
 
   .profile-button {
-    width: 200px;
+    width: 180px;
     margin-left: 40px;
 
     &.profile-button-mobile {
@@ -256,8 +264,6 @@ $avatar-size: 160px;
   }
 
   .profile-social {
-    text-align: right;
-
     a {
       color: #000 !important;
       margin-right: 15px;
