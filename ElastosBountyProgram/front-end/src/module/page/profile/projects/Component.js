@@ -1,5 +1,5 @@
 import React from 'react';
-import StandardPage from '../../StandardPage';
+import ProfilePage from '../../ProfilePage';
 import Footer from '@/module/layout/Footer/Container'
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import _ from 'lodash'
@@ -27,7 +27,7 @@ const FILTERS = {
     CR100: 'cr100'
 }
 
-export default class extends StandardPage {
+export default class extends ProfilePage {
     constructor(props) {
         super(props)
 
@@ -35,12 +35,6 @@ export default class extends StandardPage {
             showMobile: false,
             filter: FILTERS.ALL,
             showUserInfo: null
-        }
-    }
-
-    ord_checkLogin(isLogin) {
-        if (!isLogin) {
-            this.props.history.replace('/profile/teams')
         }
     }
 
@@ -146,9 +140,7 @@ export default class extends StandardPage {
                                 <h5 class="no-margin">
                                     {item.description}
                                 </h5>
-                                <div>
-                                    {item.content}
-                                </div>
+                                <div className="description-content ql-editor" dangerouslySetInnerHTML={{__html: item.content}} />
                                 <div className="ant-list-item-right-box">
                                     <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
                                         <Avatar size="large" icon="user" className="pull-right" src={USER_AVATAR_DEFAULT}/>

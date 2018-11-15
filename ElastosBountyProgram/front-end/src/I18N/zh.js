@@ -1,5 +1,6 @@
-import { TASK_STATUS } from '@/constant'
+import {TASK_STATUS, CVOTE_STATUS} from '@/constant'
 import council from './zh/council'
+import getting_started from './en/getting_started';
 
 const zh = {
     council,
@@ -17,7 +18,6 @@ const zh = {
     '0009': '常见问题',
     '0010': '联系方式',
     '0011': '加入Discord',
-    '0012': '语言',
 
     '0100': '开发者',
     '0101': '活动',
@@ -75,7 +75,9 @@ const zh = {
 
     'comments': '评论',
     'comments.posts': '动态',
+    'comments.post': 'Post',
     'comments.noComments': '还没有评论，抢沙发！',
+    'comments.commentsOrUpdates': 'Comments or updates',
     // Admin tasks
     'admin.tasks.status': '状态',
 
@@ -413,7 +415,21 @@ const zh = {
 
     'project.detail.comments_disabled': '不能对已经关闭的竞标项目或任务发表评论',
 
-    'team.detail.team_active': '您的团队已经激活',
+    'project.admin.statusHelp.created': 'this task does not require approval',
+    'project.admin.statusHelp.pending': 'this task is awaiting approval',
+    'project.admin.statusHelp.successReward': 'this task is awaiting ELA disbursement',
+    'project.admin.statusHelp.successNoReward': 'this task does not require ELA, no further action is needed',
+    'project.admin.statusHelp.approvedBy': 'this task is approved by',
+    'project.admin.statusHelp.approvedOn': 'on',
+
+    'project.public.statusHelp.pending': 'this task is awaiting approval by an admin',
+    'project.public.statusHelp.submitted': 'this task is awaiting council sign off',
+    'project.public.statusHelp.success': 'an admin will review and disburse the ELA reward if any',
+
+    'project.public.statusHelp.markAsComplete': 'Mark as Complete',
+    'project.public.statusHelp.markAsCompleteConfirm': 'Are you sure you want to mark this task as complete?',
+
+    'team.detail.team_active': '你的团队已经激活',
 
     'team.create.error.nameRequired': '请填写团队名称',
     'team.create.error.nameTooShort': '团队名称过短',
@@ -499,7 +515,26 @@ const zh = {
     'community.link.toevent': '查看活动',
 
     // Council
+    'council.list': 'List',
+    'council.voting': 'Voting',
     'council.list.proposals': '如果有意见和建议，请发送提案到',
+    'council.voting.proposalList': 'Proposal List',
+    'council.voting.number': 'No.',
+    'council.voting.published': 'Published',
+    'council.voting.title': 'Title',
+    'council.voting.type': 'Type',
+    'council.voting.author': 'Author',
+    'council.voting.voteBy': 'Vote By',
+    'council.voting.status': 'Status',
+    'council.voting.createdAt': 'Created',
+
+    'council.voting.type.newMotion': 'New Motion',
+    'council.voting.type.motionAgainst': 'Motion Against',
+    'council.voting.type.anythingElse': 'Anything Else',
+
+    'council.voting.type.support': 'Support',
+    'council.voting.type.reject': 'Reject',
+    'council.voting.type.abstention': 'Abstention',
 
     // Landing
     'landing.elastos': 'Elastos',
@@ -654,6 +689,10 @@ const zh = {
     'landing.footer.contacts': '其他联系人：',
     'landing.footer.join': '加入我们',
 
+    'landing.footer.other': 'Other',
+    'landing.footer.privacyPolicy': 'Privacy Policy',
+    'landing.footer.termsAndConditions': 'Terms & Conditions',
+
     'landing.0220': 'ELA令牌将用于在区块链上注册id，打开通往Elastos生态系统的门。 一旦加入，将会有无数的交流机会。',
     'landing.0221': '您可以购买去中心化应用程序，获得云存储，购买和销售数字产品和资产，如歌曲、电影、书籍和视频，以及无限的其他资源。',
     'landing.0222': '此外，ELA令牌持有者将有机会投资于众多项目。对于在Elastos上运行的每一个dApp，拥有ELA来注册数字资产将是非常重要的，从而为令牌创造持续的必要性。',
@@ -676,7 +715,6 @@ const zh = {
     'vision.05': '亦来云的愿景是改变互联网，而Cyber Republic愿景去改变人们组织和构建一个全球项目的方式。Alpha版本为我们向一个完全现代和独特的网络共和国目标迈进提供了模板和框架。您的投入和积极的参与对让这个愿景得以继续发展并成形是非常必要的。',
     'vision.06': '关于如何申请个人项目的更多信息和更多细节很快将会发布。',
     'vision.07': '我们期待着为更安全、更透明、更自由的新型互联网建立一个创业和创新的国际化港湾。',
-
 
     // Role
     'role.member': '普通会员',
@@ -725,6 +763,8 @@ const zh = {
     'profile.detail.table.action': '操作',
     'profile.detail.noapplications': '还没有任何申请',
     'profile.detail.finding': '资金支持：100k美金或5%的股权或代币/令牌',
+    'profile.detail.sendmessage': 'Send Message',
+    'profile.detail.comingsoon': 'Coming soon...',
 
     // Validate Form
     'ambassadors.form.required': '必填项目',
@@ -1046,6 +1086,68 @@ const zh = {
     'cr-video.q7.title': '有问题吗？只是想要联系？',
     'cr-video.q7.subtitle': '输入你的电邮，我们将会亲自跟你联系',
     'cr-video.q7.button_text': '提交',
+
+    'user.skillset.select': 'Select skillsets',
+
+    'user.skillset.group.DESIGN': 'Design',
+    'user.skillset.group.MARKETING': 'Marketing',
+    'user.skillset.group.WRITING': 'Writing',
+    'user.skillset.group.VIDEO': 'Video',
+    'user.skillset.group.MUSIC': 'Music',
+    'user.skillset.group.DEVELOPER': 'Developer',
+    'user.skillset.group.BUSINESS': 'Business',
+
+    'user.skillset.LOGO_DESIGN': 'Logo Design',
+    'user.skillset.FLYERS': 'Flyers Design',
+    'user.skillset.PACKAGING': 'Packaging Design',
+    'user.skillset.ILLUSTRATION': 'Illustrations',
+    'user.skillset.INFOGRAPHIC': 'Infographics',
+    'user.skillset.PRODUCT_DESIGN': 'Product Design',
+    'user.skillset.MERCHANDISE': 'Merchandise Design',
+    'user.skillset.PHOTOSHOP': 'Photoshop',
+    'user.skillset.SOCIAL_MEDIA_MARKETING': 'Social Media Marketing',
+    'user.skillset.SEO': 'SEO',
+    'user.skillset.CONTENT_MARKETING': 'Content Marketing',
+    'user.skillset.VIDEO_MARKETING': 'Video Marketing',
+    'user.skillset.EMAIL_MARKETING': 'Email Marketing',
+    'user.skillset.MARKETING_STRATEGY': 'Marketing Strategy',
+    'user.skillset.WEB_ANALYTICS': 'Web Analytics',
+    'user.skillset.ECOMMERCE': 'E-Commerce',
+    'user.skillset.MOBILE_ADVERTISING': 'Mobile Advertising',
+    'user.skillset.TRANSLATION': 'Translation',
+    'user.skillset.PRODUCT_DESCRIPTIONS': 'Product Desc. Writing',
+    'user.skillset.WEBSITE_CONTENT': 'Website Content Writing',
+    'user.skillset.TECHNICAL_WRITING': 'Technical Writing',
+    'user.skillset.PROOFREADING': 'Proofreading',
+    'user.skillset.CREATIVE_WRITING': 'Creative Writing',
+    'user.skillset.ARTICLES_WRITING': 'Articles Writing',
+    'user.skillset.SALES_COPY': 'Sales Copy Writing',
+    'user.skillset.PRESS_RELEASES': 'Press Release Writing',
+    'user.skillset.LEGAL_WRITING': 'Legal Writing',
+    'user.skillset.INTROS': 'Intro Videos',
+    'user.skillset.LOGO_ANIMATION': 'Logo Animation',
+    'user.skillset.PROMO_VIDEOS': 'Promo Videos',
+    'user.skillset.VIDEO_ADS': 'Video Ads',
+    'user.skillset.VIDEO_EDITING': 'Video Editing',
+    'user.skillset.VIDEO_MODELING': 'Video Modeling',
+    'user.skillset.PRODUCT_PHOTO': 'Product Photography',
+    'user.skillset.VOICE_OVER': 'Voice Overs',
+    'user.skillset.MIXING': 'Music Mixing',
+    'user.skillset.MUSIC_PRODUCTION': 'Music Production',
+    'user.skillset.CPP': 'C++',
+    'user.skillset.JAVASCRIPT': 'JavaScript',
+    'user.skillset.GO': 'GO',
+    'user.skillset.PYTHON': 'Python',
+    'user.skillset.JAVA': 'Java',
+    'user.skillset.SWIFT': 'Swift',
+    'user.skillset.SOFTWARE_TESTING': 'Software Testing',
+    'user.skillset.VIRTUAL_ASSISTANT': 'Virtual Assistant',
+    'user.skillset.DATA_ENTRY': 'Data Entry',
+    'user.skillset.MARKET_RESEARCH': 'Market Research',
+    'user.skillset.BUSINESS_PLANS': 'Business Plans',
+    'user.skillset.LEGAL_CONSULTING': 'Legal Consulting',
+    'user.skillset.FINANCIAL_CONSULTING': 'Financial Consulting',
+    'user.skillset.PRESENTATION': 'Business Presentations'
 }
 
 // lang mappings
@@ -1060,5 +1162,13 @@ zh[`taskStatus.${TASK_STATUS.SUCCESS}`] = '成功'
 zh[`taskStatus.${TASK_STATUS.DISTRIBUTED}`] = '已结算'
 zh[`taskStatus.${TASK_STATUS.CANCELED}`] = '已取消'
 zh[`taskStatus.${TASK_STATUS.EXPIRED}`] = '已过期'
+
+zh[`cvoteStatus.${CVOTE_STATUS.DRAFT}`] = 'DRAFT'
+zh[`cvoteStatus.${CVOTE_STATUS.PROPOSED}`] = 'PROPOSED'
+zh[`cvoteStatus.${CVOTE_STATUS.ACTIVE}`] = 'ACTIVE'
+zh[`cvoteStatus.${CVOTE_STATUS.REJECT}`] = 'REJECT'
+zh[`cvoteStatus.${CVOTE_STATUS.FINAL}`] = 'FINAL'
+zh[`cvoteStatus.${CVOTE_STATUS.DEFERRED}`] = 'DEFERRED'
+
 
 export default zh

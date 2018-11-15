@@ -142,9 +142,15 @@ export default class extends Base {
         const db_team = this.getDBModel('Team');
         const db_user_team = this.getDBModel('User_Team');
 
-        const tasks = await db_task.list(param, {
-            updatedAt: -1
-        });
+        const cursor = db_task.getDBInstance().find(_.omit(param, ['results', 'page']))
+
+        if (param.results) {
+            const results = parseInt(param.results, 10)
+            const page = parseInt(param.page, 10)
+            cursor.skip(results * (page - 1)).limit(results)
+        }
+
+        const tasks = await cursor
 
         if (tasks.length) {
             for (let task of tasks) {
@@ -338,10 +344,6 @@ export default class extends Base {
 
         // we need to set this for the end of the fn so we have the updated task
         let sendTaskPendingRequiredApprovalEmail = false
-
-        if (!this.currentUser || !this.currentUser._id) {
-            return
-        }
 
         if (param.status === constant.TASK_STATUS.ASSIGNED) {
             throw 'Assigned Status is Deprecated'

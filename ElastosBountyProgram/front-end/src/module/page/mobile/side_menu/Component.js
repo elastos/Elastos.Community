@@ -8,7 +8,7 @@ import { Modal } from 'antd/lib/index'
 import _ from 'lodash'
 import I18N from '@/I18N'
 
-import {USER_ROLE} from '@/constant'
+import {USER_ROLE, USER_LANGUAGE} from '@/constant'
 
 export default class extends BaseComponent {
 
@@ -50,7 +50,13 @@ export default class extends BaseComponent {
                 }
             })
         } else if (key === 'blog') {
-            window.location.href = 'https://blog.cyberrepublic.org'
+            let linkToBlog = 'https://blog.cyberrepublic.org'
+
+            if (I18N.getLang() === USER_LANGUAGE.zh) {
+                linkToBlog += `/${USER_LANGUAGE.zh}`
+            }
+
+            window.location.href = linkToBlog
         }
     }
 

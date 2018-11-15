@@ -42,13 +42,18 @@
       .admin-left-column.wrap-box-user {
         .group {
           margin: $gap_2 0;
+
+          &:first-child {
+            margin-top: $gap_0;
+          }
+
           .title {
             font-weight: bold;
             font-size: 11px;
             margin: $gap_0;
           }
           .content {
-            padding-left: $gap_1;
+            padding: 0 $gap_1;
 
             .radio {
               display: block;

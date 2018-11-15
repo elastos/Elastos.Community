@@ -25,6 +25,7 @@ import {
 
 import I18N from '@/I18N'
 import {upload_file} from "@/util";
+import ReactQuill from 'react-quill';
 import './style.scss'
 import moment from 'moment'
 import _ from 'lodash'
@@ -149,7 +150,6 @@ class C extends BaseComponent {
                 props.circleId || null,
             removeAttachment: false,
             editing: !!props.existingTask,
-            isUsd: (props.existingTask && props.existingTask.reward.isUsd) || false,
             fileList: (props.existingTask && props.existingTask.pictures) || [],
             previewVisible: false,
             previewImage: '',
@@ -278,7 +278,14 @@ class C extends BaseComponent {
             initialValue: this.state.editing ? existingTask.description : ''
         })
         const taskDesc_el = (
-            <TextArea rows={6}></TextArea>
+            <ReactQuill
+                modules={{
+                    toolbar: [
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{'list': 'ordered'}, {'list': 'bullet'}]
+                    ]
+                }}
+            />
         )
 
         const taskDescBreakdown_fn = getFieldDecorator('taskDescBreakdown', {
@@ -288,7 +295,14 @@ class C extends BaseComponent {
             initialValue: this.state.editing ? existingTask.descBreakdown : ''
         })
         const taskDescBreakdown_el = (
-            <TextArea rows={4}></TextArea>
+            <ReactQuill
+                modules={{
+                    toolbar: [
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{'list': 'ordered'}, {'list': 'bullet'}]
+                    ]
+                }}
+            />
         )
         const taskGoals_fn = getFieldDecorator('taskGoals', {
             rules: [
@@ -1031,33 +1045,16 @@ class C extends BaseComponent {
                             <div>
                                 {this.state.assignSelf && <br/>}
 
-                                <FormItem label={I18N.get('from.TaskCreateForm.label.fiat')} {...formItemLayout}>
-                                    <Checkbox name="isUsd" checked={this.state.isUsd}
-                                        disabled={this.hasLeaderEditRestrictions()}
-                                        onChange={() => {this.setState({isUsd: !this.state.isUsd})}}/>
-                                </FormItem>
-
-                                {this.state.isUsd ?
-                                    <Row>
-                                        <Col>
-                                            <FormItem label={I18N.get('from.TaskCreateForm.label.usdbudget')} {...formItemLayout}>
-                                                {p.taskRewardUpfrontUsd}
-                                            </FormItem>
-                                            <FormItem label={I18N.get('from.TaskCreateForm.label.usdreward')} {...formItemLayout}>
-                                                {p.taskRewardUsd}
-                                            </FormItem>
-                                        </Col>
-                                    </Row> :
-                                    <Row>
-                                        <Col>
-                                            <FormItem label={I18N.get('from.TaskCreateForm.label.elabudget')} {...formItemLayout}>
-                                                {p.taskRewardUpfront}
-                                            </FormItem>
-                                            <FormItem label={I18N.get('from.TaskCreateForm.label.elareward')} {...formItemLayout}>
-                                                {p.taskReward}
-                                            </FormItem>
-                                        </Col>
-                                    </Row>
+                                <Row>
+                                    <Col>
+                                        <FormItem label={I18N.get('from.TaskCreateForm.label.usdbudget')} {...formItemLayout}>
+                                            {p.taskRewardUpfrontUsd}
+                                        </FormItem>
+                                        <FormItem label={I18N.get('from.TaskCreateForm.label.usdreward')} {...formItemLayout}>
+                                            {p.taskRewardUsd}
+                                        </FormItem>
+                                    </Col>
+                                </Row>
 
                                 }
 

@@ -5,6 +5,15 @@
 $avatar-size: 160px;
 
 .c_Member {
+  .profile-skillset-info {
+    max-width: 250px;
+    text-align: right;
+
+    .ant-tag {
+      margin-top: 1px;
+      margin-bottom: 1px;
+    }
+  }
 
   .header {
     width: 100%;
@@ -187,8 +196,8 @@ $avatar-size: 160px;
   }
 
   .profile-button {
-    width: 200px;
-    margin-left: 20px;
+    width: 180px;
+    margin-left: 40px;
 
     &.profile-button-mobile {
       float: none;
@@ -220,7 +229,7 @@ $avatar-size: 160px;
 
   .profile-right {
     width: calc(100% - 200px);
-    padding-left: 40px;
+    padding-left: 60px;
     padding-right: 40px;
     padding-bottom: 15px;
   }
@@ -256,8 +265,6 @@ $avatar-size: 160px;
   }
 
   .profile-social {
-    text-align: right;
-
     a {
       color: #000 !important;
       margin-right: 15px;

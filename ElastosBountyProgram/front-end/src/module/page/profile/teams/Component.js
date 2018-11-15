@@ -1,5 +1,5 @@
 import React from 'react';
-import StandardPage from '../../StandardPage';
+import ProfilePage from '../../ProfilePage';
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import config from '@/config';
 import _ from 'lodash'
@@ -24,7 +24,7 @@ const FILTERS = {
     REJECTED: 'rejected'
 }
 
-export default class extends StandardPage {
+export default class extends ProfilePage {
     constructor(props) {
         super(props)
 
@@ -181,7 +181,7 @@ export default class extends StandardPage {
                         <h5 class="no-margin">
                             {item.description}
                         </h5>
-                        <div className="description-content" dangerouslySetInnerHTML={{__html: item.content}} />
+                        <div className="description-content ql-editor" dangerouslySetInnerHTML={{__html: item.content}} />
                         <div className="ant-list-item-right-box">
                             <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
                                 <Avatar size="large" icon="user" className="pull-right" src={ownerProfile.avatar}/>

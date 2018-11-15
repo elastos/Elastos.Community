@@ -402,6 +402,10 @@ export default class extends Base {
             query.archived = param.archived
         }
 
+        if (param.name) {
+            query.name = param.name
+        }
+
         if (param.domain) {
             query.domain = { $in: param.domain.split(',') }
         }
@@ -440,9 +444,15 @@ export default class extends Base {
             query.type = param.type;
         }
 
-        const teams = await db_team.list(query, {
-            updatedAt: -1
-        });
+        const cursor = db_team.getDBInstance().find(query)
+
+        if (param.results) {
+            const results = parseInt(param.results, 10)
+            const page = parseInt(param.page, 10)
+            cursor.skip(results * (page - 1)).limit(results)
+        }
+
+        const teams = await cursor
 
         for (let team of teams) {
             await db_team.getDBInstance().populate(team, {

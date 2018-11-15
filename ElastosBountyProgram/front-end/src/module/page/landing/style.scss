@@ -1602,7 +1602,7 @@
   }
   #hero .bg-wrap {
     height: 630px;
-    top: 104px;
+    top: 0px;
   }
   #hero .bg-wrap h1 {
     position: absolute;
@@ -3489,10 +3489,14 @@
   }
   #globalFooter .footer-row li.title {
     color: #1de9b6;
-    margin-bottom: 34px;
+    margin-bottom: 12px;
+
+    &.legal {
+      margin-top: 24px;
+    }
   }
   #globalFooter .footer-row li + li {
-    margin-top: 19px;
+    margin-top: 8px;
   }
   #globalFooter .footer-row .social li.title {
     margin-bottom: 7px;
@@ -3767,11 +3771,11 @@
   /*! mq: 1300 */
   @media screen and (max-width: 1300px) {
     #hero {
-      padding-top: 510px;
+      padding-top: 408px;
       padding-bottom: 50px;
     }
     #hero .bg-wrap {
-      top: 50%;
+      top: 42%;
       height: 504px;
       margin-top: -252px;
     }
@@ -3989,7 +3993,7 @@
       margin-left: -225px;
     }
     #hero .bg-wrap {
-      top: 50%;
+      top: 42%;
       height: 378px;
       margin-top: -190px;
     }

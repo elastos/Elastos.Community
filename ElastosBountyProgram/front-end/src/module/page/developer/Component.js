@@ -2,24 +2,30 @@ import React from 'react'
 import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import I18N from '@/I18N'
+import Video from '@/module/shared/video/Container'
 import { Link } from 'react-router-dom'
 import './style.scss'
 import MediaQuery from 'react-responsive'
-import { Col, Row, Card, Button, Breadcrumb, Icon, Table, Input, Modal, Avatar } from 'antd'
+import { Col, Row, Card, Button, Breadcrumb, Icon, Table, Input, Modal, Avatar, TreeSelect } from 'antd'
 import {MAX_WIDTH_MOBILE} from "../../../config/constant"
-import { USER_AVATAR_DEFAULT } from '@/constant'
+import { USER_AVATAR_DEFAULT, USER_SKILLSET } from '@/constant'
 import ProfilePopup from '@/module/profile/OverviewPopup/Container'
+import URI from 'urijs'
 
 export default class extends StandardPage {
     constructor(props) {
         super(props)
 
+        const params = new URI(props.location.search || '').search(true)
+
         this.state = {
-            search: '',
+            search: params.search || '',
             showUserInfo: null,
+            skillsetFilters: (params.skillsetFilters || '').split(','),
+            showVideo: false,
             userListPagination: {
                 pageSize: 5,
-                current: 1
+                current: parseInt(params.page || 1, 10)
             }
         }
     }
@@ -33,11 +39,15 @@ export default class extends StandardPage {
     }
 
     refetch() {
-        this.props.listUsers({
+        const options = {
             search: this.state.search || '',
             results: (this.state.userListPagination || {}).pageSize || 5,
-            page: (this.state.userListPagination || {}).current || 1
-        })
+            page: (this.state.userListPagination || {}).current || 1,
+            skillset: this.state.skillsetFilters || []
+        }
+
+        this.props.history.replace(`/developer?search=${options.search}&page=${options.page}&skillset=${options.skillset.join(',')}`)
+        this.props.listUsers(options)
     }
 
     ord_renderContent () {
@@ -53,9 +63,24 @@ export default class extends StandardPage {
                         </div>
                     </div>
                 </div>
+                {this.renderVideoModal()}
                 {this.renderProfileModal()}
                 <Footer/>
             </div>
+        )
+    }
+
+    renderVideoModal() {
+        return (
+            <Modal
+                className="video-popup-modal"
+                visible={!!this.state.showVideo}
+                onCancel={this.handleCancelVideo.bind(this)}
+                footer={null}
+                width="76%"
+                style={{ top: 35 }}>
+                <Video showVideo={this.state.showVideo} />
+            </Modal>
         )
     }
 
@@ -71,6 +96,18 @@ export default class extends StandardPage {
                 }
             </Modal>
         )
+    }
+
+    handleCancelVideo() {
+        this.setState({
+            showVideo: false
+        })
+    }
+
+    handleShowVideo() {
+        this.setState({
+            showVideo: true
+        })
     }
 
     handleCancelProfilePopup() {
@@ -108,6 +145,13 @@ export default class extends StandardPage {
                             </a>
                         </div>
                     </div>
+                    <div className="video" onClick={this.handleShowVideo.bind(this)}>
+                        <a className="video-btn">
+                            <p className="video-title">Cyber Republic Video</p>
+                            <p className="video-more">Watch it now and learn more</p>
+                            <img className="video-img" src="/assets/images/arrow-right.png"/>
+                        </a>
+                    </div>
                     <div className="pull-right">
                         <img src="/assets/images/community-world.svg"/>
                     </div>
@@ -140,8 +184,8 @@ export default class extends StandardPage {
                 <div className="navi-panel-content panel-content">
                     {buildNaviItem(I18N.get('developer.learn'), I18N.get('developer.learn.description'), '/developer/learn')}
                     {buildNaviItem(I18N.get('developer.teams.title'), I18N.get('developer.teams.description'), '/developer/search')}
-                    {buildNaviItem(I18N.get('developer.project.title'), I18N.get('developer.projects.description'), '/developer/search?type=PROJECT')}
-                    {buildNaviItem(I18N.get('developer.tasks.title'), I18N.get('developer.tasks.description'), '/developer/search?type=TASK')}
+                    {buildNaviItem(I18N.get('developer.project.title'), I18N.get('developer.projects.description'), '/developer/search?lookingFor=PROJECT')}
+                    {buildNaviItem(I18N.get('developer.tasks.title'), I18N.get('developer.tasks.description'), '/developer/search?lookingFor=TASK')}
                 </div>
             </div>
         )
@@ -178,6 +222,34 @@ export default class extends StandardPage {
         return _.isEmpty(avatar)
             ? USER_AVATAR_DEFAULT
             : avatar
+    }
+
+    skillsetFilterChanged(value) {
+        this.setState({ skillsetFilters: value }, this.debouncedRefetch.bind(this))
+    }
+
+    getSkillsets() {
+        return _.map(USER_SKILLSET, (skillsets, category) => {
+            return {
+                title: I18N.get(`user.skillset.group.${category}`),
+                value: category,
+                key: category,
+                children: _.map(skillsets, (skillset) => {
+                    return {
+                        title: I18N.get(`user.skillset.${skillset}`),
+                        value: skillset,
+                        key: skillset
+                    }
+                })
+            }
+        })
+    }
+
+    getSkillsetSelector() {
+        return (
+            <TreeSelect className="full-width" initialValue={[]} treeData={this.getSkillsets()} treeCheckable={true}
+                searchPlaceholder={I18N.get('user.skillset.select')} onChange={this.skillsetFilterChanged.bind(this)}/>
+        )
     }
 
     handleTableChange(pagination, filters, sorter) {
@@ -235,8 +307,12 @@ export default class extends StandardPage {
                     </h3>
                     <Row className="member-panel-search">
                         <Col md={9} xs={24}>
-                            <Input placeholder={I18N.get('developer.breadcrumb.search')}
+                            <Input defaultValue={this.state.search} placeholder={I18N.get('developer.breadcrumb.search')}
                                 onChange={searchChangedHandler.bind(this)}/>
+                        </Col>
+                        <Col md={6} xs={24}/>
+                        <Col md={9} xs={24}>
+                            {this.getSkillsetSelector()}
                         </Col>
                     </Row>
                     <Table

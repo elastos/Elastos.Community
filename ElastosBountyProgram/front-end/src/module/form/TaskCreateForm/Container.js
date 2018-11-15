@@ -110,6 +110,7 @@ export default createContainer(Component, (state) => {
 
             try {
                 let updateObj = {
+                    assignSelf: formData.assignSelf,
                     name: formData.taskName,
                     category: formData.taskCategory,
                     type: formData.taskType,

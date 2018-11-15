@@ -2,31 +2,40 @@ import Base from './Base';
 import {Document} from 'mongoose';
 import * as _ from 'lodash';
 import {constant} from '../constant';
-import * as uuid from 'uuid'
 import {validate, utilCrypto, mail} from '../utility';
 import * as moment from 'moment';
 
+// TODO: this needs to be improved
 const map_key = ['Kevin Zhang', 'Fay Li', 'Yipeng Su'];
 
 let tm = null;
+
+const restrictedFields = {
+    update: [
+        '_id',
+        'createdBy',
+        'createdAt'
+    ]
+}
 
 export default class extends Base {
 
     public async create(param): Promise<Document>{
 
-        const db_cvote = this.getDBModel('CVote');
-
-        if(!this.currentUser || !this.currentUser._id){
-            throw 'cvoteservice.create - invalid current user';
+        if (!this.isLoggedIn()) {
+            throw 'cvoteservice.create - must be logged in';
         }
 
         if (!this.isCouncil()) {
             throw 'cvoteservice.create - not council'
         }
 
+        const db_cvote = this.getDBModel('CVote');
+
         const {
             title, type, content, proposedBy, motionId, isConflict, notes, vote_map, reason_map
         } = param;
+
         const doc: any = {
             title,
             type,
@@ -51,11 +60,40 @@ export default class extends Base {
         return cvote;
     }
 
+    /**
+     * List proposals, only an admin may request and view private records
+     *
+     * We expect the front-end to always call with {published: true}
+     *
+     * TODO: what's the rest way of encoding multiple values for a field?
+     *
+     * Instead of magic params, we should have just different endpoints I think,
+     * this method should be as dumb as possible
+     *
+     * @param query
+     * @returns {Promise<"mongoose".Document>}
+     */
     public async list(param): Promise<Document>{
+
         const db_cvote = this.getDBModel('CVote');
         const db_user = this.getDBModel('User');
+        let query:any = {};
 
-        const query = {};
+        // if we are not querying only published records, we need to be an admin
+        // TODO: write a test for this
+        if (param.published !== true) {
+            if (!this.isLoggedIn() || !this.isAdmin()) {
+                throw 'cvoteservice.list - unpublished proposals only visible to admin';
+            }
+        } else {
+            if (param.published === true) {
+                query.published = param.published
+            }
+        }
+
+        // we should map over allowed filters manually
+        // console.log(query)
+
         const list = await db_cvote.list(query, {
             createdAt: -1
         }, 100);
@@ -70,6 +108,12 @@ export default class extends Base {
 
         return list;
     }
+
+    /**
+     *
+     * @param param
+     * @returns {Promise<"mongoose".Document>}
+     */
     public async update(param): Promise<Document>{
         const db_cvote = this.getDBModel('CVote');
 
@@ -86,31 +130,39 @@ export default class extends Base {
             throw 'cvoteservice.update - invalid proposal id';
         }
 
-        if(this.isExpired(cur) || _.includes([constant.CVOTE_STATUS.FINAL, constant.CVOTE_STATUS.DEFERRED], cur.status)){
-            throw 'cvoteservice.update - proposal finished or deferred, can not edit anymore';
+        let doc:any = {}
+
+        if (this.isExpired(cur) || _.includes([constant.CVOTE_STATUS.FINAL, constant.CVOTE_STATUS.DEFERRED], cur.status)) {
+
+            if (cur.published === param.published) {
+                throw 'cvoteservice.update - proposal finished or deferred, can not edit anymore';
+
+            } else {
+
+                // if published is changed, we let it pass if published is changed, but only that field
+                doc = {
+                    published: param.published
+                }
+            }
+
+        } else {
+            doc = _.omit(param, restrictedFields.update)
+
+            if (param.vote_map) {
+                doc.vote_map = this.param_metadata(param.vote_map)
+                doc.status = this.getNewStatus(doc.vote_map, cur);
+            }
+
+            if (param.reason_map) {
+                doc.reason_map = this.param_metadata(param.reason_map)
+            }
         }
-
-        const {
-            title, type, content, proposedBy, motionId, isConflict, notes, vote_map, reason_map
-        } = param;
-        const doc: any= {
-            title,
-            type,
-            content,
-            proposedBy,
-            motionId,
-            isConflict,
-            notes,
-            vote_map : this.param_metadata(vote_map),
-            reason_map : this.param_metadata(reason_map)
-        };
-
-        doc.status = this.getNewStatus(doc.vote_map, cur);
 
         const cvote = await db_cvote.update({_id : param._id}, doc);
 
         this.sendEmailNotification({_id : param._id}, 'update');
 
+        // this is wrong, update call doesn't return doc
         return cvote;
     }
 
@@ -246,16 +298,19 @@ export default class extends Base {
         // });
     }
 
-    private async eachJob(){
+    private async eachJob() {
+
         const db_cvote = this.getDBModel('CVote');
 
         const list = await db_cvote.find({
             'status' : {
-                '$in' : [constant.CVOTE_STATUS.PROPOSED]
+                '$in' : [constant.CVOTE_STATUS.PROPOSED, constant.CVOTE_STATUS.ACTIVE]
             }
         });
         const ids = [];
-        console.log(ids);
+
+        ids.length && console.log(ids);
+
         _.each(list, (item)=>{
             if(this.isExpired(item)){
                 ids.push(item._id);
@@ -290,4 +345,5 @@ export default class extends Base {
 
         ].indexOf(this.currentUser._id.toString()) >= 0
     }
+
 }

@@ -6,6 +6,13 @@ import {Document} from 'mongoose';
  * This is an abstraction layer around the db model
  *
  * Use getDBInstance if you need access to the native Mongoose model
+ *
+ * NOTE: using the functions here is ill advised, we should move towards an agreement
+ * to not overwrite and simplify already provided functions
+ *
+ * You must use getDBInstance if you need to use .populate and foreign keys
+ *
+ * However added functionality like findByIdAndDelete are fine
  */
 export default abstract class {
     private db;

@@ -10,6 +10,9 @@ import Emp35Page from '@/module/page/empower_35/Container'
 import Ambassadors from '@/module/page/ambassadors/Container'
 import CrVideo from '@/module/page/static/cr-video/Container'
 
+import PrivacyPage from '@/module/page/static/privacy/Container'
+import TermsPage from '@/module/page/static/terms/Container'
+
 // this is the leaders link in the header
 import DirectoryPage from '@/module/page/directory/Container'
 
@@ -222,6 +225,14 @@ export default [
     {
         path: '/join-cr',
         page: CrVideo
+    },
+    {
+        path: '/privacy',
+        page: PrivacyPage
+    },
+    {
+        path: '/terms',
+        page: TermsPage
     },
     /*
     ********************************************************************************

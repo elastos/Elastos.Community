@@ -41,6 +41,7 @@ export default createContainer(Component, (state)=>{
                     gender: formData.gender,
                     country: formData.country,
                     timezone: formData.timezone,
+                    skillset: formData.skillset,
                     avatar: state.avatar_url,
                     walletAddress: formData.walletAddress,
 
@@ -75,6 +76,15 @@ export default createContainer(Component, (state)=>{
             } catch (err) {
                 // message.error('There was an error creating this task')
                 message.error(err.message) // TODO: add rollbar?
+            }
+        },
+
+        async checkEmail(email) {
+            try {
+                await userService.checkEmail(email)
+                return false
+            } catch (err) {
+                return true
             }
         }
     };

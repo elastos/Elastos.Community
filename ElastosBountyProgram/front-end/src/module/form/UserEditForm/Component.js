@@ -14,8 +14,8 @@ import {
     Col,
     Upload,
     Cascader,
-    Divider
-
+    Divider,
+    TreeSelect
 } from 'antd'
 import config from '@/config'
 import { MIN_LENGTH_PASSWORD } from '@/config/constant'
@@ -23,7 +23,7 @@ import TimezonePicker from 'react-timezone'
 import I18N from '@/I18N'
 import {upload_file} from '@/util'
 import './style.scss'
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, USER_GENDER} from '@/constant'
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, USER_GENDER, USER_SKILLSET} from '@/constant'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
@@ -69,6 +69,22 @@ class C extends BaseComponent {
         })
     }
 
+    checkEmail(rule, value, callback, source, options) {
+        const emailRegex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+
+        if (this.props.is_admin && value && emailRegex.test(value) && this.props.user.email !== value) {
+            this.props.checkEmail(value).then((isExist) => {
+                if (isExist) {
+                    callback(I18N.get('register.error.duplicate_email'))
+                } else {
+                    callback()
+                }
+            })
+        } else {
+            callback()
+        }
+    }
+
     compareToFirstPassword(rule, value, callback) {
         const form = this.props.form
         if (value && value !== form.getFieldValue('password')) {
@@ -87,6 +103,23 @@ class C extends BaseComponent {
             callback(`${I18N.get('register.error.password_length_1')} ${MIN_LENGTH_PASSWORD} ${I18N.get('register.error.password_length_2')}`)
         }
         callback()
+    }
+
+    getSkillsets() {
+        return _.map(USER_SKILLSET, (skillsets, category) => {
+            return {
+                title: I18N.get(`user.skillset.group.${category}`),
+                value: category,
+                key: category,
+                children: _.map(skillsets, (skillset) => {
+                    return {
+                        title: I18N.get(`user.skillset.${skillset}`),
+                        value: skillset,
+                        key: skillset
+                    }
+                })
+            }
+        })
     }
 
     getInputProps () {
@@ -124,11 +157,17 @@ class C extends BaseComponent {
         )
 
         const email_fn = getFieldDecorator('email', {
-            rules: [{required: true, message: I18N.get('user.edit.form.label_email')}],
+            rules: [{
+                required: true, message: I18N.get('user.edit.form.label_email')
+            }, {
+                type: 'email', message: I18N.get('register.error.email'),
+            }, {
+                validator: this.checkEmail.bind(this)
+            }],
             initialValue: user.email
         })
         const email_el = (
-            <Input disabled/>
+            <Input size="large" disabled={!(this.props.is_admin && this.props.history.location.pathname.indexOf("/admin/profile/") !== -1)} />
         )
 
         const password_fn = getFieldDecorator('password', {
@@ -184,6 +223,16 @@ class C extends BaseComponent {
                     {config.data.mappingGenderKeyToName[USER_GENDER.FEMALE]}
                 </Radio>
             </RadioGroup>
+        )
+
+        const skillsets = this.getSkillsets()
+        const skillset_fn = getFieldDecorator('skillset', {
+            rules: [],
+            initialValue: user.profile.skillset || []
+        })
+
+        const skillset_el = (
+            <TreeSelect treeData={skillsets} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
         )
 
         const country_fn = getFieldDecorator('country', {
@@ -315,6 +364,7 @@ class C extends BaseComponent {
             gender: gender_fn(gender_el),
             country: country_fn(country_el),
             timezone: timezone_fn(timezone_el),
+            skillset: skillset_fn(skillset_el),
 
             walletAddress: walletAddress_fn(walletAddress_el),
 
@@ -355,12 +405,22 @@ class C extends BaseComponent {
 
         return (
             <div className="c_userEditFormContainer">
-                <div className="header-profile">
-                    <h3 className="header-label komu-a with-gizmo">
-                        {I18N.get('2300')}
-                    </h3>
-                </div>
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
+                    <div className="header-profile">
+                        <h3 className="header-label komu-a with-gizmo">
+                            {I18N.get('profile.skillsets')}
+                        </h3>
+                    </div>
+                    <div>
+                        <FormItem label={I18N.get('from.UserEditForm.label.skillset')} {...formItemLayout}>
+                            {p.skillset}
+                        </FormItem>
+                    </div>
+                    <div className="header-profile">
+                        <h3 className="header-label komu-a with-gizmo">
+                            {I18N.get('2300')}
+                        </h3>
+                    </div>
                     <div>
                         <div className="label">{I18N.get('user.edit.form.section.general')}</div>
                         <FormItem label={I18N.get('1202')} {...formItemLayout}>
@@ -395,9 +455,6 @@ class C extends BaseComponent {
                         <FormItem label={I18N.get('from.UserEditForm.label.timezone')} {...formItemLayout}>
                             {p.timezone}
                         </FormItem>
-
-                        <div className="label">{I18N.get('user.edit.form.section.social')}</div>
-
                         <FormItem label="LinkedIn" {...formItemLayout}>
                             {p.linkedin}
                         </FormItem>

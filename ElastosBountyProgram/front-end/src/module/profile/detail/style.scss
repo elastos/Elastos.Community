@@ -139,7 +139,7 @@ $avatar-size: 160px;
   }
 
   .profile-button {
-    width: 200px;
+    width: 180px;
     margin-left: 20px;
 
     &.profile-button-mobile {
@@ -153,6 +153,12 @@ $avatar-size: 160px;
     margin-bottom: 15px;
     border: 0;
     border-radius: 0;
+
+    button {
+      width: 100%;
+      text-transform: uppercase;
+      border-radius: 0;
+    }
   }
 
   .profile-follow {
@@ -205,8 +211,7 @@ $avatar-size: 160px;
   }
 
   .profile-social {
-    text-align: right;
-
+    margin-top: $gap_0;
     a {
       color: #000 !important;
       margin-right: 15px;

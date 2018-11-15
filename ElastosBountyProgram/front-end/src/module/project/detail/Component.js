@@ -101,6 +101,17 @@ class C extends BaseComponent {
             </Row>
         )
 
+        const generateHtmlRow = (key, value, cssRowClass) => (
+            <Row className={[cssRowClass, 'meta-row'].join(' ')}>
+                <Col span={8}>
+                    {key}
+                </Col>
+                <Col span={16}>
+                    <div className="ql-editor" dangerouslySetInnerHTML={{__html: value}} />
+                </Col>
+            </Row>
+        )
+
         const detail = this.props.task
         const budget = this.getBudgetFormatted()
         const reward = this.getRewardFormatted()
@@ -113,11 +124,11 @@ class C extends BaseComponent {
                     this.getUserNameWithFallback(detail.createdBy))}
 
                 {detail.circle &&
-                    generateRow(I18N.get('task.circle'), detail.circle.name)}
+                    generateRow(I18N.get('task.circle'), I18N.get(`crcle.${detail.circle.name.toLowerCase()}`))}
 
-                {generateRow(I18N.get('task.type'), detail.type)}
+                {generateRow(I18N.get('task.type'), I18N.get(`developer.search.${detail.type.toLowerCase()}`))}
 
-                {generateRow(I18N.get('task.category'), detail.category)}
+                {generateRow(I18N.get('task.category'), I18N.get(`taks.application.${detail.category.toLowerCase()}`))}
 
                 {detail.location && generateRow(I18N.get('task.location'), detail.location)}
 
@@ -127,7 +138,7 @@ class C extends BaseComponent {
                     <div>
                         {detail.approvedBy.username}
                         {detail.approvedDate && <span>
-                            &nbsp; on {moment(detail.approvedDate).format('MMM D, YYYY')}
+                            &nbsp;{I18N.get('project.admin.statusHelp.approvedOn')} {moment(detail.approvedDate).format('MMM D, YYYY')}
                         </span>}
                     </div>
                 ))}
@@ -160,7 +171,7 @@ class C extends BaseComponent {
 
                 {detail.goals && generateRow(I18N.get('task.goals'), detail.goals, 'task-goals')}
 
-                {detail.descBreakdown && generateRow(I18N.get('task.descBreakdown'),
+                {detail.descBreakdown && generateHtmlRow(I18N.get('task.descBreakdown'),
                     detail.descBreakdown, 'task-breakdown')}
 
                 {detail.eventDateRangeStart && generateRow(I18N.get('task.eventStart'),
@@ -170,7 +181,7 @@ class C extends BaseComponent {
                 {detail.eventDateRangeEnd && generateRow(I18N.get('task.eventEnd'),
                     moment(detail.eventDateRangeEnd).format(EVENT_DATE_FORMAT))}
 
-                {generateRow(I18N.get('task.description'), detail.description, 'task-description')}
+                {generateHtmlRow(I18N.get('task.description'), detail.description, 'task-description')}
 
                 {detail.attachment && generateRow(I18N.get('task.attachment'),
                     <a href={detail.attachment} target="_blank">{detail.attachmentFilename}</a>)}
@@ -697,8 +708,15 @@ class C extends BaseComponent {
     }
 
     getReward() {
-        return this.props.task.reward &&
-            ((this.props.task.reward.usd / 100) || (this.props.task.reward.ela / 1000))
+        if (!this.props.task.reward) {
+            return null
+        }
+
+        return this.props.task.reward
+            ? this.props.task.reward.isUsd
+                ? this.props.task.reward.usd / 100
+                : this.props.task.reward.ela / 1000
+            : null
     }
 
     getRewardElaPerUsd() {
@@ -728,8 +746,15 @@ class C extends BaseComponent {
     }
 
     getBudget() {
-        return this.props.task.rewardUpfront &&
-            ((this.props.task.rewardUpfront.usd / 100) || (this.props.task.rewardUpfront.ela / 1000))
+        if (!this.props.task.rewardUpfront) {
+            return null
+        }
+
+        return this.props.task.rewardUpfront
+            ? this.props.task.rewardUpfront.isUsd
+                ? this.props.task.rewardUpfront.usd / 100
+                : this.props.task.rewardUpfront.ela / 1000
+            : null
     }
 
     getBudgetElaPerUsd() {

@@ -4,6 +4,8 @@ import _ from 'lodash'
 import { message } from 'antd/lib/index'
 import UserService from '@/service/UserService'
 
+let userService
+
 export default createContainer(Component, (state) => {
     return {
         users: state.member.users,
@@ -11,7 +13,7 @@ export default createContainer(Component, (state) => {
         loading: state.member.users_loading
     }
 }, () => {
-    const userService = new UserService()
+    userService = userService || new UserService()
 
     return {
         async listUsers (query) {

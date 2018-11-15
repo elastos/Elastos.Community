@@ -20,6 +20,16 @@ global.DB = {
         country: 'ca',
         city: 'Vancouver'
     },
+    COUNCIL_USER: {
+        _id: {"$oid": '5b28be2784f6f900350d30b9'},
+        username: `kevinzhang`,
+        password: 'ebp12345',
+        email: 'clarence+kevinzhang@elastosjs.com',
+        firstName: 'Kevin',
+        lastName: 'Zhang',
+        country: 'us',
+        city: 'Fremont'
+    },
     ADMIN_USER : {
         username: 'ebpadmin'
     },
@@ -69,4 +79,6 @@ global.DB = {
         logo : 'logo_url111',
         recruiting : false
     }
-};
+}
+
+require('./data/cvote')

@@ -49,7 +49,7 @@ export default class extends Base {
 
         const salt = uuid.v4();
 
-        const doc = {
+        const doc:any = {
             username,
             password : this.getPassword(param.password, salt),
             email,
@@ -68,6 +68,12 @@ export default class extends Base {
             role : constant.USER_ROLE.MEMBER,
             active: true
         };
+
+        if (process.env.NODE_ENV === 'test') {
+            if (param._id) {
+                doc._id = param._id.$oid
+            }
+        }
 
         const newUser = await db_user.save(doc);
 
@@ -170,6 +176,10 @@ export default class extends Base {
 
         if (param.profile) {
             updateObj.profile = Object.assign(user.profile, param.profile)
+
+            if (param.profile.skillset) {
+                updateObj.profile.skillset = param.profile.skillset
+            }
         }
 
         if (param.timezone) {
@@ -253,7 +263,7 @@ export default class extends Base {
         }
 
         if (query.search) {
-            finalQuery.$and = _.map(query.search.split(' '), (part) => {
+            finalQuery.$and = _.map(_.trim(query.search).split(' '), (part) => {
                 return {
                     $or: [
                         { 'profile.firstName': { $regex: part, $options: 'i' }},
@@ -262,6 +272,11 @@ export default class extends Base {
                     ]
                 }
             })
+        }
+
+        if (query.skillset) {
+            const skillsets = query.skillset.split(',')
+            finalQuery['profile.skillset'] = { $in: skillsets }
         }
 
         if (query.empower) {
