@@ -274,6 +274,11 @@ export default class extends Base {
             })
         }
 
+        if (query.skillset) {
+            const skillsets = query.skillset.split(',')
+            finalQuery['profile.skillset'] = { $in: _.intersection(_.values(constant.USER_SKILLSET), skillsets) }
+        }
+
         if (query.empower) {
             finalQuery.empower = JSON.parse(query.empower)
         }

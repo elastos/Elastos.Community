@@ -1114,6 +1114,7 @@ const en = {
     'crcle.hr': 'HR',
     'crcle.legal': 'Legal',
 
+    'user.skillset.select': 'Select skillsets',
     'user.skillset.CPP': 'C++',
     'user.skillset.JAVASCRIPT': 'JavaScript',
     'user.skillset.GO': 'GO',
