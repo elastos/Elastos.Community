@@ -25,10 +25,15 @@ const TreeNode = TreeSelect.TreeNode;
 const Option = Select.Option;
 
 export default class extends BaseComponent {
+    constructor (props) {
+        super(props)
+        this.debouncedRefetch = _.debounce(this.refetch.bind(this), 300)
+        this.debouncedLoadMore = _.debounce(this.loadMore.bind(this), 300)
+    }
+
     componentDidMount() {
         this.props.loadAllCircles()
         this.refetch()
-        this.debouncedRefetch = _.debounce(this.refetch.bind(this), 300)
     }
 
     componentWillUnmount() {
@@ -840,7 +845,7 @@ export default class extends BaseComponent {
             <InfiniteScroll
                 initialLoad={false}
                 pageStart={1}
-                loadMore={this.loadMore.bind(this)}
+                loadMore={this.debouncedLoadMore.bind(this)}
                 hasMore={!this.state.loadingMore && !this.props.loading && this.hasMore()}
                 useWindow={true}
             >

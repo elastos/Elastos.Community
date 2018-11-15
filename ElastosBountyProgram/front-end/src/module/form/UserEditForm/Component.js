@@ -398,12 +398,22 @@ class C extends BaseComponent {
 
         return (
             <div className="c_userEditFormContainer">
-                <div className="header-profile">
-                    <h3 className="header-label komu-a with-gizmo">
-                        {I18N.get('2300')}
-                    </h3>
-                </div>
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
+                    <div className="header-profile">
+                        <h3 className="header-label komu-a with-gizmo">
+                            {I18N.get('profile.skillsets')}
+                        </h3>
+                    </div>
+                    <div>
+                        <FormItem label={I18N.get('from.UserEditForm.label.skillset')} {...formItemLayout}>
+                            {p.skillset}
+                        </FormItem>
+                    </div>
+                    <div className="header-profile">
+                        <h3 className="header-label komu-a with-gizmo">
+                            {I18N.get('2300')}
+                        </h3>
+                    </div>
                     <div>
                         <div className="label">{I18N.get('user.edit.form.section.general')}</div>
                         <FormItem label={I18N.get('1202')} {...formItemLayout}>
@@ -437,9 +447,6 @@ class C extends BaseComponent {
                         </FormItem>
                         <FormItem label={I18N.get('from.UserEditForm.label.timezone')} {...formItemLayout}>
                             {p.timezone}
-                        </FormItem>
-                        <FormItem label={I18N.get('from.UserEditForm.label.skillset')} {...formItemLayout}>
-                            {p.skillset}
                         </FormItem>
                         <FormItem label="LinkedIn" {...formItemLayout}>
                             {p.linkedin}

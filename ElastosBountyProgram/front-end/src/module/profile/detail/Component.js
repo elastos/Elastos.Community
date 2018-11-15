@@ -3,9 +3,10 @@ import BaseComponent from '@/model/BaseComponent'
 import UserContactForm from '@/module/form/UserContactForm/Container'
 import moment from 'moment-timezone'
 import Comments from '@/module/common/comments/Container'
-import {Col, Row, Tabs, Icon, Button, Spin, Table, Tooltip} from 'antd'
+import {Col, Row, Tabs, Icon, Button, Spin, Table, Tooltip, Tag} from 'antd'
 import I18N from '@/I18N'
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE, USER_AVATAR_DEFAULT, TEAM_TYPE} from '@/constant'
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS,
+    USER_ROLE, USER_AVATAR_DEFAULT, TEAM_TYPE} from '@/constant'
 import './style.scss'
 import config from '@/config'
 import MediaQuery from 'react-responsive'
@@ -88,6 +89,18 @@ export default class extends BaseComponent {
         )
     }
 
+    renderSkillsets(isMobile) {
+        return (
+            <div className={`profile-skillset-info ${isMobile ? 'profile-skillset-info-mobile' : ''}`}>
+                {_.map(this.props.member.profile.skillset || [], (skillset) =>
+                    <Tag color="blue" key={skillset}>
+                        {I18N.get(`user.skillset.${skillset}`)}
+                    </Tag>
+                )}
+            </div>
+        )
+    }
+
     renderDesktop() {
         return (
             <div>
@@ -99,6 +112,9 @@ export default class extends BaseComponent {
                     </div>
                     <div className="profile-right pull-left">
                         {this.renderFullName()}
+                        <div className="pull-right">
+                            {this.renderSkillsets()}
+                        </div>
                         {this.renderLocation()}
                         <div className="pull-left">
                             {this.renderLocalTime()}

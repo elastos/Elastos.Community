@@ -139,7 +139,7 @@ $avatar-size: 160px;
   }
 
   .profile-button {
-    width: 200px;
+    width: 180px;
     margin-left: 20px;
 
     &.profile-button-mobile {
@@ -211,8 +211,7 @@ $avatar-size: 160px;
   }
 
   .profile-social {
-    text-align: right;
-
+    margin-top: $gap_0;
     a {
       color: #000 !important;
       margin-right: 15px;
