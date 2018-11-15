@@ -4,7 +4,8 @@ import _ from 'lodash'
 import I18N from '@/I18N'
 import './style.scss'
 import { MAX_WIDTH_MOBILE, MIN_WIDTH_PC } from '@/config/constant'
-import { Col, Row, List, Button, Select, Icon } from 'antd'
+import Video from '@/module/shared/video/Container'
+import { Col, Row, List, Button, Select, Icon, Modal } from 'antd'
 import Footer from '@/module/layout/Footer/Container'
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
@@ -12,6 +13,14 @@ import Flag from 'react-flags'
 import {USER_LANGUAGE} from '@/constant'
 
 export default class extends StandardPage {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            showVideo: false,
+        }
+    }
+
     buildLanguageDropdown() {
         return (
             <div className="language-dropdown">
@@ -31,6 +40,32 @@ export default class extends StandardPage {
         )
     }
 
+    handleCancelVideo() {
+        this.setState({
+            showVideo: false
+        })
+    }
+
+    renderVideoModal() {
+        return (
+            <Modal
+                className="video-popup-modal"
+                visible={!!this.state.showVideo}
+                onCancel={this.handleCancelVideo.bind(this)}
+                footer={null}
+                width="76%"
+                style={{ top: 35 }}>
+                <Video showVideo={this.state.showVideo} />
+            </Modal>
+        )
+    }
+
+    playVideo() {
+        this.setState({
+            showVideo: true
+        })
+    }
+
     ord_renderContent () {
         let linkToBlog = 'https://blog.cyberrepublic.org'
 
@@ -39,45 +74,11 @@ export default class extends StandardPage {
         }
 
         return <div className="p_landingBg">
+            {this.renderVideoModal()}
             <div id="loader">
                 <div className="load-clip">
                     <div className="logo-text part"><img src="assets/images/logo-text.svg"/></div>
                     <div className="logo-mark part"><img src="assets/images/logo-mark.svg"/></div>
-                </div>
-            </div>
-
-            <div className="sticky">
-                <div className="bg"></div>
-
-                <div className="contentContainer">
-                    <nav className="toplinks">
-                        <ul>
-                            <li><a href="/cr100">{I18N.get('0105')}</a></li>
-                            <li><a href="/crcles">{I18N.get('0106')}</a></li>
-                            <li><a href="/developer">{I18N.get('0102')}</a></li>
-                            <li><a href="/council">{I18N.get('council.0001')}</a></li>
-                            <li><a href="https://blog.cyberrepublic.org">{I18N.get('0110')}</a></li>
-                            <li><a href="/ambassadors">{I18N.get('0107')}</a></li>
-
-                            {this.props.is_login
-                                ? <li><a href="/profile/info">{I18N.get('0104')}</a></li>
-                                : <li><a href="/login">{I18N.get('0201')}</a></li>
-                            }
-
-                            <li className="hasIcon">
-                                <span className="txt">{I18N.get('landing.playVideo')}</span>
-                                <div className="arrow-btn">
-                                    <div className="arrow-circle"><img src="assets/images/arrow-submit.svg"/></div>
-                                    <div className="arrow-border"></div>
-                                </div>
-                                <a href="#" className="video-btn"></a>
-                            </li>
-
-                            <li>
-                                {this.buildLanguageDropdown()}
-                            </li>
-                        </ul>
-                    </nav>
                 </div>
             </div>
 
@@ -139,6 +140,11 @@ export default class extends StandardPage {
                         <p style={{paddingTop: '24px'}}>{I18N.get('landing.action.enter')} <strong>{I18N.get('landing.action.here')}</strong></p>
                         <div className="arrow sized"><img src="assets/images/arrow.svg"/></div>
                         <a href="/cr100"></a>
+                    </div>
+                    <div className="cta-btn" style={{cursor: 'pointer'}} style={{marginRight: '24px'}}>
+                        <p style={{paddingTop: '24px'}}>{I18N.get('landing.playVideo')} <strong>{I18N.get('landing.action.here')}</strong></p>
+                        <div className="arrow sized"><img src="assets/images/arrow.svg"/></div>
+                        <a onClick={this.playVideo.bind(this)}></a>
                     </div>
                 </div>
             </section>

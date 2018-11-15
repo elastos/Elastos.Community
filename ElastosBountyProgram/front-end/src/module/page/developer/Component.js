@@ -22,6 +22,7 @@ export default class extends StandardPage {
             search: params.search || '',
             showUserInfo: null,
             skillsetFilters: (params.skillsetFilters || '').split(','),
+            showVideo: false,
             userListPagination: {
                 pageSize: 5,
                 current: parseInt(params.page || 1, 10)
@@ -62,14 +63,14 @@ export default class extends StandardPage {
                         </div>
                     </div>
                 </div>
-                {this.rederVideoModal()}
+                {this.renderVideoModal()}
                 {this.renderProfileModal()}
                 <Footer/>
             </div>
         )
     }
 
-    rederVideoModal() {
+    renderVideoModal() {
         return (
             <Modal
                 className="video-popup-modal"
