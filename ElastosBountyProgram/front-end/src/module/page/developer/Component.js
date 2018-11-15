@@ -2,6 +2,7 @@ import React from 'react'
 import StandardPage from '../StandardPage'
 import Footer from '@/module/layout/Footer/Container'
 import I18N from '@/I18N'
+import Video from '@/module/shared/video/Container'
 import { Link } from 'react-router-dom'
 import './style.scss'
 import MediaQuery from 'react-responsive'
@@ -21,6 +22,7 @@ export default class extends StandardPage {
             search: params.search || '',
             showUserInfo: null,
             skillsetFilters: (params.skillsetFilters || '').split(','),
+            showVideo: false,
             userListPagination: {
                 pageSize: 5,
                 current: parseInt(params.page || 1, 10)
@@ -61,9 +63,24 @@ export default class extends StandardPage {
                         </div>
                     </div>
                 </div>
+                {this.renderVideoModal()}
                 {this.renderProfileModal()}
                 <Footer/>
             </div>
+        )
+    }
+
+    renderVideoModal() {
+        return (
+            <Modal
+                className="video-popup-modal"
+                visible={!!this.state.showVideo}
+                onCancel={this.handleCancelVideo.bind(this)}
+                footer={null}
+                width="76%"
+                style={{ top: 35 }}>
+                <Video showVideo={this.state.showVideo} />
+            </Modal>
         )
     }
 
@@ -79,6 +96,18 @@ export default class extends StandardPage {
                 }
             </Modal>
         )
+    }
+
+    handleCancelVideo() {
+        this.setState({
+            showVideo: false
+        })
+    }
+
+    handleShowVideo() {
+        this.setState({
+            showVideo: true
+        })
     }
 
     handleCancelProfilePopup() {
@@ -115,6 +144,13 @@ export default class extends StandardPage {
                                 Discord
                             </a>
                         </div>
+                    </div>
+                    <div className="video" onClick={this.handleShowVideo.bind(this)}>
+                        <a className="video-btn">
+                            <p className="video-title">Cyber Republic Video</p>
+                            <p className="video-more">Watch it now and learn more</p>
+                            <img className="video-img" src="/assets/images/arrow-right.png"/>
+                        </a>
                     </div>
                     <div className="pull-right">
                         <img src="/assets/images/community-world.svg"/>
