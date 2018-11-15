@@ -87,9 +87,9 @@ export default class extends AdminPage {
         this.loadCommunities();
         this.loadCommunityDetail();
         this.loadSubCommunities();
-        this.props.getAllUsers().then((users) => {
+        this.props.getAllUsers().then((result) => {
             this.setState({
-                users
+                users: result.list
             })
         })
     }
