@@ -42,7 +42,7 @@
   .top-section {
     border: 1px solid $border_gray;
     border-radius: 5px 50px 5px 5px;
-    width: 752px;
+    width: 100%;
     margin: 0 auto;
 
     @media only screen and (max-width: $mobile-width) {
@@ -51,7 +51,6 @@
 
     .col-left {
       display: flex;
-      width: 250px;
 
       @media only screen and (max-width: $mobile-width) {
         padding-top: $gap_1;
