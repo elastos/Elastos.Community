@@ -66,9 +66,9 @@ export default class extends AdminPage {
     componentDidMount() {
         super.componentDidMount()
         this.loadCommunities();
-        this.props.getAllUsers().then((users) => {
+        this.props.getAllUsers().then((result) => {
             this.setState({
-                users
+                users: result.list
             })
         })
     }
