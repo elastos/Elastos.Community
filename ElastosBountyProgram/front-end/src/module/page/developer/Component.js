@@ -193,11 +193,18 @@ export default class extends StandardPage {
     }
 
     getSkillsets() {
-        return _.map(USER_SKILLSET, (skillset) => {
+        return _.map(USER_SKILLSET, (skillsets, category) => {
             return {
-                title: I18N.get(`user.skillset.${skillset}`),
-                value: skillset,
-                key: skillset
+                title: I18N.get(`user.skillset.group.${category}`),
+                value: category,
+                key: category,
+                children: _.map(skillsets, (skillset) => {
+                    return {
+                        title: I18N.get(`user.skillset.${skillset}`),
+                        value: skillset,
+                        key: skillset
+                    }
+                })
             }
         })
     }

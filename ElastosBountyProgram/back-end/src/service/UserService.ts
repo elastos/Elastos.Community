@@ -276,7 +276,7 @@ export default class extends Base {
 
         if (query.skillset) {
             const skillsets = query.skillset.split(',')
-            finalQuery['profile.skillset'] = { $in: _.intersection(_.values(constant.USER_SKILLSET), skillsets) }
+            finalQuery['profile.skillset'] = { $in: skillsets }
         }
 
         if (query.empower) {
