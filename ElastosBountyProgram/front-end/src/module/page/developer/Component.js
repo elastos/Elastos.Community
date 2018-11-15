@@ -5,9 +5,9 @@ import I18N from '@/I18N'
 import { Link } from 'react-router-dom'
 import './style.scss'
 import MediaQuery from 'react-responsive'
-import { Col, Row, Card, Button, Breadcrumb, Icon, Table, Input, Modal, Avatar } from 'antd'
+import { Col, Row, Card, Button, Breadcrumb, Icon, Table, Input, Modal, Avatar, TreeSelect } from 'antd'
 import {MAX_WIDTH_MOBILE} from "../../../config/constant"
-import { USER_AVATAR_DEFAULT } from '@/constant'
+import { USER_AVATAR_DEFAULT, USER_SKILLSET } from '@/constant'
 import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 import URI from 'urijs'
 
@@ -20,6 +20,7 @@ export default class extends StandardPage {
         this.state = {
             search: params.search || '',
             showUserInfo: null,
+            skillsetFilters: (params.skillsetFilters || '').split(','),
             userListPagination: {
                 pageSize: 5,
                 current: parseInt(params.page || 1, 10)
@@ -39,10 +40,11 @@ export default class extends StandardPage {
         const options = {
             search: this.state.search || '',
             results: (this.state.userListPagination || {}).pageSize || 5,
-            page: (this.state.userListPagination || {}).current || 1
+            page: (this.state.userListPagination || {}).current || 1,
+            skillset: this.state.skillsetFilters || []
         }
 
-        this.props.history.replace(`/developer?search=${options.search}&page=${options.page}`)
+        this.props.history.replace(`/developer?search=${options.search}&page=${options.page}&skillset=${options.skillset.join(',')}`)
         this.props.listUsers(options)
     }
 
@@ -186,6 +188,34 @@ export default class extends StandardPage {
             : avatar
     }
 
+    skillsetFilterChanged(value) {
+        this.setState({ skillsetFilters: value }, this.debouncedRefetch.bind(this))
+    }
+
+    getSkillsets() {
+        return _.map(USER_SKILLSET, (skillsets, category) => {
+            return {
+                title: I18N.get(`user.skillset.group.${category}`),
+                value: category,
+                key: category,
+                children: _.map(skillsets, (skillset) => {
+                    return {
+                        title: I18N.get(`user.skillset.${skillset}`),
+                        value: skillset,
+                        key: skillset
+                    }
+                })
+            }
+        })
+    }
+
+    getSkillsetSelector() {
+        return (
+            <TreeSelect className="full-width" initialValue={[]} treeData={this.getSkillsets()} treeCheckable={true}
+                searchPlaceholder={I18N.get('user.skillset.select')} onChange={this.skillsetFilterChanged.bind(this)}/>
+        )
+    }
+
     handleTableChange(pagination, filters, sorter) {
         const pager = { ...this.state.userListPagination }
         pager.current = pagination.current
@@ -243,6 +273,10 @@ export default class extends StandardPage {
                         <Col md={9} xs={24}>
                             <Input defaultValue={this.state.search} placeholder={I18N.get('developer.breadcrumb.search')}
                                 onChange={searchChangedHandler.bind(this)}/>
+                        </Col>
+                        <Col md={6} xs={24}/>
+                        <Col md={9} xs={24}>
+                            {this.getSkillsetSelector()}
                         </Col>
                     </Row>
                     <Table

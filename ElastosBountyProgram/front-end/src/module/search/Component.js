@@ -607,6 +607,12 @@ export default class extends BaseComponent {
                             <Option value="TASK">{I18N.get('developer.search.task')}</Option>
                         </Select>
                     </div>
+                    <div className="search-mobile-container">
+                        <div className="">
+                            <Input defaultValue={this.state.search} onChange={searchChangedHandler.bind(this)}
+                                placeholder={I18N.get('developer.search.search.placeholder')}/>
+                        </div>
+                    </div>
                     {this.state.lookingFor !== 'TASK' &&
                         <TreeSelect
                             className="filters-tree"

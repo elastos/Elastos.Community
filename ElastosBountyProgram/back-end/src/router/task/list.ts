@@ -34,12 +34,7 @@ export default class extends Base{
 
         if (param.type) {
             const types = param.type.split(',')
-            const valid = _.intersection(_.values(constant.TASK_TYPE), types).length ===
-                types.length
-
-            if (valid) {
-                query.type = { $in: types }
-            }
+            query.type = { $in: _.intersection(_.values(constant.TASK_TYPE), types) }
         }
 
         query.category = { $in: [constant.TASK_CATEGORY.DEVELOPER, constant.TASK_CATEGORY.SOCIAL] }
