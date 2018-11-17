@@ -51,7 +51,6 @@ export default class extends BaseComponent {
             )
         }
 
-        console.log(this.props.member)
         const user = this.props.member
         const avatar = user.profile.avatar || USER_AVATAR_DEFAULT
         const now = moment(Date.now())
