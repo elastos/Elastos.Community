@@ -1,6 +1,7 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
-import { Button, Icon, Spin } from 'antd'
+import UserContactForm from '@/module/form/UserContactForm/Container'
+import {Button, Icon, Modal, Spin} from 'antd'
 import I18N from '@/I18N'
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS, USER_ROLE, USER_AVATAR_DEFAULT} from '@/constant'
 import './style.scss'
@@ -10,13 +11,23 @@ import _ from 'lodash'
 import moment from 'moment-timezone'
 
 export default class extends BaseComponent {
+
+    ord_states() {
+        return {
+            showSendMessage: this.props.showSendMessage || false
+        }
+    }
+
     async componentDidMount() {
-        this.props.getMember(this.props.showUserInfo._id ||
-            this.props.showUserInfo.current_user_id)
+        if (this.props.showUserInfo) {
+            this.props.getMember(this.props.showUserInfo._id || this.props.showUserInfo.current_user_id)
+        }
     }
 
     componentWillUnmount() {
-        this.props.resetMemberDetail()
+        if (this.props.showUserInfo) {
+            this.props.resetMemberDetail()
+        }
     }
 
     getCountry(countryCode) {
@@ -81,9 +92,15 @@ export default class extends BaseComponent {
                         <div className="profile-interaction">
                             <div><span>{I18N.get('profile.localTime')} {localTime}</span></div>
                         </div>
-                        <div className="profile-view-button">
-                            <Button className="komu-a" onClick={() => this.linkUserDetail(user)}>{I18N.get('profile.viewProfile')}</Button>
-                        </div>
+                        {this.state.showSendMessage ? (
+                            <div className="message-box">
+                                <UserContactForm recipient={user} close={this.props.close}/>
+                            </div>) : (
+                            <div className="profile-view-button">
+                                <Button className="komu-a"
+                                    onClick={() => this.linkUserDetail(user)}>{I18N.get('profile.viewProfile')}</Button>
+                            </div>)
+                        }
                     </div>
                 </div>
             </div>
