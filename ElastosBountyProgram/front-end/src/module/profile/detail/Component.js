@@ -1,9 +1,10 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import UserContactForm from '@/module/form/UserContactForm/Container'
+import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 import moment from 'moment-timezone'
 import Comments from '@/module/common/comments/Container'
-import {Col, Row, Tabs, Icon, Button, Spin, Table, Tooltip, Tag} from 'antd'
+import {Col, Row, Tabs, Icon, Button, Spin, Table, Tooltip, Tag, Modal} from 'antd'
 import I18N from '@/I18N'
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS,
     USER_ROLE, USER_AVATAR_DEFAULT, TEAM_TYPE} from '@/constant'
@@ -19,6 +20,7 @@ export default class extends BaseComponent {
 
     ord_states() {
         return {
+            showUserInfo: null
         }
     }
 
@@ -60,6 +62,16 @@ export default class extends BaseComponent {
                         {this.renderDesktop()}
                     </div>
                 </MediaQuery>
+                <Modal
+                    className="profile-overview-popup-modal"
+                    visible={!!this.state.showUserInfo}
+                    onCancel={this.handleCancelProfilePopup.bind(this)}
+                    footer={null}>
+                    { this.state.showUserInfo &&
+                        <ProfilePopup close={this.handleCancelProfilePopup.bind(this)}
+                            member={this.state.showUserInfo} showSendMessage={true}/>
+                    }
+                </Modal>
             </div>
         )
     }
@@ -127,7 +139,7 @@ export default class extends BaseComponent {
                     {this.renderDescription()}
                 </div>
 
-                {/*this.renderProjectsTasks()*/}
+                {/* this.renderProjectsTasks() */}
 
                 <Row>
                     <Col span={24} className="gridCol">
@@ -178,24 +190,33 @@ export default class extends BaseComponent {
     }
 
     renderSendMessage() {
+        const isMyself = this.props.member._id === this.props.currentUserId
+        const hoverMessage = I18N.get('profile.detail.sendmessage.disabled')
         return (
-            <Tooltip title={I18N.get('profile.detail.comingsoon')}>
-                <Button disabled type="primary" className="profile-send-msg">{I18N.get('profile.detail.sendmessage')}</Button>
-            </Tooltip>)
+            <Tooltip title={isMyself ? hoverMessage : ''}>
+                <Button disabled={isMyself} type="primary" className="profile-send-msg" onClick={this.linkProfilePopup.bind(this)}>
+                    {I18N.get('profile.detail.sendmessage')}
+                </Button>
+            </Tooltip>
+        )
     }
 
     renderFollow() {
         const isMyself = this.props.member._id === this.props.currentUserId
         const isFollowing = this.isUserSubscribed()
         const clickHandler = isFollowing ? this.unfollowUser : this.followUser
-
-        return <Button className="profile-follow" disabled={isMyself}
-            loading={this.props.subscribing} onClick={clickHandler.bind(this)}>
-            {isFollowing
-                ? I18N.get('user.unfollow')
-                : I18N.get('user.follow')
-            }
-        </Button>
+        const hoverMessage = I18N.get('profile.detail.follow.disabled')
+        return (
+            <Tooltip title={isMyself ? hoverMessage : ''}>
+                <Button className={ !isMyself ? 'profile-follow' : 'profile-follow follow-disabled'} disabled={isMyself}
+                    loading={this.props.subscribing} onClick={clickHandler.bind(this)}>
+                    {isFollowing
+                        ? I18N.get('user.unfollow')
+                        : I18N.get('user.follow')
+                    }
+                </Button>
+            </Tooltip>
+        )
     }
 
     renderLocation(isMobile) {
@@ -268,9 +289,8 @@ export default class extends BaseComponent {
         return <Row>
             <Col span={24}>
                 {!this.props.is_login ? <div>
-                        {I18N.get('profile.detail.requiredlogin')}
-                    </div> :
-                    <UserContactForm recipient={this.props.member}/>
+                    {I18N.get('profile.detail.requiredlogin')}
+                </div> : <UserContactForm recipient={this.props.member}/>
                 }
             </Col>
         </Row>
@@ -409,5 +429,17 @@ export default class extends BaseComponent {
 
     linkProjectDetail(taskId) {
         this.props.history.push(`/task-detail/${taskId}`)
+    }
+
+    linkProfilePopup() {
+        this.setState({
+            showUserInfo: this.props.member
+        })
+    }
+
+    handleCancelProfilePopup() {
+        this.setState({
+            showUserInfo: null
+        })
     }
 }
