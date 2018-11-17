@@ -68,7 +68,7 @@ export default class extends BaseComponent {
                     onCancel={this.handleCancelProfilePopup.bind(this)}
                     footer={null}>
                     { this.state.showUserInfo &&
-                        <ProfilePopup showUserInfo={this.state.showUserInfo} showSendMessage={true}/>
+                        <ProfilePopup member={this.state.showUserInfo} showSendMessage={true}/>
                     }
                 </Modal>
             </div>
@@ -193,7 +193,7 @@ export default class extends BaseComponent {
         const hoverMessage = I18N.get('profile.detail.sendmessage.disabled')
         return (
             <Tooltip title={isMyself ? hoverMessage : ''}>
-                <Button disabled={isMyself} type="primary" className="profile-send-msg" onClick={this.linkProfilePopup.bind(this, this.props.member)}>
+                <Button disabled={isMyself} type="primary" className="profile-send-msg" onClick={this.linkProfilePopup.bind(this)}>
                     {I18N.get('profile.detail.sendmessage')}
                 </Button>
             </Tooltip>
@@ -430,9 +430,9 @@ export default class extends BaseComponent {
         this.props.history.push(`/task-detail/${taskId}`)
     }
 
-    linkProfilePopup(user) {
+    linkProfilePopup() {
         this.setState({
-            showUserInfo: user
+            showUserInfo: this.props.member
         })
     }
 

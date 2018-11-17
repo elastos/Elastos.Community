@@ -19,11 +19,15 @@ export default class extends BaseComponent {
     }
 
     async componentDidMount() {
-        // this.props.getMember(this.props.showUserInfo._id || this.props.showUserInfo.current_user_id)
+        if (this.props.showUserInfo) {
+            this.props.getMember(this.props.showUserInfo._id || this.props.showUserInfo.current_user_id)
+        }
     }
 
     componentWillUnmount() {
-        this.props.resetMemberDetail()
+        if (this.props.showUserInfo) {
+            this.props.resetMemberDetail()
+        }
     }
 
     getCountry(countryCode) {
