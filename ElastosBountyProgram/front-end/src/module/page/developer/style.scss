@@ -29,7 +29,7 @@ $mobile-padding: $gap_0 0px;
 
     @media only screen and (max-width: $mobile-width) {
       max-width: 928px;
-      min-width: 580px;
+      min-height: 420px;
       padding: $gap_4 $gap_3;
     }
 

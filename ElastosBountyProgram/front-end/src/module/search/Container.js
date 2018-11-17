@@ -26,6 +26,7 @@ export default createContainer(Component, (state) => {
         async getProjects(filters) {
             return await taskService.index({
                 ...filters,
+                assignSelf: false,
                 type: TASK_TYPE.PROJECT,
                 category: TASK_CATEGORY.DEVELOPER
             })
@@ -34,6 +35,7 @@ export default createContainer(Component, (state) => {
         async loadMoreProjects(filters) {
             return await taskService.loadMore({
                 ...filters,
+                assignSelf: false,
                 type: TASK_TYPE.PROJECT,
                 category: TASK_CATEGORY.DEVELOPER
             })
@@ -42,6 +44,7 @@ export default createContainer(Component, (state) => {
         async getTasks(filters) {
             return await taskService.index({
                 ...filters,
+                assignSelf: false,
                 type: [TASK_TYPE.TASK, TASK_TYPE.EVENT],
                 category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.SOCIAL]
             })
@@ -50,6 +53,7 @@ export default createContainer(Component, (state) => {
         async loadMoreTasks(filters) {
             return await taskService.loadMore({
                 ...filters,
+                assignSelf: false,
                 type: [TASK_TYPE.TASK, TASK_TYPE.EVENT],
                 category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.SOCIAL]
             })
