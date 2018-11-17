@@ -491,7 +491,14 @@ export default class extends Base {
         const fromUser = await db_user.findById(fromUserId)
         const toUser = await db_user.findById(toUserId)
 
-        const formattedSubject = subject || 'Message from ' + fromUser.username
+        const formattedSubject = subject || 'New Cyber Republic private message'
+
+        const body = `
+            New message from <a href="${process.env.SERVER_URL}/member/${fromUserId}">${fromUser.username}</a>
+            <br/>
+            <br/>
+            ${message}
+        `
 
         if (!fromUser){
             throw 'From user not found'
@@ -507,7 +514,7 @@ export default class extends Base {
             to: toUser.email,
             toName: `${toUser.profile.firstName} ${toUser.profile.lastName}`,
             subject: formattedSubject,
-            body: message,
+            body,
             replyTo: {
                 name: `${fromUser.profile.firstName} ${fromUser.profile.lastName}`,
                 email: fromUser.email
