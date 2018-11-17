@@ -35,7 +35,7 @@ class C extends BaseComponent {
         const {getFieldDecorator} = this.props.form
 
         const subject_fn = getFieldDecorator('subject', {
-            rules: [{required: true, message: I18N.get('from.UserContactForm.field.required')}]
+            rules: []
         })
         const subject_el = (
             <Input size="large" placeholder="subject"/>
@@ -48,8 +48,10 @@ class C extends BaseComponent {
             <TextArea rows={4} name="message" placeholder={I18N.get('from.UserContactForm.placeholder.message')}></TextArea>
         )
 
+        const name = this.props.recipient.profile.firstName + ' ' + this.props.recipient.profile.lastName
+        const defaultSubject = 'Cyber Republic - Message from ' + name
         return {
-            subject: subject_fn(subject_el),
+            subject: subject_fn(subject_el) || defaultSubject,
             message: message_fn(message_el)
         }
     }
@@ -59,7 +61,6 @@ class C extends BaseComponent {
         const p = this.getInputProps()
 
         // TODO: description CKE Editor
-
         return (
             <div className="c_taskCreateFormContainer">
 

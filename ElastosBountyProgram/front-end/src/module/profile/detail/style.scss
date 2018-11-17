@@ -162,10 +162,18 @@ $avatar-size: 160px;
   }
 
   .profile-follow {
-    width: 100%;
-    border: 1px solid #000;
-    color: #000;
-    text-transform: uppercase;
+    border: 0;
+    border-radius: 0;
+    font-weight: bold;
+
+    button {
+      width: 100%;
+      text-transform: uppercase;
+      border-radius: 0;
+    }
+  }
+  .profile-follow.follow-disabled {
+    border: 0 !important;
   }
 
   .profile-left {

@@ -61,6 +61,52 @@
       }
     }
   }
+  .message-box {
+    .c_taskCreateFormContainer {
+      padding: 0 $gap_1;
+      .no-info {
+        display: none;
+      }
+      #subject {
+        display: none;
+      }
+      .ant-row.ant-form-item {
+        margin: 0;
+      }
+      textarea {
+        resize: none;
+        border-color: $text_light_gray;
+        border-radius: 0;
+      }
+      .ant-form-explain {
+        display: none;
+      }
+      .ant-form-item-control-wrapper {
+        width: 100%;
+        text-align: center;
+      }
+      .d_btn {
+        margin: $gap_1 0 0 -15px;
+        width: calc(100% + 30px);
+        height: 60px;
+        background-color: $primary_color;
+        border-color: $primary_color;
+        border-radius: 0;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .d_btn:hover {
+        background-color: #66bda3;
+        border-color: #66bda3;
+      }
+    }
+    @media only screen and (max-width: $mobile-width) {
+      .c_taskCreateFormContainer {
+        padding: 0;
+      }
+    }
+  }
   .profile-view-button {
     width: 100%;
 
@@ -73,6 +119,11 @@
       color: white;
       font-size: 24px;
       font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #66bda3;
+      border-color: #66bda3;
     }
   }
 }
