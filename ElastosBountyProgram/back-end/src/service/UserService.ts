@@ -491,7 +491,7 @@ export default class extends Base {
         const fromUser = await db_user.findById(fromUserId)
         const toUser = await db_user.findById(toUserId)
 
-        subject = subject || 'Message from ' + fromUser.username
+        const formattedSubject = subject || 'Message from ' + fromUser.username
 
         if (!fromUser){
             throw 'From user not found'
@@ -506,7 +506,7 @@ export default class extends Base {
         await mail.send({
             to: toUser.email,
             toName: `${toUser.profile.firstName} ${toUser.profile.lastName}`,
-            subject: subject,
+            subject: formattedSubject,
             body: message,
             replyTo: {
                 name: `${fromUser.profile.firstName} ${fromUser.profile.lastName}`,
