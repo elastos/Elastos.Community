@@ -491,6 +491,8 @@ export default class extends Base {
         const fromUser = await db_user.findById(fromUserId)
         const toUser = await db_user.findById(toUserId)
 
+        subject = subject || 'Message from ' + fromUser.username
+
         if (!fromUser){
             throw 'From user not found'
         }
