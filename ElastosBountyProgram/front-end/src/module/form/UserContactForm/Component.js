@@ -26,6 +26,7 @@ class C extends BaseComponent {
                 this.props.sendEmail(this.props.recipient._id, formData).then(() => {
                     message.success(I18N.get('from.UserContactForm.message.success'))
                 })
+                this.props.close && this.props.close()
             }
         })
     }

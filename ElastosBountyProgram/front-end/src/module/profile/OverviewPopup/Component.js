@@ -95,7 +95,7 @@ export default class extends BaseComponent {
                         </div>
                         {this.state.showSendMessage ? (
                             <div className="message-box">
-                                <UserContactForm recipient={user}/>
+                                <UserContactForm recipient={user} close={this.props.close}/>
                             </div>) : (
                             <div className="profile-view-button">
                                 <Button className="komu-a"

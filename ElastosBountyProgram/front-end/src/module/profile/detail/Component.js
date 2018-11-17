@@ -68,7 +68,8 @@ export default class extends BaseComponent {
                     onCancel={this.handleCancelProfilePopup.bind(this)}
                     footer={null}>
                     { this.state.showUserInfo &&
-                        <ProfilePopup member={this.state.showUserInfo} showSendMessage={true}/>
+                        <ProfilePopup close={this.handleCancelProfilePopup.bind(this)}
+                            member={this.state.showUserInfo} showSendMessage={true}/>
                     }
                 </Modal>
             </div>
