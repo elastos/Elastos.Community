@@ -764,7 +764,9 @@ const zh = {
     'profile.detail.noapplications': '还没有任何申请',
     'profile.detail.finding': '资金支持：100k美金或5%的股权或代币/令牌',
     'profile.detail.sendmessage': 'Send Message',
+    'profile.detail.sendmessage.disabled': 'You cannot send a message to yourself',
     'profile.detail.comingsoon': 'Coming soon...',
+    'profile.detail.follow.disabled': 'You cannot follow yourself',
 
     // Validate Form
     'ambassadors.form.required': '必填项目',

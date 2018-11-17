@@ -767,7 +767,9 @@ const en = {
     'profile.detail.noapplications': 'No applications yet',
     'profile.detail.finding': 'Funding: 100k for 5% of the equity or coins/tokens',
     'profile.detail.sendmessage': 'Send Message',
+    'profile.detail.sendmessage.disabled': 'You cannot send a message to yourself',
     'profile.detail.comingsoon': 'Coming soon...',
+    'profile.detail.follow.disabled': 'You cannot follow yourself',
 
     // Validate Form
     'ambassadors.form.required': 'This must be filled out',
