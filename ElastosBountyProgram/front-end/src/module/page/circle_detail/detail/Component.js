@@ -263,9 +263,9 @@ class C extends BaseComponent {
             <div>
                 <div className="member-header">
                     <h3 className="member-header-label komu-a with-gizmo">{I18N.get('circle.tasks')}</h3>
-                    <Button className="pull-right" onClick={this.createNewTask.bind(this)}>
+                    {this.isTeamMember() && <Button className="pull-right" onClick={this.createNewTask.bind(this)}>
                         {I18N.get('task.createNew')}
-                    </Button>
+                    </Button>}
                 </div>
                 <div className="members-list">
                     <Table
