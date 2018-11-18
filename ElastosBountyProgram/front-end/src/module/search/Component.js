@@ -2,11 +2,11 @@ import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import {
     Col, Row, Icon, Input, Button, List, Checkbox, Radio, Select,
-    Carousel, Modal, Avatar, Affix, Tag, TreeSelect, Switch, Divider, Spin
+    Carousel, Modal, Avatar, Affix, Tag, TreeSelect, Switch, Divider, Spin, DatePicker
 } from 'antd'
 import _ from 'lodash'
 import './style.scss'
-import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT} from '@/constant'
+import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT, ORDER_BY} from '@/constant'
 import InfiniteScroll from 'react-infinite-scroller'
 import TeamDetail from '@/module/team/detail/Container'
 import TaskDetail from '@/module/task/popup/Container'
@@ -62,7 +62,11 @@ export default class extends BaseComponent {
             filtersTree: ['TEAM'],
             showUserInfo: null,
             page: 1,
-            results: 5
+            results: 5,
+            orderBy: params.orderBy || '', // ASC, DESC
+            isDescending: params.orderBy !== ORDER_BY.DESC,
+            updatedAt: params.updatedAt || '',
+            createdAt: params.createdAt || ''
         }
     }
 
@@ -87,6 +91,18 @@ export default class extends BaseComponent {
             }
         }
 
+        if (!_.isEmpty(this.state.orderBy)) {
+            query.orderBy = this.state.orderBy
+        }
+
+        if (!_.isEmpty(this.state.updatedAt)) {
+            query.updatedAt = this.state.updatedAt
+        }
+
+        if (!_.isEmpty(this.state.createdAt)) {
+            query.createdAt = this.state.createdAt
+        }
+
         query.page = this.state.page || 1
         query.results = this.state.results || 5
 
@@ -99,6 +115,9 @@ export default class extends BaseComponent {
         const circle = (query.circle || []).join(',')
         const lookingFor = this.state.lookingFor
         const search = this.state.search
+        const orderBy = this.state.orderBy
+        const updatedAt = this.state.updatedAt
+        const createdAt = this.state.createdAt
 
         const url = new URI('/developer/search')
         lookingFor && url.addSearch('lookingFor', lookingFor)
@@ -106,6 +125,9 @@ export default class extends BaseComponent {
         domain && url.addSearch('domain', domain)
         circle && url.addSearch('circle', circle)
         search && url.addSearch('search', search)
+        orderBy && url.addSearch('orderBy', orderBy)
+        updatedAt && url.addSearch('updatedAt', updatedAt)
+        createdAt && url.addSearch('createdAt', createdAt)
 
         return url.toString()
     }
@@ -414,6 +436,54 @@ export default class extends BaseComponent {
         return elements
     }
 
+    renderSortDateBox() {
+        return (
+            <div className="wrap-box-date">
+                <DatePicker
+                    className="box_item"
+                    placeholder="Created date"
+                    defaultValue={this.state.createdAt && moment(this.state.createdAt, 'YYYY-MM-DD')}
+                    onChange={this.onCreateDateChange.bind(this)}
+                />
+                <DatePicker
+                    className="box_item"
+                    placeholder="Last updated"
+                    defaultValue={this.state.updatedAt && moment(this.state.updatedAt, 'YYYY-MM-DD')}
+                    onChange={this.onLastUpdateChange.bind(this)}
+                />
+                <Switch
+                    className="box_item"
+                    onChange={this.onChangeSwitchOrder.bind(this)}
+                    unCheckedChildren="Descending"
+                    checkedChildren="Ascending"
+                    defaultChecked={this.state.isDescending}
+                />
+            </div>
+        )
+    }
+
+    onChangeSwitchOrder(checked) {
+        this.setState({
+            isDescending: !this.state.isDescending,
+            orderBy: checked ? ORDER_BY.ASC : ORDER_BY.DESC,
+            page: 1
+        }, this.debouncedRefetch.bind(this))
+    }
+
+    onCreateDateChange(date, dateString) {
+        this.setState({
+            createdAt: dateString,
+            page: 1
+        }, this.debouncedRefetch.bind(this))
+    }
+
+    onLastUpdateChange(date, dateString) {
+        this.setState({
+            updatedAt: dateString,
+            page: 1
+        }, this.debouncedRefetch.bind(this))
+    }
+
     handleOnFiltersChange(e) {
         const skillset = []
         const domain = []
@@ -587,6 +657,7 @@ export default class extends BaseComponent {
                             <div className="group">
                                 <div className="title">{I18N.get('developer.search.circle')}</div>
                                 <div className="content">
+                                    {this.renderSortDateBox()}
                                     {this.renderCircles(this.state.circlesShowAllEntries)}
                                     <div className="showMore" onClick={this.enableCirclesEntries.bind(this)}>
                                         {
@@ -648,6 +719,9 @@ export default class extends BaseComponent {
                         treeCheckable={!this.props.all_circles_loading}
                         onChange={this.onChangeCircle.bind(this)}
                     />
+                    }
+                    {this.state.lookingFor === 'TASK' &&
+                    this.renderSortDateBox()
                     }
                 </MediaQuery>
             </div>)

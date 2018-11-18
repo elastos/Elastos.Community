@@ -135,7 +135,7 @@ export default class extends Base {
         return updatedTask
     }
 
-    public async list(param): Promise<Document> {
+    public async list(param, orderBy): Promise<Document> {
         const db_task = this.getDBModel('Task');
         const db_task_candidate = this.getDBModel('Task_Candidate');
         const db_user = this.getDBModel('User');
@@ -148,6 +148,10 @@ export default class extends Base {
             const results = parseInt(param.results, 10)
             const page = parseInt(param.page, 10)
             cursor.skip(results * (page - 1)).limit(results)
+        }
+
+        if (orderBy) {
+            cursor.sort({createdAt: orderBy})
         }
 
         const tasks = await cursor

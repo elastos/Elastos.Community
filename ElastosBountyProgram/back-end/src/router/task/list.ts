@@ -75,6 +75,26 @@ export default class extends Base{
             query.eventDateRangeStart = JSON.parse(param.eventDateRangeStart)
         }
 
+        if (param.createdAt) {
+            const date = new Date(param.createdAt)
+            date.setDate(date.getDate() + 1)
+
+            query.createdAt = {
+                '$gte': new Date(param.createdAt),
+                '$lt': date
+            }
+        }
+
+        if (param.updatedAt) {
+            const date = new Date(param.updatedAt)
+            date.setDate(date.getDate() + 1)
+
+            query.updatedAt = {
+                '$gte': new Date(param.updatedAt),
+                '$lt': date
+            }
+        }
+
         // public page overrides all else
         if (param.public === 'true') {
             query.status = {
@@ -148,7 +168,12 @@ export default class extends Base{
 
         }
 
-        const list = await taskService.list(query)
+        let orderBy
+        if (param.orderBy) {
+            orderBy = param.orderBy === constant.ORDER_BY.ASC ? 1 : -1
+        }
+
+        const list = await taskService.list(query, orderBy)
         const count = await taskService.getDBModel('Task')
             .count(_.omit(query, ['results', 'page']))
 
