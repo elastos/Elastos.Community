@@ -241,7 +241,7 @@ const en = {
 
     'developer.search.sort': 'Sort',
     'developer.search.sort.createdAt': 'Created',
-    'developer.search.sort.createdAt': 'Created',
+    'developer.search.sort.updatedAt': 'Updated',
     'developer.search.sort.asc': 'Ascending',
     'developer.search.sort.desc': 'Descending',
     'developer.search.team': 'Team',
