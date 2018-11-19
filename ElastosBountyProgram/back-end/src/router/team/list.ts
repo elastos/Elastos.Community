@@ -22,7 +22,7 @@ export default class extends Base{
 
         const list = await teamService.list(_.omit(param, ['search']))
         const count = await teamService.getDBModel('Team')
-            .count(_.omit(param, ['search', 'page', 'results']))
+            .count(_.omit(param, ['search', 'page', 'results', 'sortBy', 'sortOrder']))
 
         return this.result(1, {
             list,

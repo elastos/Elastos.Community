@@ -446,6 +446,12 @@ export default class extends Base {
 
         const cursor = db_team.getDBInstance().find(query)
 
+        if (param.sortBy) {
+            let sortObject = {}
+            sortObject[param.sortBy] = param.sortOrder || constant.SORT_ORDER.DESC
+            cursor.sort(sortObject)
+        }
+
         if (param.results) {
             const results = parseInt(param.results, 10)
             const page = parseInt(param.page, 10)

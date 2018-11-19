@@ -6,7 +6,7 @@ import {
 } from 'antd'
 import _ from 'lodash'
 import './style.scss'
-import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT} from '@/constant'
+import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT, SORT_ORDER} from '@/constant'
 import InfiniteScroll from 'react-infinite-scroller'
 import TeamDetail from '@/module/team/detail/Container'
 import TaskDetail from '@/module/task/popup/Container'
@@ -62,7 +62,9 @@ export default class extends BaseComponent {
             filtersTree: ['TEAM'],
             showUserInfo: null,
             page: 1,
-            results: 5
+            results: 5,
+            sortBy: params.sortBy || 'createdAt',
+            sortOrder: params.sortOrder || SORT_ORDER.DESC
         }
     }
 
@@ -87,6 +89,14 @@ export default class extends BaseComponent {
             }
         }
 
+        if (this.state.sortBy) {
+            query.sortBy = this.state.sortBy
+        }
+
+        if (this.state.sortOrder) {
+            query.sortOrder = this.state.sortOrder
+        }
+
         query.page = this.state.page || 1
         query.results = this.state.results || 5
 
@@ -99,6 +109,8 @@ export default class extends BaseComponent {
         const circle = (query.circle || []).join(',')
         const lookingFor = this.state.lookingFor
         const search = this.state.search
+        const sortBy = this.state.sortBy
+        const sortOrder = this.state.sortOrder
 
         const url = new URI('/developer/search')
         lookingFor && url.addSearch('lookingFor', lookingFor)
@@ -106,6 +118,8 @@ export default class extends BaseComponent {
         domain && url.addSearch('domain', domain)
         circle && url.addSearch('circle', circle)
         search && url.addSearch('search', search)
+        sortBy && url.addSearch('sortBy', sortBy)
+        sortOrder && url.addSearch('sortOrder', sortOrder)
 
         return url.toString()
     }
@@ -185,6 +199,20 @@ export default class extends BaseComponent {
     onChangeLookingFor(e) {
         this.setState({
             lookingFor: e.target.value,
+            page: 1
+        }, this.debouncedRefetch.bind(this))
+    }
+
+    onChangeSortBy(e) {
+        this.setState({
+            sortBy: e.target.value,
+            page: 1
+        }, this.debouncedRefetch.bind(this))
+    }
+
+    onChangeSortOrder(e) {
+        this.setState({
+            sortOrder: e.target.value,
             page: 1
         }, this.debouncedRefetch.bind(this))
     }
@@ -286,6 +314,32 @@ export default class extends BaseComponent {
         this.setState({
             showLoginRegisterModal: false
         })
+    }
+
+    renderSortOptions() {
+        return (
+            <div>
+                <RadioGroup value={this.state.sortBy}
+                    onChange={this.onChangeSortBy.bind(this)} className="gap-bottom">
+                    <Radio className="radio" value="createdAt">
+                        {I18N.get('developer.search.sort.createdAt')}
+                    </Radio>
+                    <Radio className="radio" value="updatedAt">
+                        {I18N.get('developer.search.sort.updatedAt')}
+                    </Radio>
+                </RadioGroup>
+
+                <RadioGroup value={this.state.sortOrder}
+                    onChange={this.onChangeSortOrder.bind(this)}>
+                    <Radio className="radio" value={SORT_ORDER.DESC}>
+                        {I18N.get('developer.search.sort.desc')}
+                    </Radio>
+                    <Radio className="radio" value={SORT_ORDER.ASC}>
+                        {I18N.get('developer.search.sort.asc')}
+                    </Radio>
+                </RadioGroup>
+            </div>
+        )
     }
 
     renderLookingFor(lookingForOptions, showAll) {
@@ -549,6 +603,12 @@ export default class extends BaseComponent {
                             <div className="title">{I18N.get('developer.search.lookingFor')}</div>
                             <div className="content">
                                 {this.renderLookingFor(lookingForOptions, true)}
+                            </div>
+                        </div>
+                        <div className="group">
+                            <div className="title">{I18N.get('developer.search.sort')}</div>
+                            <div className="content">
+                                {this.renderSortOptions()}
                             </div>
                         </div>
                         {this.state.lookingFor !== 'TASK' &&
