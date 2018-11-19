@@ -63,8 +63,8 @@ export default class extends BaseComponent {
             showUserInfo: null,
             page: 1,
             results: 5,
-            sortBy: 'createdAt',
-            sortOrder: SORT_ORDER.DESC
+            sortBy: params.sortBy || 'createdAt',
+            sortOrder: params.sortOrder || SORT_ORDER.DESC
         }
     }
 
@@ -109,6 +109,8 @@ export default class extends BaseComponent {
         const circle = (query.circle || []).join(',')
         const lookingFor = this.state.lookingFor
         const search = this.state.search
+        const sortBy = this.state.sortBy
+        const sortOrder = this.state.sortOrder
 
         const url = new URI('/developer/search')
         lookingFor && url.addSearch('lookingFor', lookingFor)
@@ -116,6 +118,8 @@ export default class extends BaseComponent {
         domain && url.addSearch('domain', domain)
         circle && url.addSearch('circle', circle)
         search && url.addSearch('search', search)
+        sortBy && url.addSearch('sortBy', sortBy)
+        sortOrder && url.addSearch('sortOrder', sortOrder)
 
         return url.toString()
     }
@@ -302,7 +306,7 @@ export default class extends BaseComponent {
         return (
             <div>
                 <RadioGroup value={this.state.sortBy}
-                    onChange={(sortBy) => this.setState({ sortBy })}>
+                    onChange={(e) => this.setState({ sortBy: e.target.value })}>
                     <Radio className="radio" value="createdAt">
                         {I18N.get('developer.search.sort.createdAt')}
                     </Radio>
@@ -312,7 +316,7 @@ export default class extends BaseComponent {
                 </RadioGroup>
 
                 <RadioGroup value={this.state.sortOrder}
-                    onChange={(sortOrder) => this.setState({ sortOrder })}>
+                    onChange={(e) => this.setState({ sortOrder: e.target.value })}>
                     <Radio className="radio" value={SORT_ORDER.DESC}>
                         {I18N.get('developer.search.sort.desc')}
                     </Radio>
