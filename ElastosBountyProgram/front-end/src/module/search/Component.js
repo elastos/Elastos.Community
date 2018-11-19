@@ -203,6 +203,18 @@ export default class extends BaseComponent {
         }, this.debouncedRefetch.bind(this))
     }
 
+    onChangeSortBy(e) {
+        this.setState({
+            sortBy: e.target.value
+        }, this.debouncedRefetch.bind(this))
+    }
+
+    onChangeSortOrder(e) {
+        this.setState({
+            sortOrder: e.target.value
+        }, this.debouncedRefetch.bind(this))
+    }
+
     onChangeSkillset(value) {
         this.setState({
             skillset: value,
@@ -306,7 +318,7 @@ export default class extends BaseComponent {
         return (
             <div>
                 <RadioGroup value={this.state.sortBy}
-                    onChange={(e) => this.setState({ sortBy: e.target.value })}>
+                    onChange={this.onChangeSortBy.bind(this)} className="gap-bottom">
                     <Radio className="radio" value="createdAt">
                         {I18N.get('developer.search.sort.createdAt')}
                     </Radio>
@@ -316,7 +328,7 @@ export default class extends BaseComponent {
                 </RadioGroup>
 
                 <RadioGroup value={this.state.sortOrder}
-                    onChange={(e) => this.setState({ sortOrder: e.target.value })}>
+                    onChange={this.onChangeSortOrder.bind(this)}>
                     <Radio className="radio" value={SORT_ORDER.DESC}>
                         {I18N.get('developer.search.sort.desc')}
                     </Radio>
