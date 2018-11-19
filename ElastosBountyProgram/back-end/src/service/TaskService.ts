@@ -142,7 +142,13 @@ export default class extends Base {
         const db_team = this.getDBModel('Team');
         const db_user_team = this.getDBModel('User_Team');
 
-        const cursor = db_task.getDBInstance().find(_.omit(param, ['results', 'page']))
+        const cursor = db_task.getDBInstance().find(_.omit(param, ['results', 'page', 'sortBy', 'sortOrder']))
+
+        if (param.sortBy) {
+            let sortObject = {}
+            sortObject[param.sortBy] = param.sortOrder || constant.SORT_ORDER.DESC
+            cursor.sort(sortObject)
+        }
 
         if (param.results) {
             const results = parseInt(param.results, 10)

@@ -148,9 +148,17 @@ export default class extends Base{
 
         }
 
+        if (param.sortBy) {
+            query.sortBy = param.sortBy
+        }
+
+        if (param.sortOrder) {
+            query.sortOrder = param.sortOrder
+        }
+
         const list = await taskService.list(query)
         const count = await taskService.getDBModel('Task')
-            .count(_.omit(query, ['results', 'page']))
+            .count(_.omit(query, ['results', 'page', 'sortBy', 'sortOrder']))
 
         return this.result(1, {
             list,
