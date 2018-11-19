@@ -205,13 +205,15 @@ export default class extends BaseComponent {
 
     onChangeSortBy(e) {
         this.setState({
-            sortBy: e.target.value
+            sortBy: e.target.value,
+            page: 1
         }, this.debouncedRefetch.bind(this))
     }
 
     onChangeSortOrder(e) {
         this.setState({
-            sortOrder: e.target.value
+            sortOrder: e.target.value,
+            page: 1
         }, this.debouncedRefetch.bind(this))
     }
 
