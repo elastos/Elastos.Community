@@ -44,8 +44,10 @@ export default class extends ProfilePage {
     }
 
     refetch() {
-        let query = {
-            teamHasUser: this.props.currentUserId
+        let query = {}
+
+        if (!this.props.is_admin) {
+            query.teamHasUser = this.props.currentUserId
         }
 
         if (this.state.filter === FILTERS.ACTIVE) {

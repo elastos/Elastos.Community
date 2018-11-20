@@ -8,7 +8,8 @@ export default createContainer(Component, (state) => {
     return {
         ...state.team,
         currentUserId: state.user.current_user_id,
-        all_teams: _.filter(state.team.all_teams, { type: TEAM_TYPE.TEAM })
+        all_teams: _.filter(state.team.all_teams, { type: TEAM_TYPE.TEAM }),
+        is_admin: state.user.is_admin
     }
 }, () => {
     const teamService = new TeamService()

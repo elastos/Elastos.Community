@@ -447,7 +447,7 @@ const en = {
     'team.applyMessage': 'Apply',
     'team.detail.view': 'View',
 
-    'team.detail.team_active': 'Your team is currently active',
+    'team.detail.team_active': 'The team is currently active',
 
     'team.create.error.nameRequired': 'Team name is required',
     'team.create.error.nameTooShort': 'Team name is too short',
