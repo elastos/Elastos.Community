@@ -64,7 +64,8 @@ export default class extends BaseComponent {
             page: 1,
             results: 5,
             sortBy: params.sortBy || 'createdAt',
-            sortOrder: params.sortOrder || SORT_ORDER.DESC
+            sortOrder: params.sortOrder || SORT_ORDER.DESC,
+            assignment: params.assignment || 'all'
         }
     }
 
@@ -97,6 +98,7 @@ export default class extends BaseComponent {
             query.sortOrder = this.state.sortOrder
         }
 
+        query.unassigned = this.state.assignment === 'unassigned'
         query.page = this.state.page || 1
         query.results = this.state.results || 5
 
@@ -107,10 +109,7 @@ export default class extends BaseComponent {
         const skillset = (query.skillset || []).join(',')
         const domain = (query.domain || []).join(',')
         const circle = (query.circle || []).join(',')
-        const lookingFor = this.state.lookingFor
-        const search = this.state.search
-        const sortBy = this.state.sortBy
-        const sortOrder = this.state.sortOrder
+        const { lookingFor, search, sortBy, sortOrder, assignment } = this.state
 
         const url = new URI('/developer/search')
         lookingFor && url.addSearch('lookingFor', lookingFor)
@@ -120,6 +119,7 @@ export default class extends BaseComponent {
         search && url.addSearch('search', search)
         sortBy && url.addSearch('sortBy', sortBy)
         sortOrder && url.addSearch('sortOrder', sortOrder)
+        assignment !== 'all' && url.addSearch('assignment', assignment)
 
         return url.toString()
     }
@@ -245,6 +245,13 @@ export default class extends BaseComponent {
         }, this.debouncedRefetch.bind(this))
     }
 
+    onChangeAssignment(e) {
+        this.setState({
+            assignment: e.target.value,
+            page: 1
+        }, this.debouncedRefetch.bind(this))
+    }
+
     showTaskModal(id) {
         this.setState({
             showTaskModal: true,
@@ -339,6 +346,19 @@ export default class extends BaseComponent {
                     </Radio>
                 </RadioGroup>
             </div>
+        )
+    }
+
+    renderAssignment() {
+        return (
+            <RadioGroup onChange={this.onChangeAssignment.bind(this)} value={this.state.assignment}>
+                <Radio className="radio" value="all">
+                    {I18N.get('developer.search.assignment.all')}
+                </Radio>
+                <Radio className="radio" value="unassigned">
+                    {I18N.get('developer.search.assignment.unassigned')}
+                </Radio>
+            </RadioGroup>
         )
     }
 
@@ -605,6 +625,16 @@ export default class extends BaseComponent {
                                 {this.renderLookingFor(lookingForOptions, true)}
                             </div>
                         </div>
+
+                        {this.state.lookingFor === 'TASK' &&
+                            <div className="group">
+                                <div className="title">{I18N.get('developer.search.assignment')}</div>
+                                <div className="content">
+                                    {this.renderAssignment()}
+                                </div>
+                            </div>
+                        }
+
                         <div className="group">
                             <div className="title">{I18N.get('developer.search.sort')}</div>
                             <div className="content">
@@ -838,10 +868,10 @@ export default class extends BaseComponent {
                             {_.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>)}
                         </div>
                     </div>}
-                    {entity.bidding && (this.isAssigned_fn(entity) ?
+                    {entity.bidding && (this.isAssigned(entity) ?
                         <div className="valign-wrapper">
                             <div className="gap-right pull-left">
-                                <h4 className="important-text">Winning bid has been selected</h4>
+                                <h4 className="important-text">{I18N.get('project.detail.bid_selected')}</h4>
                             </div>
                         </div> : (entity.referenceBid &&
                         <div className="valign-wrapper">
@@ -851,9 +881,9 @@ export default class extends BaseComponent {
                             </div>
                         </div>
                     ))}
-                    {!entity.bidding && this.isAssigned_fn(entity) && <div className="valign-wrapper">
+                    {!entity.bidding && this.isAssigned(entity) && <div className="valign-wrapper">
                         <div className="gap-right pull-left">
-                            <h4 className="important-text">Winning application already selected</h4>
+                            <h4 className="important-text">{I18N.get('project.detail.app_selected')}</h4>
                         </div>
                     </div>}
                     {entity.applicationDeadline &&
@@ -985,7 +1015,7 @@ export default class extends BaseComponent {
         )
     }
 
-    isAssigned_fn(entity) {
+    isAssigned(entity) {
         return !!_.find(entity.candidates, {status: TASK_CANDIDATE_STATUS.APPROVED})
     }
 
@@ -1011,8 +1041,8 @@ export default class extends BaseComponent {
                 {detail.hasApprovedApplication ?
                     I18N.get('developer.search.view') : (
                         detail.bidding ?
-                            (this.isAssigned_fn(detail) ? I18N.get('developer.search.view') : I18N.get('developer.search.submit_bid')):
-                            (this.isAssigned_fn(detail) ? I18N.get('developer.search.view') : I18N.get('developer.search.apply'))
+                            (this.isAssigned(detail) ? I18N.get('developer.search.view') : I18N.get('developer.search.submit_bid')):
+                            (this.isAssigned(detail) ? I18N.get('developer.search.view') : I18N.get('developer.search.apply'))
                     )
                 }
             </Button>

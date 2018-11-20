@@ -156,6 +156,16 @@ export default class extends Base{
             query.sortOrder = param.sortOrder
         }
 
+        if (param.unassigned) {
+            const approvedCandidates = await taskService.getDBModel('Task_Candidate')
+                .find({ status: constant.TASK_CANDIDATE_STATUS.APPROVED })
+
+            query.$and = query.$and || []
+            query.$and.push({
+                candidates: {$nin: _.map(approvedCandidates, '_id')}
+            })
+        }
+
         const list = await taskService.list(query)
         const count = await taskService.getDBModel('Task')
             .count(_.omit(query, ['results', 'page', 'sortBy', 'sortOrder']))

@@ -239,6 +239,10 @@ const en = {
     'developer.cr100.pitch.beneficiaries': 'Beneficiaries',
     'developer.cr100.pitch.elaInfrastructure': 'Elastos Infrastructure',
 
+    'developer.search.assignment': 'Assignment',
+    'developer.search.assignment.all': 'All',
+    'developer.search.assignment.unassigned': 'Unassigned',
+    'developer.search.event': 'Event',
     'developer.search.sort': 'Sort',
     'developer.search.sort.createdAt': 'Created',
     'developer.search.sort.updatedAt': 'Updated',
@@ -371,6 +375,8 @@ const en = {
     'training.disclaimer': 'Training content and itinerary subject to change',
 
     // Project/Team detail
+    'project.detail.bid_selected': 'Winning bid has been selected',
+    'project.detail.app_selected': 'Winning application already selected',
     'project.detail.deadline': 'Application Deadline',
     'project.detail.completion_deadline': 'Completion Deadline',
     'project.detail.progress': 'Progress',

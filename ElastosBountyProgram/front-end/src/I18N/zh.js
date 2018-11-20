@@ -237,6 +237,10 @@ const zh = {
     'developer.cr100.pitch.beneficiaries': '受益人',
     'developer.cr100.pitch.elaInfrastructure': '亦来云基础设施',
 
+    'developer.search.assignment': 'Assignment',
+    'developer.search.assignment.all': 'All',
+    'developer.search.assignment.unassigned': 'Unassigned',
+    'developer.search.event': 'Event',
     'developer.search.team': '团队',
     'developer.search.project': '项目',
     'developer.search.task': '任务',
@@ -364,6 +368,8 @@ const zh = {
     'training.disclaimer': '培训内容和行程可能根据实际情况调整',
 
       // Project/Team detail
+    'project.detail.bid_selected': 'Winning bid has been selected',
+    'project.detail.app_selected': 'Winning application already selected',
     'project.detail.deadline': '申请截止日期',
     'project.detail.completion_deadline': '完成截至日期',
     'project.detail.progress': '项目进度',
