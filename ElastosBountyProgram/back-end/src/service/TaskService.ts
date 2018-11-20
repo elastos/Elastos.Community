@@ -885,14 +885,27 @@ export default class extends Base {
             status: constant.TASK_CANDIDATE_STATUS.APPROVED
         });
 
-        doc = await db_tc.findById(param.taskCandidateId)
+        doc = await db_tc.getDBInstance().findById(param.taskCandidateId)
+            .populate('user')
         task = await db_task.getDBInstance().findOne({_id: doc.task})
-            .populate('candidates')
+            .populate({
+                path: 'candidates',
+                populate: {
+                    path: 'user'
+                }
+            })
 
         let acceptedCnt = 0;
+        let users = []
+        let usersWonBidding = []
         for (let candidate of task.candidates) {
             if (candidate.status === constant.TASK_CANDIDATE_STATUS.APPROVED) {
                 acceptedCnt =+ 1
+                usersWonBidding.push(candidate.user)
+            }
+
+            if (candidate.status !== constant.TASK_CANDIDATE_STATUS.APPROVED) {
+                users.push(candidate.user)
             }
         }
 
@@ -902,6 +915,9 @@ export default class extends Base {
             }, {
                 status: constant.TASK_STATUS.APPROVED
             })
+
+            this.sendWonBiddingEmail(usersWonBidding, task)
+            this.sendApproveBiddingEmail(users, task, doc)
         }
 
         // TODO: remove unaccepted candidates and send them emails
@@ -1066,6 +1082,36 @@ export default class extends Base {
                 toName: `${admin.profile.firstName} ${admin.profile.lastName}`,
                 subject: subject,
                 body: body
+            })
+        }
+    }
+
+    public async sendWonBiddingEmail(users, task) {
+
+        let candidateSubject = `Your application for task ${task.name} has been approved`
+        let candidateBody = `Congratulations, you have won the bidding ${task.name}, you can get started.`
+
+        for (let user of users) {
+            await mail.send({
+                to: user.email,
+                toName: `${user.profile.firstName} ${user.profile.lastName}`,
+                subject: candidateSubject,
+                body: candidateBody
+            })
+        }
+    }
+
+    public async sendApproveBiddingEmail(users, task, taskCandidate) {
+
+        let candidateSubject = `Your application for task ${task.name} has been approved`
+        let candidateBody = `Who have won the bidding at ${taskCandidate.bid} ELA, but don't worry, you can bid next time.`
+
+        for (let user of users) {
+            await mail.send({
+                to: user.email,
+                toName: `${user.profile.firstName} ${user.profile.lastName}`,
+                subject: candidateSubject,
+                body: candidateBody
             })
         }
     }

@@ -362,8 +362,14 @@ class C extends BaseComponent {
 
         // status checks
         if (detail.bidding && _.indexOf([TASK_STATUS.CREATED,
-                TASK_STATUS.PENDING], detail.status) < 0) {
+                TASK_STATUS.PENDING, TASK_STATUS.APPROVED], detail.status) < 0) {
             return ''
+        }
+
+        let isApprovedBidding = false
+        if (detail.bidding && _.indexOf([TASK_STATUS.CREATED,
+                TASK_STATUS.PENDING], detail.status) < 0) {
+            isApprovedBidding = true
         }
 
         if (!detail.bidding && _.find(detail.candidates,
@@ -408,7 +414,7 @@ class C extends BaseComponent {
                 {title}
             </h3>
 
-            {pendingCandidates.length && this.renderCandidates(pendingCandidates)}
+            {pendingCandidates.length && this.renderCandidates(pendingCandidates, isApprovedBidding)}
 
             {/* this works because we filtered pendingCandidates after we saved the count */}
             {(this.props.page !== 'ADMIN' || !this.props.is_admin) && this.props.task.createdBy !== this.props.currentUserId &&
@@ -442,7 +448,7 @@ class C extends BaseComponent {
         return _.trim([user.profile.firstName, user.profile.lastName].join(' '))
     }
 
-    renderCandidates(candidates) {
+    renderCandidates(candidates, isApprovedBidding) {
         const columns = [{
             title: I18N.get('project.detail.columns.name'),
             key: 'name',
@@ -506,7 +512,7 @@ class C extends BaseComponent {
                                         </a>
                                     </span>)
                                 }
-                                {(this.isTaskOwner() || this.props.is_admin) &&
+                                {((this.isTaskOwner() || this.props.is_admin) && !isApprovedBidding) &&
                                     <span className="inline-block">
                                         <Divider type="vertical"/>
                                         <a onClick={this.approveUser.bind(this, candidate._id)}>
