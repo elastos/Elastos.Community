@@ -440,6 +440,11 @@ const zh = {
     'team.create.error.nameRequired': '请填写团队名称',
     'team.create.error.nameTooShort': '团队名称过短',
 
+    'team.owner': 'Leader',
+    'team.description': 'Description',
+    'team.applyMessage': 'Apply',
+    'team.detail.view': 'View',
+
     // Team specializations
     'team.spec.media': '媒体',
     'team.spec.iot': '物联网',

@@ -25,6 +25,7 @@ import Comments from '@/module/common/comments/Container'
 import ProjectApplication from '@/module/project/application/Container'
 import _ from 'lodash'
 import './style.scss'
+import I18N from '@/I18N'
 
 /*
  * Project Pop-up UI
@@ -111,7 +112,7 @@ class C extends BaseComponent {
                 {generateRow(I18N.get('team.owner'),
                     this.getUserNameWithFallback(detail.owner))}
                 {generateHtmlRow(I18N.get('team.description'),
-                    detail.description, 'team-description')}
+                    detail.profile.description, 'team-description')}
             </div>
         )
     }
@@ -122,79 +123,11 @@ class C extends BaseComponent {
             <div className="app-footer valign-wrapper halign-wrapper">
                 <Button href={detailUrl}>
                     {this.isTeamMember() || this.isTeamOwner()
-                        ? I18N.get('project.detail.view')
-                        : I18N.get('task.applyMessage')}
+                        ? I18N.get('team.detail.view')
+                        : I18N.get('team.applyMessage')}
                 </Button>
             </div>
         )
-    }
-
-    // Helpers
-    getCurrency() {
-        return this.props.detail.reward.isUsd ? 'USD' : 'ELA'
-    }
-
-    getReward() {
-        return this.props.detail.reward &&
-            ((this.props.detail.reward.usd / 100) || this.props.detail.reward.ela / 1000)
-    }
-
-    getRewardElaPerUsd() {
-        return this.props.detail.reward && this.props.detail.reward.elaPerUsd
-    }
-
-    getRewardFormatted() {
-        const epu = this.getRewardElaPerUsd()
-        const suffix = epu ? ` (@${epu} ELA/USD)` : ''
-        return this.getReward() && `${this.getReward()} ${this.getCurrency()}${suffix}`
-    }
-
-    getBudget() {
-        return this.props.detail.rewardUpfront &&
-            ((this.props.detail.rewardUpfront.usd / 100) || this.props.detail.rewardUpfront.ela / 1000)
-    }
-
-    getBudgetElaPerUsd() {
-        return this.props.detail.rewardUpfront && this.props.detail.rewardUpfront.elaPerUsd
-    }
-
-    getBudgetFormatted() {
-        const epu = this.getBudgetElaPerUsd()
-        const suffix = epu ? ` (@${epu} ELA/USD)` : ''
-        return this.getBudget() && `${this.getBudget()} ${this.getCurrency()}${suffix}`
-    }
-
-    getCommunityDisp() {
-        let str = ''
-
-        if (this.props.detail.communityParent) {
-            str += this.props.detail.communityParent.name + '/'
-        }
-        if (this.props.detail.community) {
-            str += this.props.detail.community.name
-        }
-
-        return str
-    }
-
-    getBudgetExplanation() {
-        return (
-            <Popover content={I18N.get('task.budget.explain')}>
-                <Icon className="help-icon" type="question-circle-o"/>
-            </Popover>
-        )
-    }
-
-    getRewardExplanation() {
-        return (
-            <Popover content={I18N.get('task.reward.explain')}>
-                <Icon className="help-icon" type="question-circle-o"/>
-            </Popover>
-        )
-    }
-
-    isTaskOwner() {
-        return this.props.detail.createdBy._id === this.props.currentUserId
     }
 
     linkProfileInfo(userId) {
@@ -235,10 +168,6 @@ class C extends BaseComponent {
                 </Carousel>
             </div>
         )
-    }
-
-    showTaskDetail() {
-        this.props.history.push(`/task-detail/${this.props.detail._id}`)
     }
 
     getAvatarWithFallback(avatar) {
