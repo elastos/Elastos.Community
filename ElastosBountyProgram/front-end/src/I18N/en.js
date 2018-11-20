@@ -239,6 +239,10 @@ const en = {
     'developer.cr100.pitch.beneficiaries': 'Beneficiaries',
     'developer.cr100.pitch.elaInfrastructure': 'Elastos Infrastructure',
 
+    'developer.search.assignment': 'Assignment',
+    'developer.search.assignment.all': 'All',
+    'developer.search.assignment.unassigned': 'Unassigned',
+    'developer.search.event': 'Event',
     'developer.search.sort': 'Sort',
     'developer.search.sort.createdAt': 'Created',
     'developer.search.sort.updatedAt': 'Updated',

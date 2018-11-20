@@ -64,7 +64,8 @@ export default class extends BaseComponent {
             page: 1,
             results: 5,
             sortBy: params.sortBy || 'createdAt',
-            sortOrder: params.sortOrder || SORT_ORDER.DESC
+            sortOrder: params.sortOrder || SORT_ORDER.DESC,
+            assignment: params.assignment || 'all'
         }
     }
 
@@ -97,6 +98,7 @@ export default class extends BaseComponent {
             query.sortOrder = this.state.sortOrder
         }
 
+        query.unassigned = this.state.assignment === 'unassigned'
         query.page = this.state.page || 1
         query.results = this.state.results || 5
 
@@ -107,10 +109,7 @@ export default class extends BaseComponent {
         const skillset = (query.skillset || []).join(',')
         const domain = (query.domain || []).join(',')
         const circle = (query.circle || []).join(',')
-        const lookingFor = this.state.lookingFor
-        const search = this.state.search
-        const sortBy = this.state.sortBy
-        const sortOrder = this.state.sortOrder
+        const { lookingFor, search, sortBy, sortOrder, assignment } = this.state
 
         const url = new URI('/developer/search')
         lookingFor && url.addSearch('lookingFor', lookingFor)
@@ -120,6 +119,7 @@ export default class extends BaseComponent {
         search && url.addSearch('search', search)
         sortBy && url.addSearch('sortBy', sortBy)
         sortOrder && url.addSearch('sortOrder', sortOrder)
+        assignment !== 'all' && url.addSearch('assignment', assignment)
 
         return url.toString()
     }
@@ -245,6 +245,13 @@ export default class extends BaseComponent {
         }, this.debouncedRefetch.bind(this))
     }
 
+    onChangeAssignment(e) {
+        this.setState({
+            assignment: e.target.value,
+            page: 1
+        }, this.debouncedRefetch.bind(this))
+    }
+
     showTaskModal(id) {
         this.setState({
             showTaskModal: true,
@@ -339,6 +346,19 @@ export default class extends BaseComponent {
                     </Radio>
                 </RadioGroup>
             </div>
+        )
+    }
+
+    renderAssignment() {
+        return (
+            <RadioGroup onChange={this.onChangeAssignment.bind(this)} value={this.state.assignment}>
+                <Radio className="radio" value="all">
+                    {I18N.get('developer.search.assignment.all')}
+                </Radio>
+                <Radio className="radio" value="unassigned">
+                    {I18N.get('developer.search.assignment.unassigned')}
+                </Radio>
+            </RadioGroup>
         )
     }
 
@@ -605,6 +625,14 @@ export default class extends BaseComponent {
                                 {this.renderLookingFor(lookingForOptions, true)}
                             </div>
                         </div>
+
+                        <div className="group">
+                            <div className="title">{I18N.get('developer.search.assignment')}</div>
+                            <div className="content">
+                                {this.renderAssignment()}
+                            </div>
+                        </div>
+
                         <div className="group">
                             <div className="title">{I18N.get('developer.search.sort')}</div>
                             <div className="content">

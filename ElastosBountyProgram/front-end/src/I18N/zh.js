@@ -237,6 +237,10 @@ const zh = {
     'developer.cr100.pitch.beneficiaries': '受益人',
     'developer.cr100.pitch.elaInfrastructure': '亦来云基础设施',
 
+    'developer.search.assignment': 'Assignment',
+    'developer.search.assignment.all': 'All',
+    'developer.search.assignment.unassigned': 'Unassigned',
+    'developer.search.event': 'Event',
     'developer.search.team': '团队',
     'developer.search.project': '项目',
     'developer.search.task': '任务',
