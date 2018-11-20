@@ -46,21 +46,6 @@ export default class extends ProfilePage {
                 </div>
                 <div className="p_admin_index ebp-wrap">
                     <div className="d_box">
-                        <div className="p_admin_breadcrumb">
-                            <Breadcrumb>
-                                <Breadcrumb.Item href="/">
-                                    <Icon type="home" />
-                                </Breadcrumb.Item>
-                                <Breadcrumb.Item>{I18N.get('0200')}</Breadcrumb.Item>
-                                <Breadcrumb.Item href="/profile/tasks">Tasks</Breadcrumb.Item>
-                                <Breadcrumb.Item href={taskDetailLink}>
-                                    {this.props.task.name}
-                                </Breadcrumb.Item>
-                                <Breadcrumb.Item>
-                                    {candidate && candidate.user.username || ''}
-                                </Breadcrumb.Item>
-                            </Breadcrumb>
-                        </div>
                         <div className="p_ProfileTaskCandidateDetail p_admin_content">
                             <Row>
                                 <Col sm={24} md={4} className="admin-left-column wrap-box-navigator">

@@ -87,14 +87,6 @@ export default class extends ProfilePage {
                 </div>
                 <div className="p_admin_index ebp-wrap">
                     <div className="d_box">
-                        <div className="p_admin_breadcrumb">
-                            <Breadcrumb>
-                                <Breadcrumb.Item href="/">
-                                    <Icon type="home" />
-                                </Breadcrumb.Item>
-                                <Breadcrumb.Item>{I18N.get('myrepublic.teams')}</Breadcrumb.Item>
-                            </Breadcrumb>
-                        </div>
                         <div className="p_admin_content">
                             <Row>
                                 <Col sm={24} md={4} className="wrap-box-navigator">

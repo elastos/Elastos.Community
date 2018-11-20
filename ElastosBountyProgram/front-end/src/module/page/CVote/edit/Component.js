@@ -13,14 +13,6 @@ export default class extends StandardPage {
         return (
             <div className="p-cvote">
                 <div className="d_box">
-                    <div style={{textAlign:'left'}}>
-                        <Breadcrumb>
-                            <Breadcrumb.Item onClick={this.goList.bind(this)} href="javascript:void(0)">
-                                <Icon type="home" />
-                            </Breadcrumb.Item>
-                            <Breadcrumb.Item>edit proposal</Breadcrumb.Item>
-                        </Breadcrumb>
-                    </div>
                     <CVoteForm edit={this.props.match.params.id} data={this.state.data} />
                 </div>
             </div>
