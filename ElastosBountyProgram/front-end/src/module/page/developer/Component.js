@@ -166,10 +166,10 @@ export default class extends StandardPage {
             return (
                 <Row gutter={24} className="navi-panel-item"
                     onClick={() => this.props.history.push(link)}>
-                    <Col md={4} xs={24} className="navi-panel-item-title">
+                    <Col md={8} xs={24} className="navi-panel-item-title">
                         {title}
                     </Col>
-                    <Col md={16} xs={24} className="navi-panel-item-description">
+                    <Col md={12} xs={24} className="navi-panel-item-description">
                         {description}
                     </Col>
                     <Col md={4} xs={24} className="navi-panel-item-arrow">
