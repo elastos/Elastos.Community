@@ -704,7 +704,7 @@ class C extends BaseComponent {
     }
 
     getCurrency() {
-        return this.props.task.reward.isUsd ? 'USD' : 'ELA'
+        return 'USD'
     }
 
     getReward() {
@@ -713,9 +713,7 @@ class C extends BaseComponent {
         }
 
         return this.props.task.reward
-            ? this.props.task.reward.isUsd
-                ? this.props.task.reward.usd / 100
-                : this.props.task.reward.ela / 1000
+            ? this.props.task.reward.usd / 100
             : null
     }
 
@@ -751,9 +749,7 @@ class C extends BaseComponent {
         }
 
         return this.props.task.rewardUpfront
-            ? this.props.task.rewardUpfront.isUsd
-                ? this.props.task.rewardUpfront.usd / 100
-                : this.props.task.rewardUpfront.ela / 1000
+            ? this.props.task.rewardUpfront.usd / 100
             : null
     }
 
