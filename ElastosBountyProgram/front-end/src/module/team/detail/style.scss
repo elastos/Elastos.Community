@@ -16,6 +16,10 @@
     margin-right: $gap_0;
   }
 
+  .top-section .col-left {
+    width: 250px;
+  }
+
   .actions {
     .ant-btn:not(:last-child) {
       margin-right: $gap_0;
@@ -40,10 +44,13 @@
   }
 
   .top-section {
-    border: 1px solid $border_gray;
-    border-radius: 5px 50px 5px 5px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
     width: 100%;
     margin: 0 auto;
+
+    .title {
+      padding-left: $gap_2;
+    }
 
     @media only screen and (max-width: $mobile-width) {
       width: auto;
@@ -84,7 +91,7 @@
         }
 
         .divider {
-          border: 1px solid gainsboro;
+          border: 1px solid $border_gray;
           margin: $gap_3 0;
         }
       }
@@ -171,7 +178,7 @@
       }
 
       .divider {
-        border: 1px solid gainsboro;
+        border-top: 1px solid $border_gray;
         margin-right: $gap_2;
       }
 

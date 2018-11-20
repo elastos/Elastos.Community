@@ -1,6 +1,5 @@
 import LandingPage from '@/module/page/landing/Container'
 import HomePage from '@/module/page/home/Container'
-import SocialPage from '@/module/page/social/Container'
 import DeveloperPage from '@/module/page/developer/Container'
 import DeveloperLearnPage from '@/module/page/developer/learn/Container'
 import DeveloperSearchPage from '@/module/page/developer/search/Container'
@@ -103,10 +102,6 @@ export default [
     {
         path: '/home',
         page: HomePage
-    },
-    {
-        path: '/social',
-        page: SocialPage
     },
     {
         path: '/cr100',
