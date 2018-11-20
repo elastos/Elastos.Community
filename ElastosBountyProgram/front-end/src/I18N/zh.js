@@ -364,6 +364,8 @@ const zh = {
     'training.disclaimer': '培训内容和行程可能根据实际情况调整',
 
       // Project/Team detail
+    'project.detail.bid_selected': 'Winning bid has been selected',
+    'project.detail.app_selected': 'Winning application already selected',
     'project.detail.deadline': '申请截止日期',
     'project.detail.completion_deadline': '完成截至日期',
     'project.detail.progress': '项目进度',

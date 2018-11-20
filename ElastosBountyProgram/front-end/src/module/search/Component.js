@@ -838,10 +838,10 @@ export default class extends BaseComponent {
                             {_.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>)}
                         </div>
                     </div>}
-                    {entity.bidding && (this.isAssigned_fn(entity) ?
+                    {entity.bidding && (this.isAssigned(entity) ?
                         <div className="valign-wrapper">
                             <div className="gap-right pull-left">
-                                <h4 className="important-text">Winning bid has been selected</h4>
+                                <h4 className="important-text">{I18N.get('project.detail.bid_selected')}</h4>
                             </div>
                         </div> : (entity.referenceBid &&
                         <div className="valign-wrapper">
@@ -851,9 +851,9 @@ export default class extends BaseComponent {
                             </div>
                         </div>
                     ))}
-                    {!entity.bidding && this.isAssigned_fn(entity) && <div className="valign-wrapper">
+                    {!entity.bidding && this.isAssigned(entity) && <div className="valign-wrapper">
                         <div className="gap-right pull-left">
-                            <h4 className="important-text">Winning application already selected</h4>
+                            <h4 className="important-text">{I18N.get('project.detail.app_selected')}</h4>
                         </div>
                     </div>}
                     {entity.applicationDeadline &&
@@ -985,7 +985,7 @@ export default class extends BaseComponent {
         )
     }
 
-    isAssigned_fn(entity) {
+    isAssigned(entity) {
         return !!_.find(entity.candidates, {status: TASK_CANDIDATE_STATUS.APPROVED})
     }
 
@@ -1011,8 +1011,8 @@ export default class extends BaseComponent {
                 {detail.hasApprovedApplication ?
                     I18N.get('developer.search.view') : (
                         detail.bidding ?
-                            (this.isAssigned_fn(detail) ? I18N.get('developer.search.view') : I18N.get('developer.search.submit_bid')):
-                            (this.isAssigned_fn(detail) ? I18N.get('developer.search.view') : I18N.get('developer.search.apply'))
+                            (this.isAssigned(detail) ? I18N.get('developer.search.view') : I18N.get('developer.search.submit_bid')):
+                            (this.isAssigned(detail) ? I18N.get('developer.search.view') : I18N.get('developer.search.apply'))
                     )
                 }
             </Button>
