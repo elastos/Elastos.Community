@@ -70,6 +70,7 @@ const en = {
     '2303': 'My Issues',
     '2304': 'My Communities',
     '2305': 'My Projects',
+    '2306': 'Communities',
 
     'profile.skillsets': 'My Skillsets',
 

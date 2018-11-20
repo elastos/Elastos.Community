@@ -6,7 +6,7 @@ import _ from 'lodash'
 import ModalAddCountry from '../../shared/ModalAddCountry/Component'
 import config from '@/config'
 import { USER_GENDER } from '@/constant'
-import Navigator from '../../shared/Navigator/Component'
+import Navigator from '../../../shared/HomeNavigator/Container'
 
 import '../style.scss'
 

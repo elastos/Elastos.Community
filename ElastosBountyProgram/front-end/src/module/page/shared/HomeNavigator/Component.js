@@ -23,27 +23,20 @@ export default class extends BaseComponent {
     }
 
     handleMenuClick(item, key, keyPath) {
-
-        switch (item.key) {
-            case 'profileProjects':
-                this.props.history.push('/profile/projects')
-                break
-            case 'profileTasks':
-                this.props.history.push('/profile/tasks')
-                break
-            case 'profileTeams':
-                this.props.history.push('/profile/teams')
-                break
-            case 'profileSubmissions':
-                this.props.history.push('/profile/submissions')
-                break
-            case 'profileInfo':
-                this.props.history.push('/profile/info')
-                break
-            case 'profileCommunities':
-                this.props.history.push('/profile/communities')
-                break
+        const lookup = {
+            profileProjects: '/profile/projects',
+            profileTasks: '/profile/tasks',
+            profileTeams: '/profile/teams',
+            profileSubmissions: '/profile/submissions',
+            profileInfo: '/profile/info',
+            profileCommunities: '/profile/communities',
+            forms: '/admin/forms',
+            users: '/admin/users',
+            communities: '/admin/community'
         }
+
+        const route = lookup[item.key]
+        route && this.props.history.push(route)
     }
 
     isProfileIncomplete() {
@@ -91,6 +84,21 @@ export default class extends BaseComponent {
                             <Menu.Item key="profileCommunities">
                                 {I18N.get('2304')}
                             </Menu.Item>
+                            {this.props.is_admin &&
+                                <Menu.Item key="forms">
+                                    {I18N.get('1305')}
+                                </Menu.Item>
+                            }
+                            {this.props.is_admin &&
+                                <Menu.Item key="users">
+                                    {I18N.get('1302')}
+                                </Menu.Item>
+                            }
+                            {this.props.is_admin &&
+                                <Menu.Item key="communtities">
+                                    {I18N.get('2306')}
+                                </Menu.Item>
+                            }
                         </Menu>
                     </Affix>
                 </MediaQuery>
