@@ -51,7 +51,7 @@ class C extends BaseComponent {
         }
 
         if (carouselImages.length === 0) {
-            carouselImages.push(<img src={'/assets/images/Elastos_Logo.png'} key={0} />);
+            carouselImages.push(<img src={'/assets/images/Group_1685.12.svg'} key={0} />);
         }
 
         let domains = []
@@ -112,7 +112,6 @@ class C extends BaseComponent {
                 <div class="description-box">
                     <hr className="divider"/>
                     <div className="description-title">{recruiting_el}</div>
-                    <hr className="divider"/>
                     <div className="description-content ql-editor" dangerouslySetInnerHTML={{__html: description}} />
                 </div>
             </div>
@@ -355,7 +354,7 @@ class C extends BaseComponent {
                                 </Row>
                             }
 
-                            {!this.state.applying && this.props.page === 'LEADER' && (isTeamMember || isTeamOwner) &&
+                            {!this.state.applying && (isTeamMember || isTeamOwner) &&
                                 <Row>
                                     <Comments type="team" canPost={true} model={this.props.teamId}
                                         returnUrl={`/team-detail/${this.props.detail._id}`}
