@@ -442,6 +442,11 @@ const en = {
     'project.public.statusHelp.markAsComplete': 'Mark as Complete',
     'project.public.statusHelp.markAsCompleteConfirm': 'Are you sure you want to mark this task as complete?',
 
+    'team.owner': 'Leader',
+    'team.description': 'Description',
+    'team.applyMessage': 'Apply',
+    'team.detail.view': 'View',
+
     'team.detail.team_active': 'Your team is currently active',
 
     'team.create.error.nameRequired': 'Team name is required',

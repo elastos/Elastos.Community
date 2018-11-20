@@ -28,9 +28,8 @@ $mobile-padding: $gap_0 0px;
 
   .ebp-wrap {
     padding: 0;
-    max-width: 800px;
+    max-width: $lg-width;
     margin: 0 auto;
-    background: $bg_blue;
   }
 
   .c_Team.c_Detail {
