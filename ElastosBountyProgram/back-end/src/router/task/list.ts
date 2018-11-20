@@ -68,7 +68,7 @@ export default class extends Base{
         }
 
         if (_.has(param, 'assignSelf')) {
-            query.assignSelf = param.assignSelf
+            query.assignSelf = param.assignSelf === 'true'
         }
 
         if (param.eventDateRangeStart) {
