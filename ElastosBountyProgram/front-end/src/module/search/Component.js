@@ -626,12 +626,14 @@ export default class extends BaseComponent {
                             </div>
                         </div>
 
-                        <div className="group">
-                            <div className="title">{I18N.get('developer.search.assignment')}</div>
-                            <div className="content">
-                                {this.renderAssignment()}
+                        {this.state.lookingFor === 'TASK' &&
+                            <div className="group">
+                                <div className="title">{I18N.get('developer.search.assignment')}</div>
+                                <div className="content">
+                                    {this.renderAssignment()}
+                                </div>
                             </div>
-                        </div>
+                        }
 
                         <div className="group">
                             <div className="title">{I18N.get('developer.search.sort')}</div>
