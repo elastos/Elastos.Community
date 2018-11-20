@@ -243,7 +243,7 @@ class C extends BaseComponent {
                                     <br/>
                                     <Comments type="task" canPost={true}
                                         canSubscribe={!isTaskOwner} model={this.props.taskId}
-                                        returnUrl={`/project-detail/${this.props.taskId}`}
+                                        returnUrl={`/task-detail/${this.props.taskId}`}
                                     />
                                 </Row> :
                                 <Row>
