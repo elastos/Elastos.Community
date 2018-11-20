@@ -36,16 +36,6 @@ export default class extends AdminPage {
                 <div className="p_admin_index ebp-wrap" style={{display: this.props.task.loading ? 'none' : 'block'}}>
                     <div className="ebp-header-divider" />
                     <div className="d_box">
-                        <div className="p_admin_breadcrumb">
-                            <Breadcrumb>
-                                <Breadcrumb.Item href="/">
-                                    <Icon type="home" />
-                                </Breadcrumb.Item>
-                                <Breadcrumb.Item>Admin</Breadcrumb.Item>
-                                <Breadcrumb.Item href="/admin/tasks">Tasks</Breadcrumb.Item>
-                                <Breadcrumb.Item>{this.props.task.name}</Breadcrumb.Item>
-                            </Breadcrumb>
-                        </div>
                         <div className="p_admin_content">
                             <Row className="clearfix">
                                 <Col span={4} className="admin-left-column wrap-box-navigator">

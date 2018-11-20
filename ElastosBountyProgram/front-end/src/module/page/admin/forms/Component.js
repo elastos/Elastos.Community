@@ -134,15 +134,6 @@ export default class extends AdminPage {
             <div className="p_admin_index ebp-wrap">
                 <div className="ebp-header-divider" />
                 <div className="d_box">
-                    <div className="p_admin_breadcrumb">
-                        <Breadcrumb>
-                            <Breadcrumb.Item href="/">
-                                <Icon type="home" />
-                            </Breadcrumb.Item>
-                            <Breadcrumb.Item>Admin</Breadcrumb.Item>
-                            <Breadcrumb.Item>Forms</Breadcrumb.Item>
-                        </Breadcrumb>
-                    </div>
                     <div className="p_admin_content">
                         <Row>
                             <Col span={4} className="admin-left-column wrap-box-navigator">
