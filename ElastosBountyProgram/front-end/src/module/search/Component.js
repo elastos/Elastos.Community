@@ -98,7 +98,10 @@ export default class extends BaseComponent {
             query.sortOrder = this.state.sortOrder
         }
 
-        query.unassigned = this.state.assignment === 'unassigned'
+        if (this.state.assignment === 'unassigned') {
+            query.unassigned = true
+        }
+
         query.page = this.state.page || 1
         query.results = this.state.results || 5
 

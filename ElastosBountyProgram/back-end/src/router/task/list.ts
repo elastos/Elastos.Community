@@ -156,7 +156,7 @@ export default class extends Base{
             query.sortOrder = param.sortOrder
         }
 
-        if (param.unassigned) {
+        if (_.has(param, 'unassigned')) {
             const approvedCandidates = await taskService.getDBModel('Task_Candidate')
                 .find({ status: constant.TASK_CANDIDATE_STATUS.APPROVED })
 
