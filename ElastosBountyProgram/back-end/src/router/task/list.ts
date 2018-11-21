@@ -75,6 +75,8 @@ export default class extends Base{
             query.eventDateRangeStart = JSON.parse(param.eventDateRangeStart)
         }
 
+        const isAdmin = this.session.user && this.session.user.role === constant.USER_ROLE.ADMIN
+
         // public page overrides all else
         if (param.public === 'true') {
             query.status = {
@@ -87,9 +89,11 @@ export default class extends Base{
             }
         } else if (param.status) {
             query.status = param.status
-        } else if (this.session.user && this.session.user.role === constant.USER_ROLE.ADMIN) {
+        } else if (isAdmin) {
             query.status = {$ne: constant.TASK_STATUS.CANCELED}
-        } else if (param.profileListFor) {
+        }
+
+        if (param.profileListFor && (param.taskHasUserStatus || !isAdmin)) {
             const currentUserId = new ObjectId(param.profileListFor)
 
             const db_tc = await taskService.getDBModel('Task_Candidate')
@@ -103,8 +107,6 @@ export default class extends Base{
                 query.$or = [
                     {createdBy: currentUserId}
                 ]
-            } else {
-                query.$and = []
             }
 
             // we need to find task candidates that match the user
@@ -125,7 +127,7 @@ export default class extends Base{
                 const taskCandidates = await taskService.getCandidatesForTeam(userTeam._id, param.taskHasUserStatus)
                 if (taskCandidates.length) {
                     if (param.taskHasUserStatus) {
-                        query.$and.push({candidates: {$in: _.map(taskCandidates, '_id')}})
+                        query.candidates = { $in: _.map(taskCandidates, '_id') }
                     } else {
                         query.$or.push({candidates: {$in: _.map(taskCandidates, '_id')}})
                     }
@@ -134,10 +136,15 @@ export default class extends Base{
 
             if (taskCandidatesForUser.length) {
                 if (param.taskHasUserStatus) {
-                    query.$and.push({candidates: {$in: _.map(taskCandidatesForUser, '_id')}})
+                    query.candidates = { $in: _.map(taskCandidatesForUser, '_id') }
                 } else {
                     query.$or.push({candidates: {$in: _.map(taskCandidatesForUser, '_id')}})
                 }
+            } else if (param.taskHasUserStatus) {
+                return this.result(1, {
+                    list: [],
+                    total: 0
+                })
             }
 
             if (!param.taskHasUserStatus) {
