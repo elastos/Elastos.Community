@@ -7,7 +7,7 @@ import './style.scss'
 import '../../admin/admin.scss'
 import {
     Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button,
-    Table, Select, Divider, List, Carousel, Avatar, Tag, Modal, Spin
+    Table, Select, Divider, List, Carousel, Avatar, Tag, Modal, Spin, Input
 } from 'antd'
 import {TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT, TASK_CATEGORY} from '@/constant'
 import moment from 'moment/moment'
@@ -37,10 +37,12 @@ export default class extends ProfilePage {
             filter: FILTERS.ALL,
             showUserInfo: null,
             page: 1,
-            results: 5
+            results: 5,
+            search: ''
         }
 
         this.debouncedLoadMore = _.debounce(this.loadMore.bind(this), 300)
+        this.debouncedRefetch = _.debounce(this.refetch.bind(this), 300)
     }
 
     componentDidMount() {
@@ -76,6 +78,10 @@ export default class extends ProfilePage {
 
         if (this.state.filter === FILTERS.SUBSCRIBED) {
             query.subscribed = true
+        }
+
+        if (!_.isEmpty(this.state.search)) {
+            query.search = this.state.search
         }
 
         query.page = this.state.page || 1
@@ -329,12 +335,13 @@ export default class extends ProfilePage {
     }
 
     ord_renderContent () {
-        const tasksActiveData = this.props.candidate_active_tasks
-        const tasksPendingData = this.props.candidate_pending_tasks
-        const tasksOwnedData = this.props.owned_tasks
-        const tasksSubscribedData = this.props.subscribed_tasks
-        const tasksCr100Data = this.props.cr100_tasks
-        const allTasks = this.props.all_tasks
+        const searchChangedHandler = (e) => {
+            const search = e.target.value
+            this.setState({
+                search,
+                page: 1
+            }, this.debouncedRefetch)
+        }
 
         return (
             <div className="p_ProfileProjects">
@@ -368,7 +375,7 @@ export default class extends ProfilePage {
                                         </Select>
                                     </MediaQuery>
                                     <MediaQuery minWidth={MIN_WIDTH_PC}>
-                                        <Button.Group className="filter-group">
+                                        <Button.Group className="filter-group pull-left">
                                             <Button
                                                 className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
                                                 onClick={this.clearFilters.bind(this)}>{I18N.get('myrepublic.projects.all')}</Button>
@@ -389,12 +396,17 @@ export default class extends ProfilePage {
                                                 onClick={this.setCr100Filter.bind(this)}>CR100</Button>
                                         </Button.Group>
                                     </MediaQuery>
-                                    {this.state.filter === FILTERS.ALL && this.getListComponent(allTasks)}
-                                    {this.state.filter === FILTERS.ACTIVE && this.getListComponent(tasksActiveData)}
-                                    {this.state.filter === FILTERS.APPLIED && this.getListComponent(tasksPendingData)}
-                                    {this.state.filter === FILTERS.OWNED && this.getListComponent(tasksOwnedData)}
-                                    {this.state.filter === FILTERS.SUBSCRIBED && this.getListComponent(tasksSubscribedData)}
-                                    {this.state.filter === FILTERS.CR100 && this.getListComponent(tasksCr100Data)}
+                                    <div className="pull-left filter-group search-group">
+                                        <Input defaultValue={this.state.search} onChange={searchChangedHandler.bind(this)}
+                                            placeholder={I18N.get('developer.search.search.placeholder')} style={{width: 250}}/>
+                                    </div>
+                                    <div className="clearfix"/>
+                                    {this.state.filter === FILTERS.ALL && this.getListComponent()}
+                                    {this.state.filter === FILTERS.ACTIVE && this.getListComponent()}
+                                    {this.state.filter === FILTERS.APPLIED && this.getListComponent()}
+                                    {this.state.filter === FILTERS.OWNED && this.getListComponent()}
+                                    {this.state.filter === FILTERS.SUBSCRIBED && this.getListComponent()}
+                                    {this.state.filter === FILTERS.CR100 && this.getListComponent()}
                                 </Col>
                             </Row>
                             <Row>
