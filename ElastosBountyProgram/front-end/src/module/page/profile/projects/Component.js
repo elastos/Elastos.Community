@@ -74,6 +74,10 @@ export default class extends ProfilePage {
             query.createdBy = this.props.currentUserId
         }
 
+        if (this.state.filter === FILTERS.SUBSCRIBED) {
+            query.subscribed = true
+        }
+
         query.page = this.state.page || 1
         query.results = this.state.results || 5
 

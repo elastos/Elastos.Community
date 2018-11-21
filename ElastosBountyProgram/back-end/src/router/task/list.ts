@@ -97,7 +97,7 @@ export default class extends Base{
             query.status = {$ne: constant.TASK_STATUS.CANCELED}
         }
 
-        if (param.profileListFor && (param.taskHasUserStatus || !isAdmin)) {
+        if (param.profileListFor && (param.taskHasUserStatus || param.subscribed || !isAdmin)) {
             const currentUserId = new ObjectId(param.profileListFor)
 
             const db_tc = await taskService.getDBModel('Task_Candidate')
@@ -105,7 +105,7 @@ export default class extends Base{
                 user: param.profileListFor
             }
 
-            if (!param.taskHasUserStatus) {
+            if (!param.taskHasUserStatus && !param.subscribed) {
                 // this is the profile page query
                 // basically all tasks you are a candidate of or own
                 query.$or = [
@@ -132,7 +132,7 @@ export default class extends Base{
                 if (taskCandidates.length) {
                     if (param.taskHasUserStatus) {
                         query.candidates = { $in: _.map(taskCandidates, '_id') }
-                    } else {
+                    } else if (!param.subscribed) {
                         query.$or.push({candidates: {$in: _.map(taskCandidates, '_id')}})
                     }
                 }
@@ -141,7 +141,7 @@ export default class extends Base{
             if (taskCandidatesForUser.length) {
                 if (param.taskHasUserStatus) {
                     query.candidates = { $in: _.map(taskCandidatesForUser, '_id') }
-                } else {
+                } else if (!param.subscribed) {
                     query.$or.push({candidates: {$in: _.map(taskCandidatesForUser, '_id')}})
                 }
             } else if (param.taskHasUserStatus) {
@@ -151,8 +151,12 @@ export default class extends Base{
                 })
             }
 
-            if (!param.taskHasUserStatus) {
+            if (!param.taskHasUserStatus && !param.subscribed) {
                 query.$or.push({subscribers: {$all: [{"$elemMatch": {user: currentUserId}}] }})
+            }
+
+            if (param.subscribed) {
+                query.subscribers = {$all: [{"$elemMatch": {user: currentUserId}}]}
             }
 
             query.status = {$in: [
