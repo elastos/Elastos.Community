@@ -9,7 +9,7 @@ import {
     Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button,
     Table, Select, Divider, List, Carousel, Avatar, Tag, Modal, Spin
 } from 'antd'
-import {TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT} from '@/constant'
+import {TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT, TASK_CATEGORY} from '@/constant'
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
 import InfiniteScroll from 'react-infinite-scroller'
@@ -64,6 +64,10 @@ export default class extends ProfilePage {
 
         if (this.state.filter === FILTERS.APPLIED) {
             query.taskHasUserStatus = TASK_CANDIDATE_STATUS.PENDING
+        }
+
+        if (this.state.filter === FILTERS.CR100) {
+            query.category = TASK_CATEGORY.CR100
         }
 
         query.page = this.state.page || 1
