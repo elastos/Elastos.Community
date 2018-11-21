@@ -429,6 +429,7 @@ const en = {
     'project.detail.columns.action': 'Action',
 
     'project.detail.comments_disabled': 'Comments are disabled for closed bidding projects/tasks',
+    'project.detail.statusHelp.approvedBy': 'Approved by',
 
     'project.admin.statusHelp.created': 'this task does not require approval',
     'project.admin.statusHelp.pending': 'this task is awaiting approval',

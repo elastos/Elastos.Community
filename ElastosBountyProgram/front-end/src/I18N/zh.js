@@ -420,6 +420,7 @@ const zh = {
     'project.detail.columns.action': '行动',
 
     'project.detail.comments_disabled': '不能对已经关闭的竞标项目或任务发表评论',
+    'project.detail.statusHelp.approvedBy': 'Approved by',
 
     'project.admin.statusHelp.created': 'this task does not require approval',
     'project.admin.statusHelp.pending': 'this task is awaiting approval',
