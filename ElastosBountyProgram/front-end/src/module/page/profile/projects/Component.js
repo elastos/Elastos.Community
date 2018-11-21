@@ -58,6 +58,14 @@ export default class extends ProfilePage {
             profileListFor: this.props.currentUserId
         }
 
+        if (this.state.filter === FILTERS.ACTIVE) {
+            query.taskHasUserStatus = TASK_CANDIDATE_STATUS.APPROVED
+        }
+
+        if (this.state.filter === FILTERS.APPLIED) {
+            query.taskHasUserStatus = TASK_CANDIDATE_STATUS.PENDING
+        }
+
         query.page = this.state.page || 1
         query.results = this.state.results || 5
 
@@ -128,7 +136,8 @@ export default class extends ProfilePage {
         )
     }
 
-    getListComponent(tasks) {
+    getListComponent() {
+        const tasks = this.props.all_tasks
         const description_fn = (entity) => {
             return (
                 <div>
@@ -419,27 +428,45 @@ export default class extends ProfilePage {
     }
 
     clearFilters() {
-        this.setState({ filter: FILTERS.ALL })
+        this.setState({
+            filter: FILTERS.ALL,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setActiveFilter() {
-        this.setState({ filter: FILTERS.ACTIVE })
+        this.setState({
+            filter: FILTERS.ACTIVE,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setAppliedFilter() {
-        this.setState({ filter: FILTERS.APPLIED })
+        this.setState({
+            filter: FILTERS.APPLIED,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setOwnedFilter() {
-        this.setState({ filter: FILTERS.OWNED })
+        this.setState({
+            filter: FILTERS.OWNED,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setSubscribedFilter() {
-        this.setState({ filter: FILTERS.SUBSCRIBED })
+        this.setState({
+            filter: FILTERS.SUBSCRIBED,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setCr100Filter() {
-        this.setState({ filter: FILTERS.CR100 })
+        this.setState({
+            filter: FILTERS.CR100,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     linkTaskDetail(taskId) {

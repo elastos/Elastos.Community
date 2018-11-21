@@ -90,17 +90,25 @@ export default class extends Base{
         } else if (this.session.user && this.session.user.role === constant.USER_ROLE.ADMIN) {
             query.status = {$ne: constant.TASK_STATUS.CANCELED}
         } else if (param.profileListFor) {
-
             const currentUserId = new ObjectId(param.profileListFor)
 
-            // this is the profile page query
-            // basically all tasks you are a candidate of or own
-            query.$or = [
-                {createdBy: currentUserId}
-            ]
+            const db_tc = await taskService.getDBModel('Task_Candidate')
+            let listObj:any = {
+                user: param.profileListFor
+            }
+
+            if (!param.taskHasUserStatus) {
+                // this is the profile page query
+                // basically all tasks you are a candidate of or own
+                query.$or = [
+                    {createdBy: currentUserId}
+                ]
+            } else {
+                query.$and = []
+            }
 
             // we need to find task candidates that match the user
-            const taskCandidatesForUser = await taskService.getCandidatesForUser(currentUserId)
+            const taskCandidatesForUser = await taskService.getCandidatesForUser(currentUserId, param.taskHasUserStatus)
 
             // we need to find task candidates that match the users' team
 
@@ -114,17 +122,27 @@ export default class extends Base{
             // Iterate all teams and check if the team is a candidate of the task
             for (let i = 0; i < _.size(teams); i++) {
                 const userTeam = teams[i] as any
-                const taskCandidates = await taskService.getCandidatesForTeam(userTeam._id)
+                const taskCandidates = await taskService.getCandidatesForTeam(userTeam._id, param.taskHasUserStatus)
                 if (taskCandidates.length) {
-                    query.$or.push({candidates: {$in: _.map(taskCandidates, '_id')}})
+                    if (param.taskHasUserStatus) {
+                        query.$and.push({candidates: {$in: _.map(taskCandidates, '_id')}})
+                    } else {
+                        query.$or.push({candidates: {$in: _.map(taskCandidates, '_id')}})
+                    }
                 }
             }
 
             if (taskCandidatesForUser.length) {
-                query.$or.push({candidates: {$in: _.map(taskCandidatesForUser, '_id')}})
+                if (param.taskHasUserStatus) {
+                    query.$and.push({candidates: {$in: _.map(taskCandidatesForUser, '_id')}})
+                } else {
+                    query.$or.push({candidates: {$in: _.map(taskCandidatesForUser, '_id')}})
+                }
             }
 
-            query.$or.push({subscribers: {$all: [{"$elemMatch": {user: currentUserId}}] }})
+            if (!param.taskHasUserStatus) {
+                query.$or.push({subscribers: {$all: [{"$elemMatch": {user: currentUserId}}] }})
+            }
 
             query.status = {$in: [
                     constant.TASK_STATUS.CREATED,
