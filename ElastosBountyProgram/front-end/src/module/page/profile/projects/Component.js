@@ -70,6 +70,10 @@ export default class extends ProfilePage {
             query.category = TASK_CATEGORY.CR100
         }
 
+        if (this.state.filter === FILTERS.OWNED) {
+            query.createdBy = this.props.currentUserId
+        }
+
         query.page = this.state.page || 1
         query.results = this.state.results || 5
 

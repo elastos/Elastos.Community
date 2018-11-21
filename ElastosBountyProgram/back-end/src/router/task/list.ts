@@ -51,6 +51,10 @@ export default class extends Base{
             query.results = param.results
         }
 
+        if (param.createdBy) {
+            query.createdBy = param.createdBy
+        }
+
         if (param.page) {
             query.page = param.page
         }
