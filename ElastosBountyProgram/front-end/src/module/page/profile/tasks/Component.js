@@ -10,7 +10,7 @@ import '../../admin/admin.scss'
 
 import {TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT, TASK_CATEGORY, TASK_STATUS} from '@/constant'
 import { Col, Row, Icon, Select, Form, Badge, Tooltip, Breadcrumb,
-    Avatar, Button, Table, Divider, Spin, List, Carousel } from 'antd'
+    Avatar, Button, Table, Divider, Spin, List, Carousel, Input } from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
@@ -35,10 +35,12 @@ export default class extends ProfilePage {
             showMobile: false,
             filter: FILTERS.ALL,
             page: 1,
-            results: 5
+            results: 5,
+            search: ''
         }
 
         this.debouncedLoadMore = _.debounce(this.loadMore.bind(this), 300)
+        this.debouncedRefetch = _.debounce(this.refetch.bind(this), 300)
     }
 
     componentDidMount() {
@@ -74,6 +76,10 @@ export default class extends ProfilePage {
 
         if (this.state.filter === FILTERS.NEED_APPROVAL) {
             query.status = TASK_STATUS.PENDING
+        }
+
+        if (!_.isEmpty(this.state.search)) {
+            query.search = this.state.search
         }
 
         query.page = this.state.page || 1
@@ -192,6 +198,13 @@ export default class extends ProfilePage {
     }
 
     ord_renderContent () {
+        const searchChangedHandler = (e) => {
+            const search = e.target.value
+            this.setState({
+                search,
+                page: 1
+            }, this.debouncedRefetch)
+        }
 
         return (
             <div className="p_ProfileTasks">
@@ -225,7 +238,7 @@ export default class extends ProfilePage {
                                         </Select>
                                     </MediaQuery>
                                     <MediaQuery minWidth={MIN_WIDTH_PC}>
-                                        <Button.Group className="filter-group">
+                                        <Button.Group className="filter-group pull-left">
                                             <Button
                                                 className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
                                                 onClick={this.clearFilters.bind(this)}>All</Button>
@@ -248,6 +261,11 @@ export default class extends ProfilePage {
                                                 onClick={this.setSubscribedFilter.bind(this)}>Subscribed</Button>
                                         </Button.Group>
                                     </MediaQuery>
+                                    <div className="pull-left filter-group search-group">
+                                        <Input defaultValue={this.state.search} onChange={searchChangedHandler.bind(this)}
+                                            placeholder={I18N.get('developer.search.search.placeholder')} style={{width: 250}}/>
+                                    </div>
+                                    <div className="clearfix"/>
                                     {this.renderList()}
                                 </Col>
                             </Row>
