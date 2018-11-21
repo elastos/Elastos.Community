@@ -7,11 +7,12 @@ import './style.scss'
 import '../../admin/admin.scss'
 import {
     Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button,
-    Table, Select, Divider, List, Carousel, Avatar, Tag, Modal
+    Table, Select, Divider, List, Carousel, Avatar, Tag, Modal, Spin
 } from 'antd'
 import {TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT} from '@/constant'
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
+import InfiniteScroll from 'react-infinite-scroller'
 import I18N from '@/I18N'
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '../../../../config/constant'
 import ProfilePopup from '@/module/profile/OverviewPopup/Container'
@@ -34,18 +35,63 @@ export default class extends ProfilePage {
         this.state = {
             showMobile: false,
             filter: FILTERS.ALL,
-            showUserInfo: null
+            showUserInfo: null,
+            page: 1,
+            results: 5
         }
+
+        this.debouncedLoadMore = _.debounce(this.loadMore.bind(this), 300)
     }
 
     componentDidMount() {
         super.componentDidMount()
-        this.props.getTasks(this.props.currentUserId)
+        this.refetch()
         this.props.getUserTeams(this.props.currentUserId)
     }
 
     componentWillUnmount() {
         this.props.resetTasks()
+    }
+
+    getQuery() {
+        let query = {
+            profileListFor: this.props.currentUserId
+        }
+
+        query.page = this.state.page || 1
+        query.results = this.state.results || 5
+
+        return query
+    }
+
+    refetch() {
+        const query = this.getQuery()
+        this.props.getTasks(query)
+    }
+
+    async loadMore() {
+        const page = this.state.page + 1
+
+        const query = {
+            ...this.getQuery(),
+            page,
+            results: this.state.results
+        }
+
+        this.setState({ loadingMore: true })
+
+        try {
+            await this.props.loadMoreProjects(query)
+            this.setState({ page })
+        } catch (e) {
+            // Do not update page in state if the call fails
+        }
+
+        this.setState({ loadingMore: false })
+    }
+
+    hasMoreProjects() {
+        return _.size(this.props.all_tasks) < this.props.all_tasks_total
     }
 
     getCarousel(item) {
@@ -68,7 +114,7 @@ export default class extends ProfilePage {
         if (_.isEmpty(pictures)) {
             pictures.unshift(
                 <div key="main">
-                    <img width={188} height={188} alt="logo" src='/assets/images/Elastos_Logo.png' />
+                    <img width={188} height={188} alt="logo" src='/assets/images/Group_1685.12.svg' />
                 </div>
             )
         }
@@ -120,71 +166,85 @@ export default class extends ProfilePage {
             }
         })
         return (
-            <List itemLayout='vertical' size='large' loading={this.props.loading}
-                className="with-right-box" dataSource={data}
-                renderItem={item => (
-                    <div>
-                        <MediaQuery minWidth={MIN_WIDTH_PC}>
-                            <List.Item
-                                key={item.id}
-                                extra={this.getCarousel(item.task)}
-                            >
-                                <h3 class="no-margin no-padding one-line brand-color">
-                                    <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
-                                </h3>
-                                {item.applicationDeadlinePassed &&
-                                    <span className="subtitle">
-                                        {I18N.get('developer.search.subtitle_prefix')} {I18N.get('developer.search.subtitle_applications')}
-                                    </span>
-                                }
-                                <h5 class="no-margin">
-                                    {item.description}
-                                </h5>
-                                <div className="description-content ql-editor" dangerouslySetInnerHTML={{__html: item.content}} />
-                                <div className="ant-list-item-right-box">
-                                    <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
-                                        <Avatar size="large" icon="user" className="pull-right" src={USER_AVATAR_DEFAULT}/>
-                                        <div class="clearfix"/>
-                                        <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
-                                    </a>
-                                    <Button type="primary" className="pull-down" onClick={this.linkTaskDetail.bind(this, item.id)}>
-                                        View
-                                        <div class="pull-right">
-                                            {this.props.page === 'LEADER' && this.getCommentStatus(item.task)}
-                                        </div>
-                                    </Button>
-                                </div>
-                            </List.Item>
-                        </MediaQuery>
-                        <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
-                            <List.Item
-                                key={item.id}
-                                className="ignore-right-box"
-                            >
-                                <h3 class="no-margin no-padding one-line brand-color">
-                                    <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
-                                </h3>
-                                <h5 class="no-margin">
-                                    {item.description}
-                                </h5>
-                                <div>
-                                    <a onClick={this.linkUserDetail.bind(this, item.owner)}>
-                                        <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
-                                        <Divider type="vertical"/>
-                                        <Avatar size="large" icon="user" src={USER_AVATAR_DEFAULT}/>
-                                    </a>
-                                    <Button type="primary" className="pull-right" onClick={this.linkTaskDetail.bind(this, item.id)}>
-                                        View
-                                        <div class="pull-right">
-                                            {this.props.page === 'LEADER' && this.getCommentStatus(item.task)}
-                                        </div>
-                                    </Button>
-                                </div>
-                            </List.Item>
-                        </MediaQuery>
-                    </div>
-                )}
-            />
+            <InfiniteScroll
+                initialLoad={false}
+                pageStart={1}
+                loadMore={this.debouncedLoadMore.bind(this)}
+                hasMore={!this.state.loadingMore && !this.props.loading && this.hasMoreProjects()}
+                useWindow={true}
+            >
+                <List itemLayout='vertical' size='large' loading={this.props.loading}
+                    className="with-right-box" dataSource={data}
+                    renderItem={item => (
+                        <div>
+                            <MediaQuery minWidth={MIN_WIDTH_PC}>
+                                <List.Item
+                                    key={item.id}
+                                    extra={this.getCarousel(item.task)}
+                                >
+                                    <h3 class="no-margin no-padding one-line brand-color">
+                                        <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
+                                    </h3>
+                                    {item.applicationDeadlinePassed &&
+                                        <span className="subtitle">
+                                            {I18N.get('developer.search.subtitle_prefix')} {I18N.get('developer.search.subtitle_applications')}
+                                        </span>
+                                    }
+                                    <h5 class="no-margin">
+                                        {item.description}
+                                    </h5>
+                                    <div className="description-content ql-editor" dangerouslySetInnerHTML={{__html: item.content}} />
+                                    <div className="ant-list-item-right-box">
+                                        <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                            <Avatar size="large" icon="user" className="pull-right" src={USER_AVATAR_DEFAULT}/>
+                                            <div class="clearfix"/>
+                                            <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
+                                        </a>
+                                        <Button type="primary" className="pull-down" onClick={this.linkTaskDetail.bind(this, item.id)}>
+                                            View
+                                            <div class="pull-right">
+                                                {this.props.page === 'LEADER' && this.getCommentStatus(item.task)}
+                                            </div>
+                                        </Button>
+                                    </div>
+                                </List.Item>
+                            </MediaQuery>
+                            <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                                <List.Item
+                                    key={item.id}
+                                    className="ignore-right-box"
+                                >
+                                    <h3 class="no-margin no-padding one-line brand-color">
+                                        <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
+                                    </h3>
+                                    <h5 class="no-margin">
+                                        {item.description}
+                                    </h5>
+                                    <div>
+                                        <a onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                            <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
+                                            <Divider type="vertical"/>
+                                            <Avatar size="large" icon="user" src={USER_AVATAR_DEFAULT}/>
+                                        </a>
+                                        <Button type="primary" className="pull-right" onClick={this.linkTaskDetail.bind(this, item.id)}>
+                                            View
+                                            <div class="pull-right">
+                                                {this.props.page === 'LEADER' && this.getCommentStatus(item.task)}
+                                            </div>
+                                        </Button>
+                                    </div>
+                                </List.Item>
+                            </MediaQuery>
+                        </div>
+                    )}
+                >
+                    {this.state.loadingMore && this.hasMoreProjects() &&
+                        <div className="loadmore full-width halign-wrapper">
+                            <Spin />
+                        </div>
+                    }
+                </List>
+            </InfiniteScroll>
         )
     }
 

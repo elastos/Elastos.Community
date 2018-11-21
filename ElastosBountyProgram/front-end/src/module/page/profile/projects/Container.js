@@ -99,9 +99,17 @@ export default createContainer(Component, (state) => {
          *
          * @returns {Promise<*>}
          */
-        async getTasks(currentUserId) {
+        async getTasks(query) {
             return taskService.index({
-                profileListFor: currentUserId,
+                ...query,
+                type: TASK_TYPE.PROJECT,
+                category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.CR100]
+            })
+        },
+
+        async loadMoreProjects(query) {
+            return taskService.loadMore({
+                ...query,
                 type: TASK_TYPE.PROJECT,
                 category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.CR100]
             })
