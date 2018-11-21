@@ -62,6 +62,7 @@ const en = {
     '1303': 'Teams',
     '1304': 'Issues',
     '1305': 'Forms',
+    '1306': 'Projects',
 
     // Profile navigator
     '2300': 'My Profile',

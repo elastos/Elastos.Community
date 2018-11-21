@@ -70,19 +70,16 @@ export default class extends BaseComponent {
                                 }
                             </Menu.Item>
                             <Menu.Item key="profileTeams">
-                                {I18N.get('2302')}
+                                {I18N.get(this.props.is_admin ? '1303' : '2302')}
                             </Menu.Item>
                             <Menu.Item key="profileProjects">
-                                {I18N.get('2305')}
+                                {I18N.get(this.props.is_admin ? '1306' : '2305')}
                             </Menu.Item>
                             <Menu.Item key="profileTasks">
-                                {I18N.get('2301')}
+                                {I18N.get(this.props.is_admin ? '1300' : '2301')}
                             </Menu.Item>
                             <Menu.Item key="profileSubmissions">
-                                {I18N.get('2303')}
-                            </Menu.Item>
-                            <Menu.Item key="profileCommunities">
-                                {I18N.get('2304')}
+                                {I18N.get(this.props.is_admin ? '1304' : '2303')}
                             </Menu.Item>
                             {this.props.is_admin &&
                                 <Menu.Item key="forms">
@@ -94,8 +91,13 @@ export default class extends BaseComponent {
                                     {I18N.get('1302')}
                                 </Menu.Item>
                             }
+                            {!this.props.is_admin &&
+                                <Menu.Item key="profileCommunities">
+                                    {I18N.get('2304')}
+                                </Menu.Item>
+                            }
                             {this.props.is_admin &&
-                                <Menu.Item key="communtities">
+                                <Menu.Item key="communities">
                                     {I18N.get('2306')}
                                 </Menu.Item>
                             }
@@ -112,20 +114,37 @@ export default class extends BaseComponent {
                             {I18N.get('2300')}
                         </Menu.Item>
                         <Menu.Item key="profileTeams">
-                            {I18N.get('2302')}
+                            {I18N.get(this.props.is_admin ? '1303' : '2302')}
                         </Menu.Item>
                         <Menu.Item key="profileProjects">
-                            {I18N.get('2305')}
+                            {I18N.get(this.props.is_admin ? '1306' : '2305')}
                         </Menu.Item>
                         <Menu.Item key="profileTasks">
-                            {I18N.get('2301')}
+                            {I18N.get(this.props.is_admin ? '1300' : '2301')}
                         </Menu.Item>
                         <Menu.Item key="profileSubmissions">
-                            {I18N.get('2303')}
+                            {I18N.get(this.props.is_admin ? '1304' : '2303')}
                         </Menu.Item>
-                        <Menu.Item key="profileCommunities">
-                            {I18N.get('2304')}
-                        </Menu.Item>
+                        {!this.props.is_admin &&
+                            <Menu.Item key="profileCommunities">
+                                {I18N.get('2304')}
+                            </Menu.Item>
+                        }
+                        {this.props.is_admin &&
+                            <Menu.Item key="communities">
+                                {I18N.get('2306')}
+                            </Menu.Item>
+                        }
+                        {this.props.is_admin &&
+                            <Menu.Item key="forms">
+                                {I18N.get('1305')}
+                            </Menu.Item>
+                        }
+                        {this.props.is_admin &&
+                            <Menu.Item key="users">
+                                {I18N.get('1302')}
+                            </Menu.Item>
+                        }
                     </Menu>
                 </MediaQuery>
             </div>

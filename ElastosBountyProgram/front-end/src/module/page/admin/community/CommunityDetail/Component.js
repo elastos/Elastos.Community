@@ -6,7 +6,7 @@ import ModalChangeOrganizerCountry from '../../shared/ModalChangeOrganizerCountr
 import ModalAddSubCommunity from '../../shared/ModalAddSubCommunity/Component'
 import ModalUpdateSubCommunity from '../../shared/ModalUpdateSubCommunity/Component'
 import ModalAddOrganizer from '../../shared/ModalAddOrganizer/Component'
-import Navigator from '../../shared/Navigator/Component'
+import Navigator from '../../../shared/HomeNavigator/Container'
 import config from '@/config'
 import { COMMUNITY_TYPE, USER_GENDER, DEFAULT_IMAGE } from '@/constant'
 
@@ -629,7 +629,7 @@ export default class extends AdminPage {
                     <div className="p_admin_content">
                         <Row>
                             <Col span={4} className="admin-left-column wrap-box-navigator">
-                                <Navigator selectedItem={'community'}/>
+                                <Navigator selectedItem={'communtities'}/>
                             </Col>
                             <Col span={20} className="admin-right-column wrap-box-user">
                                 <div>
