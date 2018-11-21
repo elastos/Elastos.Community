@@ -6,8 +6,9 @@ import _ from 'lodash'
 import './style.scss'
 import '../../admin/admin.scss'
 import { Col, Row, Icon, Form, Input, Breadcrumb, Button,
-    Divider, Select, Table, List, Carousel, Avatar, Tag } from 'antd'
+    Divider, Select, Table, List, Carousel, Avatar, Tag, Spin } from 'antd'
 import { TEAM_USER_STATUS, TEAM_AVATAR_DEFAULT } from '@/constant'
+import InfiniteScroll from 'react-infinite-scroller'
 import MediaQuery from 'react-responsive'
 import moment from 'moment/moment'
 import Footer from '@/module/layout/Footer/Container'
@@ -28,9 +29,13 @@ export default class extends ProfilePage {
     constructor(props) {
         super(props)
 
+        this.debouncedLoadMore = _.debounce(this.loadMore.bind(this), 300)
+
         this.state = {
             showMobile: false,
-            filter: FILTERS.ALL
+            filter: FILTERS.ALL,
+            page: 1,
+            results: 5
         }
     }
 
@@ -43,9 +48,11 @@ export default class extends ProfilePage {
         this.props.resetTeams()
     }
 
-    refetch() {
-        let query = {
-            teamHasUser: this.props.currentUserId
+    getQuery() {
+        let query = {}
+
+        if (!this.props.is_admin) {
+            query.teamHasUser = this.props.currentUserId
         }
 
         if (this.state.filter === FILTERS.ACTIVE) {
@@ -66,15 +73,40 @@ export default class extends ProfilePage {
             }
         }
 
+        query.page = this.state.page || 1
+        query.results = this.state.results || 5
+
+        return query
+    }
+
+    refetch() {
+        const query = this.getQuery()
         this.props.getTeams(query)
     }
 
-    ord_states() {
-        return {
-            loading: true,
-            total: 0,
-            list: []
-        };
+    async loadMore() {
+        const page = this.state.page + 1
+
+        const query = {
+            ...this.getQuery(),
+            page,
+            results: this.state.results
+        }
+
+        this.setState({ loadingMore: true })
+
+        try {
+            await this.props.loadMoreTeams(query)
+            this.setState({ page })
+        } catch (e) {
+            // Do not update page in state if the call fails
+        }
+
+        this.setState({ loadingMore: false })
+    }
+
+    hasMoreTeams() {
+        return _.size(this.props.all_teams) < this.props.all_teams_total
     }
 
     ord_renderContent () {
@@ -236,10 +268,24 @@ export default class extends ProfilePage {
         })
 
         return (
-            <List itemLayout='vertical' size='large' loading={this.props.loading}
-                className="with-right-box" dataSource={data}
-                renderItem={item => this.getListItem(item)}
-            />
+            <InfiniteScroll
+                initialLoad={false}
+                pageStart={1}
+                loadMore={this.debouncedLoadMore.bind(this)}
+                hasMore={!this.state.loadingMore && !this.props.loading && this.hasMoreTeams()}
+                useWindow={true}
+            >
+                <List itemLayout='vertical' size='large' loading={this.props.loading}
+                    className="with-right-box" dataSource={data}
+                    renderItem={item => this.getListItem(item)}
+                >
+                    {this.state.loadingMore && this.hasMoreTeams() &&
+                        <div className="loadmore full-width halign-wrapper">
+                            <Spin />
+                        </div>
+                    }
+                </List>
+            </InfiniteScroll>
         )
     }
 
@@ -259,28 +305,43 @@ export default class extends ProfilePage {
                 break;
             default:
                 this.clearFilters();
-                break;
+                break
         }
     }
 
     clearFilters() {
-        this.setState({ filter: FILTERS.ALL }, this.refetch.bind(this))
+        this.setState({
+            filter: FILTERS.ALL,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setActiveFilter() {
-        this.setState({ filter: FILTERS.ACTIVE }, this.refetch.bind(this))
+        this.setState({
+            filter: FILTERS.ACTIVE,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setAppliedFilter() {
-        this.setState({ filter: FILTERS.APPLIED }, this.refetch.bind(this))
+        this.setState({
+            filter: FILTERS.APPLIED,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setRejectedFilter() {
-        this.setState({ filter: FILTERS.REJECTED }, this.refetch.bind(this))
+        this.setState({
+            filter: FILTERS.REJECTED,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setOwnedFilter() {
-        this.setState({ filter: FILTERS.OWNED }, this.refetch.bind(this))
+        this.setState({
+            filter: FILTERS.OWNED,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     goCreatepage() {

@@ -994,9 +994,18 @@ export default class extends Base {
      *
      * @param userId
      */
-    public async getCandidatesForUser(userId) {
-        const db_task_candidate = this.getDBModel('Task_Candidate');
-        return db_task_candidate.list({user: userId})
+    public async getCandidatesForUser(userId, status) {
+        const db_task_candidate = this.getDBModel('Task_Candidate')
+
+        let options:any = {
+            user: userId
+        }
+
+        if (!_.isEmpty(status)) {
+            options.status = status
+        }
+
+        return db_task_candidate.list(options)
     }
 
     /**
@@ -1004,9 +1013,18 @@ export default class extends Base {
      *
      * @param teamId
      */
-    public async getCandidatesForTeam(teamId) {
-        const db_task_candidate = this.getDBModel('Task_Candidate');
-        return db_task_candidate.list({team: teamId})
+    public async getCandidatesForTeam(teamId, status) {
+        const db_task_candidate = this.getDBModel('Task_Candidate')
+
+        let options:any = {
+            team: teamId
+        }
+
+        if (!_.isEmpty(status)) {
+            options.status = status
+        }
+
+        return db_task_candidate.list(options)
     }
 
     /**

@@ -51,6 +51,10 @@ export default class extends Base{
             query.results = param.results
         }
 
+        if (param.createdBy) {
+            query.createdBy = param.createdBy
+        }
+
         if (param.page) {
             query.page = param.page
         }
@@ -75,6 +79,8 @@ export default class extends Base{
             query.eventDateRangeStart = JSON.parse(param.eventDateRangeStart)
         }
 
+        const isAdmin = this.session.user && this.session.user.role === constant.USER_ROLE.ADMIN
+
         // public page overrides all else
         if (param.public === 'true') {
             query.status = {
@@ -87,20 +93,28 @@ export default class extends Base{
             }
         } else if (param.status) {
             query.status = param.status
-        } else if (this.session.user && this.session.user.role === constant.USER_ROLE.ADMIN) {
+        } else if (isAdmin) {
             query.status = {$ne: constant.TASK_STATUS.CANCELED}
-        } else if (param.profileListFor) {
+        }
 
+        if (param.profileListFor && (param.taskHasUserStatus || param.subscribed || !isAdmin)) {
             const currentUserId = new ObjectId(param.profileListFor)
 
-            // this is the profile page query
-            // basically all tasks you are a candidate of or own
-            query.$or = [
-                {createdBy: currentUserId}
-            ]
+            const db_tc = await taskService.getDBModel('Task_Candidate')
+            let listObj:any = {
+                user: param.profileListFor
+            }
+
+            if (!param.taskHasUserStatus && !param.subscribed) {
+                // this is the profile page query
+                // basically all tasks you are a candidate of or own
+                query.$or = [
+                    {createdBy: currentUserId}
+                ]
+            }
 
             // we need to find task candidates that match the user
-            const taskCandidatesForUser = await taskService.getCandidatesForUser(currentUserId)
+            const taskCandidatesForUser = await taskService.getCandidatesForUser(currentUserId, param.taskHasUserStatus)
 
             // we need to find task candidates that match the users' team
 
@@ -114,17 +128,36 @@ export default class extends Base{
             // Iterate all teams and check if the team is a candidate of the task
             for (let i = 0; i < _.size(teams); i++) {
                 const userTeam = teams[i] as any
-                const taskCandidates = await taskService.getCandidatesForTeam(userTeam._id)
+                const taskCandidates = await taskService.getCandidatesForTeam(userTeam._id, param.taskHasUserStatus)
                 if (taskCandidates.length) {
-                    query.$or.push({candidates: {$in: _.map(taskCandidates, '_id')}})
+                    if (param.taskHasUserStatus) {
+                        query.candidates = { $in: _.map(taskCandidates, '_id') }
+                    } else if (!param.subscribed) {
+                        query.$or.push({candidates: {$in: _.map(taskCandidates, '_id')}})
+                    }
                 }
             }
 
             if (taskCandidatesForUser.length) {
-                query.$or.push({candidates: {$in: _.map(taskCandidatesForUser, '_id')}})
+                if (param.taskHasUserStatus) {
+                    query.candidates = { $in: _.map(taskCandidatesForUser, '_id') }
+                } else if (!param.subscribed) {
+                    query.$or.push({candidates: {$in: _.map(taskCandidatesForUser, '_id')}})
+                }
+            } else if (param.taskHasUserStatus) {
+                return this.result(1, {
+                    list: [],
+                    total: 0
+                })
             }
 
-            query.$or.push({subscribers: {$all: [{"$elemMatch": {user: currentUserId}}] }})
+            if (!param.taskHasUserStatus && !param.subscribed) {
+                query.$or.push({subscribers: {$all: [{"$elemMatch": {user: currentUserId}}] }})
+            }
+
+            if (param.subscribed) {
+                query.subscribers = {$all: [{"$elemMatch": {user: currentUserId}}]}
+            }
 
             query.status = {$in: [
                     constant.TASK_STATUS.CREATED,

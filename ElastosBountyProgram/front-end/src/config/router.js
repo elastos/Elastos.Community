@@ -54,11 +54,6 @@ import MemberPage from '@/module/page/member/Container'
 
 import AdminUsersPage from '@/module/page/admin/users/Container'
 import AdminProfileDetailPage from '@/module/page/admin/profile_detail/Container'
-import AdminTasksPage from '@/module/page/admin/tasks/Container'
-import AdminCr100Page from '@/module/page/admin/cr100/Container'
-import AdminTaskDetailPage from '@/module/page/admin/task_detail/Container'
-import AdminSubmissionsPage from '@/module/page/admin/submissions/Container'
-import AdminSubmissionDetailPage from '@/module/page/admin/submission_detail/Container'
 import AdminFormsPage from '@/module/page/admin/forms/Container'
 
 import CountryCommunitiesPage from '@/module/page/admin/community/CountryCommunities/Container'
@@ -344,32 +339,12 @@ export default [
         page: AdminUsersPage
     },
     {
-        path: '/admin/tasks',
-        page: AdminTasksPage
-    },
-    {
-        path: '/admin/task-detail/:taskId',
-        page: AdminTaskDetailPage
-    },
-    {
         path: '/admin/profile/:userId',
         page: AdminProfileDetailPage
     },
     {
-        path: '/admin/submissions',
-        page: AdminSubmissionsPage
-    },
-    {
         path: '/admin/forms',
         page: AdminFormsPage
-    },
-    {
-        path: '/admin/cr100',
-        page: AdminCr100Page
-    },
-    {
-        path: '/admin/submission-detail/:submissionId',
-        page: AdminSubmissionDetailPage
     },
     {
         path: '/admin/community',

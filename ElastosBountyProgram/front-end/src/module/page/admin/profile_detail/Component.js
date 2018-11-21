@@ -5,7 +5,7 @@ import Profile from '@/module/profile/Container'
 import '../admin.scss'
 import './style.scss'
 
-import Navigator from '../shared/Navigator/Component'
+import Navigator from '../../shared/HomeNavigator/Container'
 
 import { Breadcrumb, Col, Icon, Row, Spin } from 'antd'
 

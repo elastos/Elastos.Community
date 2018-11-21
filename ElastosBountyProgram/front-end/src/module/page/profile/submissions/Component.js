@@ -33,7 +33,14 @@ export default class extends ProfilePage {
 
     componentDidMount() {
         super.componentDidMount()
-        this.props.getSubmissions(this.props.currentUserId)
+
+        let query = {}
+
+        if (!this.props.is_admin) {
+            query.profileListFor = this.props.currentUserId
+        }
+
+        this.props.getSubmissions(query)
     }
 
     componentWillUnmount() {
