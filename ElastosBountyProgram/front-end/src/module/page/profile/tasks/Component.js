@@ -8,7 +8,10 @@ import I18N from '@/I18N'
 import './style.scss'
 import '../../admin/admin.scss'
 
-import { Col, Row, Icon, Select, Form, Badge, Tooltip, Breadcrumb, Avatar, Button, Table, Divider } from 'antd'
+import {TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT, TASK_CATEGORY} from '@/constant'
+import { Col, Row, Icon, Select, Form, Badge, Tooltip, Breadcrumb,
+    Avatar, Button, Table, Divider, Spin, List, Carousel } from 'antd'
+import InfiniteScroll from 'react-infinite-scroller'
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from "../../../../config/constant"
@@ -30,18 +33,83 @@ export default class extends ProfilePage {
 
         this.state = {
             showMobile: false,
-            filter: FILTERS.ALL
+            filter: FILTERS.ALL,
+            page: 1,
+            results: 5
         }
+
+        this.debouncedLoadMore = _.debounce(this.loadMore.bind(this), 300)
     }
 
     componentDidMount() {
         super.componentDidMount()
-        this.props.getTasks(this.props.currentUserId)
+        this.refetch()
         this.props.getUserTeams(this.props.currentUserId)
     }
 
     componentWillUnmount() {
         this.props.resetTasks()
+    }
+
+    getQuery() {
+        let query = {
+            profileListFor: this.props.currentUserId
+        }
+
+        if (this.state.filter === FILTERS.ACTIVE) {
+            query.taskHasUserStatus = TASK_CANDIDATE_STATUS.APPROVED
+        }
+
+        if (this.state.filter === FILTERS.APPLIED) {
+            query.taskHasUserStatus = TASK_CANDIDATE_STATUS.PENDING
+        }
+
+        if (this.state.filter === FILTERS.CR100) {
+            query.category = TASK_CATEGORY.CR100
+        }
+
+        if (this.state.filter === FILTERS.OWNED) {
+            query.createdBy = this.props.currentUserId
+        }
+
+        if (this.state.filter === FILTERS.SUBSCRIBED) {
+            query.subscribed = true
+        }
+
+        query.page = this.state.page || 1
+        query.results = this.state.results || 5
+
+        return query
+    }
+
+    refetch() {
+        const query = this.getQuery()
+        this.props.getTasks(query)
+    }
+
+    async loadMore() {
+        const page = this.state.page + 1
+
+        const query = {
+            ...this.getQuery(),
+            page,
+            results: this.state.results
+        }
+
+        this.setState({ loadingMore: true })
+
+        try {
+            await this.props.loadMoreTasks(query)
+            this.setState({ page })
+        } catch (e) {
+            // Do not update page in state if the call fails
+        }
+
+        this.setState({ loadingMore: false })
+    }
+
+    hasMoreTasks() {
+        return _.size(this.props.all_tasks) < this.props.all_tasks_total
     }
 
     getOwnerCommentActions(id, data) {
@@ -124,154 +192,6 @@ export default class extends ProfilePage {
     }
 
     ord_renderContent () {
-        const tasksActiveData = this.props.candidate_active_tasks
-        const tasksPendingData = this.props.candidate_pending_tasks
-        const tasksOwnedData = this.props.owned_tasks
-        const tasksSubscribedData = this.props.subscribed_tasks
-        const tasksNeedApprovalData = this.props.need_approval_tasks
-        const allTasks = this.props.all_tasks
-
-        const columns = [{
-            title: I18N.get('profile.tasks.table.name'),
-            dataIndex: 'name',
-            width: '30%',
-            className: 'fontWeight500 allow-wrap',
-            render: (name, record) => {
-                return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
-            }
-        }, {
-            title: I18N.get('profile.tasks.table.owner'),
-            dataIndex: 'createdBy',
-            width: '30%',
-            render: (createdBy) => {
-                const profile = createdBy && createdBy.profile ? createdBy.profile : {};
-                return <a onClick={this.linkUserDetail.bind(this, createdBy)} className="tableLink">
-                    <Avatar className="gap-right" src={profile.avatar} />
-                    {`${profile.firstName} ${profile.lastName}`}
-                </a>
-            }
-        }, {
-            title: I18N.get('profile.tasks.table.category'),
-            dataIndex: 'category',
-            render: (category) => _.capitalize(category)
-        }, {
-            title: I18N.get('profile.tasks.table.type'),
-            dataIndex: 'type',
-        }, {
-            title: I18N.get('profile.tasks.table.date'),
-            dataIndex: 'startTime',
-            render: (startTime) => moment(startTime).format('MMM D')
-        }, {
-            title: I18N.get('profile.tasks.table.created'),
-            dataIndex: 'createdAt',
-            render: (createdAt) => moment(createdAt).format('MMM D')
-        }, {
-            title: '',
-            dataIndex: '_id',
-            key: 'actions',
-            render: this.getCommentActions.bind(this)
-        }]
-
-        const appliedColumns = [{
-            title: I18N.get('profile.tasks.table.name'),
-            dataIndex: 'name',
-            width: '30%',
-            className: 'fontWeight500 allow-wrap',
-            render: (name, record) => {
-                return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
-            }
-        }, {
-            title: I18N.get('profile.tasks.table.owner'),
-            dataIndex: 'createdBy.username'
-        }, {
-            title: I18N.get('profile.tasks.table.category'),
-            dataIndex: 'category',
-            render: (category) => _.capitalize(category)
-        }, {
-            title: I18N.get('profile.tasks.table.type'),
-            dataIndex: 'type',
-        }, {
-            title: I18N.get('profile.tasks.table.community'),
-            dataIndex: 'community',
-            key: 'community',
-            render: (community, data) => {
-                if (!community) {
-                    return null;
-                }
-
-                if (data.communityParent) {
-                    let nameParent = data.communityParent.name;
-                    return (<p>{nameParent}/{community.name}</p>)
-                } else {
-                    return (<p>{community.name}</p>)
-                }
-
-            }
-        }, {
-            title: I18N.get('profile.tasks.table.date'),
-            dataIndex: 'startTime',
-            render: (startTime) => moment(startTime).format('MMM D')
-        }, {
-            title: I18N.get('profile.tasks.table.created'),
-            dataIndex: 'createdAt',
-            render: (createdAt) => moment(createdAt).format('MMM D')
-        }, {
-            title: '',
-            dataIndex: '_id',
-            key: 'actions',
-            render: this.getCandidateCommentActions.bind(this, 'lastSeenByCandidate')
-        }]
-
-        // TODO: this should be moved to a more restrictive admin
-        const ownedColumns = [{
-            title: I18N.get('profile.tasks.table.name'),
-            dataIndex: 'name',
-            width: '30%',
-            className: 'fontWeight500 allow-wrap',
-            render: (name, record) => {
-                return <a onClick={this.linkTaskDetail.bind(this, record._id)} className="tableLink">{name}</a>
-            }
-        }, {
-            title: I18N.get('profile.tasks.table.category'),
-            dataIndex: 'category',
-            render: (category) => _.capitalize(category)
-        }, {
-            title: I18N.get('profile.tasks.table.type'),
-            dataIndex: 'type',
-        }, {
-            title: I18N.get('profile.tasks.table.community'),
-            dataIndex: 'community',
-            key: 'community',
-            render: (community, data) => {
-                if (!community) {
-                    return null;
-                }
-
-                if (data.communityParent) {
-                    let nameParent = data.communityParent.name;
-                    return (<p>{nameParent}/{community.name}</p>)
-                } else {
-                    return (<p>{community.name}</p>)
-                }
-
-            }
-        }, {
-            title: I18N.get('profile.tasks.table.status'),
-            dataIndex: 'status'
-        },{
-            title: I18N.get('profile.tasks.table.date'),
-            dataIndex: 'startTime',
-            render: (startTime) => moment(startTime).format('MMM D')
-        }, {
-            title: I18N.get('profile.tasks.table.created'),
-            dataIndex: 'createdAt',
-            render: (createdAt) => moment(createdAt).format('MMM D')
-        }, {
-            title: '',
-            dataIndex: '_id',
-            key: 'actions',
-            render: this.getOwnerCommentActions.bind(this)
-        }]
 
         return (
             <div className="p_ProfileTasks">
@@ -328,71 +248,7 @@ export default class extends ProfilePage {
                                                 onClick={this.setSubscribedFilter.bind(this)}>Subscribed</Button>
                                         </Button.Group>
                                     </MediaQuery>
-                                    {this.state.filter === FILTERS.ALL &&
-                                        <div>
-                                            <Table
-                                                columns={columns}
-                                                rowKey={(item) => item._id}
-                                                dataSource={allTasks}
-                                                loading={this.props.loading}
-                                            />
-                                        </div>
-                                    }
-
-                                    {this.state.filter === FILTERS.NEED_APPROVAL &&
-                                        <div>
-                                            <Table
-                                                columns={columns}
-                                                rowKey={(item) => item._id}
-                                                dataSource={tasksNeedApprovalData}
-                                                loading={this.props.loading}
-                                            />
-                                        </div>
-                                    }
-
-                                    {this.state.filter === FILTERS.ACTIVE &&
-                                        <div>
-                                            <Table
-                                                columns={columns}
-                                                rowKey={(item) => item._id}
-                                                dataSource={tasksActiveData}
-                                                loading={this.props.loading}
-                                            />
-                                        </div>
-                                    }
-
-                                    {this.state.filter === FILTERS.APPLIED &&
-                                        <div>
-                                            <Table
-                                                columns={appliedColumns}
-                                                rowKey={(item) => item._id}
-                                                dataSource={tasksPendingData}
-                                                loading={this.props.loading}
-                                            />
-                                        </div>
-                                    }
-
-                                    {this.state.filter === FILTERS.OWNED &&
-                                        <div>
-                                            <Table
-                                                columns={ownedColumns}
-                                                rowKey={(item) => item._id}
-                                                dataSource={tasksOwnedData}
-                                                loading={this.props.loading}
-                                            />
-                                        </div>
-                                    }
-
-                                    {this.state.filter === FILTERS.SUBSCRIBED &&
-                                        <div>
-                                            <Table
-                                                columns={ownedColumns}
-                                                rowKey={(item) => item._id}
-                                                dataSource={tasksSubscribedData}
-                                                loading={this.props.loading}
-                                            />
-                                        </div>
-                                    }
+                                    {this.renderList()}
                                 </Col>
                             </Row>
                             <Row>
@@ -405,6 +261,161 @@ export default class extends ProfilePage {
                     </div>
                 </div>
             </div>
+        )
+    }
+
+    getCarousel(item) {
+        const pictures = _.map(item.pictures, (picture, ind) => {
+            return (
+                <div key={ind}>
+                    <img width={188} height={188} alt="logo" src={picture.url} />
+                </div>
+            )
+        })
+
+        if (item.thumbnail) {
+            pictures.unshift(
+                <div key="main">
+                    <img width={188} height={188} alt="logo" src={item.thumbnail} />
+                </div>
+            )
+        }
+
+        if (_.isEmpty(pictures)) {
+            pictures.unshift(
+                <div key="main">
+                    <img width={188} height={188} alt="logo" src='/assets/images/Group_1685.12.svg' />
+                </div>
+            )
+        }
+
+        return (
+            <div className="carousel-wrapper">
+                <Carousel autoplay>
+                    {pictures}
+                </Carousel>
+            </div>
+        )
+    }
+
+    renderList() {
+        const tasks = this.props.all_tasks
+        const description_fn = (entity) => {
+            return (
+                <div>
+                    <div className="valign-wrapper">
+                        <div className="gap-right pull-left">{I18N.get('project.detail.recruiting')}: </div>
+                        <div className="pull-left">
+                            {_.isEmpty(entity.recruitedSkillsets) ? (
+                                <span className="default-text">{I18N.get('project.detail.recruiting_skills_unknown')}</span>) : (
+                                _.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>))}
+                        </div>
+                    </div>
+                    {entity.applicationDeadline &&
+                    <div className="valign-wrapper">
+                        <div className="gap-right pull-left">{I18N.get('project.detail.deadline')}:</div>
+                        <div className="pull-left default-text">
+                            {moment(entity.applicationDeadline).format('MMM D')}
+                        </div>
+                    </div>
+                    }
+                </div>
+            )
+        }
+
+        const data = _.map(tasks, (task, id) => {
+            const applicationDeadline = task.applicationDeadline ? new Date(task.applicationDeadline).getTime() : Date.now();
+            return {
+                href: '',
+                title: task.name,
+                description: description_fn(task),
+                content: task.description,
+                owner: task.createdBy,
+                applicationDeadlinePassed: Date.now() > applicationDeadline,
+                id: task._id,
+                task
+            }
+        })
+        return (
+            <InfiniteScroll
+                initialLoad={false}
+                pageStart={1}
+                loadMore={this.debouncedLoadMore.bind(this)}
+                hasMore={!this.state.loadingMore && !this.props.loading && this.hasMoreTasks()}
+                useWindow={true}
+            >
+                <List itemLayout='vertical' size='large' loading={this.props.loading}
+                    className="with-right-box" dataSource={data}
+                    renderItem={item => (
+                        <div>
+                            <MediaQuery minWidth={MIN_WIDTH_PC}>
+                                <List.Item
+                                    key={item.id}
+                                    extra={this.getCarousel(item.task)}
+                                >
+                                    <h3 class="no-margin no-padding one-line brand-color">
+                                        <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
+                                    </h3>
+                                    {item.applicationDeadlinePassed &&
+                                        <span className="subtitle">
+                                            {I18N.get('developer.search.subtitle_prefix')} {I18N.get('developer.search.subtitle_applications')}
+                                        </span>
+                                    }
+                                    <h5 class="no-margin">
+                                        {item.description}
+                                    </h5>
+                                    <div className="description-content ql-editor" dangerouslySetInnerHTML={{__html: item.content}} />
+                                    <div className="ant-list-item-right-box">
+                                        <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                            <Avatar size="large" icon="user" className="pull-right" src={USER_AVATAR_DEFAULT}/>
+                                            <div class="clearfix"/>
+                                            <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
+                                        </a>
+                                        <Button type="primary" className="pull-down" onClick={this.linkTaskDetail.bind(this, item.id)}>
+                                            View
+                                            <div class="pull-right">
+                                                {this.props.page === 'LEADER' && this.getCommentStatus(item.task)}
+                                            </div>
+                                        </Button>
+                                    </div>
+                                </List.Item>
+                            </MediaQuery>
+                            <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                                <List.Item
+                                    key={item.id}
+                                    className="ignore-right-box"
+                                >
+                                    <h3 class="no-margin no-padding one-line brand-color">
+                                        <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
+                                    </h3>
+                                    <h5 class="no-margin">
+                                        {item.description}
+                                    </h5>
+                                    <div>
+                                        <a onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                            <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
+                                            <Divider type="vertical"/>
+                                            <Avatar size="large" icon="user" src={USER_AVATAR_DEFAULT}/>
+                                        </a>
+                                        <Button type="primary" className="pull-right" onClick={this.linkTaskDetail.bind(this, item.id)}>
+                                            View
+                                            <div class="pull-right">
+                                                {this.props.page === 'LEADER' && this.getCommentStatus(item.task)}
+                                            </div>
+                                        </Button>
+                                    </div>
+                                </List.Item>
+                            </MediaQuery>
+                        </div>
+                    )}
+                >
+                    {this.state.loadingMore && this.hasMoreTasks() &&
+                        <div className="loadmore full-width halign-wrapper">
+                            <Spin />
+                        </div>
+                    }
+                </List>
+            </InfiniteScroll>
         )
     }
 
