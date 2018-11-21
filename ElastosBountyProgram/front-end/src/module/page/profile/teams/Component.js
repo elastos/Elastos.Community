@@ -30,12 +30,14 @@ export default class extends ProfilePage {
         super(props)
 
         this.debouncedLoadMore = _.debounce(this.loadMore.bind(this), 300)
+        this.debouncedRefetch = _.debounce(this.refetch.bind(this), 300)
 
         this.state = {
             showMobile: false,
             filter: FILTERS.ALL,
             page: 1,
-            results: 5
+            results: 5,
+            search: ''
         }
     }
 
@@ -71,6 +73,10 @@ export default class extends ProfilePage {
             query = {
                 owner: this.props.currentUserId
             }
+        }
+
+        if (!_.isEmpty(this.state.search)) {
+            query.search = this.state.search
         }
 
         query.page = this.state.page || 1
@@ -111,6 +117,13 @@ export default class extends ProfilePage {
 
     ord_renderContent () {
         const teams = this.props.all_teams
+        const searchChangedHandler = (e) => {
+            const search = e.target.value
+            this.setState({
+                search,
+                page: 1
+            }, this.debouncedRefetch)
+        }
 
         return (
             <div class="p_ProfileTeams">
@@ -142,7 +155,7 @@ export default class extends ProfilePage {
                                         </Select>
                                     </MediaQuery>
                                     <MediaQuery minWidth={MIN_WIDTH_PC}>
-                                        <Button.Group className="filter-group">
+                                        <Button.Group className="filter-group pull-left">
                                             <Button
                                                 className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
                                                 onClick={this.clearFilters.bind(this)}>{I18N.get('myrepublic.teams.all')}</Button>
@@ -160,6 +173,10 @@ export default class extends ProfilePage {
                                                 onClick={this.setRejectedFilter.bind(this)}>{I18N.get('myrepublic.teams.rejected')}</Button>
                                         </Button.Group>
                                     </MediaQuery>
+                                    <div className="pull-left filter-group search-group">
+                                        <Input defaultValue={this.state.search} onChange={searchChangedHandler.bind(this)}
+                                            placeholder={I18N.get('developer.search.search.placeholder')} style={{width: 250}}/>
+                                    </div>
                                     <div className="clearfix"/>
                                     {this.getListComponent()}
                                 </Col>
