@@ -303,21 +303,13 @@ export default class extends ProfilePage {
         const description_fn = (entity) => {
             return (
                 <div>
-                    <div className="valign-wrapper">
-                        <div className="gap-right pull-left">{I18N.get('project.detail.recruiting')}: </div>
-                        <div className="pull-left">
-                            {_.isEmpty(entity.recruitedSkillsets) ? (
-                                <span className="default-text">{I18N.get('project.detail.recruiting_skills_unknown')}</span>) : (
-                                _.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>))}
-                        </div>
-                    </div>
                     {entity.applicationDeadline &&
-                    <div className="valign-wrapper">
-                        <div className="gap-right pull-left">{I18N.get('project.detail.deadline')}:</div>
-                        <div className="pull-left default-text">
-                            {moment(entity.applicationDeadline).format('MMM D')}
+                        <div className="valign-wrapper">
+                            <div className="gap-right pull-left">{I18N.get('project.detail.deadline')}:</div>
+                            <div className="pull-left default-text">
+                                {moment(entity.applicationDeadline).format('MMM D')}
+                            </div>
                         </div>
-                    </div>
                     }
                 </div>
             )
