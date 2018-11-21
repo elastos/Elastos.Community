@@ -8,7 +8,7 @@ import I18N from '@/I18N'
 import './style.scss'
 import '../../admin/admin.scss'
 
-import {TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT, TASK_CATEGORY} from '@/constant'
+import {TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT, TASK_CATEGORY, TASK_STATUS} from '@/constant'
 import { Col, Row, Icon, Select, Form, Badge, Tooltip, Breadcrumb,
     Avatar, Button, Table, Divider, Spin, List, Carousel } from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'
@@ -64,16 +64,16 @@ export default class extends ProfilePage {
             query.taskHasUserStatus = TASK_CANDIDATE_STATUS.PENDING
         }
 
-        if (this.state.filter === FILTERS.CR100) {
-            query.category = TASK_CATEGORY.CR100
-        }
-
         if (this.state.filter === FILTERS.OWNED) {
             query.createdBy = this.props.currentUserId
         }
 
         if (this.state.filter === FILTERS.SUBSCRIBED) {
             query.subscribed = true
+        }
+
+        if (this.state.filter === FILTERS.NEED_APPROVAL) {
+            query.status = TASK_STATUS.PENDING
         }
 
         query.page = this.state.page || 1
@@ -424,27 +424,45 @@ export default class extends ProfilePage {
     }
 
     clearFilters() {
-        this.setState({ filter: FILTERS.ALL })
+        this.setState({
+            filter: FILTERS.ALL,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setActiveFilter() {
-        this.setState({ filter: FILTERS.ACTIVE })
+        this.setState({
+            filter: FILTERS.ACTIVE,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setAppliedFilter() {
-        this.setState({ filter: FILTERS.APPLIED })
+        this.setState({
+            filter: FILTERS.APPLIED,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setOwnedFilter() {
-        this.setState({ filter: FILTERS.OWNED })
+        this.setState({
+            filter: FILTERS.OWNED,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setSubscribedFilter() {
-        this.setState({ filter: FILTERS.SUBSCRIBED })
+        this.setState({
+            filter: FILTERS.SUBSCRIBED,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setNeedApprovalFilter() {
-        this.setState({ filter: FILTERS.NEED_APPROVAL })
+        this.setState({
+            filter: FILTERS.NEED_APPROVAL,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     linkTaskDetail(taskId) {
