@@ -139,7 +139,7 @@ export default class extends StandardPage {
                     <div className="cta-btn" style={{cursor: 'pointer'}}>
                         <p style={{paddingTop: '24px'}}>{I18N.get('landing.action.enter')} <strong>{I18N.get('landing.action.here')}</strong></p>
                         <div className="arrow sized"><img src="assets/images/arrow.svg"/></div>
-                        <a href="/cr100"></a>
+                        <a href="/developer"></a>
                     </div>
                     <div className="cta-btn" style={{cursor: 'pointer'}} style={{marginRight: '24px'}}>
                         <p style={{paddingTop: '24px'}}>{I18N.get('landing.playVideo')} <strong>{I18N.get('landing.action.here')}</strong></p>
