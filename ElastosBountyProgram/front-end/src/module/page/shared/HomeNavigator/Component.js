@@ -57,17 +57,17 @@ export default class extends BaseComponent {
             <div className="navigator">
                 <MediaQuery minWidth={MIN_WIDTH_PC}>
                     <Affix offsetTop={15}>
+                        {this.props.is_admin &&
+                            <h5 className="admin-label">
+                                {I18N.get('role.admin.mode')}
+                            </h5>
+                        }
                         <Menu
                             className="no-padding-items"
                             defaultSelectedKeys={[this.props.selectedItem]}
                             onClick={this.handleMenuClick.bind(this)}
                             mode="inline"
                         >
-                            {this.props.is_admin &&
-                                <h5 className="admin-label">
-                                    {I18N.get('role.admin.mode')}
-                                </h5>
-                            }
                             <Menu.Item key="profileInfo">
                                 { this.isProfileIncomplete()
                                     ? <Badge status="processing" text={I18N.get('2300')}/>
@@ -130,16 +130,6 @@ export default class extends BaseComponent {
                         <Menu.Item key="profileSubmissions">
                             {I18N.get(this.props.is_admin ? '1304' : '2303')}
                         </Menu.Item>
-                        {!this.props.is_admin &&
-                            <Menu.Item key="profileCommunities">
-                                {I18N.get('2304')}
-                            </Menu.Item>
-                        }
-                        {this.props.is_admin &&
-                            <Menu.Item key="communities">
-                                {I18N.get('2306')}
-                            </Menu.Item>
-                        }
                         {this.props.is_admin &&
                             <Menu.Item key="forms">
                                 {I18N.get('1305')}
@@ -148,6 +138,16 @@ export default class extends BaseComponent {
                         {this.props.is_admin &&
                             <Menu.Item key="users">
                                 {I18N.get('1302')}
+                            </Menu.Item>
+                        }
+                        {!this.props.is_admin &&
+                            <Menu.Item key="profileCommunities">
+                                {I18N.get('2304')}
+                            </Menu.Item>
+                        }
+                        {this.props.is_admin &&
+                            <Menu.Item key="communities">
+                                {I18N.get('2306')}
                             </Menu.Item>
                         }
                     </Menu>
