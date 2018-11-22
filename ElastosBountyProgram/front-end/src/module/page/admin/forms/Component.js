@@ -218,6 +218,6 @@ export default class extends AdminPage {
     }
 
     linkSubmissionDetail(submissionId) {
-        this.props.history.push(`/admin/submission-detail/${submissionId}`)
+        this.props.history.push(`/submission-detail/${submissionId}`)
     }
 }
