@@ -732,6 +732,7 @@ const zh = {
     'role.member': '普通会员',
     'role.organizer': '组织者',
     'role.admin': '管理员',
+    'role.admin.mode': 'Admin Mode',
 
     // Profile
     'profile.localTime': '本地时间',

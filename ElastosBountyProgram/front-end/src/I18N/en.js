@@ -742,6 +742,7 @@ const en = {
     'role.member': 'Member',
     'role.organizer': 'Organizer',
     'role.admin': 'Admin',
+    'role.admin.mode': 'Admin Mode',
 
     // Profile
     'profile.localTime': 'Local time',

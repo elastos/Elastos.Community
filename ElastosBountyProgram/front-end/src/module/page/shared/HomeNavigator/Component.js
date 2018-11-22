@@ -63,6 +63,11 @@ export default class extends BaseComponent {
                             onClick={this.handleMenuClick.bind(this)}
                             mode="inline"
                         >
+                            {this.props.is_admin &&
+                                <h5 className="admin-label">
+                                    {I18N.get('role.admin.mode')}
+                                </h5>
+                            }
                             <Menu.Item key="profileInfo">
                                 { this.isProfileIncomplete()
                                     ? <Badge status="processing" text={I18N.get('2300')}/>
