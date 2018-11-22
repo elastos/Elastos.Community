@@ -23,7 +23,7 @@ store.history = history;
 // store.actions = action;
 
 store.history.listen((e, type) => {
-    if (type === 'PUSH' && window) {
+    if (type === 'PUSH' && window.scrollTo) {
 		window.scrollTo({ left: 0, top: 0 })
     }
 })
