@@ -30,11 +30,7 @@ export default createContainer(Component, (state) => {
                         sessionStorage.setItem('loggedIn', '1')
                         sessionStorage.setItem('loginDirect', null)
                     } else {
-                        if (rs.is_admin) {
-                            this.history.push('/admin/tasks')
-                        } else {
-                            this.history.push('/profile/teams')
-                        }
+                        this.history.push('/developer')
                     }
                     return true
                 }
