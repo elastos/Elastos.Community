@@ -146,7 +146,7 @@ export default class extends BaseComponent {
                             model={applicant}
                             detailReducer={(detail) => _.find(detail.candidates,
                                 { _id: this.props.applicantId })}
-                            returnUrl={`/project-detail/${this.props.detail._id}`}
+                            returnUrl={`/task-detail/${this.props.detail._id}`}
                         />
                     </div>
                 </div>
