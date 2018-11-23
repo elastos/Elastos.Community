@@ -1046,7 +1046,7 @@ export default class extends Base {
 
         body += `<br/>
             <br/>
-            <a href="${process.env.SERVER_URL}/admin/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
+            <a href="${process.env.SERVER_URL}/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
             `
 
 
@@ -1072,7 +1072,7 @@ export default class extends Base {
             body += ` and it requires approval
                     <br/>
                     <br/>
-                    <a href="${process.env.SERVER_URL}/admin/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
+                    <a href="${process.env.SERVER_URL}/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
                     `
         }
 
