@@ -192,6 +192,7 @@ export default class extends ProfilePage {
                 task
             }
         })
+
         return (
             <InfiniteScroll
                 initialLoad={false}
@@ -210,7 +211,7 @@ export default class extends ProfilePage {
                                     extra={this.getCarousel(item.task)}
                                 >
                                     <h3 class="no-margin no-padding one-line brand-color">
-                                        <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
+                                        <a onClick={this.linkTaskDetail.bind(this, item.task)}>{item.title}</a>
                                     </h3>
                                     {item.applicationDeadlinePassed &&
                                         <span className="subtitle">
@@ -227,7 +228,7 @@ export default class extends ProfilePage {
                                             <div class="clearfix"/>
                                             <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
                                         </a>
-                                        <Button type="primary" className="pull-down" onClick={this.linkTaskDetail.bind(this, item.id)}>
+                                        <Button type="primary" className="pull-down" onClick={this.linkTaskDetail.bind(this, item.task)}>
                                             View
                                             <div class="pull-right">
                                                 {this.props.page === 'LEADER' && this.getCommentStatus(item.task)}
@@ -242,7 +243,7 @@ export default class extends ProfilePage {
                                     className="ignore-right-box"
                                 >
                                     <h3 class="no-margin no-padding one-line brand-color">
-                                        <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
+                                        <a onClick={this.linkTaskDetail.bind(this, item.task)}>{item.title}</a>
                                     </h3>
                                     <h5 class="no-margin">
                                         {item.description}
@@ -253,7 +254,7 @@ export default class extends ProfilePage {
                                             <Divider type="vertical"/>
                                             <Avatar size="large" icon="user" src={USER_AVATAR_DEFAULT}/>
                                         </a>
-                                        <Button type="primary" className="pull-right" onClick={this.linkTaskDetail.bind(this, item.id)}>
+                                        <Button type="primary" className="pull-right" onClick={this.linkTaskDetail.bind(this, item.task)}>
                                             View
                                             <div class="pull-right">
                                                 {this.props.page === 'LEADER' && this.getCommentStatus(item.task)}
@@ -325,7 +326,7 @@ export default class extends ProfilePage {
             ? (
                 <Tooltip title={tooltip}>
                     <Badge dot count={unread}>
-                        <a onClick={this.linkTaskDetail.bind(this, task._id)} className="tableLink">
+                        <a onClick={this.linkTaskDetail.bind(this, task)} className="tableLink">
                             <Icon type="message" className="white"/>
                         </a>
                     </Badge>
@@ -493,8 +494,10 @@ export default class extends ProfilePage {
         }, this.refetch.bind(this))
     }
 
-    linkTaskDetail(taskId) {
-        this.props.history.push(`/task-detail/${taskId}`)
+    linkTaskDetail(task) {
+        this.props.history.push(task.category === TASK_CATEGORY.CR100
+            ? `/project-detail/${task._id}`
+            : `/task-detail/${task._id}`)
     }
 
     linkTaskCandidateDetail(taskId, taskCandidateId) {
