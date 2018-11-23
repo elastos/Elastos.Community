@@ -138,7 +138,9 @@ class C extends BaseComponent {
 
                 {detail.bidding &&
                     generateRow(I18N.get('task.referenceBid'),
-                        detail.referenceBid || I18N.get('task.referenceBid.none'))}
+                        detail.referenceBid
+                            ? `${detail.referenceBid} ELA`
+                            : I18N.get('task.referenceBid.none'))}
 
                 {!detail.bidding && budget && generateRow(I18N.get('task.budget'), (
                     <div>
