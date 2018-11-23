@@ -1114,7 +1114,7 @@ const zh = {
     'user.skillset.group.BUSINESS': '商务',
 
     'user.skillset.LOGO_DESIGN': 'Logo 设计',
-    'user.skillset.FLYERS': '海报设计'
+    'user.skillset.FLYERS': '海报设计',
     'user.skillset.PACKAGING': '包装设计',
     'user.skillset.ILLUSTRATION': '插画设计',
     'user.skillset.INFOGRAPHIC': '信息图表',
