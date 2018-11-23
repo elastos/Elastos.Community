@@ -36,25 +36,6 @@ export default class extends StandardPage {
 
                 </div>
                 <div className="ebp-page">
-
-                    <Breadcrumb>
-                        <Breadcrumb.Item href="/">
-                            <Icon type="home"/>
-                        </Breadcrumb.Item>
-                        <Breadcrumb.Item>
-                            {this.props.task.category === TASK_CATEGORY.SOCIAL ?
-                                <Link to="/social">{I18N.get('taks.application.social')} {_.capitalize(this.props.task.type)}s</Link> :
-                                <Link to="/developer">{I18N.get('taks.application.developer')} {_.capitalize(this.props.task.type)}s</Link>
-                            }
-                        </Breadcrumb.Item>
-                        <Breadcrumb.Item href={detailLink}>
-                            {this.props.task.name}
-                        </Breadcrumb.Item>
-                        <Breadcrumb.Item>
-                            {candidate && candidate.user.username || ''}
-                        </Breadcrumb.Item>
-                    </Breadcrumb>
-
                     <TaskApplicationDetail task={this.props.task} applicantId={this.props.match.params.applicantId}/>
                 </div>
                 <Footer />

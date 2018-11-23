@@ -2,7 +2,8 @@
 @import "../../../../style/variable";
 @import "../../../../style/color";
 
-.p_ProfileProjects {
+.p_ProfileProjects,
+.p_ProfileTasks {
   background: white;
   text-align: left;
 
@@ -12,6 +13,14 @@
     @media only screen and (max-width: $mobile-width) {
       width: 100%;
     }
+  }
+
+  .search-group {
+    margin-left: $gap_1;
+  }
+
+  .loadmore {
+    margin: $gap_3 0;
   }
 
   .ql-editor {
@@ -51,6 +60,7 @@
   .carousel-wrapper {
     width: 188px;
     height: 188px;
+    background: $primary_color;
   }
 
   .ant-list-item-extra-wrap {

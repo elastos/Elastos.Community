@@ -7,11 +7,12 @@ import './style.scss'
 import '../../admin/admin.scss'
 import {
     Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button,
-    Table, Select, Divider, List, Carousel, Avatar, Tag, Modal
+    Table, Select, Divider, List, Carousel, Avatar, Tag, Modal, Spin, Input
 } from 'antd'
-import {TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT} from '@/constant'
+import {TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT, TASK_CATEGORY} from '@/constant'
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
+import InfiniteScroll from 'react-infinite-scroller'
 import I18N from '@/I18N'
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '../../../../config/constant'
 import ProfilePopup from '@/module/profile/OverviewPopup/Container'
@@ -34,18 +35,89 @@ export default class extends ProfilePage {
         this.state = {
             showMobile: false,
             filter: FILTERS.ALL,
-            showUserInfo: null
+            showUserInfo: null,
+            page: 1,
+            results: 5,
+            search: ''
         }
+
+        this.debouncedLoadMore = _.debounce(this.loadMore.bind(this), 300)
+        this.debouncedRefetch = _.debounce(this.refetch.bind(this), 300)
     }
 
     componentDidMount() {
         super.componentDidMount()
-        this.props.getTasks(this.props.currentUserId)
+        this.refetch()
         this.props.getUserTeams(this.props.currentUserId)
     }
 
     componentWillUnmount() {
         this.props.resetTasks()
+    }
+
+    getQuery() {
+        let query = {
+            profileListFor: this.props.currentUserId
+        }
+
+        if (this.state.filter === FILTERS.ACTIVE) {
+            query.taskHasUserStatus = TASK_CANDIDATE_STATUS.APPROVED
+        }
+
+        if (this.state.filter === FILTERS.APPLIED) {
+            query.taskHasUserStatus = TASK_CANDIDATE_STATUS.PENDING
+        }
+
+        if (this.state.filter === FILTERS.CR100) {
+            query.category = TASK_CATEGORY.CR100
+        }
+
+        if (this.state.filter === FILTERS.OWNED) {
+            query.createdBy = this.props.currentUserId
+        }
+
+        if (this.state.filter === FILTERS.SUBSCRIBED) {
+            query.subscribed = true
+        }
+
+        if (!_.isEmpty(this.state.search)) {
+            query.search = this.state.search
+        }
+
+        query.page = this.state.page || 1
+        query.results = this.state.results || 5
+
+        return query
+    }
+
+    refetch() {
+        const query = this.getQuery()
+        this.props.getTasks(query)
+    }
+
+    async loadMore() {
+        const page = this.state.page + 1
+
+        const query = {
+            ...this.getQuery(),
+            page,
+            results: this.state.results
+        }
+
+        this.setState({ loadingMore: true })
+
+        try {
+            await this.props.loadMoreProjects(query)
+            this.setState({ page })
+        } catch (e) {
+            // Do not update page in state if the call fails
+        }
+
+        this.setState({ loadingMore: false })
+    }
+
+    hasMoreProjects() {
+        return _.size(this.props.all_tasks) < this.props.all_tasks_total
     }
 
     getCarousel(item) {
@@ -68,7 +140,7 @@ export default class extends ProfilePage {
         if (_.isEmpty(pictures)) {
             pictures.unshift(
                 <div key="main">
-                    <img width={188} height={188} alt="logo" src='/assets/images/Elastos_Logo.png' />
+                    <img width={188} height={188} alt="logo" src='/assets/images/Group_1685.12.svg' />
                 </div>
             )
         }
@@ -82,7 +154,8 @@ export default class extends ProfilePage {
         )
     }
 
-    getListComponent(tasks) {
+    getListComponent() {
+        const tasks = this.props.all_tasks
         const description_fn = (entity) => {
             return (
                 <div>
@@ -120,71 +193,85 @@ export default class extends ProfilePage {
             }
         })
         return (
-            <List itemLayout='vertical' size='large' loading={this.props.loading}
-                className="with-right-box" dataSource={data}
-                renderItem={item => (
-                    <div>
-                        <MediaQuery minWidth={MIN_WIDTH_PC}>
-                            <List.Item
-                                key={item.id}
-                                extra={this.getCarousel(item.task)}
-                            >
-                                <h3 class="no-margin no-padding one-line brand-color">
-                                    <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
-                                </h3>
-                                {item.applicationDeadlinePassed &&
-                                    <span className="subtitle">
-                                        {I18N.get('developer.search.subtitle_prefix')} {I18N.get('developer.search.subtitle_applications')}
-                                    </span>
-                                }
-                                <h5 class="no-margin">
-                                    {item.description}
-                                </h5>
-                                <div className="description-content ql-editor" dangerouslySetInnerHTML={{__html: item.content}} />
-                                <div className="ant-list-item-right-box">
-                                    <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
-                                        <Avatar size="large" icon="user" className="pull-right" src={USER_AVATAR_DEFAULT}/>
-                                        <div class="clearfix"/>
-                                        <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
-                                    </a>
-                                    <Button type="primary" className="pull-down" onClick={this.linkTaskDetail.bind(this, item.id)}>
-                                        View
-                                        <div class="pull-right">
-                                            {this.props.page === 'LEADER' && this.getCommentStatus(item.task)}
-                                        </div>
-                                    </Button>
-                                </div>
-                            </List.Item>
-                        </MediaQuery>
-                        <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
-                            <List.Item
-                                key={item.id}
-                                className="ignore-right-box"
-                            >
-                                <h3 class="no-margin no-padding one-line brand-color">
-                                    <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
-                                </h3>
-                                <h5 class="no-margin">
-                                    {item.description}
-                                </h5>
-                                <div>
-                                    <a onClick={this.linkUserDetail.bind(this, item.owner)}>
-                                        <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
-                                        <Divider type="vertical"/>
-                                        <Avatar size="large" icon="user" src={USER_AVATAR_DEFAULT}/>
-                                    </a>
-                                    <Button type="primary" className="pull-right" onClick={this.linkTaskDetail.bind(this, item.id)}>
-                                        View
-                                        <div class="pull-right">
-                                            {this.props.page === 'LEADER' && this.getCommentStatus(item.task)}
-                                        </div>
-                                    </Button>
-                                </div>
-                            </List.Item>
-                        </MediaQuery>
-                    </div>
-                )}
-            />
+            <InfiniteScroll
+                initialLoad={false}
+                pageStart={1}
+                loadMore={this.debouncedLoadMore.bind(this)}
+                hasMore={!this.state.loadingMore && !this.props.loading && this.hasMoreProjects()}
+                useWindow={true}
+            >
+                <List itemLayout='vertical' size='large' loading={this.props.loading}
+                    className="with-right-box" dataSource={data}
+                    renderItem={item => (
+                        <div>
+                            <MediaQuery minWidth={MIN_WIDTH_PC}>
+                                <List.Item
+                                    key={item.id}
+                                    extra={this.getCarousel(item.task)}
+                                >
+                                    <h3 class="no-margin no-padding one-line brand-color">
+                                        <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
+                                    </h3>
+                                    {item.applicationDeadlinePassed &&
+                                        <span className="subtitle">
+                                            {I18N.get('developer.search.subtitle_prefix')} {I18N.get('developer.search.subtitle_applications')}
+                                        </span>
+                                    }
+                                    <h5 class="no-margin">
+                                        {item.description}
+                                    </h5>
+                                    <div className="description-content ql-editor" dangerouslySetInnerHTML={{__html: item.content}} />
+                                    <div className="ant-list-item-right-box">
+                                        <a className="pull-up" onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                            <Avatar size="large" icon="user" className="pull-right" src={USER_AVATAR_DEFAULT}/>
+                                            <div class="clearfix"/>
+                                            <div>{item.owner.profile.firstName} {item.owner.profile.lastName}</div>
+                                        </a>
+                                        <Button type="primary" className="pull-down" onClick={this.linkTaskDetail.bind(this, item.id)}>
+                                            View
+                                            <div class="pull-right">
+                                                {this.props.page === 'LEADER' && this.getCommentStatus(item.task)}
+                                            </div>
+                                        </Button>
+                                    </div>
+                                </List.Item>
+                            </MediaQuery>
+                            <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                                <List.Item
+                                    key={item.id}
+                                    className="ignore-right-box"
+                                >
+                                    <h3 class="no-margin no-padding one-line brand-color">
+                                        <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
+                                    </h3>
+                                    <h5 class="no-margin">
+                                        {item.description}
+                                    </h5>
+                                    <div>
+                                        <a onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                            <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
+                                            <Divider type="vertical"/>
+                                            <Avatar size="large" icon="user" src={USER_AVATAR_DEFAULT}/>
+                                        </a>
+                                        <Button type="primary" className="pull-right" onClick={this.linkTaskDetail.bind(this, item.id)}>
+                                            View
+                                            <div class="pull-right">
+                                                {this.props.page === 'LEADER' && this.getCommentStatus(item.task)}
+                                            </div>
+                                        </Button>
+                                    </div>
+                                </List.Item>
+                            </MediaQuery>
+                        </div>
+                    )}
+                >
+                    {this.state.loadingMore && this.hasMoreProjects() &&
+                        <div className="loadmore full-width halign-wrapper">
+                            <Spin />
+                        </div>
+                    }
+                </List>
+            </InfiniteScroll>
         )
     }
 
@@ -248,12 +335,13 @@ export default class extends ProfilePage {
     }
 
     ord_renderContent () {
-        const tasksActiveData = this.props.candidate_active_tasks
-        const tasksPendingData = this.props.candidate_pending_tasks
-        const tasksOwnedData = this.props.owned_tasks
-        const tasksSubscribedData = this.props.subscribed_tasks
-        const tasksCr100Data = this.props.cr100_tasks
-        const allTasks = this.props.all_tasks
+        const searchChangedHandler = (e) => {
+            const search = e.target.value
+            this.setState({
+                search,
+                page: 1
+            }, this.debouncedRefetch)
+        }
 
         return (
             <div className="p_ProfileProjects">
@@ -262,14 +350,6 @@ export default class extends ProfilePage {
                 </div>
                 <div className="p_admin_index ebp-wrap">
                     <div className="d_box">
-                        <div className="p_admin_breadcrumb">
-                            <Breadcrumb>
-                                <Breadcrumb.Item href="/">
-                                    <Icon type="home" />
-                                </Breadcrumb.Item>
-                                <Breadcrumb.Item>{I18N.get('myrepublic.projects')}</Breadcrumb.Item>
-                            </Breadcrumb>
-                        </div>
                         <div className="p_admin_content">
                             <Row>
                                 <Col sm={24} md={4} className="wrap-box-navigator">
@@ -295,7 +375,7 @@ export default class extends ProfilePage {
                                         </Select>
                                     </MediaQuery>
                                     <MediaQuery minWidth={MIN_WIDTH_PC}>
-                                        <Button.Group className="filter-group">
+                                        <Button.Group className="filter-group pull-left">
                                             <Button
                                                 className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
                                                 onClick={this.clearFilters.bind(this)}>{I18N.get('myrepublic.projects.all')}</Button>
@@ -316,12 +396,17 @@ export default class extends ProfilePage {
                                                 onClick={this.setCr100Filter.bind(this)}>CR100</Button>
                                         </Button.Group>
                                     </MediaQuery>
-                                    {this.state.filter === FILTERS.ALL && this.getListComponent(allTasks)}
-                                    {this.state.filter === FILTERS.ACTIVE && this.getListComponent(tasksActiveData)}
-                                    {this.state.filter === FILTERS.APPLIED && this.getListComponent(tasksPendingData)}
-                                    {this.state.filter === FILTERS.OWNED && this.getListComponent(tasksOwnedData)}
-                                    {this.state.filter === FILTERS.SUBSCRIBED && this.getListComponent(tasksSubscribedData)}
-                                    {this.state.filter === FILTERS.CR100 && this.getListComponent(tasksCr100Data)}
+                                    <div className="pull-left filter-group search-group">
+                                        <Input defaultValue={this.state.search} onChange={searchChangedHandler.bind(this)}
+                                            placeholder={I18N.get('developer.search.search.placeholder')} style={{width: 250}}/>
+                                    </div>
+                                    <div className="clearfix"/>
+                                    {this.state.filter === FILTERS.ALL && this.getListComponent()}
+                                    {this.state.filter === FILTERS.ACTIVE && this.getListComponent()}
+                                    {this.state.filter === FILTERS.APPLIED && this.getListComponent()}
+                                    {this.state.filter === FILTERS.OWNED && this.getListComponent()}
+                                    {this.state.filter === FILTERS.SUBSCRIBED && this.getListComponent()}
+                                    {this.state.filter === FILTERS.CR100 && this.getListComponent()}
                                 </Col>
                             </Row>
                             <Row>
@@ -367,31 +452,49 @@ export default class extends ProfilePage {
     }
 
     clearFilters() {
-        this.setState({ filter: FILTERS.ALL })
+        this.setState({
+            filter: FILTERS.ALL,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setActiveFilter() {
-        this.setState({ filter: FILTERS.ACTIVE })
+        this.setState({
+            filter: FILTERS.ACTIVE,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setAppliedFilter() {
-        this.setState({ filter: FILTERS.APPLIED })
+        this.setState({
+            filter: FILTERS.APPLIED,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setOwnedFilter() {
-        this.setState({ filter: FILTERS.OWNED })
+        this.setState({
+            filter: FILTERS.OWNED,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setSubscribedFilter() {
-        this.setState({ filter: FILTERS.SUBSCRIBED })
+        this.setState({
+            filter: FILTERS.SUBSCRIBED,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     setCr100Filter() {
-        this.setState({ filter: FILTERS.CR100 })
+        this.setState({
+            filter: FILTERS.CR100,
+            page: 1
+        }, this.refetch.bind(this))
     }
 
     linkTaskDetail(taskId) {
-        this.props.history.push(`/profile/project-detail/${taskId}`)
+        this.props.history.push(`/task-detail/${taskId}`)
     }
 
     linkTaskCandidateDetail(taskId, taskCandidateId) {

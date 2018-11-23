@@ -6,9 +6,9 @@ import {
 } from 'antd'
 import _ from 'lodash'
 import './style.scss'
-import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT} from '@/constant'
+import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT, SORT_ORDER} from '@/constant'
 import InfiniteScroll from 'react-infinite-scroller'
-import TeamDetail from '@/module/team/detail/Container'
+import TeamDetail from '@/module/team/popup/Container'
 import TaskDetail from '@/module/task/popup/Container'
 import LoginOrRegisterForm from '@/module/form/LoginOrRegisterForm/Container'
 import Footer from '@/module/layout/Footer/Container'
@@ -62,7 +62,10 @@ export default class extends BaseComponent {
             filtersTree: ['TEAM'],
             showUserInfo: null,
             page: 1,
-            results: 5
+            results: 5,
+            sortBy: params.sortBy || 'createdAt',
+            sortOrder: params.sortOrder || SORT_ORDER.DESC,
+            assignment: params.assignment || 'all'
         }
     }
 
@@ -87,6 +90,18 @@ export default class extends BaseComponent {
             }
         }
 
+        if (this.state.sortBy) {
+            query.sortBy = this.state.sortBy
+        }
+
+        if (this.state.sortOrder) {
+            query.sortOrder = this.state.sortOrder
+        }
+
+        if (this.state.assignment === 'unassigned') {
+            query.unassigned = true
+        }
+
         query.page = this.state.page || 1
         query.results = this.state.results || 5
 
@@ -97,8 +112,7 @@ export default class extends BaseComponent {
         const skillset = (query.skillset || []).join(',')
         const domain = (query.domain || []).join(',')
         const circle = (query.circle || []).join(',')
-        const lookingFor = this.state.lookingFor
-        const search = this.state.search
+        const { lookingFor, search, sortBy, sortOrder, assignment } = this.state
 
         const url = new URI('/developer/search')
         lookingFor && url.addSearch('lookingFor', lookingFor)
@@ -106,6 +120,9 @@ export default class extends BaseComponent {
         domain && url.addSearch('domain', domain)
         circle && url.addSearch('circle', circle)
         search && url.addSearch('search', search)
+        sortBy && url.addSearch('sortBy', sortBy)
+        sortOrder && url.addSearch('sortOrder', sortOrder)
+        assignment !== 'all' && url.addSearch('assignment', assignment)
 
         return url.toString()
     }
@@ -189,6 +206,20 @@ export default class extends BaseComponent {
         }, this.debouncedRefetch.bind(this))
     }
 
+    onChangeSortBy(e) {
+        this.setState({
+            sortBy: e.target.value,
+            page: 1
+        }, this.debouncedRefetch.bind(this))
+    }
+
+    onChangeSortOrder(e) {
+        this.setState({
+            sortOrder: e.target.value,
+            page: 1
+        }, this.debouncedRefetch.bind(this))
+    }
+
     onChangeSkillset(value) {
         this.setState({
             skillset: value,
@@ -213,6 +244,13 @@ export default class extends BaseComponent {
     onChangeLookingForSelect(value) {
         this.setState({
             lookingFor: value,
+            page: 1
+        }, this.debouncedRefetch.bind(this))
+    }
+
+    onChangeAssignment(e) {
+        this.setState({
+            assignment: e.target.value,
             page: 1
         }, this.debouncedRefetch.bind(this))
     }
@@ -286,6 +324,45 @@ export default class extends BaseComponent {
         this.setState({
             showLoginRegisterModal: false
         })
+    }
+
+    renderSortOptions() {
+        return (
+            <div>
+                <RadioGroup value={this.state.sortBy}
+                    onChange={this.onChangeSortBy.bind(this)} className="gap-bottom">
+                    <Radio className="radio" value="createdAt">
+                        {I18N.get('developer.search.sort.createdAt')}
+                    </Radio>
+                    <Radio className="radio" value="updatedAt">
+                        {I18N.get('developer.search.sort.updatedAt')}
+                    </Radio>
+                </RadioGroup>
+
+                <RadioGroup value={this.state.sortOrder}
+                    onChange={this.onChangeSortOrder.bind(this)}>
+                    <Radio className="radio" value={SORT_ORDER.DESC}>
+                        {I18N.get('developer.search.sort.desc')}
+                    </Radio>
+                    <Radio className="radio" value={SORT_ORDER.ASC}>
+                        {I18N.get('developer.search.sort.asc')}
+                    </Radio>
+                </RadioGroup>
+            </div>
+        )
+    }
+
+    renderAssignment() {
+        return (
+            <RadioGroup onChange={this.onChangeAssignment.bind(this)} value={this.state.assignment}>
+                <Radio className="radio" value="all">
+                    {I18N.get('developer.search.assignment.all')}
+                </Radio>
+                <Radio className="radio" value="unassigned">
+                    {I18N.get('developer.search.assignment.unassigned')}
+                </Radio>
+            </RadioGroup>
+        )
     }
 
     renderLookingFor(lookingForOptions, showAll) {
@@ -551,6 +628,22 @@ export default class extends BaseComponent {
                                 {this.renderLookingFor(lookingForOptions, true)}
                             </div>
                         </div>
+
+                        {this.state.lookingFor === 'TASK' &&
+                            <div className="group">
+                                <div className="title">{I18N.get('developer.search.assignment')}</div>
+                                <div className="content">
+                                    {this.renderAssignment()}
+                                </div>
+                            </div>
+                        }
+
+                        <div className="group">
+                            <div className="title">{I18N.get('developer.search.sort')}</div>
+                            <div className="content">
+                                {this.renderSortOptions()}
+                            </div>
+                        </div>
                         {this.state.lookingFor !== 'TASK' &&
                             <div className="group">
                                 <div className="title">{I18N.get('developer.search.skillset')}</div>
@@ -778,10 +871,10 @@ export default class extends BaseComponent {
                             {_.map(entity.recruitedSkillsets, (skillset, ind) => <Tag key={ind}>{skillset}</Tag>)}
                         </div>
                     </div>}
-                    {entity.bidding && (this.isAssigned_fn(entity) ?
+                    {entity.bidding && (this.isAssigned(entity) ?
                         <div className="valign-wrapper">
                             <div className="gap-right pull-left">
-                                <h4 className="important-text">Winning bid has been selected</h4>
+                                <h4 className="important-text">{I18N.get('project.detail.bid_selected')}</h4>
                             </div>
                         </div> : (entity.referenceBid &&
                         <div className="valign-wrapper">
@@ -791,9 +884,9 @@ export default class extends BaseComponent {
                             </div>
                         </div>
                     ))}
-                    {!entity.bidding && this.isAssigned_fn(entity) && <div className="valign-wrapper">
+                    {!entity.bidding && this.isAssigned(entity) && <div className="valign-wrapper">
                         <div className="gap-right pull-left">
-                            <h4 className="important-text">Winning application already selected</h4>
+                            <h4 className="important-text">{I18N.get('project.detail.app_selected')}</h4>
                         </div>
                     </div>}
                     {entity.applicationDeadline &&
@@ -925,7 +1018,7 @@ export default class extends BaseComponent {
         )
     }
 
-    isAssigned_fn(entity) {
+    isAssigned(entity) {
         return !!_.find(entity.candidates, {status: TASK_CANDIDATE_STATUS.APPROVED})
     }
 
@@ -951,8 +1044,8 @@ export default class extends BaseComponent {
                 {detail.hasApprovedApplication ?
                     I18N.get('developer.search.view') : (
                         detail.bidding ?
-                            (this.isAssigned_fn(detail) ? I18N.get('developer.search.view') : I18N.get('developer.search.submit_bid')):
-                            (this.isAssigned_fn(detail) ? I18N.get('developer.search.view') : I18N.get('developer.search.apply'))
+                            (this.isAssigned(detail) ? I18N.get('developer.search.view') : I18N.get('developer.search.submit_bid')):
+                            (this.isAssigned(detail) ? I18N.get('developer.search.view') : I18N.get('developer.search.apply'))
                     )
                 }
             </Button>

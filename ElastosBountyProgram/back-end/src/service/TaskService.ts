@@ -142,7 +142,13 @@ export default class extends Base {
         const db_team = this.getDBModel('Team');
         const db_user_team = this.getDBModel('User_Team');
 
-        const cursor = db_task.getDBInstance().find(_.omit(param, ['results', 'page']))
+        const cursor = db_task.getDBInstance().find(_.omit(param, ['results', 'page', 'sortBy', 'sortOrder']))
+
+        if (param.sortBy) {
+            let sortObject = {}
+            sortObject[param.sortBy] = param.sortOrder || constant.SORT_ORDER.DESC
+            cursor.sort(sortObject)
+        }
 
         if (param.results) {
             const results = parseInt(param.results, 10)
@@ -988,9 +994,18 @@ export default class extends Base {
      *
      * @param userId
      */
-    public async getCandidatesForUser(userId) {
-        const db_task_candidate = this.getDBModel('Task_Candidate');
-        return db_task_candidate.list({user: userId})
+    public async getCandidatesForUser(userId, status) {
+        const db_task_candidate = this.getDBModel('Task_Candidate')
+
+        let options:any = {
+            user: userId
+        }
+
+        if (!_.isEmpty(status)) {
+            options.status = status
+        }
+
+        return db_task_candidate.list(options)
     }
 
     /**
@@ -998,9 +1013,18 @@ export default class extends Base {
      *
      * @param teamId
      */
-    public async getCandidatesForTeam(teamId) {
-        const db_task_candidate = this.getDBModel('Task_Candidate');
-        return db_task_candidate.list({team: teamId})
+    public async getCandidatesForTeam(teamId, status) {
+        const db_task_candidate = this.getDBModel('Task_Candidate')
+
+        let options:any = {
+            team: teamId
+        }
+
+        if (!_.isEmpty(status)) {
+            options.status = status
+        }
+
+        return db_task_candidate.list(options)
     }
 
     /**

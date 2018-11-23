@@ -14,6 +14,14 @@
     }
   }
 
+  .loadmore {
+    margin: $gap_3 0;
+  }
+
+  .search-group {
+    margin-left: $gap_1;
+  }
+
   .ant-select {
     @media only screen and (max-width: $mobile-width) {
       width: 100%;

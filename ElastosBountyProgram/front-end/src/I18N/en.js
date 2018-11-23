@@ -62,6 +62,7 @@ const en = {
     '1303': 'Teams',
     '1304': 'Issues',
     '1305': 'Forms',
+    '1306': 'Projects',
 
     // Profile navigator
     '2300': 'My Profile',
@@ -70,6 +71,7 @@ const en = {
     '2303': 'My Issues',
     '2304': 'My Communities',
     '2305': 'My Projects',
+    '2306': 'Communities',
 
     'profile.skillsets': 'My Skillsets',
 
@@ -239,6 +241,15 @@ const en = {
     'developer.cr100.pitch.beneficiaries': 'Beneficiaries',
     'developer.cr100.pitch.elaInfrastructure': 'Elastos Infrastructure',
 
+    'developer.search.assignment': 'Assignment',
+    'developer.search.assignment.all': 'All',
+    'developer.search.assignment.unassigned': 'Unassigned',
+    'developer.search.event': 'Event',
+    'developer.search.sort': 'Sort',
+    'developer.search.sort.createdAt': 'Created',
+    'developer.search.sort.updatedAt': 'Updated',
+    'developer.search.sort.asc': 'Ascending',
+    'developer.search.sort.desc': 'Descending',
     'developer.search.team': 'Team',
     'developer.search.project': 'Project',
     'developer.search.task': 'Task',
@@ -366,6 +377,8 @@ const en = {
     'training.disclaimer': 'Training content and itinerary subject to change',
 
     // Project/Team detail
+    'project.detail.bid_selected': 'Winning bid has been selected',
+    'project.detail.app_selected': 'Winning application already selected',
     'project.detail.deadline': 'Application Deadline',
     'project.detail.completion_deadline': 'Completion Deadline',
     'project.detail.progress': 'Progress',
@@ -416,6 +429,7 @@ const en = {
     'project.detail.columns.action': 'Action',
 
     'project.detail.comments_disabled': 'Comments are disabled for closed bidding projects/tasks',
+    'project.detail.statusHelp.approvedBy': 'Approved by',
 
     'project.admin.statusHelp.created': 'this task does not require approval',
     'project.admin.statusHelp.pending': 'this task is awaiting approval',
@@ -431,7 +445,12 @@ const en = {
     'project.public.statusHelp.markAsComplete': 'Mark as Complete',
     'project.public.statusHelp.markAsCompleteConfirm': 'Are you sure you want to mark this task as complete?',
 
-    'team.detail.team_active': 'Your team is currently active',
+    'team.owner': 'Leader',
+    'team.description': 'Description',
+    'team.applyMessage': 'Apply',
+    'team.detail.view': 'View',
+
+    'team.detail.team_active': 'The team is currently active',
 
     'team.create.error.nameRequired': 'Team name is required',
     'team.create.error.nameTooShort': 'Team name is too short',
@@ -723,6 +742,7 @@ const en = {
     'role.member': 'Member',
     'role.organizer': 'Organizer',
     'role.admin': 'Admin',
+    'role.admin.mode': 'Admin Mode',
 
     // Profile
     'profile.localTime': 'Local time',

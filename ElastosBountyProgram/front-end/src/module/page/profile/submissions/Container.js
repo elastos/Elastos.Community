@@ -45,10 +45,8 @@ export default createContainer(Component, (state) => {
         /**
          * @returns {Promise<*>}
          */
-        async getSubmissions(currentUserId) {
-            return submissionService.index({
-                profileListFor: currentUserId
-            })
+        async getSubmissions(query) {
+            return submissionService.index(query)
         },
 
         async resetSubmissions () {

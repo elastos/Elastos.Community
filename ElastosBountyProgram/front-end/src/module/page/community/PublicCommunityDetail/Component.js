@@ -605,29 +605,6 @@ export default class extends StandardPage {
             <div className="p_Community">
                 <div className="ebp-header-divider"></div>
                 <div className="ebp-page">
-                    <div className="ebp-page-breadcrumb">
-                        <Row>
-                            <Col span={24}>
-                                <Breadcrumb>
-                                    <Breadcrumb.Item href="/">
-                                        <Icon type="home"/>
-                                    </Breadcrumb.Item>
-                                    <Breadcrumb.Item>{I18N.get('0002')}</Breadcrumb.Item>
-                                    {/*<Breadcrumb.Item>
-                                        <Link to="/community">Global</Link>
-                                    </Breadcrumb.Item>*/}
-                                    <Breadcrumb.Item>
-                                        {menuCountriesEl}
-                                    </Breadcrumb.Item>
-                                    {/*
-                                    <Breadcrumb.Item>
-                                        {menuListRegionsEl}
-                                    </Breadcrumb.Item>
-                                    */}
-                                </Breadcrumb>
-                            </Col>
-                        </Row>
-                    </div>
                     <div className="ebp-page">
                         <div className="ebp-page-content">
                             <MediaQuery minWidth={MIN_WIDTH_PC}>

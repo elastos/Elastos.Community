@@ -237,6 +237,10 @@ const zh = {
     'developer.cr100.pitch.beneficiaries': '受益人',
     'developer.cr100.pitch.elaInfrastructure': '亦来云基础设施',
 
+    'developer.search.assignment': 'Assignment',
+    'developer.search.assignment.all': 'All',
+    'developer.search.assignment.unassigned': 'Unassigned',
+    'developer.search.event': 'Event',
     'developer.search.team': '团队',
     'developer.search.project': '项目',
     'developer.search.task': '任务',
@@ -364,6 +368,8 @@ const zh = {
     'training.disclaimer': '培训内容和行程可能根据实际情况调整',
 
       // Project/Team detail
+    'project.detail.bid_selected': 'Winning bid has been selected',
+    'project.detail.app_selected': 'Winning application already selected',
     'project.detail.deadline': '申请截止日期',
     'project.detail.completion_deadline': '完成截至日期',
     'project.detail.progress': '项目进度',
@@ -414,6 +420,7 @@ const zh = {
     'project.detail.columns.action': '行动',
 
     'project.detail.comments_disabled': '不能对已经关闭的竞标项目或任务发表评论',
+    'project.detail.statusHelp.approvedBy': 'Approved by',
 
     'project.admin.statusHelp.created': 'this task does not require approval',
     'project.admin.statusHelp.pending': 'this task is awaiting approval',
@@ -433,6 +440,11 @@ const zh = {
 
     'team.create.error.nameRequired': '请填写团队名称',
     'team.create.error.nameTooShort': '团队名称过短',
+
+    'team.owner': 'Leader',
+    'team.description': 'Description',
+    'team.applyMessage': 'Apply',
+    'team.detail.view': 'View',
 
     // Team specializations
     'team.spec.media': '媒体',
@@ -720,6 +732,7 @@ const zh = {
     'role.member': '普通会员',
     'role.organizer': '组织者',
     'role.admin': '管理员',
+    'role.admin.mode': 'Admin Mode',
 
     // Profile
     'profile.localTime': '本地时间',

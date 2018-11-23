@@ -13,12 +13,16 @@
       width: 100%;
     }
   }
-  
+
   .ant-select {
     @media only screen and (max-width: $mobile-width) {
       width: 100%;
       margin-bottom: $gap_1;
     }
+  }
+
+  .search-group {
+    margin-left: $gap_1;
   }
 
   .ant-list-item {
@@ -33,7 +37,6 @@
 
   .ant-list-item-content {
     max-height: 188px;
-    overflow: hidden;
   }
 
   .carousel-wrapper {

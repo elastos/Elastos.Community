@@ -16,64 +16,7 @@ export default createContainer(Component, (state) => {
         is_admin: isAdmin
     }
 
-    if (!_.isArray(taskState.all_tasks)) {
-        taskState.all_tasks = _.values(taskState.all_tasks)
-    }
-
-    taskState.filter = state.task.filter || {}
-    taskState.owned_tasks = []
-    taskState.subscribed_tasks = []
-
-    // tasks I am candidate of and waiting approval
-    taskState.candidate_pending_tasks = []
-
-    // tasks I am candidate of and approved
-    taskState.candidate_active_tasks = []
-
-    // tasks which need my approval if I'm admin
-    taskState.need_approval_tasks = []
-
-    if (taskState.all_tasks.length) {
-        for (let task of taskState.all_tasks) {
-            if (_.find(task.subscribers, (subscriber) => {
-                return subscriber.user && subscriber.user._id === state.user.current_user_id
-            })) {
-                taskState.subscribed_tasks.push(task)
-            }
-
-            if (task.createdBy && task.createdBy._id === currentUserId) {
-                taskState.owned_tasks.push(task)
-            } else {
-                // assumed to be candidate, a task can have multiple candidates
-                // find the one we are a user of (should be only one ever for a user)
-                // TODO: teams
-                let taskCandidate = _.find(task.candidates, (candidate) => {
-                    if (candidate.type === 'USER' && candidate.user) {
-                        return candidate.user._id === currentUserId
-                    }
-
-                    if (candidate.type === 'TEAM' && candidate.team) {
-                        return _.map(state.team.all_teams, '_id').includes(candidate.team._id)
-                    }
-                })
-
-                if (taskCandidate) {
-                    if (taskCandidate.status === TASK_CANDIDATE_STATUS.APPROVED) {
-                        taskState.candidate_active_tasks.push(task)
-                    } else {
-                        taskState.candidate_pending_tasks.push(task)
-                    }
-                }
-            }
-
-            if (isAdmin && task.status === TASK_STATUS.PENDING) {
-                taskState.need_approval_tasks.push(task)
-            }
-        }
-    }
-
     return taskState
-
 }, () => {
 
     const taskService = new TaskService()
@@ -89,11 +32,20 @@ export default createContainer(Component, (state) => {
          *
          * @returns {Promise<*>}
          */
-        async getTasks(currentUserId) {
+
+        async getTasks(query) {
             return taskService.index({
-                profileListFor: currentUserId,
                 type: [TASK_TYPE.TASK, TASK_TYPE.EVENT],
-                category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.SOCIAL]
+                category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.SOCIAL],
+                ...query,
+            })
+        },
+
+        async loadMoreTasks(query) {
+            return taskService.loadMore({
+                type: [TASK_TYPE.TASK, TASK_TYPE.EVENT],
+                category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.SOCIAL],
+                ...query,
             })
         },
 

@@ -26,7 +26,6 @@ export default class extends BaseComponent {
             'profile/teams',
             'developer',
             'community',
-            'admin/tasks',
             'help',
             'about',
             'faq',
@@ -121,11 +120,6 @@ export default class extends BaseComponent {
                         {!isLogin &&
                         <Menu.Item key="register">
                             {I18N.get('0202')}
-                        </Menu.Item>
-                        }
-                        {isLogin && hasAdminAccess &&
-                        <Menu.Item key="admin/tasks">
-                            {I18N.get('0203')}
                         </Menu.Item>
                         }
                         {isLogin &&

@@ -23,15 +23,6 @@ export default class extends ProfilePage {
                 </div>
                 <div className="p_admin_index ebp-wrap">
                     <div className="d_box">
-                        <div className="p_admin_breadcrumb">
-                            <Breadcrumb>
-                                <Breadcrumb.Item href="/">
-                                    <Icon type="home" />
-                                </Breadcrumb.Item>
-                                <Breadcrumb.Item>{I18N.get('0200')}</Breadcrumb.Item>
-                                <Breadcrumb.Item>{I18N.get('profile.info.title')}</Breadcrumb.Item>
-                            </Breadcrumb>
-                        </div>
                         <div className="p_Profile p_admin_content">
                             <MediaQuery maxWidth={720}>
                                 <Row>
