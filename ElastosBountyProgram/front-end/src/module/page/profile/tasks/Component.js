@@ -274,10 +274,10 @@ export default class extends ProfilePage {
                                     <br/>
                                 </Col>
                             </Row>
-                            <Footer/>
                         </div>
                     </div>
                 </div>
+                <Footer/>
             </div>
         )
     }
