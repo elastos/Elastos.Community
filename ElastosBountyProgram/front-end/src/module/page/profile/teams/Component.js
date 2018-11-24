@@ -208,7 +208,7 @@ export default class extends ProfilePage {
     }
 
     getListItem(item) {
-        const ownerProfile = item.owner.profile || {};
+        const ownerProfile = item.owner && item.owner.profile || {};
         return (
             <div className="list-item">
                 <MediaQuery minWidth={MIN_WIDTH_PC}>
