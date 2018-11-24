@@ -181,10 +181,10 @@ export default class extends ProfilePage {
                                     {this.getListComponent()}
                                 </Col>
                             </Row>
-                            <Footer/>
                         </div>
                     </div>
                 </div>
+                <Footer/>
             </div>
         )
     }

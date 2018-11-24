@@ -415,10 +415,10 @@ export default class extends ProfilePage {
                                     <br/>
                                 </Col>
                             </Row>
-                            <Footer/>
                         </div>
                     </div>
                 </div>
+                <Footer/>
                 <Modal
                     className="profile-overview-popup-modal"
                     visible={!!this.state.showUserInfo}
