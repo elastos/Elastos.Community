@@ -1056,8 +1056,6 @@ class C extends BaseComponent {
                                     </Col>
                                 </Row>
 
-                                }
-
                                 {!this.props.is_admin && (!this.props.existingTask || this.props.existingTask.status === TASK_STATUS.PENDING) &&
                                 <FormItem {...formItemNoLabelLayout}>
                                     <Checkbox name="readDisclaimer" checked={this.state.readDisclaimer} onChange={() => {this.setState({readDisclaimer: !this.state.readDisclaimer})}}/>

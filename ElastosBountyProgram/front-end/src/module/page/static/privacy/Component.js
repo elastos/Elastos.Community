@@ -75,14 +75,6 @@ export default class extends StandardPage {
                             </tr>
                             <tr>
                                 <td>
-                                    Employment
-                                </td>
-                                <td>
-                                    If you apply for a job posting, or become an employee, we may collect personal information necessary to process your application.  This may include, among other things, your Social Security Number.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
                                     Feedback/Support
                                 </td>
                                 <td>
