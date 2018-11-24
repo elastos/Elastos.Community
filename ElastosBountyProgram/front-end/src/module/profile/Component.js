@@ -284,17 +284,25 @@ export default class extends BaseComponent {
         )
     }
 
+    getFullUrl(url) {
+        if (url.indexOf('http') < 0) {
+            return `https://${url}`
+        }
+
+        return url
+    }
+
     renderSocialMedia(isMobile) {
         const { profile } = this.props.user
 
         return (
             <div className={`profile-social ${isMobile ? 'profile-social-mobile' : ''}`}>
-                {profile.telegram && <a href={profile.telegram} target="_blank"><i className="fab fa-telegram fa-2x"/></a>}
-                {profile.twitter && <a href={profile.twitter} target="_blank"><i className="fab fa-twitter fa-2x"/></a>}
-                {profile.facebook && <a href={profile.facebook} target="_blank"><i class="fab fa-facebook-square fa-2x"></i></a>}
-                {profile.reddit && <a href={profile.reddit} target="_blank"><i className="fab fa-reddit fa-2x"/></a>}
-                {profile.linkedin && <a href={profile.linkedin} target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>}
-                {profile.github && <a href={profile.github} target="_blank"><i class="fab fa-github fa-2x"></i></a>}
+                {profile.telegram && <a href={this.getFullUrl(profile.telegram)} target="_blank"><i className="fab fa-telegram fa-2x"/></a>}
+                {profile.twitter && <a href={this.getFullUrl(profile.twitter)} target="_blank"><i className="fab fa-twitter fa-2x"/></a>}
+                {profile.facebook && <a href={this.getFullUrl(profile.facebook)} target="_blank"><i class="fab fa-facebook-square fa-2x"></i></a>}
+                {profile.reddit && <a href={this.getFullUrl(profile.reddit)} target="_blank"><i className="fab fa-reddit fa-2x"/></a>}
+                {profile.linkedin && <a href={this.getFullUrl(profile.linkedin)} target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>}
+                {profile.github && <a href={this.getFullUrl(profile.github)} target="_blank"><i class="fab fa-github fa-2x"></i></a>}
             </div>
         )
     }
