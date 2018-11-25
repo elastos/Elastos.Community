@@ -28,6 +28,13 @@ const stagingEnv = {
     CR_VERSION: JSON.stringify(process.env.CR_VERSION)
 };
 
+const devEnv = {
+    NODE_ENV: JSON.stringify('dev'),
+    PLATFORM_ENV: JSON.stringify('web'),
+    SERVER_URL: JSON.stringify('http://local.ebp.com:3000'),
+    CR_VERSION: JSON.stringify(process.env.CR_VERSION)
+};
+
 const cssFilename_lib = 'static/css/lib.css?[hash:8]';
 const cssFilename_app = 'static/css/app.css?[hash:8]';
 const cssFilename_mobile = 'static/css/mobile.css?[hash:8]';
@@ -209,7 +216,7 @@ module.exports = merge(common, {
         extractCSS_APP,
         extractCSS_MOBILE,
         new webpack.DefinePlugin({
-            'process.env': process.env.NODE_ENV === 'production' ? prodEnv : stagingEnv,
+            'process.env': process.env.NODE_ENV === 'production' ? prodEnv : (process.env.NODE_ENV === 'staging' ? stagingEnv : devEnv),
         }),
         new webpack.optimize.AggressiveMergingPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
