@@ -3,13 +3,13 @@
 
 #### The Key Performance Indicators (KPIs) demonstrate the value that Cyber Republic brings to the Elastos Ecosystem.
 
-For a higher-level overview of Cyber Republic please reference the [full documentation](https://www.cyberrepublic.org/docs)
+?> For a higher-level overview of Cyber Republic please reference the [full documentation](https://www.cyberrepublic.org/docs)
 
 The KPIs are grouped into three categories:
 
 ## Development KPIs
 
-### 1. Developer Count
+#### 1. Developer Count
 
 This should be granular and broken down into disciplines and experience level
 
@@ -22,7 +22,7 @@ This should be granular and broken down into disciplines and experience level
 - Senior Experience Level
 - Junior Experience Level - 1-3 years of experience
 
-### 2. Pivotal Tracker Velocity (Weekly) - across all projects
+#### 2. Pivotal Tracker Velocity (Weekly) - across all projects
 
 This is our agile/sprint project management software. It uses a common fibonacci point scheme for task difficulty:
 
@@ -36,18 +36,28 @@ For individual tasks the points correspond to the following time to complete:
 
 Generally a full-time developer should average 15-18 points a week, so a velocity of 50 would correspond to 3 developers
 
-### 3. Bugs/Issues Opened and Closed per Week
+#### 3. Bugs/Issues Opened and Closed per Week
 
-### 4. Pull Requests per Week
+#### 4. Pull Requests per Week
 
 ---
 
 ## Community KPIs
 
-### 1. Cyber Republic Users / Active per Week
+#### 1. Cyber Republic Users / Active per Week
 
-### 2.
+#### 2. Regions Represented
 
+#### 3. Ambassador Activity
 
+#### 4. Events and Outreach
+
+---
 
 ## Marketing KPIs
+
+#### 1. Number of Leads
+
+#### 2. Customer Acquisition Cost (CAC)
+
+#### 3. Customer Retention
