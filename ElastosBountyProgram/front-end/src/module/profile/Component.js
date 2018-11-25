@@ -284,7 +284,7 @@ export default class extends BaseComponent {
         )
     }
 
-    getFullUrl(url) {
+    getFullUrl(url = '') {
         if (url.indexOf('http') < 0) {
             return `https://${url}`
         }
