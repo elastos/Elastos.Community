@@ -370,6 +370,6 @@ export default class extends ProfilePage {
     }
 
     linkTeamDetail(teamId) {
-        this.props.history.push(`/profile/team-detail/${teamId}`)
+        this.props.history.push(`/team-detail/${teamId}`)
     }
 }
