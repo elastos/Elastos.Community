@@ -9,9 +9,9 @@ Each quarter the team will have a budget that is approved by the CRC, the secret
 
 ### Rules
 
-- The fund will be held by a multi-signature wallet owned by the lead investor, an Elastos Foundation member and the Secretariat
+- The fund will be held by a multi-signature wallet owned by the lead investor, an Elastos Foundation member, and the Secretariat
 
-- All leads, opportunities and contacts must be entered into the CRM and shared with other members of the team
+- All leads, opportunities, and contacts must be entered into the CRM and shared with other members of the team
 
 - Each quarter of the year, the team must submit a funding request document with KPIs/goals at the start.
 At the end of the quarter another report is required describing the current state of all investments and comparisons with goals
