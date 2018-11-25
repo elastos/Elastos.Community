@@ -38,13 +38,10 @@ import VisionPage from '@/module/page/vision/Container'
 
 import ProfileInfoPage from '@/module/page/profile/info/Container'
 import ProfileTasksPage from '@/module/page/profile/tasks/Container'
-import ProfileTaskDetailPage from '@/module/page/profile/task_detail/Container'
 import ProfileTaskApplicationDetailPage from '@/module/page/profile/task_candidate_detail/Container'
 import ProfileTeamsPage from '@/module/page/profile/teams/Container'
-import ProfileTeamDetailPage from '@/module/page/profile/team_detail/Container'
 import ProfileTeamCreatePage from '@/module/page/profile/team_create/Container'
 import ProfileProjectsPage from '@/module/page/profile/projects/Container'
-import ProfileProjectDetailPage from '@/module/page/profile/project_detail/Container'
 import ProfileSubmissionsPage from '@/module/page/profile/submissions/Container'
 import ProfileSubmissionCreatePage from '@/module/page/profile/submission_create/Container'
 import ProfileCommunitiesPage from '@/module/page/profile/communities/Container'
@@ -239,11 +236,11 @@ export default [
     },
     {
         path: '/profile/task-detail/:taskId',
-        page: ProfileTaskDetailPage
+        page: TaskDetailPage
     },
     {
         path: '/profile/team-detail/:teamId',
-        page: ProfileTeamDetailPage
+        page: TeamDetailPage
     },
     {
         path: '/profile/task-app/:taskId/:applicantId',
@@ -255,7 +252,7 @@ export default [
     },
     {
         path: '/profile/project-detail/:taskId',
-        page: ProfileProjectDetailPage
+        page: TaskDetailPage
     },
     {
         path: '/project-detail/:taskId',
