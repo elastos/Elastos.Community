@@ -34,6 +34,6 @@ The team initially will be formed of three members
 
 The team will be selected from active and motivated individuals in the CR community and grow from there.
 
-In the future we would like to hire more experienced investors with actual industry or VC experience. We are not looking for
+In the future we would like to hire more experienced investors with actual industry or VC experience. We are not looking for this right now, as the Token Team is still in its infancy and such investors would be too expensive.
 
 
