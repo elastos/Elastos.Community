@@ -895,13 +895,18 @@ export default class extends Base {
                 }
             })
 
-        let acceptedCnt = 0;
+        let acceptedCnt = 0
         let users = []
         let usersWonBidding = []
+        let usernameWonString = ''
         for (let candidate of task.candidates) {
             if (candidate.status === constant.TASK_CANDIDATE_STATUS.APPROVED) {
                 acceptedCnt =+ 1
                 usersWonBidding.push(candidate.user)
+                usernameWonString += `${candidate.user.profile.firstName} ${candidate.user.profile.lastName}`
+                if (task.candidates.length !== acceptedCnt) {
+                    usernameWonString += ', '
+                }
             }
 
             if (candidate.status !== constant.TASK_CANDIDATE_STATUS.APPROVED) {
@@ -917,7 +922,7 @@ export default class extends Base {
             })
 
             this.sendWonBiddingEmail(usersWonBidding, task)
-            this.sendLostBiddingEmail(users, task, doc)
+            this.sendLostBiddingEmail(users, task, doc, usernameWonString)
         }
 
         // TODO: remove unaccepted candidates and send them emails
@@ -1101,10 +1106,10 @@ export default class extends Base {
         }
     }
 
-    public async sendLostBiddingEmail(users, task, taskCandidate) {
+    public async sendLostBiddingEmail(users, task, taskCandidate, usernameWonString) {
 
         let candidateSubject = `Your application for task ${task.name} has been approved`
-        let candidateBody = `Who have won the bidding at ${taskCandidate.bid} ELA, but don't worry, you can bid next time.`
+        let candidateBody = `${usernameWonString} won the bid at ${taskCandidate.bid} ELA, but don't worry you can bid next time.`
 
         for (let user of users) {
             await mail.send({
