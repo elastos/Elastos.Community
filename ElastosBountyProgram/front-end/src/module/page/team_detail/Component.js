@@ -9,7 +9,6 @@ import { Row, Breadcrumb, Icon } from 'antd'
 
 export default class extends StandardPage {
     ord_renderContent () {
-        console.log(this.props.match.params.teamId)
         return (
             <div className="p_TeamDetail">
                 <div className="ebp-header-divider" />
