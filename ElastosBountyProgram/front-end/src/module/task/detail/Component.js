@@ -528,9 +528,7 @@ export default class extends BaseComponent {
                             </span>
                         }
 
-                        {this.props.is_login &&
-                        !isTaskOwner &&
-                        this.renderJoinButton.call(this)}
+                        {this.props.is_login && !isTaskOwner && this.renderJoinButton()}
 
                     </Col>
                 </Row>
