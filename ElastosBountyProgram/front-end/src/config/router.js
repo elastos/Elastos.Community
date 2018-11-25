@@ -73,7 +73,6 @@ import FormTraining1Page from '@/module/page/form_ext/training_1/Container'
 
 // admin team page
 import TeamListPage from '../module/page/admin/teams/TeamListPage';
-import AdminTeamDetailPage from '../module/page/admin/teams/TeamDetailPage';
 
 // council
 import CouncilPage from '../module/page/council/Container';
