@@ -12,6 +12,10 @@
         h1.app-name img {
             width: 90%;
         }
+
+        nav.app-nav li ul {
+            min-width: 100px;
+        }
     </style>
 </head>
 <body>
@@ -26,8 +30,9 @@
         themeColor: '#2A3C5A',
         alias: {
             '/.*/_navbar.md': '/_navbar.md',
-            '/zh/(.*)': 'https://raw.githubusercontent.com/docsifyjs/docs-zh/master/$1',
-        }
+            '/zh/(.*)': 'https://raw.githubusercontent.com/elastos/Elastos.Community/master/ElastosBountyProgram/front-end/docs/zh/$1',
+        },
+        ga: 'UA-123722031-1'
     }
 </script>
 <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
