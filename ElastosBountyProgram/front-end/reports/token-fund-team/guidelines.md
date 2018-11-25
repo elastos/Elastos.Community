@@ -20,7 +20,7 @@
 
 ?> These metrics will be tracked as a cohort of the projects funded/invested within a quarter.
 
-A key challenge is managing the cohort data when different projects may take different amounts of time to complete.
+_A key challenge is managing the cohort data when different projects may take different amounts of time to complete._
 
 - **Number of Users / After 1 Year:** this refers to the number of users we expect a year after the projects are complete
 
