@@ -17,7 +17,7 @@ Each quarter the team will have a budget that is approved by the CRC, the secret
 At the end of the quarter another report is required describing the current state of all investments and comparisons with goals
 
 - The team will take a management fee equal to 10% of the fund which will be held in a separate wallet. From this wallet the members of the teams
-will deduct their agreed upon pay on a semi-monthly basis. The management fee funds will also be used to create CR tasks for CRcles to help the Token Fund Team in any way necessary.
+will deduct their agreed upon pay on a semi-monthly basis in ELA. The management fee funds will also be used to create CR tasks for CRcles to help the Token Fund Team in any way necessary.
 
 - Each project invested in will require an analysis report which includes information including but not limited to: funding, technical milestones, expected ROI, deliverables
 and the contractual agreement on how many tokens will be allocated to Elastos
