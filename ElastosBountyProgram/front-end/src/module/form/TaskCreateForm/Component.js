@@ -1056,7 +1056,6 @@ class C extends BaseComponent {
                                     </Col>
                                 </Row>
 
-                                }
 
                                 {!this.props.is_admin && (!this.props.existingTask || this.props.existingTask.status === TASK_STATUS.PENDING) &&
                                 <FormItem {...formItemNoLabelLayout}>
