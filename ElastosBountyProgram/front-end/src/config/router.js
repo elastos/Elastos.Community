@@ -148,6 +148,10 @@ export default [
         page: TaskDetailPage
     },
     {
+        path: '/admin/task-detail/:taskId',
+        page: TaskDetailPage
+    },
+    {
         path: '/task-app/:taskId/:applicantId',
         page: TaskApplicationPage
     },
