@@ -917,7 +917,7 @@ export default class extends Base {
             })
 
             this.sendWonBiddingEmail(usersWonBidding, task)
-            this.sendApproveBiddingEmail(users, task, doc)
+            this.sendLostBiddingEmail(users, task, doc)
         }
 
         // TODO: remove unaccepted candidates and send them emails
@@ -1101,7 +1101,7 @@ export default class extends Base {
         }
     }
 
-    public async sendApproveBiddingEmail(users, task, taskCandidate) {
+    public async sendLostBiddingEmail(users, task, taskCandidate) {
 
         let candidateSubject = `Your application for task ${task.name} has been approved`
         let candidateBody = `Who have won the bidding at ${taskCandidate.bid} ELA, but don't worry, you can bid next time.`
