@@ -90,9 +90,9 @@ export default class extends BaseComponent {
 
         return (
             <Menu onClick={this.clickItem.bind(this)} className="help-menu">
-                <Menu.Item key="help">
+                {/*<Menu.Item key="help">
                     {I18N.get('0007')}
-                </Menu.Item>
+                </Menu.Item>*/}
                 <Menu.Item key="about">
                     {I18N.get('0008')}
                 </Menu.Item>
