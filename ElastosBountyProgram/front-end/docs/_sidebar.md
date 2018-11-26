@@ -11,6 +11,7 @@
 
     - [CRcles](/CRcles.md)
     - [Teams](/cr-teams.md)
+    - [Ambassadors](/ambassadors.md)
     - Tasks
         - [Applying for Tasks](/user-guide/tasks/task-apply.md)
         - [Task Approval Process](/user-guide/tasks/task-approval.md)
