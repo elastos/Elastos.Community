@@ -1,6 +1,10 @@
 
 
-# Welcome to the Documentation Site
+# Cyber Republic - Media, Resources & Assets
 
-#### This site is a community maintained guide to how Cyber Republic functions and its policies
+#### This is meant to be the one-stop directory of all Elastos and CR media
+
+?> For a higher-level overview of Cyber Republic please reference the [full documentation](https://www.cyberrepublic.org/docs)
+
+This assets are free for the public to use without our permission as long as they are used within our [code of conduct](/code-of-conduct)
 

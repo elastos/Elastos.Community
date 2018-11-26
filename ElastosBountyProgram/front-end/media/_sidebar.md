@@ -1,32 +1,18 @@
 
 
-- Structure
+- [Overview](/README.md)
 
-    - [Overview](structure/overview.md)
-    - [Token Fund Team](/structure/token-fund-team.md)
+- Logos
 
-- User's Guide
 
-    - CRcles
-    - Teams
-    - Tasks
-        - [Applying for Tasks](/user-guide/tasks/task-apply.md)
-        - [Task Approval Process](/user-guide/tasks/task-approval.md)
+- Brochures
+    - [Elastos](/brochure/elastos)
+    - [Cyber Republic](/brochure/cr)
 
-- Roster and Contacts
-    - Council, Secretariat and Administrators
-    - Token Fund Team
-    - Marketing Team
-    - Development Team
-    - Translators
-    - CRcle Active Members
+- Banners / Meetup Assets
 
-- Reports & KPIs
-    - KPI Reports
-    - Project Roadmap
+- Slides / Decks
 
-- CR Website Architecture (Developers)
-    - Front-End
-    - Back-End
+- Apparel
 
 

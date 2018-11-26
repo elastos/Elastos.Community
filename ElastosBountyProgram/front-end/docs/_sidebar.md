@@ -4,11 +4,13 @@
 
     - [Overview](structure/overview.md)
     - [Token Fund Team](/structure/token-fund-team.md)
+    - [Marketing Council](/structure/marketing-council.md)
+    - [Development Team(s)](/structure/dev-teams.md)
 
 - User's Guide
 
-    - CRcles
-    - Teams
+    - [CRcles](/CRcles.md)
+    - [Teams](/cr-teams.md)
     - Tasks
         - [Applying for Tasks](/user-guide/tasks/task-apply.md)
         - [Task Approval Process](/user-guide/tasks/task-approval.md)
