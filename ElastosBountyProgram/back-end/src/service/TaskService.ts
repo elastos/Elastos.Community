@@ -915,11 +915,6 @@ export default class extends Base {
         const db_tc = this.getDBModel('Task_Candidate')
 
         let doc = await db_tc.findById(taskCandidateId)
-
-        if (!doc || doc.status !== constant.TASK_CANDIDATE_STATUS.PENDING) {
-            throw 'Invalid status'
-        }
-
         let task = await db_task.getDBInstance().findOne({_id: doc.task})
             .populate('createdBy', sanitize)
 
