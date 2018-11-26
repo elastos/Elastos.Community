@@ -6,3 +6,5 @@
 ### How to Become an Ambassador of a Region
 
 ### Guide on Organizing a Meetup
+
+Etc
