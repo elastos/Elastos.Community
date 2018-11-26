@@ -20,6 +20,7 @@
     - Token Fund Team
     - Marketing Team
     - Development Team
+    - [Ambassadors](/roster/ambassadors.md)
     - Translators
     - CRcle Active Members
 
