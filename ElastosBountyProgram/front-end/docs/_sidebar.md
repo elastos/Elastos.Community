@@ -24,12 +24,17 @@
     - Translators
     - CRcle Active Members
 
+- Internal Projects
+    - CR Website
+        - Front-End
+        - Back-End
+
+
 - Reports & KPIs
     - KPI Reports
     - Project Roadmap
 
-- CR Website Architecture (Developers)
-    - Front-End
-    - Back-End
+
+
 
 
