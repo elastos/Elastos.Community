@@ -1108,7 +1108,7 @@ export default class extends Base {
 
     public async sendLostBiddingEmail(users, task, taskCandidate, usernameWonString) {
 
-        let candidateSubject = `Your application for task ${task.name} has been approved`
+        let candidateSubject = `Your application for task ${task.name} has lost the bid`
         let candidateBody = `${usernameWonString} won the bid at ${taskCandidate.bid} ELA, but don't worry you can bid next time.`
 
         for (let user of users) {
