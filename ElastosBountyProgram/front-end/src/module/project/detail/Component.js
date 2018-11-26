@@ -577,17 +577,17 @@ class C extends BaseComponent {
             render: (candidate) => {
                 return (
                     <div className="text-right">
-                        {this.isTaskOwner() && !this.props.task.bidding &&
+                        {(this.isTaskOwner() || this.props.is_admin) && !this.props.task.bidding &&
                             <a onClick={this.removeUser.bind(this, candidate._id)}>
                                 {I18N.get('project.detail.remove')}
                             </a>
                         }
-                        {this.isTaskOwner() && this.props.task.bidding &&
+                        {(this.isTaskOwner() || this.props.is_admin) && this.props.task.bidding &&
                             <span>
                                 Bid: {candidate.bid} ELA
                             </span>
                         }
-                        {(this.props.page === 'ADMIN' || this.isTaskOwner() ||
+                        {(this.isTaskOwner() || this.props.is_admin ||
                             this.loggedInUserBelongsToCandidate(candidate)) && (
                             <span>
                                 <Divider type="vertical"/>
