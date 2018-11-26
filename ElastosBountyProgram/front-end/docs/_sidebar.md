@@ -18,7 +18,7 @@
 
 - Roster and Contacts
     - Council, Secretariat and Administrators
-    - Token Fund Team
+    - [Token Fund Team](/roster/token-fund-team.md)
     - Marketing Team
     - Development Team
     - [Ambassadors](/roster/ambassadors.md)
