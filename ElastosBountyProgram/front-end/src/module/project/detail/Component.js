@@ -366,12 +366,6 @@ class C extends BaseComponent {
             return ''
         }
 
-        let isApprovedBidding = false
-        if (detail.bidding && _.indexOf([TASK_STATUS.CREATED,
-                TASK_STATUS.PENDING], detail.status) < 0) {
-            isApprovedBidding = true
-        }
-
         if (!detail.bidding && _.find(detail.candidates,
             (candidate) => candidate.status === TASK_CANDIDATE_STATUS.APPROVED)) {
             return ''
@@ -414,7 +408,7 @@ class C extends BaseComponent {
                 {title}
             </h3>
 
-            {pendingCandidates.length && this.renderCandidates(pendingCandidates, isApprovedBidding)}
+            {pendingCandidates.length && this.renderCandidates(pendingCandidates)}
 
             {/* this works because we filtered pendingCandidates after we saved the count */}
             {(this.props.page !== 'ADMIN' || !this.props.is_admin) && this.props.task.createdBy !== this.props.currentUserId &&
@@ -448,7 +442,7 @@ class C extends BaseComponent {
         return _.trim([user.profile.firstName, user.profile.lastName].join(' '))
     }
 
-    renderCandidates(candidates, isApprovedBidding) {
+    renderCandidates(candidates) {
         const columns = [{
             title: I18N.get('project.detail.columns.name'),
             key: 'name',
@@ -512,7 +506,7 @@ class C extends BaseComponent {
                                         </a>
                                     </span>)
                                 }
-                                {((this.isTaskOwner() || this.props.is_admin) && !isApprovedBidding) &&
+                                {((this.isTaskOwner() || this.props.is_admin) && candidate.status !== TASK_STATUS.APPROVED) &&
                                     <span className="inline-block">
                                         <Divider type="vertical"/>
                                         <a onClick={this.approveUser.bind(this, candidate._id)}>
