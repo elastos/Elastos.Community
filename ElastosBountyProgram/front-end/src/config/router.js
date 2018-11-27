@@ -38,13 +38,10 @@ import VisionPage from '@/module/page/vision/Container'
 
 import ProfileInfoPage from '@/module/page/profile/info/Container'
 import ProfileTasksPage from '@/module/page/profile/tasks/Container'
-import ProfileTaskDetailPage from '@/module/page/profile/task_detail/Container'
 import ProfileTaskApplicationDetailPage from '@/module/page/profile/task_candidate_detail/Container'
 import ProfileTeamsPage from '@/module/page/profile/teams/Container'
-import ProfileTeamDetailPage from '@/module/page/profile/team_detail/Container'
 import ProfileTeamCreatePage from '@/module/page/profile/team_create/Container'
 import ProfileProjectsPage from '@/module/page/profile/projects/Container'
-import ProfileProjectDetailPage from '@/module/page/profile/project_detail/Container'
 import ProfileSubmissionsPage from '@/module/page/profile/submissions/Container'
 import ProfileSubmissionCreatePage from '@/module/page/profile/submission_create/Container'
 import ProfileCommunitiesPage from '@/module/page/profile/communities/Container'
@@ -54,11 +51,6 @@ import MemberPage from '@/module/page/member/Container'
 
 import AdminUsersPage from '@/module/page/admin/users/Container'
 import AdminProfileDetailPage from '@/module/page/admin/profile_detail/Container'
-import AdminTasksPage from '@/module/page/admin/tasks/Container'
-import AdminCr100Page from '@/module/page/admin/cr100/Container'
-import AdminTaskDetailPage from '@/module/page/admin/task_detail/Container'
-import AdminSubmissionsPage from '@/module/page/admin/submissions/Container'
-import AdminSubmissionDetailPage from '@/module/page/admin/submission_detail/Container'
 import AdminFormsPage from '@/module/page/admin/forms/Container'
 
 import CountryCommunitiesPage from '@/module/page/admin/community/CountryCommunities/Container'
@@ -81,7 +73,6 @@ import FormTraining1Page from '@/module/page/form_ext/training_1/Container'
 
 // admin team page
 import TeamListPage from '../module/page/admin/teams/TeamListPage';
-import AdminTeamDetailPage from '../module/page/admin/teams/TeamDetailPage';
 
 // council
 import CouncilPage from '../module/page/council/Container';
@@ -153,6 +144,10 @@ export default [
     },
     {
         path: '/task-detail/:taskId',
+        page: TaskDetailPage
+    },
+    {
+        path: '/admin/task-detail/:taskId',
         page: TaskDetailPage
     },
     {
@@ -244,11 +239,11 @@ export default [
     },
     {
         path: '/profile/task-detail/:taskId',
-        page: ProfileTaskDetailPage
+        page: TaskDetailPage
     },
     {
         path: '/profile/team-detail/:teamId',
-        page: ProfileTeamDetailPage
+        page: TeamDetailPage
     },
     {
         path: '/profile/task-app/:taskId/:applicantId',
@@ -260,7 +255,7 @@ export default [
     },
     {
         path: '/profile/project-detail/:taskId',
-        page: ProfileProjectDetailPage
+        page: TaskDetailPage
     },
     {
         path: '/project-detail/:taskId',
@@ -344,32 +339,12 @@ export default [
         page: AdminUsersPage
     },
     {
-        path: '/admin/tasks',
-        page: AdminTasksPage
-    },
-    {
-        path: '/admin/task-detail/:taskId',
-        page: AdminTaskDetailPage
-    },
-    {
         path: '/admin/profile/:userId',
         page: AdminProfileDetailPage
     },
     {
-        path: '/admin/submissions',
-        page: AdminSubmissionsPage
-    },
-    {
         path: '/admin/forms',
         page: AdminFormsPage
-    },
-    {
-        path: '/admin/cr100',
-        page: AdminCr100Page
-    },
-    {
-        path: '/admin/submission-detail/:submissionId',
-        page: AdminSubmissionDetailPage
     },
     {
         path: '/admin/community',
@@ -419,7 +394,7 @@ export default [
     },
     {
         path: '/admin/teams/:teamId',
-        page: AdminTeamDetailPage
+        page: TeamDetailPage
     },
 
     // council

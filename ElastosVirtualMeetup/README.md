@@ -3,6 +3,18 @@
 We will regularly schedule virtual meetups where the community members can directly interact with the developers on the status of the project and ask any questions they need clarification on. Each meetup will have a different agenda.
 
 ## Past Meetups
+### Friday, Nov 23rd, 2018
+- [Link to powerpoint slides](https://docs.google.com/presentation/d/1Tpubga9onBkfFbExb2baf0uO1el5uGPZ9p7dYlkKz4I/edit?usp=sharing)
+- [Link to youtube recording](https://www.youtube.com/watch?v=6u1mJWcdtFs)
+
+### Thursday, Nov 8th, 2018
+- [Link to powerpoint slides](https://docs.google.com/presentation/d/15YWmF0EXCqJWiwq8oOWJk7ZeJ3Uv1O7zYM9sKZfTduw/edit?usp=sharing)
+- [Link to youtube recording](https://www.youtube.com/watch?v=zYkdbBvIUPs)
+
+### Thursday, Oct 25th, 2018
+- [Link to powerpoint slides](https://docs.google.com/presentation/d/12yW_1wg9VjigZDvdieX4K0zxgZYmItD48mKab9VSrLo/edit?usp=sharing)
+- [Link to youtube recording](https://www.youtube.com/watch?v=F0Nagi4QFJ8)
+
 ### Thursday, Oct 11th, 2018 
 - [Link to powerpoint slides](https://docs.google.com/presentation/d/1LgM5b9iH0DjqS0U_T5EBSteJSDkQRTpR64ZrwXAgaYs/edit?usp=sharing)
 - [Link to youtube recording](https://www.youtube.com/watch?v=Loh0g_XKKHo)

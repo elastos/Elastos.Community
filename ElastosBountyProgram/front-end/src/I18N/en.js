@@ -62,6 +62,7 @@ const en = {
     '1303': 'Teams',
     '1304': 'Issues',
     '1305': 'Forms',
+    '1306': 'Projects',
 
     // Profile navigator
     '2300': 'My Profile',
@@ -70,6 +71,7 @@ const en = {
     '2303': 'My Issues',
     '2304': 'My Communities',
     '2305': 'My Projects',
+    '2306': 'Communities',
 
     'profile.skillsets': 'My Skillsets',
 
@@ -427,6 +429,7 @@ const en = {
     'project.detail.columns.action': 'Action',
 
     'project.detail.comments_disabled': 'Comments are disabled for closed bidding projects/tasks',
+    'project.detail.statusHelp.approvedBy': 'Approved by',
 
     'project.admin.statusHelp.created': 'this task does not require approval',
     'project.admin.statusHelp.pending': 'this task is awaiting approval',
@@ -447,7 +450,7 @@ const en = {
     'team.applyMessage': 'Apply',
     'team.detail.view': 'View',
 
-    'team.detail.team_active': 'Your team is currently active',
+    'team.detail.team_active': 'The team is currently active',
 
     'team.create.error.nameRequired': 'Team name is required',
     'team.create.error.nameTooShort': 'Team name is too short',
@@ -739,6 +742,7 @@ const en = {
     'role.member': 'Member',
     'role.organizer': 'Organizer',
     'role.admin': 'Admin',
+    'role.admin.mode': 'Admin Mode',
 
     // Profile
     'profile.localTime': 'Local time',

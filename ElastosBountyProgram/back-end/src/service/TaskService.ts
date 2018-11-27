@@ -936,11 +936,6 @@ export default class extends Base {
         const db_tc = this.getDBModel('Task_Candidate')
 
         let doc = await db_tc.findById(taskCandidateId)
-
-        if (!doc || doc.status !== constant.TASK_CANDIDATE_STATUS.PENDING) {
-            throw 'Invalid status'
-        }
-
         let task = await db_task.getDBInstance().findOne({_id: doc.task})
             .populate('createdBy', sanitize)
 
@@ -1015,9 +1010,18 @@ export default class extends Base {
      *
      * @param userId
      */
-    public async getCandidatesForUser(userId) {
-        const db_task_candidate = this.getDBModel('Task_Candidate');
-        return db_task_candidate.list({user: userId})
+    public async getCandidatesForUser(userId, status) {
+        const db_task_candidate = this.getDBModel('Task_Candidate')
+
+        let options:any = {
+            user: userId
+        }
+
+        if (!_.isEmpty(status)) {
+            options.status = status
+        }
+
+        return db_task_candidate.list(options)
     }
 
     /**
@@ -1025,9 +1029,18 @@ export default class extends Base {
      *
      * @param teamId
      */
-    public async getCandidatesForTeam(teamId) {
-        const db_task_candidate = this.getDBModel('Task_Candidate');
-        return db_task_candidate.list({team: teamId})
+    public async getCandidatesForTeam(teamId, status) {
+        const db_task_candidate = this.getDBModel('Task_Candidate')
+
+        let options:any = {
+            team: teamId
+        }
+
+        if (!_.isEmpty(status)) {
+            options.status = status
+        }
+
+        return db_task_candidate.list(options)
     }
 
     /**
@@ -1049,7 +1062,7 @@ export default class extends Base {
 
         body += `<br/>
             <br/>
-            <a href="${process.env.SERVER_URL}/admin/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
+            <a href="${process.env.SERVER_URL}/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
             `
 
 
@@ -1075,7 +1088,7 @@ export default class extends Base {
             body += ` and it requires approval
                     <br/>
                     <br/>
-                    <a href="${process.env.SERVER_URL}/admin/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
+                    <a href="${process.env.SERVER_URL}/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
                     `
         }
 

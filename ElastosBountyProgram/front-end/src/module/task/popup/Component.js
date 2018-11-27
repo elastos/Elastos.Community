@@ -138,7 +138,9 @@ class C extends BaseComponent {
 
                 {detail.bidding &&
                     generateRow(I18N.get('task.referenceBid'),
-                        detail.referenceBid || I18N.get('task.referenceBid.none'))}
+                        detail.referenceBid
+                            ? `${detail.referenceBid} ELA`
+                            : I18N.get('task.referenceBid.none'))}
 
                 {!detail.bidding && budget && generateRow(I18N.get('task.budget'), (
                     <div>
@@ -189,12 +191,11 @@ class C extends BaseComponent {
 
     // Helpers
     getCurrency() {
-        return this.props.detail.reward.isUsd ? 'USD' : 'ELA'
+        return 'USD'
     }
 
     getReward() {
-        return this.props.detail.reward &&
-            ((this.props.detail.reward.usd / 100) || this.props.detail.reward.ela / 1000)
+        return this.props.detail.reward && (this.props.detail.reward.usd / 100)
     }
 
     getRewardElaPerUsd() {
@@ -208,8 +209,7 @@ class C extends BaseComponent {
     }
 
     getBudget() {
-        return this.props.detail.rewardUpfront &&
-            ((this.props.detail.rewardUpfront.usd / 100) || this.props.detail.rewardUpfront.ela / 1000)
+        return this.props.detail.rewardUpfront && (this.props.detail.rewardUpfront.usd / 100)
     }
 
     getBudgetElaPerUsd() {

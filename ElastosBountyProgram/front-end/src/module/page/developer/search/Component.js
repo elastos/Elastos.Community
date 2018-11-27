@@ -17,21 +17,6 @@ export default class extends StandardPage {
 
                 </div>
                 <div className="ebp-wrap">
-                    <Row className="d_row d_rowTop">
-                        <div className="p_admin_breadcrumb">
-                            <Breadcrumb>
-                                <Breadcrumb.Item href="/">
-                                    <Icon type="home"/>
-                                </Breadcrumb.Item>
-                                <Breadcrumb.Item href="/developer">
-                                    {I18N.get('developer.breadcrumb.developers')}
-                                </Breadcrumb.Item>
-                                <Breadcrumb.Item>
-                                    {I18N.get('developer.breadcrumb.search')}
-                                </Breadcrumb.Item>
-                            </Breadcrumb>
-                        </div>
-                    </Row>
                     <Row className="d_row">
                         <Search/>
                     </Row>

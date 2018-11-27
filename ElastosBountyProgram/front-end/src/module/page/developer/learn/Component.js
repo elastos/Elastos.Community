@@ -331,11 +331,6 @@ export default class extends StandardPage {
     ord_renderContent() {
         return (
             <div className="p_DeveloperLearn">
-                <Breadcrumb className="p_admin_breadcrumb">
-                    <Breadcrumb.Item><Icon type="home"/></Breadcrumb.Item>
-                    <Breadcrumb.Item>{I18N.get('developer.breadcrumb.developers')}</Breadcrumb.Item>
-                    <Breadcrumb.Item>{I18N.get('developer.learn')}</Breadcrumb.Item>
-                </Breadcrumb>
                 <div className="p_admin_index ebp-wrap">
                     <div className="d_box">
                         <div className="p_admin_content">

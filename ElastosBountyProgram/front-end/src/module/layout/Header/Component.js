@@ -59,11 +59,6 @@ export default class extends BaseComponent {
                         {I18N.get('0202')}
                     </Menu.Item>
                 }
-                {isLogin && hasAdminAccess &&
-                    <Menu.Item key="admin/tasks">
-                        {I18N.get('0203')}
-                    </Menu.Item>
-                }
                 {isLogin &&
                     <Menu.Item key="logout">
                         {I18N.get('0204')}
@@ -95,9 +90,9 @@ export default class extends BaseComponent {
 
         return (
             <Menu onClick={this.clickItem.bind(this)} className="help-menu">
-                <Menu.Item key="help">
+                {/*<Menu.Item key="help">
                     {I18N.get('0007')}
-                </Menu.Item>
+                </Menu.Item>*/}
                 <Menu.Item key="about">
                     {I18N.get('0008')}
                 </Menu.Item>
@@ -109,12 +104,6 @@ export default class extends BaseComponent {
                     {I18N.get('0011')}
                 </Menu.Item>
 
-                {this.props.isLogin && hasAdminAccess &&
-                <Menu.Item key="admin/tasks">
-                    {I18N.get('0203')}
-                </Menu.Item>
-                }
-
                 {this.props.isLogin &&
                 <Menu.Item key="logout">
                     {I18N.get('0204')}
@@ -125,9 +114,14 @@ export default class extends BaseComponent {
     }
 
     getSelectedKeys() {
-        const keys = _.map(['cr100', 'crcles', 'ambassadors', 'profile', 'developer', 'social', 'community'], (key) => {
+        let keys = _.map(['cr100', 'crcles', 'ambassadors', 'profile', 'admin',
+            'developer', 'social', 'community'], (key) => {
             return ((this.props.pathname || '').indexOf(`/${key}`) === 0) ? key : ''
         })
+
+        if (_.includes(keys, 'admin')) {
+            keys = _.union(_.without(keys, ['admin']), ['profile'])
+        }
 
         return keys
     }
@@ -271,7 +265,6 @@ export default class extends BaseComponent {
             'register',
             'signup',
             'profile/info',
-            'admin/tasks',
             'how-to-earn',
             'help',
             'about',

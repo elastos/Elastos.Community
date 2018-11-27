@@ -1,6 +1,7 @@
 import React from 'react';
 import ProfilePage from '../../ProfilePage';
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
+import Footer from '@/module/layout/Footer/Container'
 import I18N from '@/I18N'
 import { message } from 'antd'
 import config from '@/config'
@@ -66,15 +67,6 @@ export default class extends ProfilePage {
                 </div>
                 <div className="p_admin_index ebp-wrap">
                     <div className="d_box">
-                        <div className="p_admin_breadcrumb">
-                            <Breadcrumb>
-                                <Breadcrumb.Item href="/">
-                                    <Icon type="home" />
-                                </Breadcrumb.Item>
-                                <Breadcrumb.Item>{I18N.get('0200')}</Breadcrumb.Item>
-                                <Breadcrumb.Item>{I18N.get('profile.community.title')}</Breadcrumb.Item>
-                            </Breadcrumb>
-                        </div>
                         <div className="p_ProfileCommunities p_admin_content">
                             <MediaQuery maxWidth={720}>
                                 <Row>
@@ -103,6 +95,7 @@ export default class extends ProfilePage {
                         </div>
                     </div>
                 </div>
+                <Footer/>
             </div>
         )
     }
