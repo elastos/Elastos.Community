@@ -166,7 +166,7 @@ class C extends BaseComponent {
 
     hasLeaderEditRestrictions() {
         const existingTask = this.props.existingTask
-        return this.props.page === 'LEADER' &&
+        return !this.props.is_admin &&
             ![TASK_STATUS.CREATED, TASK_STATUS.PENDING].includes(existingTask.status)
     }
 
