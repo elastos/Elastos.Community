@@ -68,24 +68,8 @@ class C extends BaseComponent {
         * General
         ****************************************************************************************
          */
-        const firstName_fn = getFieldDecorator('firstName', {
-            rules: [{required: true, message: I18N.get('from.UserProfileForm.firstName.required')}],
-            initialValue: user.profile.firstName
-        })
-        const firstName_el = (
-            <Input />
-        )
-
-        const lastName_fn = getFieldDecorator('lastName', {
-            rules: [{required: true, message: I18N.get('from.UserProfileForm.lastName.required')}],
-            initialValue: user.profile.lastName
-        })
-        const lastName_el = (
-            <Input />
-        )
-
         const bio_fn = getFieldDecorator('bio', {
-            rules: [{required: true, message: I18N.get('from.UserProfileForm.bio.required')}],
+            rules: [],
             initialValue: user.profile.bio
         })
         const bio_el = (
@@ -165,8 +149,6 @@ class C extends BaseComponent {
         );
 
         return {
-            firstName: firstName_fn(firstName_el),
-            lastName: lastName_fn(lastName_el),
             avatar: avatar_fn(avatar_el),
             banner: banner_fn(banner_el),
             bio: bio_fn(bio_el),
@@ -213,19 +195,6 @@ class C extends BaseComponent {
                         </Col>
                     </Row>
 
-                    <Row gutter={16}>
-                        <Col sm={{span: 24}} md={{span: 24}}>
-                            <FormItem label={I18N.get('from.UserProfileForm.text.firstName')} {...formItemLayout}>
-                                {p.firstName}
-                            </FormItem>
-
-                        </Col>
-                        <Col sm={{span: 24}} md={{span: 24}}>
-                            <FormItem label={I18N.get('from.UserProfileForm.text.lastName')} {...formItemLayout}>
-                                {p.lastName}
-                            </FormItem>
-                        </Col>
-                    </Row>
                     <FormItem
                         colon={false}
                         labelCol={{ sm: {span: 24}, md: {span: 8} }}

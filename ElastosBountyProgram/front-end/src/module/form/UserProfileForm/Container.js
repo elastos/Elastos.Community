@@ -33,8 +33,6 @@ export default createContainer(Component, (state)=>{
             const doc = {
                 profile: {
                     // General
-                    firstName: formData.firstName,
-                    lastName: formData.lastName,
                     bio: formData.bio,
                     motto: formData.motto,
                     avatar: state.avatar_url,
