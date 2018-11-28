@@ -378,7 +378,8 @@ export default class extends Base {
         const taskOwner = await db_user.findById(task.createdBy)
 
         // permission shortcuts
-        if (this.currentUser.role === constant.USER_ROLE.MEMBER && (this.currentUser._id.toString() !== task.createdBy.toString() || param.status !== constant.TASK_STATUS.SUBMITTED)) {
+        if (this.currentUser.role === constant.USER_ROLE.MEMBER &&
+            this.currentUser._id.toString() !== task.createdBy.toString()) {
             throw 'Access Denied'
         }
 
