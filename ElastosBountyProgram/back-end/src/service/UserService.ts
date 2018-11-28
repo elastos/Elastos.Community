@@ -76,7 +76,7 @@ export default class extends Base {
             }
         }
 
-        const newUser = await db_user.save(doc).select(selectFields);
+        const newUser = await db_user.save(doc)
 
         await this.linkCountryCommunity(newUser)
         this.sendConfirmation(doc)
