@@ -33,19 +33,24 @@ export default class extends Base {
         const db_cvote = this.getDBModel('CVote');
 
         const {
-            title, type, content, proposedBy, motionId, isConflict, notes, vote_map, reason_map
+            title, title_zh, type, content,  content_zh, proposedBy, motionId, isConflict,
+            notes, notes_zh,vote_map, reason_map, reason_zh_map
         } = param;
 
         const doc: any = {
             title,
+            title_zh,
             type,
             content,
+            content_zh,
             proposedBy,
             motionId,
             isConflict,
             notes,
+            notes_zh,
             vote_map : this.param_metadata(vote_map),
             reason_map : this.param_metadata(reason_map),
+            reason_zh_map : this.param_metadata(reason_zh_map),
             createdBy : this.currentUser._id
         };
 
@@ -155,6 +160,10 @@ export default class extends Base {
 
             if (param.reason_map) {
                 doc.reason_map = this.param_metadata(param.reason_map)
+            }
+
+            if (param.reason_zh_map) {
+                doc.reason_zh_map = this.param_metadata(param.reason_zh_map)
             }
         }
 
