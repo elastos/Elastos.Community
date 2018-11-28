@@ -13,3 +13,5 @@
 
 3. For user submitted assets, credit is given to the original creator as noted by *Source*. If not specified the source can be assumed to be the Elastos Team
 and no credit needs to be specified.
+
+*Updated: Nov 2018*

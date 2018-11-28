@@ -3,6 +3,7 @@
 
 ?> There are currently no brochures ready, as they are created they will be added here
 
+---
 
 ### Tasks to Create Brochures
 

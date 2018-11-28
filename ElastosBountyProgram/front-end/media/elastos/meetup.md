@@ -8,6 +8,8 @@ This includes pop-up banners and backdrops
 
 - [Elastos + Cyber Republic - Standing Banner](https://drive.google.com/file/d/1B6cpg7hWDQCLH1yxoAIoDjkJKOkxDJdC/view?usp=sharing) - *Source: Elastos Team*
 
+---
+
 ## Tasks to Create Assets
 
 Available Tasks:
