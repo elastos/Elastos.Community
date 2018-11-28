@@ -506,13 +506,17 @@ class C extends BaseComponent {
                                         </a>
                                     </span>)
                                 }
-                                {((this.isTaskOwner() || this.props.is_admin) && candidate.status !== TASK_STATUS.APPROVED) &&
+                                {(this.isTaskOwner() || this.props.is_admin) &&
                                     <span className="inline-block">
-                                        <Divider type="vertical"/>
-                                        <a onClick={this.approveUser.bind(this, candidate._id)}>
-                                            {I18N.get('project.detail.approve')}
-                                        </a>
-                                        <Divider type="vertical"/>
+                                        {candidate.status !== TASK_STATUS.APPROVED &&
+                                            <span>
+                                                <Divider type="vertical"/>
+                                                <a onClick={this.approveUser.bind(this, candidate._id)}>
+                                                    {I18N.get('project.detail.approve')}
+                                                </a>
+                                                <Divider type="vertical"/>
+                                            </span>
+                                        }
                                         <a onClick={this.disapproveUser.bind(this, candidate._id)}>
                                             {I18N.get('project.detail.disapprove')}
                                         </a>
