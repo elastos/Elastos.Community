@@ -3,13 +3,21 @@
 
 ### Mandate
 
-The token fund team is an investment team responsible for selecting the best projects for Elastos to invest in.
+The token fund team is an investment team responsible for finding, researching and helping to select the best projects for Elastos to kick start/seed invest in.
 Each quarter the team will have a budget that is approved by the CRC, the secretariat will ensure that the request is reasonable and follow up on the KPIs.
 
 
 ### Key Rules
 
-1. **Project Selection** - the CRC and the Token Fund Team will both select an equal
+1. **Project Selection** - the CRC and the Token Fund Team will both select an equal number of projects to fund from a pool of qualified projects.
+To ensure a healthy selection of candidates, the CRC can only select 33% of the candidates and the Token Fund Team may select another 33%. This means that for every 6 selected
+candidates, the Token Fund Team must find 10 qualifying candidates (rounded down).
+
+2. **Funding by Milestones** - the Token Fund Team must clearly define multiple milestones for each project, a portion of the funding will be attached to each milestone.
+
+3. **Seed Investment Only** - our investments are meant to kick start the projects only and are not meant to fund the project in its entirety. It is expected that progress advances
+fast enough to ensure the project has enough funding through its own token. If this is not feasible it should be caught in the project selection stage or as soon as possible at the milestones.
+Should this still happen an audit/review will be necessary and possible escalation to the CRC.
 
 ### Policies
 
@@ -36,8 +44,13 @@ The team initially will be formed of three members
 
 - **Technical Adviser** - advises on which projects are feasible and helps review funding requirements to ensure they are realistic
 
+
+#### Team Growth
+
 The team will be selected from active and motivated individuals in the CR community and grow from there.
 
-In the future we would like to hire more experienced investors with actual industry or VC experience. We are not looking for this right now, as the Token Team is still in its infancy and such investors would be too expensive.
+In the future we would like to hire more experienced investors with actual industry or VC experience. We are not looking for these right now, as the Token Team is still in its infancy and such investors would be too expensive.
+We also believe that experienced investors are only necessary when we are trying to select a unicorn from many strong candidates, and where discerning which projects have the most potential is difficult.
+Given the quality of applications we've seen so far we do not believe there will be enough amazing projects to warrant looking for stronger investors yet.
 
 

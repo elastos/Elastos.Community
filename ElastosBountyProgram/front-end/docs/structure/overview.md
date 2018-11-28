@@ -7,7 +7,7 @@ Cyber Republic is governed by the **Cyber Republic Council (CRC)** which directl
 - [**Marketing Council**](/structure/marketing-council.md)
 - [**Product Team**](/structure/product-team.md)
 
-?> In charge of enforcing the rules and requirements of each group as defined in this document is the Secretariat and their assistant administrators.
+?> The **Secretariat and Administrators** are in charge of enforcing the rules and requirements of each group as defined in this document
 
 ### Current Organization
 
