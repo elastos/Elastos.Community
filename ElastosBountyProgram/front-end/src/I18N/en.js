@@ -1057,7 +1057,7 @@ const en = {
     'from.UserProfileForm.upload.banner': 'Upload Banner',
     'from.UserProfileForm.text.firstName': 'First Name',
     'from.UserProfileForm.text.lastName': 'Last Name',
-    'from.UserProfileForm.text.slogan': 'Profile Slogan',
+    'from.UserProfileForm.text.slogan': 'Bio',
     'from.UserProfileForm.text.motto': 'Profile Motto',
 
     // CR Video / Earn ELA page
