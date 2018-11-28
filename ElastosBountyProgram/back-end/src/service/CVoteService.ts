@@ -33,9 +33,10 @@ export default class extends Base {
         const db_cvote = this.getDBModel('CVote');
 
         const {
-            title, title_zh, type, content,  content_zh, proposedBy, motionId, isConflict,
-            notes, notes_zh,vote_map, reason_map, reason_zh_map
+            title, type, content, proposedBy, motionId, isConflict, notes, vote_map, reason_map
         } = param;
+
+        const { title_zh, content_zh, notes_zh, reason_zh_map } = param
 
         const doc: any = {
             title,
