@@ -362,7 +362,7 @@ class C extends BaseComponent {
 
         // status checks
         if (detail.bidding && _.indexOf([TASK_STATUS.CREATED,
-                TASK_STATUS.PENDING], detail.status) < 0) {
+                TASK_STATUS.PENDING, TASK_STATUS.APPROVED], detail.status) < 0) {
             return ''
         }
 
@@ -508,11 +508,15 @@ class C extends BaseComponent {
                                 }
                                 {(this.isTaskOwner() || this.props.is_admin) &&
                                     <span className="inline-block">
-                                        <Divider type="vertical"/>
-                                        <a onClick={this.approveUser.bind(this, candidate._id)}>
-                                            {I18N.get('project.detail.approve')}
-                                        </a>
-                                        <Divider type="vertical"/>
+                                        {candidate.status !== TASK_STATUS.APPROVED &&
+                                            <span>
+                                                <Divider type="vertical"/>
+                                                <a onClick={this.approveUser.bind(this, candidate._id)}>
+                                                    {I18N.get('project.detail.approve')}
+                                                </a>
+                                                <Divider type="vertical"/>
+                                            </span>
+                                        }
                                         <a onClick={this.disapproveUser.bind(this, candidate._id)}>
                                             {I18N.get('project.detail.disapprove')}
                                         </a>

@@ -2,6 +2,7 @@ import {createContainer, goPath} from "@/util"
 import Component from './Component'
 import UserService from '@/service/UserService'
 import {message} from 'antd'
+import I18N from '@/I18N'
 
 message.config({
     top: 100
@@ -21,7 +22,7 @@ export default createContainer(Component, (state) => {
                 const rs = await userService.login(username.trim(), password, persist)
 
                 if (rs) {
-                    message.success('login success')
+                    message.success(I18N.get('login.success'))
 
                     const loginRedirect = sessionStorage.getItem('loginRedirect')
                     if (loginRedirect) {

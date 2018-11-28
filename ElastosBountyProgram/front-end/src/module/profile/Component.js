@@ -3,7 +3,7 @@ import BaseComponent from '@/model/BaseComponent'
 import UserEditForm from '@/module/form/UserEditForm/Container'
 import UserProfileForm from '@/module/form/UserProfileForm/Container'
 import I18N from '@/I18N'
-import { Col, Row, Icon, Popover, Button, Spin, Tabs, Tag } from 'antd'
+import { Col, Row, Icon, Popover, Button, Spin, Tabs, Tag, Modal } from 'antd'
 import moment from 'moment-timezone'
 
 import UserPublicDetail from './detail/Container'
@@ -116,11 +116,18 @@ export default class extends BaseComponent {
     }
 
     renderEditForm() {
-        if (this.state.editing) {
-            return (
+        return (
+            <Modal
+                className="project-detail-nobar"
+                visible={this.state.editing}
+                onOk={this.switchEditMode.bind(this)}
+                onCancel={this.switchEditMode.bind(this)}
+                footer={null}
+                width="70%"
+            >
                 <UserEditForm user={this.props.user} page={this.props.page} switchEditMode={this.switchEditMode}/>
-            )
-        }
+            </Modal>
+        )
     }
 
     renderDesktop() {

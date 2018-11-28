@@ -5,6 +5,7 @@
 .c_LoginOrRegister {
     display: flex;
     max-width: 400px;
+    margin: 0 auto;
 
     .hide-tabbar {
         .ant-tabs-bar {
@@ -21,6 +22,10 @@
     }
     .c_registerContainer, .c_loginForm {
         margin-top: $gap_3;
+    }
+
+    .ant-tabs {
+        width: 100%;
     }
     .ant-tabs-ink-bar {
         display: none !important;
