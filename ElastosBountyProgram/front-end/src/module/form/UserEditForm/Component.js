@@ -147,7 +147,16 @@ class C extends BaseComponent {
         const role_el = (
             <Select showSearch
                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                placeholder="Role">
+                placeholder="Role"
+                // Fix select dropdowns in modals
+                // https://github.com/vazco/uniforms/issues/228
+                getPopupContainer={x => {
+                    while (x && x.tagName.toLowerCase() !== 'form') {
+                        x = x.parentElement;
+                    }
+
+                    return x;
+                }}>
                 {_.entries(config.data.mappingRoleToName).map(([key, val]) => {
                     return <Select.Option key={key} value={key}>
                         {I18N.get(val)}
@@ -243,7 +252,16 @@ class C extends BaseComponent {
             <Select showSearch
                 suffixIcon={<img className="circle-down-arrow" src="/assets/images/emp35/down_arrow.png"/>}
                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                placeholder="Country">
+                placeholder="Country"
+                // Fix select dropdowns in modals
+                // https://github.com/vazco/uniforms/issues/228
+                getPopupContainer={x => {
+                    while (x && x.tagName.toLowerCase() !== 'form') {
+                        x = x.parentElement;
+                    }
+
+                    return x;
+                }}>
                 {_.entries(config.data.mappingCountryCodeToName).map(([key, val]) => {
                     return <Select.Option key={key} value={key}>
                         {val}
