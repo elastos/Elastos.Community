@@ -73,6 +73,8 @@ const en = {
     '2305': 'My Projects',
     '2306': 'Communities',
 
+    'login.success': 'Login Successful',
+
     'profile.skillsets': 'My Skillsets',
 
     'mentions.notFound': 'User not found',
