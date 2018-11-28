@@ -1,5 +1,5 @@
 
-## Token Fund Team
+# Token Fund Team
 
 ### Mandate
 
@@ -7,7 +7,11 @@ The token fund team is an investment team responsible for selecting the best pro
 Each quarter the team will have a budget that is approved by the CRC, the secretariat will ensure that the request is reasonable and follow up on the KPIs.
 
 
-### Rules
+### Key Rules
+
+1. **Project Selection** - the CRC and the Token Fund Team will both select an equal
+
+### Policies
 
 - The fund will be held by a multi-signature wallet owned by the lead investor, an Elastos Foundation member and the Secretariat
 
@@ -16,7 +20,7 @@ Each quarter the team will have a budget that is approved by the CRC, the secret
 - Each quarter of the year, the team must submit a funding request document with KPIs/goals at the start.
 At the end of the quarter another report is required describing the current state of all investments and comparisons with goals
 
-- The team will take a management fee equal to 10% of the fund which will be held in a separate wallet. From this wallet the members of the teams
+- The team will take a **management fee equal to a percentage of the fund** which will be held in a separate wallet. From this wallet the members of the teams
 will deduct their agreed upon pay on a semi-monthly basis in ELA. The management fee funds will also be used to create CR tasks for CRcles to help the Token Fund Team in any way necessary.
 
 - Each project invested in will require an analysis report which includes information including but not limited to: funding, technical milestones, expected ROI, deliverables

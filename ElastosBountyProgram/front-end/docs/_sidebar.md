@@ -5,7 +5,11 @@
     - [Overview](structure/overview.md)
     - [Token Fund Team](/structure/token-fund-team.md)
     - [Marketing Council](/structure/marketing-council.md)
-    - [Development Team(s)](/structure/dev-teams.md)
+    - [Product Team](/structure/product-team.md)
+    - Organizational Charts
+        - [2019](/structure/org-chart/2019.md)
+        - [2020](/structure/org-chart/2020.md)
+        - [2021+](/structure/org-chart/2021.md)
 
 - User's Guide
 
@@ -17,19 +21,18 @@
         - [Task Approval Process](/user-guide/tasks/task-approval.md)
 
 - Roster and Contacts
-    - Council, Secretariat and Administrators
+    - [Council](/roster/council.md)
+    - [Secretariat Team](/roster/secretariat-team.md)
     - [Token Fund Team](/roster/token-fund-team.md)
-    - Marketing Team
-    - Development Team
+    - [Marketing Council](/roster/marketing-council.md)
+    - [Development Team](/roster/product-team.md)
     - [Ambassadors](/roster/ambassadors.md)
-    - Translators
-    - CRcle Active Members
+    - [Translators](/roster/translators.md)
+    - [CRcle Active Members](/roster/crcles.md)
 
 - Internal Projects
     - CR Website
-        - Front-End
-        - Back-End
-
+    - React Native Framework
 
 - Reports & KPIs
     - KPI Reports
