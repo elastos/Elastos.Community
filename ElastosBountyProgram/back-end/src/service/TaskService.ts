@@ -378,9 +378,18 @@ export default class extends Base {
         const taskOwner = await db_user.findById(task.createdBy)
 
         // permission shortcuts
-        if (this.currentUser.role === constant.USER_ROLE.MEMBER &&
-            this.currentUser._id.toString() !== task.createdBy.toString()) {
-            throw 'Access Denied'
+        if (this.currentUser.role === constant.USER_ROLE.MEMBER) {
+            if (this.currentUser._id.toString() !== task.createdBy.toString()) {
+                throw 'Access Denied'
+            } else {
+                const preapprovalStatuses = [constant.TASK_STATUS.CREATED,
+                    constant.TASK_STATUS.PENDING]
+
+                if (!_.includes(preapprovalStatuses, task.status)) {
+                    const approvedRestrictedFields = ['reward', 'rewardUpfront']
+                    param = _.omit(param, approvedRestrictedFields)
+                }
+            }
         }
 
         // TODO: ensure reward cannot change if status APPROVED or after
