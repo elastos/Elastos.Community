@@ -18,28 +18,28 @@ export default class extends BaseService {
             }
         });
 
-        await this.dispatch(userRedux.actions.login_form_reset())
+        this.dispatch(userRedux.actions.login_form_reset())
 
-        await this.dispatch(userRedux.actions.is_login_update(true))
+        this.dispatch(userRedux.actions.is_login_update(true))
 
         if ([USER_ROLE.ADMIN, USER_ROLE.COUNCIL].includes(res.user.role)) {
-            await this.dispatch(userRedux.actions.is_admin_update(true))
+            this.dispatch(userRedux.actions.is_admin_update(true))
         }else{
-            await this.dispatch(userRedux.actions.is_admin_update(false))
+            this.dispatch(userRedux.actions.is_admin_update(false))
         }
         if ([USER_ROLE.LEADER].includes(res.user.role)) {
-            await this.dispatch(userRedux.actions.is_leader_update(true))
+            this.dispatch(userRedux.actions.is_leader_update(true))
         }else {
-            await this.dispatch(userRedux.actions.is_leader_update(false))
+            this.dispatch(userRedux.actions.is_leader_update(false))
         }
 
-        await this.dispatch(userRedux.actions.email_update(res.user.email))
-        await this.dispatch(userRedux.actions.username_update(res.user.username))
-        await this.dispatch(userRedux.actions.profile_update(res.user.profile))
-        await this.dispatch(userRedux.actions.role_update(res.user.role))
-        await this.dispatch(userRedux.actions.circles_update(_.values(res.user.circles)))
-        await this.dispatch(userRedux.actions.subscribers_update(_.values(res.user.subscribers)))
-        await this.dispatch(userRedux.actions.current_user_id_update(res.user._id))
+        this.dispatch(userRedux.actions.email_update(res.user.email))
+        this.dispatch(userRedux.actions.username_update(res.user.username))
+        this.dispatch(userRedux.actions.profile_update(res.user.profile))
+        this.dispatch(userRedux.actions.role_update(res.user.role))
+        this.dispatch(userRedux.actions.circles_update(_.values(res.user.circles)))
+        this.dispatch(userRedux.actions.subscribers_update(_.values(res.user.subscribers)))
+        this.dispatch(userRedux.actions.current_user_id_update(res.user._id))
         sessionStorage.setItem('api-token', res['api-token']);
 
         if (persist) {
