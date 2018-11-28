@@ -10,8 +10,8 @@ Each quarter the team will have a budget that is approved by the CRC, the secret
 ### Key Rules
 
 1. **Project Selection** - the CRC and the Token Fund Team will both select an equal number of projects to fund from a pool of qualified projects.
-To ensure a healthy selection of candidates, the CRC can only select 33% of the candidates and the Token Fund Team may select another 33%. This means that for every 6 selected
-candidates, the Token Fund Team must find 10 qualifying candidates (rounded down).
+To ensure a healthy selection of candidates, the CRC can only select 35% of the candidates and the Token Fund Team may select another 35%. This means that for every 14 selected
+candidates, the Token Fund Team must find 20 qualifying candidates (rounded down).
 
 2. **Funding by Milestones** - the Token Fund Team must clearly define multiple milestones for each project, a portion of the funding will be attached to each milestone.
 
