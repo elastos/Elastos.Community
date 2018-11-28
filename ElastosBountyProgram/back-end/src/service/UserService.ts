@@ -15,7 +15,8 @@ const restrictedFields = {
         '_id',
         'username',
         'role',
-        'profile'
+        'profile',
+        'salt'
     ]
 }
 
@@ -75,7 +76,7 @@ export default class extends Base {
             }
         }
 
-        const newUser = await db_user.save(doc);
+        const newUser = await db_user.save(doc).select(selectFields);
 
         await this.linkCountryCommunity(newUser)
         this.sendConfirmation(doc)
@@ -210,7 +211,7 @@ export default class extends Base {
 
         await db_user.update({_id: userId}, updateObj)
 
-        user = db_user.getDBInstance().findOne({_id: userId})
+        user = db_user.getDBInstance().findOne({_id: userId}).select(selectFields)
             .populate('circles')
 
         // if we change the country, we add the new country as a community if not already
@@ -228,7 +229,7 @@ export default class extends Base {
         return await db_user.getDBInstance().findOne({
             [isEmail ? 'email' : 'username']: query.username.toLowerCase(),
             password: query.password
-        }).populate('circles');
+        }).select(selectFields).populate('circles');
     }
 
     public async findUsers(query): Promise<Document[]>{
