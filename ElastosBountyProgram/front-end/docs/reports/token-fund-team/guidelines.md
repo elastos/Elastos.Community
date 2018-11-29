@@ -1,6 +1,8 @@
 
 # Token Fund Team - Proposal Guideline
 
+!> This is still a WORK IN PROGRESS!
+
 ## Required Information
 
 #### Basics

@@ -1,9 +1,11 @@
 
-# Product Team
+# Development Team
+
+!> Significant changes are in store for the development/product team
 
 #### Elastos and Cyber Republic is a global project amongst many exciting and professional blockchain projects.
 
-!> Therefore a high emphasis on usability and design is a given and must be maintained.
+?> Therefore a high emphasis on usability and design is a given and must be maintained.
 
 ###### To achieve this all design and product will be placed under a single **Product Team**. Its members will be selected from the CRcles and the best contributors to the CR development projects.
 
