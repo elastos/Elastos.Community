@@ -74,7 +74,7 @@ export default createContainer(Component, (state) => {
         },
 
         async loadAllCircles() {
-            return teamService.loadAllCircles()
+            return teamService.loadAllCircles({ includeTasks: false })
         },
 
         resetTasks () {

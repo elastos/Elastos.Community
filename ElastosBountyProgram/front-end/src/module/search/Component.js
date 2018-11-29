@@ -680,13 +680,22 @@ export default class extends BaseComponent {
                             <div className="group">
                                 <div className="title">{I18N.get('developer.search.circle')}</div>
                                 <div className="content">
-                                    {this.renderCircles(this.state.circlesShowAllEntries)}
-                                    <div className="showMore" onClick={this.enableCirclesEntries.bind(this)}>
-                                        {
-                                            !this.state.circlesShowAllEntries ? (<span>{I18N.get('developer.search.showMore')}</span>)
-                                                : (<span>{I18N.get('developer.search.hide')}</span>)
-                                        }
-                                    </div>
+                                    {this.props.all_circles_loading
+                                        ? <Spin/>
+                                        : <TreeSelect
+                                            className="filters-tree"
+                                            showSearch
+                                            value={this.state.circle}
+                                            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                                            placeholder="Filters"
+                                            allowClear
+                                            multiple
+                                            treeDefaultExpandAll
+                                            treeData={this.getCircleTree()}
+                                            treeCheckable={!this.props.all_circles_loading}
+                                            onChange={this.onChangeCircle.bind(this)}
+                                        />
+                                    }
                                 </div>
                             </div>
                         }
