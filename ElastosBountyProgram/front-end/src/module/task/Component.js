@@ -164,10 +164,10 @@ export default class extends BaseComponent {
                     <Button>{I18N.get('project.public.statusHelp.markAsComplete')}</Button>
                 </Popconfirm>
                 }
-                {this.props.task.status !== TASK_STATUS.SUCCESS && isTaskOwner &&
-                <Button onClick={this.switchEditMode.bind(this)}>
-                    {this.state.editing ? I18N.get('.cancel') : I18N.get('.edit')}
-                </Button>
+                {isTaskOwner && _.includes([TASK_STATUS.CREATED, TASK_STATUS.PENDING], this.props.task.status) &&
+                    <Button onClick={this.switchEditMode.bind(this)}>
+                        {this.state.editing ? I18N.get('.cancel') : I18N.get('.edit')}
+                    </Button>
                 }
             </div>
             }
