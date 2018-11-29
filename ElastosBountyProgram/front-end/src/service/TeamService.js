@@ -59,9 +59,9 @@ export default class extends BaseService {
             path: '/api/team/list',
             method: 'get',
             data: {
+                includeTasks: true,
                 ...qry,
-                type: TEAM_TYPE.CRCLE,
-                includeTasks: true
+                type: TEAM_TYPE.CRCLE
             }
         })
 
