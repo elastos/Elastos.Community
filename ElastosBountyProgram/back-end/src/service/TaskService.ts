@@ -378,8 +378,14 @@ export default class extends Base {
         const taskOwner = await db_user.findById(task.createdBy)
 
         // permission shortcuts
-        if (this.currentUser.role === constant.USER_ROLE.MEMBER && (this.currentUser._id.toString() !== task.createdBy.toString() || param.status !== constant.TASK_STATUS.SUBMITTED)) {
-            throw 'Access Denied'
+        if (this.currentUser.role === constant.USER_ROLE.MEMBER) {
+            if (this.currentUser._id.toString() !== task.createdBy.toString()) {
+                throw 'Access Denied'
+            }
+
+            if (!_.includes([constant.TASK_STATUS.CREATED, constant.TASK_STATUS.PENDING], task.status)) {
+                throw 'Access Denied - Owners cant edit tasks past PENDING'
+            }
         }
 
         // TODO: ensure reward cannot change if status APPROVED or after
@@ -412,16 +418,14 @@ export default class extends Base {
                     updateObj.status = param.status
                 }
             }
-        } else if ([constant.TASK_STATUS.PENDING, constant.TASK_STATUS.CREATED].includes(task.status)) {
+        } else {
+            const hasReward = task.reward.usd > 0 || task.rewardUpfront.usd > 0
+            const willHaveReward = (rewardUpfront && rewardUpfront.usd > 0) ||
+                (reward && reward.usd > 0)
 
-            // reward should only change if ela amount changed from 0 to > 0
-            if ((task.reward.ela === 0 && task.rewardUpfront.ela === 0) &&
-                (rewardUpfront && (rewardUpfront.ela > 0 || rewardUpfront.usd > 0)) ||
-                (reward && (reward.ela > 0 || reward.usd > 0))
-            ) {
-                // TODO: send notification to admin
-                updateObj.status = constant.TASK_STATUS.PENDING;
-
+            // Status should only change if reward changed from 0 to > 0
+            if (!hasReward && willHaveReward) {
+                updateObj.status = constant.TASK_STATUS.PENDING
                 sendTaskPendingRequiredApprovalEmail = true
             }
         }
