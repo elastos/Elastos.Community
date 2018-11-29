@@ -419,15 +419,13 @@ export default class extends Base {
                 }
             }
         } else {
+            const hasReward = task.reward.usd > 0 || task.rewardUpfront.usd > 0
+            const willHaveReward = (rewardUpfront && rewardUpfront.usd > 0) ||
+                (reward && reward.usd > 0)
 
-            // reward should only change if ela amount changed from 0 to > 0
-            if ((task.reward.usd === 0 && task.rewardUpfront.usd === 0) &&
-                ((rewardUpfront && rewardUpfront.usd > 0) ||
-                (reward && reward.usd > 0)))
-            ) {
-                // TODO: send notification to admin
-                updateObj.status = constant.TASK_STATUS.PENDING;
-
+            // Status should only change if reward changed from 0 to > 0
+            if (!hasReward && willHaveReward) {
+                updateObj.status = constant.TASK_STATUS.PENDING
                 sendTaskPendingRequiredApprovalEmail = true
             }
         }
