@@ -30,8 +30,9 @@ export const TASK_TYPE = {
 }
 
 export const TASK_CATEGORY = {
-    DEVELOPER: 'DEVELOPER',
+    GENERAL: 'GENERAL',
     SOCIAL: 'SOCIAL',
+    DEVELOPER: 'DEVELOPER',
     LEADER: 'LEADER',
     CR100: 'CR100'
 }

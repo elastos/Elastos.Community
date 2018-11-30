@@ -506,7 +506,7 @@ const en = {
     'task.soloApply': 'Apply as an Individual',
     'task.teamApply': 'Apply as a Team',
     'task.applyReason': 'Why you wanted to join this task',
-    'task.createNew': 'Propose new Task',
+    'task.createNew': 'Propose New Task',
 
     // General
     'select.placeholder': 'Please select',

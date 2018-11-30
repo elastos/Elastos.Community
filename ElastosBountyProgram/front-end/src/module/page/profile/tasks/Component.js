@@ -10,7 +10,7 @@ import '../../admin/admin.scss'
 
 import {TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT, TASK_CATEGORY, TASK_STATUS} from '@/constant'
 import { Col, Row, Icon, Select, Form, Badge, Tooltip, Breadcrumb,
-    Avatar, Button, Table, Divider, Spin, List, Carousel, Input } from 'antd'
+    Avatar, Button, Tag, Divider, Spin, List, Carousel, Input } from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
@@ -53,6 +53,9 @@ export default class extends ProfilePage {
         this.props.resetTasks()
     }
 
+    /**
+     * Builds the query from the current state
+     */
     getQuery() {
         let query = {
             profileListFor: this.props.currentUserId
@@ -88,6 +91,9 @@ export default class extends ProfilePage {
         return query
     }
 
+    /**
+     * Refetch the data based on the current state retrieved from getQuery
+     */
     refetch() {
         const query = this.getQuery()
         this.props.getTasks(query)
@@ -280,7 +286,7 @@ export default class extends ProfilePage {
                                                 onClick={this.setSubscribedFilter.bind(this)}>Subscribed</Button>
                                         </Button.Group>
                                     </MediaQuery>
-                                    <div className="pull-left filter-group search-group">
+                                    <div className="pull-right filter-group search-group">
                                         <Input defaultValue={this.state.search} onChange={searchChangedHandler.bind(this)}
                                             placeholder={I18N.get('developer.search.search.placeholder')} style={{width: 250}}/>
                                     </div>
@@ -365,6 +371,7 @@ export default class extends ProfilePage {
                 }},
                 applicationDeadlinePassed: Date.now() > applicationDeadline,
                 id: task._id,
+                status: task.status,
                 task
             }
         })
@@ -387,6 +394,12 @@ export default class extends ProfilePage {
                                 <h3 class="no-margin no-padding one-line brand-color">
                                     <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
                                 </h3>
+
+                                {/* Status */}
+                                <div className="valign-wrapper">
+                                    <Tag>Status: {item.status}</Tag>
+                                </div>
+
                                 {item.applicationDeadlinePassed &&
                                     <span className="subtitle">
                                         {I18N.get('developer.search.subtitle_prefix')} {I18N.get('developer.search.subtitle_applications')}
@@ -419,6 +432,12 @@ export default class extends ProfilePage {
                                 <h3 class="no-margin no-padding one-line brand-color">
                                     <a onClick={this.linkTaskDetail.bind(this, item.id)}>{item.title}</a>
                                 </h3>
+
+                                {/* Status */}
+                                <div className="valign-wrapper">
+                                    <Tag>Status: {item.status}</Tag>
+                                </div>
+
                                 <h5 class="no-margin">
                                     {item.description}
                                 </h5>

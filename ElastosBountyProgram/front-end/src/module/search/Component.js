@@ -932,7 +932,11 @@ export default class extends BaseComponent {
                     thumbnail: task.thumbnail,
                     description: description_fn(task),
                     content: task.description,
-                    owner: task.createdBy,
+                    owner: task.createdBy || {profile: {
+                        firstName: '',
+                        lastName: 'DELETED'
+                    }},
+                    status: task.status,
                     applicationDeadlinePassed: applicationDeadline ? Date.now() > applicationDeadline : false,
                     id: task._id,
                     candidates: task.candidates
@@ -966,14 +970,22 @@ export default class extends BaseComponent {
                                     key={item.id}
                                     extra={this.getCarousel(item)}
                                 >
-                                    <h3 className="no-margin no-padding one-line brand-color">
+                                    <h3 className="no-margin no-padding one-line brand-color task-title">
                                         <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
                                     </h3>
+
+                                    {/* Status */}
+                                    <div className="valign-wrapper">
+                                        <Tag>Status: {item.status}</Tag>
+                                    </div>
+
+                                    {/* Application Deadline - info */}
                                     {item.applicationDeadlinePassed &&
                                     <span className="subtitle">
                                         {I18N.get('developer.search.subtitle_prefix')} {I18N.get('developer.search.subtitle_applications')}
                                     </span>
                                     }
+
                                     <h5 className="no-margin">
                                         {item.description}
                                     </h5>
@@ -998,9 +1010,15 @@ export default class extends BaseComponent {
                                     key={item.id}
                                     className="ignore-right-box"
                                 >
-                                    <h3 className="no-margin no-padding one-line brand-color">
+                                    <h3 className="no-margin no-padding one-line brand-color task-title">
                                         <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
                                     </h3>
+
+                                    {/* Status */}
+                                    <div className="valign-wrapper">
+                                        <Tag>Status: {item.status}</Tag>
+                                    </div>
+
                                     <h5 className="no-margin">
                                         {item.description}
                                     </h5>

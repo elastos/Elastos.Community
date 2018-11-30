@@ -205,7 +205,10 @@ export default class extends ProfilePage {
                 title: task.name,
                 description: description_fn(task),
                 content: task.description,
-                owner: task.createdBy,
+                owner: task.createdBy || {profile: {
+                    firstName: '',
+                    lastName: 'DELETED'
+                }},
                 applicationDeadlinePassed: Date.now() > applicationDeadline,
                 id: task._id,
                 task
@@ -230,6 +233,12 @@ export default class extends ProfilePage {
                                 <h3 class="no-margin no-padding one-line brand-color">
                                     <a onClick={this.linkTaskDetail.bind(this, item.task)}>{item.title}</a>
                                 </h3>
+
+                                {/* Status */}
+                                <div className="valign-wrapper">
+                                    <Tag>Status: {item.status}</Tag>
+                                </div>filter-group
+
                                 {item.applicationDeadlinePassed &&
                                     <span className="subtitle">
                                         {I18N.get('developer.search.subtitle_prefix')} {I18N.get('developer.search.subtitle_applications')}
@@ -262,6 +271,12 @@ export default class extends ProfilePage {
                                 <h3 class="no-margin no-padding one-line brand-color">
                                     <a onClick={this.linkTaskDetail.bind(this, item.task)}>{item.title}</a>
                                 </h3>
+
+                                {/* Status */}
+                                <div className="valign-wrapper">
+                                    <Tag>Status: {item.status}</Tag>
+                                </div>
+
                                 <h5 class="no-margin">
                                     {item.description}
                                 </h5>
