@@ -856,6 +856,7 @@ const en = {
     // Task Application
     'taks.application.social': 'Social',
     'taks.application.developer': 'Developer',
+    'taks.application.general': 'General',
     'taks.create.project': 'Create Project',
     'taks.create.task': 'Create Task / Event',
 

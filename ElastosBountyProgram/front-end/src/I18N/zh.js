@@ -820,6 +820,7 @@ const zh = {
     // Task Application
     'taks.application.social': '社交',
     'taks.application.developer': '开发者',
+    'taks.application.general': 'General',
     'taks.create.project': '创建项目',
     'taks.create.task': '创建任务 / 活动',
 

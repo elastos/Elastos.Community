@@ -60,6 +60,8 @@ export default class extends ProfilePage {
             profileListFor: this.props.currentUserId
         }
 
+        // FILTERS.ALL - defaults to task.category [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.SOCIAL, TASK_CATEGORY.GENERAL]
+
         if (this.state.filter === FILTERS.ACTIVE) {
             query.taskHasUserStatus = TASK_CANDIDATE_STATUS.APPROVED
         }
@@ -86,6 +88,8 @@ export default class extends ProfilePage {
 
         query.page = this.state.page || 1
         query.results = this.state.results || 5
+
+        console.log(query)
 
         return query
     }
@@ -211,6 +215,7 @@ export default class extends ProfilePage {
                 }},
                 applicationDeadlinePassed: Date.now() > applicationDeadline,
                 id: task._id,
+                status: task.status,
                 task
             }
         })
@@ -234,10 +239,10 @@ export default class extends ProfilePage {
                                     <a onClick={this.linkTaskDetail.bind(this, item.task)}>{item.title}</a>
                                 </h3>
 
-                                {/* Status */}
-                                <div className="valign-wrapper">
-                                    <Tag>Status: {item.status}</Tag>
-                                </div>filter-group
+                                    {/* Status */}
+                                    <div className="valign-wrapper">
+                                        <Tag>{I18N.get('admin.tasks.status')}: {I18N.get(`taskStatus.${item.status}`)}</Tag>
+                                    </div>
 
                                 {item.applicationDeadlinePassed &&
                                     <span className="subtitle">
@@ -302,7 +307,6 @@ export default class extends ProfilePage {
     }
 
     getCandidateUnreadMessageCount(task) {
-        const isOwner = task.createdBy._id === this.props.currentUserId
         const candidate = _.find(task.candidates, (candidate) => {
             return candidate.user && candidate.user._id === this.props.currentUserId
         })
@@ -327,7 +331,7 @@ export default class extends ProfilePage {
     }
 
     getUnreadMessageCount(task) {
-        const isOwner = task.createdBy._id === this.props.currentUserId
+        const isOwner = task.createdBy && task.createdBy._id === this.props.currentUserId
         const subscription = _.find(task.subscribers, (subscriber) => {
             return subscriber.user && subscriber.user._id === this.props.currentUserId
         })
