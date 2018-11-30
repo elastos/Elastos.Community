@@ -4,7 +4,7 @@ import getting_started from './en/getting_started';
 
 const zh = {
     council,
-
+    getting_started,
     // Header
     '0000': 'ALPHA版本',
     '0001': '奖励计划',
@@ -62,6 +62,7 @@ const zh = {
     '1303': '团队',
     '1304': '议题',
     '1305': '表格',
+    '1306': 'Projects',
 
     // Profile navigator
     '2300': '我的档案',
@@ -70,6 +71,11 @@ const zh = {
     '2303': '我的议题',
     '2304': '我的社区',
     '2305': '我的项目',
+    '2306': 'Communities',
+
+    'login.success': 'Login Successful',
+
+    'profile.skillsets': 'My Skillsets',
 
     'mentions.notFound': '该用户不存在',
 
@@ -241,6 +247,11 @@ const zh = {
     'developer.search.assignment.all': 'All',
     'developer.search.assignment.unassigned': 'Unassigned',
     'developer.search.event': 'Event',
+    'developer.search.sort': 'Sort',
+    'developer.search.sort.createdAt': 'Created',
+    'developer.search.sort.updatedAt': 'Updated',
+    'developer.search.sort.asc': 'Ascending',
+    'developer.search.sort.desc': 'Descending',
     'developer.search.team': '团队',
     'developer.search.project': '项目',
     'developer.search.task': '任务',
@@ -352,7 +363,6 @@ const zh = {
     'training.thanksForApplying': '感谢您的申请，我们会尽快与您取得联系！',
     'training.applyError': '出错了，请直接与我们联系。',
     'training.apply.title': '申请成为大使',
-
 
     // Itinerary
     'training.itinerary.title': '行程示例',
@@ -1203,6 +1213,11 @@ zh[`taskStatus.${TASK_STATUS.SUCCESS}`] = '成功'
 zh[`taskStatus.${TASK_STATUS.DISTRIBUTED}`] = '已结算'
 zh[`taskStatus.${TASK_STATUS.CANCELED}`] = '已取消'
 zh[`taskStatus.${TASK_STATUS.EXPIRED}`] = '已过期'
+
+zh[`taskType.${TASK_STATUS.TASK}`] = 'Task'
+zh[`taskType.${TASK_STATUS.SUB_TASK}`] = 'Sub Task'
+zh[`taskType.${TASK_STATUS.PROJECT}`] = 'Project'
+zh[`taskType.${TASK_STATUS.EVENT}`] = 'Event'
 
 zh[`cvoteStatus.${CVOTE_STATUS.DRAFT}`] = 'DRAFT'
 zh[`cvoteStatus.${CVOTE_STATUS.PROPOSED}`] = 'PROPOSED'

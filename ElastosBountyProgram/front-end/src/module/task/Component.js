@@ -1,4 +1,4 @@
-import {TASK_STATUS, TASK_CATEGORY, TASK_TYPE} from '@/constant'
+import {TASK_STATUS, TASK_CATEGORY, TASK_TYPE, TASK_CANDIDATE_STATUS} from '@/constant'
 
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
@@ -93,16 +93,16 @@ export default class extends BaseComponent {
                 {!this.state.editing && this.props.task.status === TASK_STATUS.PENDING &&
                     <Popconfirm title="Are you sure you want to approve this task?"
                         placement="left" okText="Yes" onConfirm={this.approveTask.bind(this)}>
-                        <Button type="primary">Approve</Button>
+                        <Button>Approve</Button>
                     </Popconfirm>
                 }
                 {!this.state.editing && this.props.task.status === TASK_STATUS.PENDING &&
                     <Popconfirm title="Are you sure you want to approve this task and assign to the owner?"
                         placement="left" okText="Yes" onConfirm={this.approveAndAssignTask.bind(this)}>
-                        <Button type="primary">Approve and Assign</Button>
+                        <Button>Approve and Assign to Owner</Button>
                     </Popconfirm>
                 }
-                {/* Admin & Task Owner CAN Mark as Complete */}
+                {/* ONLY Admin & Task Owner CAN Mark as Complete */}
                 {(this.props.task.status === TASK_STATUS.APPROVED || this.props.task.status === TASK_STATUS.ASSIGNED) &&
                 <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsSubmitted.bind(this)}>
                     <Button>Mark as Complete</Button>
@@ -137,6 +137,13 @@ export default class extends BaseComponent {
 
         const isTaskOwner = this.props.current_user_id === (this.props.task.createdBy && this.props.task.createdBy._id)
 
+        const taskAssignee = _.filter(this.props.task.candidates, {status: TASK_CANDIDATE_STATUS.APPROVED})
+        let isTaskAssignee = false
+
+        if (taskAssignee.length) {
+            isTaskAssignee = taskAssignee[0]._id === this.props.current_user_id
+        }
+
         return <div className="l_banner">
             {this.props.task.category !== 'CR100' ?
                 <div className="pull-left">
@@ -158,8 +165,8 @@ export default class extends BaseComponent {
             }
             {this.props.task.category !== 'CR100' &&
             <div className="pull-right right-align">
-                {/* Admin & Task Owner CAN Mark as Complete */}
-                {(this.props.task.status === TASK_STATUS.APPROVED || this.props.task.status === TASK_STATUS.ASSIGNED) && isTaskOwner &&
+                {/* Admin & Task Assignee CAN Mark as Complete - TODO: we should consider if we need a separate flag to allow the owner to approve the deliverable */}
+                {(this.props.task.status === TASK_STATUS.APPROVED || this.props.task.status === TASK_STATUS.ASSIGNED) && isTaskAssignee &&
                 <Popconfirm title={I18N.get('project.public.statusHelp.markAsCompleteConfirm')} placement="left" okText={I18N.get('.yes')} onConfirm={this.markAsSubmitted.bind(this)}>
                     <Button>{I18N.get('project.public.statusHelp.markAsComplete')}</Button>
                 </Popconfirm>

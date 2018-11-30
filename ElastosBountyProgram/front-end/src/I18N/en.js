@@ -1,4 +1,4 @@
-import {TASK_STATUS, CVOTE_STATUS} from '@/constant'
+import {TASK_STATUS, TASK_TYPE, CVOTE_STATUS} from '@/constant'
 import council from './en/council';
 import getting_started from './en/getting_started';
 
@@ -1253,6 +1253,11 @@ en[`taskStatus.${TASK_STATUS.SUCCESS}`] = 'Success'
 en[`taskStatus.${TASK_STATUS.DISTRIBUTED}`] = 'Distributed'
 en[`taskStatus.${TASK_STATUS.CANCELED}`] = 'Canceled'
 en[`taskStatus.${TASK_STATUS.EXPIRED}`] = 'Expired'
+
+en[`taskType.${TASK_TYPE.TASK}`] = 'Task'
+en[`taskType.${TASK_TYPE.SUB_TASK}`] = 'Sub Task'
+en[`taskType.${TASK_TYPE.PROJECT}`] = 'Project'
+en[`taskType.${TASK_TYPE.EVENT}`] = 'Event'
 
 en[`cvoteStatus.${CVOTE_STATUS.DRAFT}`] = 'DRAFT'
 en[`cvoteStatus.${CVOTE_STATUS.PROPOSED}`] = 'PROPOSED'

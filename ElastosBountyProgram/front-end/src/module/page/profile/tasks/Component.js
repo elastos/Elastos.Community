@@ -27,13 +27,19 @@ const FILTERS = {
     NEED_APPROVAL: 'need_approval'
 }
 
+/**
+ * This uses new features such as infinite scroll and pagination, therefore
+ * we do some different things such as only loading the data from the server
+ */
 export default class extends ProfilePage {
     constructor(props) {
         super(props)
 
+        // we use the props from the redux store if its retained
         this.state = {
             showMobile: false,
             filter: FILTERS.ALL,
+            statusFilter: (this.props.filter && this.props.filter.statusFilter) || null,
             page: 1,
             results: 5,
             search: ''
@@ -83,6 +89,11 @@ export default class extends ProfilePage {
 
         if (!_.isEmpty(this.state.search)) {
             query.search = this.state.search
+        }
+
+        // let this override, though it should be mutually exclusive with state.filter
+        if (this.state.statusFilter) {
+            query.status = this.state.statusFilter.toUpperCase()
         }
 
         query.page = this.state.page || 1
@@ -245,8 +256,10 @@ export default class extends ProfilePage {
                                 </Col>
                                 <Col sm={24} md={20} className="c_ProfileContainer admin-right-column wrap-box-user">
                                     {(this.props.is_leader || this.props.is_admin) &&
-                                        <div className="pull-right filter-group">
-                                            <Button onClick={() => this.props.history.push('/task-create/')}>{I18N.get('profile.tasks.create.task')}</Button>
+                                        <div className="pull-right filter-group btn-create-task">
+                                            <Button onClick={() => this.props.history.push('/task-create/')}>
+                                                {I18N.get('profile.tasks.create.task')}
+                                            </Button>
                                         </div>
                                     }
                                     <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
@@ -262,15 +275,16 @@ export default class extends ProfilePage {
                                             })}
                                         </Select>
                                     </MediaQuery>
+                                    {!this.props.is_admin &&
                                     <MediaQuery minWidth={MIN_WIDTH_PC}>
                                         <Button.Group className="filter-group pull-left">
                                             <Button
                                                 className={(this.state.filter === FILTERS.ALL && 'selected') || ''}
                                                 onClick={this.clearFilters.bind(this)}>All</Button>
                                             {this.props.is_admin &&
-                                                <Button
-                                                    className={(this.state.filter === FILTERS.NEED_APPROVAL && 'selected') || ''}
-                                                    onClick={this.setNeedApprovalFilter.bind(this)}>Need Approval</Button>
+                                            <Button
+                                                className={(this.state.filter === FILTERS.NEED_APPROVAL && 'selected') || ''}
+                                                onClick={this.setNeedApprovalFilter.bind(this)}>Need Approval</Button>
                                             }
                                             <Button
                                                 className={(this.state.filter === FILTERS.OWNED && 'selected') || ''}
@@ -286,10 +300,31 @@ export default class extends ProfilePage {
                                                 onClick={this.setSubscribedFilter.bind(this)}>Subscribed</Button>
                                         </Button.Group>
                                     </MediaQuery>
+                                    }
                                     <div className="pull-right filter-group search-group">
                                         <Input defaultValue={this.state.search} onChange={searchChangedHandler.bind(this)}
                                             placeholder={I18N.get('developer.search.search.placeholder')} style={{width: 250}}/>
                                     </div>
+
+                                    {this.props.is_admin &&
+                                    <div className="pull-right">
+                                        Status:
+                                        <Select
+                                            showSearch
+                                            allowClear
+                                            style={{width: 200, marginLeft: 8}}
+                                            placeholder="Select a status"
+                                            defaultValue={this.state.statusFilter}
+                                            onChange={this.setStatusFilter.bind(this)}
+                                        >
+                                            {_.keys(TASK_STATUS).map((taskStatus) => {
+                                                return <Select.Option key={taskStatus} value={_.capitalize(taskStatus)}>
+                                                    {I18N.get(`taskStatus.${taskStatus}`)}
+                                                </Select.Option>
+                                            })}
+                                        </Select>
+                                    </div>
+                                    }
                                     <div className="clearfix"/>
                                     {this.renderList()}
                                 </Col>
@@ -341,6 +376,9 @@ export default class extends ProfilePage {
         )
     }
 
+    /**
+     * This purposely only loads tasks from props because we are using pagination
+     */
     renderList() {
         const tasks = this.props.all_tasks
         const description_fn = (entity) => {
@@ -513,6 +551,18 @@ export default class extends ProfilePage {
         this.setState({
             filter: FILTERS.NEED_APPROVAL,
             page: 1
+        }, this.refetch.bind(this))
+    }
+
+    // TODO: write documentation on how we save the filters between pages
+    setStatusFilter(status) {
+
+        this.props.setFilter({
+            statusFilter: status
+        })
+
+        this.setState({
+            statusFilter: status
         }, this.refetch.bind(this))
     }
 

@@ -9,11 +9,13 @@ import {USER_ROLE, TASK_TYPE, TASK_CANDIDATE_STATUS, TASK_CATEGORY, TASK_STATUS}
 export default createContainer(Component, (state) => {
     const currentUserId = state.user.current_user_id
     const isAdmin = state.user.role === USER_ROLE.ADMIN
+
     const taskState = {
         ...state.task,
         currentUserId,
         is_leader: state.user.role === USER_ROLE.LEADER,
-        is_admin: isAdmin
+        is_admin: isAdmin,
+        filter: state.task.filter || {}
     }
 
     return taskState
@@ -36,7 +38,6 @@ export default createContainer(Component, (state) => {
         async getTasks(query) {
             return taskService.index({
                 type: [TASK_TYPE.TASK, TASK_TYPE.EVENT],
-                category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.SOCIAL],
                 ...query,
             })
         },
@@ -44,7 +45,6 @@ export default createContainer(Component, (state) => {
         async loadMoreTasks(query) {
             return taskService.loadMore({
                 type: [TASK_TYPE.TASK, TASK_TYPE.EVENT],
-                category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.SOCIAL],
                 ...query,
             })
         },
@@ -53,14 +53,12 @@ export default createContainer(Component, (state) => {
             return taskService.resetAllTasks()
         },
 
-        async setFilter(options) {
-
+        async setFilter(filter) {
+            return taskService.saveFilter(filter)
         },
 
         async getUserTeams(currentUserId) {
-
             const teamService = new TeamService()
-
             return teamService.getUserTeams(currentUserId)
         }
     }
