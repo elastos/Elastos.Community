@@ -9,6 +9,7 @@ import _ from 'lodash'
 import I18N from '@/I18N'
 import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 import { USER_AVATAR_DEFAULT } from '@/constant'
+import MediaQuery from 'react-responsive'
 
 const TextArea = Input.TextArea
 const FormItem = Form.Item
@@ -16,7 +17,8 @@ const FormItem = Form.Item
 class C extends BaseComponent {
     ord_states() {
         return {
-            showUserInfo: null
+            showUserInfo: null,
+            isMobile: false
         }
     }
 
@@ -71,13 +73,15 @@ class C extends BaseComponent {
         )
     }
 
+    detectMobile() {
+        this.setState({isMobile: true})
+    }
+
     getInputProps() {
         const allUsers = _.map(this.props.all_users, (user) => user.username)
         const {getFieldDecorator} = this.props.form
         const comment_fn = getFieldDecorator('comment', {
-            rules: [{
-                required: true, message: 'Please input your comment!'
-            }],
+            rules: [],
             initialValue: Mention.toContentState('')
         })
         const comment_el = (
@@ -87,6 +91,16 @@ class C extends BaseComponent {
                 suggestions={allUsers}
                 notFoundContent={I18N.get('mentions.notFound')}
                 placeholder={I18N.get('comments.commentsOrUpdates')}/>
+        )
+
+        const commentForMobile_fn = getFieldDecorator('commentForMobile', {
+            rules: []
+        })
+        const commentForMobile_el = (
+            <TextArea
+                style={{ width: '100%', height: 100 }}
+                onChange={this.detectMobile.bind(this)}
+                placeholder={I18N.get('comments.commentsOrUpdates')} />
         )
 
         const headline_fn = getFieldDecorator('headline', {
@@ -103,6 +117,7 @@ class C extends BaseComponent {
 
         return {
             comment: comment_fn(comment_el),
+            commentForMobile: commentForMobile_fn(commentForMobile_el),
             headline: headline_fn(headline_el)
         }
     }
@@ -152,9 +167,16 @@ class C extends BaseComponent {
                         {p.headline}
                     </FormItem>
                 }
-                <FormItem>
-                    {p.comment}
-                </FormItem>
+                <MediaQuery minWidth={720}>
+                    <FormItem>
+                        {p.comment}
+                    </FormItem>
+                </MediaQuery>
+                <MediaQuery maxWidth={720}>
+                    <FormItem>
+                        {p.commentForMobile}
+                    </FormItem>
+                </MediaQuery>
                 <FormItem>
                     {subscribeButton}
                     <Button className="ant-btn-ebp pull-right" type="primary" size="small"
@@ -331,26 +353,53 @@ class C extends BaseComponent {
     handleSubmit(e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
-            const commentPlainText = values.comment.getPlainText()
+            let commentPlainText
 
-            if (!commentPlainText) {
-                this.props.form.setFields({
-                    comment: {
-                        errors: [new Error('Please input comment')],
-                    }
-                });
-                return;
+            if (this.state.isMobile) {
+                commentPlainText = values.commentForMobile
+
+                if (!commentPlainText) {
+                    this.props.form.setFields({
+                        commentForMobile: {
+                            errors: [new Error('Please input comment')],
+                        }
+                    });
+                    return;
+                }
+
+                if (commentPlainText.length > MAX_LENGTH_COMMENT) {
+                    this.props.form.setFields({
+                        commentForMobile: {
+                            value: values.comment,
+                            errors: [new Error('Comment is too long')],
+                        }
+                    });
+                    return;
+                }
+
+            } else {
+                commentPlainText = values.comment.getPlainText()
+
+                if (!commentPlainText) {
+                    this.props.form.setFields({
+                        comment: {
+                            errors: [new Error('Please input comment')],
+                        }
+                    });
+                    return;
+                }
+
+                if (commentPlainText.length > MAX_LENGTH_COMMENT) {
+                    this.props.form.setFields({
+                        comment: {
+                            value: values.comment,
+                            errors: [new Error('Comment is too long')],
+                        }
+                    });
+                    return;
+                }
             }
 
-            if (commentPlainText.length > MAX_LENGTH_COMMENT) {
-                this.props.form.setFields({
-                    comment: {
-                        value: values.comment,
-                        errors: [new Error('Comment is too long')],
-                    }
-                });
-                return;
-            }
 
             if (!err) {
                 this.props.postComment(this.props.type,
@@ -358,7 +407,7 @@ class C extends BaseComponent {
                     this.props.detailReducer,
                     this.props.returnUrl,
                     this.getModelId(),
-                    values.comment && values.comment.getPlainText(),
+                    commentPlainText,
                     values.headline).then(() => {
                         this.props.form.resetFields()
                     })
