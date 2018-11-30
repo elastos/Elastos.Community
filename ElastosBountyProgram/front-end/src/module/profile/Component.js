@@ -8,9 +8,11 @@ import moment from 'moment-timezone'
 
 import UserPublicDetail from './detail/Container'
 
-import {USER_AVATAR_DEFAULT} from '@/constant'
+import {USER_AVATAR_DEFAULT, LINKIFY_OPTION} from '@/constant'
 import config from '@/config'
 import MediaQuery from 'react-responsive'
+
+import linkifyStr from 'linkifyjs/string';
 
 import './style.scss'
 
@@ -315,11 +317,13 @@ export default class extends BaseComponent {
     }
 
     renderDescription(isMobile) {
+        const bio = _.get(this.props, 'user.profile.bio') || ''
+        const content = linkifyStr(bio, LINKIFY_OPTION)
         return (
             <div>
                 {
                     this.props.user.profile.bio &&
-                    <div className={`profile-description ${isMobile ? 'profile-description-mobile' : ''}`}>{this.props.user.profile.bio}</div>
+                    <div className={`profile-description ${isMobile ? 'profile-description-mobile' : ''}`} dangerouslySetInnerHTML={{__html: content}}></div>
                 }
             </div>
         )

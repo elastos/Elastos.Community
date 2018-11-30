@@ -56,7 +56,9 @@ class C extends BaseComponent {
 
         let domains = []
         for (let i of details.domain) {
-            domains.push(<Tag key={i}>{i}</Tag>)
+            if (i) {
+                domains.push(<Tag key={i}>{i}</Tag>)
+            }
         }
 
         return (
