@@ -19,8 +19,7 @@ export const EMPOWER_MAX_REGIONAL_EVANGELIST = 10;
 export const MAX_LENGTH_COMMENT = 1024;
 export const TOOLBAR_OPTIONS = [
     ['bold', 'italic', 'underline', 'strike'],
-    [{'list': 'ordered'}, {'list': 'bullet'}],
-    ['link']
+    [{'list': 'ordered'}, {'list': 'bullet'}]
 ];
 export const LINKIFY_OPTION = {
     defaultProtocol: 'https',
