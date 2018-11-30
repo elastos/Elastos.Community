@@ -17,6 +17,7 @@ import {
     Divider
 
 } from 'antd'
+import { TOOLBAR_OPTIONS } from '@/config/constant'
 import I18N from '@/I18N'
 import {upload_file} from '@/util'
 import './style.scss'

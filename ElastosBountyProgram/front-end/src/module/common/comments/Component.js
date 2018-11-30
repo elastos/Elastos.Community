@@ -9,8 +9,9 @@ import moment from 'moment'
 import _ from 'lodash'
 import I18N from '@/I18N'
 import ProfilePopup from '@/module/profile/OverviewPopup/Container'
-import { USER_AVATAR_DEFAULT } from '@/constant'
 import MediaQuery from 'react-responsive'
+import { USER_AVATAR_DEFAULT, LINKIFY_OPTION } from '@/constant'
+import linkifyStr from 'linkifyjs/string';
 
 const TextArea = Input.TextArea
 const FormItem = Form.Item
@@ -230,7 +231,7 @@ class C extends BaseComponent {
             ** Format visuals
             */
             const spanCreator = (content, key) => {
-                return <span key={key} className="non-mention">{content}</span>
+                return <div key={key} className="non-mention" dangerouslySetInnerHTML={{__html: content}} />
             }
             const mentionCreator = (mention, key) => {
                 return <a key={key} onClick={() => this.showUserProfile(mention.replace('@', ''))}>
@@ -303,8 +304,9 @@ class C extends BaseComponent {
             const createdById = (thread.createdBy && thread.createdBy._id)
             const dateFormatted = dateFormatter(thread.createdAt)
 
+            const linkifyComment = linkifyStr(thread.comment || '', LINKIFY_OPTION)
             return {
-                comment: thread.comment,
+                comment: linkifyComment,
                 headline: thread.headline,
                 description: (
                     <div className="commenter-info">

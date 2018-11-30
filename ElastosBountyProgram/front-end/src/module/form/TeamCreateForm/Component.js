@@ -22,6 +22,7 @@ import {
 import I18N from '@/I18N'
 import InputTags from '@/module/shared/InputTags/Component'
 import ReactQuill from 'react-quill'
+import { TOOLBAR_OPTIONS } from '@/config/constant'
 import {TEAM_TASK_DOMAIN, SKILLSET_TYPE} from '@/constant'
 import {upload_file} from '@/util'
 import sanitizeHtml from 'sanitize-html'
@@ -107,10 +108,7 @@ class C extends BaseComponent {
         const textarea_el = (
             <ReactQuill
                 modules={{
-                    toolbar: [
-                        ['bold', 'italic', 'underline','strike'],
-                        [{'list': 'ordered'}, {'list': 'bullet'}]
-                    ]
+                    toolbar: TOOLBAR_OPTIONS
                 }}
             />
         )

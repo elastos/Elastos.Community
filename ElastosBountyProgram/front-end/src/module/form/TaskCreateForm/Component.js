@@ -24,9 +24,10 @@ import {
 } from 'antd'
 
 import I18N from '@/I18N'
-import {upload_file} from "@/util";
-import ReactQuill from 'react-quill';
+import {upload_file} from '@/util'
+import ReactQuill from 'react-quill'
 import './style.scss'
+import { TOOLBAR_OPTIONS } from '@/config/constant'
 import moment from 'moment'
 import _ from 'lodash'
 
@@ -138,8 +139,8 @@ class C extends BaseComponent {
             taskCategory: this.props.taskCategory || TASK_CATEGORY.SOCIAL,
             assignSelf: props.existingTask ? props.existingTask.assignSelf : !this.props.circleId,
             eventDateRange: (props.existingTask && props.existingTask.eventDateRange) || false,
-            thumbnail_url : (props.existingTask && props.existingTask.thumbnail) || null,
-            thumbnail_loading : false,
+            thumbnail_url: (props.existingTask && props.existingTask.thumbnail) || null,
+            thumbnail_loading: false,
             thumbnail_filename: (props.existingTask && props.existingTask.thumbnailFilename) || '',
             thumbnail_type: '',
             attachment_url: (props.existingTask && props.existingTask.attachment) || null,
@@ -197,11 +198,11 @@ class C extends BaseComponent {
         const taskCategory_el = (
             <Select
                 disabled={hasLeaderEditRestrictions} onChange={(val) => {
-                this.setState({taskCategory: val})
-                if (this.state.taskCategory === TASK_TYPE.PROJECT) {
+                    this.setState({taskCategory: val})
+                    if (this.state.taskCategory === TASK_TYPE.PROJECT) {
                     // this.setState({taskType: TASK_TYPE.TASK})
-                }
-            }}>
+                    }
+                }}>
                 <Option value={TASK_CATEGORY.SOCIAL}>Social</Option>
                 <Option value={TASK_CATEGORY.DEVELOPER}>Developer</Option>
             </Select>
@@ -280,10 +281,7 @@ class C extends BaseComponent {
         const taskDesc_el = (
             <ReactQuill
                 modules={{
-                    toolbar: [
-                        ['bold', 'italic', 'underline', 'strike'],
-                        [{'list': 'ordered'}, {'list': 'bullet'}]
-                    ]
+                    toolbar: TOOLBAR_OPTIONS
                 }}
             />
         )
@@ -297,10 +295,7 @@ class C extends BaseComponent {
         const taskDescBreakdown_el = (
             <ReactQuill
                 modules={{
-                    toolbar: [
-                        ['bold', 'italic', 'underline', 'strike'],
-                        [{'list': 'ordered'}, {'list': 'bullet'}]
-                    ]
+                    toolbar: TOOLBAR_OPTIONS
                 }}
             />
         )
@@ -454,15 +449,15 @@ class C extends BaseComponent {
         });
         const p_thumbnail = {
             showUploadList: false,
-            customRequest :(info)=>{
+            customRequest: (info) => {
                 this.setState({
                     thumbnail_loading: true
                 });
-                upload_file(info.file).then((d)=>{
+                upload_file(info.file).then((d) => {
                     const url = d.url;
                     this.setState({
                         thumbnail_loading: false,
-                        thumbnail_url : url,
+                        thumbnail_url: url,
                         thumbnail_type: d.type,
                         thumbnail_filename: d.filename,
 
@@ -475,8 +470,8 @@ class C extends BaseComponent {
             <Upload name="logo" listType="picture" {...p_thumbnail}>
                 {
                     this.state.thumbnail_url ? (
-                        <img style={{height:'100px'}} src={this.state.thumbnail_url} />
-                        ) : (
+                        <img style={{height: '100px'}} src={this.state.thumbnail_url} />
+                    ) : (
                         <Button loading={this.state.thumbnail_loading}>
                             <Icon type="upload" /> {I18N.get('from.TaskCreateForm.uploadtext')}
                         </Button>
@@ -490,15 +485,15 @@ class C extends BaseComponent {
         });
         const p_attachment = {
             showUploadList: false,
-            customRequest :(info)=>{
+            customRequest: (info) => {
                 this.setState({
                     attachment_loading: true
                 });
-                upload_file(info.file).then((d)=>{
+                upload_file(info.file).then((d) => {
                     const url = d.url;
                     this.setState({
                         attachment_loading: false,
-                        attachment_url : url,
+                        attachment_url: url,
                         attachment_type: d.type,
                         attachment_filename: d.filename,
 
@@ -512,9 +507,9 @@ class C extends BaseComponent {
                 {
                     this.state.attachment_url ? (
                         <a target="_blank" href={this.state.attachment_url}>
-                            {this.state.attachment_type === 'application/pdf' ?
-                                <Icon type="file-pdf"/> :
-                                <Icon type="file"/>
+                            {this.state.attachment_type === 'application/pdf'
+                                ? <Icon type="file-pdf"/>
+                                : <Icon type="file"/>
                             } &nbsp;
                             {this.state.attachment_filename}
                         </a>
@@ -780,48 +775,48 @@ class C extends BaseComponent {
         const formItemLayout = {
             labelCol: {
                 xs: {span: 24},
-                sm: {span: 8},
+                sm: {span: 8}
             },
             wrapperCol: {
                 xs: {span: 24},
-                sm: {span: 12},
-            },
+                sm: {span: 12}
+            }
         }
 
         const formItemLayoutAdjLeft = {
             labelCol: {
                 xs: {span: 24},
-                sm: {span: 16},
+                sm: {span: 16}
             },
             wrapperCol: {
                 xs: {span: 24},
-                sm: {span: 8},
-            },
+                sm: {span: 8}
+            }
         }
 
         const formItemLayoutAdjRight = {
             labelCol: {
                 xs: {span: 24},
-                sm: {span: 8},
+                sm: {span: 8}
             },
             wrapperCol: {
                 xs: {span: 24},
-                sm: {span: 16},
-            },
+                sm: {span: 16}
+            }
         }
 
         const formItemNoLabelLayout = {
             wrapperCol: {
                 xs: {span: 24},
-                sm: {offset: 8, span: 12},
-            },
+                sm: {offset: 8, span: 12}
+            }
         }
 
         const formItemCenterLayout = {
             wrapperCol: {
                 xs: {span: 24},
-                sm: {offset: 6, span: 12},
-            },
+                sm: {offset: 6, span: 12}
+            }
         }
 
         // const existingTask = this.props.existingTask
@@ -848,11 +843,11 @@ class C extends BaseComponent {
                             {p.taskCommunity}
                         </FormItem>
 
-                        {!this.state.thumbnail_url ?
-                            <FormItem label={I18N.get('from.TaskCreateForm.label.thumbnail')} {...formItemLayout}>
+                        {!this.state.thumbnail_url
+                            ? <FormItem label={I18N.get('from.TaskCreateForm.label.thumbnail')} {...formItemLayout}>
                                 {p.thumbnail}
-                            </FormItem> :
-                            <Row className="ant-form-item">
+                            </FormItem>
+                            : <Row className="ant-form-item">
                                 <Col span={8} className="ant-form-item-label text-right">
                                     <label>
                                         {I18N.get('from.TaskCreateForm.label.thumbnail')}
@@ -960,13 +955,13 @@ class C extends BaseComponent {
                             </FormItem>
                             <Row>
                                 <Col span={this.state.eventDateRange ? 12 : 24}>
-                                    {this.state.eventDateRange ?
-                                    <FormItem label={I18N.get('from.TaskCreateForm.label.eventdate') + (this.state.eventDateRange ? I18N.get('from.TaskCreateForm.label.start') : '')} {...formItemLayoutAdjLeft}>
-                                        {p.eventDateRangeStart}
-                                    </FormItem> :
-                                    <FormItem label={I18N.get('from.TaskCreateForm.label.eventdate') + (this.state.eventDateRange ? I18N.get('from.TaskCreateForm.label.start') : '')} {...formItemLayout}>
-                                        {p.eventDateRangeStart}
-                                    </FormItem>}
+                                    {this.state.eventDateRange
+                                    ? <FormItem label={I18N.get('from.TaskCreateForm.label.eventdate') + (this.state.eventDateRange ? I18N.get('from.TaskCreateForm.label.start') : '')} {...formItemLayoutAdjLeft}>
+                                            {p.eventDateRangeStart}
+                                        </FormItem>
+                                    : <FormItem label={I18N.get('from.TaskCreateForm.label.eventdate') + (this.state.eventDateRange ? I18N.get('from.TaskCreateForm.label.start') : '')} {...formItemLayout}>
+                                            {p.eventDateRangeStart}
+                                        </FormItem>}
                                 </Col>
                                 {this.state.eventDateRange &&
                                 <Col span={12}>
@@ -1000,7 +995,7 @@ class C extends BaseComponent {
                         {!this.props.circleId && (!this.props.existingTask || this.props.is_admin) &&
                             <Row>
                                 <Col span={12}>
-                                    <Card hoverable className={'feature-box' + (this.state.assignSelf ? ' selected' : '')} onClick={() => {this.setState({assignSelf: true})}}>
+                                    <Card hoverable className={'feature-box' + (this.state.assignSelf ? ' selected' : '')} onClick={() => { this.setState({assignSelf: true}) }}>
                                         <div className="title">
                                             <span>{I18N.get('from.TaskCreateForm.label.private')}</span>
                                         </div>
@@ -1013,7 +1008,7 @@ class C extends BaseComponent {
                                     </Card>
                                 </Col>
                                 <Col span={12}>
-                                    <Card hoverable className={'feature-box' + (!this.state.assignSelf ? ' selected' : '')} onClick={() => {this.setState({assignSelf: false})}}>
+                                    <Card hoverable className={'feature-box' + (!this.state.assignSelf ? ' selected' : '')} onClick={() => { this.setState({assignSelf: false}) }}>
                                         <div className="title">
                                             <span>{I18N.get('from.TaskCreateForm.label.public')}</span>
                                         </div>
@@ -1058,7 +1053,7 @@ class C extends BaseComponent {
 
                                 {!this.props.is_admin && (!this.props.existingTask || this.props.existingTask.status === TASK_STATUS.PENDING) &&
                                 <FormItem {...formItemNoLabelLayout}>
-                                    <Checkbox name="readDisclaimer" checked={this.state.readDisclaimer} onChange={() => {this.setState({readDisclaimer: !this.state.readDisclaimer})}}/>
+                                    <Checkbox name="readDisclaimer" checked={this.state.readDisclaimer} onChange={() => { this.setState({readDisclaimer: !this.state.readDisclaimer}) }}/>
 
                                     <span id="disclaimerLink" className="disclaimerLink" onClick={this.showDisclaimer.bind(this)}>{I18N.get('from.TaskCreateForm.label.disclaimerrule')}</span>
                                 </FormItem>
@@ -1081,16 +1076,16 @@ class C extends BaseComponent {
                         */}
                         <h3 className="no-margin">{I18N.get('from.TaskCreateForm.label.attachment')}</h3>
                         <br/>
-                        {!this.state.attachment_url ?
-                            <FormItem {...formItemCenterLayout} className="attachmentUpload">
+                        {!this.state.attachment_url
+                            ? <FormItem {...formItemCenterLayout} className="attachmentUpload">
                                 {p.attachment}
-                            </FormItem> :
-                            <Row>
+                            </FormItem>
+                            : <Row>
                                 <Col offset={8} span={16}>
                                     <a target="_blank" href={this.state.attachment_url}>
-                                        {this.state.attachment_type === 'application/pdf' ?
-                                            <Icon type="file-pdf"/> :
-                                            <Icon type="file"/>
+                                        {this.state.attachment_type === 'application/pdf'
+                                            ? <Icon type="file-pdf"/>
+                                            : <Icon type="file"/>
                                         } &nbsp;
                                         {this.state.attachment_filename}
                                     </a>
@@ -1151,7 +1146,7 @@ class C extends BaseComponent {
     removeAttachment() {
         this.setState({
             attachment_loading: false,
-            attachment_url : null,
+            attachment_url: null,
             attachment_type: '',
             attachment_filename: '',
 
@@ -1162,7 +1157,7 @@ class C extends BaseComponent {
     removeThumbnail() {
         this.setState({
             thumbnail_loading: false,
-            thumbnail_url : null,
+            thumbnail_url: null,
             thumbnail_type: '',
             thumbnail_filename: '',
 

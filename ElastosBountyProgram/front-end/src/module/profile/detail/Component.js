@@ -7,11 +7,12 @@ import Comments from '@/module/common/comments/Container'
 import {Col, Row, Tabs, Icon, Button, Spin, Table, Tooltip, Tag, Modal} from 'antd'
 import I18N from '@/I18N'
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS,
-    USER_ROLE, USER_AVATAR_DEFAULT, TEAM_TYPE} from '@/constant'
+    USER_ROLE, USER_AVATAR_DEFAULT, TEAM_TYPE,LINKIFY_OPTION} from '@/constant'
 import './style.scss'
 import config from '@/config'
 import MediaQuery from 'react-responsive'
 import _ from 'lodash'
+import linkifyStr from 'linkifyjs/string';
 
 const TabPane = Tabs.TabPane
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
@@ -275,11 +276,13 @@ export default class extends BaseComponent {
     }
 
     renderDescription(isMobile) {
+        const bio = _.get(this.props, 'user.profile.bio') || ''
+        const content = linkifyStr(bio, LINKIFY_OPTION)
         return (
             <div>
                 {
                     this.props.member.profile.bio &&
-                    <div className={`profile-description ${isMobile ? 'profile-description-mobile' : ''}`}>{this.props.member.profile.bio}</div>
+                    <div className={`profile-description ${isMobile ? 'profile-description-mobile' : ''}`} dangerouslySetInnerHTML={{__html: content}}></div>
                 }
             </div>
         )
