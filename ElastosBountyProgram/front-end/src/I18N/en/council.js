@@ -95,7 +95,7 @@ export default {
         In the case of voting to amend the Constitution, voting shall follow the process as outlined in the Elastos Community Voting Rules, with the following exception. Amending the Constitution requires the following threshold:
         <ol>
             <li>ELA participating in voting accounting for more than 30% of circulated ELA by the deadline of such voting;</li>
-            <li>Support of 66.67% of the votes represented by ELA participating in voting.;</li>
+            <li>Support of 66.67% of the votes represented by ELA participating in voting.</li>
         </ol>
 
         <strong>ARTICLE 9 - MISCELLANEOUS</strong>
@@ -148,7 +148,7 @@ export default {
         
         <strong>4 Structure</strong>
         <ol>
-            <li>The Cyber Republic Council has seven Members and two Alternate Members, who all represent community members. </li>
+            <li>The Cyber Republic Council has seven Members and five Alternate Members, who all represent community members. </li>
             <li>Each term lasts for one year. </li>
             <li>Cyber Republic Council Members may be re-elected to serve consecutive terms. </li>
             <li>In the case a selection does not take place before a term ends, the Cyber Republic Council Members shall continue to shoulder their responsibility as Council members until new Cyber Republic Council Members are selected.</li>
@@ -318,7 +318,7 @@ export default {
             <li>Corresponding ELA participating in the voting shall remain locked-up until the deadline of the voting.</li>
             <li>Cumulative voting is adopted in selecting the Cyber Republic Council Members. This process is described in Section 6(1) of this Document.</li>
             <li>Uncirculated ELA represents no vote and shall not be calculated in the base. Uncirculated ELA are the unspent ELA for the purpose of ecosystem development, and the ELA account balance of the Elastos Foundation that have not been transferred to the accounts of cooperative parties or individuals for ecosystem development.</li>
-            <li>ELA participating in the locked-up plan (different from being locked-up during the community vote) is part of the ELA in circulation. </li>
+            
         </ol>
         
         <strong>11 Voting Thresholds</strong>
