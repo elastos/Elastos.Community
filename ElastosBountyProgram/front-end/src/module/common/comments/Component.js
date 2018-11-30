@@ -2,6 +2,7 @@ import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import {Form, Col, Row, List, Avatar, Icon, Divider, Button, Input, Mention, Modal} from 'antd'
 import config from '@/config'
+import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
 import {MAX_LENGTH_COMMENT} from '@/config/constant'
 import './style.scss'
 import moment from 'moment'
@@ -17,8 +18,7 @@ const FormItem = Form.Item
 class C extends BaseComponent {
     ord_states() {
         return {
-            showUserInfo: null,
-            isMobile: false
+            showUserInfo: null
         }
     }
 
@@ -73,11 +73,27 @@ class C extends BaseComponent {
         )
     }
 
-    detectMobile() {
-        this.setState({isMobile: true})
+    getInputProps() {
+        const {getFieldDecorator} = this.props.form
+
+        const headline_fn = getFieldDecorator('headline', {
+            rules: [{
+                max: 100, message: 'Headline is too long'
+            }, {
+                required: this.props.headlines, message: 'Please input headline!'
+            }],
+            initialValue: ''
+        })
+        const headline_el = (
+            <Input placeholder="Headline"/>
+        )
+
+        return {
+            headline: headline_fn(headline_el)
+        }
     }
 
-    getInputProps() {
+    renderComment() {
         const allUsers = _.map(this.props.all_users, (user) => user.username)
         const {getFieldDecorator} = this.props.form
         const comment_fn = getFieldDecorator('comment', {
@@ -93,33 +109,23 @@ class C extends BaseComponent {
                 placeholder={I18N.get('comments.commentsOrUpdates')}/>
         )
 
-        const commentForMobile_fn = getFieldDecorator('commentForMobile', {
-            rules: []
+        return comment_fn(comment_el)
+    }
+
+    renderCommentMobile() {
+        const allUsers = _.map(this.props.all_users, (user) => user.username)
+        const {getFieldDecorator} = this.props.form
+        const comment_fn = getFieldDecorator('comment', {
+            rules: [],
+            initialValue: ''
         })
-        const commentForMobile_el = (
+        const comment_el = (
             <TextArea
                 style={{ width: '100%', height: 100 }}
-                onChange={this.detectMobile.bind(this)}
                 placeholder={I18N.get('comments.commentsOrUpdates')} />
         )
 
-        const headline_fn = getFieldDecorator('headline', {
-            rules: [{
-                max: 100, message: 'Headline is too long'
-            }, {
-                required: this.props.headlines, message: 'Please input headline!'
-            }],
-            initialValue: ''
-        })
-        const headline_el = (
-            <Input placeholder="Headline"/>
-        )
-
-        return {
-            comment: comment_fn(comment_el),
-            commentForMobile: commentForMobile_fn(commentForMobile_el),
-            headline: headline_fn(headline_el)
-        }
+        return comment_fn(comment_el)
     }
 
     isUserSubscribed() {
@@ -167,14 +173,14 @@ class C extends BaseComponent {
                         {p.headline}
                     </FormItem>
                 }
-                <MediaQuery minWidth={720}>
+                <MediaQuery minWidth={MIN_WIDTH_PC}>
                     <FormItem>
-                        {p.comment}
+                        {this.renderComment()}
                     </FormItem>
                 </MediaQuery>
-                <MediaQuery maxWidth={720}>
+                <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
                     <FormItem>
-                        {p.commentForMobile}
+                        {this.renderCommentMobile()}
                     </FormItem>
                 </MediaQuery>
                 <FormItem>
@@ -353,62 +359,41 @@ class C extends BaseComponent {
     handleSubmit(e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
-            let commentPlainText
-
-            if (this.state.isMobile) {
-                commentPlainText = values.commentForMobile
-
-                if (!commentPlainText) {
-                    this.props.form.setFields({
-                        commentForMobile: {
-                            errors: [new Error('Please input comment')],
-                        }
-                    });
-                    return;
-                }
-
-                if (commentPlainText.length > MAX_LENGTH_COMMENT) {
-                    this.props.form.setFields({
-                        commentForMobile: {
-                            value: values.comment,
-                            errors: [new Error('Comment is too long')],
-                        }
-                    });
-                    return;
-                }
-
-            } else {
-                commentPlainText = values.comment.getPlainText()
-
-                if (!commentPlainText) {
-                    this.props.form.setFields({
-                        comment: {
-                            errors: [new Error('Please input comment')],
-                        }
-                    });
-                    return;
-                }
-
-                if (commentPlainText.length > MAX_LENGTH_COMMENT) {
-                    this.props.form.setFields({
-                        comment: {
-                            value: values.comment,
-                            errors: [new Error('Comment is too long')],
-                        }
-                    });
-                    return;
-                }
-            }
-
-
             if (!err) {
+                const comment = values.comment
+                const commentPlainText = _.isFunction(comment.getPlainText)
+                    ? comment.getPlainText()
+                    : comment
+
+                if (_.isEmpty(commentPlainText)) {
+                    this.props.form.setFields({
+                        comment: {
+                            errors: [new Error('Please input comment')],
+                        },
+                    })
+
+                    return
+                }
+
+                if (commentPlainText.length > MAX_LENGTH_COMMENT) {
+                    this.props.form.setFields({
+                        comment: {
+                            value: comment,
+                            errors: [new Error('Comment is too long')],
+                        }
+                    })
+
+                    return
+                }
+
                 this.props.postComment(this.props.type,
                     this.props.reduxType,
                     this.props.detailReducer,
                     this.props.returnUrl,
                     this.getModelId(),
                     commentPlainText,
-                    values.headline).then(() => {
+                    values.headline)
+                    .then(() => {
                         this.props.form.resetFields()
                     })
             }
