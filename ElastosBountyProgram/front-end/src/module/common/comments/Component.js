@@ -388,14 +388,12 @@ class C extends BaseComponent {
                     return
                 }
 
-                const linkifyComment = linkifyStr(commentPlainText || '', LINKIFY_OPTION)
-
                 this.props.postComment(this.props.type,
                     this.props.reduxType,
                     this.props.detailReducer,
                     this.props.returnUrl,
                     this.getModelId(),
-                    linkifyComment,
+                    commentPlainText,
                     values.headline)
                     .then(() => {
                         this.props.form.resetFields()
