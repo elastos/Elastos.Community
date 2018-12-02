@@ -439,7 +439,9 @@ class C extends BaseComponent {
             return user.username
         }
 
-        return _.trim([user.profile.firstName, user.profile.lastName].join(' '))
+        return <a onClick={this.linkProfileInfo.bind(this, user)}>
+            {_.trim([user.profile.firstName, user.profile.lastName].join(' '))}
+        </a>
     }
 
     renderCandidates(candidates) {
