@@ -44,6 +44,12 @@ Generally a full-time developer should average 15-18 points a week, so a velocit
 
 ---
 
+## Technical BD KPIs
+
+#### 1. Opportunities Advised (Copper)
+
+---
+
 ## Community KPIs
 
 #### 1. Cyber Republic Users / Active per Week

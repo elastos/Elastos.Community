@@ -6,6 +6,7 @@
     - Structure
 
         - [Overview](/main/)
+        - [Token Fund Team (Draft)](/main/structure/token-fund-team.md)
 
     - User's Guide
 

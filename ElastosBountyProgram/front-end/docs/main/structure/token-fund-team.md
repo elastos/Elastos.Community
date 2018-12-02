@@ -1,23 +1,60 @@
 
-# Token Fund Team
+# Token Fund Team Founding Document
+
+!> This is a draft - Work in Progress
 
 ### Mandate
 
 The token fund team is an investment team responsible for finding, researching and helping to select the best projects for Elastos to kick start/seed invest in.
 Each quarter the team will have a budget that is approved by the CRC, the secretariat will ensure that the request is reasonable and follow up on the KPIs.
 
+?> It is important to note that the budgeted amount for each **investment quarter** is a **lifetime fund** for the projects selected by that quarter. For example a million dollar investment fund is only expected to be slowly distributed over a term of a year as each project hits their milestones.
+
+![CR-2019-Token-Fund-Timeline](token-fund-timeline.png)
 
 ### Key Rules
 
 1. **Project Selection** - the CRC and the Token Fund Team will both select an equal number of projects to fund from a pool of qualified projects.
-To ensure a healthy selection of candidates, the CRC can only select 35% of the candidates and the Token Fund Team may select another 35%. This means that for every 14 selected
-candidates, the Token Fund Team must find 20 qualifying candidates (rounded down).
+To ensure a healthy selection of candidates, the CRC can only select up to 35% of the candidates and the Token Fund Team may select another 35% (rounded down).
+
+?> Feel free to comment on this ratio, or if the Council should even be allowed to choose candidates. I believe Kevin would prefer to be involved in selecting at least a couple candidates, but Rebecca originally envisioned the team make all selections.
 
 2. **Funding by Milestones** - the Token Fund Team must clearly define multiple milestones for each project, a portion of the funding will be attached to each milestone.
 
-3. **Seed Investment Only** - our investments are meant to kick start the projects only and are not meant to fund the project in its entirety. It is expected that progress advances
-fast enough to ensure the project has enough funding through its own token. If this is not feasible it should be caught in the project selection stage or as soon as possible at the milestones.
-Should this still happen an audit/review will be necessary and possible escalation to the CRC.
+3. **Investment Period of 1 Year** - after selection Cyber Republic will only fund the project for a maximum of one year after which it must reach a Minimum Viable Product (MVP).
+Projects that cannot reasonably reach an MVP will not be considered by the Token Fund Team, instead they can be referred to the **Business Development Team**.
+
+4. **Seed Investment Only** - our investments are meant to kick start the projects only to the MVP stage and are not meant to fund the project in its entirety.
+It is expected that projects plan to raise funding through its own token or other means part way through their business plan. If this is not feasible it should be caught
+in the project selection stage or as soon as possible at the milestones. Should this still happen an audit/review will be necessary and possible escalation to the CRC.
+
+5. **Return of Unused Funds** - any projects that do not hit their required milestones will possibly no longer receive additional funding. Unused funds will be returned
+to the Cyber Republic fund for investment in another quarter. If a milestone is missed an appeal can be submitted to the Token Fund Team within a month of the deadline,
+the team will review the appeal and provide the review plus any supporting documents to the council for possible extension.
+
+
+### Phase 1 - Jan 2019 - **Research/Collaboration Phase**
+
+##### Working with the Best Candidates/Teams to Develop their Whitepapers
+
+We will be working closely with the best teams we selected in Phase 1 on their business plans, whitepapers and technical designs.
+The ultimate goal is to qualify a set of candidates for selection by the CRC and the Token Fund Team, this will be
+run as a competition of sorts because in the Token Fund Team rules only a maximum 70% of the qualified applications will be funded.
+
+### Phase 2 - Feb 2019 - **Milestone Phase**
+
+##### Technical Design, Milestones and Business Development
+
+At this phase the technical members of each project will work on defining reasonable milestones and set a timeline to reach the Minimum Viable Product (MVP).
+Other members of each project's team will start basic business development initiatives such as networking and researching competing products.
+As described in the Token Fund Team founding document the MVP must be built within 1 year and a plan to raise additional/continual funds must be in place.
+
+### Phase 3 - Mar 2019 - **Selection Phase**
+
+##### Submission of Proposals to Council and Selection Process
+
+At the start of phase 3 the whitepapers will be presented to the Council,
+
 
 ### Policies
 
