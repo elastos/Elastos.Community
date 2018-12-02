@@ -37,6 +37,10 @@ export default {
             data['h:Reply-To'] = `${replyTo.name} <${replyTo.email}>`
         }
 
+        if (process.env.NODE_ENV === 'dev') {
+            console.log('Debug - Sending Mail:', data)
+        }
+
         return new Promise((resolve, reject) => {
 
             resolve()
