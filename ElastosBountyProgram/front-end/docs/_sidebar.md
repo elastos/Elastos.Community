@@ -11,4 +11,6 @@
 
 - [Media](/media/)
 
+- [Contribute to this Documentation](/how-to-contribute.md)
+
 

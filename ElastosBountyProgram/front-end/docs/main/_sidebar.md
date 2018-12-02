@@ -12,9 +12,11 @@
         - [CRcles](/main/CRcles.md)
         - [Teams](/main/cr-teams.md)
         - [Ambassadors](/main/ambassadors.md)
-        - Tasks
+        - Tasks / Projects
+            - [Creating Tasks](/main/user-guide/tasks/task-create.md)
             - [Applying for Tasks](/main/user-guide/tasks/task-apply.md)
-            - [Task Approval Process](/main/user-guide/tasks/task-approval.md)
+            - [Statuses](/main/user-guide/tasks/task-status.md)
+            - [Approval Process](/main/user-guide/tasks/task-approval.md)
 
     - Roster and Contacts
         - [Council](/main/roster/council.md)
