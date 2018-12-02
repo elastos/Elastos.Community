@@ -14,8 +14,10 @@ Each quarter the team will have a budget that is approved by the CRC, the secret
 
 ### Key Rules
 
-1. **Project Selection** - the CRC and the Token Fund Team will both select an equal number of projects to fund from a pool of qualified projects.
-To ensure a healthy selection of candidates, the CRC can only select up to 35% of the candidates and the Token Fund Team may select another 35% (rounded down).
+1. **Project Selection** - the CRC and the Token Fund Team will both be allowed to select projects to fund from a pool of qualified projects.
+To ensure a healthy selection of candidates only 70% of the qualified projects can be selected, forcing the Token Fund Team to provide more choices.
+Of the 70%, the CRC can optionally select up to half personally, the remaining allotment is left to the Token Fund Team - all fractions are handled by **bankers rounding**.
+*E.g. 20 qualified projects, CRC selects up to 7, Team selects remaining 7. Or if CRC selects 5, thus the Team can select 9 projects.*
 
 ?> Feel free to comment on this ratio, or if the Council should even be allowed to choose candidates. I believe Kevin would prefer to be involved in selecting at least a couple candidates, but Rebecca originally envisioned the team make all selections.
 
@@ -37,7 +39,7 @@ the team will review the appeal and provide the review plus any supporting docum
 
 ##### Working with the Best Candidates/Teams to Develop their Whitepapers
 
-We will be working closely with the best teams we selected in Phase 1 on their business plans, whitepapers and technical designs.
+We will be working closely with the best teams we find on their business plans, whitepapers and technical designs.
 The ultimate goal is to qualify a set of candidates for selection by the CRC and the Token Fund Team, this will be
 run as a competition of sorts because in the Token Fund Team rules only a maximum 70% of the qualified applications will be funded.
 
@@ -53,7 +55,8 @@ As described in the Token Fund Team founding document the MVP must be built with
 
 ##### Submission of Proposals to Council and Selection Process
 
-At the start of phase 3 the whitepapers will be presented to the Council,
+At the start of phase 3 all of the whitepapers will be presented to the Council for reference. The Token Fund Team will have this month to make
+their final decisions. The Council may also select up to 35% of the pool of candidates if they wish, but this is optional.
 
 
 ### Policies
