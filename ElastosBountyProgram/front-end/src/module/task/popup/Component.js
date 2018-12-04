@@ -2,29 +2,19 @@ import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import moment from 'moment'
 import {
-    message,
     Col,
     Row,
-    Tag,
     Icon,
     Carousel,
-    Avatar,
     Button,
     Spin,
-    Select,
-    Table,
-    Input,
     Form,
-    Divider,
     Modal,
-    InputNumber,
     Popover
 } from 'antd'
 import I18N from '@/I18N'
-import { TASK_CANDIDATE_STATUS, TASK_CANDIDATE_TYPE, TASK_TYPE,
-    TEAM_USER_STATUS, TASK_STATUS, USER_AVATAR_DEFAULT } from '@/constant'
-import Comments from '@/module/common/comments/Container'
-import ProjectApplication from '@/module/project/application/Container'
+import { TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT } from '@/constant'
+import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 import _ from 'lodash'
 import './style.scss'
 
@@ -36,6 +26,7 @@ class C extends BaseComponent {
 
     ord_states() {
         return {
+            showUserInfo: null
         }
     }
 
@@ -70,6 +61,15 @@ class C extends BaseComponent {
                         </div>
                     )
                 }
+                <Modal
+                    className="profile-overview-popup-modal"
+                    visible={!!this.state.showUserInfo}
+                    onCancel={this.handleCancelProfilePopup.bind(this)}
+                    footer={null}>
+                    { this.state.showUserInfo &&
+                        <ProfilePopup showUserInfo={this.state.showUserInfo}/>
+                    }
+                </Modal>
             </div>
         )
     }
@@ -114,8 +114,11 @@ class C extends BaseComponent {
 
         return (
             <div className="app-meta">
-                {generateRow(I18N.get('task.owner'),
-                    this.getUserNameWithFallback(detail.createdBy))}
+                {generateRow(I18N.get('task.owner'), (
+                    <a onClick={this.linkProfileInfo.bind(this, detail.createdBy)}>
+                        {this.getUserNameWithFallback(detail.createdBy)}
+                    </a>
+                ))}
 
                 {detail.circle &&
                     generateRow(I18N.get('task.circle'), detail.circle.name)}
@@ -255,8 +258,10 @@ class C extends BaseComponent {
         return this.props.detail.createdBy._id === this.props.currentUserId
     }
 
-    linkProfileInfo(userId) {
-        this.props.history.push(`/member/${userId}`)
+    linkProfileInfo(user) {
+        this.setState({
+            showUserInfo: user
+        })
     }
 
     getCarousel() {
@@ -315,6 +320,12 @@ class C extends BaseComponent {
 
     isAssigned() {
         return !!_.find(this.props.detail.candidates, {status: TASK_CANDIDATE_STATUS.APPROVED})
+    }
+
+    handleCancelProfilePopup() {
+        this.setState({
+            showUserInfo: null
+        })
     }
 }
 

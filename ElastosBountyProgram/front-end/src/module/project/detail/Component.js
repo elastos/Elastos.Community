@@ -120,8 +120,11 @@ class C extends BaseComponent {
 
         return (
             <div className="meta">
-                {generateRow(I18N.get('task.owner'),
-                    this.getUserNameWithFallback(detail.createdBy))}
+                {generateRow(I18N.get('task.owner'), (
+                    <a onClick={this.linkProfileInfo.bind(this, detail.createdBy)}>
+                        {this.getUserNameWithFallback(detail.createdBy)}
+                    </a>
+                ))}
 
                 {detail.circle &&
                     generateRow(I18N.get('task.circle'), I18N.get(`crcle.${detail.circle.name.toLowerCase()}`))}
