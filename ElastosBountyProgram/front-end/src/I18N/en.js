@@ -1117,6 +1117,10 @@ const en = {
     'cr-video.q7.subtitle': 'Enter your email and we will contact you personally',
     'cr-video.q7.button_text': 'Submit',
 
+    'crcle.category.essential': 'Essential',
+    'crcle.category.advanced': 'Advanced',
+    'crcle.category.services': 'Services',
+    'crcle.category.developer': 'Developer',
     'crcle.product': 'Product',
     'crcle.support': 'Support',
     'crcle.media': 'Media',
