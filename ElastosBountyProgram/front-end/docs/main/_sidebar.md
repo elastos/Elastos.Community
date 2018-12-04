@@ -16,5 +16,4 @@
         - Tasks / Projects
             - [Creating Tasks](/main/user-guide/tasks/task-create.md)
             - [Applying for Tasks](/main/user-guide/tasks/task-apply.md)
-            - [Statuses](/main/user-guide/tasks/task-status.md)
-            - [Approval Process](/main/user-guide/tasks/task-approval.md)
+            - [Statuses & Approval Process](/main/user-guide/tasks/task-approval.md)
