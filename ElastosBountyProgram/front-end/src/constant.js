@@ -170,7 +170,7 @@ export const TEAM_TASK_DOMAIN = create([
 ])
 export const TEAM_USER_STATUS = create(['NORMAL', 'PENDING', 'REJECT'])
 export const TEAM_TYPE = create(['TEAM', 'CRCLE'])
-export const TEAM_SUBCATEGORY = create(['ESSENTIAL', 'ADVANCED', 'SERVICES'])
+export const TEAM_SUBCATEGORY = create(['ESSENTIAL', 'ADVANCED', 'SERVICES', 'DEVELOPER'])
 // Images
 export const USER_AVATAR_DEFAULT = '/assets/images/user_blurred_white.png'
 export const TASK_AVATAR_DEFAULT = '/assets/images/Elastos_Logo.png'
