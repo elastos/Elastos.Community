@@ -63,8 +63,17 @@
     @extend .komu-a;
   }
 
+  .uef-button-row {
+    text-align: center;
+
+    button {
+      margin-right: $gap_1;
+    }
+  }
+
   .uef-section-content {
     padding: 0 $gap_3;
+    margin-bottom: $gap_3;
   }
 
   .uef-switcher {

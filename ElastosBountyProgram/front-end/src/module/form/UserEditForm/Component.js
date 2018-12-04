@@ -591,8 +591,13 @@ class C extends BaseComponent {
                     {this.renderSkillsetSection()}
                     {this.renderSocialSection()}
 
-                    <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 10}}}>
-                        {this.state.section === 4
+                    <FormItem className="uef-button-row">
+                        { this.state.section > 1 &&
+                            <Button className="cr-btn" onClick={this.prevSection.bind(this)} loading={this.props.loading}>
+                                {I18N.get('profile.previous')}
+                            </Button>
+                        }
+                        {this.state.section > 3
                             ?
                                 <Button className="cr-btn" type="primary" htmlType="submit" loading={this.props.loading}>
                                     {I18N.get('profile.save')}

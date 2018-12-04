@@ -752,6 +752,7 @@ const en = {
     'profile.editProfile.section.1': 'Basic Information',
     'profile.editProfile.section.2': 'Skill Set',
     'profile.editProfile.section.3': 'Social Profile',
+    'profile.previous': 'Previous',
     'profile.next': 'Next',
     'profile.localTime': 'Local time',
     'profile.sendMessage': 'Send Direct Message',
