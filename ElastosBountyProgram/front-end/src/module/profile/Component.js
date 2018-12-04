@@ -127,7 +127,9 @@ export default class extends BaseComponent {
                 footer={null}
                 width="70%"
             >
-                <UserEditForm user={this.props.user} page={this.props.page} switchEditMode={this.switchEditMode}/>
+                { this.state.editing &&
+                    <UserEditForm user={this.props.user} page={this.props.page} switchEditMode={this.switchEditMode}/>
+                }
             </Modal>
         )
     }

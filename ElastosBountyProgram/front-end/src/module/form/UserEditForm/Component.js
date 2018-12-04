@@ -54,6 +54,7 @@ class C extends BaseComponent {
 
         this.state = {
             communityTrees: [],
+            section: 1,
         }
     }
 
@@ -122,6 +123,20 @@ class C extends BaseComponent {
         })
     }
 
+    getFormItemLayout() {
+        return {
+            colon: false,
+            labelCol: {
+                xs: {span: 12},
+                sm: {span: 8}
+            },
+            wrapperCol: {
+                xs: {span: 24},
+                sm: {span: 16}
+            }
+        }
+    }
+
     getInputProps () {
 
         const {getFieldDecorator} = this.props.form
@@ -176,7 +191,7 @@ class C extends BaseComponent {
             initialValue: user.email
         })
         const email_el = (
-            <Input size="large" disabled={!(this.props.is_admin && this.props.history.location.pathname.indexOf("/admin/profile/") !== -1)} />
+            <Input disabled={!(this.props.is_admin && this.props.history.location.pathname.indexOf("/admin/profile/") !== -1)} />
         )
 
         const password_fn = getFieldDecorator('password', {
@@ -397,112 +412,200 @@ class C extends BaseComponent {
         }
     }
 
-    ord_render () {
-        const {getFieldDecorator} = this.props.form
-        const p = this.getInputProps()
+    isCompleteProfileMode() {
+        return this.props.complete
+    }
 
-        const formItemLayout = {
-            colon: false,
-            labelCol: {
-                xs: {span: 12},
-                sm: {span: 8}
-            },
-            wrapperCol: {
-                xs: {span: 24},
-                sm: {span: 16}
-            }
+    renderHeader() {
+        return (
+            <div className="uef-header">
+                <h3>
+                    {this.isCompleteProfileMode()
+                        ? I18N.get('profile.completeProfile')
+                        : I18N.get('profile.editProfile')
+                    }
+                </h3>
+                <h4>
+                    {I18N.get('profile.completeProfile.explanation')}
+                </h4>
+            </div>
+        )
+    }
+
+    renderSectionSwitcher() {
+        const section = this.state.section
+
+        const sectionGenerator = (index, description) => {
+            const activeClass = index === section
+                ? 'active'
+                : ''
+
+            const doneClass = index < section
+                ? 'done'
+                : ''
+
+            const fullClass = `uef-section ${activeClass} ${doneClass}`
+
+            return (
+                <div className={fullClass} onClick={() => this.setState({ section: index })}>
+                    <div className="uef-section-index">
+                        {index}
+                    </div>
+                    <div className="uef-section-description">
+                        {description}
+                    </div>
+                </div>
+            )
         }
 
-        // const existingTask = this.props.existingTask
+        return (
+            <Row className="uef-switcher">
+                <Col span={8}>
+                    {sectionGenerator(1, I18N.get('profile.editProfile.section.1'))}
+                </Col>
+                <Col span={8}>
+                    {sectionGenerator(2, I18N.get('profile.editProfile.section.2'))}
+                </Col>
+                <Col span={8}>
+                    {sectionGenerator(3, I18N.get('profile.editProfile.section.3'))}
+                </Col>
+            </Row>
+        )
+    }
 
-        // TODO: terms of service checkbox
-
-        // TODO: react-motion animate slide left
-
-        // TODO: description CKE Editor
+    renderBasicSection() {
+        const p = this.getInputProps()
+        const formItemLayout = this.getFormItemLayout()
+        const hideClass = this.state.section === 1 ? '' : 'hide'
+        const contentClass = `uef-section-content ${hideClass}`
 
         return (
+            <div className={contentClass}>
+                <FormItem label={I18N.get('from.UserEditForm.label.firstName')} {...formItemLayout}>
+                    {p.firstName}
+                </FormItem>
+                <FormItem label={I18N.get('from.UserEditForm.label.lastName')} {...formItemLayout}>
+                    {p.lastName}
+                </FormItem>
+                <FormItem label={I18N.get('1202')} {...formItemLayout}>
+                    {p.email}
+                </FormItem>
+                {!this.isCompleteProfileMode() &&
+                    <FormItem label={I18N.get('from.UserEditForm.label.password')} {...formItemLayout}>
+                        {p.password}
+                    </FormItem>
+                }
+                {!this.isCompleteProfileMode() &&
+                    <FormItem label={I18N.get('from.UserEditForm.label.confirm')} {...formItemLayout}>
+                        {p.passwordConfirm}
+                    </FormItem>
+                }
+                {this.props.is_admin &&
+                    <FormItem label={I18N.get('user.edit.form.role')} {...formItemLayout}>
+                        {p.role}
+                    </FormItem>
+                }
+                <FormItem label={I18N.get('from.UserEditForm.label.gender')} {...formItemLayout}>
+                    {p.gender}
+                </FormItem>
+                <FormItem label={I18N.get('from.UserEditForm.label.wallet')} {...formItemLayout}>
+                    {p.walletAddress}
+                </FormItem>
+                <FormItem label={I18N.get('from.UserEditForm.label.country')} {...formItemLayout}>
+                    {p.country}
+                </FormItem>
+                <FormItem label={I18N.get('from.UserEditForm.label.timezone')} {...formItemLayout}>
+                    {p.timezone}
+                </FormItem>
+            </div>
+        )
+    }
+
+    renderSkillsetSection() {
+        const p = this.getInputProps()
+        const formItemLayout = this.getFormItemLayout()
+        const hideClass = this.state.section === 2 ? '' : 'hide'
+        const contentClass = `uef-section-content ${hideClass}`
+
+        return (
+            <div className={contentClass}>
+                <FormItem label={I18N.get('from.UserEditForm.label.skillset')} {...formItemLayout}>
+                    {p.skillset}
+                </FormItem>
+                <FormItem label="GitHub" {...formItemLayout}>
+                    {p.github}
+                </FormItem>
+            </div>
+        )
+    }
+
+    renderSocialSection() {
+        const p = this.getInputProps()
+        const formItemLayout = this.getFormItemLayout()
+        const hideClass = this.state.section === 3 ? '' : 'hide'
+        const contentClass = `uef-section-content ${hideClass}`
+
+        return (
+            <div className={contentClass}>
+                <FormItem label="LinkedIn" {...formItemLayout}>
+                    {p.linkedin}
+                </FormItem>
+                <FormItem label="Telegram" {...formItemLayout}>
+                    {p.telegram}
+                </FormItem>
+                <FormItem label="Reddit" {...formItemLayout}>
+                    {p.reddit}
+                </FormItem>
+                <FormItem label="WeChat" {...formItemLayout}>
+                    {p.wechat}
+                </FormItem>
+                <FormItem label="Twitter" {...formItemLayout}>
+                    {p.twitter}
+                </FormItem>
+                <FormItem label="Facebook" {...formItemLayout}>
+                    {p.facebook}
+                </FormItem>
+            </div>
+        )
+    }
+
+    prevSection() {
+        this.setState({
+            section: this.state.section - 1
+        })
+    }
+
+    nextSection() {
+        this.setState({
+            section: this.state.section + 1
+        })
+    }
+
+    ord_render () {
+        return (
             <div className="c_userEditFormContainer">
+                {this.renderHeader()}
+                {this.renderSectionSwitcher()}
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
-                    <div className="header-profile">
-                        <h3 className="header-label komu-a with-gizmo">
-                            {I18N.get('profile.skillsets')}
-                        </h3>
-                    </div>
-                    <div>
-                        <FormItem label={I18N.get('from.UserEditForm.label.skillset')} {...formItemLayout}>
-                            {p.skillset}
-                        </FormItem>
-                    </div>
-                    <div className="header-profile">
-                        <h3 className="header-label komu-a with-gizmo">
-                            {I18N.get('2300')}
-                        </h3>
-                    </div>
-                    <div>
-                        <div className="label">{I18N.get('user.edit.form.section.general')}</div>
-                        <FormItem label={I18N.get('1202')} {...formItemLayout}>
-                            {p.email}
-                        </FormItem>
-                        <FormItem label={I18N.get('from.UserEditForm.label.firstName')} {...formItemLayout}>
-                            {p.firstName}
-                        </FormItem>
-                        <FormItem label={I18N.get('from.UserEditForm.label.lastName')} {...formItemLayout}>
-                            {p.lastName}
-                        </FormItem>
-                        {this.props.is_admin &&
-                        <FormItem label={I18N.get('user.edit.form.role')} {...formItemLayout}>
-                            {p.role}
-                        </FormItem>
+                    {this.renderBasicSection()}
+                    {this.renderSkillsetSection()}
+                    {this.renderSocialSection()}
+
+                    <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 10}}}>
+                        {this.state.section === 4
+                            ?
+                                <Button className="cr-btn" type="primary" htmlType="submit" loading={this.props.loading}>
+                                    {I18N.get('profile.save')}
+                                </Button>
+                            :
+                                <Button className="cr-btn" onClick={this.nextSection.bind(this)} loading={this.props.loading}>
+                                    {I18N.get(this.state.section === 3
+                                        ? 'profile.save'
+                                        : 'profile.next')
+                                    }
+                                </Button>
                         }
-                        <FormItem label={I18N.get('from.UserEditForm.label.password')} {...formItemLayout}>
-                            {p.password}
-                        </FormItem>
-                        <FormItem label={I18N.get('from.UserEditForm.label.confirm')} {...formItemLayout}>
-                            {p.passwordConfirm}
-                        </FormItem>
-                        <FormItem label={I18N.get('from.UserEditForm.label.gender')} {...formItemLayout}>
-                            {p.gender}
-                        </FormItem>
-                        <FormItem label={I18N.get('from.UserEditForm.label.wallet')} {...formItemLayout}>
-                            {p.walletAddress}
-                        </FormItem>
-                        <FormItem label={I18N.get('from.UserEditForm.label.country')} {...formItemLayout}>
-                            {p.country}
-                        </FormItem>
-                        <FormItem label={I18N.get('from.UserEditForm.label.timezone')} {...formItemLayout}>
-                            {p.timezone}
-                        </FormItem>
-                        <FormItem label="LinkedIn" {...formItemLayout}>
-                            {p.linkedin}
-                        </FormItem>
-                        <FormItem label="GitHub" {...formItemLayout}>
-                            {p.github}
-                        </FormItem>
-                        <FormItem label="Telegram" {...formItemLayout}>
-                            {p.telegram}
-                        </FormItem>
-                        <FormItem label="Reddit" {...formItemLayout}>
-                            {p.reddit}
-                        </FormItem>
-                        <FormItem label="WeChat" {...formItemLayout}>
-                            {p.wechat}
-                        </FormItem>
-                        <FormItem label="Twitter" {...formItemLayout}>
-                            {p.twitter}
-                        </FormItem>
-                        <FormItem label="Facebook" {...formItemLayout}>
-                            {p.facebook}
-                        </FormItem>
-                        <br />
-                        <br />
-                        <FormItem wrapperCol={{xs: {span: 24, offset: 0}, sm: {span: 12, offset: 10}}}>
-                            <Button className="cr-btn" type="primary" htmlType="submit" loading={this.props.loading}>
-                                {I18N.get('profile.save')}
-                            </Button>
-                        </FormItem>
-                        <br />
-                    </div>
+                    </FormItem>
                 </Form>
             </div>
         )

@@ -75,8 +75,6 @@ const en = {
 
     'login.success': 'Login Successful',
 
-    'profile.skillsets': 'My Skillsets',
-
     'mentions.notFound': 'User not found',
 
     'comments': 'Comments',
@@ -747,6 +745,14 @@ const en = {
     'role.admin.mode': 'Admin Mode',
 
     // Profile
+    'profile.skillsets': 'My Skillsets',
+    'profile.completeProfile': 'Complete your Profile',
+    'profile.completeProfile.explanation': 'Get more tasks and connect with talent all over the world',
+    'profile.editProfile': 'Edit Profile',
+    'profile.editProfile.section.1': 'Basic Information',
+    'profile.editProfile.section.2': 'Skill Set',
+    'profile.editProfile.section.3': 'Social Profile',
+    'profile.next': 'Next',
     'profile.localTime': 'Local time',
     'profile.sendMessage': 'Send Direct Message',
     'profile.viewProfile': 'View Profile',

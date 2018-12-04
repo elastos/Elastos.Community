@@ -47,6 +47,10 @@
   white-space: nowrap;
 }
 
+.hide {
+  display: none !important;
+}
+
 h3.one-line {
   @extend .ellipsis;
 }
@@ -279,6 +283,10 @@ h3.one-line {
   .ant-collapse-item {
     border: 0;
   }
+}
+
+.ant-modal {
+  max-width: 992px;
 }
 
 .ant-modal-body {
