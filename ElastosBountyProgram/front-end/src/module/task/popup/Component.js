@@ -114,8 +114,11 @@ class C extends BaseComponent {
 
         return (
             <div className="app-meta">
-                {generateRow(I18N.get('task.owner'),
-                    this.getUserNameWithFallback(detail.createdBy))}
+                {generateRow(I18N.get('task.owner'), (
+                    <a onClick={this.linkProfileInfo.bind(this, detail.createdBy)}>
+                        {this.getUserNameWithFallback(detail.createdBy)}
+                    </a>
+                ))}
 
                 {detail.circle &&
                     generateRow(I18N.get('task.circle'), detail.circle.name)}
@@ -312,9 +315,7 @@ class C extends BaseComponent {
             return user.username
         }
 
-        return <a onClick={this.linkProfileInfo.bind(this, user)}>
-            {_.trim([user.profile.firstName, user.profile.lastName].join(' '))}
-        </a>
+        return _.trim([user.profile.firstName, user.profile.lastName].join(' '))
     }
 
     isAssigned() {
