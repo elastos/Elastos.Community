@@ -107,8 +107,11 @@ class C extends BaseComponent {
 
         return (
             <div className="app-meta">
-                {generateRow(I18N.get('team.owner'),
-                    this.getUserNameWithFallback(detail.owner))}
+                {generateRow(I18N.get('team.owner'), (
+                    <a onClick={this.linkProfileInfo.bind(this, detail.owner)}>
+                        {this.getUserNameWithFallback(detail.owner)}
+                    </a>
+                ))}
                 {generateHtmlRow(I18N.get('team.description'),
                     detail.profile.description, 'team-description')}
             </div>
@@ -181,9 +184,7 @@ class C extends BaseComponent {
             return user.username
         }
 
-        return <a onClick={this.linkProfileInfo.bind(this, user)}>
-            {_.trim([user.profile.firstName, user.profile.lastName].join(' '))}
-        </a>
+        return _.trim([user.profile.firstName, user.profile.lastName].join(' '))
     }
 
     isTeamOwner() {
