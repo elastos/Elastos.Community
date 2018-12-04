@@ -752,6 +752,7 @@ const en = {
     'profile.editProfile.section.1': 'Basic Information',
     'profile.editProfile.section.2': 'Skill Set',
     'profile.editProfile.section.3': 'Social Profile',
+    'profile.skillsDetails.placeholder': 'Explain more about your skills, work experience, etc.',
     'profile.previous': 'Previous',
     'profile.next': 'Next',
     'profile.localTime': 'Local time',

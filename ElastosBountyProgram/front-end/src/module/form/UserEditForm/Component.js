@@ -309,6 +309,24 @@ class C extends BaseComponent {
             />
         )
 
+        const portfolio_fn = getFieldDecorator('portfolio', {
+            rules: [],
+            initialValue: user.profile.portfolio
+        })
+
+        const portfolio_el = (
+            <Input />
+        )
+
+        const skillsDetails_fn = getFieldDecorator('skillsDetails', {
+            rules: [],
+            initialValue: user.profile.skillsDetails
+        })
+
+        const skillsDetails_el = (
+            <Input placeholder={I18N.get('profile.skillsDetails.placeholder')} />
+        )
+
         /*
         ****************************************************************************************
         * Social Media
@@ -398,6 +416,8 @@ class C extends BaseComponent {
             country: country_fn(country_el),
             timezone: timezone_fn(timezone_el),
             skillset: skillset_fn(skillset_el),
+            portfolio: portfolio_fn(portfolio_el),
+            skillsDetails: skillsDetails_fn(skillsDetails_el),
 
             walletAddress: walletAddress_fn(walletAddress_el),
 
@@ -531,6 +551,12 @@ class C extends BaseComponent {
             <div className={contentClass}>
                 <FormItem label={I18N.get('from.UserEditForm.label.skillset')} {...formItemLayout}>
                     {p.skillset}
+                </FormItem>
+                <FormItem label="Skills Details" {...formItemLayout}>
+                    {p.skillsDetails}
+                </FormItem>
+                <FormItem label="Portfolio" {...formItemLayout}>
+                    {p.portfolio}
                 </FormItem>
                 <FormItem label="GitHub" {...formItemLayout}>
                     {p.github}
