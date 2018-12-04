@@ -1,16 +1,20 @@
 
 - [Home](/)
 
+    - [Reports Overview](/reports/kpi-overview.md)
+
+        - [Development KPIs](/reports/kpi-development.md)
+        - [Technical KPIs](/reports/kpi-technical.md)
+        - [Community KPIs](/reports/kpi-community.md)
+        - [Marketing KPIs](/reports/kpi-marketing.md)
+
     - General Reports
 
         - [2018 Q3](/reports/general/2018-Q3.md)
 
-    - [KPI Overview](/reports/kpi-overview.md)
-
     - KPI Reports
 
         - [2018 Q3](/reports/kpi-reports/2018-Q3.md)
-        - [2018 Q4](/reports/kpi-reports/2018-Q4.md)
 
     - Token Fund Team
         - [Guidelines](/reports/token-fund-team/guidelines.md)
