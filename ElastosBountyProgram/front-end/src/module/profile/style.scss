@@ -194,6 +194,7 @@ $avatar-size: 160px;
     }
 
     .profile-avatar {
+      margin-top: -16px;
       overflow: hidden;
       width: $avatar-size;
       height: $avatar-size;
