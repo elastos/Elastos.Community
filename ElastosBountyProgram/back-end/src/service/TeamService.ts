@@ -125,6 +125,11 @@ export default class extends Base {
             throw 'invalid team id'
         }
 
+        if (this.currentUser._id.toString() !== team.owner._id.toString() &&
+            this.currentUser.role !== constant.USER_ROLE.ADMIN) {
+            throw 'Access Denied'
+        }
+
         const db_ut = this.getDBModel('User_Team')
 
         for (let member of team.members) {
