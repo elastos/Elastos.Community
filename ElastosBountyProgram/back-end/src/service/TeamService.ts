@@ -307,7 +307,7 @@ export default class extends Base {
 
         let doc = await db_ut.findById(teamCandidateId)
 
-        if (!doc || doc.status !== constant.TEAM_USER_STATUS.PENDING) {
+        if (!doc) {
             throw 'Invalid status'
         }
 
