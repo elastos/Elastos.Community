@@ -66,7 +66,7 @@ export default class extends BaseComponent {
                                     {this.renderAvatar(false, this.state.temporaryAvatar)}
                                 </div>
                                 <UserProfileForm user={this.props.user}
-                                    page={this.props.page} switchEditMode={this.switchEditBasicMode}
+                                    page={this.props.page} switchEditMode={this.switchEditBasicMode.bind(this)}
                                     updateBanner={(url) => this.setState({temporaryBanner: url})}
                                     updateAvatar={(url) => this.setState({temporaryAvatar: url})}/>
                             </div>
@@ -207,7 +207,7 @@ export default class extends BaseComponent {
         return (
             <div className={`profile-banner ${isMobile ? 'profile-banner-mobile' : ''}`}>
                 <span style={{ backgroundImage: this.getBannerWithFallback(url || this.props.user.profile.banner) }}></span>
-                {!this.state.editingBasic && <Icon className="profile-edit-btn" type="edit" onClick={this.switchEditBasicMode}/>}
+                {!this.state.editingBasic && <Icon className="profile-edit-btn" type="edit" onClick={this.switchEditBasicMode.bind(this)}/>}
             </div>
         )
     }

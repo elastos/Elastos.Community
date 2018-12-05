@@ -253,7 +253,10 @@ export default class extends BaseComponent {
             'profile.profession'
         ]
 
-        return !_.every(requiredProps, (prop) => _.has(this.props.user, prop))
+        return !_.every(requiredProps, (prop) => {
+            return _.has(this.props.user, prop) &&
+                !_.isEmpty(_.get(this.props.user, prop))
+        })
     }
 
     clickItem(e) {
