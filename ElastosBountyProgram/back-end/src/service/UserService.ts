@@ -84,6 +84,12 @@ export default class extends Base {
         return newUser
     }
 
+    // record user login date
+    public async recordLogin(param) {
+        const db_user = this.getDBModel('User');
+        await db_user.update({ _id: param.userId }, { $push: { logins: new Date() } });
+    }
+
     public async getUserSalt(username): Promise<String>{
         const isEmail = validate.email(username);
         username = username.toLowerCase();

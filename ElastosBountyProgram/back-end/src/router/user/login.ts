@@ -39,6 +39,9 @@ export default class extends Base {
             user
         };
 
+        // record user login date
+        userService.recordLogin({ userId: user.id });
+
         // always return api-token on login, this is needed for future requests
         this.session.userId = user.id;
         resultData['api-token'] = utilCrypto.encrypt(JSON.stringify({
