@@ -27,6 +27,7 @@ if (process.env.NODE_ENV === 'production') {
 
     const app = express();
 
+    app.set('trust proxy', true)
     app.use(cors());
     app.use(compression());
     app.options('*', cors());
