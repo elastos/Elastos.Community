@@ -34,7 +34,6 @@ export default class extends BaseComponent {
         this.state = {
             editing: false,
             editingBasic: false,
-            completing: false,
             publicView: false
         }
     }
@@ -93,13 +92,11 @@ export default class extends BaseComponent {
             content = (
                 <div>
                     <MediaQuery maxWidth={800}>
-                        {this.renderToast(true)}
                         <div className="member-content member-content-mobile">
                             {this.renderMobile()}
                         </div>
                     </MediaQuery>
                     <MediaQuery minWidth={801}>
-                        {this.renderToast()}
                         <div className="member-content">
                             {this.renderDesktop()}
                         </div>
@@ -146,7 +143,7 @@ export default class extends BaseComponent {
             >
                 { this.state.editing &&
                     <UserEditForm user={this.props.user} page={this.props.page}
-                        switchEditMode={this.switchEditMode.bind(this, false)} completing={this.state.completing}/>
+                        switchEditMode={this.switchEditMode.bind(this, false)} completing={false}/>
                 }
             </Modal>
         )
@@ -216,20 +213,6 @@ export default class extends BaseComponent {
                 <div className="center">
                     {label}
                 </div>
-            </div>
-        )
-    }
-
-    renderToast(isMobile) {
-        if (!this.hasIncompleteProfile()) {
-            return
-        }
-
-        return (
-            <div className="fill-profile-toast">
-                <a onClick={this.switchEditMode.bind(this, true)}>
-                    {I18N.get('profile.complete')}
-                </a>
             </div>
         )
     }
@@ -375,10 +358,9 @@ export default class extends BaseComponent {
         })
     }
 
-    switchEditMode(completing = false) {
+    switchEditMode() {
         this.setState({
             editing: !this.state.editing,
-            completing,
             temporaryAvatar: null,
             temporaryBanner: null
         })

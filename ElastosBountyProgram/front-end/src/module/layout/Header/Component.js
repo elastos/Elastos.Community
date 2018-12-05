@@ -8,6 +8,7 @@ import Flyout from './Flyout';
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
 import {USER_ROLE, USER_LANGUAGE} from '@/constant'
 import Flag from 'react-flags'
+import UserEditForm from '@/module/form/UserEditForm/Container'
 
 const {Header} = Layout
 const SubMenu = Menu.SubMenu
@@ -18,26 +19,40 @@ export default class extends BaseComponent {
         super();
         this.state = {
             affixed: false,
-            popover: false
+            popover: false,
+            completing: false
         }
     }
-    /*
-    buildOverviewDropdown() {
+
+    renderCompleteProfileModal() {
         return (
-            <Menu onClick={this.clickItem.bind(this)}>
-                <Menu.Item key="developer">
-                    {I18N.get('0100')}
-                </Menu.Item>
-                <Menu.Item key="social">
-                    {I18N.get('0101')}
-                </Menu.Item>
-                <Menu.Item key="leader">
-                    {I18N.get('0102')}
-                </Menu.Item>
-            </Menu>
+            <Modal
+                className="project-detail-nobar"
+                visible={this.state.completing}
+                onOk={this.onCompleteProfileModalOk.bind(this)}
+                onCancel={this.onCompleteProfileModalCancel.bind(this)}
+                footer={null}
+                width="70%"
+            >
+                { this.state.editing &&
+                    <UserEditForm user={this.props.user} page={this.props.page}
+                        switchEditMode={this.onCompleteProfileModalCancel.bind(this)} completing={true}/>
+                }
+            </Modal>
         )
     }
-    */
+
+    onCompleteProfileModalOk() {
+        this.setState({
+            completing: false
+        })
+    }
+
+    onCompleteProfileModalCancel() {
+        this.setState({
+            completing: false
+        })
+    }
 
     buildAcctDropdown() {
 
@@ -126,10 +141,13 @@ export default class extends BaseComponent {
         return keys
     }
 
+    completeProfile() {
+
+    }
+
     ord_render() {
         const isLogin = this.props.isLogin
 
-        // const overviewDropdown = this.buildOverviewDropdown()
         const acctDropdown = this.buildAcctDropdown()
         const helpDropdown = this.buildHelpDropdown()
         return (
@@ -172,23 +190,8 @@ export default class extends BaseComponent {
                     </div>
                 </MediaQuery>
 
-                {/*
-                <Menu.Item className="c_MenuItem overview">
-                    <Dropdown overlay={overviewDropdown} style="margin-top: 24px;">
-                        <a className="ant-dropdown-link" href="#">
-                            {I18N.get('0001')} <Icon type="down" />
-                        </a>
-                    </Dropdown>
-                </Menu.Item>
-                */}
                 <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu pull-right"
                       selectedKeys={this.getSelectedKeys()} mode="horizontal">
-                    {/*this.props.isLogin &&
-                        <Menu.Item className="c_MenuItem link right" key="profile">
-                            {I18N.get('0104')}
-                        </Menu.Item>
-                    */}
-
                     <Menu.Item className="c_MenuItem link" key="cr100">
                         {I18N.get('0105')}
                     </Menu.Item>
@@ -221,23 +224,13 @@ export default class extends BaseComponent {
                             {I18N.get('0201')}
                         </Menu.Item>
                     }
-
-                    {/*
-                    <Menu.Item className="c_MenuItem" key="directory">
-                        {I18N.get('0003')}
-                    </Menu.Item>
-                    */}
-
-                    {/*
-                    <Menu.Item className="c_MenuItem right-side" key="tasks">
-                        {I18N.get('0006')}
-                    </Menu.Item>
-
-                    <Menu.Item className="c_MenuItem right-side" key="teams">
-                        {I18N.get('0005')}
-                    </Menu.Item>
-                    */}
                 </Menu>
+                <div className="clearfix"/>
+                <div className="fill-profile-toast">
+                    <a onClick={this.completeProfile.bind(this)}>
+                        {I18N.get('profile.complete')}
+                    </a>
+                </div>
             </Header>
         )
     }

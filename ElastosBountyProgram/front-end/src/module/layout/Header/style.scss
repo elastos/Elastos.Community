@@ -3,6 +3,16 @@
 @import "../../../style/color";
 
 .c_Header {
+    height: auto !important;
+
+    .fill-profile-toast {
+        background: $cr_dark_color;
+        color: $primary_color;
+        height: $gap_3;
+        line-height: $gap_3;
+        text-align: center;
+    }
+
     .ant-menu-item.logo {
         &:hover {
             border-bottom: none;
