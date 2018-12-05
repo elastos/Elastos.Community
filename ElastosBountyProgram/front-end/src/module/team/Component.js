@@ -46,7 +46,7 @@ export default class extends BaseComponent {
                     {this.state.editing ? I18N.get('.cancel') : I18N.get('.edit')}
                 </Button>
                 <Popconfirm title={I18N.get('.areYouSure')} onConfirm={this.deleteTeam.bind(this)}>
-                    <Button>
+                    <Button loading={this.props.loading}>
                         {I18N.get('.delete')}
                     </Button>
                 </Popconfirm>
