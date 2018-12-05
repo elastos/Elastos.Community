@@ -16,7 +16,8 @@ const MenuItemGroup = Menu.ItemGroup
 
 export default class extends BaseComponent {
     constructor() {
-        super();
+        super()
+
         this.state = {
             affixed: false,
             popover: false,
@@ -34,8 +35,8 @@ export default class extends BaseComponent {
                 footer={null}
                 width="70%"
             >
-                { this.state.editing &&
-                    <UserEditForm user={this.props.user} page={this.props.page}
+                { this.state.completing &&
+                    <UserEditForm user={this.props.user}
                         switchEditMode={this.onCompleteProfileModalCancel.bind(this)} completing={true}/>
                 }
             </Modal>
@@ -105,9 +106,6 @@ export default class extends BaseComponent {
 
         return (
             <Menu onClick={this.clickItem.bind(this)} className="help-menu">
-                {/*<Menu.Item key="help">
-                    {I18N.get('0007')}
-                </Menu.Item>*/}
                 <Menu.Item key="about">
                     {I18N.get('0008')}
                 </Menu.Item>
@@ -141,15 +139,11 @@ export default class extends BaseComponent {
         return keys
     }
 
-    completeProfile() {
-
-    }
-
     ord_render() {
         const isLogin = this.props.isLogin
-
         const acctDropdown = this.buildAcctDropdown()
         const helpDropdown = this.buildHelpDropdown()
+
         return (
             <Header className="c_Header">
                 <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu pull-left"
@@ -226,17 +220,43 @@ export default class extends BaseComponent {
                     }
                 </Menu>
                 <div className="clearfix"/>
-                <div className="fill-profile-toast">
-                    <a onClick={this.completeProfile.bind(this)}>
-                        {I18N.get('profile.complete')}
-                    </a>
-                </div>
+                {this.props.isLogin && this.hasIncompleteProfile() && this.renderToast()}
+                {this.renderCompleteProfileModal()}
             </Header>
         )
     }
 
-    clickItem(e) {
+    completeProfile() {
+        this.setState({
+            completing: true
+        })
+    }
 
+    renderToast() {
+        return (
+            <div className="fill-profile-toast">
+                <a onClick={this.completeProfile.bind(this)}>
+                    {I18N.get('profile.complete')}
+                </a>
+            </div>
+        )
+    }
+
+    hasIncompleteProfile() {
+        const requiredProps = [
+            'profile.firstName',
+            'profile.lastName',
+            'profile.timezone',
+            'profile.country',
+            'profile.skillsDetails',
+            'profile.skillset',
+            'profile.profession'
+        ]
+
+        return !_.every(requiredProps, (prop) => _.has(this.props.user, prop))
+    }
+
+    clickItem(e) {
         const key = e.key
 
         if (_.includes([

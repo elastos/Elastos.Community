@@ -745,6 +745,7 @@ const en = {
     'role.admin.mode': 'Admin Mode',
 
     // Profile
+    'profile.thanksForCompleting': 'Thanks for updating your profile!',
     'profile.skillsets': 'My Skillsets',
     'profile.completeProfile': 'Complete your Profile',
     'profile.completeProfile.explanation': 'Get more tasks and connect with talent all over the world',

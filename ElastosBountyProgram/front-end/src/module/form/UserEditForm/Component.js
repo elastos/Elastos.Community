@@ -64,8 +64,9 @@ class C extends BaseComponent {
             if (!err) {
                 this.props.updateUser(values, this.state).then(() => {
                     this.props.getCurrentUser()
+                    this.props.switchEditMode()
+                    message.success(I18N.get('profile.thanksForCompleting'))
                 });
-                this.props.switchEditMode()
             }
         })
     }
@@ -605,7 +606,7 @@ class C extends BaseComponent {
     renderSocialSection() {
         const p = this.getInputProps()
         const formItemLayout = this.getFormItemLayout()
-        const hideClass = this.state.section === 3 ? '' : 'hide'
+        const hideClass = this.state.section >= 3 ? '' : 'hide'
         const contentClass = `uef-section-content ${hideClass}`
 
         return (
@@ -656,17 +657,17 @@ class C extends BaseComponent {
 
                     <FormItem className="uef-button-row">
                         { this.state.section > 1 &&
-                            <Button className="cr-btn" onClick={this.prevSection.bind(this)} loading={this.props.loading}>
+                            <Button onClick={this.prevSection.bind(this)} loading={this.props.loading}>
                                 {I18N.get('profile.previous')}
                             </Button>
                         }
                         {this.state.section > 3
                             ?
-                                <Button className="cr-btn" type="primary" htmlType="submit" loading={this.props.loading}>
+                                <Button type="primary" htmlType="submit" loading={this.props.loading}>
                                     {I18N.get('profile.save')}
                                 </Button>
                             :
-                                <Button className="cr-btn" onClick={this.nextSection.bind(this)} loading={this.props.loading}>
+                                <Button onClick={this.nextSection.bind(this)} loading={this.props.loading}>
                                     {I18N.get(this.state.section === 3
                                         ? 'profile.save'
                                         : 'profile.next')

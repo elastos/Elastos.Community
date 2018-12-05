@@ -38,20 +38,6 @@ export default class extends BaseComponent {
         }
     }
 
-    hasIncompleteProfile() {
-        const requiredProps = [
-            'profile.firstName',
-            'profile.lastName',
-            'profile.timezone',
-            'profile.country',
-            'profile.skillsDetails',
-            'profile.skillset',
-            'profile.profession'
-        ]
-
-        return !_.every(requiredProps, (prop) => _.has(this.props.user, prop))
-    }
-
     // TODO: add twitter, telegram, linkedIn, FB
     ord_render () {
         let content = null;
@@ -142,7 +128,7 @@ export default class extends BaseComponent {
                 width="70%"
             >
                 { this.state.editing &&
-                    <UserEditForm user={this.props.user} page={this.props.page}
+                    <UserEditForm user={this.props.user}
                         switchEditMode={this.switchEditMode.bind(this, false)} completing={false}/>
                 }
             </Modal>
