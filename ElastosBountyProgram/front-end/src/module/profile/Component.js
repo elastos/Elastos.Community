@@ -142,24 +142,58 @@ export default class extends BaseComponent {
                 <div className="profile-info-container clearfix">
                     <div className="profile-left pull-left">
                         {this.renderAvatar()}
-                        {this.renderButton()}
                     </div>
                     <div className="profile-right pull-left">
                         {this.renderFullName()}
-                        <div className="pull-right">
-                            {this.renderSkillsets()}
-                        </div>
-                        {this.renderLocation()}
-                        <div className="pull-left">
-                            {this.renderLocalTime()}
-                        </div>
-                        <div className="clearfix"/>
-                        <div>
-                            {this.renderSocialMedia()}
-                        </div>
+                        <Row>
+                            <Col span={24} className="profile-right-col">
+                                {this.renderGender()}
+                            </Col>
+                            <Col span={24} className="profile-right-col">
+                                {this.renderLocation()}
+                            </Col>
+                            <Col span={24} className="profile-right-col">
+                                {this.renderLocalTime()}
+                            </Col>
+                        </Row>
                     </div>
+                    <div className="clearfix"/>
                     {this.renderDescription()}
                 </div>
+
+                <div className="profile-info-container clearfix">
+                    <div className="pull-left skillset-header">
+                        <h4 className="komu-a">
+                            {I18N.get('profile.skillset.header')}
+                        </h4>
+                    </div>
+                    <div className="pull-right skillset-content">
+                        <Row>
+                            <Col span={14}>
+                                {this.renderSkillsets()}
+                            </Col>
+                            <Col span={10}>
+                                {this.renderProfession()}
+                            </Col>
+                        </Row>
+                    </div>
+                </div>
+
+                <div className="profile-info-container clearfix">
+                    <div className="pull-left skillset-header">
+                        <h4 className="komu-a">
+                            {I18N.get('profile.social.header')}
+                        </h4>
+                    </div>
+                    <div className="pull-right skillset-content">
+                        <Row>
+                            <Col span={24}>
+                                {this.renderSocialMedia()}
+                            </Col>
+                        </Row>
+                    </div>
+                </div>
+
                 {this.renderMetrics()}
                 {this.renderEditForm()}
             </div>
@@ -247,7 +281,7 @@ export default class extends BaseComponent {
     renderLocation(isMobile) {
         return (
             <div className={`profile-general-info ${isMobile ? 'profile-general-info-mobile' : ''}`}>
-                <i class="fas fa-map-marker-alt location-icon"></i>
+                <Icon type="pushpin"/>
                 <span>
                     {this.getCountryName(this.props.user.profile.country)}
                 </span>
@@ -255,14 +289,43 @@ export default class extends BaseComponent {
         )
     }
 
+    renderGender(isMobile) {
+        return (
+            <div className={`profile-general-info ${isMobile ? 'profile-general-info-mobile' : ''}`}>
+                <Icon type="user"/>
+                <span>
+                    {_.capitalize(this.props.user.profile.gender)}
+                </span>
+            </div>
+        )
+    }
+
     renderSkillsets(isMobile) {
         return (
-            <div className={`profile-skillset-info ${isMobile ? 'profile-skillset-info-mobile' : ''}`}>
+            <div className="skillset-container">
                 {_.map(this.props.user.profile.skillset || [], (skillset) =>
-                    <Tag color="blue" key={skillset}>
-                        {I18N.get(`user.skillset.${skillset}`)}
-                    </Tag>
+                    <div key={skillset}>
+                        + {I18N.get(`user.skillset.${skillset}`)}
+                    </div>
                 )}
+            </div>
+        )
+    }
+
+    renderProfession(isMobile) {
+        return (
+            <div className="profession-container">
+                <div>
+                    {I18N.get(`profile.profession.${this.props.user.profile.profession}`)}
+                </div>
+                {!_.isEmpty(this.props.user.profile.portfolio) &&
+                    <div className="portfolio-container">
+                        <a href={this.props.user.profile.portfolio} target="_blank" className="link-container">
+                            <Icon type="link"/>
+                        </a>
+                        {I18N.get('profile.portfolio')}
+                    </div>
+                }
             </div>
         )
     }
@@ -323,7 +386,8 @@ export default class extends BaseComponent {
         const bio = _.get(this.props, 'user.profile.bio') || ''
         const content = linkifyStr(bio, LINKIFY_OPTION)
         return (
-            <div>
+            <div className="profile-container">
+                {this.renderButton()}
                 {
                     this.props.user.profile.bio &&
                     <div className={`profile-description ${isMobile ? 'profile-description-mobile' : ''}`} dangerouslySetInnerHTML={{__html: content}}></div>

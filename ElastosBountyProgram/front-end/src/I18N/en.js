@@ -780,7 +780,7 @@ const en = {
     'profile.skillsDetails.placeholder': 'Explain more about your skills, work experience, etc.',
     'profile.previous': 'Previous',
     'profile.next': 'Next',
-    'profile.localTime': 'Local time',
+    'profile.localTime': 'Local Time',
     'profile.sendMessage': 'Send Direct Message',
     'profile.viewProfile': 'View Profile',
     'profile.editProfile': 'Edit Profile',
@@ -825,6 +825,9 @@ const en = {
     'profile.detail.sendmessage.disabled': 'You cannot send a message to yourself',
     'profile.detail.comingsoon': 'Coming soon...',
     'profile.detail.follow.disabled': 'You cannot follow yourself',
+    'profile.skillset.header': 'Skill Set',
+    'profile.social.header': 'Social Profile',
+    'profile.portfolio': 'Portfolio',
 
     // Validate Form
     'ambassadors.form.required': 'This must be filled out',
