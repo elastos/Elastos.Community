@@ -745,6 +745,7 @@ const en = {
     'role.admin.mode': 'Admin Mode',
 
     // Profile
+    'profile.thanksForCompleting': 'Thanks for updating your profile!',
     'profile.skillsets': 'My Skillsets',
     'profile.completeProfile': 'Complete your Profile',
     'profile.completeProfile.explanation': 'Get more tasks and connect with talent all over the world',
@@ -770,6 +771,7 @@ const en = {
     'profile.profession.ECONOMICS': 'Economics',
     'profile.profession.MANAGEMENT': 'Management',
     'profile.complete': 'Complete Your Profile',
+    'profile.complete.dismiss': 'Dismiss',
     'profile.skillsDetails.placeholder': 'Explain more about your skills, work experience, etc.',
     'profile.previous': 'Previous',
     'profile.next': 'Next',

@@ -8,8 +8,12 @@
     font-size: 14px;
   }
 
+  .description-ql-editor-wrapper {
+    height: 116px;
+  }
+
   .admin-left-column {
-    padding: 0 !important;
+    padding-top: 8px;
     .filter-select-container {
       padding-bottom: $gap_0;
 
@@ -37,7 +41,7 @@
 
   .admin-right-column {
     min-height: 392px;
-    padding: 0 20px !important;
+    padding: 8px 20px 0 20px !important;
 
     .ant-list-item {
       &:hover {

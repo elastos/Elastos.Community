@@ -34,23 +34,8 @@ export default class extends BaseComponent {
         this.state = {
             editing: false,
             editingBasic: false,
-            completing: false,
             publicView: false
         }
-    }
-
-    hasIncompleteProfile() {
-        const requiredProps = [
-            'profile.firstName',
-            'profile.lastName',
-            'profile.timezone',
-            'profile.country',
-            'profile.skillsDetails',
-            'profile.skillset',
-            'profile.profession'
-        ]
-
-        return !_.every(requiredProps, (prop) => _.has(this.props.user, prop))
     }
 
     // TODO: add twitter, telegram, linkedIn, FB
@@ -81,7 +66,7 @@ export default class extends BaseComponent {
                                     {this.renderAvatar(false, this.state.temporaryAvatar)}
                                 </div>
                                 <UserProfileForm user={this.props.user}
-                                    page={this.props.page} switchEditMode={this.switchEditBasicMode}
+                                    page={this.props.page} switchEditMode={this.switchEditBasicMode.bind(this)}
                                     updateBanner={(url) => this.setState({temporaryBanner: url})}
                                     updateAvatar={(url) => this.setState({temporaryAvatar: url})}/>
                             </div>
@@ -93,13 +78,11 @@ export default class extends BaseComponent {
             content = (
                 <div>
                     <MediaQuery maxWidth={800}>
-                        {this.renderToast(true)}
                         <div className="member-content member-content-mobile">
                             {this.renderMobile()}
                         </div>
                     </MediaQuery>
                     <MediaQuery minWidth={801}>
-                        {this.renderToast()}
                         <div className="member-content">
                             {this.renderDesktop()}
                         </div>
@@ -145,8 +128,8 @@ export default class extends BaseComponent {
                 width="70%"
             >
                 { this.state.editing &&
-                    <UserEditForm user={this.props.user} page={this.props.page}
-                        switchEditMode={this.switchEditMode.bind(this, false)} completing={this.state.completing}/>
+                    <UserEditForm user={this.props.user}
+                        switchEditMode={this.switchEditMode.bind(this, false)} completing={false}/>
                 }
             </Modal>
         )
@@ -220,25 +203,11 @@ export default class extends BaseComponent {
         )
     }
 
-    renderToast(isMobile) {
-        if (!this.hasIncompleteProfile()) {
-            return
-        }
-
-        return (
-            <div className="fill-profile-toast">
-                <a onClick={this.switchEditMode.bind(this, true)}>
-                    {I18N.get('profile.complete')}
-                </a>
-            </div>
-        )
-    }
-
     renderBanner(isMobile, url) {
         return (
             <div className={`profile-banner ${isMobile ? 'profile-banner-mobile' : ''}`}>
                 <span style={{ backgroundImage: this.getBannerWithFallback(url || this.props.user.profile.banner) }}></span>
-                {!this.state.editingBasic && <Icon className="profile-edit-btn" type="edit" onClick={this.switchEditBasicMode}/>}
+                {!this.state.editingBasic && <Icon className="profile-edit-btn" type="edit" onClick={this.switchEditBasicMode.bind(this)}/>}
             </div>
         )
     }
@@ -375,10 +344,9 @@ export default class extends BaseComponent {
         })
     }
 
-    switchEditMode(completing = false) {
+    switchEditMode() {
         this.setState({
             editing: !this.state.editing,
-            completing,
             temporaryAvatar: null,
             temporaryBanner: null
         })

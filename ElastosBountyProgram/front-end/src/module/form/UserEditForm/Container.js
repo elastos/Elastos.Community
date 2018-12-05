@@ -11,7 +11,8 @@ message.config({
 
 export default createContainer(Component, (state)=>{
     return {
-        is_admin: state.user.is_admin
+        is_admin: state.user.is_admin,
+        loading: state.member.loading
     };
 }, ()=>{
     const userService = new UserService();
@@ -67,19 +68,7 @@ export default createContainer(Component, (state)=>{
                 doc.role = formData.role
             }
 
-            try {
-                const rs = await userService.update(userId, doc);
-
-                if (rs) {
-                    message.success('User updated successfully');
-
-                    // state.editing = false
-                    // this.setState({editing: false})
-                }
-            } catch (err) {
-                // message.error('There was an error creating this task')
-                message.error(err.message) // TODO: add rollbar?
-            }
+            return userService.update(userId, doc)
         },
 
         async checkEmail(email) {

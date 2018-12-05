@@ -8,9 +8,8 @@ export default createContainer(Component, (state) => {
     return {
         isLogin: state.user.is_login,
         role: state.user.role,
-        profile: state.user.profile,
-        language: state.language,
-        pathname: state.router.location.pathname
+        pathname: state.router.location.pathname,
+        user: state.user
     };
 }, () => {
     const userService = new UserService();
