@@ -125,6 +125,11 @@ export default class extends Base {
             throw 'invalid team id'
         }
 
+        await db_team.getDBInstance().populate(team, {
+            path: 'owner',
+            select: sanitize
+        })
+
         if (this.currentUser._id.toString() !== team.owner._id.toString() &&
             this.currentUser.role !== constant.USER_ROLE.ADMIN) {
             throw 'Access Denied'
