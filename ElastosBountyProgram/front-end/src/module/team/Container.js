@@ -28,6 +28,10 @@ export default createContainer(Component, (state) => {
 
         resetTeamDetail() {
             return teamService.resetTeamDetail()
+        },
+
+        async deleteTeam(teamId) {
+            return teamService.deleteTeam(teamId)
         }
     }
 })

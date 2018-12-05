@@ -16,6 +16,8 @@ export default class extends Base {
             rs = await teamService.rejectApply(param);
         } else if (action === 'withdraw') {
             rs = await teamService.withdrawApply(param);
+        } else if (action === 'delete') {
+            rs = await teamService.deleteTeam(param);
         } else {
             return this.res.sendStatus(403);
         }

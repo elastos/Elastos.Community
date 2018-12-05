@@ -512,12 +512,14 @@ const en = {
     '.ok': 'Ok',
     '.apply': 'Apply',
     '.cancel': 'Cancel',
+    '.delete': 'Delete',
     '.edit': 'Edit',
     '.upload': 'Click to Upload',
     '.yes': 'Yes',
     '.no': 'No',
     '.loading': 'Loading...',
     'ela': 'ELA',
+    '.areYouSure': 'Are you sure?',
 
     // Community
     'community.nomember': 'no members',
