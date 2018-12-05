@@ -156,22 +156,44 @@ export default class extends BaseComponent {
                                 {this.renderLocalTime()}
                             </Col>
                         </Row>
-
-                        <div className="pull-right">
-                            {/*this.renderSkillsets()*/}
-                        </div>
-
-                        <div className="pull-left">
-
-                        </div>
-                        <div className="clearfix"/>
-                        <div>
-                            {/*this.renderSocialMedia()*/}
-                        </div>
                     </div>
                     <div className="clearfix"/>
                     {this.renderDescription()}
                 </div>
+
+                <div className="profile-info-container clearfix">
+                    <div className="pull-left skillset-header">
+                        <h4 className="komu-a">
+                            {I18N.get('profile.skillset.header')}
+                        </h4>
+                    </div>
+                    <div className="pull-right skillset-content">
+                        <Row>
+                            <Col span={14}>
+                                {this.renderSkillsets()}
+                            </Col>
+                            <Col span={10}>
+                                {this.renderProfession()}
+                            </Col>
+                        </Row>
+                    </div>
+                </div>
+
+                <div className="profile-info-container clearfix">
+                    <div className="pull-left skillset-header">
+                        <h4 className="komu-a">
+                            {I18N.get('profile.social.header')}
+                        </h4>
+                    </div>
+                    <div className="pull-right skillset-content">
+                        <Row>
+                            <Col span={24}>
+                                {this.renderSocialMedia()}
+                            </Col>
+                        </Row>
+                    </div>
+                </div>
+
                 {this.renderMetrics()}
                 {this.renderEditForm()}
             </div>
@@ -280,12 +302,30 @@ export default class extends BaseComponent {
 
     renderSkillsets(isMobile) {
         return (
-            <div className={`profile-skillset-info ${isMobile ? 'profile-skillset-info-mobile' : ''}`}>
+            <div className="skillset-container">
                 {_.map(this.props.user.profile.skillset || [], (skillset) =>
-                    <Tag color="blue" key={skillset}>
-                        {I18N.get(`user.skillset.${skillset}`)}
-                    </Tag>
+                    <div key={skillset}>
+                        + {I18N.get(`user.skillset.${skillset}`)}
+                    </div>
                 )}
+            </div>
+        )
+    }
+
+    renderProfession(isMobile) {
+        return (
+            <div className="profession-container">
+                <div>
+                    {I18N.get(`profile.profession.${this.props.user.profile.profession}`)}
+                </div>
+                {!_.isEmpty(this.props.user.profile.portfolio) &&
+                    <div className="portfolio-container">
+                        <a href={this.props.user.profile.portfolio} target="_blank" className="link-container">
+                            <Icon type="link"/>
+                        </a>
+                        {I18N.get('profile.portfolio')}
+                    </div>
+                }
             </div>
         )
     }

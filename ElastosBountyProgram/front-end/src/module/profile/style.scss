@@ -100,8 +100,6 @@ $avatar-size: 160px;
     }
 
     .ant-row {
-      margin: $gap_0 0;
-
       p {
         padding-bottom: $gap_0;
       }
@@ -156,12 +154,28 @@ $avatar-size: 160px;
   .profile-info-container {
     margin-top: 0 !important;
     background: #f7f9fd;
-    padding-bottom: 25px;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
 
     &.profile-info-container-mobile {
       padding: 0 24px;
-      padding-bottom: 25px;
+      padding-bottom: 24px;
     }
+  }
+
+  .skillset-header {
+    padding-left: 24px;
+
+    & > h4 {
+      font-size: 24px;
+      padding-top: 24px;
+    }
+  }
+
+  .skillset-content {
+    width: 498px;
+    margin-right: 24px;
+    margin-top: 24px;
   }
 
   .profile-avatar-container {
@@ -192,10 +206,6 @@ $avatar-size: 160px;
         height: 100%;
       }
     }
-  }
-
-  .profile-container {
-    border-top: 1px solid #d7d7d9;
   }
 
   .profile-button {
@@ -264,6 +274,7 @@ $avatar-size: 160px;
   .profile-social {
     a {
       margin-right: 16px;
+      color: $text_default_color;
 
       &:last-child {
         margin-right: 0;
@@ -276,10 +287,18 @@ $avatar-size: 160px;
     }
   }
 
+  .portfolio-container {
+    .link-container {
+      margin-right: $gap_0;
+    }
+  }
+
   .profile-description {
-    padding: 24px 24px 0 0;
+    border-top: 1px solid #d7d7d9;
+    padding: 24px 0 0 0;
+    margin-right: 24px;
     float: right;
-    width: 520px;
+    width: 498px;
 
     &.profile-description-mobile {
       margin: 0;
