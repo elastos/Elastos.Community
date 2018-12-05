@@ -266,4 +266,20 @@ export default class extends BaseService {
 
         return result
     }
+
+    async deleteTeam(teamId) {
+        const teamRedux = this.store.getRedux('team')
+        this.dispatch(teamRedux.actions.loading_update(true))
+
+        const result = await api_request({
+            path: '/api/team/action/delete',
+            method: 'post',
+            data: {
+                teamId
+            }
+        })
+
+        this.dispatch(teamRedux.actions.loading_update(false))
+        this.dispatch(teamRedux.actions.detail_update({}))
+    }
 }

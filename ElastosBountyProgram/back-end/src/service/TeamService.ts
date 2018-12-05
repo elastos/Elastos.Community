@@ -112,6 +112,40 @@ export default class extends Base {
         return db_team.findById(teamId)
     }
 
+    public async deleteTeam(param): Promise<boolean> {
+        const {teamId} = param
+
+        if (!teamId) {
+            throw 'no team id'
+        }
+
+        const db_team = this.getDBModel('Team')
+        const team = await db_team.findOne({_id: teamId})
+        if (!team) {
+            throw 'invalid team id'
+        }
+
+        await db_team.getDBInstance().populate(team, {
+            path: 'owner',
+            select: sanitize
+        })
+
+        if (this.currentUser._id.toString() !== team.owner._id.toString() &&
+            this.currentUser.role !== constant.USER_ROLE.ADMIN) {
+            throw 'Access Denied'
+        }
+
+        const db_ut = this.getDBModel('User_Team')
+
+        for (let member of team.members) {
+            await db_ut.remove({_id: member})
+        }
+
+        const res = await db_team.remove({_id: teamId})
+
+        return res
+    }
+
     public async addCandidate(param): Promise<boolean>{
         const {teamId, userId, applyMsg} = param
         const doc: any = {

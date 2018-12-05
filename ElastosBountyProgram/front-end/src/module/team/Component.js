@@ -45,6 +45,11 @@ export default class extends BaseComponent {
                 <Button onClick={this.switchEditMode.bind(this)}>
                     {this.state.editing ? I18N.get('.cancel') : I18N.get('.edit')}
                 </Button>
+                <Popconfirm title={I18N.get('.areYouSure')} onConfirm={this.deleteTeam.bind(this)}>
+                    <Button loading={this.props.loading}>
+                        {I18N.get('.delete')}
+                    </Button>
+                </Popconfirm>
             </div>
             <div className="clearfix"/>
         </div>
@@ -70,5 +75,11 @@ export default class extends BaseComponent {
 
     switchEditMode() {
         this.setState({editing: !this.state.editing})
+    }
+
+    deleteTeam() {
+        this.props.deleteTeam(this.props.team._id).then(() => {
+            this.props.history.goBack();
+        })
     }
 }

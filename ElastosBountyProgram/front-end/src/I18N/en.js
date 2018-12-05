@@ -453,7 +453,9 @@ const en = {
     'team.detail.team_active': 'The team is currently active',
 
     'team.create.error.nameRequired': 'Team name is required',
+    'team.create.error.descriptionRequired': 'Team description is required',
     'team.create.error.nameTooShort': 'Team name is too short',
+    'team.create.error.descriptionTooShort': 'Team description is too short',
 
     // Team specializations
     'team.spec.media': 'Media',
@@ -510,12 +512,14 @@ const en = {
     '.ok': 'Ok',
     '.apply': 'Apply',
     '.cancel': 'Cancel',
+    '.delete': 'Delete',
     '.edit': 'Edit',
     '.upload': 'Click to Upload',
     '.yes': 'Yes',
     '.no': 'No',
     '.loading': 'Loading...',
     'ela': 'ELA',
+    '.areYouSure': 'Are you sure?',
 
     // Community
     'community.nomember': 'no members',
