@@ -401,6 +401,7 @@ const en = {
     'project.detail.remove': 'Remove',
     'project.detail.view': 'View',
     'project.detail.approve': 'Approve',
+    'project.detail.remove': 'Remove',
     'project.detail.disapprove': 'Disapprove',
     'project.detail.withdraw_application': 'Withdraw',
     'project.detail.popup.leave_question': 'Are you sure you want to leave?',
