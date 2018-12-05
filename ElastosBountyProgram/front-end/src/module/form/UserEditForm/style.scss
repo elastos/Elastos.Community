@@ -43,6 +43,10 @@
 
     &.done {
       color: $cr_light_color;
+
+      .uef-section-done-marker {
+        visibility: visible;
+      }
     }
 
     &.active {
@@ -69,6 +73,13 @@
     button {
       margin-right: $gap_1;
     }
+  }
+
+  .uef-section-done-marker {
+    visibility: hidden;
+    float: left;
+    line-height: 60px;
+    margin-left: $gap_0;
   }
 
   .uef-section-content {

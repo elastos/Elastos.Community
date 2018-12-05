@@ -499,6 +499,9 @@ class C extends BaseComponent {
 
             return (
                 <div className={fullClass} onClick={() => this.setState({ section: index })}>
+                    <div className="uef-section-done-marker">
+                        <img src="/assets/images/step-done.svg"/>
+                    </div>
                     <div className="uef-section-index">
                         {index}
                     </div>
