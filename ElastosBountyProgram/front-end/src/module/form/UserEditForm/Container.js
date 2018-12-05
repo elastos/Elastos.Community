@@ -44,6 +44,9 @@ export default createContainer(Component, (state)=>{
                     skillset: formData.skillset,
                     avatar: state.avatar_url,
                     walletAddress: formData.walletAddress,
+                    profession: formData.profession,
+                    portfolio: formData.portfolio,
+                    skillsDetails: formData.skillsDetails,
 
                     // Social Media
                     telegram: formData.telegram,

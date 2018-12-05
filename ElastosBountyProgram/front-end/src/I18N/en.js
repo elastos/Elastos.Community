@@ -75,8 +75,6 @@ const en = {
 
     'login.success': 'Login Successful',
 
-    'profile.skillsets': 'My Skillsets',
-
     'mentions.notFound': 'User not found',
 
     'comments': 'Comments',
@@ -747,6 +745,34 @@ const en = {
     'role.admin.mode': 'Admin Mode',
 
     // Profile
+    'profile.skillsets': 'My Skillsets',
+    'profile.completeProfile': 'Complete your Profile',
+    'profile.completeProfile.explanation': 'Get more tasks and connect with talent all over the world',
+    'profile.editProfile': 'Edit Profile',
+    'profile.editProfile.section.1': 'Basic Information',
+    'profile.editProfile.section.2': 'Skill Set',
+    'profile.editProfile.section.3': 'Social Profile',
+    'profile.portfolio.placeholder': 'Relevant for Designers',
+    'profile.portfolio.github': 'Relevant for Developers',
+    'profile.profession.ENGINEERING': 'Engineering',
+    'profile.profession.COMPUTER_SCIENCE': 'Computer Science',
+    'profile.profession.PRODUCT_MANAGEMENT': 'Product Management',
+    'profile.profession.ART_DESIGN': 'Art / Design',
+    'profile.profession.SALES': 'Sales',
+    'profile.profession.MARKETING': 'Marketing',
+    'profile.profession.BUSINESS_FINANCE': 'Business / Finance',
+    'profile.profession.ENTREPRENEUR': 'Entrepreneur',
+    'profile.profession.STUDENT': 'Stuent',
+    'profile.profession.HEALTH_MEDICINE': 'Health/Medicine',
+    'profile.profession.LITERATURE_WRITING': 'Literature/Writing',
+    'profile.profession.TRANSLATION': 'Translation/Interpretation',
+    'profile.profession.LAW': 'Law',
+    'profile.profession.ECONOMICS': 'Economics',
+    'profile.profession.MANAGEMENT': 'Management',
+    'profile.complete': 'Complete Your Profile',
+    'profile.skillsDetails.placeholder': 'Explain more about your skills, work experience, etc.',
+    'profile.previous': 'Previous',
+    'profile.next': 'Next',
     'profile.localTime': 'Local time',
     'profile.sendMessage': 'Send Direct Message',
     'profile.viewProfile': 'View Profile',

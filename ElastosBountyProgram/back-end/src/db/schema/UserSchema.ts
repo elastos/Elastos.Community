@@ -16,23 +16,20 @@ export const Contact = {
 export const Profile = {
     firstName : String,
     lastName: String,
-
     avatar : String,
     avatarFilename: String,
     avatarFileType: String,
-
     banner : String,
     bannerFilename: String,
     bannerFileType: String,
-
     gender : String,
     birth : Date,
     timezone: String,
     region: Region,
-
     country : String,
     state : String,
     city : String,
+    profession: String,
 
     telegram: String,
     reddit: String,
@@ -42,13 +39,13 @@ export const Profile = {
     github: String,
     linkedin: String,
 
+    portfolio: String,
+    skillsDetails: String,
     skillset: [String],
-
     bio: String,
     motto: String,
     beOrganizer : Boolean,
     isDeveloper : Boolean,
-
     source : String,
     walletAddress : String
 }
