@@ -9,6 +9,7 @@ import * as ConnectMongo from 'connect-mongo';
 import * as cors from 'cors';
 import * as fileUpload from 'express-fileupload';
 import * as compression from 'compression';
+import * as fs from 'fs';
 import db from './db';
 
 import router, {middleware} from './router';
@@ -34,8 +35,10 @@ if (process.env.NODE_ENV === 'production') {
     const TIMEOUT = '600s';
     app.use(timeout(TIMEOUT));
 
+
     morgan.format('ebp', '[Backend] :method :url :status :res[content-length] - :response-time ms');
     app.use(morgan('ebp'));
+    app.use(morgan('common', {stream: fs.createWriteStream('./access.log', {flags: 'a'})}))
 
 
     app.use(helmet());
