@@ -270,7 +270,17 @@ class C extends BaseComponent {
         })
 
         const profession_el = (
-            <Select>
+            <Select placeholder={I18N.get('select.placeholder')}
+                // Fix select dropdowns in modals
+                // https://github.com/vazco/uniforms/issues/228
+                getPopupContainer={x => {
+                    while (x && x.tagName.toLowerCase() !== 'form') {
+                        x = x.parentElement;
+                    }
+
+                    return x;
+                }}>
+
                 {_.map(professions, (profession) =>
                     <Select.Option key={profession} value={profession}>
                         {I18N.get(`profile.profession.${profession}`)}
