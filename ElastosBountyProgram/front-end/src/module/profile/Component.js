@@ -315,7 +315,7 @@ export default class extends BaseComponent {
     renderProfession(isMobile) {
         return (
             <div className="profession-container">
-                {this.props.member.profile.profession &&
+                {this.props.user.profile.profession &&
                     <div>
                         {I18N.get(`profile.profession.${this.props.user.profile.profession}`)}
                     </div>
