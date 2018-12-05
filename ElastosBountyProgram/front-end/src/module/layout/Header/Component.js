@@ -250,6 +250,7 @@ export default class extends BaseComponent {
             <div className="fill-profile-toast">
                 <a onClick={this.completeProfile.bind(this)}>
                     {I18N.get('profile.complete')}
+                    <Icon type="right" style={{marginLeft: 8}}/>
                 </a>
                 <a className="pull-right toast-close-container" onClick={this.dismissToast.bind(this)}>
                     <Icon type="close"/>
