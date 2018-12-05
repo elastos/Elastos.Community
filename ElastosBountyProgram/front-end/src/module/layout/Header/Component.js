@@ -220,7 +220,8 @@ export default class extends BaseComponent {
                     }
                 </Menu>
                 <div className="clearfix"/>
-                {this.props.isLogin && this.hasIncompleteProfile() && this.renderToast()}
+                {!this.state.dismissed && !this.isPermanentlyDismissed() &&
+                    this.props.isLogin && this.hasIncompleteProfile() && this.renderToast()}
                 {this.renderCompleteProfileModal()}
             </Header>
         )
@@ -232,11 +233,26 @@ export default class extends BaseComponent {
         })
     }
 
+    dismissToast() {
+        this.setState({
+            dismissed: true
+        })
+
+        localStorage.setItem('complete-profile-dismissed', true)
+    }
+
+    isPermanentlyDismissed() {
+        return localStorage.getItem('complete-profile-dismissed')
+    }
+
     renderToast() {
         return (
             <div className="fill-profile-toast">
                 <a onClick={this.completeProfile.bind(this)}>
                     {I18N.get('profile.complete')}
+                </a>
+                <a className="pull-right toast-close-container" onClick={this.dismissToast.bind(this)}>
+                    <Icon type="close"/>
                 </a>
             </div>
         )

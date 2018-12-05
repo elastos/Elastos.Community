@@ -19,6 +19,11 @@
         }
     }
 
+    .toast-close-container {
+        margin-right: $gap_1;
+        font-size: 18px;
+    }
+
     .language-dropdown {
         &:not(.mobile) {
             padding-top: 26px;
