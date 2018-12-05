@@ -43,7 +43,6 @@ $avatar-size: 160px;
     top: 12px;
     .item {
       padding: 16px;
-      background-color: #f7f9fd;
       >.value {
         text-align: center;
         font-weight: 700;
@@ -124,8 +123,8 @@ $avatar-size: 160px;
       position: absolute;
       color: #fff;
       font-size: 24px;
-      top: 26px;
-      right: 30px;
+      top: 24px;
+      right: 24px;
       cursor: pointer;
     }
 
@@ -160,7 +159,7 @@ $avatar-size: 160px;
     padding-bottom: 25px;
 
     &.profile-info-container-mobile {
-      padding: 0 20px;
+      padding: 0 24px;
       padding-bottom: 25px;
     }
   }
@@ -169,7 +168,7 @@ $avatar-size: 160px;
     position: relative;
     z-index: 2;
     width: $avatar-size;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     margin-right: 6px;
     float: right;
 
@@ -213,42 +212,35 @@ $avatar-size: 160px;
   .profile-send-msg {
     width: 100%;
     text-transform: uppercase;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
     border: 0;
     border-radius: 0;
   }
 
   .profile-follow, .profile-edit, .profile-show {
     width: 100%;
-    border: 1px solid #000;
-    color: #000;
-    text-transform: uppercase;
     &.separated {
-      margin-bottom: 15px;
+      margin-bottom: 16px;
     }
   }
 
   .profile-left {
     width: 200px;
-    padding-bottom: 15px;
+    padding-bottom: 16px;
   }
 
   .profile-right {
     width: calc(100% - 200px);
     padding-left: 60px;
     padding-right: 40px;
-    padding-bottom: 15px;
+    padding-bottom: 16px;
   }
 
   .profile-general-info {
     line-height: 32px;
 
     span {
-      margin-left: 10px;
-    }
-
-    .location-icon {
-      margin-right: 3px;
+      margin-left: 8px;
     }
 
     &.profile-general-info-mobile {
@@ -261,8 +253,8 @@ $avatar-size: 160px;
     font-size: 36px;
     padding-bottom: 0;
     padding-top: 0;
-    margin-bottom: 6px;
-    margin-top: 10px;
+    margin-bottom: 8px;
+    margin-top: 8px;
 
     &.profile-general-title-mobile {
       text-align: center;
@@ -271,8 +263,7 @@ $avatar-size: 160px;
 
   .profile-social {
     a {
-      color: #000 !important;
-      margin-right: 15px;
+      margin-right: 16px;
 
       &:last-child {
         margin-right: 0;
@@ -281,7 +272,7 @@ $avatar-size: 160px;
 
     &.profile-social-mobile {
       text-align: left;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
   }
 
@@ -292,7 +283,7 @@ $avatar-size: 160px;
 
     &.profile-description-mobile {
       margin: 0;
-      margin-top: 25px;
+      margin-top: 24px;
     }
   }
 
@@ -323,7 +314,7 @@ $avatar-size: 160px;
         color: black;
       }
       .cr-btn {
-        padding: 0 20px;
+        padding: 0 24px;
         height: 28px;
       }
     }
