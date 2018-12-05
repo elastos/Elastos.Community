@@ -142,22 +142,34 @@ export default class extends BaseComponent {
                 <div className="profile-info-container clearfix">
                     <div className="profile-left pull-left">
                         {this.renderAvatar()}
-                        {this.renderButton()}
                     </div>
                     <div className="profile-right pull-left">
                         {this.renderFullName()}
+                        <Row>
+                            <Col span={24} className="profile-right-col">
+                                {this.renderGender()}
+                            </Col>
+                            <Col span={24} className="profile-right-col">
+                                {this.renderLocation()}
+                            </Col>
+                            <Col span={24} className="profile-right-col">
+                                {this.renderLocalTime()}
+                            </Col>
+                        </Row>
+
                         <div className="pull-right">
-                            {this.renderSkillsets()}
+                            {/*this.renderSkillsets()*/}
                         </div>
-                        {this.renderLocation()}
+
                         <div className="pull-left">
-                            {this.renderLocalTime()}
+
                         </div>
                         <div className="clearfix"/>
                         <div>
-                            {this.renderSocialMedia()}
+                            {/*this.renderSocialMedia()*/}
                         </div>
                     </div>
+                    <div className="clearfix"/>
                     {this.renderDescription()}
                 </div>
                 {this.renderMetrics()}
@@ -247,9 +259,20 @@ export default class extends BaseComponent {
     renderLocation(isMobile) {
         return (
             <div className={`profile-general-info ${isMobile ? 'profile-general-info-mobile' : ''}`}>
-                <i class="fas fa-map-marker-alt location-icon"></i>
+                <Icon type="pushpin"/>
                 <span>
                     {this.getCountryName(this.props.user.profile.country)}
+                </span>
+            </div>
+        )
+    }
+
+    renderGender(isMobile) {
+        return (
+            <div className={`profile-general-info ${isMobile ? 'profile-general-info-mobile' : ''}`}>
+                <Icon type="user"/>
+                <span>
+                    {_.capitalize(this.props.user.profile.gender)}
                 </span>
             </div>
         )
@@ -323,7 +346,8 @@ export default class extends BaseComponent {
         const bio = _.get(this.props, 'user.profile.bio') || ''
         const content = linkifyStr(bio, LINKIFY_OPTION)
         return (
-            <div>
+            <div className="profile-container">
+                {this.renderButton()}
                 {
                     this.props.user.profile.bio &&
                     <div className={`profile-description ${isMobile ? 'profile-description-mobile' : ''}`} dangerouslySetInnerHTML={{__html: content}}></div>

@@ -780,7 +780,7 @@ const en = {
     'profile.skillsDetails.placeholder': 'Explain more about your skills, work experience, etc.',
     'profile.previous': 'Previous',
     'profile.next': 'Next',
-    'profile.localTime': 'Local time',
+    'profile.localTime': 'Local Time',
     'profile.sendMessage': 'Send Direct Message',
     'profile.viewProfile': 'View Profile',
     'profile.editProfile': 'Edit Profile',

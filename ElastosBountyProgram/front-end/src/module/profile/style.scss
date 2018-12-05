@@ -169,8 +169,8 @@ $avatar-size: 160px;
     position: relative;
     z-index: 2;
     width: $avatar-size;
-    height: 50px;
     margin-bottom: 20px;
+    margin-right: 6px;
     float: right;
 
     &.profile-avatar-container-mobile {
@@ -184,8 +184,6 @@ $avatar-size: 160px;
     }
 
     .profile-avatar {
-      position: absolute;
-      bottom: 0;
       overflow: hidden;
       width: $avatar-size;
       height: $avatar-size;
@@ -197,9 +195,15 @@ $avatar-size: 160px;
     }
   }
 
+  .profile-container {
+    border-top: 1px solid #d7d7d9;
+  }
+
   .profile-button {
     width: 180px;
-    margin-left: 40px;
+    margin-left: 24px;
+    float: left;
+    margin-top: $gap_2;
 
     &.profile-button-mobile {
       float: none;
@@ -237,7 +241,6 @@ $avatar-size: 160px;
   }
 
   .profile-general-info {
-    margin-bottom: 15px !important;
     line-height: 32px;
 
     span {
@@ -283,10 +286,9 @@ $avatar-size: 160px;
   }
 
   .profile-description {
-    border-top: 1px solid #d7d7d9;
-    padding: 25px 0 0 0;
-    margin: 0 40px;
-    clear: both;
+    padding: 24px 24px 0 0;
+    float: right;
+    width: 520px;
 
     &.profile-description-mobile {
       margin: 0;
