@@ -762,7 +762,7 @@ const en = {
     'profile.profession.MARKETING': 'Marketing',
     'profile.profession.BUSINESS_FINANCE': 'Business / Finance',
     'profile.profession.ENTREPRENEUR': 'Entrepreneur',
-    'profile.profession.STUDENT': 'Stuent',
+    'profile.profession.STUDENT': 'Student',
     'profile.profession.HEALTH_MEDICINE': 'Health/Medicine',
     'profile.profession.LITERATURE_WRITING': 'Literature/Writing',
     'profile.profession.TRANSLATION': 'Translation/Interpretation',
