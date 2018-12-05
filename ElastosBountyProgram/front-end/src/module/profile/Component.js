@@ -34,8 +34,23 @@ export default class extends BaseComponent {
         this.state = {
             editing: false,
             editingBasic: false,
+            completing: false,
             publicView: false
         }
+    }
+
+    hasIncompleteProfile() {
+        const requiredProps = [
+            'profile.firstName',
+            'profile.lastName',
+            'profile.timezone',
+            'profile.country',
+            'profile.skillsDetails',
+            'profile.skillset',
+            'profile.profession'
+        ]
+
+        return !_.every(requiredProps, (prop) => _.has(this.props.user, prop))
     }
 
     // TODO: add twitter, telegram, linkedIn, FB
@@ -78,11 +93,13 @@ export default class extends BaseComponent {
             content = (
                 <div>
                     <MediaQuery maxWidth={800}>
+                        {this.renderToast(true)}
                         <div className="member-content member-content-mobile">
                             {this.renderMobile()}
                         </div>
                     </MediaQuery>
                     <MediaQuery minWidth={801}>
+                        {this.renderToast()}
                         <div className="member-content">
                             {this.renderDesktop()}
                         </div>
@@ -122,13 +139,14 @@ export default class extends BaseComponent {
             <Modal
                 className="project-detail-nobar"
                 visible={this.state.editing}
-                onOk={this.switchEditMode.bind(this)}
-                onCancel={this.switchEditMode.bind(this)}
+                onOk={this.switchEditMode.bind(this, false)}
+                onCancel={this.switchEditMode.bind(this, false)}
                 footer={null}
                 width="70%"
             >
                 { this.state.editing &&
-                    <UserEditForm user={this.props.user} page={this.props.page} switchEditMode={this.switchEditMode}/>
+                    <UserEditForm user={this.props.user} page={this.props.page}
+                        switchEditMode={this.switchEditMode.bind(this, false)} completing={this.state.completing}/>
                 }
             </Modal>
         )
@@ -173,7 +191,7 @@ export default class extends BaseComponent {
                     <div className="content">
                         {I18N.get(this.state.publicView ? 'profile.publicProfile' : 'profile.edit')}
                     </div>
-                    <Icon className="close-btn" type="close" onClick={onToggle} />
+                    <Icon className="close-btn" type="close" onClick={onToggle.bind(this)} />
                 </div>
             )
         }
@@ -198,6 +216,20 @@ export default class extends BaseComponent {
                 <div className="center">
                     {label}
                 </div>
+            </div>
+        )
+    }
+
+    renderToast(isMobile) {
+        if (!this.hasIncompleteProfile()) {
+            return
+        }
+
+        return (
+            <div className="fill-profile-toast">
+                <a onClick={this.switchEditMode.bind(this, true)}>
+                    {I18N.get('profile.complete')}
+                </a>
             </div>
         )
     }
@@ -233,10 +265,10 @@ export default class extends BaseComponent {
     renderButton(isMobile) {
         return (
             <div className={`profile-button ${isMobile ? 'profile-button-mobile' : ''}`}>
-                <Button className="profile-edit separated" onClick={this.switchEditMode}>
+                <Button className="profile-edit separated" onClick={this.switchEditMode.bind(this, false)}>
                     {I18N.get('profile.editProfile')}
                 </Button>
-                <Button className="profile-show" onClick={this.switchPublicView}>
+                <Button className="profile-show" onClick={this.switchPublicView.bind(this)}>
                     {I18N.get('profile.showPublicProfile')}
                 </Button>
             </div>
@@ -335,7 +367,7 @@ export default class extends BaseComponent {
         return config.data.mappingCountryCodeToName[countryCode]
     }
 
-    switchEditBasicMode = () => {
+    switchEditBasicMode() {
         this.setState({
             editingBasic: !this.state.editingBasic,
             temporaryAvatar: null,
@@ -343,20 +375,20 @@ export default class extends BaseComponent {
         })
     }
 
-    switchEditMode = () => {
+    switchEditMode(completing = false) {
         this.setState({
             editing: !this.state.editing,
+            completing,
             temporaryAvatar: null,
             temporaryBanner: null
         })
     }
 
-    switchPublicView = () => {
+    switchPublicView() {
         this.setState({
             publicView: !this.state.publicView,
             temporaryAvatar: null,
             temporaryBanner: null
         })
     }
-
 }

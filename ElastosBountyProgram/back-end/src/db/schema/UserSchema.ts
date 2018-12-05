@@ -29,6 +29,7 @@ export const Profile = {
     country : String,
     state : String,
     city : String,
+    profession: String,
 
     telegram: String,
     reddit: String,

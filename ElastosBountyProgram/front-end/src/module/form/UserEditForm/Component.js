@@ -23,7 +23,7 @@ import TimezonePicker from 'react-timezone'
 import I18N from '@/I18N'
 import {upload_file} from '@/util'
 import './style.scss'
-import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, USER_GENDER, USER_SKILLSET} from '@/constant'
+import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, USER_GENDER, USER_SKILLSET, USER_PROFESSION} from '@/constant'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
@@ -121,6 +121,10 @@ class C extends BaseComponent {
                 })
             }
         })
+    }
+
+    getProfessions() {
+        return _.keys(USER_PROFESSION)
     }
 
     getFormItemLayout() {
@@ -257,6 +261,22 @@ class C extends BaseComponent {
 
         const skillset_el = (
             <TreeSelect treeData={skillsets} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
+        )
+
+        const professions = this.getProfessions()
+        const profession_fn = getFieldDecorator('profession', {
+            rules: [],
+            initialValue: user.profile.profession || ''
+        })
+
+        const profession_el = (
+            <Select>
+                {_.map(professions, (profession) =>
+                    <Select.Option key={profession} value={profession}>
+                        {I18N.get(`profile.profession.${profession}`)}
+                    </Select.Option>
+                )}
+            </Select>
         )
 
         const country_fn = getFieldDecorator('country', {
@@ -399,7 +419,7 @@ class C extends BaseComponent {
             initialValue: user.profile.github
         })
         const github_el = (
-            <Input placeholder={I18N.ge('profile.portfolio.github')}/>
+            <Input placeholder={I18N.get('profile.portfolio.github')}/>
         )
 
         return {
@@ -418,6 +438,7 @@ class C extends BaseComponent {
             skillset: skillset_fn(skillset_el),
             portfolio: portfolio_fn(portfolio_el),
             skillsDetails: skillsDetails_fn(skillsDetails_el),
+            profession: profession_fn(profession_el),
 
             walletAddress: walletAddress_fn(walletAddress_el),
 
@@ -433,7 +454,7 @@ class C extends BaseComponent {
     }
 
     isCompleteProfileMode() {
-        return this.props.complete
+        return this.props.completing
     }
 
     renderHeader() {
@@ -554,6 +575,9 @@ class C extends BaseComponent {
                 </FormItem>
                 <FormItem label="Skills Details" {...formItemLayout}>
                     {p.skillsDetails}
+                </FormItem>
+                <FormItem label="Profession" {...formItemLayout}>
+                    {p.profession}
                 </FormItem>
                 <FormItem label="Portfolio" {...formItemLayout}>
                     {p.portfolio}
