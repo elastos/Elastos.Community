@@ -315,7 +315,7 @@ class C extends BaseComponent {
         })
 
         const portfolio_el = (
-            <Input />
+            <Input placeholder={I18N.get('profile.portfolio.placeholder')} />
         )
 
         const skillsDetails_fn = getFieldDecorator('skillsDetails', {
@@ -399,7 +399,7 @@ class C extends BaseComponent {
             initialValue: user.profile.github
         })
         const github_el = (
-            <Input />
+            <Input placeholder={I18N.ge('profile.portfolio.github')}/>
         )
 
         return {
