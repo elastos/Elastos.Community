@@ -315,9 +315,11 @@ export default class extends BaseComponent {
     renderProfession(isMobile) {
         return (
             <div className="profession-container">
-                <div>
-                    {I18N.get(`profile.profession.${this.props.user.profile.profession}`)}
-                </div>
+                {this.props.member.profile.profession &&
+                    <div>
+                        {I18N.get(`profile.profession.${this.props.user.profile.profession}`)}
+                    </div>
+                }
                 {!_.isEmpty(this.props.user.profile.portfolio) &&
                     <div className="portfolio-container">
                         <a href={this.props.user.profile.portfolio} target="_blank" className="link-container">
