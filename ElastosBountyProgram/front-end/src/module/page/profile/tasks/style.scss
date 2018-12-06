@@ -2,19 +2,27 @@
 @import "../../../../style/variable";
 @import "../../../../style/color";
 
-.p_ProfileTasks {
+.p_ProfileTasks,
+.p_ProfileProjects {
   background: white;
   text-align: left;
 
   .filter-group {
-    margin-bottom: $gap_2;
+    margin-bottom: $gap_1;
 
     @media only screen and (max-width: $mobile-width) {
       width: 100%;
     }
   }
 
+  .ant-input,
   .ant-select {
+    width: 250px;
+  }
+
+  .ant-select,
+  .ant-input,
+  .status-selector {
     @media only screen and (max-width: $mobile-width) {
       width: 100%;
       margin-bottom: $gap_1;
@@ -23,6 +31,10 @@
 
   .search-group {
     margin-left: $gap_1;
+
+    .ant-input {
+      margin-bottom: 0;
+    }
   }
 
   .ant-list-item {
@@ -59,5 +71,14 @@
 
   .btn-create-task {
     margin-left: $gap_0;
+  }
+
+  .ql-editor {
+    padding: 0;
+    font-size: 14px;
+  }
+
+  .subtitle {
+    color: rgba(0, 0, 0, 0.45);
   }
 }

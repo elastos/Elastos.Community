@@ -39,7 +39,7 @@ export default class extends ProfilePage {
         this.state = {
             showMobile: false,
             filter: FILTERS.ALL,
-            statusFilter: (this.props.filter && this.props.filter.statusFilter) || null,
+            statusFilter: this.props.filter && this.props.filter.statusFilter,
             page: 1,
             results: 5,
             search: ''
@@ -303,27 +303,25 @@ export default class extends ProfilePage {
                                     }
                                     <div className="pull-right filter-group search-group">
                                         <Input defaultValue={this.state.search} onChange={searchChangedHandler.bind(this)}
-                                            placeholder={I18N.get('developer.search.search.placeholder')} style={{width: 250}}/>
+                                            placeholder={I18N.get('developer.search.search.placeholder')}/>
                                     </div>
 
                                     {this.props.is_admin &&
-                                    <div className="pull-right">
-                                        Status:
-                                        <Select
-                                            showSearch
-                                            allowClear
-                                            style={{width: 200, marginLeft: 8}}
-                                            placeholder="Select a status"
-                                            defaultValue={this.state.statusFilter}
-                                            onChange={this.setStatusFilter.bind(this)}
-                                        >
-                                            {_.keys(TASK_STATUS).map((taskStatus) => {
-                                                return <Select.Option key={taskStatus} value={_.capitalize(taskStatus)}>
-                                                    {I18N.get(`taskStatus.${taskStatus}`)}
-                                                </Select.Option>
-                                            })}
-                                        </Select>
-                                    </div>
+                                        <div className="pull-right status-selector">
+                                            <Select
+                                                showSearch
+                                                allowClear
+                                                placeholder="Select a status"
+                                                defaultValue={this.state.statusFilter}
+                                                onChange={this.setStatusFilter.bind(this)}
+                                            >
+                                                {_.keys(TASK_STATUS).map((taskStatus) => {
+                                                    return <Select.Option key={taskStatus} value={_.capitalize(taskStatus)}>
+                                                        {I18N.get(`taskStatus.${taskStatus}`)}
+                                                    </Select.Option>
+                                                })}
+                                            </Select>
+                                        </div>
                                     }
                                     <div className="clearfix"/>
                                     {this.renderList()}
