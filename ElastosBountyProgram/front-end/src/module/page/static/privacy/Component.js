@@ -314,6 +314,8 @@ export default class extends StandardPage {
                             privacy@elastos.org<br/>
                         </div>
 
+                        <br/>
+
                         <div className="elastosAddress">
                             <b>Data Controller</b><br/>
                             TBD<br/>
