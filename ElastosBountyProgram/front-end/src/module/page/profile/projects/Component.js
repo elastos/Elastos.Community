@@ -3,7 +3,7 @@ import ProfilePage from '../../ProfilePage';
 import Footer from '@/module/layout/Footer/Container'
 import Navigator from '@/module/page/shared/HomeNavigator/Container'
 import _ from 'lodash'
-import './style.scss'
+import '../tasks/style.scss'
 import '../../admin/admin.scss'
 import {
     Col, Row, Icon, Form, Badge, Tooltip, Breadcrumb, Button,
@@ -428,7 +428,7 @@ export default class extends ProfilePage {
                                     </MediaQuery>
                                     <div className="pull-left filter-group search-group">
                                         <Input defaultValue={this.state.search} onChange={searchChangedHandler.bind(this)}
-                                            placeholder={I18N.get('developer.search.search.placeholder')} style={{width: 250}}/>
+                                            placeholder={I18N.get('developer.search.search.placeholder')}/>
                                     </div>
                                     <div className="clearfix"/>
                                     {this.state.filter === FILTERS.ALL && this.getListComponent()}

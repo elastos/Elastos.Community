@@ -64,9 +64,42 @@ export default class extends BaseComponent {
                     {this.renderFullName(true)}
                     {this.renderLocation(true)}
                     {this.renderLocalTime(true)}
-                    {this.renderSocialMedia(true)}
                     {this.renderDescription(true)}
                 </div>
+
+                <div className="profile-info-container profile-info-container-mobile clearfix">
+                    <div className="pull-left skillset-header">
+                        <h4 className="komu-a">
+                            {I18N.get('profile.skillset.header')}
+                        </h4>
+                    </div>
+                    <div className="pull-right skillset-content">
+                        <Row>
+                            <Col span={24}>
+                                {this.renderSkillsets(true)}
+                            </Col>
+                            <Col span={24}>
+                                {this.renderProfession(true)}
+                            </Col>
+                        </Row>
+                    </div>
+                </div>
+
+                <div className="profile-info-container profile-info-container-mobile clearfix">
+                    <div className="pull-left skillset-header">
+                        <h4 className="komu-a">
+                            {I18N.get('profile.social.header')}
+                        </h4>
+                    </div>
+                    <div className="pull-right skillset-content">
+                        <Row>
+                            <Col span={24}>
+                                {this.renderSocialMedia(true)}
+                            </Col>
+                        </Row>
+                    </div>
+                </div>
+
                 {this.renderMetrics()}
                 {this.renderEditForm()}
             </div>

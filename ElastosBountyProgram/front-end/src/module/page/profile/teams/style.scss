@@ -14,12 +14,16 @@
     }
   }
 
-  .loadmore {
-    margin: $gap_3 0;
+  .search-group {
+    margin-left: $gap_0;
+
+    @media only screen and (max-width: $mobile-width) {
+      margin-left: 0;
+    }
   }
 
-  .search-group {
-    margin-left: $gap_1;
+  .loadmore {
+    margin: $gap_3 0;
   }
 
   .ant-select {

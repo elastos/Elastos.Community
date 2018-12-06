@@ -37,6 +37,7 @@
 
   .c_Header_Menu.ant-menu {
     padding-top: 0;
+    height: 137px;
   }
 
   .c_Side_Menu {
@@ -60,7 +61,6 @@
   }
 
   .c_MenuItem {
-    height: 80px;
     font-size: 14px;
     font-stretch: normal;
     padding-top: 48px;
@@ -76,6 +76,10 @@
       }
     }
 
+    &.link {
+      padding-bottom: 8px;
+    }
+
     &.overview {
       padding-top: 0;
       padding-right: 4px;
@@ -84,6 +88,10 @@
         height: 73px;
         padding-top: 24px;
       }
+    }
+
+    &.mobile {
+      height: auto;
     }
 
     &.right-side {
