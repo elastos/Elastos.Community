@@ -377,14 +377,16 @@ export default class extends Base {
         const task = await db_task.findById(taskId)
         const taskOwner = await db_user.findById(task.createdBy)
 
+        await db_task.getDBInstance().populate(task, {
+            path: 'candidates',
+            select: sanitize,
+        })
+
         // flags for email actions later, maybe move this to an aspect or post call handler
         let sendTaskMarkedAsCompleteEmail = false
 
         // permission shortcuts
         if (this.currentUser.role === constant.USER_ROLE.MEMBER) {
-            if (this.currentUser._id.toString() !== task.createdBy.toString()) {
-                throw 'Access Denied'
-            }
 
             // there is an exception for members,
             // if they are the task assignee they can mark the task as complete only
@@ -401,6 +403,9 @@ export default class extends Base {
                 else {
                     throw 'Access Denied - Owners cant edit tasks past PENDING'
                 }
+
+            } else if (this.currentUser._id.toString() !== task.createdBy.toString()) {
+                throw 'Access Denied'
             }
         }
 
@@ -1313,7 +1318,7 @@ export default class extends Base {
         let isTaskAssignee = false
 
         if (taskAssigneeUserId) {
-            isTaskAssignee = taskAssigneeUserId === this.currentUser._id.toString()
+            isTaskAssignee = taskAssigneeUserId.toString() === this.currentUser._id.toString()
         }
 
         return isTaskAssignee
