@@ -478,12 +478,12 @@ export default class extends ProfilePage {
                                     {item.description}
                                 </h5>
                                 <div>
-                                    <a onClick={this.linkUserDetail.bind(this, item.owner)}>
+                                    <a onClick={this.linkUserDetail.bind(this, item.owner)} className="owner-container">
                                         <span>{item.owner.profile.firstName} {item.owner.profile.lastName}</span>
                                         <Divider type="vertical"/>
                                         <Avatar size="large" icon="user" src={USER_AVATAR_DEFAULT}/>
                                     </a>
-                                    <Button type="primary" className="pull-right" onClick={this.linkTaskDetail.bind(this, item.id)}>
+                                    <Button type="primary" className="pull-right view-button" onClick={this.linkTaskDetail.bind(this, item.id)}>
                                         View
                                         <div class="pull-right">
                                             {this.props.page === 'LEADER' && this.getCommentStatus(item.task)}
