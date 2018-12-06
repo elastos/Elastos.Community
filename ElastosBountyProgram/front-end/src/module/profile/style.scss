@@ -173,6 +173,10 @@ $avatar-size: 160px;
   .skillset-header {
     padding-left: 24px;
 
+    @media only screen and (max-width: $mobile-width) {
+      padding-left: 0;
+    }
+
     & > h4 {
       font-size: 24px;
       padding-top: 24px;
@@ -183,6 +187,16 @@ $avatar-size: 160px;
     width: 498px;
     margin-right: 24px;
     margin-top: 24px;
+
+    @media only screen and (max-width: $mobile-width) {
+      float: left;
+    }
+  }
+
+  .profession-container {
+    @media only screen and (max-width: $mobile-width) {
+      margin-top: $gap_1;
+    }
   }
 
   .profile-avatar-container {
@@ -199,11 +213,6 @@ $avatar-size: 160px;
     &.profile-avatar-container-mobile {
       float: none;
       width: 100%;
-
-      .profile-avatar {
-        left: 50%;
-        transform: translateX(-50%);
-      }
     }
 
     $avatarTopOffset: -16px;
@@ -314,6 +323,7 @@ $avatar-size: 160px;
     &.profile-description-mobile {
       margin: 0;
       margin-top: 24px;
+      width: auto;
     }
   }
 

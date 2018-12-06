@@ -18,6 +18,11 @@
 
 .admin-right-column {
   padding: $gap_1 $gap_2 0 $gap_2 !important;
+
+  @media only screen and (max-width: $mobile-width) {
+    padding-left: 0 !important;
+  }
+
   text-align: left;
   z-index: 10;
 }
