@@ -116,12 +116,12 @@ export default class extends BaseComponent {
 
         const url = new URI('/developer/search')
         lookingFor && url.addSearch('lookingFor', lookingFor)
-        skillset && url.addSearch('skillset', skillset)
-        domain && url.addSearch('domain', domain)
-        circle && url.addSearch('circle', circle)
-        search && url.addSearch('search', search)
-        sortBy && url.addSearch('sortBy', sortBy)
-        sortOrder && url.addSearch('sortOrder', sortOrder)
+        !_.isEmpty(skillset) && url.addSearch('skillset', skillset)
+        !_.isEmpty(domain) && url.addSearch('domain', domain)
+        !_.isEmpty(circle) && url.addSearch('circle', circle)
+        !_.isEmpty(search) && url.addSearch('search', search)
+        !_.isEmpty(sortBy) && url.addSearch('sortBy', sortBy)
+        !_.isEmpty(sortOrder) && url.addSearch('sortOrder', sortOrder)
         assignment !== 'all' && url.addSearch('assignment', assignment)
 
         return url.toString()
@@ -975,9 +975,11 @@ export default class extends BaseComponent {
                                     </h3>
 
                                     {/* Status */}
-                                    <div className="valign-wrapper">
-                                        <Tag>Status: {item.status}</Tag>
-                                    </div>
+                                    { item.status &&
+                                        <div className="valign-wrapper">
+                                            <Tag>{I18N.get('.status')}: {item.status}</Tag>
+                                        </div>
+                                    }
 
                                     {/* Application Deadline - info */}
                                     {item.applicationDeadlinePassed &&
@@ -1015,9 +1017,11 @@ export default class extends BaseComponent {
                                     </h3>
 
                                     {/* Status */}
-                                    <div className="valign-wrapper">
-                                        <Tag>Status: {item.status}</Tag>
-                                    </div>
+                                    { item.status &&
+                                        <div className="valign-wrapper">
+                                            <Tag>{I18N.get('.status')}: {item.status}</Tag>
+                                        </div>
+                                    }
 
                                     <h5 className="no-margin">
                                         {item.description}

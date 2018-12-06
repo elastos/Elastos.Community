@@ -113,7 +113,7 @@ class C extends BaseComponent {
                 title: I18N.get(`user.skillset.group.${category}`),
                 value: category,
                 key: category,
-                children: _.map(skillsets, (skillset) => {
+                children: _.map(_.keys(skillsets).sort(), (skillset) => {
                     return {
                         title: I18N.get(`user.skillset.${skillset}`),
                         value: skillset,
@@ -125,7 +125,7 @@ class C extends BaseComponent {
     }
 
     getProfessions() {
-        return _.keys(USER_PROFESSION)
+        return _.keys(USER_PROFESSION).sort()
     }
 
     getFormItemLayout() {
@@ -261,7 +261,18 @@ class C extends BaseComponent {
         })
 
         const skillset_el = (
-            <TreeSelect treeData={skillsets} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
+            <TreeSelect
+                treeData={skillsets}
+                treeCheckable={true}
+                searchPlaceholder={I18N.get('select.placeholder')}
+                getPopupContainer={x => {
+                    while (x && x.tagName.toLowerCase() !== 'form') {
+                        x = x.parentElement;
+                    }
+
+                    return x;
+                }}
+            />
         )
 
         const professions = this.getProfessions()
@@ -349,13 +360,22 @@ class C extends BaseComponent {
             <Input placeholder={I18N.get('profile.portfolio.placeholder')} />
         )
 
-        const skillsDetails_fn = getFieldDecorator('skillsDetails', {
+        const bio_fn = getFieldDecorator('bio', {
             rules: [],
-            initialValue: user.profile.skillsDetails
+            initialValue: user.profile.bio
         })
 
-        const skillsDetails_el = (
-            <Input placeholder={I18N.get('profile.skillsDetails.placeholder')} />
+        const bio_el = (
+            <Input.TextArea rows={4} placeholder={I18N.get('profile.skillsDetails.placeholder')} />
+        )
+
+        const motto_fn = getFieldDecorator('motto', {
+            rules: [],
+            initialValue: user.profile.motto
+        })
+
+        const motto_el = (
+            <Input placeholder={I18N.get('profile.motto.placeholder')}/>
         )
 
         /*
@@ -448,7 +468,8 @@ class C extends BaseComponent {
             timezone: timezone_fn(timezone_el),
             skillset: skillset_fn(skillset_el),
             portfolio: portfolio_fn(portfolio_el),
-            skillsDetails: skillsDetails_fn(skillsDetails_el),
+            bio: bio_fn(bio_el),
+            motto: motto_fn(motto_el),
             profession: profession_fn(profession_el),
 
             walletAddress: walletAddress_fn(walletAddress_el),
@@ -572,6 +593,9 @@ class C extends BaseComponent {
                 <FormItem label={I18N.get('from.UserEditForm.label.timezone')} {...formItemLayout}>
                     {p.timezone}
                 </FormItem>
+                <FormItem label={I18N.get('from.UserEditForm.label.motto')} {...formItemLayout}>
+                    {p.motto}
+                </FormItem>
             </div>
         )
     }
@@ -587,16 +611,16 @@ class C extends BaseComponent {
                 <FormItem label={I18N.get('from.UserEditForm.label.skillset')} {...formItemLayout}>
                     {p.skillset}
                 </FormItem>
-                <FormItem label="Skills Details" {...formItemLayout}>
-                    {p.skillsDetails}
+                <FormItem label={I18N.get('from.UserEditForm.label.bio')} {...formItemLayout}>
+                    {p.bio}
                 </FormItem>
-                <FormItem label="Profession" {...formItemLayout}>
+                <FormItem label={I18N.get('from.UserEditForm.label.profession')} {...formItemLayout}>
                     {p.profession}
                 </FormItem>
-                <FormItem label="Portfolio" {...formItemLayout}>
+                <FormItem label={I18N.get('from.UserEditForm.label.portfolio')} {...formItemLayout}>
                     {p.portfolio}
                 </FormItem>
-                <FormItem label="GitHub" {...formItemLayout}>
+                <FormItem label={I18N.get('from.UserEditForm.label.github')} {...formItemLayout}>
                     {p.github}
                 </FormItem>
             </div>
