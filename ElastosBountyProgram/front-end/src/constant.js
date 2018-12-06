@@ -52,8 +52,9 @@ export const TEAM_ROLE = {
 };
 
 export const TASK_CATEGORY = {
-    DEVELOPER: 'DEVELOPER',
+    GENERAL: 'GENERAL',
     SOCIAL: 'SOCIAL',
+    DEVELOPER: 'DEVELOPER',
     LEADER: 'LEADER',
     CR100: 'CR100'
 }

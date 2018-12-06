@@ -44,7 +44,6 @@ export default createContainer(Component, (state) => {
         async getTasks(query) {
             return taskService.index({
                 type: TASK_TYPE.PROJECT,
-                category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.CR100],
                 ...query,
             })
         },
@@ -52,7 +51,6 @@ export default createContainer(Component, (state) => {
         async loadMoreProjects(query) {
             return taskService.loadMore({
                 type: TASK_TYPE.PROJECT,
-                category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.CR100],
                 ...query,
             })
         },

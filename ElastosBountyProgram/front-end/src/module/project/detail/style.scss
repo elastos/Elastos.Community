@@ -20,6 +20,7 @@
   }
 
   .detail-container {
+    margin-top: $gap_2;
     padding-bottom: $gap_3;
     position: relative;
 
@@ -256,5 +257,13 @@
     max-width: 70%;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .assignment-info {
+    padding-left: $gap_2;
+
+    > .ant-tag {
+      cursor: auto;
+    }
   }
 }

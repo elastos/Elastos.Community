@@ -37,7 +37,7 @@ export default class extends Base{
             query.type = { $in: _.intersection(_.values(constant.TASK_TYPE), types) }
         }
 
-        query.category = { $in: [constant.TASK_CATEGORY.DEVELOPER, constant.TASK_CATEGORY.SOCIAL] }
+        query.category = { $in: [constant.TASK_CATEGORY.DEVELOPER, constant.TASK_CATEGORY.SOCIAL, constant.TASK_CATEGORY.GENERAL] }
         if (param.category) {
             const categories = param.category.split(',')
             const valid = _.intersection(_.values(constant.TASK_CATEGORY), categories).length ===
@@ -170,7 +170,8 @@ export default class extends Base{
             ]}
 
         } else if (!param.status && !isAdmin) {
-            // by default we only show tasks with these statuses
+
+            // by default we only show tasks with these statuses if they are not an admin
             query.status = {
                 $in: [
                     constant.TASK_STATUS.CREATED,

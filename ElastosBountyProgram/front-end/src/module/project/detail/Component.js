@@ -35,6 +35,7 @@ import './style.scss'
  *
  */
 class C extends BaseComponent {
+
     ord_states() {
         return {
             showAppModal: false,
@@ -195,6 +196,34 @@ class C extends BaseComponent {
         )
     }
 
+    /**
+     * Assignment Info
+     *
+     * - based on the assignSelf boolean field
+     *
+     * This refers to the next action after a task approval
+     * - If assignSelf = true, it is a private task which means it will be assigned to the owner after approval
+     * - If assignSelf = false, it is public and after it will be open for applications or bidding if (bidding = true)
+     */
+    renderAssignmentInfo() {
+        return <div>
+            {this.props.task.assignSelf ?
+                <div className="assignment-info">
+                    <Tag>Assignment Type: PRIVATE</Tag>
+                    <Popover content={`After APPROVAL this ${I18N.get(`taskType.${this.props.task.type}`)} is assigned to the owner`}>
+                        < Icon className="help-icon" type="question-circle-o"/>
+                    </Popover>
+                </div> :
+                <div className="assignment-info">
+                    <Tag>Assignment Type: PUBLIC</Tag>
+                    <Popover content={`After APPROVAL this ${I18N.get(`taskType.${this.props.task.type}`)} becomes publicly available`}>
+                        <Icon className="help-icon" type="question-circle-o"/>
+                    </Popover>
+                </div>
+            }
+        </div>
+    }
+
     ord_render() {
         const detail = this.props.task
         const loading = _.isEmpty(detail)
@@ -213,6 +242,7 @@ class C extends BaseComponent {
                         <div className="detail-container">
                             {this.getImageCarousel()}
                             {this.renderHeader()}
+                            {this.props.task.status === TASK_STATUS.PENDING && this.renderAssignmentInfo()}
                             {this.renderMeta()}
 
                             {/*

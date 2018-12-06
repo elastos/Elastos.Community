@@ -1,4 +1,4 @@
-import {TASK_STATUS, CVOTE_STATUS} from '@/constant'
+import {TASK_STATUS, TASK_TYPE, CVOTE_STATUS} from '@/constant'
 import council from './en/council';
 import getting_started from './en/getting_started';
 
@@ -506,7 +506,7 @@ const en = {
     'task.soloApply': 'Apply as an Individual',
     'task.teamApply': 'Apply as a Team',
     'task.applyReason': 'Why you wanted to join this task',
-    'task.createNew': 'Propose new Task',
+    'task.createNew': 'Propose New Task',
 
     // General
     'select.placeholder': 'Please select',
@@ -856,6 +856,7 @@ const en = {
     // Task Application
     'taks.application.social': 'Social',
     'taks.application.developer': 'Developer',
+    'taks.application.general': 'General',
     'taks.create.project': 'Create Project',
     'taks.create.task': 'Create Task / Event',
 
@@ -1253,6 +1254,11 @@ en[`taskStatus.${TASK_STATUS.SUCCESS}`] = 'Success'
 en[`taskStatus.${TASK_STATUS.DISTRIBUTED}`] = 'Distributed'
 en[`taskStatus.${TASK_STATUS.CANCELED}`] = 'Canceled'
 en[`taskStatus.${TASK_STATUS.EXPIRED}`] = 'Expired'
+
+en[`taskType.${TASK_TYPE.TASK}`] = 'Task'
+en[`taskType.${TASK_TYPE.SUB_TASK}`] = 'Sub Task'
+en[`taskType.${TASK_TYPE.PROJECT}`] = 'Project'
+en[`taskType.${TASK_TYPE.EVENT}`] = 'Event'
 
 en[`cvoteStatus.${CVOTE_STATUS.DRAFT}`] = 'DRAFT'
 en[`cvoteStatus.${CVOTE_STATUS.PROPOSED}`] = 'PROPOSED'
