@@ -113,7 +113,7 @@ class C extends BaseComponent {
                 title: I18N.get(`user.skillset.group.${category}`),
                 value: category,
                 key: category,
-                children: _.map(skillsets, (skillset) => {
+                children: _.map(_.keys(skillsets).sort(), (skillset) => {
                     return {
                         title: I18N.get(`user.skillset.${skillset}`),
                         value: skillset,
@@ -125,7 +125,7 @@ class C extends BaseComponent {
     }
 
     getProfessions() {
-        return _.keys(USER_PROFESSION)
+        return _.keys(USER_PROFESSION).sort()
     }
 
     getFormItemLayout() {
@@ -261,7 +261,18 @@ class C extends BaseComponent {
         })
 
         const skillset_el = (
-            <TreeSelect treeData={skillsets} treeCheckable={true} searchPlaceholder={I18N.get('select.placeholder')}/>
+            <TreeSelect
+                treeData={skillsets}
+                treeCheckable={true}
+                searchPlaceholder={I18N.get('select.placeholder')}
+                getPopupContainer={x => {
+                    while (x && x.tagName.toLowerCase() !== 'form') {
+                        x = x.parentElement;
+                    }
+
+                    return x;
+                }}
+            />
         )
 
         const professions = this.getProfessions()
