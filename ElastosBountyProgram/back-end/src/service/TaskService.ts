@@ -427,8 +427,6 @@ export default class extends Base {
                     updateObj.approvedDate = new Date()
 
                     // if APPROVED we also consider if we are setting assignSelf now
-                    console.log(param, typeof param.assignSelf)
-
                     let flagNotifyAssignPlusApprove = false
 
                     if (!task.assignSelf && param.assignSelf === true) {
@@ -495,11 +493,11 @@ export default class extends Base {
         // TODO: if reward changed to 0, force status to CREATED
 
         if (sendTaskPendingRequiredApprovalEmail) {
-            await this.sendTaskPendingEmail(this.currentUser, updatedTask)
+            this.sendTaskPendingEmail(this.currentUser, updatedTask)
         }
 
         if (sendTaskMarkedAsCompleteEmail) {
-            console.log('TODO sendTaskMarkedAsCompleteEmail')
+            this.sendTaskMarkedAsCompleteEmail(taskOwner, this.currentUser, updatedTask)
         }
 
         return updatedTask
@@ -1129,6 +1127,28 @@ export default class extends Base {
                 body: body
             })
         }
+    }
+
+    public async sendTaskMarkedAsCompleteEmail(taskOwner, curUser, task) {
+
+        if (taskOwner._id.toString() === curUser._id.toString()) {
+            return
+        }
+
+        let subject = 'Task ' + task.name + ' Marked as Complete';
+
+        let body = `${this.currentUser.profile.firstName} ${this.currentUser.profile.lastName} has marked the task ${task.name} as complete.
+            <br/>
+            <br/>
+            Please verify the task was completed properly and accept it: <a href="${process.env.SERVER_URL}/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
+        `
+        await mail.send({
+            to: taskOwner.email,
+            toName: `${taskOwner.profile.firstName} ${taskOwner.profile.lastName}`,
+            subject: subject,
+            body: body
+        })
+
     }
 
     public async sendWonBiddingEmail(users, task) {
