@@ -5,27 +5,25 @@ import {message} from 'antd'
 import {TASK_STATUS} from '@/constant'
 
 export default createContainer(Component, (state) => {
-
-    let page = 'PUBLIC' // default
-
-    if (/^\/admin/.test(state.router.location.pathname)) {
-        page = 'ADMIN'
-    } else if (/^\/profile/.test(state.router.location.pathname)){
-        // TODO: this should be PROFILE
-        page = 'LEADER'
-    }
-
     return {
         is_admin: state.user.is_admin,
         is_login: state.user.is_login,
-        currentUserId: state.user.current_user_id,
-        page: page
+        currentUserId: state.user.current_user_id
     }
 }, () => {
-
     const userService = new UserService()
 
     return {
+        async getCurrentUser() {
+            try {
+                const rs = await userService.getCurrentUser()
+            } catch (err) {
+                message.error(err.message)
+            }
+        },
 
+        async updateUser(userId, data) {
+            await userService.update(userId, data)
+        }
     }
 })

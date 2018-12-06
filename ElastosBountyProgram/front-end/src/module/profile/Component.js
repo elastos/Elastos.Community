@@ -1,19 +1,14 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import UserEditForm from '@/module/form/UserEditForm/Container'
-import UserProfileForm from '@/module/form/UserProfileForm/Container'
 import I18N from '@/I18N'
-import { Col, Row, Icon, Popover, Button, Spin, Tabs, Tag, Modal } from 'antd'
+import { Col, Row, Icon, Popover, Button, Spin, Tabs, Tag, Modal, Upload } from 'antd'
 import moment from 'moment-timezone'
-
-import UserPublicDetail from './detail/Container'
-
+import {upload_file} from '@/util'
 import {USER_AVATAR_DEFAULT, LINKIFY_OPTION} from '@/constant'
 import config from '@/config'
 import MediaQuery from 'react-responsive'
-
 import linkifyStr from 'linkifyjs/string';
-
 import './style.scss'
 
 const TabPane = Tabs.TabPane
@@ -32,50 +27,18 @@ export default class extends BaseComponent {
         super(props)
 
         this.state = {
-            editing: false,
-            editingBasic: false,
-            publicView: false
+            editing: false
         }
     }
 
     // TODO: add twitter, telegram, linkedIn, FB
     ord_render () {
-        let content = null;
         if (_.isEmpty(this.props.user) || this.props.user.loading) {
             return <div class="center"><Spin size="large" /></div>;
         }
 
-        if (this.state.publicView) {
-            content = (
-                <div className="member-content">
-                    {this.renderHeader()}
-                    <div className="container">
-                        <UserPublicDetail userId={this.props.currentUserId} page={this.props.page}/>
-                    </div>
-                </div>
-            );
-        } else if (this.state.editingBasic) {
-            content = (
-                <div className="member-content">
-                    {this.renderHeader()}
-                    <div className="container">
-                        <div>
-                            {this.renderBanner(false, this.state.temporaryBanner)}
-                            <div className="profile-info-container clearfix">
-                                <div className="profile-left pull-left">
-                                    {this.renderAvatar(false, this.state.temporaryAvatar)}
-                                </div>
-                                <UserProfileForm user={this.props.user}
-                                    page={this.props.page} switchEditMode={this.switchEditBasicMode.bind(this)}
-                                    updateBanner={(url) => this.setState({temporaryBanner: url})}
-                                    updateAvatar={(url) => this.setState({temporaryAvatar: url})}/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        } else {
-            content = (
+        return (
+            <div className="c_Member public">
                 <div>
                     <MediaQuery maxWidth={800}>
                         <div className="member-content member-content-mobile">
@@ -88,12 +51,6 @@ export default class extends BaseComponent {
                         </div>
                     </MediaQuery>
                 </div>
-            );
-        }
-
-        return (
-            <div className="c_Member public">
-                {content}
             </div>
         );
     }
@@ -108,7 +65,6 @@ export default class extends BaseComponent {
                     {this.renderLocation(true)}
                     {this.renderLocalTime(true)}
                     {this.renderSocialMedia(true)}
-                    {this.renderButton(true)}
                     {this.renderDescription(true)}
                 </div>
                 {this.renderMetrics()}
@@ -200,20 +156,6 @@ export default class extends BaseComponent {
         )
     }
 
-    renderHeader() {
-        if (this.state.publicView || this.state.editingBasic) {
-            const onToggle = this.state.publicView ? this.switchPublicView : this.switchEditBasicMode;
-            return (
-                <div className="header">
-                    <div className="content">
-                        {I18N.get(this.state.publicView ? 'profile.publicProfile' : 'profile.edit')}
-                    </div>
-                    <Icon className="close-btn" type="close" onClick={onToggle.bind(this)} />
-                </div>
-            )
-        }
-    }
-
     renderMetrics() {
         return (
             <Row gutter={16} className="profile-metrics">
@@ -241,16 +183,57 @@ export default class extends BaseComponent {
         return (
             <div className={`profile-banner ${isMobile ? 'profile-banner-mobile' : ''}`}>
                 <span style={{ backgroundImage: this.getBannerWithFallback(url || this.props.user.profile.banner) }}></span>
-                {!this.state.editingBasic && <Icon className="profile-edit-btn" type="edit" onClick={this.switchEditBasicMode.bind(this)}/>}
+                <Icon className="profile-edit-btn" type="edit" onClick={this.switchEditMode.bind(this)}/>
             </div>
         )
     }
 
-    renderAvatar(isMobile, url) {
+    renderAvatar(isMobile) {
+        const p_avatar = {
+            showUploadList: false,
+            customRequest: (info) => {
+                this.setState({
+                    avatar_loading: true
+                })
+
+                upload_file(info.file).then(async (d) => {
+                    await this.props.updateUser(this.props.currentUserId, {
+                        profile: {
+                            avatar: d.url,
+                            avatarFilename: d.filename,
+                            avatarFileType: d.type
+                        }
+                    })
+
+                    await this.props.getCurrentUser()
+
+                    this.setState({
+                        avatar_loading: false
+                    })
+                })
+            }
+        }
+
         return (
             <div className={`profile-avatar-container ${isMobile ? 'profile-avatar-container-mobile' : ''}`}>
                 <div className="profile-avatar">
-                    <img src={this.getAvatarWithFallback(url || this.props.user.profile.avatar)} />
+                    <Upload name="avatar" listType="picture-card"
+                        className="avatar-uploader"
+                        showUploadList={false}
+                        {...p_avatar}
+                    >
+                        {this.state.avatar_loading
+                            ? (
+                                <div>
+                                    <Icon type="loading"/>
+                                </div>
+                            )
+                            : (
+                                <img src={this.getAvatarWithFallback(
+                                    this.props.user.profile.avatar)} />
+                            )
+                        }
+                    </Upload>
                 </div>
             </div>
         )
@@ -262,19 +245,6 @@ export default class extends BaseComponent {
                 {this.props.user.profile.firstName}&nbsp;
                 {this.props.user.profile.lastName}
             </h1>
-        )
-    }
-
-    renderButton(isMobile) {
-        return (
-            <div className={`profile-button ${isMobile ? 'profile-button-mobile' : ''}`}>
-                <Button className="profile-edit separated" onClick={this.switchEditMode.bind(this, false)}>
-                    {I18N.get('profile.editProfile')}
-                </Button>
-                <Button className="profile-show" onClick={this.switchPublicView.bind(this)}>
-                    {I18N.get('profile.showPublicProfile')}
-                </Button>
-            </div>
         )
     }
 
@@ -389,7 +359,6 @@ export default class extends BaseComponent {
         const content = linkifyStr(bio, LINKIFY_OPTION)
         return (
             <div className="profile-container">
-                {this.renderButton()}
                 {
                     this.props.user.profile.bio &&
                     <div className={`profile-description ${isMobile ? 'profile-description-mobile' : ''}`} dangerouslySetInnerHTML={{__html: content}}></div>
@@ -402,27 +371,9 @@ export default class extends BaseComponent {
         return config.data.mappingCountryCodeToName[countryCode]
     }
 
-    switchEditBasicMode() {
-        this.setState({
-            editingBasic: !this.state.editingBasic,
-            temporaryAvatar: null,
-            temporaryBanner: null
-        })
-    }
-
     switchEditMode() {
         this.setState({
-            editing: !this.state.editing,
-            temporaryAvatar: null,
-            temporaryBanner: null
-        })
-    }
-
-    switchPublicView() {
-        this.setState({
-            publicView: !this.state.publicView,
-            temporaryAvatar: null,
-            temporaryBanner: null
+            editing: !this.state.editing
         })
     }
 }

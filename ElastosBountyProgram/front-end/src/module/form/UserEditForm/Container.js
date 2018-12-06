@@ -47,7 +47,8 @@ export default createContainer(Component, (state)=>{
                     walletAddress: formData.walletAddress,
                     profession: formData.profession,
                     portfolio: formData.portfolio,
-                    skillsDetails: formData.skillsDetails,
+                    bio: formData.bio,
+                    motto: formData.motto,
 
                     // Social Media
                     telegram: formData.telegram,

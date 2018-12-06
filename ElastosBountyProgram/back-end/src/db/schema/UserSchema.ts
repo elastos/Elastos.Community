@@ -40,7 +40,6 @@ export const Profile = {
     linkedin: String,
 
     portfolio: String,
-    skillsDetails: String,
     skillset: [String],
     bio: String,
     motto: String,
