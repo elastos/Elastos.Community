@@ -280,6 +280,11 @@ export default class extends Base {
             finalQuery['profile.skillset'] = { $in: skillsets }
         }
 
+        if (query.profession) {
+            const professions = query.profession.split(',')
+            finalQuery['profile.profession'] = { $in: professions }
+        }
+
         if (query.empower) {
             finalQuery.empower = JSON.parse(query.empower)
         }

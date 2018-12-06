@@ -514,6 +514,7 @@ const en = {
     '.apply': 'Apply',
     '.cancel': 'Cancel',
     '.delete': 'Delete',
+    '.status': 'Status',
     '.edit': 'Edit',
     '.upload': 'Click to Upload',
     '.yes': 'Yes',
@@ -1187,6 +1188,7 @@ const en = {
     'crcle.legal': 'Legal',
 
     'user.skillset.select': 'Select skillsets',
+    'user.profession.select': 'Select profession',
 
     'user.skillset.group.DESIGN': 'Design',
     'user.skillset.group.MARKETING': 'Marketing',
