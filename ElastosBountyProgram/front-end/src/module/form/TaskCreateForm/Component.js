@@ -136,7 +136,7 @@ class C extends BaseComponent {
         this.state = {
             communityTrees: [],
             taskType: this.props.taskType || TASK_TYPE.TASK,
-            taskCategory: this.props.taskCategory || TASK_CATEGORY.SOCIAL,
+            taskCategory: this.props.taskCategory || TASK_CATEGORY.GENERAL,
             assignSelf: props.existingTask ? props.existingTask.assignSelf : !this.props.circleId,
             eventDateRange: (props.existingTask && props.existingTask.eventDateRange) || false,
             thumbnail_url: (props.existingTask && props.existingTask.thumbnail) || null,
@@ -201,8 +201,9 @@ class C extends BaseComponent {
                     this.setState({taskCategory: val})
                     if (this.state.taskCategory === TASK_TYPE.PROJECT) {
                     // this.setState({taskType: TASK_TYPE.TASK})
-                    }
-                }}>
+                }
+            }}>
+                <Option value={TASK_CATEGORY.GENERAL}>General</Option>
                 <Option value={TASK_CATEGORY.SOCIAL}>Social</Option>
                 <Option value={TASK_CATEGORY.DEVELOPER}>Developer</Option>
             </Select>
@@ -979,7 +980,7 @@ class C extends BaseComponent {
                         </div>
                         }
 
-                        <Divider/>
+                        {this.state.taskType === TASK_TYPE.EVENT && <Divider/>}
 
                         {/*
                         ********************************************************************************
@@ -992,7 +993,7 @@ class C extends BaseComponent {
                                 <Icon className="help-icon" type="question-circle-o"/>
                             </Popover>
                         </h3>
-                        {!this.props.circleId && (!this.props.existingTask || this.props.is_admin) &&
+                        {!this.props.existingTask &&
                             <Row>
                                 <Col span={12}>
                                     <Card hoverable className={'feature-box' + (this.state.assignSelf ? ' selected' : '')} onClick={() => { this.setState({assignSelf: true}) }}>
@@ -1023,7 +1024,7 @@ class C extends BaseComponent {
                             </Row>
                         }
 
-                        {!this.state.assignSelf && !this.props.disableCircleSelect &&
+                        {!this.state.assignSelf &&
                         <div>
                             <br/>
                             <FormItem label={I18N.get('from.TaskCreateForm.label.rewardtype')} {...formItemLayout}>

@@ -8,6 +8,7 @@ import Flyout from './Flyout';
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
 import {USER_ROLE, USER_LANGUAGE} from '@/constant'
 import Flag from 'react-flags'
+import UserEditForm from '@/module/form/UserEditForm/Container'
 
 const {Header} = Layout
 const SubMenu = Menu.SubMenu
@@ -15,29 +16,44 @@ const MenuItemGroup = Menu.ItemGroup
 
 export default class extends BaseComponent {
     constructor() {
-        super();
+        super()
+
         this.state = {
             affixed: false,
-            popover: false
+            popover: false,
+            completing: false
         }
     }
-    /*
-    buildOverviewDropdown() {
+
+    renderCompleteProfileModal() {
         return (
-            <Menu onClick={this.clickItem.bind(this)}>
-                <Menu.Item key="developer">
-                    {I18N.get('0100')}
-                </Menu.Item>
-                <Menu.Item key="social">
-                    {I18N.get('0101')}
-                </Menu.Item>
-                <Menu.Item key="leader">
-                    {I18N.get('0102')}
-                </Menu.Item>
-            </Menu>
+            <Modal
+                className="project-detail-nobar"
+                visible={this.state.completing}
+                onOk={this.onCompleteProfileModalOk.bind(this)}
+                onCancel={this.onCompleteProfileModalCancel.bind(this)}
+                footer={null}
+                width="70%"
+            >
+                { this.state.completing &&
+                    <UserEditForm user={this.props.user}
+                        switchEditMode={this.onCompleteProfileModalCancel.bind(this)} completing={true}/>
+                }
+            </Modal>
         )
     }
-    */
+
+    onCompleteProfileModalOk() {
+        this.setState({
+            completing: false
+        })
+    }
+
+    onCompleteProfileModalCancel() {
+        this.setState({
+            completing: false
+        })
+    }
 
     buildAcctDropdown() {
 
@@ -90,9 +106,6 @@ export default class extends BaseComponent {
 
         return (
             <Menu onClick={this.clickItem.bind(this)} className="help-menu">
-                {/*<Menu.Item key="help">
-                    {I18N.get('0007')}
-                </Menu.Item>*/}
                 <Menu.Item key="about">
                     {I18N.get('0008')}
                 </Menu.Item>
@@ -128,10 +141,9 @@ export default class extends BaseComponent {
 
     ord_render() {
         const isLogin = this.props.isLogin
-
-        // const overviewDropdown = this.buildOverviewDropdown()
         const acctDropdown = this.buildAcctDropdown()
         const helpDropdown = this.buildHelpDropdown()
+
         return (
             <Header className="c_Header">
                 <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu pull-left"
@@ -172,23 +184,8 @@ export default class extends BaseComponent {
                     </div>
                 </MediaQuery>
 
-                {/*
-                <Menu.Item className="c_MenuItem overview">
-                    <Dropdown overlay={overviewDropdown} style="margin-top: 24px;">
-                        <a className="ant-dropdown-link" href="#">
-                            {I18N.get('0001')} <Icon type="down" />
-                        </a>
-                    </Dropdown>
-                </Menu.Item>
-                */}
                 <Menu onClick={this.clickItem.bind(this)} className="c_Header_Menu pull-right"
                       selectedKeys={this.getSelectedKeys()} mode="horizontal">
-                    {/*this.props.isLogin &&
-                        <Menu.Item className="c_MenuItem link right" key="profile">
-                            {I18N.get('0104')}
-                        </Menu.Item>
-                    */}
-
                     <Menu.Item className="c_MenuItem link" key="cr100">
                         {I18N.get('0105')}
                     </Menu.Item>
@@ -221,29 +218,65 @@ export default class extends BaseComponent {
                             {I18N.get('0201')}
                         </Menu.Item>
                     }
-
-                    {/*
-                    <Menu.Item className="c_MenuItem" key="directory">
-                        {I18N.get('0003')}
-                    </Menu.Item>
-                    */}
-
-                    {/*
-                    <Menu.Item className="c_MenuItem right-side" key="tasks">
-                        {I18N.get('0006')}
-                    </Menu.Item>
-
-                    <Menu.Item className="c_MenuItem right-side" key="teams">
-                        {I18N.get('0005')}
-                    </Menu.Item>
-                    */}
                 </Menu>
+                <div className="clearfix"/>
+                {!this.state.dismissed && !this.isPermanentlyDismissed() &&
+                    this.props.isLogin && this.hasIncompleteProfile() && this.renderToast()}
+                {this.renderCompleteProfileModal()}
             </Header>
         )
     }
 
-    clickItem(e) {
+    completeProfile() {
+        this.setState({
+            completing: true
+        })
+    }
 
+    dismissToast() {
+        this.setState({
+            dismissed: true
+        })
+
+        localStorage.setItem('complete-profile-dismissed', true)
+    }
+
+    isPermanentlyDismissed() {
+        return localStorage.getItem('complete-profile-dismissed')
+    }
+
+    renderToast() {
+        return (
+            <div className="fill-profile-toast">
+                <a onClick={this.completeProfile.bind(this)}>
+                    {I18N.get('profile.complete')}
+                    <Icon type="right" style={{marginLeft: 8}}/>
+                </a>
+                <a className="pull-right toast-close-container" onClick={this.dismissToast.bind(this)}>
+                    <Icon type="close"/>
+                </a>
+            </div>
+        )
+    }
+
+    hasIncompleteProfile() {
+        const requiredProps = [
+            'profile.firstName',
+            'profile.lastName',
+            'profile.timezone',
+            'profile.country',
+            'profile.bio',
+            'profile.skillset',
+            'profile.profession'
+        ]
+
+        return !_.every(requiredProps, (prop) => {
+            return _.has(this.props.user, prop) &&
+                !_.isEmpty(_.get(this.props.user, prop))
+        })
+    }
+
+    clickItem(e) {
         const key = e.key
 
         if (_.includes([

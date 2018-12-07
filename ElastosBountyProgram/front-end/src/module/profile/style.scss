@@ -5,6 +5,24 @@
 $avatar-size: 160px;
 
 .c_Member {
+  padding-top: $gap_0;
+
+  .profile-edit-btn {
+    visibility: hidden;
+  }
+
+  @media only screen and (max-width: $mobile-width) {
+    .profile-edit-btn {
+      visibility: visible;
+    }
+  }
+
+  .member-content:hover {
+    .profile-edit-btn {
+      visibility: visible;
+    }
+  }
+
   .profile-skillset-info {
     max-width: 250px;
     text-align: right;
@@ -41,7 +59,6 @@ $avatar-size: 160px;
     top: 12px;
     .item {
       padding: 16px;
-      background-color: #f7f9fd;
       >.value {
         text-align: center;
         font-weight: 700;
@@ -55,9 +72,6 @@ $avatar-size: 160px;
     width: 100%;
     max-width: 780px;
     margin: auto;
-    >.container {
-      background-color: #f7f9fd;
-    }
   }
 
   .member-content-mobile {
@@ -99,8 +113,6 @@ $avatar-size: 160px;
     }
 
     .ant-row {
-      margin: $gap_0 0;
-
       p {
         padding-bottom: $gap_0;
       }
@@ -122,8 +134,8 @@ $avatar-size: 160px;
       position: absolute;
       color: #fff;
       font-size: 24px;
-      top: 26px;
-      right: 30px;
+      top: 24px;
+      right: 24px;
       cursor: pointer;
     }
 
@@ -155,11 +167,41 @@ $avatar-size: 160px;
   .profile-info-container {
     margin-top: 0 !important;
     background: #f7f9fd;
-    padding-bottom: 25px;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
 
     &.profile-info-container-mobile {
-      padding: 0 20px;
-      padding-bottom: 25px;
+      padding: 0 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+  .skillset-header {
+    padding-left: 24px;
+
+    @media only screen and (max-width: $mobile-width) {
+      padding-left: 0;
+    }
+
+    & > h4 {
+      font-size: 24px;
+      padding-top: 24px;
+    }
+  }
+
+  .skillset-content {
+    width: 498px;
+    margin-right: 24px;
+    margin-top: 24px;
+
+    @media only screen and (max-width: $mobile-width) {
+      float: left;
+    }
+  }
+
+  .profession-container {
+    @media only screen and (max-width: $mobile-width) {
+      margin-top: $gap_1;
     }
   }
 
@@ -167,37 +209,36 @@ $avatar-size: 160px;
     position: relative;
     z-index: 2;
     width: $avatar-size;
-    height: 50px;
-    margin-bottom: 20px;
     float: right;
+
+    .ant-upload {
+      width: $avatar-size;
+      height: $avatar-size;
+    }
 
     &.profile-avatar-container-mobile {
       float: none;
       width: 100%;
-
-      .profile-avatar {
-        left: 50%;
-        transform: translateX(-50%);
-      }
     }
 
+    $avatarTopOffset: -16px;
     .profile-avatar {
-      position: absolute;
-      bottom: 0;
+      margin-top: $avatarTopOffset;
       overflow: hidden;
       width: $avatar-size;
       height: $avatar-size;
 
       img {
         width: 100%;
-        height: 100%;
       }
     }
   }
 
   .profile-button {
     width: 180px;
-    margin-left: 40px;
+    margin-left: 24px;
+    float: left;
+    margin-top: $gap_2;
 
     &.profile-button-mobile {
       float: none;
@@ -207,43 +248,35 @@ $avatar-size: 160px;
   .profile-send-msg {
     width: 100%;
     text-transform: uppercase;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
     border: 0;
     border-radius: 0;
   }
 
   .profile-follow, .profile-edit, .profile-show {
     width: 100%;
-    border: 1px solid #000;
-    color: #000;
-    text-transform: uppercase;
     &.separated {
-      margin-bottom: 15px;
+      margin-bottom: 16px;
     }
   }
 
   .profile-left {
     width: 200px;
-    padding-bottom: 15px;
+    padding-bottom: 16px;
   }
 
   .profile-right {
     width: calc(100% - 200px);
     padding-left: 60px;
     padding-right: 40px;
-    padding-bottom: 15px;
+    padding-bottom: 16px;
   }
 
   .profile-general-info {
-    margin-bottom: 15px !important;
     line-height: 32px;
 
     span {
-      margin-left: 10px;
-    }
-
-    .location-icon {
-      margin-right: 3px;
+      margin-left: 8px;
     }
 
     &.profile-general-info-mobile {
@@ -256,8 +289,8 @@ $avatar-size: 160px;
     font-size: 36px;
     padding-bottom: 0;
     padding-top: 0;
-    margin-bottom: 6px;
-    margin-top: 10px;
+    margin-bottom: 8px;
+    margin-top: 8px;
 
     &.profile-general-title-mobile {
       text-align: center;
@@ -266,8 +299,8 @@ $avatar-size: 160px;
 
   .profile-social {
     a {
-      color: #000 !important;
-      margin-right: 15px;
+      margin-right: 16px;
+      color: $text_default_color;
 
       &:last-child {
         margin-right: 0;
@@ -276,19 +309,27 @@ $avatar-size: 160px;
 
     &.profile-social-mobile {
       text-align: left;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+    }
+  }
+
+  .portfolio-container {
+    .link-container {
+      margin-right: $gap_0;
     }
   }
 
   .profile-description {
     border-top: 1px solid #d7d7d9;
-    padding: 25px 0 0 0;
-    margin: 0 40px;
-    clear: both;
+    padding: 24px 0 0 0;
+    margin-right: 24px;
+    float: right;
+    width: 498px;
 
     &.profile-description-mobile {
       margin: 0;
-      margin-top: 25px;
+      margin-top: 24px;
+      width: auto;
     }
   }
 
@@ -319,7 +360,7 @@ $avatar-size: 160px;
         color: black;
       }
       .cr-btn {
-        padding: 0 20px;
+        padding: 0 24px;
         height: 28px;
       }
     }

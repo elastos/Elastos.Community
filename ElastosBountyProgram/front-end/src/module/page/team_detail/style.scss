@@ -24,6 +24,10 @@ $mobile-padding: $gap_0 0px;
     @extend .komu-a;
     font-size: 32px;
     padding: $gap_3 0;
+
+    &.with-gizmo {
+      padding-top: 0;
+    }
   }
 
   .ebp-wrap {

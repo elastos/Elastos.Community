@@ -44,6 +44,7 @@ export default createContainer(Component, (state) => {
             }
         },
 
+        // TODO: this doesn't work since assignSelf only works on creation
         async approveAndAssignTask(taskId) {
             try {
                 await taskService.update(taskId, {

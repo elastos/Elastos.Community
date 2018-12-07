@@ -1,4 +1,4 @@
-import {TASK_STATUS, TASK_CATEGORY, TASK_TYPE} from '@/constant'
+import {TASK_STATUS, TASK_CATEGORY, TASK_TYPE, TASK_CANDIDATE_STATUS} from '@/constant'
 
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
@@ -57,28 +57,30 @@ export default class extends BaseComponent {
         return <ProjectPublicDetail taskId={this.props.task._id}/>
     }
 
+    // not using I18N here since all admins so far know English and this isn't visible to non-admins
     renderAdminHeader() {
 
         const adminDropdown = this.buildAdminDropdown()
+        const curTask = this.props.task
 
         return <div className="l_banner">
-            {this.props.task.category !== 'CR100' ?
+            {curTask.category !== 'CR100' ?
             <div className="pull-left">
-                {I18N.get('admin.tasks.status')}: <span className="status">{I18N.get(`taskStatus.${this.props.task.status}`)}</span>
-                {this.props.task.status === TASK_STATUS.CREATED &&
+                {I18N.get('admin.tasks.status')}: <span className="status">{I18N.get(`taskStatus.${curTask.status}`)}</span>
+                {curTask.status === TASK_STATUS.CREATED &&
                 <span className="help-text">&nbsp; - {I18N.get('project.admin.statusHelp.created')}</span>
                 }
-                {this.props.task.status === TASK_STATUS.PENDING &&
+                {curTask.status === TASK_STATUS.PENDING &&
                 <span className="help-text">&nbsp; - {I18N.get('project.admin.statusHelp.pending')}</span>
                 }
-                {(this.props.task.status === TASK_STATUS.APPROVED || this.props.task.status === TASK_STATUS.ASSIGNED) && this.props.task.approvedBy &&
+                {(curTask.status === TASK_STATUS.APPROVED || curTask.status === TASK_STATUS.ASSIGNED) && curTask.approvedBy &&
                 <span className="help-text">
-                    &nbsp; - {I18N.get('project.detail.statusHelp.approvedBy')} {this.props.task.approvedBy.username}
-                    {this.props.task.approvedDate && ` ${I18N.get('project.admin.statusHelp.approvedOn')} ${moment(this.props.task.approvedDate).format('MMM D')}`}
+                    &nbsp; - {I18N.get('project.detail.statusHelp.approvedBy')} {curTask.approvedBy.username}
+                    {curTask.approvedDate && ` ${I18N.get('project.admin.statusHelp.approvedOn')} ${moment(curTask.approvedDate).format('MMM D')}`}
                 </span>
                 }
-                {this.props.task.status === TASK_STATUS.SUCCESS &&
-                ((this.props.task.reward.ela > 0 || this.props.task.reward.usd > 0) ?
+                {curTask.status === TASK_STATUS.SUCCESS &&
+                ((curTask.reward.ela > 0 || curTask.reward.usd > 0) ?
                     <span className="help-text">&nbsp; - {I18N.get('project.admin.statusHelp.successReward')}</span> :
                     <span className="help-text">&nbsp; - {I18N.get('project.admin.statusHelp.successNoReward')}</span>
                 )
@@ -88,32 +90,32 @@ export default class extends BaseComponent {
                 CR100 {I18N.get('developer.search.project')}
             </div>
             }
-            {this.props.task.category !== 'CR100' &&
+            {curTask.category !== 'CR100' &&
             <div className="pull-right right-align">
-                {!this.state.editing && this.props.task.status === TASK_STATUS.PENDING &&
+                {!this.state.editing && curTask.status === TASK_STATUS.PENDING &&
                     <Popconfirm title="Are you sure you want to approve this task?"
                         placement="left" okText="Yes" onConfirm={this.approveTask.bind(this)}>
-                        <Button type="primary">Approve</Button>
+                        <Button>Approve</Button>
                     </Popconfirm>
                 }
-                {!this.state.editing && this.props.task.status === TASK_STATUS.PENDING &&
+                {!this.state.editing && curTask.status === TASK_STATUS.PENDING && curTask.assignSelf !== true &&
                     <Popconfirm title="Are you sure you want to approve this task and assign to the owner?"
                         placement="left" okText="Yes" onConfirm={this.approveAndAssignTask.bind(this)}>
-                        <Button type="primary">Approve and Assign</Button>
+                        <Button>Approve and Assign to Owner</Button>
                     </Popconfirm>
                 }
-                {/* Admin & Task Owner CAN Mark as Complete */}
-                {(this.props.task.status === TASK_STATUS.APPROVED || this.props.task.status === TASK_STATUS.ASSIGNED) &&
+                {/* ONLY Admin & Task Owner CAN Mark as Complete */}
+                {(curTask.status === TASK_STATUS.APPROVED || curTask.status === TASK_STATUS.ASSIGNED) &&
                 <Popconfirm title="Are you sure you want to mark this task as complete?" placement="left" okText="Yes" onConfirm={this.markAsSubmitted.bind(this)}>
                     <Button>Mark as Complete</Button>
                 </Popconfirm>
                 }
-                {!this.state.editing && this.props.task.status === TASK_STATUS.SUBMITTED &&
+                {!this.state.editing && curTask.status === TASK_STATUS.SUBMITTED &&
                 <Popconfirm title="Are you sure you want to accept this task as completed?" placement="left" okText="Yes" onConfirm={this.markAsSuccessful.bind(this)}>
                     <Button>Accept as Complete</Button>
                 </Popconfirm>
                 }
-                {!this.state.editing && this.props.task.status === TASK_STATUS.SUCCESS && (this.props.task.reward.ela > 0 || this.props.task.reward.usd > 0) &&
+                {!this.state.editing && curTask.status === TASK_STATUS.SUCCESS && (curTask.reward.ela > 0 || curTask.reward.usd > 0) &&
                 <Popconfirm title="Are you sure you want to mark the ELA as disbursed?" placement="left" okText="Yes" onConfirm={this.markAsDisbursed.bind(this)}>
                     <Button type="primary">Mark as Disbursed</Button>
                 </Popconfirm>
@@ -137,6 +139,13 @@ export default class extends BaseComponent {
 
         const isTaskOwner = this.props.current_user_id === (this.props.task.createdBy && this.props.task.createdBy._id)
 
+        const taskAssignee = _.filter(this.props.task.candidates, {status: TASK_CANDIDATE_STATUS.APPROVED})
+        let isTaskAssignee = false
+
+        if (taskAssignee.length) {
+            isTaskAssignee = taskAssignee[0].user._id === this.props.current_user_id
+        }
+
         return <div className="l_banner">
             {this.props.task.category !== 'CR100' ?
                 <div className="pull-left">
@@ -158,8 +167,8 @@ export default class extends BaseComponent {
             }
             {this.props.task.category !== 'CR100' &&
             <div className="pull-right right-align">
-                {/* Admin & Task Owner CAN Mark as Complete */}
-                {(this.props.task.status === TASK_STATUS.APPROVED || this.props.task.status === TASK_STATUS.ASSIGNED) && isTaskOwner &&
+                {/* Admin & Task Assignee CAN Mark as Complete - TODO: we should consider if we need a separate flag to allow the owner to approve the deliverable */}
+                {(this.props.task.status === TASK_STATUS.APPROVED || this.props.task.status === TASK_STATUS.ASSIGNED) && isTaskAssignee &&
                 <Popconfirm title={I18N.get('project.public.statusHelp.markAsCompleteConfirm')} placement="left" okText={I18N.get('.yes')} onConfirm={this.markAsSubmitted.bind(this)}>
                     <Button>{I18N.get('project.public.statusHelp.markAsComplete')}</Button>
                 </Popconfirm>

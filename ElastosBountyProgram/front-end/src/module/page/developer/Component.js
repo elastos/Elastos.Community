@@ -8,7 +8,7 @@ import './style.scss'
 import MediaQuery from 'react-responsive'
 import { Col, Row, Card, Button, Breadcrumb, Icon, Table, Input, Modal, Avatar, TreeSelect } from 'antd'
 import {MAX_WIDTH_MOBILE} from "../../../config/constant"
-import { USER_AVATAR_DEFAULT, USER_SKILLSET } from '@/constant'
+import { USER_AVATAR_DEFAULT, USER_SKILLSET, USER_PROFESSION } from '@/constant'
 import ProfilePopup from '@/module/profile/OverviewPopup/Container'
 import URI from 'urijs'
 
@@ -21,7 +21,8 @@ export default class extends StandardPage {
         this.state = {
             search: params.search || '',
             showUserInfo: null,
-            skillsetFilters: (params.skillsetFilters || '').split(','),
+            skillsetFilters: (params.skillset && params.skillset.split(',')) || [],
+            professionFilters: (params.profession && params.profession.split(',')) || [],
             showVideo: false,
             userListPagination: {
                 pageSize: 5,
@@ -43,10 +44,17 @@ export default class extends StandardPage {
             search: this.state.search || '',
             results: (this.state.userListPagination || {}).pageSize || 5,
             page: (this.state.userListPagination || {}).current || 1,
-            skillset: this.state.skillsetFilters || []
+            skillset: this.state.skillsetFilters || [],
+            profession: this.state.professionFilters || []
         }
 
-        this.props.history.replace(`/developer?search=${options.search}&page=${options.page}&skillset=${options.skillset.join(',')}`)
+        const url = new URI('/developer')
+        !_.isEmpty(this.state.search) && url.addSearch('search', this.state.search)
+        options.page > 1 && url.addSearch('page', options.page)
+        options.skillset.length && url.addSearch('skillset', options.skillset.join(','))
+        options.profession.length && url.addSearch('profession', options.profession.join(','))
+
+        this.props.history.replace(url.toString())
         this.props.listUsers(options)
     }
 
@@ -228,13 +236,17 @@ export default class extends StandardPage {
         this.setState({ skillsetFilters: value }, this.debouncedRefetch.bind(this))
     }
 
+    professionFilterChanged(value) {
+        this.setState({ professionFilters: value }, this.debouncedRefetch.bind(this))
+    }
+
     getSkillsets() {
         return _.map(USER_SKILLSET, (skillsets, category) => {
             return {
                 title: I18N.get(`user.skillset.group.${category}`),
                 value: category,
                 key: category,
-                children: _.map(skillsets, (skillset) => {
+                children: _.map(_.keys(skillsets).sort(), (skillset) => {
                     return {
                         title: I18N.get(`user.skillset.${skillset}`),
                         value: skillset,
@@ -247,8 +259,39 @@ export default class extends StandardPage {
 
     getSkillsetSelector() {
         return (
-            <TreeSelect className="full-width" initialValue={[]} treeData={this.getSkillsets()} treeCheckable={true}
-                searchPlaceholder={I18N.get('user.skillset.select')} onChange={this.skillsetFilterChanged.bind(this)}/>
+            <TreeSelect
+                className="full-width"
+                value={this.state.skillsetFilters}
+                treeData={this.getSkillsets()}
+                treeCheckable={true}
+                searchPlaceholder={I18N.get('user.skillset.select')}
+                onChange={this.skillsetFilterChanged.bind(this)}/>
+        )
+    }
+
+    getProfessions() {
+        // Make sure Other is the last entry
+        const keys = _.union(_.without(_.keys(USER_PROFESSION).sort(), USER_PROFESSION.OTHER),
+            [USER_PROFESSION.OTHER])
+
+        return _.map(keys, (profession) => {
+            return {
+                title: I18N.get(`profile.profession.${profession}`),
+                value: profession,
+                key: profession
+            }
+        })
+    }
+
+    getProfessionSelector() {
+        return (
+            <TreeSelect
+                className="full-width"
+                value={this.state.professionFilters}
+                treeData={this.getProfessions()}
+                treeCheckable={true}
+                searchPlaceholder={I18N.get('user.profession.select')}
+                onChange={this.professionFilterChanged.bind(this)}/>
         )
     }
 
@@ -305,13 +348,15 @@ export default class extends StandardPage {
                     <h3 className="with-gizmo">
                         {I18N.get('developer.member.search.title')}
                     </h3>
-                    <Row className="member-panel-search">
-                        <Col md={9} xs={24}>
+                    <Row className="member-panel-search" gutter={16}>
+                        <Col md={8} xs={24}>
                             <Input defaultValue={this.state.search} placeholder={I18N.get('developer.breadcrumb.search')}
                                 onChange={searchChangedHandler.bind(this)}/>
                         </Col>
-                        <Col md={6} xs={24}/>
-                        <Col md={9} xs={24}>
+                        <Col md={8} xs={24}>
+                            {this.getProfessionSelector()}
+                        </Col>
+                        <Col md={8} xs={24}>
                             {this.getSkillsetSelector()}
                         </Col>
                     </Row>

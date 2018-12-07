@@ -107,6 +107,7 @@ export default class extends StandardPage {
                             {this.buildEssentialCircles()}
                             {this.buildAdvancedCircles()}
                             {this.buildServicesCircles()}
+                            {this.buildDeveloperCircles()}
                             {this.buildCircleStatement()}
                         </div>
                     </div>
@@ -241,54 +242,40 @@ export default class extends StandardPage {
         )
     }
 
-    buildEssentialCircles() {
+    buildCircleCategory(title, category) {
         return (
             <div className="emp35-teamDark">
                 <div className="container">
                     <Row>
                         <Col xs={{span: 24}} md={{span: 24}}>
-                            <span className="blue-title">Essential</span>
+                            <span className="blue-title">{title}</span>
                             {this.checkForLoading(() => {
-                                return this.buildCircles({ subcategory: TEAM_SUBCATEGORY.ESSENTIAL })
+                                return this.buildCircles({ subcategory: category })
                             })}
                         </Col>
                     </Row>
                 </div>
             </div>
         )
+    }
+
+    buildEssentialCircles() {
+        return this.buildCircleCategory(
+            I18N.get('crcle.category.essential'), TEAM_SUBCATEGORY.ESSENTIAL)
     }
 
     buildAdvancedCircles() {
-        return (
-            <div className="emp35-teamDark">
-                <div className="container">
-                    <Row>
-                        <Col xs={{span: 24}} md={{span: 24}}>
-                            <span className="blue-title">Advanced</span>
-                            {this.checkForLoading(() => {
-                                return this.buildCircles({ subcategory: TEAM_SUBCATEGORY.ADVANCED })
-                            })}
-                        </Col>
-                    </Row>
-                </div>
-            </div>
-        )
+        return this.buildCircleCategory(
+            I18N.get('crcle.category.advanced'), TEAM_SUBCATEGORY.ADVANCED)
     }
 
     buildServicesCircles() {
-        return (
-            <div className="emp35-teamDark">
-                <div className="container">
-                    <Row>
-                        <Col xs={{span: 24}} md={{span: 24}}>
-                            <span className="blue-title">Services</span>
-                            {this.checkForLoading(() => {
-                                return this.buildCircles({ subcategory: TEAM_SUBCATEGORY.SERVICES })
-                            })}
-                        </Col>
-                    </Row>
-                </div>
-            </div>
-        )
+        return this.buildCircleCategory(
+            I18N.get('crcle.category.services'), TEAM_SUBCATEGORY.SERVICES)
+    }
+
+    buildDeveloperCircles() {
+        return this.buildCircleCategory(
+            I18N.get('crcle.category.developer'), TEAM_SUBCATEGORY.DEVELOPER)
     }
 }

@@ -17,8 +17,14 @@
 }
 
 .admin-right-column {
-  padding: 0 20px !important;
+  padding: $gap_1 $gap_2 0 $gap_2 !important;
+
+  @media only screen and (max-width: $mobile-width) {
+    padding-left: 0 !important;
+  }
+
   text-align: left;
+  z-index: 10;
 }
 
 @media only screen and (min-width: $mobile-width) and (max-width: $lg-width) {

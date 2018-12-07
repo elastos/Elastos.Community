@@ -15,7 +15,8 @@ export default createContainer(Component, (state) => {
         is_admin: state.user.is_admin,
         is_login: state.user.is_login,
         current_user_id: state.user.current_user_id,
-        page: page
+        page: page,
+        loading: state.team.loading
     }
 }, () => {
 
@@ -28,6 +29,10 @@ export default createContainer(Component, (state) => {
 
         resetTeamDetail() {
             return teamService.resetTeamDetail()
+        },
+
+        async deleteTeam(teamId) {
+            return teamService.deleteTeam(teamId)
         }
     }
 })
