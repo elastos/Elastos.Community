@@ -270,7 +270,11 @@ export default class extends StandardPage {
     }
 
     getProfessions() {
-        return _.map(_.keys(USER_PROFESSION).sort(), (profession) => {
+        // Make sure Other is the last entry
+        const keys = _.union(_.without(_.keys(USER_PROFESSION).sort(), USER_PROFESSION.OTHER),
+            [USER_PROFESSION.OTHER])
+
+        return _.map(keys, (profession) => {
             return {
                 title: I18N.get(`profile.profession.${profession}`),
                 value: profession,
