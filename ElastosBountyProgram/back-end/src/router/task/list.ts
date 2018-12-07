@@ -199,6 +199,10 @@ export default class extends Base{
             })
         }
 
+        if (param.taskCategory) {
+            query.category = param.taskCategory
+        }
+
         const list = await taskService.list(query)
         const count = await taskService.getDBModel('Task')
             .count(_.omit(query, ['results', 'page', 'sortBy', 'sortOrder']))

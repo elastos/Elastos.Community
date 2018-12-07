@@ -384,17 +384,20 @@ export default class extends BaseComponent {
                 <Radio className="radio" value="ALL">
                     {I18N.get('developer.search.assignment.all')}
                 </Radio>
+                <Radio className="radio" value="GENERAL">
+                    {I18N.get('taks.application.general')}
+                </Radio>
                 <Radio className="radio" value="DEVELOPER">
-                    {I18N.get('developer.search.assignment.unassigned')}
+                    {I18N.get('taks.application.developer')}
                 </Radio>
                 <Radio className="radio" value="SOCIAL">
-                    {I18N.get('developer.search.assignment.unassigned')}
+                    {I18N.get('taks.application.social')}
                 </Radio>
                 <Radio className="radio" value="LEADER">
-                    {I18N.get('developer.search.assignment.unassigned')}
+                    {I18N.get('team.owner')}
                 </Radio>
                 <Radio className="radio" value="CR100">
-                    {I18N.get('developer.search.assignment.unassigned')}
+                    {I18N.get('0105')}
                 </Radio>
             </RadioGroup>
         )
