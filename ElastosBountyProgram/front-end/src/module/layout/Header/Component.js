@@ -265,7 +265,7 @@ export default class extends BaseComponent {
             'profile.lastName',
             'profile.timezone',
             'profile.country',
-            'profile.skillsDetails',
+            'profile.bio',
             'profile.skillset',
             'profile.profession'
         ]
