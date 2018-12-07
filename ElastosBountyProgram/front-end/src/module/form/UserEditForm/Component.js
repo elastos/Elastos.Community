@@ -669,9 +669,44 @@ class C extends BaseComponent {
         })
     }
 
-    ord_render () {
+    renderPrevNext() {
         return (
-            <div className="c_userEditFormContainer">
+            <div>
+                {this.state.section > 1 &&
+                    <Button onClick={this.prevSection.bind(this)} loading={this.props.loading}>
+                        {I18N.get('profile.previous')}
+                    </Button>
+                }
+                {this.state.section > 3
+                    ? this.renderSave()
+                    :
+                        <Button onClick={this.nextSection.bind(this)} loading={this.props.loading}>
+                            {I18N.get(this.state.section === 3
+                                ? 'profile.save'
+                                : 'profile.next')
+                            }
+                        </Button>
+                }
+            </div>
+        )
+    }
+
+    renderSave() {
+        return (
+            <Button type="primary" htmlType="submit" loading={this.props.loading}>
+                {I18N.get('profile.save')}
+            </Button>
+        )
+    }
+
+    ord_render () {
+        const completingClass = this.isCompleteProfileMode()
+            ? 'completing'
+            : ''
+        const className = ['c_userEditFormContainer', completingClass].join(' ')
+
+        return (
+            <div className={className}>
                 {this.renderHeader()}
                 {this.renderSectionSwitcher()}
                 <Form onSubmit={this.handleSubmit.bind(this)} className="d_taskCreateForm">
@@ -680,23 +715,10 @@ class C extends BaseComponent {
                     {this.renderSocialSection()}
 
                     <FormItem className="uef-button-row">
-                        { this.state.section > 1 &&
-                            <Button onClick={this.prevSection.bind(this)} loading={this.props.loading}>
-                                {I18N.get('profile.previous')}
-                            </Button>
-                        }
-                        {this.state.section > 3
-                            ?
-                                <Button type="primary" htmlType="submit" loading={this.props.loading}>
-                                    {I18N.get('profile.save')}
-                                </Button>
-                            :
-                                <Button onClick={this.nextSection.bind(this)} loading={this.props.loading}>
-                                    {I18N.get(this.state.section === 3
-                                        ? 'profile.save'
-                                        : 'profile.next')
-                                    }
-                                </Button>
+                        {
+                            this.isCompleteProfileMode()
+                                ? this.renderPrevNext()
+                                : this.renderSave()
                         }
                     </FormItem>
                 </Form>

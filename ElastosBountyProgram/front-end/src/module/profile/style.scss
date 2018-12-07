@@ -11,6 +11,12 @@ $avatar-size: 160px;
     visibility: hidden;
   }
 
+  @media only screen and (max-width: $mobile-width) {
+    .profile-edit-btn {
+      visibility: visible;
+    }
+  }
+
   .member-content:hover {
     .profile-edit-btn {
       visibility: visible;
