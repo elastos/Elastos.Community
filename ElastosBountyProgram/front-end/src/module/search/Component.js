@@ -66,6 +66,7 @@ export default class extends BaseComponent {
             sortBy: params.sortBy || 'createdAt',
             sortOrder: params.sortOrder || SORT_ORDER.DESC,
             assignment: params.assignment || 'all'
+            taskCategory: params.taskCategory || 'ALL'
         }
     }
 
@@ -102,6 +103,10 @@ export default class extends BaseComponent {
             query.unassigned = true
         }
 
+        if (this.state.taskCategory) {
+            query.taskCategory = this.state.taskCategory
+        }
+
         query.page = this.state.page || 1
         query.results = this.state.results || 5
 
@@ -112,7 +117,7 @@ export default class extends BaseComponent {
         const skillset = (query.skillset || []).join(',')
         const domain = (query.domain || []).join(',')
         const circle = (query.circle || []).join(',')
-        const { lookingFor, search, sortBy, sortOrder, assignment } = this.state
+        const { lookingFor, search, sortBy, sortOrder, assignment, taskCategory } = this.state
 
         const url = new URI('/developer/search')
         lookingFor && url.addSearch('lookingFor', lookingFor)
@@ -123,6 +128,7 @@ export default class extends BaseComponent {
         !_.isEmpty(sortBy) && url.addSearch('sortBy', sortBy)
         !_.isEmpty(sortOrder) && url.addSearch('sortOrder', sortOrder)
         assignment !== 'all' && url.addSearch('assignment', assignment)
+        taskCategory !== 'ALL' && url.addSearch('taskCategory', taskCategory)
 
         return url.toString()
     }
@@ -255,6 +261,13 @@ export default class extends BaseComponent {
         }, this.debouncedRefetch.bind(this))
     }
 
+    onChangeTaskCategory(e) {
+        this.setState({
+            taskCategory: e.target.value,
+            page: 1
+        }, this.debouncedRefetch.bind(this))
+    }
+
     showTaskModal(id) {
         this.setState({
             showTaskModal: true,
@@ -359,6 +372,28 @@ export default class extends BaseComponent {
                     {I18N.get('developer.search.assignment.all')}
                 </Radio>
                 <Radio className="radio" value="unassigned">
+                    {I18N.get('developer.search.assignment.unassigned')}
+                </Radio>
+            </RadioGroup>
+        )
+    }
+
+    renderTaskCategory() {
+        return (
+            <RadioGroup onChange={this.onChangeTaskCategory.bind(this)} value={this.state.taskCategory}>
+                <Radio className="radio" value="ALL">
+                    {I18N.get('developer.search.assignment.all')}
+                </Radio>
+                <Radio className="radio" value="DEVELOPER">
+                    {I18N.get('developer.search.assignment.unassigned')}
+                </Radio>
+                <Radio className="radio" value="SOCIAL">
+                    {I18N.get('developer.search.assignment.unassigned')}
+                </Radio>
+                <Radio className="radio" value="LEADER">
+                    {I18N.get('developer.search.assignment.unassigned')}
+                </Radio>
+                <Radio className="radio" value="CR100">
                     {I18N.get('developer.search.assignment.unassigned')}
                 </Radio>
             </RadioGroup>
