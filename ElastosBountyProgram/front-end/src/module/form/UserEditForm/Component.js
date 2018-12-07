@@ -125,7 +125,9 @@ class C extends BaseComponent {
     }
 
     getProfessions() {
-        return _.keys(USER_PROFESSION).sort()
+        // Make sure Other is the last entry
+        return _.union(_.without(_.keys(USER_PROFESSION).sort(), USER_PROFESSION.OTHER),
+            [USER_PROFESSION.OTHER])
     }
 
     getFormItemLayout() {
