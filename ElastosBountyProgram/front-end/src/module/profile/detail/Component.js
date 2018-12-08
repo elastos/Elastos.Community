@@ -125,6 +125,7 @@ export default class extends BaseComponent {
                     </div>
                     <div className="profile-right pull-left">
                         {this.renderFullName()}
+                        {this.renderButton()}
                         <Row>
                             <Col span={24} className="profile-right-col">
                                 {this.renderGender()}
@@ -223,32 +224,34 @@ export default class extends BaseComponent {
     }
 
     renderSendMessage() {
-        const isMyself = this.props.member._id === this.props.currentUserId
-        const hoverMessage = I18N.get('profile.detail.sendmessage.disabled')
+        if (this.props.member._id === this.props.currentUserId) {
+            return
+        }
+
         return (
-            <Tooltip title={isMyself ? hoverMessage : ''}>
-                <Button disabled={isMyself} type="primary" className="profile-send-msg" onClick={this.linkProfilePopup.bind(this)}>
-                    {I18N.get('profile.detail.sendmessage')}
-                </Button>
-            </Tooltip>
+            <a onClick={this.linkProfilePopup.bind(this)}>
+                <Icon type="message"/>
+            </a>
         )
     }
 
     renderFollow() {
-        const isMyself = this.props.member._id === this.props.currentUserId
+        if (this.props.member._id === this.props.currentUserId) {
+            return
+        }
+
         const isFollowing = this.isUserSubscribed()
         const clickHandler = isFollowing ? this.unfollowUser : this.followUser
-        const hoverMessage = I18N.get('profile.detail.follow.disabled')
+
         return (
-            <Tooltip title={isMyself ? hoverMessage : ''}>
-                <Button className={ !isMyself ? 'profile-follow' : 'profile-follow follow-disabled'} disabled={isMyself}
-                    loading={this.props.subscribing} onClick={clickHandler.bind(this)}>
-                    {isFollowing
-                        ? I18N.get('user.unfollow')
-                        : I18N.get('user.follow')
-                    }
-                </Button>
-            </Tooltip>
+            <a onClick={clickHandler.bind(this)}>
+                {this.props.loading
+                    ? <Icon type="loading"/>
+                    : isFollowing
+                        ? <Icon type="star"/>
+                        : <Icon type="star-o"/>
+                }
+            </a>
         )
     }
 

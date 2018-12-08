@@ -235,13 +235,20 @@ $avatar-size: 160px;
   }
 
   .profile-button {
-    width: 180px;
-    margin-left: 24px;
-    float: left;
-    margin-top: $gap_2;
+    &:not(.profile-button-mobile) {
+      position: absolute;
+      top: $gap_0;
+      right: $gap_0;
 
-    &.profile-button-mobile {
-      float: none;
+      a {
+        i.anticon {
+          font-size: 22px;
+        }
+
+        &:not(:last-child) {
+          margin-right: $gap_0;
+        }
+      }
     }
   }
 
@@ -266,6 +273,7 @@ $avatar-size: 160px;
   }
 
   .profile-right {
+    position: relative;
     width: calc(100% - 200px);
     padding-left: 60px;
     padding-right: 40px;
