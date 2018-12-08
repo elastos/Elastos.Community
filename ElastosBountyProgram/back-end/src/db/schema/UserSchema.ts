@@ -124,6 +124,7 @@ export const User = {
         type : Boolean,
         default : false
     },
+    logins: [Date],
     circles: [{type: Schema.Types.ObjectId, ref: 'team'}],
     comments: [[CommentSchema]],
     subscribers: [SubscriberSchema]
