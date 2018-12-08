@@ -243,6 +243,11 @@ $avatar-size: 160px;
       a {
         i.anticon {
           font-size: 22px;
+
+          &.anticon-loading {
+            font-size: 20px;
+            margin-right: 2px;
+          }
         }
 
         &:not(:last-child) {

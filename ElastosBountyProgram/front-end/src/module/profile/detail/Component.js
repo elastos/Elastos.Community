@@ -245,7 +245,7 @@ export default class extends BaseComponent {
 
         return (
             <a onClick={clickHandler.bind(this)}>
-                {this.props.loading
+                {this.props.subscribing
                     ? <Icon type="loading"/>
                     : isFollowing
                         ? <Icon type="star"/>
