@@ -748,38 +748,38 @@ const zh = {
     'role.admin.mode': '管理员模式',
 
     // Profile
-    'profile.thanksForCompleting': 'Thanks for updating your profile!',
-    'profile.skillsets': 'My Skillsets',
-    'profile.completeProfile': 'Complete your Profile',
-    'profile.completeProfile.explanation': 'Get more tasks and connect with talent all over the world',
-    'profile.editProfile': 'Edit Profile',
-    'profile.editProfile.section.1': 'Basic Information',
-    'profile.editProfile.section.2': 'Skill Set',
-    'profile.editProfile.section.3': 'Social Profile',
-    'profile.portfolio.placeholder': 'Relevant for Designers',
-    'profile.portfolio.github': 'Relevant for Developers',
-    'profile.profession.ENGINEERING': 'Engineering',
-    'profile.profession.COMPUTER_SCIENCE': 'Computer Science',
-    'profile.profession.PRODUCT_MANAGEMENT': 'Product Management',
-    'profile.profession.ART_DESIGN': 'Art / Design',
-    'profile.profession.SALES': 'Sales',
-    'profile.profession.MARKETING': 'Marketing',
-    'profile.profession.BUSINESS_FINANCE': 'Business / Finance',
-    'profile.profession.ENTREPRENEUR': 'Entrepreneur',
-    'profile.profession.STUDENT': 'Student',
-    'profile.profession.HEALTH_MEDICINE': 'Health/Medicine',
-    'profile.profession.LITERATURE_WRITING': 'Literature/Writing',
-    'profile.profession.TRANSLATION': 'Translation/Interpretation',
-    'profile.profession.LAW': 'Law',
-    'profile.profession.ECONOMICS': 'Economics',
-    'profile.profession.MANAGEMENT': 'Management',
-    'profile.profession.OTHER': 'Other',
-    'profile.complete': 'Complete Your Profile',
-    'profile.complete.dismiss': 'Dismiss',
-    'profile.skillsDetails.placeholder': 'Explain more about your skills, work experience, etc.',
-    'profile.motto.placeholder': 'Do you have a life motto?',
-    'profile.previous': 'Previous',
-    'profile.next': 'Next',
+    'profile.thanksForCompleting': '感谢更新您的个人档案！',
+    'profile.skillsets': '我的技能',
+    'profile.completeProfile': '请完成您的个人档案',
+    'profile.completeProfile.explanation': '获取更多任务并与世界各地的英才联系',
+    'profile.editProfile': '编辑档案',
+    'profile.editProfile.section.1': '基本信息',
+    'profile.editProfile.section.2': '技能',
+    'profile.editProfile.section.3': '社交媒体',
+    'profile.portfolio.placeholder': '设计师相关',
+    'profile.portfolio.github': '开发人员相关',
+    'profile.profession.ENGINEERING': '工程',
+    'profile.profession.COMPUTER_SCIENCE': '计算机科学',
+    'profile.profession.PRODUCT_MANAGEMENT': '产品管理',
+    'profile.profession.ART_DESIGN': '艺术/设计',
+    'profile.profession.SALES': '销售',
+    'profile.profession.MARKETING': '营销',
+    'profile.profession.BUSINESS_FINANCE': '商务/金融',
+    'profile.profession.ENTREPRENEUR': '创业者',
+    'profile.profession.STUDENT': '学生',
+    'profile.profession.HEALTH_MEDICINE': '健康/医疗',
+    'profile.profession.LITERATURE_WRITING': '文学/写作',
+    'profile.profession.TRANSLATION': '翻译',
+    'profile.profession.LAW': '法律',
+    'profile.profession.ECONOMICS': '经济',
+    'profile.profession.MANAGEMENT': '管理',
+    'profile.profession.OTHER': '其他',
+    'profile.complete': '请完成您的档案',
+    'profile.complete.dismiss': '取消',
+    'profile.skillsDetails.placeholder': '请详细描述您的技能，工作经历等',
+    'profile.motto.placeholder': '您的座右铭是什么？',
+    'profile.previous': '前一页',
+    'profile.next': '下一页',
     'profile.localTime': '本地时间',
     'profile.sendMessage': '发送消息',
     'profile.viewProfile': '查看个人资料',
@@ -865,8 +865,8 @@ const zh = {
     'profile.detail.columns.type': '类型',
     'profile.detail.columns.name': '名字',
     'profile.detail.columns.date': '日期',
-    'profile.detail.profile.title': '您的个人资料',
-    'profile.detail.public': '公开的资料',
+    'profile.detail.profile.title': '您的个人档案',
+    'profile.detail.public': '公开的档案',
     'profile.detail.button.edit': '编辑',
     'profile.detail.username': '用户名',
     'profile.detail.role': '角色',
@@ -1069,16 +1069,16 @@ const zh = {
     'from.UserContactForm.text.emailreply': "邮件回复地址将设置为您注册帐户使用的电子邮箱，回复将直接发送到您的电子邮箱",
     'from.UserContactForm.button.send': '发送信息',
 
-    'from.UserEditForm.label.bio': 'Biography',
-    'from.UserEditForm.label.motto': 'Motto',
-    'from.UserEditForm.label.profession': 'Profession',
-    'from.UserEditForm.label.portfolio': 'Portfolio',
+    'from.UserEditForm.label.bio': '自传',
+    'from.UserEditForm.label.motto': '座右铭',
+    'from.UserEditForm.label.profession': '职业',
+    'from.UserEditForm.label.portfolio': '作品集',
     'from.UserEditForm.label.github': 'GitHub',
     'from.UserEditForm.username.required': '用户名为必填项',
     'from.UserEditForm.firstName.required': '名字为必填项',
     'from.UserEditForm.lastName.required': '姓氏为必填项',
     'from.UserEditForm.country.required': '请选择您的国家',
-    'from.UserEditForm.walletAddress.len': '地址长度错误',
+    'from.UserEditForm.walletAddress.len': '钱包地址长度错误',
     'from.UserEditForm.timezone.placeholder': '选择时区...',
     'from.UserEditForm.telegram.min': '请输入至少4个字符',
     'from.UserEditForm.label.firstName': '名字',
@@ -1149,17 +1149,17 @@ const zh = {
     'cr-video.q6.paragraph.5': '大踏步前进，把您的想法变为现实吧！',
 
     'cr-video.q6.subtitle.1': '透过以下资源了解有关亦来云的更多信息：',
-    'cr-video.q6.link.1': 'Cyber Republic教程 - 成为组织者',
-    'cr-video.q6.link.2': 'Cyber Republic教程 - 公共任务',
+    'cr-video.q6.link.1': 'Cyber Republic教程——成为组织者',
+    'cr-video.q6.link.2': 'Cyber Republic教程——公共任务',
 
     'cr-video.q7.title': '有疑问吗？或者想要取得联系？',
     'cr-video.q7.subtitle': '请输入您的电邮，我们将会亲自跟您联系',
     'cr-video.q7.button_text': '提交',
 
-    'crcle.category.essential': 'Essential',
-    'crcle.category.advanced': 'Advanced',
-    'crcle.category.services': 'Services',
-    'crcle.category.developer': 'Developer',
+    'crcle.category.essential': '基本',
+    'crcle.category.advanced': '高级',
+    'crcle.category.services': '服务',
+    'crcle.category.developer': '开发者',
     'crcle.product': '产品',
     'crcle.support': '技术支持',
     'crcle.media': '媒体',
@@ -1172,7 +1172,7 @@ const zh = {
     'crcle.security': '安全',
     'crcle.translation': '翻译',
     'crcle.finance': '金融',
-    'crcle.businessDevelopment': '商业开拓',
+    'crcle.businessDevelopment': '商业拓展',
     'crcle.partnership': '商务合作',
     'crcle.investment': '投资',
     'crcle.marketing': '市场营销',
@@ -1182,7 +1182,7 @@ const zh = {
     'crcle.legal': '法律咨询',
 
     'user.skillset.select': '请选择技能',
-    'user.profession.select': 'Select profession',
+    'user.profession.select': '请选择职业',
 
     'user.skillset.group.DESIGN': '设计',
     'user.skillset.group.MARKETING': '营销',
@@ -1258,17 +1258,17 @@ zh[`taskStatus.${TASK_STATUS.DISTRIBUTED}`] = '已结算'
 zh[`taskStatus.${TASK_STATUS.CANCELED}`] = '已取消'
 zh[`taskStatus.${TASK_STATUS.EXPIRED}`] = '已过期'
 
-zh[`taskType.${TASK_STATUS.TASK}`] = 'Task'
-zh[`taskType.${TASK_STATUS.SUB_TASK}`] = 'Sub Task'
-zh[`taskType.${TASK_STATUS.PROJECT}`] = 'Project'
-zh[`taskType.${TASK_STATUS.EVENT}`] = 'Event'
+zh[`taskType.${TASK_STATUS.TASK}`] = '任务'
+zh[`taskType.${TASK_STATUS.SUB_TASK}`] = '子任务'
+zh[`taskType.${TASK_STATUS.PROJECT}`] = '项目'
+zh[`taskType.${TASK_STATUS.EVENT}`] = '活动'
 
-zh[`cvoteStatus.${CVOTE_STATUS.DRAFT}`] = 'DRAFT'
-zh[`cvoteStatus.${CVOTE_STATUS.PROPOSED}`] = 'PROPOSED'
-zh[`cvoteStatus.${CVOTE_STATUS.ACTIVE}`] = 'ACTIVE'
-zh[`cvoteStatus.${CVOTE_STATUS.REJECT}`] = 'REJECT'
-zh[`cvoteStatus.${CVOTE_STATUS.FINAL}`] = 'FINAL'
-zh[`cvoteStatus.${CVOTE_STATUS.DEFERRED}`] = 'DEFERRED'
+zh[`cvoteStatus.${CVOTE_STATUS.DRAFT}`] = '草案'
+zh[`cvoteStatus.${CVOTE_STATUS.PROPOSED}`] = '拟议的'
+zh[`cvoteStatus.${CVOTE_STATUS.ACTIVE}`] = '待投票'
+zh[`cvoteStatus.${CVOTE_STATUS.REJECT}`] = '已拒绝'
+zh[`cvoteStatus.${CVOTE_STATUS.FINAL}`] = '最终版'
+zh[`cvoteStatus.${CVOTE_STATUS.DEFERRED}`] = '延期的'
 
 
 export default zh
