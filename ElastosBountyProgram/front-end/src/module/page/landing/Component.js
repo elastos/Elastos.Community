@@ -55,7 +55,7 @@ export default class extends StandardPage {
                 footer={null}
                 width="76%"
                 style={{ top: 35 }}>
-                <Video showVideo={this.state.showVideo} />
+                { this.state.showVideo ? < Video /> : '' }
             </Modal>
         )
     }
