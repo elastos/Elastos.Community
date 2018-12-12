@@ -255,7 +255,7 @@ const zh = {
     'developer.search.team': '团队',
     'developer.search.project': '项目',
     'developer.search.task': '任务',
-    'developer.search.taskCategory': 'Task category',
+    'developer.search.taskCategory': '任务类别',
     'developer.search.category': '类别',
     'developer.search.category.social': '社交',
     'developer.search.category.iot': '物联网',
@@ -748,38 +748,38 @@ const zh = {
     'role.admin.mode': '管理员模式',
 
     // Profile
-    'profile.thanksForCompleting': 'Thanks for updating your profile!',
-    'profile.skillsets': 'My Skillsets',
-    'profile.completeProfile': 'Complete your Profile',
-    'profile.completeProfile.explanation': 'Get more tasks and connect with talent all over the world',
-    'profile.editProfile': 'Edit Profile',
-    'profile.editProfile.section.1': 'Basic Information',
-    'profile.editProfile.section.2': 'Skill Set',
-    'profile.editProfile.section.3': 'Social Profile',
-    'profile.portfolio.placeholder': 'Relevant for Designers',
-    'profile.portfolio.github': 'Relevant for Developers',
-    'profile.profession.ENGINEERING': 'Engineering',
-    'profile.profession.COMPUTER_SCIENCE': 'Computer Science',
-    'profile.profession.PRODUCT_MANAGEMENT': 'Product Management',
-    'profile.profession.ART_DESIGN': 'Art / Design',
-    'profile.profession.SALES': 'Sales',
-    'profile.profession.MARKETING': 'Marketing',
-    'profile.profession.BUSINESS_FINANCE': 'Business / Finance',
-    'profile.profession.ENTREPRENEUR': 'Entrepreneur',
-    'profile.profession.STUDENT': 'Student',
-    'profile.profession.HEALTH_MEDICINE': 'Health/Medicine',
-    'profile.profession.LITERATURE_WRITING': 'Literature/Writing',
-    'profile.profession.TRANSLATION': 'Translation/Interpretation',
-    'profile.profession.LAW': 'Law',
-    'profile.profession.ECONOMICS': 'Economics',
-    'profile.profession.MANAGEMENT': 'Management',
-    'profile.profession.OTHER': 'Other',
-    'profile.complete': 'Complete Your Profile',
-    'profile.complete.dismiss': 'Dismiss',
-    'profile.skillsDetails.placeholder': 'Explain more about your skills, work experience, etc.',
-    'profile.motto.placeholder': 'Do you have a life motto?',
-    'profile.previous': 'Previous',
-    'profile.next': 'Next',
+    'profile.thanksForCompleting': '感谢更新您的档案！',
+    'profile.skillsets': '我的技能',
+    'profile.completeProfile': '请完成您的档案',
+    'profile.completeProfile.explanation': '获取更多任务并与全球的英才连接',
+    'profile.editProfile': '编辑档案',
+    'profile.editProfile.section.1': '基本信息',
+    'profile.editProfile.section.2': '技能',
+    'profile.editProfile.section.3': '社交档案',
+    'profile.portfolio.placeholder': '设计师相关',
+    'profile.portfolio.github': '开发者相关',
+    'profile.profession.ENGINEERING': '工程',
+    'profile.profession.COMPUTER_SCIENCE': '计算机科学',
+    'profile.profession.PRODUCT_MANAGEMENT': '产品管理',
+    'profile.profession.ART_DESIGN': '艺术/设计',
+    'profile.profession.SALES': '销售',
+    'profile.profession.MARKETING': '营销',
+    'profile.profession.BUSINESS_FINANCE': '商务/金融',
+    'profile.profession.ENTREPRENEUR': '企业家',
+    'profile.profession.STUDENT': '学生',
+    'profile.profession.HEALTH_MEDICINE': '健康/医疗',
+    'profile.profession.LITERATURE_WRITING': '文学/写作',
+    'profile.profession.TRANSLATION': '翻译',
+    'profile.profession.LAW': '法律',
+    'profile.profession.ECONOMICS': '经济',
+    'profile.profession.MANAGEMENT': '管理',
+    'profile.profession.OTHER': '其他',
+    'profile.complete': '请完成您的档案',
+    'profile.complete.dismiss': '取消',
+    'profile.skillsDetails.placeholder': '请详细介绍您的技能，工作经历等信息',
+    'profile.motto.placeholder': '您有座右铭吗?',
+    'profile.previous': '前一页',
+    'profile.next': '下一页',
     'profile.localTime': '本地时间',
     'profile.sendMessage': '发送消息',
     'profile.viewProfile': '查看个人资料',
@@ -1069,10 +1069,10 @@ const zh = {
     'from.UserContactForm.text.emailreply': "邮件回复地址将设置为您注册帐户使用的电子邮箱，回复将直接发送到您的电子邮箱",
     'from.UserContactForm.button.send': '发送信息',
 
-    'from.UserEditForm.label.bio': 'Biography',
-    'from.UserEditForm.label.motto': 'Motto',
-    'from.UserEditForm.label.profession': 'Profession',
-    'from.UserEditForm.label.portfolio': 'Portfolio',
+    'from.UserEditForm.label.bio': '自传',
+    'from.UserEditForm.label.motto': '座右铭',
+    'from.UserEditForm.label.profession': '职业',
+    'from.UserEditForm.label.portfolio': '作品集',
     'from.UserEditForm.label.github': 'GitHub',
     'from.UserEditForm.username.required': '用户名为必填项',
     'from.UserEditForm.firstName.required': '名字为必填项',
@@ -1156,10 +1156,10 @@ const zh = {
     'cr-video.q7.subtitle': '请输入您的电邮，我们将会亲自跟您联系',
     'cr-video.q7.button_text': '提交',
 
-    'crcle.category.essential': 'Essential',
-    'crcle.category.advanced': 'Advanced',
-    'crcle.category.services': 'Services',
-    'crcle.category.developer': 'Developer',
+    'crcle.category.essential': '基本',
+    'crcle.category.advanced': '高级',
+    'crcle.category.services': '服务',
+    'crcle.category.developer': '开发者',
     'crcle.product': '产品',
     'crcle.support': '技术支持',
     'crcle.media': '媒体',
@@ -1182,7 +1182,7 @@ const zh = {
     'crcle.legal': '法律咨询',
 
     'user.skillset.select': '请选择技能',
-    'user.profession.select': 'Select profession',
+    'user.profession.select': '请选择职业',
 
     'user.skillset.group.DESIGN': '设计',
     'user.skillset.group.MARKETING': '营销',
@@ -1258,17 +1258,17 @@ zh[`taskStatus.${TASK_STATUS.DISTRIBUTED}`] = '已结算'
 zh[`taskStatus.${TASK_STATUS.CANCELED}`] = '已取消'
 zh[`taskStatus.${TASK_STATUS.EXPIRED}`] = '已过期'
 
-zh[`taskType.${TASK_STATUS.TASK}`] = 'Task'
-zh[`taskType.${TASK_STATUS.SUB_TASK}`] = 'Sub Task'
-zh[`taskType.${TASK_STATUS.PROJECT}`] = 'Project'
-zh[`taskType.${TASK_STATUS.EVENT}`] = 'Event'
+zh[`taskType.${TASK_STATUS.TASK}`] = '任务'
+zh[`taskType.${TASK_STATUS.SUB_TASK}`] = '子任务'
+zh[`taskType.${TASK_STATUS.PROJECT}`] = '项目'
+zh[`taskType.${TASK_STATUS.EVENT}`] = '活动'
 
-zh[`cvoteStatus.${CVOTE_STATUS.DRAFT}`] = 'DRAFT'
-zh[`cvoteStatus.${CVOTE_STATUS.PROPOSED}`] = 'PROPOSED'
-zh[`cvoteStatus.${CVOTE_STATUS.ACTIVE}`] = 'ACTIVE'
-zh[`cvoteStatus.${CVOTE_STATUS.REJECT}`] = 'REJECT'
-zh[`cvoteStatus.${CVOTE_STATUS.FINAL}`] = 'FINAL'
-zh[`cvoteStatus.${CVOTE_STATUS.DEFERRED}`] = 'DEFERRED'
+zh[`cvoteStatus.${CVOTE_STATUS.DRAFT}`] = '草案'
+zh[`cvoteStatus.${CVOTE_STATUS.PROPOSED}`] = '拟议的'
+zh[`cvoteStatus.${CVOTE_STATUS.ACTIVE}`] = '待投票'
+zh[`cvoteStatus.${CVOTE_STATUS.REJECT}`] = '已拒绝'
+zh[`cvoteStatus.${CVOTE_STATUS.FINAL}`] = '最终结果'
+zh[`cvoteStatus.${CVOTE_STATUS.DEFERRED}`] = '推迟的'
 
 
 export default zh
