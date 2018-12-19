@@ -27,3 +27,8 @@ export const LINKIFY_OPTION = {
         url: '_self' // Does not work for some reason
     }
 };
+export const LANGUAGES = {
+  english: 'en',
+  chinese: 'zh'
+}
+
