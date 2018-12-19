@@ -8,8 +8,7 @@ export const CVote = {
         required : true
     },
     title_zh : {
-        type : String,
-        required : true
+        type : String
     },
     vid : {
         type : Number,
@@ -25,7 +24,6 @@ export const CVote = {
     },
     content_zh : {
         type : String,
-        required : true
     },
     // name of proposer
     proposedBy : {
