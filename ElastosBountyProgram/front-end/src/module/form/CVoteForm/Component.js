@@ -1,13 +1,16 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import {Form, Icon, Input, Button, Checkbox, Select, Row, Col, message, Steps, Modal, Switch} from 'antd'
+import {Form, Icon, Input, Button, Checkbox, Select, Row, Col, message, Steps, Modal, Switch, Tabs } from 'antd'
 import I18N from '@/I18N'
 import _ from 'lodash'
+import { getIndex } from '@/util'
+import { LANGUAGES } from '@/config/constant'
 
 import './style.scss'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
+const TabPane = Tabs.TabPane
 const Step = Steps.Step
 
 class C extends BaseComponent {
@@ -18,7 +21,7 @@ class C extends BaseComponent {
         this.state = {
             persist: true,
             loading: false,
-            language: 'en' // language for this specifc form only
+            language: LANGUAGES.english// language for this specifc form only
         }
 
         this.isLogin = this.props.isLogin
@@ -125,6 +128,13 @@ class C extends BaseComponent {
             delete secretaryDisabled.readOnly
         }
 
+        // TODO: must delete
+        // for test only
+        // publicReadonly.readOnly=false
+        // publicDisabled.disabled= false
+        // councilNotOwnerReadOnly.readOnly= false
+        // councilNotOwnerDisabled.disabled=false
+        // secretaryDisabled.readOnly = false
 
         const s = this.props.static
         const {getFieldDecorator} = this.props.form
@@ -148,7 +158,6 @@ class C extends BaseComponent {
         )
 
         const title_zh_fn = getFieldDecorator('title_zh', {
-            rules: [{ required: true }],
             initialValue: edit ? data.title_zh : ''
         })
         const title_zh_el = (
@@ -181,7 +190,6 @@ class C extends BaseComponent {
             <TextArea {...publicReadonly} {...councilNotOwnerReadOnly} rows={6}></TextArea>
         )
         const content_zh_fn = getFieldDecorator('content_zh', {
-            rules: [{ required: true }],
             initialValue: edit ? data.content_zh : ''
         })
         const content_zh_el = (
@@ -223,7 +231,7 @@ class C extends BaseComponent {
             }
 
             const fn = getFieldDecorator('vote_'+name, {
-                initialValue : edit ? data.vote_map[name] : (fullName !== name ? '-1' : 'support')
+                initialValue : edit ? getIndex(data, 'vote_map/'+name) : (fullName !== name ? '-1' : 'support')
             })
             const el = (
                 <Select {...publicDisabled} {...tmp} size="large">
@@ -251,7 +259,7 @@ class C extends BaseComponent {
             }
 
             const fn = getFieldDecorator('reason_'+name, {
-                initialValue : edit ? data.reason_map[name] : '',
+                initialValue : edit ? getIndex(data, 'reason_map/'+name) : '',
                 rules : [
                     {},
                     {
@@ -383,20 +391,6 @@ class C extends BaseComponent {
             },
         }
 
-        // the problem with antd element form is 
-        // when unmouting input, the data will gone
-        // that means tab or togler cannot do it
-        // so we will be using display: none of css to hide input
-        const enOnly = {}
-        const zhOnly = {}
-        if (language === 'en') {
-            // hide all none english input
-            zhOnly.display = 'none'
-        }
-        if (language === 'zh') {
-            enOnly.display = 'none'
-        }
-
         return (
             <Form onSubmit={this.handleSubmit.bind(this)} className="c_CVoteForm">
 
@@ -412,60 +406,58 @@ class C extends BaseComponent {
                     <Col offset={6} span={12}>
                         {this.renderVoteStep(this.props.data)}
                     </Col>
-                </Row> 
-                <FormItem label={I18N.get('0300') + ' zh / en'} {...formItemLayout}><Switch defaultChecked onChange={this.onChangeLang} /></FormItem>
-
-                <FormItem style={{marginBottom:'12px', marginTop: '12px'}} label={I18N.get('from.CVoteForm.label.publish')} {...formItemLayout}>
-                    {p.published}
-                </FormItem>
-                <FormItem label={I18N.get('from.CVoteForm.label.title')} {...formItemLayout} style={{marginTop: '24px', ...enOnly}}>{ p.title }</FormItem>
-                <FormItem label={I18N.get('from.CVoteForm.label.title')} {...formItemLayout} style={{marginTop: '24px', ...zhOnly}}>{ p.title_zh }</FormItem>
-
-                <FormItem label={I18N.get('from.CVoteForm.label.type')} {...formItemLayout}>{p.type}</FormItem>
-
-                <FormItem label={I18N.get('from.CVoteForm.label.content')} {...formItemLayout} style={enOnly}>{p.content}</FormItem>
-                <FormItem label={I18N.get('from.CVoteForm.label.content')} {...formItemLayout} style={zhOnly}>{p.content_zh}</FormItem>
-                <FormItem label={I18N.get('from.CVoteForm.label.proposedby')} {...formItemLayout}>{p.proposedBy}</FormItem>
-
-                <FormItem style={{'marginBottom':'30px'}} label={I18N.get('from.CVoteForm.label.motion')} help={I18N.get('from.CVoteForm.label.motion.help')} {...formItemLayout}>{p.motionId}</FormItem>
-
-                {
-                    _.map(s.voter, (item, i)=>{
-                        const name = item.value
-                        return (
-                            <FormItem key={i} label={`Online Voting by ${name}`} {...formItemLayout}>{p['vote_'+name]}</FormItem>
-                        )
-                    })
-                }
-
-                {
-                    _.map(s.voter, (item, i)=>{
-                        const name = item.value
-                        return (
-                            <FormItem key={i} label={`Reasons from ${name} if against`} {...formItemLayout} style={enOnly}>{p['reason_' + name]}</FormItem>
-                        )
-                    })
-                }
-                {
-                    _.map(s.voter, (item, i) => {
-                        const name = item.value
-                        return (
-                            <FormItem key={i} label={`Reasons from ${name} if against`} {...formItemLayout} style={zhOnly}>{p['reason_zh_' + name]}</FormItem>
-                        )
-                    })
-                }
-                <FormItem style={{'marginBottom':'12px'}} label={I18N.get('from.CVoteForm.label.conflict')} help={I18N.get('from.CVoteForm.label.conflict.help')} {...formItemLayout}>{p.isConflict}</FormItem>
-                <FormItem label={I18N.get('from.CVoteForm.label.note')} {...formItemLayout} style={enOnly}>{p.notes}</FormItem>
-                <FormItem label={I18N.get('from.CVoteForm.label.note')} {...formItemLayout} style={zhOnly}>{p.notes_zh}</FormItem>
-                <Row>
-                    <Col offset={6} span={12}>
-                        {this.props.isCouncil && this.renderSubmitButton()}
-                        {this.props.isCouncil && this.renderFinishButton()}
-                        {this.props.isCouncil && this.renderUpdateNoteButton()}
-                    </Col>
                 </Row>
+                <br />
+                <Tabs defaultActiveKey={LANGUAGES.english} onChange={(k) => console.log('changing tab: ' + k)}>
+                    <TabPane tab={I18N.get('0301')} key={LANGUAGES.english}>
+                        <FormItem style={{marginBottom:'12px'}} label={I18N.get('from.CVoteForm.label.publish')} {...formItemLayout}>
+                            {p.published}
+                        </FormItem>
+                        <FormItem label={I18N.get('from.CVoteForm.label.title')} {...formItemLayout} style={{marginTop: '24px'}}>{ p.title }</FormItem>
 
+                        <FormItem label={I18N.get('from.CVoteForm.label.type')} {...formItemLayout}>{p.type}</FormItem>
 
+                        <FormItem label={I18N.get('from.CVoteForm.label.content')} {...formItemLayout}>{p.content}</FormItem>
+                        <FormItem label={I18N.get('from.CVoteForm.label.proposedby')} {...formItemLayout}>{p.proposedBy}</FormItem>
+
+                        <FormItem style={{'marginBottom':'30px'}} label={I18N.get('from.CVoteForm.label.motion')} help={I18N.get('from.CVoteForm.label.motion.help')} {...formItemLayout}>{p.motionId}</FormItem>
+
+                        {_.map(s.voter, (item, i)=>{
+                                const name = item.value
+                                return (
+                                    <FormItem key={i} label={`Online Voting by ${name}`} {...formItemLayout}>{p['vote_'+name]}</FormItem>
+                                )
+                        })}
+
+                        {_.map(s.voter, (item, i)=>{
+                                const name = item.value
+                                return (
+                                    <FormItem key={i} label={`Reasons from ${name} if against`} {...formItemLayout}>{p['reason_' + name]}</FormItem>
+                                )
+                        })}
+
+                        <FormItem style={{'marginBottom':'12px'}} label={I18N.get('from.CVoteForm.label.conflict')} help={I18N.get('from.CVoteForm.label.conflict.help')} {...formItemLayout}>{p.isConflict}</FormItem>
+                        <FormItem label={I18N.get('from.CVoteForm.label.note')} {...formItemLayout}>{p.notes}</FormItem>
+                        <Row>
+                            <Col offset={6} span={12}>
+                                {this.props.isCouncil && this.renderSubmitButton()}
+                                {this.props.isCouncil && this.renderFinishButton()}
+                                {this.props.isCouncil && this.renderUpdateNoteButton()}
+                            </Col>
+                        </Row>
+                    </TabPane>
+                    <TabPane tab={I18N.get('0302')} key={LANGUAGES.chinese}>
+                        <FormItem label={I18N.get('from.CVoteForm.label.title')} {...formItemLayout}>{ p.title_zh }</FormItem>
+                        <FormItem label={I18N.get('from.CVoteForm.label.content')} {...formItemLayout}>{p.content_zh}</FormItem>
+                            { _.map(s.voter, (item, i) => {
+                                const name = item.value
+                                return (
+                                    <FormItem key={i} label={`Reasons from ${name} if against`} {...formItemLayout} >{p['reason_zh_' + name]}</FormItem>
+                                )
+                            })}
+                        <FormItem label={I18N.get('from.CVoteForm.label.note')} {...formItemLayout} >{p.notes_zh}</FormItem>
+                    </TabPane>
+                </Tabs>
             </Form>
         )
     }
@@ -573,10 +565,10 @@ class C extends BaseComponent {
         let ss = data.status || 'processing...'
         _.each(s.voter, (item)=>{
             const name = item.value
-            if(data.vote_map[name] === 'support'){
+            if(getIndex(data, 'vote_map/'+name) === 'support'){
                 n++
             }
-            else if(data.vote_map[name] === 'reject'){
+            else if(getIndex(data, 'vote_map/'+name) === 'reject'){
                 en++
             }
             else{
