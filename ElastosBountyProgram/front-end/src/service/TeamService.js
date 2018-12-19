@@ -59,9 +59,9 @@ export default class extends BaseService {
             path: '/api/team/list',
             method: 'get',
             data: {
+                includeTasks: true,
                 ...qry,
-                type: TEAM_TYPE.CRCLE,
-                includeTasks: true
+                type: TEAM_TYPE.CRCLE
             }
         })
 
@@ -265,5 +265,21 @@ export default class extends BaseService {
         this.dispatch(teamRedux.actions.loading_update(false))
 
         return result
+    }
+
+    async deleteTeam(teamId) {
+        const teamRedux = this.store.getRedux('team')
+        this.dispatch(teamRedux.actions.loading_update(true))
+
+        const result = await api_request({
+            path: '/api/team/action/delete',
+            method: 'post',
+            data: {
+                teamId
+            }
+        })
+
+        this.dispatch(teamRedux.actions.loading_update(false))
+        this.dispatch(teamRedux.actions.detail_update({}))
     }
 }

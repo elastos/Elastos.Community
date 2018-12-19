@@ -1,4 +1,4 @@
-import {TASK_STATUS, CVOTE_STATUS} from '@/constant'
+import {TASK_STATUS, TASK_TYPE, CVOTE_STATUS} from '@/constant'
 import council from './en/council';
 import getting_started from './en/getting_started';
 
@@ -73,7 +73,7 @@ const en = {
     '2305': 'My Projects',
     '2306': 'Communities',
 
-    'profile.skillsets': 'My Skillsets',
+    'login.success': 'Login Successful',
 
     'mentions.notFound': 'User not found',
 
@@ -253,13 +253,14 @@ const en = {
     'developer.search.team': 'Team',
     'developer.search.project': 'Project',
     'developer.search.task': 'Task',
+    'developer.search.taskCategory': 'Task category',
     'developer.search.category': 'Category',
     'developer.search.category.social': 'Social',
     'developer.search.category.iot': 'IoT',
     'developer.search.category.media': 'Media',
     'developer.search.category.finance': 'Finance',
     'developer.search.circle': 'Circle',
-    'developer.search.lookingFor': 'Looking For',
+    'developer.search.lookingFor': 'Looking for',
     'developer.search.search.placeholder': 'Search',
     'developer.search.skillset': 'Skillset',
     'developer.search.showMore': 'Show More…',
@@ -401,6 +402,7 @@ const en = {
     'project.detail.remove': 'Remove',
     'project.detail.view': 'View',
     'project.detail.approve': 'Approve',
+    'project.detail.remove': 'Remove',
     'project.detail.disapprove': 'Disapprove',
     'project.detail.withdraw_application': 'Withdraw',
     'project.detail.popup.leave_question': 'Are you sure you want to leave?',
@@ -453,7 +455,9 @@ const en = {
     'team.detail.team_active': 'The team is currently active',
 
     'team.create.error.nameRequired': 'Team name is required',
+    'team.create.error.descriptionRequired': 'Team description is required',
     'team.create.error.nameTooShort': 'Team name is too short',
+    'team.create.error.descriptionTooShort': 'Team description is too short',
 
     // Team specializations
     'team.spec.media': 'Media',
@@ -503,19 +507,22 @@ const en = {
     'task.soloApply': 'Apply as an Individual',
     'task.teamApply': 'Apply as a Team',
     'task.applyReason': 'Why you wanted to join this task',
-    'task.createNew': 'Propose new Task',
+    'task.createNew': 'Propose New Task',
 
     // General
     'select.placeholder': 'Please select',
     '.ok': 'Ok',
     '.apply': 'Apply',
     '.cancel': 'Cancel',
+    '.delete': 'Delete',
+    '.status': 'Status',
     '.edit': 'Edit',
     '.upload': 'Click to Upload',
     '.yes': 'Yes',
     '.no': 'No',
     '.loading': 'Loading...',
     'ela': 'ELA',
+    '.areYouSure': 'Are you sure?',
 
     // Community
     'community.nomember': 'no members',
@@ -745,7 +752,39 @@ const en = {
     'role.admin.mode': 'Admin Mode',
 
     // Profile
-    'profile.localTime': 'Local time',
+    'profile.thanksForCompleting': 'Thanks for updating your profile!',
+    'profile.skillsets': 'My Skillsets',
+    'profile.completeProfile': 'Complete your Profile',
+    'profile.completeProfile.explanation': 'Get more tasks and connect with talent all over the world',
+    'profile.editProfile': 'Edit Profile',
+    'profile.editProfile.section.1': 'Basic Information',
+    'profile.editProfile.section.2': 'Skill Set',
+    'profile.editProfile.section.3': 'Social Profile',
+    'profile.portfolio.placeholder': 'Relevant for Designers',
+    'profile.portfolio.github': 'Relevant for Developers',
+    'profile.profession.ENGINEERING': 'Engineering',
+    'profile.profession.COMPUTER_SCIENCE': 'Computer Science',
+    'profile.profession.PRODUCT_MANAGEMENT': 'Product Management',
+    'profile.profession.ART_DESIGN': 'Art / Design',
+    'profile.profession.SALES': 'Sales',
+    'profile.profession.MARKETING': 'Marketing',
+    'profile.profession.BUSINESS_FINANCE': 'Business / Finance',
+    'profile.profession.ENTREPRENEUR': 'Entrepreneur',
+    'profile.profession.STUDENT': 'Student',
+    'profile.profession.HEALTH_MEDICINE': 'Health/Medicine',
+    'profile.profession.LITERATURE_WRITING': 'Literature/Writing',
+    'profile.profession.TRANSLATION': 'Translation/Interpretation',
+    'profile.profession.LAW': 'Law',
+    'profile.profession.ECONOMICS': 'Economics',
+    'profile.profession.MANAGEMENT': 'Management',
+    'profile.profession.OTHER': 'Other',
+    'profile.complete': 'Complete Your Profile',
+    'profile.complete.dismiss': 'Dismiss',
+    'profile.skillsDetails.placeholder': 'Explain more about your skills, work experience, etc.',
+    'profile.motto.placeholder': 'Do you have a life motto?',
+    'profile.previous': 'Previous',
+    'profile.next': 'Next',
+    'profile.localTime': 'Local Time',
     'profile.sendMessage': 'Send Direct Message',
     'profile.viewProfile': 'View Profile',
     'profile.editProfile': 'Edit Profile',
@@ -790,6 +829,9 @@ const en = {
     'profile.detail.sendmessage.disabled': 'You cannot send a message to yourself',
     'profile.detail.comingsoon': 'Coming soon...',
     'profile.detail.follow.disabled': 'You cannot follow yourself',
+    'profile.skillset.header': 'Skill Set',
+    'profile.social.header': 'Social Profile',
+    'profile.portfolio': 'Portfolio',
 
     // Validate Form
     'ambassadors.form.required': 'This must be filled out',
@@ -818,6 +860,7 @@ const en = {
     // Task Application
     'taks.application.social': 'Social',
     'taks.application.developer': 'Developer',
+    'taks.application.general': 'General',
     'taks.create.project': 'Create Project',
     'taks.create.task': 'Create Task / Event',
 
@@ -1033,6 +1076,11 @@ const en = {
     'from.UserContactForm.text.emailreply': "The email reply-to address will be set to your account's email, responses will go directly to your email",
     'from.UserContactForm.button.send': 'Send Message',
 
+    'from.UserEditForm.label.bio': 'Biography',
+    'from.UserEditForm.label.motto': 'Motto',
+    'from.UserEditForm.label.profession': 'Profession',
+    'from.UserEditForm.label.portfolio': 'Portfolio',
+    'from.UserEditForm.label.github': 'GitHub',
     'from.UserEditForm.username.required': 'Username is required',
     'from.UserEditForm.firstName.required': 'First name is required',
     'from.UserEditForm.lastName.required': 'Last name is required',
@@ -1057,7 +1105,7 @@ const en = {
     'from.UserProfileForm.upload.banner': 'Upload Banner',
     'from.UserProfileForm.text.firstName': 'First Name',
     'from.UserProfileForm.text.lastName': 'Last Name',
-    'from.UserProfileForm.text.slogan': 'Profile Slogan',
+    'from.UserProfileForm.text.slogan': 'Bio',
     'from.UserProfileForm.text.motto': 'Profile Motto',
 
     // CR Video / Earn ELA page
@@ -1115,6 +1163,10 @@ const en = {
     'cr-video.q7.subtitle': 'Enter your email and we will contact you personally',
     'cr-video.q7.button_text': 'Submit',
 
+    'crcle.category.essential': 'Essential',
+    'crcle.category.advanced': 'Advanced',
+    'crcle.category.services': 'Services',
+    'crcle.category.developer': 'Developer',
     'crcle.product': 'Product',
     'crcle.support': 'Support',
     'crcle.media': 'Media',
@@ -1137,6 +1189,7 @@ const en = {
     'crcle.legal': 'Legal',
 
     'user.skillset.select': 'Select skillsets',
+    'user.profession.select': 'Select profession',
 
     'user.skillset.group.DESIGN': 'Design',
     'user.skillset.group.MARKETING': 'Marketing',
@@ -1211,6 +1264,11 @@ en[`taskStatus.${TASK_STATUS.SUCCESS}`] = 'Success'
 en[`taskStatus.${TASK_STATUS.DISTRIBUTED}`] = 'Distributed'
 en[`taskStatus.${TASK_STATUS.CANCELED}`] = 'Canceled'
 en[`taskStatus.${TASK_STATUS.EXPIRED}`] = 'Expired'
+
+en[`taskType.${TASK_TYPE.TASK}`] = 'Task'
+en[`taskType.${TASK_TYPE.SUB_TASK}`] = 'Sub Task'
+en[`taskType.${TASK_TYPE.PROJECT}`] = 'Project'
+en[`taskType.${TASK_TYPE.EVENT}`] = 'Event'
 
 en[`cvoteStatus.${CVOTE_STATUS.DRAFT}`] = 'DRAFT'
 en[`cvoteStatus.${CVOTE_STATUS.PROPOSED}`] = 'PROPOSED'

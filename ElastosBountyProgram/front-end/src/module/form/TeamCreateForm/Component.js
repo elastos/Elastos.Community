@@ -22,6 +22,7 @@ import {
 import I18N from '@/I18N'
 import InputTags from '@/module/shared/InputTags/Component'
 import ReactQuill from 'react-quill'
+import { TOOLBAR_OPTIONS } from '@/config/constant'
 import {TEAM_TASK_DOMAIN, SKILLSET_TYPE} from '@/constant'
 import {upload_file} from '@/util'
 import sanitizeHtml from 'sanitize-html'
@@ -64,6 +65,16 @@ class C extends BaseComponent {
         const tags = this.props.form.getFieldInstance('tags').getValue()
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
+                if (_.isEmpty(values.description)) {
+                    this.props.form.setFields({
+                        description: {
+                            errors: [new Error(I18N.get('team.create.error.descriptionRequired'))],
+                        },
+                    })
+
+                    return
+                }
+
                 let createParams = {
                     ...values,
                     description: sanitizeHtml(values.description, {
@@ -107,10 +118,7 @@ class C extends BaseComponent {
         const textarea_el = (
             <ReactQuill
                 modules={{
-                    toolbar: [
-                        ['bold', 'italic', 'underline','strike'],
-                        [{'list': 'ordered'}, {'list': 'bullet'}]
-                    ]
+                    toolbar: TOOLBAR_OPTIONS
                 }}
             />
         )
@@ -227,7 +235,10 @@ class C extends BaseComponent {
         )
 
         const description_fn = getFieldDecorator('description', {
-            rules: [],
+            rules: [
+                {required: true, message: I18N.get('team.create.error.descriptionRequired')},
+                {min: 4, message: I18N.get('team.create.error.descriptionTooShort')}
+            ],
             initialValue: existingTeam && existingTeam.profile.description || ''
         })
 

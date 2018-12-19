@@ -7,11 +7,12 @@ import Comments from '@/module/common/comments/Container'
 import {Col, Row, Tabs, Icon, Button, Spin, Table, Tooltip, Tag, Modal} from 'antd'
 import I18N from '@/I18N'
 import {TASK_CATEGORY, TASK_TYPE, TASK_STATUS, TASK_CANDIDATE_STATUS,
-    USER_ROLE, USER_AVATAR_DEFAULT, TEAM_TYPE} from '@/constant'
+    USER_ROLE, USER_AVATAR_DEFAULT, TEAM_TYPE,LINKIFY_OPTION} from '@/constant'
 import './style.scss'
 import config from '@/config'
 import MediaQuery from 'react-responsive'
 import _ from 'lodash'
+import linkifyStr from 'linkifyjs/string';
 
 const TabPane = Tabs.TabPane
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
@@ -117,29 +118,62 @@ export default class extends BaseComponent {
         return (
             <div>
                 {this.renderBanner()}
+
                 <div className="profile-info-container clearfix">
                     <div className="profile-left pull-left">
                         {this.renderAvatar()}
-                        {this.renderButton()}
                     </div>
                     <div className="profile-right pull-left">
                         {this.renderFullName()}
-                        <div className="pull-right">
-                            {this.renderSkillsets()}
-                        </div>
-                        {this.renderLocation()}
-                        <div className="pull-left">
-                            {this.renderLocalTime()}
-                        </div>
-                        <div className="pull-right">
-                            {this.renderSocialMedia()}
-                        </div>
+                        {this.renderButton()}
+                        <Row>
+                            <Col span={24} className="profile-right-col">
+                                {this.renderGender()}
+                            </Col>
+                            <Col span={24} className="profile-right-col">
+                                {this.renderLocation()}
+                            </Col>
+                            <Col span={24} className="profile-right-col">
+                                {this.renderLocalTime()}
+                            </Col>
+                        </Row>
                     </div>
-
+                    <div className="clearfix"/>
                     {this.renderDescription()}
                 </div>
 
-                {/* this.renderProjectsTasks() */}
+                <div className="profile-info-container clearfix">
+                    <div className="pull-left skillset-header">
+                        <h4 className="komu-a">
+                            {I18N.get('profile.skillset.header')}
+                        </h4>
+                    </div>
+                    <div className="pull-right skillset-content">
+                        <Row>
+                            <Col span={14}>
+                                {this.renderSkillsets()}
+                            </Col>
+                            <Col span={10}>
+                                {this.renderProfession()}
+                            </Col>
+                        </Row>
+                    </div>
+                </div>
+
+                <div className="profile-info-container clearfix">
+                    <div className="pull-left skillset-header">
+                        <h4 className="komu-a">
+                            {I18N.get('profile.social.header')}
+                        </h4>
+                    </div>
+                    <div className="pull-right skillset-content">
+                        <Row>
+                            <Col span={24}>
+                                {this.renderSocialMedia()}
+                            </Col>
+                        </Row>
+                    </div>
+                </div>
 
                 <Row>
                     <Col span={24} className="gridCol">
@@ -190,42 +224,87 @@ export default class extends BaseComponent {
     }
 
     renderSendMessage() {
-        const isMyself = this.props.member._id === this.props.currentUserId
-        const hoverMessage = I18N.get('profile.detail.sendmessage.disabled')
+        if (this.props.member._id === this.props.currentUserId) {
+            return
+        }
+
         return (
-            <Tooltip title={isMyself ? hoverMessage : ''}>
-                <Button disabled={isMyself} type="primary" className="profile-send-msg" onClick={this.linkProfilePopup.bind(this)}>
-                    {I18N.get('profile.detail.sendmessage')}
-                </Button>
-            </Tooltip>
+            <a onClick={this.linkProfilePopup.bind(this)}>
+                <Icon type="message"/>
+            </a>
         )
     }
 
     renderFollow() {
-        const isMyself = this.props.member._id === this.props.currentUserId
+        if (this.props.member._id === this.props.currentUserId) {
+            return
+        }
+
         const isFollowing = this.isUserSubscribed()
         const clickHandler = isFollowing ? this.unfollowUser : this.followUser
-        const hoverMessage = I18N.get('profile.detail.follow.disabled')
+
         return (
-            <Tooltip title={isMyself ? hoverMessage : ''}>
-                <Button className={ !isMyself ? 'profile-follow' : 'profile-follow follow-disabled'} disabled={isMyself}
-                    loading={this.props.subscribing} onClick={clickHandler.bind(this)}>
-                    {isFollowing
-                        ? I18N.get('user.unfollow')
-                        : I18N.get('user.follow')
-                    }
-                </Button>
-            </Tooltip>
+            <a onClick={clickHandler.bind(this)}>
+                {this.props.subscribing
+                    ? <Icon type="loading"/>
+                    : isFollowing
+                        ? <Icon type="star"/>
+                        : <Icon type="star-o"/>
+                }
+            </a>
         )
     }
 
     renderLocation(isMobile) {
         return (
             <div className={`profile-general-info ${isMobile ? 'profile-general-info-mobile' : ''}`}>
-                <i class="fas fa-map-marker-alt location-icon"></i>
+                <Icon type="pushpin"/>
                 <span>
                     {this.getCountryName(this.props.member.profile.country)}
                 </span>
+            </div>
+        )
+    }
+
+    renderGender(isMobile) {
+        return (
+            <div className={`profile-general-info ${isMobile ? 'profile-general-info-mobile' : ''}`}>
+                <Icon type="user"/>
+                <span>
+                    {_.capitalize(this.props.member.profile.gender)}
+                </span>
+            </div>
+        )
+    }
+
+    renderSkillsets(isMobile) {
+        return (
+            <div className="skillset-container">
+                {_.map(this.props.member.profile.skillset || [], (skillset) =>
+                    <div key={skillset}>
+                        + {I18N.get(`user.skillset.${skillset}`)}
+                    </div>
+                )}
+            </div>
+        )
+    }
+
+    renderProfession(isMobile) {
+        return (
+            <div className="profession-container">
+                {this.props.member.profile.profession &&
+                    <div>
+                        {I18N.get(`profile.profession.${this.props.member.profile.profession}`)}
+                    </div>
+                }
+                {!_.isEmpty(this.props.member.profile.portfolio) &&
+                    <div className="portfolio-container">
+                        <a href={this.props.member.profile.portfolio} target="_blank" className="link-container">
+                            <Icon type="link"/>
+                        </a>
+                        {I18N.get('profile.portfolio')}
+                    </div>
+                }
             </div>
         )
     }
@@ -275,11 +354,13 @@ export default class extends BaseComponent {
     }
 
     renderDescription(isMobile) {
+        const bio = _.get(this.props, 'member.profile.bio') || ''
+        const content = linkifyStr(bio, LINKIFY_OPTION)
         return (
             <div>
                 {
                     this.props.member.profile.bio &&
-                    <div className={`profile-description ${isMobile ? 'profile-description-mobile' : ''}`}>{this.props.member.profile.bio}</div>
+                    <div className={`profile-description ${isMobile ? 'profile-description-mobile' : ''}`} dangerouslySetInnerHTML={{__html: content}}></div>
                 }
             </div>
         )

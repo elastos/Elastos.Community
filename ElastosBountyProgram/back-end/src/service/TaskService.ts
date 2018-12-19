@@ -111,13 +111,13 @@ export default class extends Base {
     }
 
     public async markCandidateVisited(param): Promise<Document> {
-        const { taskCandidateId, owner } = param;
+        const {taskCandidateId, owner} = param;
 
         const db_task_candidate = this.getDBModel('Task_Candidate');
         const updateObj = owner
-            ? { lastSeenByOwner: new Date() }
-            : { lastSeenByCandidate: new Date() }
-        await db_task_candidate.update({ _id: taskCandidateId }, updateObj)
+            ? {lastSeenByOwner: new Date()}
+            : {lastSeenByCandidate: new Date()}
+        await db_task_candidate.update({_id: taskCandidateId}, updateObj)
 
         const updatedTask = db_task_candidate.findById(taskCandidateId)
         return updatedTask
@@ -125,11 +125,11 @@ export default class extends Base {
 
     // unused
     public async markComplete(param): Promise<Document> {
-        const { taskCandidateId } = param;
+        const {taskCandidateId} = param;
 
         const db_task_candidate = this.getDBModel('Task_Candidate')
-        const updateObj = { complete: true }
-        await db_task_candidate.update({ _id: taskCandidateId }, updateObj)
+        const updateObj = {complete: true}
+        await db_task_candidate.update({_id: taskCandidateId}, updateObj)
 
         const updatedTask = db_task_candidate.findById(taskCandidateId)
         return updatedTask
@@ -291,16 +291,16 @@ export default class extends Base {
             candidateSltLimit,
             pitch,
             rewardUpfront: rewardUpfront,
-            reward : reward,
+            reward: reward,
             assignSelf: assignSelf,
-            status : status,
-            createdBy : this.currentUser._id
+            status: status,
+            createdBy: this.currentUser._id
         };
-        if(community){
+        if (community) {
             doc['community'] = community;
         }
 
-        if(communityParent){
+        if (communityParent) {
             doc['communityParent'] = communityParent;
         }
 
@@ -377,15 +377,42 @@ export default class extends Base {
         const task = await db_task.findById(taskId)
         const taskOwner = await db_user.findById(task.createdBy)
 
+        await db_task.getDBInstance().populate(task, {
+            path: 'candidates',
+            select: sanitize,
+        })
+
+        // flags for email actions later, maybe move this to an aspect or post call handler
+        let sendTaskMarkedAsCompleteEmail = false
+
         // permission shortcuts
-        if (this.currentUser.role === constant.USER_ROLE.MEMBER && (this.currentUser._id.toString() !== task.createdBy.toString() || param.status !== constant.TASK_STATUS.SUBMITTED)) {
-            throw 'Access Denied'
+        if (this.currentUser.role === constant.USER_ROLE.MEMBER) {
+
+            // there is an exception for members,
+            // if they are the task assignee they can mark the task as complete only
+            if (!_.includes([constant.TASK_STATUS.CREATED, constant.TASK_STATUS.PENDING], task.status)) {
+
+                // only permit this to continue if there is only taskId and status fields on param, and status = SUBMITTED
+                if (this.isTaskAssignee(task) && _.keys(param).length === 2 && !!param.taskId && param.status === constant.TASK_STATUS.SUBMITTED) {
+
+                    // TODO: send an email notifying the owner/admin the task is marked complete
+                    sendTaskMarkedAsCompleteEmail = true
+
+                    // continue
+                }
+                else {
+                    throw 'Access Denied - Owners cant edit tasks past PENDING'
+                }
+
+            } else if (this.currentUser._id.toString() !== task.createdBy.toString()) {
+                throw 'Access Denied'
+            }
         }
 
         // TODO: ensure reward cannot change if status APPROVED or after
 
         // explictly copy over fields, do not accept param as is
-        const updateObj:any = _.omit(param, restrictedFields.update)
+        const updateObj: any = _.omit(param, restrictedFields.update)
 
         // only allow approving these fields if user is admin
 
@@ -397,31 +424,34 @@ export default class extends Base {
 
             if (param.status) {
 
+                updateObj.status = param.status
+
                 if (param.status === constant.TASK_STATUS.APPROVED) {
 
-                    updateObj.status = constant.TASK_STATUS.APPROVED
                     updateObj.approvedBy = this.currentUser._id
                     updateObj.approvedDate = new Date()
 
-                    // TODO: move this to agenda/queue
-                    await this.sendTaskApproveEmail(this.currentUser, taskOwner, task)
+                    // if APPROVED we also consider if we are setting assignSelf now
+                    let flagNotifyAssignPlusApprove = false
 
-                } else {
-                    // always allow admin to change to any status
-                    // TODO: this can still trigger alerts
-                    updateObj.status = param.status
+                    if (!task.assignSelf && param.assignSelf === true) {
+                        await this.addCandidate({taskId: task._id, userId: task.createdBy, assignSelf: true})
+                        flagNotifyAssignPlusApprove = true
+                    }
+
+                    // TODO: move this to agenda/queue
+                    await this.sendTaskApproveEmail(this.currentUser, taskOwner, task, flagNotifyAssignPlusApprove)
                 }
             }
-        } else if ([constant.TASK_STATUS.PENDING, constant.TASK_STATUS.CREATED].includes(task.status)) {
 
-            // reward should only change if ela amount changed from 0 to > 0
-            if ((task.reward.ela === 0 && task.rewardUpfront.ela === 0) &&
-                (rewardUpfront && (rewardUpfront.ela > 0 || rewardUpfront.usd > 0)) ||
-                (reward && (reward.ela > 0 || reward.usd > 0))
-            ) {
-                // TODO: send notification to admin
-                updateObj.status = constant.TASK_STATUS.PENDING;
+        } else {
+            const hasReward = task.reward.usd > 0 || task.rewardUpfront.usd > 0
+            const willHaveReward = (rewardUpfront && rewardUpfront.usd > 0) ||
+                (reward && reward.usd > 0)
 
+            // Status should only change if reward changed from 0 to > 0
+            if (!hasReward && willHaveReward) {
+                updateObj.status = constant.TASK_STATUS.PENDING
                 sendTaskPendingRequiredApprovalEmail = true
             }
         }
@@ -451,13 +481,6 @@ export default class extends Base {
                 if (param.status === constant.TASK_STATUS.SUBMITTED) {
                     await this.sendTaskSuccessEmail(taskOwner, task)
                 }
-
-                /*
-                if (param.status === constant.TASK_STATUS.ASSIGNED) {
-                    await this.sendTaskAssignedEmail(taskOwner, task)
-
-                } else
-                */
             }
         }
 
@@ -475,7 +498,11 @@ export default class extends Base {
         // TODO: if reward changed to 0, force status to CREATED
 
         if (sendTaskPendingRequiredApprovalEmail) {
-            await this.sendTaskPendingEmail(this.currentUser, updatedTask)
+            this.sendTaskPendingEmail(this.currentUser, updatedTask)
+        }
+
+        if (sendTaskMarkedAsCompleteEmail) {
+            this.sendTaskMarkedAsCompleteEmail(taskOwner, this.currentUser, updatedTask)
         }
 
         return updatedTask
@@ -501,14 +528,14 @@ export default class extends Base {
         const {id} = param;
 
         const role = this.currentUser.role;
-        if(!_.includes([constant.USER_ROLE.ADMIN, constant.USER_ROLE.COUNCIL], role)){
+        if (!_.includes([constant.USER_ROLE.ADMIN, constant.USER_ROLE.COUNCIL], role)) {
             throw 'Access Denied'
         }
 
         const db_task = this.getDBModel('Task');
-        const rs =  await db_task.update({_id : id}, {
-            $set : {
-                status : constant.TASK_STATUS.APPROVED
+        const rs = await db_task.update({_id: id}, {
+            $set: {
+                status: constant.TASK_STATUS.APPROVED
             }
         });
         console.log('approve task =>', rs);
@@ -520,7 +547,7 @@ export default class extends Base {
         const candidateSelector = {
             _id: param.taskCandidateId
         }
-        const updateObj:any = {}
+        const updateObj: any = {}
 
         if (user) {
             updateObj.user = user
@@ -549,7 +576,7 @@ export default class extends Base {
         }
 
         const db_tc = this.getDBModel('Task_Candidate')
-        if(!await db_tc.findOne(candidateSelector)) {
+        if (!await db_tc.findOne(candidateSelector)) {
             throw 'Candidate not found'
         }
 
@@ -589,29 +616,29 @@ export default class extends Base {
         };
         const db_user = this.getDBModel('User');
 
-        if(teamId){
+        if (teamId) {
             doc.team = teamId;
             const db_team = this.getDBModel('Team');
             const team = await db_team.findOne({_id: teamId});
-            if(!team){
+            if (!team) {
                 throw 'invalid team id';
             }
             doc.type = constant.TASK_CANDIDATE_TYPE.TEAM;
         }
-        else if(userId){
+        else if (userId) {
             doc.user = userId;
             const user = await db_user.findOne({_id: userId});
-            if(!user){
+            if (!user) {
                 throw 'invalid user id';
             }
             doc.type = constant.TASK_CANDIDATE_TYPE.USER;
         }
-        else{
+        else {
             throw 'no user id and team id';
         }
 
         const db_tc = this.getDBModel('Task_Candidate');
-        if(await db_tc.findOne(doc)){
+        if (await db_tc.findOne(doc)) {
             throw 'candidate already exists';
         }
 
@@ -624,7 +651,7 @@ export default class extends Base {
 
         const db_task = this.getDBModel('Task');
         const task = await db_task.findOne({_id: taskId});
-        if(!task){
+        if (!task) {
             throw 'invalid task id';
         }
 
@@ -764,7 +791,7 @@ export default class extends Base {
         await db_tc.remove(doc);
 
         task = await db_task.findOne({_id: taskId});
-        if(!task){
+        if (!task) {
             throw 'invalid task id';
         }
 
@@ -844,7 +871,7 @@ export default class extends Base {
         await db_tc.remove(doc);
 
         task = await db_task.findOne({_id: taskId});
-        if(!task){
+        if (!task) {
             throw 'invalid task id';
         }
 
@@ -885,14 +912,32 @@ export default class extends Base {
             status: constant.TASK_CANDIDATE_STATUS.APPROVED
         });
 
-        doc = await db_tc.findById(param.taskCandidateId)
+        doc = await db_tc.getDBInstance().findById(param.taskCandidateId)
+            .populate('user')
         task = await db_task.getDBInstance().findOne({_id: doc.task})
-            .populate('candidates')
+            .populate({
+                path: 'candidates',
+                populate: {
+                    path: 'user'
+                }
+            })
 
-        let acceptedCnt = 0;
+        let acceptedCnt = 0
+        let users = []
+        let usersWonBidding = []
+        let usernameWonString = ''
         for (let candidate of task.candidates) {
             if (candidate.status === constant.TASK_CANDIDATE_STATUS.APPROVED) {
-                acceptedCnt =+ 1
+                acceptedCnt = +1
+                usersWonBidding.push(candidate.user)
+                usernameWonString += `${candidate.user.profile.firstName} ${candidate.user.profile.lastName}`
+                if (task.candidates.length !== acceptedCnt) {
+                    usernameWonString += ', '
+                }
+            }
+
+            if (candidate.status !== constant.TASK_CANDIDATE_STATUS.APPROVED) {
+                users.push(candidate.user)
             }
         }
 
@@ -902,6 +947,9 @@ export default class extends Base {
             }, {
                 status: constant.TASK_STATUS.APPROVED
             })
+
+            this.sendWonBiddingEmail(usersWonBidding, task)
+            this.sendLostBiddingEmail(users, task, doc, usernameWonString)
         }
 
         // TODO: remove unaccepted candidates and send them emails
@@ -934,7 +982,7 @@ export default class extends Base {
             .populate('user', sanitize)
     }
 
-    public async withdrawCandidate(param): Promise<Document>{
+    public async withdrawCandidate(param): Promise<Document> {
         const {taskCandidateId} = param
         const db_task = this.getDBModel('Task')
         const db_tc = this.getDBModel('Task_Candidate')
@@ -958,29 +1006,32 @@ export default class extends Base {
         return result
     }
 
-    public validate_name(name){
-        if(!validate.valid_string(name, 4)){
+    public validate_name(name) {
+        if (!validate.valid_string(name, 4)) {
             throw 'invalid task name';
         }
     }
-    public validate_description(description){
-        if(!validate.valid_string(description, 1)){
+
+    public validate_description(description) {
+        if (!validate.valid_string(description, 1)) {
             throw 'invalid task description';
         }
     }
-    public validate_type(type){
-        if(!type){
+
+    public validate_type(type) {
+        if (!type) {
             throw 'task type is empty';
         }
-        if(!_.includes(constant.TASK_TYPE, type)){
+        if (!_.includes(constant.TASK_TYPE, type)) {
             throw 'task type is not valid';
         }
     }
 
-    public validate_reward_ela(ela){
+    public validate_reward_ela(ela) {
         // TODO check current user has enough ela or not.
     }
-    public validate_reward_votePower(votePower){
+
+    public validate_reward_votePower(votePower) {
         // TODO check current user has enough votePower or not.
     }
 
@@ -992,7 +1043,7 @@ export default class extends Base {
     public async getCandidatesForUser(userId, status) {
         const db_task_candidate = this.getDBModel('Task_Candidate')
 
-        let options:any = {
+        let options: any = {
             user: userId
         }
 
@@ -1011,7 +1062,7 @@ export default class extends Base {
     public async getCandidatesForTeam(teamId, status) {
         const db_task_candidate = this.getDBModel('Task_Candidate')
 
-        let options:any = {
+        let options: any = {
             team: teamId
         }
 
@@ -1083,6 +1134,58 @@ export default class extends Base {
         }
     }
 
+    public async sendTaskMarkedAsCompleteEmail(taskOwner, curUser, task) {
+
+        if (taskOwner._id.toString() === curUser._id.toString()) {
+            return
+        }
+
+        let subject = 'Task ' + task.name + ' Marked as Complete';
+
+        let body = `${this.currentUser.profile.firstName} ${this.currentUser.profile.lastName} has marked the task ${task.name} as complete.
+            <br/>
+            <br/>
+            Please verify the task was completed properly and accept it: <a href="${process.env.SERVER_URL}/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
+        `
+        await mail.send({
+            to: taskOwner.email,
+            toName: `${taskOwner.profile.firstName} ${taskOwner.profile.lastName}`,
+            subject: subject,
+            body: body
+        })
+
+    }
+
+    public async sendWonBiddingEmail(users, task) {
+
+        let candidateSubject = `Your application for task ${task.name} has been approved`
+        let candidateBody = `Congratulations, you have won the bidding ${task.name}, you can get started.`
+
+        for (let user of users) {
+            await mail.send({
+                to: user.email,
+                toName: `${user.profile.firstName} ${user.profile.lastName}`,
+                subject: candidateSubject,
+                body: candidateBody
+            })
+        }
+    }
+
+    public async sendLostBiddingEmail(users, task, taskCandidate, usernameWonString) {
+
+        let candidateSubject = `Your application for task ${task.name} has lost the bid`
+        let candidateBody = `${usernameWonString} won the bid at ${taskCandidate.bid} ELA, but don't worry you can bid next time.`
+
+        for (let user of users) {
+            await mail.send({
+                to: user.email,
+                toName: `${user.profile.firstName} ${user.profile.lastName}`,
+                subject: candidateSubject,
+                body: candidateBody
+            })
+        }
+    }
+
     // this email goes to all candidates
     public async sendTaskAssignedEmail(taskOwner, doc) {
 
@@ -1146,8 +1249,8 @@ export default class extends Base {
         });
 
         if (team) {
-            const userTeams = await db_user_team.find({ _id: { $in: team.members }});
-            const users = await db_user.find({ _id: { $in: _.map(userTeams, 'user') }});
+            const userTeams = await db_user_team.find({_id: {$in: team.members}});
+            const users = await db_user.find({_id: {$in: _.map(userTeams, 'user')}});
             const to = _.map(users, 'email');
 
             const formatUsername = (user) => {
@@ -1190,13 +1293,12 @@ export default class extends Base {
         }
     }
 
-    public async sendTaskApproveEmail(curUser, taskOwner, task) {
+    public async sendTaskApproveEmail(curUser, taskOwner, task, flagNotifyAssignPlusApprove) {
 
         let ownerSubject = `Your task proposal - ${task.name} has been approved`
         let ownerBody = `
             ${curUser.profile.firstName} ${curUser.profile.lastName} has approved your task proposal ${task.name}
-            <br/>
-            <br/>
+            <br/>${flagNotifyAssignPlusApprove ? 'This task has also been assigned to you by the approver.<br/>' : ''}<br/>
             <a href="${process.env.SERVER_URL}/profile/task-detail/${task._id}">Click here to view the ${task.type.toLowerCase()}</a>
             `
         let ownerTo = taskOwner.email
@@ -1210,6 +1312,27 @@ export default class extends Base {
         })
     }
 
+    protected isTaskAssignee(task) {
+
+        const taskAssigneeUserId = this.getTaskAssigneeUserId(task)
+        let isTaskAssignee = false
+
+        if (taskAssigneeUserId) {
+            isTaskAssignee = taskAssigneeUserId.toString() === this.currentUser._id.toString()
+        }
+
+        return isTaskAssignee
+    }
+
+    // this assumes that task's candidate user is not populated
+    protected getTaskAssigneeUserId(task) {
+        const taskAssignee = _.filter(task.candidates, {status: constant.TASK_CANDIDATE_STATUS.APPROVED})
+
+        if (taskAssignee.length) {
+            return taskAssignee[0].user
+        }
+    }
+
     protected async getAdminUsers() {
         const db_user = this.getDBModel('User');
 
@@ -1218,4 +1341,6 @@ export default class extends Base {
             active: true
         })
     }
+
+
 }

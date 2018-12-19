@@ -43,19 +43,19 @@ export default createContainer(Component, (state) => {
 
         async getTasks(filters) {
             return await taskService.index({
+                category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.SOCIAL, TASK_CATEGORY.GENERAL],
                 ...filters,
                 assignSelf: false,
-                type: [TASK_TYPE.TASK, TASK_TYPE.EVENT],
-                category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.SOCIAL]
+                type: [TASK_TYPE.TASK, TASK_TYPE.EVENT]
             })
         },
 
         async loadMoreTasks(filters) {
             return await taskService.loadMore({
+                category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.SOCIAL, TASK_CATEGORY.GENERAL],
                 ...filters,
                 assignSelf: false,
-                type: [TASK_TYPE.TASK, TASK_TYPE.EVENT],
-                category: [TASK_CATEGORY.DEVELOPER, TASK_CATEGORY.SOCIAL]
+                type: [TASK_TYPE.TASK, TASK_TYPE.EVENT]
             })
         },
 
@@ -74,7 +74,7 @@ export default createContainer(Component, (state) => {
         },
 
         async loadAllCircles() {
-            return teamService.loadAllCircles()
+            return teamService.loadAllCircles({ includeTasks: false })
         },
 
         resetTasks () {

@@ -48,7 +48,7 @@ export default class extends ProfilePage {
     }
 
     getCommentActions(id, data) {
-        const isOwner = data.createdBy._id === this.props.currentUserId
+        const isOwner = data.createdBy && data.createdBy._id === this.props.currentUserId
         const subscription = _.find(data.subscribers, (subscriber) => {
             return subscriber.user && subscriber.user._id === this.props.currentUserId
         })

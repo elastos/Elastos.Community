@@ -18,11 +18,6 @@ module.exports = merge(common, {
     module: {
         rules: [
             {
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                use: ['babel-loader'],
-            },
-            {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader', 'postcss-loader'],
             },
@@ -33,6 +28,7 @@ module.exports = merge(common, {
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2)$/,
+                exclude: /node_modules/,
                 use: ['url-loader'],
             },
             {
@@ -49,10 +45,12 @@ module.exports = merge(common, {
             },
             {
                 test: /\.svg$/,
+                exclude: /node_modules/,
                 use: ['svg-inline-loader'],
             },
             {
                 test: /\.(png|jpg)$/,
+                exclude: /node_modules/,
                 use: [
                     {
                         loader: 'url-loader',

@@ -1,17 +1,14 @@
 import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import UserEditForm from '@/module/form/UserEditForm/Container'
-import UserProfileForm from '@/module/form/UserProfileForm/Container'
 import I18N from '@/I18N'
-import { Col, Row, Icon, Popover, Button, Spin, Tabs, Tag } from 'antd'
+import { Col, Row, Icon, Popover, Button, Spin, Tabs, Tag, Modal, Upload } from 'antd'
 import moment from 'moment-timezone'
-
-import UserPublicDetail from './detail/Container'
-
-import {USER_AVATAR_DEFAULT} from '@/constant'
+import {upload_file} from '@/util'
+import {USER_AVATAR_DEFAULT, LINKIFY_OPTION} from '@/constant'
 import config from '@/config'
 import MediaQuery from 'react-responsive'
-
+import linkifyStr from 'linkifyjs/string';
 import './style.scss'
 
 const TabPane = Tabs.TabPane
@@ -30,50 +27,18 @@ export default class extends BaseComponent {
         super(props)
 
         this.state = {
-            editing: false,
-            editingBasic: false,
-            publicView: false
+            editing: false
         }
     }
 
     // TODO: add twitter, telegram, linkedIn, FB
     ord_render () {
-        let content = null;
         if (_.isEmpty(this.props.user) || this.props.user.loading) {
             return <div class="center"><Spin size="large" /></div>;
         }
 
-        if (this.state.publicView) {
-            content = (
-                <div className="member-content">
-                    {this.renderHeader()}
-                    <div className="container">
-                        <UserPublicDetail userId={this.props.currentUserId} page={this.props.page}/>
-                    </div>
-                </div>
-            );
-        } else if (this.state.editingBasic) {
-            content = (
-                <div className="member-content">
-                    {this.renderHeader()}
-                    <div className="container">
-                        <div>
-                            {this.renderBanner(false, this.state.temporaryBanner)}
-                            <div className="profile-info-container clearfix">
-                                <div className="profile-left pull-left">
-                                    {this.renderAvatar(false, this.state.temporaryAvatar)}
-                                </div>
-                                <UserProfileForm user={this.props.user}
-                                    page={this.props.page} switchEditMode={this.switchEditBasicMode}
-                                    updateBanner={(url) => this.setState({temporaryBanner: url})}
-                                    updateAvatar={(url) => this.setState({temporaryAvatar: url})}/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        } else {
-            content = (
+        return (
+            <div className="c_Member public">
                 <div>
                     <MediaQuery maxWidth={800}>
                         <div className="member-content member-content-mobile">
@@ -86,12 +51,6 @@ export default class extends BaseComponent {
                         </div>
                     </MediaQuery>
                 </div>
-            );
-        }
-
-        return (
-            <div className="c_Member public">
-                {content}
             </div>
         );
     }
@@ -105,10 +64,42 @@ export default class extends BaseComponent {
                     {this.renderFullName(true)}
                     {this.renderLocation(true)}
                     {this.renderLocalTime(true)}
-                    {this.renderSocialMedia(true)}
-                    {this.renderButton(true)}
                     {this.renderDescription(true)}
                 </div>
+
+                <div className="profile-info-container profile-info-container-mobile clearfix">
+                    <div className="pull-left skillset-header">
+                        <h4 className="komu-a">
+                            {I18N.get('profile.skillset.header')}
+                        </h4>
+                    </div>
+                    <div className="pull-right skillset-content">
+                        <Row>
+                            <Col span={24}>
+                                {this.renderSkillsets(true)}
+                            </Col>
+                            <Col span={24}>
+                                {this.renderProfession(true)}
+                            </Col>
+                        </Row>
+                    </div>
+                </div>
+
+                <div className="profile-info-container profile-info-container-mobile clearfix">
+                    <div className="pull-left skillset-header">
+                        <h4 className="komu-a">
+                            {I18N.get('profile.social.header')}
+                        </h4>
+                    </div>
+                    <div className="pull-right skillset-content">
+                        <Row>
+                            <Col span={24}>
+                                {this.renderSocialMedia(true)}
+                            </Col>
+                        </Row>
+                    </div>
+                </div>
+
                 {this.renderMetrics()}
                 {this.renderEditForm()}
             </div>
@@ -116,11 +107,21 @@ export default class extends BaseComponent {
     }
 
     renderEditForm() {
-        if (this.state.editing) {
-            return (
-                <UserEditForm user={this.props.user} page={this.props.page} switchEditMode={this.switchEditMode}/>
-            )
-        }
+        return (
+            <Modal
+                className="project-detail-nobar"
+                visible={this.state.editing}
+                onOk={this.switchEditMode.bind(this, false)}
+                onCancel={this.switchEditMode.bind(this, false)}
+                footer={null}
+                width="70%"
+            >
+                { this.state.editing &&
+                    <UserEditForm user={this.props.user}
+                        switchEditMode={this.switchEditMode.bind(this, false)} completing={false}/>
+                }
+            </Modal>
+        )
     }
 
     renderDesktop() {
@@ -130,42 +131,62 @@ export default class extends BaseComponent {
                 <div className="profile-info-container clearfix">
                     <div className="profile-left pull-left">
                         {this.renderAvatar()}
-                        {this.renderButton()}
                     </div>
                     <div className="profile-right pull-left">
                         {this.renderFullName()}
-                        <div className="pull-right">
-                            {this.renderSkillsets()}
-                        </div>
-                        {this.renderLocation()}
-                        <div className="pull-left">
-                            {this.renderLocalTime()}
-                        </div>
-                        <div className="clearfix"/>
-                        <div>
-                            {this.renderSocialMedia()}
-                        </div>
+                        <Row>
+                            <Col span={24} className="profile-right-col">
+                                {this.renderGender()}
+                            </Col>
+                            <Col span={24} className="profile-right-col">
+                                {this.renderLocation()}
+                            </Col>
+                            <Col span={24} className="profile-right-col">
+                                {this.renderLocalTime()}
+                            </Col>
+                        </Row>
                     </div>
+                    <div className="clearfix"/>
                     {this.renderDescription()}
                 </div>
+
+                <div className="profile-info-container clearfix">
+                    <div className="pull-left skillset-header">
+                        <h4 className="komu-a">
+                            {I18N.get('profile.skillset.header')}
+                        </h4>
+                    </div>
+                    <div className="pull-right skillset-content">
+                        <Row>
+                            <Col span={14}>
+                                {this.renderSkillsets()}
+                            </Col>
+                            <Col span={10}>
+                                {this.renderProfession()}
+                            </Col>
+                        </Row>
+                    </div>
+                </div>
+
+                <div className="profile-info-container clearfix">
+                    <div className="pull-left skillset-header">
+                        <h4 className="komu-a">
+                            {I18N.get('profile.social.header')}
+                        </h4>
+                    </div>
+                    <div className="pull-right skillset-content">
+                        <Row>
+                            <Col span={24}>
+                                {this.renderSocialMedia()}
+                            </Col>
+                        </Row>
+                    </div>
+                </div>
+
                 {this.renderMetrics()}
                 {this.renderEditForm()}
             </div>
         )
-    }
-
-    renderHeader() {
-        if (this.state.publicView || this.state.editingBasic) {
-            const onToggle = this.state.publicView ? this.switchPublicView : this.switchEditBasicMode;
-            return (
-                <div className="header">
-                    <div className="content">
-                        {I18N.get(this.state.publicView ? 'profile.publicProfile' : 'profile.edit')}
-                    </div>
-                    <Icon className="close-btn" type="close" onClick={onToggle} />
-                </div>
-            )
-        }
     }
 
     renderMetrics() {
@@ -195,16 +216,57 @@ export default class extends BaseComponent {
         return (
             <div className={`profile-banner ${isMobile ? 'profile-banner-mobile' : ''}`}>
                 <span style={{ backgroundImage: this.getBannerWithFallback(url || this.props.user.profile.banner) }}></span>
-                {!this.state.editingBasic && <Icon className="profile-edit-btn" type="edit" onClick={this.switchEditBasicMode}/>}
+                <Icon className="profile-edit-btn" type="edit" onClick={this.switchEditMode.bind(this)}/>
             </div>
         )
     }
 
-    renderAvatar(isMobile, url) {
+    renderAvatar(isMobile) {
+        const p_avatar = {
+            showUploadList: false,
+            customRequest: (info) => {
+                this.setState({
+                    avatar_loading: true
+                })
+
+                upload_file(info.file).then(async (d) => {
+                    await this.props.updateUser(this.props.currentUserId, {
+                        profile: {
+                            avatar: d.url,
+                            avatarFilename: d.filename,
+                            avatarFileType: d.type
+                        }
+                    })
+
+                    await this.props.getCurrentUser()
+
+                    this.setState({
+                        avatar_loading: false
+                    })
+                })
+            }
+        }
+
         return (
             <div className={`profile-avatar-container ${isMobile ? 'profile-avatar-container-mobile' : ''}`}>
                 <div className="profile-avatar">
-                    <img src={this.getAvatarWithFallback(url || this.props.user.profile.avatar)} />
+                    <Upload name="avatar" listType="picture-card"
+                        className="avatar-uploader"
+                        showUploadList={false}
+                        {...p_avatar}
+                    >
+                        {this.state.avatar_loading
+                            ? (
+                                <div>
+                                    <Icon type="loading"/>
+                                </div>
+                            )
+                            : (
+                                <img src={this.getAvatarWithFallback(
+                                    this.props.user.profile.avatar)} />
+                            )
+                        }
+                    </Upload>
                 </div>
             </div>
         )
@@ -219,23 +281,10 @@ export default class extends BaseComponent {
         )
     }
 
-    renderButton(isMobile) {
-        return (
-            <div className={`profile-button ${isMobile ? 'profile-button-mobile' : ''}`}>
-                <Button className="profile-edit separated" onClick={this.switchEditMode}>
-                    {I18N.get('profile.editProfile')}
-                </Button>
-                <Button className="profile-show" onClick={this.switchPublicView}>
-                    {I18N.get('profile.showPublicProfile')}
-                </Button>
-            </div>
-        )
-    }
-
     renderLocation(isMobile) {
         return (
             <div className={`profile-general-info ${isMobile ? 'profile-general-info-mobile' : ''}`}>
-                <i class="fas fa-map-marker-alt location-icon"></i>
+                <Icon type="pushpin"/>
                 <span>
                     {this.getCountryName(this.props.user.profile.country)}
                 </span>
@@ -243,14 +292,45 @@ export default class extends BaseComponent {
         )
     }
 
+    renderGender(isMobile) {
+        return (
+            <div className={`profile-general-info ${isMobile ? 'profile-general-info-mobile' : ''}`}>
+                <Icon type="user"/>
+                <span>
+                    {_.capitalize(this.props.user.profile.gender)}
+                </span>
+            </div>
+        )
+    }
+
     renderSkillsets(isMobile) {
         return (
-            <div className={`profile-skillset-info ${isMobile ? 'profile-skillset-info-mobile' : ''}`}>
+            <div className="skillset-container">
                 {_.map(this.props.user.profile.skillset || [], (skillset) =>
-                    <Tag color="blue" key={skillset}>
-                        {I18N.get(`user.skillset.${skillset}`)}
-                    </Tag>
+                    <div key={skillset}>
+                        + {I18N.get(`user.skillset.${skillset}`)}
+                    </div>
                 )}
+            </div>
+        )
+    }
+
+    renderProfession(isMobile) {
+        return (
+            <div className="profession-container">
+                {this.props.user.profile.profession &&
+                    <div>
+                        {I18N.get(`profile.profession.${this.props.user.profile.profession}`)}
+                    </div>
+                }
+                {!_.isEmpty(this.props.user.profile.portfolio) &&
+                    <div className="portfolio-container">
+                        <a href={this.props.user.profile.portfolio} target="_blank" className="link-container">
+                            <Icon type="link"/>
+                        </a>
+                        {I18N.get('profile.portfolio')}
+                    </div>
+                }
             </div>
         )
     }
@@ -308,11 +388,13 @@ export default class extends BaseComponent {
     }
 
     renderDescription(isMobile) {
+        const bio = _.get(this.props, 'user.profile.bio') || ''
+        const content = linkifyStr(bio, LINKIFY_OPTION)
         return (
-            <div>
+            <div className="profile-container">
                 {
                     this.props.user.profile.bio &&
-                    <div className={`profile-description ${isMobile ? 'profile-description-mobile' : ''}`}>{this.props.user.profile.bio}</div>
+                    <div className={`profile-description ${isMobile ? 'profile-description-mobile' : ''}`} dangerouslySetInnerHTML={{__html: content}}></div>
                 }
             </div>
         )
@@ -322,28 +404,9 @@ export default class extends BaseComponent {
         return config.data.mappingCountryCodeToName[countryCode]
     }
 
-    switchEditBasicMode = () => {
+    switchEditMode() {
         this.setState({
-            editingBasic: !this.state.editingBasic,
-            temporaryAvatar: null,
-            temporaryBanner: null
+            editing: !this.state.editing
         })
     }
-
-    switchEditMode = () => {
-        this.setState({
-            editing: !this.state.editing,
-            temporaryAvatar: null,
-            temporaryBanner: null
-        })
-    }
-
-    switchPublicView = () => {
-        this.setState({
-            publicView: !this.state.publicView,
-            temporaryAvatar: null,
-            temporaryBanner: null
-        })
-    }
-
 }

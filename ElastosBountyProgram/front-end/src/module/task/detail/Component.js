@@ -13,6 +13,12 @@ import { TASK_EVENT_DATE_TYPE } from '../../../constant'
 
 const dateTimeFormat = 'MMM D, YYYY - h:mma (Z [GMT])'
 
+/*
+************************************************************************************
+* DEPRECATED! - even tasks use the project/detail code now
+************************************************************************************
+ */
+
 export default class extends BaseComponent {
 
     ord_states() {
@@ -62,7 +68,7 @@ export default class extends BaseComponent {
                 <Row>
                     <Col sm={24} md={24} lg={18} className="gridCol main-area">
                         <Row>
-                            <Col>
+                            <Col className="assignment-info">
                                 <h4 className="center">
                                     {this.props.task.name}
                                     {this.props.task.assignSelf &&

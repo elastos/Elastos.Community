@@ -6,7 +6,8 @@ import {
 } from 'antd'
 import _ from 'lodash'
 import './style.scss'
-import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT, SORT_ORDER} from '@/constant'
+import {SKILLSET_TYPE, TEAM_TASK_DOMAIN, TASK_CANDIDATE_STATUS, USER_AVATAR_DEFAULT, SORT_ORDER,
+    TASK_CATEGORY} from '@/constant'
 import InfiniteScroll from 'react-infinite-scroller'
 import TeamDetail from '@/module/team/popup/Container'
 import TaskDetail from '@/module/task/popup/Container'
@@ -65,7 +66,8 @@ export default class extends BaseComponent {
             results: 5,
             sortBy: params.sortBy || 'createdAt',
             sortOrder: params.sortOrder || SORT_ORDER.DESC,
-            assignment: params.assignment || 'all'
+            assignment: params.assignment || 'all',
+            taskCategory: params.taskCategory || 'all'
         }
     }
 
@@ -102,6 +104,10 @@ export default class extends BaseComponent {
             query.unassigned = true
         }
 
+        if (this.state.taskCategory && this.state.taskCategory !== 'all') {
+            query.category = this.state.taskCategory
+        }
+
         query.page = this.state.page || 1
         query.results = this.state.results || 5
 
@@ -112,17 +118,18 @@ export default class extends BaseComponent {
         const skillset = (query.skillset || []).join(',')
         const domain = (query.domain || []).join(',')
         const circle = (query.circle || []).join(',')
-        const { lookingFor, search, sortBy, sortOrder, assignment } = this.state
+        const { lookingFor, search, sortBy, sortOrder, assignment, taskCategory } = this.state
 
         const url = new URI('/developer/search')
         lookingFor && url.addSearch('lookingFor', lookingFor)
-        skillset && url.addSearch('skillset', skillset)
-        domain && url.addSearch('domain', domain)
-        circle && url.addSearch('circle', circle)
-        search && url.addSearch('search', search)
-        sortBy && url.addSearch('sortBy', sortBy)
-        sortOrder && url.addSearch('sortOrder', sortOrder)
+        !_.isEmpty(skillset) && url.addSearch('skillset', skillset)
+        !_.isEmpty(domain) && url.addSearch('domain', domain)
+        !_.isEmpty(circle) && url.addSearch('circle', circle)
+        !_.isEmpty(search) && url.addSearch('search', search)
+        !_.isEmpty(sortBy) && url.addSearch('sortBy', sortBy)
+        !_.isEmpty(sortOrder) && url.addSearch('sortOrder', sortOrder)
         assignment !== 'all' && url.addSearch('assignment', assignment)
+        taskCategory !== 'all' && url.addSearch('taskCategory', taskCategory)
 
         return url.toString()
     }
@@ -255,6 +262,13 @@ export default class extends BaseComponent {
         }, this.debouncedRefetch.bind(this))
     }
 
+    onChangeTaskCategory(e) {
+        this.setState({
+            taskCategory: e.target.value,
+            page: 1
+        }, this.debouncedRefetch.bind(this))
+    }
+
     showTaskModal(id) {
         this.setState({
             showTaskModal: true,
@@ -360,6 +374,25 @@ export default class extends BaseComponent {
                 </Radio>
                 <Radio className="radio" value="unassigned">
                     {I18N.get('developer.search.assignment.unassigned')}
+                </Radio>
+            </RadioGroup>
+        )
+    }
+
+    renderTaskCategory() {
+        return (
+            <RadioGroup onChange={this.onChangeTaskCategory.bind(this)} value={this.state.taskCategory}>
+                <Radio className="radio" value="all">
+                    {I18N.get('developer.search.assignment.all')}
+                </Radio>
+                <Radio className="radio" value={TASK_CATEGORY.GENERAL}>
+                    {I18N.get('taks.application.general')}
+                </Radio>
+                <Radio className="radio" value={TASK_CATEGORY.DEVELOPER}>
+                    {I18N.get('taks.application.developer')}
+                </Radio>
+                <Radio className="radio" value={TASK_CATEGORY.SOCIAL}>
+                    {I18N.get('taks.application.social')}
                 </Radio>
             </RadioGroup>
         )
@@ -629,6 +662,13 @@ export default class extends BaseComponent {
                             </div>
                         </div>
 
+                        <div className="group">
+                            <div className="title">{I18N.get('developer.search.sort')}</div>
+                            <div className="content">
+                                {this.renderSortOptions()}
+                            </div>
+                        </div>
+
                         {this.state.lookingFor === 'TASK' &&
                             <div className="group">
                                 <div className="title">{I18N.get('developer.search.assignment')}</div>
@@ -638,12 +678,6 @@ export default class extends BaseComponent {
                             </div>
                         }
 
-                        <div className="group">
-                            <div className="title">{I18N.get('developer.search.sort')}</div>
-                            <div className="content">
-                                {this.renderSortOptions()}
-                            </div>
-                        </div>
                         {this.state.lookingFor !== 'TASK' &&
                             <div className="group">
                                 <div className="title">{I18N.get('developer.search.skillset')}</div>
@@ -678,15 +712,32 @@ export default class extends BaseComponent {
                         }
                         {this.state.lookingFor === 'TASK' &&
                             <div className="group">
+                                <div className="title">{I18N.get('developer.search.taskCategory')}</div>
+                                <div className="content">
+                                    {this.renderTaskCategory()}
+                                </div>
+                            </div>
+                        }
+                        {this.state.lookingFor === 'TASK' &&
+                            <div className="group">
                                 <div className="title">{I18N.get('developer.search.circle')}</div>
                                 <div className="content">
-                                    {this.renderCircles(this.state.circlesShowAllEntries)}
-                                    <div className="showMore" onClick={this.enableCirclesEntries.bind(this)}>
-                                        {
-                                            !this.state.circlesShowAllEntries ? (<span>{I18N.get('developer.search.showMore')}</span>)
-                                                : (<span>{I18N.get('developer.search.hide')}</span>)
-                                        }
-                                    </div>
+                                    {this.props.all_circles_loading
+                                        ? <Spin/>
+                                        : <TreeSelect
+                                            className="filters-tree"
+                                            showSearch
+                                            value={this.state.circle}
+                                            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                                            placeholder="Filters"
+                                            allowClear
+                                            multiple
+                                            treeDefaultExpandAll
+                                            treeData={this.getCircleTree()}
+                                            treeCheckable={!this.props.all_circles_loading}
+                                            onChange={this.onChangeCircle.bind(this)}
+                                        />
+                                    }
                                 </div>
                             </div>
                         }
@@ -923,7 +974,11 @@ export default class extends BaseComponent {
                     thumbnail: task.thumbnail,
                     description: description_fn(task),
                     content: task.description,
-                    owner: task.createdBy,
+                    owner: task.createdBy || {profile: {
+                        firstName: '',
+                        lastName: 'DELETED'
+                    }},
+                    status: task.status,
                     applicationDeadlinePassed: applicationDeadline ? Date.now() > applicationDeadline : false,
                     id: task._id,
                     candidates: task.candidates
@@ -957,18 +1012,30 @@ export default class extends BaseComponent {
                                     key={item.id}
                                     extra={this.getCarousel(item)}
                                 >
-                                    <h3 className="no-margin no-padding one-line brand-color">
+                                    <h3 className="no-margin no-padding one-line brand-color task-title">
                                         <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
                                     </h3>
+
+                                    {/* Status */}
+                                    { item.status &&
+                                        <div className="valign-wrapper">
+                                            <Tag>{I18N.get('.status')}: {item.status}</Tag>
+                                        </div>
+                                    }
+
+                                    {/* Application Deadline - info */}
                                     {item.applicationDeadlinePassed &&
                                     <span className="subtitle">
                                         {I18N.get('developer.search.subtitle_prefix')} {I18N.get('developer.search.subtitle_applications')}
                                     </span>
                                     }
+
                                     <h5 className="no-margin">
                                         {item.description}
                                     </h5>
-                                    <div className="ql-editor" dangerouslySetInnerHTML={{__html: item.content}}/>
+                                    <div className="description-ql-editor-wrapper">
+                                        <div className="ql-editor" dangerouslySetInnerHTML={{__html: item.content}}/>
+                                    </div>
                                     <div className="ant-list-item-right-box">
                                         <a className="pull-up" onClick={() => this.setState({ showUserInfo: item.owner })}>
                                             <Avatar size="large" className="pull-right"
@@ -987,9 +1054,17 @@ export default class extends BaseComponent {
                                     key={item.id}
                                     className="ignore-right-box"
                                 >
-                                    <h3 className="no-margin no-padding one-line brand-color">
+                                    <h3 className="no-margin no-padding one-line brand-color task-title">
                                         <a onClick={clickHandler.bind(this, item.id)}>{item.title}</a>
                                     </h3>
+
+                                    {/* Status */}
+                                    { item.status &&
+                                        <div className="valign-wrapper">
+                                            <Tag>{I18N.get('.status')}: {item.status}</Tag>
+                                        </div>
+                                    }
+
                                     <h5 className="no-margin">
                                         {item.description}
                                     </h5>

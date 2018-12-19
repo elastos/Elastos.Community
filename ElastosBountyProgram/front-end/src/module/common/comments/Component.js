@@ -2,13 +2,16 @@ import React from 'react';
 import BaseComponent from '@/model/BaseComponent'
 import {Form, Col, Row, List, Avatar, Icon, Divider, Button, Input, Mention, Modal} from 'antd'
 import config from '@/config'
+import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
 import {MAX_LENGTH_COMMENT} from '@/config/constant'
 import './style.scss'
 import moment from 'moment'
 import _ from 'lodash'
 import I18N from '@/I18N'
 import ProfilePopup from '@/module/profile/OverviewPopup/Container'
-import { USER_AVATAR_DEFAULT } from '@/constant'
+import MediaQuery from 'react-responsive'
+import { USER_AVATAR_DEFAULT, LINKIFY_OPTION } from '@/constant'
+import linkifyStr from 'linkifyjs/string';
 
 const TextArea = Input.TextArea
 const FormItem = Form.Item
@@ -72,22 +75,7 @@ class C extends BaseComponent {
     }
 
     getInputProps() {
-        const allUsers = _.map(this.props.all_users, (user) => user.username)
         const {getFieldDecorator} = this.props.form
-        const comment_fn = getFieldDecorator('comment', {
-            rules: [{
-                required: true, message: 'Please input your comment!'
-            }],
-            initialValue: Mention.toContentState('')
-        })
-        const comment_el = (
-            <Mention
-                multiLines
-                style={{ width: '100%', height: 100 }}
-                suggestions={allUsers}
-                notFoundContent={I18N.get('mentions.notFound')}
-                placeholder={I18N.get('comments.commentsOrUpdates')}/>
-        )
 
         const headline_fn = getFieldDecorator('headline', {
             rules: [{
@@ -102,9 +90,43 @@ class C extends BaseComponent {
         )
 
         return {
-            comment: comment_fn(comment_el),
             headline: headline_fn(headline_el)
         }
+    }
+
+    renderComment() {
+        const allUsers = _.map(this.props.all_users, (user) => user.username)
+        const {getFieldDecorator} = this.props.form
+        const comment_fn = getFieldDecorator('comment', {
+            rules: [],
+            initialValue: Mention.toContentState('')
+        })
+        const comment_el = (
+            <Mention
+                multiLines
+                style={{ width: '100%', height: 100 }}
+                suggestions={allUsers}
+                notFoundContent={I18N.get('mentions.notFound')}
+                placeholder={I18N.get('comments.commentsOrUpdates')}/>
+        )
+
+        return comment_fn(comment_el)
+    }
+
+    renderCommentMobile() {
+        const allUsers = _.map(this.props.all_users, (user) => user.username)
+        const {getFieldDecorator} = this.props.form
+        const comment_fn = getFieldDecorator('comment', {
+            rules: [],
+            initialValue: ''
+        })
+        const comment_el = (
+            <TextArea
+                style={{ width: '100%', height: 100 }}
+                placeholder={I18N.get('comments.commentsOrUpdates')} />
+        )
+
+        return comment_fn(comment_el)
     }
 
     isUserSubscribed() {
@@ -152,9 +174,16 @@ class C extends BaseComponent {
                         {p.headline}
                     </FormItem>
                 }
-                <FormItem>
-                    {p.comment}
-                </FormItem>
+                <MediaQuery minWidth={MIN_WIDTH_PC}>
+                    <FormItem>
+                        {this.renderComment()}
+                    </FormItem>
+                </MediaQuery>
+                <MediaQuery maxWidth={MAX_WIDTH_MOBILE}>
+                    <FormItem>
+                        {this.renderCommentMobile()}
+                    </FormItem>
+                </MediaQuery>
                 <FormItem>
                     {subscribeButton}
                     <Button className="ant-btn-ebp pull-right" type="primary" size="small"
@@ -202,7 +231,7 @@ class C extends BaseComponent {
             ** Format visuals
             */
             const spanCreator = (content, key) => {
-                return <span key={key} className="non-mention">{content}</span>
+                return <div key={key} className="non-mention" dangerouslySetInnerHTML={{__html: content}} />
             }
             const mentionCreator = (mention, key) => {
                 return <a key={key} onClick={() => this.showUserProfile(mention.replace('@', ''))}>
@@ -275,8 +304,9 @@ class C extends BaseComponent {
             const createdById = (thread.createdBy && thread.createdBy._id)
             const dateFormatted = dateFormatter(thread.createdAt)
 
+            const linkifyComment = linkifyStr(thread.comment || '', LINKIFY_OPTION)
             return {
-                comment: thread.comment,
+                comment: linkifyComment,
                 headline: thread.headline,
                 description: (
                     <div className="commenter-info">
@@ -331,35 +361,41 @@ class C extends BaseComponent {
     handleSubmit(e) {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
-            const commentPlainText = values.comment.getPlainText()
-
-            if (!commentPlainText) {
-                this.props.form.setFields({
-                    comment: {
-                        errors: [new Error('Please input comment')],
-                    }
-                });
-                return;
-            }
-
-            if (commentPlainText.length > MAX_LENGTH_COMMENT) {
-                this.props.form.setFields({
-                    comment: {
-                        value: values.comment,
-                        errors: [new Error('Comment is too long')],
-                    }
-                });
-                return;
-            }
-
             if (!err) {
+                const comment = values.comment
+                const commentPlainText = _.isFunction(comment.getPlainText)
+                    ? comment.getPlainText()
+                    : comment
+
+                if (_.isEmpty(commentPlainText)) {
+                    this.props.form.setFields({
+                        comment: {
+                            errors: [new Error('Please input comment')],
+                        },
+                    })
+
+                    return
+                }
+
+                if (commentPlainText.length > MAX_LENGTH_COMMENT) {
+                    this.props.form.setFields({
+                        comment: {
+                            value: comment,
+                            errors: [new Error('Comment is too long')],
+                        }
+                    })
+
+                    return
+                }
+
                 this.props.postComment(this.props.type,
                     this.props.reduxType,
                     this.props.detailReducer,
                     this.props.returnUrl,
                     this.getModelId(),
-                    values.comment && values.comment.getPlainText(),
-                    values.headline).then(() => {
+                    commentPlainText,
+                    values.headline)
+                    .then(() => {
                         this.props.form.resetFields()
                     })
             }

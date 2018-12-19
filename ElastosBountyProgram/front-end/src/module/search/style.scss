@@ -8,8 +8,12 @@
     font-size: 14px;
   }
 
+  .description-ql-editor-wrapper {
+    height: 116px;
+  }
+
   .admin-left-column {
-    padding: 0 !important;
+    padding-top: 8px;
     .filter-select-container {
       padding-bottom: $gap_0;
 
@@ -21,6 +25,8 @@
 
   .ant-affix {
     background: rgba(255, 255, 255, 0.85);
+    height: 100%;
+    overflow: auto;
   }
 
   .loadmore {
@@ -37,7 +43,7 @@
 
   .admin-right-column {
     min-height: 392px;
-    padding: 0 20px !important;
+    padding: 8px 20px 0 20px !important;
 
     .ant-list-item {
       &:hover {
@@ -61,6 +67,10 @@
 
   .no-margin {
     padding: 8px 0;
+  }
+
+  .task-title {
+    line-height: 1.2;
   }
 }
 

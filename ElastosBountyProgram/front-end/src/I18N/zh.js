@@ -4,7 +4,7 @@ import getting_started from './en/getting_started';
 
 const zh = {
     council,
-
+    getting_started,
     // Header
     '0000': 'ALPHA版本',
     '0001': '奖励计划',
@@ -26,7 +26,7 @@ const zh = {
     '0105': 'CR100',
     '0106': 'CRcles',
     '0107': '大使计划',
-    '0108': '共治委员会',
+    '0108': '筹委会',
     '0109': '提交',
     '0110': '博客',
 
@@ -62,6 +62,7 @@ const zh = {
     '1303': '团队',
     '1304': '议题',
     '1305': '表格',
+    '1306': '项目',
 
     // Profile navigator
     '2300': '我的档案',
@@ -70,6 +71,11 @@ const zh = {
     '2303': '我的议题',
     '2304': '我的社区',
     '2305': '我的项目',
+    '2306': '社区',
+
+    'login.success': '登陆成功',
+
+    'profile.skillsets': '我的技能',
 
     'mentions.notFound': '该用户不存在',
 
@@ -237,13 +243,19 @@ const zh = {
     'developer.cr100.pitch.beneficiaries': '受益人',
     'developer.cr100.pitch.elaInfrastructure': '亦来云基础设施',
 
-    'developer.search.assignment': 'Assignment',
-    'developer.search.assignment.all': 'All',
-    'developer.search.assignment.unassigned': 'Unassigned',
-    'developer.search.event': 'Event',
+    'developer.search.assignment': '分配任务',
+    'developer.search.assignment.all': '所有',
+    'developer.search.assignment.unassigned': '未分配的',
+    'developer.search.event': '事件',
+    'developer.search.sort': '分类',
+    'developer.search.sort.createdAt': '已创建的',
+    'developer.search.sort.updatedAt': '已更新的',
+    'developer.search.sort.asc': '升序',
+    'developer.search.sort.desc': '降序',
     'developer.search.team': '团队',
     'developer.search.project': '项目',
     'developer.search.task': '任务',
+    'developer.search.taskCategory': 'Task category',
     'developer.search.category': '类别',
     'developer.search.category.social': '社交',
     'developer.search.category.iot': '物联网',
@@ -260,7 +272,7 @@ const zh = {
     'developer.search.subtitle_prefix': '不再接受申请',
     'developer.search.subtitle_bids': '投标',
     'developer.search.subtitle_applications': '申请',
-    'developer.search.submit_bid': 'Submit Bid',
+    'developer.search.submit_bid': '提交标书',
     'developer.form.submission.type.required': '请选择一个类型',
     'developer.form.submission.type.option.bug': 'Bug',
     'developer.form.submission.type.option.security': '安全问题',
@@ -302,7 +314,7 @@ const zh = {
     'emp35.header.content.3': '去管理和领导每个团队.',
 
     'emp35.empower.title': 'CRcles & Empower35',
-    'emp35.empower.content': '您最多可以加入2个圈子（CRcles）。加入CRcle，您就可以组建小团队，创建并申请任务并开始展现你的才华。 CRcles是一个在CR大网络里面的智能小网络群。随着CRcles的不断扩大，整个网络会随之不断扩大。',
+    'emp35.empower.content': '您最多可以加入2个圈子（CRcles）。加入CRcle，您就可以组建小团队，创建并申请任务并开始展现您的才华。 CRcles是一个在CR大网络里面的智能小网络群。随着CRcles的不断扩大，整个网络会随之不断扩大。',
     'emp35.teamHeader.title': 'CRcles',
 
     'emp35.mycircles.title': '我的CRcles',
@@ -353,7 +365,6 @@ const zh = {
     'training.applyError': '出错了，请直接与我们联系。',
     'training.apply.title': '申请成为大使',
 
-
     // Itinerary
     'training.itinerary.title': '行程示例',
     'training.itinerary.content.venueLabel': '地点',
@@ -369,8 +380,8 @@ const zh = {
     'training.disclaimer': '培训内容和行程可能根据实际情况作出调整',
 
       // Project/Team detail
-    'project.detail.bid_selected': 'Winning bid has been selected',
-    'project.detail.app_selected': 'Winning application already selected',
+    'project.detail.bid_selected': '已选出中标方案',
+    'project.detail.app_selected': '已选出获奖应用',
     'project.detail.deadline': '申请截止日期',
     'project.detail.completion_deadline': '完成截至日期',
     'project.detail.progress': '项目进度',
@@ -395,7 +406,7 @@ const zh = {
     'project.detail.approve': '同意',
     'project.detail.disapprove': '拒绝',
     'project.detail.withdraw_application': '撤回申请',
-    'project.detail.popup.leave_question': '你确定要离开团队吗?',
+    'project.detail.popup.leave_question': '您确定要离开团队吗?',
     'project.detail.popup.leave_team': '离开团队',
     'project.detail.popup.applied': '已申请',
     'project.detail.popup.join_team': '加入团队',
@@ -405,8 +416,8 @@ const zh = {
     'project.detail.popup.bid_task': '竞标任务',
     'project.detail.bidding': '竞标开放中',
     'project.detail.bidding_closed': '竞标已结束',
-    'project.detail.tell_us_why_join': '你为什么想加入？',
-    'project.detail.tell_us_why_bid': '你为什么想竞标？',
+    'project.detail.tell_us_why_join': '您为什么想加入？',
+    'project.detail.tell_us_why_bid': '您为什么想竞标？',
     'project.detail.no_attachments': '没有附件',
     'project.detail.bid_updated': '竞标已更新',
     'project.detail.bidding_winner': '中标者',
@@ -421,7 +432,7 @@ const zh = {
     'project.detail.columns.action': '行动',
 
     'project.detail.comments_disabled': '不能对已经关闭的竞标项目或任务发表评论',
-    'project.detail.statusHelp.approvedBy': 'Approved by',
+    'project.detail.statusHelp.approvedBy': '批准人',
 
     'project.admin.statusHelp.created': '此项任务无需经过批准',
     'project.admin.statusHelp.pending': '此项任务正在等待批准',
@@ -442,10 +453,10 @@ const zh = {
     'team.create.error.nameRequired': '请填写团队名称',
     'team.create.error.nameTooShort': '团队名称过短',
 
-    'team.owner': 'Leader',
-    'team.description': 'Description',
-    'team.applyMessage': 'Apply',
-    'team.detail.view': 'View',
+    'team.owner': '领导人',
+    'team.description': '描述',
+    'team.applyMessage': '申请',
+    'team.detail.view': '查看',
 
     // Team specializations
     'team.spec.media': '媒体',
@@ -554,8 +565,8 @@ const zh = {
     'landing.alpha': 'ALPHA',
     'landing.header': '支持Cyber Republic.',
     'landing.playVideo': '播放视频',
-    'landing.action.enter': '进入',
-    'landing.action.here': '社区',
+    'landing.action.enter': '进入社区',
+    'landing.action.here': '点击这里',
     'landing.stayUpdate': '跟进Cyber Republic最新动态',
     'landing.whatIs': '什么是亦来云?',
 
@@ -737,6 +748,38 @@ const zh = {
     'role.admin.mode': '管理员模式',
 
     // Profile
+    'profile.thanksForCompleting': '感谢更新您的个人档案！',
+    'profile.skillsets': '我的技能',
+    'profile.completeProfile': '请完成您的个人档案',
+    'profile.completeProfile.explanation': '获取更多任务并与世界各地的英才联系',
+    'profile.editProfile': '编辑档案',
+    'profile.editProfile.section.1': '基本信息',
+    'profile.editProfile.section.2': '技能',
+    'profile.editProfile.section.3': '社交媒体',
+    'profile.portfolio.placeholder': '设计师相关',
+    'profile.portfolio.github': '开发人员相关',
+    'profile.profession.ENGINEERING': '工程',
+    'profile.profession.COMPUTER_SCIENCE': '计算机科学',
+    'profile.profession.PRODUCT_MANAGEMENT': '产品管理',
+    'profile.profession.ART_DESIGN': '艺术/设计',
+    'profile.profession.SALES': '销售',
+    'profile.profession.MARKETING': '营销',
+    'profile.profession.BUSINESS_FINANCE': '商务/金融',
+    'profile.profession.ENTREPRENEUR': '创业者',
+    'profile.profession.STUDENT': '学生',
+    'profile.profession.HEALTH_MEDICINE': '健康/医疗',
+    'profile.profession.LITERATURE_WRITING': '文学/写作',
+    'profile.profession.TRANSLATION': '翻译',
+    'profile.profession.LAW': '法律',
+    'profile.profession.ECONOMICS': '经济',
+    'profile.profession.MANAGEMENT': '管理',
+    'profile.profession.OTHER': '其他',
+    'profile.complete': '请完成您的档案',
+    'profile.complete.dismiss': '取消',
+    'profile.skillsDetails.placeholder': '请详细描述您的技能，工作经历等',
+    'profile.motto.placeholder': '您的座右铭是什么？',
+    'profile.previous': '前一页',
+    'profile.next': '下一页',
     'profile.localTime': '本地时间',
     'profile.sendMessage': '发送消息',
     'profile.viewProfile': '查看个人资料',
@@ -810,6 +853,7 @@ const zh = {
     // Task Application
     'taks.application.social': '社交',
     'taks.application.developer': '开发者',
+    'taks.application.general': '一般',
     'taks.create.project': '创建项目',
     'taks.create.task': '创建任务 / 活动',
 
@@ -821,8 +865,8 @@ const zh = {
     'profile.detail.columns.type': '类型',
     'profile.detail.columns.name': '名字',
     'profile.detail.columns.date': '日期',
-    'profile.detail.profile.title': '您的个人资料',
-    'profile.detail.public': '公开的资料',
+    'profile.detail.profile.title': '您的个人档案',
+    'profile.detail.public': '公开的档案',
     'profile.detail.button.edit': '编辑',
     'profile.detail.username': '用户名',
     'profile.detail.role': '角色',
@@ -882,7 +926,7 @@ const zh = {
     'from.OrganizerAppForm.fullLegalName': '法定全名',
     'from.OrganizerAppForm.Occupation': '职业',
     'from.OrganizerAppForm.Education': '教育',
-    'from.OrganizerAppForm.language': '您的母语是什么，谁是您的听众和他们所在的地区在哪里?你会使用哪（几）种语言去介绍亦来云。',
+    'from.OrganizerAppForm.language': '您的母语是什么，谁是您的听众和他们所在的地区是哪里?您会使用哪（几）种语言去介绍亦来云。',
     'from.OrganizerAppForm.speaking': '请描述您公开演讲的经历并提供相关案例。',
     'from.OrganizerAppForm.organizer': '您曾有过组织活动的经验吗？请提供相关案例。',
     'from.OrganizerAppForm.contributions': '请列出任何您现在或以往对推广亦来云做出的贡献。',
@@ -897,7 +941,7 @@ const zh = {
 
     'from.SubmissionCreateForm.title.required': '标题为必填项',
     'from.SubmissionCreateForm.type.required': '请选择问题类型',
-    'from.SubmissionCreateForm.description.required': '你必须提供描述',
+    'from.SubmissionCreateForm.description.required': '您必须提供任务描述',
     'from.SubmissionCreateForm.description.max': '任务的描述太长',
     'from.SubmissionCreateForm.type': '类别',
     'from.SubmissionCreateForm.title': '标题',
@@ -912,13 +956,13 @@ const zh = {
     'from.TaskCreateForm.taskType.option.event': '活动',
     'from.TaskCreateForm.taskType.option.task': '任务',
     'from.TaskCreateForm.taskType.option.project': '项目',
-    'from.TaskCreateForm.taskDesc.required': '你必须提供描述',
+    'from.TaskCreateForm.taskDesc.required': '您必须提供描述',
     'from.TaskCreateForm.taskDesc.max': '任务的描述过长',
     'from.TaskCreateForm.taskDescBreakdown.max': '任务的细分描述过长',
     'from.TaskCreateForm.taskGoals.max': '任务的目的描述过长',
     'from.TaskCreateForm.taskLink.required': '请输入资料的链接',
     'from.TaskCreateForm.taskLocation.required': '请输入地点',
-    'from.TaskCreateForm.taskCandLimit.required': '你必须设定期限',
+    'from.TaskCreateForm.taskCandLimit.required': '您必须设定期限',
     'from.TaskCreateForm.uploadtext': '点击上传',
     'from.TaskCreateForm.problem.max': '过长',
     'from.TaskCreateForm.label.name': '名称',
@@ -1008,7 +1052,7 @@ const zh = {
     'from.Training1Form.label.fullllegal': '法定全名',
     'from.Training1Form.label.occupation': '职业',
     'from.Training1Form.label.education': '教育背景',
-    'from.Training1Form.text.nativelanguage': '您的母语是什么，谁是您的听众和他们所在的地区在哪里?你会使用哪（几）种语言去介绍亦来云。',
+    'from.Training1Form.text.nativelanguage': '您的母语是什么，谁是您的听众和他们所在的地区是哪里?您会使用哪（几）种语言去介绍亦来云。',
     'from.Training1Form.text.describeyour': '请描述您公开演讲的经历并提供相关案例。',
     'from.Training1Form.text.listanycurrent': '请列出任何您现在或以往对推广亦来云做出的贡献。',
     'from.Training1Form.text.adeveloper': '您是开发人员吗？',
@@ -1025,11 +1069,16 @@ const zh = {
     'from.UserContactForm.text.emailreply': "邮件回复地址将设置为您注册帐户使用的电子邮箱，回复将直接发送到您的电子邮箱",
     'from.UserContactForm.button.send': '发送信息',
 
+    'from.UserEditForm.label.bio': '自传',
+    'from.UserEditForm.label.motto': '座右铭',
+    'from.UserEditForm.label.profession': '职业',
+    'from.UserEditForm.label.portfolio': '作品集',
+    'from.UserEditForm.label.github': 'GitHub',
     'from.UserEditForm.username.required': '用户名为必填项',
     'from.UserEditForm.firstName.required': '名字为必填项',
     'from.UserEditForm.lastName.required': '姓氏为必填项',
-    'from.UserEditForm.country.required': '请选择你的国家',
-    'from.UserEditForm.walletAddress.len': '地址长度错误',
+    'from.UserEditForm.country.required': '请选择您的国家',
+    'from.UserEditForm.walletAddress.len': '钱包地址长度错误',
     'from.UserEditForm.timezone.placeholder': '选择时区...',
     'from.UserEditForm.telegram.min': '请输入至少4个字符',
     'from.UserEditForm.label.firstName': '名字',
@@ -1054,7 +1103,7 @@ const zh = {
 
     // CR Video / Earn ELA page
     'cr-video.here': '点击这里',
-    'cr-video.header.1': '重新获得你的互联网',
+    'cr-video.header.1': '重新获得属于您的互联网',
     'cr-video.header.2': 'Cyber Republic是一个由合作者组成的全球性社区，旨在共同打造区块链技术驱动的安全和公平的智能万维网。',
     'cr-video.join': '现在就加入我们',
     'cr-video.q1': '当前的互联网存在哪些问题呢？',
@@ -1081,7 +1130,7 @@ const zh = {
     'cr-video.q4.paragraph.4': '目前，大多数CR项目围绕着构建、增强和测试在亦来云上运行的去中心化应用程序（DApps）而开展，或者通过营销、写作、推广、媒体报道和其他推广渠道增加亦来云的曝光度。',
     'cr-video.q4.paragraph.5': '贡献者可以做任何事情，从检查bug到企业级DApp的开发，从撰写博客到组织国际会议。您参与建设Cyber Republic是没有任何条条框框的，可以自由地制定和执行您的好主意。无论您的视野和专业知识包含什么，都将受到社区的欢迎。',
     'cr-video.q5': '为何要加入Cyber Republic？',
-    'cr-video.q5.paragraph.1': '为何不呢？如果您正在阅读这篇文章，也许你已经察觉需要一些目前的互联网无法提供的东西。那么谁是能够塑造你理想中的新型互联网的最佳选择呢？相信您已经知道答案了。所以请加入我们，注册、连接然后改变世界。 您就能成为一个新型智能互联网的联合创始人。',
+    'cr-video.q5.paragraph.1': '为何不呢？如果您正在阅读这篇文章，也许您已经察觉到需要一些目前的互联网无法提供的东西。那么谁是能够塑造您理想中的新型互联网的最佳选择呢？相信您已经知道答案了。所以请加入我们，注册、连接然后改变世界。 您就能成为一个新型智能互联网的联合创始人。',
     'cr-video.q6': '如何加入Cyber Republic',
     'cr-video.q6.title.1': '第一步：在Cyber Republic平台上注册',
     'cr-video.q6.paragraph.1': '您可以轻松完成',
@@ -1094,19 +1143,23 @@ const zh = {
     'cr-video.q6.paragraph.3.link': '加入Discord群聊, ',
     'cr-video.q6.paragraph.3_3': '或者与新的合作者一起注册下一次虚拟聚会。',
     'cr-video.q6.title.4': '第四步：浏览CR社区里进行中的项目和任务',
-    'cr-video.q6.paragraph.4': '申请那些你最感兴趣的任务，',
+    'cr-video.q6.paragraph.4': '申请那些您最感兴趣的任务，',
     'cr-video.q6.paragraph.4.link': '并凭借您的贡献获取ELA',
     'cr-video.q6.title.5': '第五步：作为新型互联网的联合创始人，剩下的就交给您自己来决定。',
     'cr-video.q6.paragraph.5': '大踏步前进，把您的想法变为现实吧！',
 
     'cr-video.q6.subtitle.1': '透过以下资源了解有关亦来云的更多信息：',
-    'cr-video.q6.link.1': 'Cyber Republic教程 - 成为组织者',
-    'cr-video.q6.link.2': 'Cyber Republic教程 - 公共任务',
+    'cr-video.q6.link.1': 'Cyber Republic教程——成为组织者',
+    'cr-video.q6.link.2': 'Cyber Republic教程——公共任务',
 
     'cr-video.q7.title': '有疑问吗？或者想要取得联系？',
     'cr-video.q7.subtitle': '请输入您的电邮，我们将会亲自跟您联系',
     'cr-video.q7.button_text': '提交',
 
+    'crcle.category.essential': '基本',
+    'crcle.category.advanced': '高级',
+    'crcle.category.services': '服务',
+    'crcle.category.developer': '开发者',
     'crcle.product': '产品',
     'crcle.support': '技术支持',
     'crcle.media': '媒体',
@@ -1119,7 +1172,7 @@ const zh = {
     'crcle.security': '安全',
     'crcle.translation': '翻译',
     'crcle.finance': '金融',
-    'crcle.businessDevelopment': '商业开拓',
+    'crcle.businessDevelopment': '商业拓展',
     'crcle.partnership': '商务合作',
     'crcle.investment': '投资',
     'crcle.marketing': '市场营销',
@@ -1129,6 +1182,7 @@ const zh = {
     'crcle.legal': '法律咨询',
 
     'user.skillset.select': '请选择技能',
+    'user.profession.select': '请选择职业',
 
     'user.skillset.group.DESIGN': '设计',
     'user.skillset.group.MARKETING': '营销',
@@ -1204,12 +1258,17 @@ zh[`taskStatus.${TASK_STATUS.DISTRIBUTED}`] = '已结算'
 zh[`taskStatus.${TASK_STATUS.CANCELED}`] = '已取消'
 zh[`taskStatus.${TASK_STATUS.EXPIRED}`] = '已过期'
 
-zh[`cvoteStatus.${CVOTE_STATUS.DRAFT}`] = 'DRAFT'
-zh[`cvoteStatus.${CVOTE_STATUS.PROPOSED}`] = 'PROPOSED'
-zh[`cvoteStatus.${CVOTE_STATUS.ACTIVE}`] = 'ACTIVE'
-zh[`cvoteStatus.${CVOTE_STATUS.REJECT}`] = 'REJECT'
-zh[`cvoteStatus.${CVOTE_STATUS.FINAL}`] = 'FINAL'
-zh[`cvoteStatus.${CVOTE_STATUS.DEFERRED}`] = 'DEFERRED'
+zh[`taskType.${TASK_STATUS.TASK}`] = '任务'
+zh[`taskType.${TASK_STATUS.SUB_TASK}`] = '子任务'
+zh[`taskType.${TASK_STATUS.PROJECT}`] = '项目'
+zh[`taskType.${TASK_STATUS.EVENT}`] = '活动'
+
+zh[`cvoteStatus.${CVOTE_STATUS.DRAFT}`] = '草案'
+zh[`cvoteStatus.${CVOTE_STATUS.PROPOSED}`] = '拟议的'
+zh[`cvoteStatus.${CVOTE_STATUS.ACTIVE}`] = '待投票'
+zh[`cvoteStatus.${CVOTE_STATUS.REJECT}`] = '已拒绝'
+zh[`cvoteStatus.${CVOTE_STATUS.FINAL}`] = '最终版'
+zh[`cvoteStatus.${CVOTE_STATUS.DEFERRED}`] = '延期的'
 
 
 export default zh

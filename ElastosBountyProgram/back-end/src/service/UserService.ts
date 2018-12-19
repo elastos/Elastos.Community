@@ -15,7 +15,8 @@ const restrictedFields = {
         '_id',
         'username',
         'role',
-        'profile'
+        'profile',
+        'salt'
     ]
 }
 
@@ -75,12 +76,18 @@ export default class extends Base {
             }
         }
 
-        const newUser = await db_user.save(doc);
+        const newUser = await db_user.save(doc)
 
         await this.linkCountryCommunity(newUser)
         this.sendConfirmation(doc)
 
         return newUser
+    }
+
+    // record user login date
+    public async recordLogin(param) {
+        const db_user = this.getDBModel('User');
+        await db_user.update({ _id: param.userId }, { $push: { logins: new Date() } });
     }
 
     public async getUserSalt(username): Promise<String>{
@@ -210,7 +217,7 @@ export default class extends Base {
 
         await db_user.update({_id: userId}, updateObj)
 
-        user = db_user.getDBInstance().findOne({_id: userId})
+        user = db_user.getDBInstance().findOne({_id: userId}).select(selectFields)
             .populate('circles')
 
         // if we change the country, we add the new country as a community if not already
@@ -228,7 +235,7 @@ export default class extends Base {
         return await db_user.getDBInstance().findOne({
             [isEmail ? 'email' : 'username']: query.username.toLowerCase(),
             password: query.password
-        }).populate('circles');
+        }).select(selectFields).populate('circles');
     }
 
     public async findUsers(query): Promise<Document[]>{
@@ -277,6 +284,11 @@ export default class extends Base {
         if (query.skillset) {
             const skillsets = query.skillset.split(',')
             finalQuery['profile.skillset'] = { $in: skillsets }
+        }
+
+        if (query.profession) {
+            const professions = query.profession.split(',')
+            finalQuery['profile.profession'] = { $in: professions }
         }
 
         if (query.empower) {

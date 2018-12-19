@@ -35,6 +35,7 @@ import './style.scss'
  *
  */
 class C extends BaseComponent {
+
     ord_states() {
         return {
             showAppModal: false,
@@ -120,8 +121,11 @@ class C extends BaseComponent {
 
         return (
             <div className="meta">
-                {generateRow(I18N.get('task.owner'),
-                    this.getUserNameWithFallback(detail.createdBy))}
+                {generateRow(I18N.get('task.owner'), (
+                    <a onClick={this.linkProfileInfo.bind(this, detail.createdBy)}>
+                        {this.getUserNameWithFallback(detail.createdBy)}
+                    </a>
+                ))}
 
                 {detail.circle &&
                     generateRow(I18N.get('task.circle'), I18N.get(`crcle.${detail.circle.name.toLowerCase()}`))}
@@ -192,6 +196,34 @@ class C extends BaseComponent {
         )
     }
 
+    /**
+     * Assignment Info
+     *
+     * - based on the assignSelf boolean field
+     *
+     * This refers to the next action after a task approval
+     * - If assignSelf = true, it is a private task which means it will be assigned to the owner after approval
+     * - If assignSelf = false, it is public and after it will be open for applications or bidding if (bidding = true)
+     */
+    renderAssignmentInfo() {
+        return <div>
+            {this.props.task.assignSelf ?
+                <div className="assignment-info">
+                    <Tag>Assignment Type: PRIVATE</Tag>
+                    <Popover content={`After APPROVAL this ${I18N.get(`taskType.${this.props.task.type}`)} is assigned to the owner`}>
+                        < Icon className="help-icon" type="question-circle-o"/>
+                    </Popover>
+                </div> :
+                <div className="assignment-info">
+                    <Tag>Assignment Type: PUBLIC</Tag>
+                    <Popover content={`After APPROVAL this ${I18N.get(`taskType.${this.props.task.type}`)} becomes publicly available`}>
+                        <Icon className="help-icon" type="question-circle-o"/>
+                    </Popover>
+                </div>
+            }
+        </div>
+    }
+
     ord_render() {
         const detail = this.props.task
         const loading = _.isEmpty(detail)
@@ -210,6 +242,7 @@ class C extends BaseComponent {
                         <div className="detail-container">
                             {this.getImageCarousel()}
                             {this.renderHeader()}
+                            {this.props.task.status === TASK_STATUS.PENDING && this.renderAssignmentInfo()}
                             {this.renderMeta()}
 
                             {/*
@@ -362,7 +395,7 @@ class C extends BaseComponent {
 
         // status checks
         if (detail.bidding && _.indexOf([TASK_STATUS.CREATED,
-                TASK_STATUS.PENDING], detail.status) < 0) {
+                TASK_STATUS.PENDING, TASK_STATUS.APPROVED], detail.status) < 0) {
             return ''
         }
 
@@ -508,11 +541,15 @@ class C extends BaseComponent {
                                 }
                                 {(this.isTaskOwner() || this.props.is_admin) &&
                                     <span className="inline-block">
-                                        <Divider type="vertical"/>
-                                        <a onClick={this.approveUser.bind(this, candidate._id)}>
-                                            {I18N.get('project.detail.approve')}
-                                        </a>
-                                        <Divider type="vertical"/>
+                                        {candidate.status !== TASK_STATUS.APPROVED &&
+                                            <span>
+                                                <Divider type="vertical"/>
+                                                <a onClick={this.approveUser.bind(this, candidate._id)}>
+                                                    {I18N.get('project.detail.approve')}
+                                                </a>
+                                                <Divider type="vertical"/>
+                                            </span>
+                                        }
                                         <a onClick={this.disapproveUser.bind(this, candidate._id)}>
                                             {I18N.get('project.detail.disapprove')}
                                         </a>

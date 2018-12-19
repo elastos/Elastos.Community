@@ -136,6 +136,7 @@ export const Task = {
         type : String
     },
 
+    // open for bids only applies to public tasks
     bidding: Boolean,
     referenceBid: Number,
 

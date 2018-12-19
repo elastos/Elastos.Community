@@ -56,7 +56,9 @@ class C extends BaseComponent {
 
         let domains = []
         for (let i of details.domain) {
-            domains.push(<Tag key={i}>{i}</Tag>)
+            if (i) {
+                domains.push(<Tag key={i}>{i}</Tag>)
+            }
         }
 
         return (
@@ -77,7 +79,7 @@ class C extends BaseComponent {
         const detail = this.props.detail
         const name = detail.name || ''
         const leaderName = detail.owner.profile
-            ? (detail.owner.profile.firstName + ' ' + detail.owner.profile.lastName)
+            ? this.getUserNameWithFallback(detail.owner)
             : ''
         const teamSize = _.size(_.filter(detail.members, { status: TEAM_USER_STATUS.NORMAL }))
         const description = detail.profile.description || ''
@@ -121,6 +123,25 @@ class C extends BaseComponent {
     renderCurrentContributors() {
         const detail = this.props.detail
         const pendingMembers = _.filter(detail.members, { status: TEAM_USER_STATUS.NORMAL })
+        const isTeamOwner = this.isTeamOwner()
+
+        const actionRenderer = (candidate) => {
+            return (
+                <div className="text-right">
+                    {(this.props.is_admin || isTeamOwner) && candidate.role !== 'LEADER' && (
+                        <span>
+                            <Popconfirm title={I18N.get('.areYouSure')}
+                                onConfirm={this.rejectUser.bind(this, candidate._id)}>
+                                <a>
+                                    {I18N.get('project.detail.remove')}
+                                </a>
+                            </Popconfirm>
+                        </span>
+                    )}
+                </div>
+            )
+        }
+
         const columns = [{
             title: 'Name',
             key: 'name',
@@ -130,14 +151,21 @@ class C extends BaseComponent {
                         <Avatar className={'gap-right ' + (candidate.role === 'LEADER' ? 'avatar-leader' : 'avatar-member')}
                             src={candidate.user.profile.avatar}/>
                         <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
-                            {`${candidate.user.profile.firstName} ${candidate.user.profile.lastName}`}</a>
+                            {this.getUserNameWithFallback(candidate.user)}</a>
 
                         {candidate.role === 'LEADER' && ' - Team Leader'}
                     </div>)
             }
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            render: actionRenderer
         }]
+
         return (
             <Table
+                loading={this.props.loading}
                 className="no-borders headerless"
                 dataSource={pendingMembers}
                 columns={columns}
@@ -146,6 +174,14 @@ class C extends BaseComponent {
                 pagination={false}>
             </Table>
         )
+    }
+
+    getUserNameWithFallback(user) {
+        if (_.isEmpty(user.profile.firstName) && _.isEmpty(user.profile.lastName)) {
+            return user.username
+        }
+
+        return _.trim([user.profile.firstName, user.profile.lastName].join(' '))
     }
 
     renderCurrentApplicants() {
@@ -191,7 +227,7 @@ class C extends BaseComponent {
                     <div key={candidate._id}>
                         <Avatar className="gap-right" src={candidate.user.profile.avatar} />
                         <a className="row-name-link" onClick={this.linkProfileInfo.bind(this, candidate.user._id)}>
-                            {`${candidate.user.profile.firstName} ${candidate.user.profile.lastName}`}</a>
+                            {this.getUserNameWithFallback(candidate.user)}</a>
                     </div>)
             }
         }, {

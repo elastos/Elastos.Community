@@ -106,8 +106,9 @@ export default class extends StandardPage {
                             <div key={ind} className="c_project">
                                 <div className="project-icon">
                                     <div className="base-icon"/>
-                                    <img className="overlay-icon" src={project.thumbnail}
-                                        onClick={this.showDetailModal.bind(this, project._id)}/>
+                                    <a href={'/project-detail/' + project._id}>
+                                        <img className="overlay-icon" src={project.thumbnail}/>
+                                    </a>
                                 </div>
                                 <div className="caption">{this.breakTextOn(project.name, '/')}</div>
                             </div>

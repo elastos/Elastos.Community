@@ -111,6 +111,25 @@ export default class extends ProfilePage {
         this.setState({ loadingMore: false })
     }
 
+    async loadPage(page) {
+        const query = {
+            ...this.getQuery(),
+            page,
+            results: this.state.results
+        }
+
+        this.setState({ loadingMore: true })
+
+        try {
+            await this.props.loadMoreTeams(query)
+            this.setState({ page })
+        } catch (e) {
+            // Do not update page in state if the call fails
+        }
+
+        this.setState({ loadingMore: false })
+    }
+
     hasMoreTeams() {
         return _.size(this.props.all_teams) < this.props.all_teams_total
     }
@@ -175,7 +194,7 @@ export default class extends ProfilePage {
                                     </MediaQuery>
                                     <div className="pull-left filter-group search-group">
                                         <Input defaultValue={this.state.search} onChange={searchChangedHandler.bind(this)}
-                                            placeholder={I18N.get('developer.search.search.placeholder')} style={{width: 250}}/>
+                                            placeholder={I18N.get('developer.search.search.placeholder')}/>
                                     </div>
                                     <div className="clearfix"/>
                                     {this.getListComponent()}
@@ -285,24 +304,15 @@ export default class extends ProfilePage {
         })
 
         return (
-            <InfiniteScroll
-                initialLoad={false}
-                pageStart={1}
-                loadMore={this.debouncedLoadMore.bind(this)}
-                hasMore={!this.state.loadingMore && !this.props.loading && this.hasMoreTeams()}
-                useWindow={true}
-            >
-                <List itemLayout='vertical' size='large' loading={this.props.loading}
-                    className="with-right-box" dataSource={data}
-                    renderItem={item => this.getListItem(item)}
-                >
-                    {this.state.loadingMore && this.hasMoreTeams() &&
-                        <div className="loadmore full-width halign-wrapper">
-                            <Spin />
-                        </div>
-                    }
-                </List>
-            </InfiniteScroll>
+            <List itemLayout='vertical' size='large' loading={this.props.loading || this.props.loadingMore}
+                className="with-right-box" dataSource={data}
+                pagination={{
+                    pageSize: this.state.results || 5,
+                    total: this.props.loading ? 0 : this.props.all_teams_total,
+                    onChange: this.loadPage.bind(this)
+                }}
+                renderItem={item => this.getListItem(item)}
+            />
         )
     }
 

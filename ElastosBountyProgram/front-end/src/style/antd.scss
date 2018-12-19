@@ -47,6 +47,10 @@
   white-space: nowrap;
 }
 
+.hide {
+  display: none !important;
+}
+
 h3.one-line {
   @extend .ellipsis;
 }
@@ -217,7 +221,7 @@ h3.one-line {
   }
 
   .ant-list-item-extra-wrap {
-    height: 188px;
+    height: 196px;
   }
 
   .ant-list-item-main {
@@ -281,9 +285,18 @@ h3.one-line {
   }
 }
 
+.ant-modal {
+  max-width: 992px;
+}
+
 .ant-modal-body {
   padding: 36px;
   background: $bg_blue;
+
+  @media only screen and (max-width: $mobile-width) {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 }
 
 .ant-btn > span {
