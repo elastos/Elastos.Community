@@ -10,6 +10,16 @@
   .header {
     position: relative;
 
+    .background-box {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: -25%;
+      width: calc(100% + 100%);
+      height: 50%;
+      background: rgba(13, 17, 27, 0.1);
+    }
+
     .header-container {
       width: 80%;
       margin: 0 auto;
@@ -68,7 +78,8 @@
     }
     .sub-title {
       width: 100%;
-      margin-bottom: $gap_2;
+      margin-bottom: $gap_5;
+      padding-top: $gap_2;
       font-size: 30px;
       line-height: 40px;
       color: initial;
@@ -168,7 +179,7 @@
   .share-icons {
     position: absolute;
     top: 30%;
-    left: $gap_5;
+    left: 12%;
 
     span {
       margin-bottom: $gap_3;
@@ -191,7 +202,6 @@
     }
 
     #twitter_share {
-      margin-bottom: 48px;
     }
 
     @media only screen and (max-width: $mobile-width) {
@@ -208,7 +218,6 @@
 
       #twitter_share {
         padding-top: 8px;
-        margin: 0 24px;
       }
 
       #facebook_share {

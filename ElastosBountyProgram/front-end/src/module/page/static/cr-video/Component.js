@@ -133,15 +133,26 @@ export default class extends StandardPage {
                                     type: 'TWITTER',
                                     url: location.href
                                 })}>
-                                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" className="twitter-share-button" data-show-count="false">Tweet</a>
+                                    <a onClick={() => {
+                                        const win = window.open('https://twitter.com/share?ref_src=twsrc%5Etfw', 'ShareOnWitter', this.getWindowOptions());
+                                        win.opener = null;
+                                    }}>
+                                        <i className="fab fa-twitter fa-2x"></i>
+                                    </a>
                                 </div>
                                 <div id="facebook_share" className="share-container" onClick={() => analytics.track('SOCIAL_SHARE_CLICKED', {
                                     type: 'FACEBOOK',
                                     url: location.href
                                 })}>
-                                    <div className="fb-share-button" data-href="https://www.facebook.com/ElastosCyberRepublic/" data-layout="button_count" data-size="small" data-mobile-iframe="true">
-                                        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.facebook.com%2FElastosCyberRepublic%2F&amp;src=sdkpreparse"
-                                           className="fb-xfbml-parse-ignore">Share</a></div>
+                                    <a onClick={() => {
+                                        FB.ui({
+                                            method: 'share',
+                                            display: 'popup',
+                                            href: 'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.facebook.com%2FElastosCyberRepublic%2F&amp;src=sdkpreparse'
+                                        }, function(response) { });
+                                    }}>
+                                        <i className="fab fa-facebook fa-2x"></i>
+                                    </a>
                                 </div>
                                 <div className="share-container" onClick={() => analytics.track('SOCIAL_SHARE_CLICKED', {
                                     type: 'TELEGRAM',
@@ -160,9 +171,26 @@ export default class extends StandardPage {
         )
     }
 
+    getWindowOptions() {
+        const width = 500;
+        const height = 350;
+        const left = (window.innerWidth / 2) - (width / 2);
+        const top = (window.innerHeight / 2) - (height / 2);
+
+        return [
+            'resizable,scrollbars,status',
+            'height=' + height,
+            'width=' + width,
+            'left=' + left,
+            'top=' + top
+        ].join();
+    };
+
     buildHeader() {
         return (
             <div className="header">
+                <div className="background-box">
+                </div>
                 <div className="header-container">
                     <div className="title komu-a">
                         {I18N.get('cr-video.header.1')}
@@ -173,13 +201,13 @@ export default class extends StandardPage {
                             allow="autoplay; encrypted-media;"
                             allowFullScreen></iframe>
                     </div>
+                    {!this.props.is_login ?
+                        <div>
+                            <Button className="earn-ela-btn" onClick={this.linkRegister.bind(this)}>{I18N.get('cr-video.join')}</Button>
+                        </div> : <div className="vertSpacer"/>}
                     <div className="title sub-title">
                         {I18N.get('cr-video.header.2')}
                     </div>
-                    {!this.props.is_login ?
-                    <div>
-                        <Button className="earn-ela-btn" onClick={this.linkRegister.bind(this)}>{I18N.get('cr-video.join')}</Button>
-                    </div> : <div className="vertSpacer"/>}
                     <div className="background-visuals">
                         <img className="upper-right" src="/assets/images/quarter-circle-connected.svg"/>
                         <img className="mid-right" src="/assets/images/training_circle.png"/>
