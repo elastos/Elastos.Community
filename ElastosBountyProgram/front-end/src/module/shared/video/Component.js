@@ -17,7 +17,7 @@ export default class extends BaseComponent {
 
     ord_render() {
         return (
-            <Video autoPlay loop muted
+            <Video autoPlay loop
                 controls={['PlayPause', 'Seek', 'Time', 'Volume', 'Fullscreen']}
                 onCanPlayThrough={() => {
                     // Do stuff
