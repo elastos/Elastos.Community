@@ -7,6 +7,9 @@ export const CVote = {
         type : String,
         required : true
     },
+    title_zh : {
+        type : String
+    },
     vid : {
         type : Number,
         required : true
@@ -18,6 +21,9 @@ export const CVote = {
     content : {
         type : String,
         required : true
+    },
+    content_zh : {
+        type : String,
     },
     // name of proposer
     proposedBy : {
@@ -33,8 +39,12 @@ export const CVote = {
     notes : {
         type : String
     },
+    notes_zh : {
+        type : String
+    },
     vote_map : Object,
     reason_map : Object,
+    reason_zh_map : Object,
     createdBy: {type: Schema.Types.ObjectId, ref: 'users'},
 
     published: {

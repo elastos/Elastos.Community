@@ -1,13 +1,15 @@
 import React from 'react'
 import BaseComponent from '@/model/BaseComponent'
-import {Form, Icon, Input, Button, Checkbox, Select, Row, Col, message, Steps, Modal} from 'antd'
+import {Form, Icon, Input, Button, Checkbox, Select, Row, Col, message, Steps, Modal, Switch, Tabs } from 'antd'
 import I18N from '@/I18N'
 import _ from 'lodash'
+import { LANGUAGES } from '@/config/constant'
 
 import './style.scss'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
+const TabPane = Tabs.TabPane
 const Step = Steps.Step
 
 class C extends BaseComponent {
@@ -17,11 +19,13 @@ class C extends BaseComponent {
 
         this.state = {
             persist: true,
-            loading : false
+            loading: false,
+            language: LANGUAGES.english// language for this specifc form only
         }
 
         this.isLogin = this.props.isLogin
         this.user = this.props.user
+        this.onChangeLang = this.onChangeLang.bind(this)
     }
 
     ord_loading(f=false){
@@ -37,24 +41,30 @@ class C extends BaseComponent {
                 // console.log(' ===> ', values)
 
                 const param = {
-                    title : values.title,
-                    type : values.type,
-                    notes : values.notes,
-                    motionId : values.motionId,
-                    isConflict : values.isConflict,
-                    proposedBy : values.proposedBy,
-                    content : values.content,
+                    title: values.title,
+                    title_zh: values.title_zh,
+                    type: values.type,
+                    notes: values.notes,
+                    notes_zh: values.notes_zh,
+                    motionId: values.motionId,
+                    isConflict: values.isConflict,
+                    proposedBy: values.proposedBy,
+                    content: values.content,
+                    content_zh: values.content_zh,
                     published: values.published === 'YES'
                 }
                 var x1 = []
                 var x2 = []
+                var x3 = []
                 _.each(s.voter, (n)=>{
                     const name = n.value
                     x1.push(name+'|'+values['vote_'+name])
                     x2.push(name+'|'+values['reason_'+name])
+                    x3.push(name + '|' + values['reason_zh_' + name])
                 })
                 param.vote_map = x1.join(',')
                 param.reason_map = x2.join(',')
+                param.reason_zh_map = x3.join(',')
 
                 // console.log(param)
                 this.ord_loading(true)
@@ -117,6 +127,13 @@ class C extends BaseComponent {
             delete secretaryDisabled.readOnly
         }
 
+        // TODO: must delete
+        // for test only
+        // publicReadonly.readOnly=false
+        // publicDisabled.disabled= false
+        // councilNotOwnerReadOnly.readOnly= false
+        // councilNotOwnerDisabled.disabled=false
+        // secretaryDisabled.readOnly = false
 
         const s = this.props.static
         const {getFieldDecorator} = this.props.form
@@ -136,6 +153,13 @@ class C extends BaseComponent {
             initialValue : edit ? data.title : ''
         })
         const title_el = (
+            <Input {...publicReadonly} {...councilNotOwnerReadOnly} size="large" type="text" />
+        )
+
+        const title_zh_fn = getFieldDecorator('title_zh', {
+            initialValue: edit ? data.title_zh : ''
+        })
+        const title_zh_el = (
             <Input {...publicReadonly} {...councilNotOwnerReadOnly} size="large" type="text" />
         )
 
@@ -164,6 +188,12 @@ class C extends BaseComponent {
         const content_el = (
             <TextArea {...publicReadonly} {...councilNotOwnerReadOnly} rows={6}></TextArea>
         )
+        const content_zh_fn = getFieldDecorator('content_zh', {
+            initialValue: edit ? data.content_zh : ''
+        })
+        const content_zh_el = (
+            <TextArea {...publicReadonly} {...councilNotOwnerReadOnly} rows={6}></TextArea>
+        )
 
         const proposedBy_fn = getFieldDecorator('proposedBy', {
             rules : [{required : true}],
@@ -190,6 +220,7 @@ class C extends BaseComponent {
         )
 
         const vtt = {}
+        debugger
         _.each(s.voter, (item)=>{
             const name = item.value
 
@@ -253,6 +284,41 @@ class C extends BaseComponent {
             vts['reason_'+name] = fn(el)
         })
 
+        const vts_zh = {}
+        _.each(s.voter, (item)=>{
+            const name = item.value
+
+            let tmp = {}
+            // if(edit && fullName !== name && data.createdBy !== this.user.current_user_id){
+            if (fullName !== name) {
+                tmp.disabled = true
+            }
+
+            const fn = getFieldDecorator('reason_zh_' + name, {
+                initialValue: edit ? (data.reason_zh_map ? data.reason_zh_map[name] : '') : '',
+                rules: [
+                    {},
+                    {
+                        validator: (rule, value, cb) => {
+                            const form = this.props.form
+                            const tmp = form.getFieldValue('vote_' + name)
+                            if (tmp === 'reject' && !value) {
+                                cb('please input your reject reason')
+                            }
+                            else {
+                                cb()
+                            }
+
+                        }
+                    }
+                ]
+
+            })
+            const el = (
+                <TextArea {...publicReadonly} {...tmp} rows={4}></TextArea>
+            )
+            vts_zh['reason_zh_' + name] = fn(el)
+        })
         const isConflict_fn = getFieldDecorator('isConflict', {
             initialValue : edit ? data.isConflict : 'NO'
         })
@@ -269,18 +335,28 @@ class C extends BaseComponent {
         const notes_el = (
             <TextArea {...secretaryDisabled} rows={4}></TextArea>
         )
+        const notes_zh_fn = getFieldDecorator('notes_zh', {
+            initialValue: edit ? data.notes_zh : ''
+        })
+        const notes_zh_el = (
+            <TextArea {...secretaryDisabled} rows={4}></TextArea>
+        )
 
         return {
             published: published_fn(published_el),
             title : title_fn(title_el),
+            title_zh: title_zh_fn(title_zh_el),
             type : type_fn(type_el),
             content : content_fn(content_el),
+            content_zh: content_zh_fn(content_zh_el),
             proposedBy : proposedBy_fn(proposedBy_el),
             motionId : motionId_fn(motionId_el),
             ...vtt,
             ...vts,
+            ...vts_zh,
             isConflict : isConflict_fn(isConflict_el),
-            notes : notes_fn(notes_el)
+            notes: notes_fn(notes_el),
+            notes_zh: notes_zh_fn(notes_zh_el)
         }
     }
 
@@ -288,7 +364,11 @@ class C extends BaseComponent {
         this.setState({persist: !this.state.persist})
     }
 
+    onChangeLang(val) {
+        return this.setState({language: this.state.language === 'en' ? 'zh' : 'en'})
+    }
     ord_render() {
+        const { language } = this.state
         let p = null
         if(this.props.edit && !this.props.data){
             return null
@@ -310,6 +390,7 @@ class C extends BaseComponent {
                 sm: {span: 12}
             },
         }
+
         return (
             <Form onSubmit={this.handleSubmit.bind(this)} className="c_CVoteForm">
 
@@ -326,47 +407,57 @@ class C extends BaseComponent {
                         {this.renderVoteStep(this.props.data)}
                     </Col>
                 </Row>
-                <FormItem style={{marginBottom:'12px', marginTop: '12px'}} label={I18N.get('from.CVoteForm.label.publish')} {...formItemLayout}>
-                    {p.published}
-                </FormItem>
-                <FormItem style={{marginTop: '24px'}} label={I18N.get('from.CVoteForm.label.title')} {...formItemLayout}>{p.title}</FormItem>
-                <FormItem label={I18N.get('from.CVoteForm.label.type')} {...formItemLayout}>{p.type}</FormItem>
+                <br />
+                <Tabs defaultActiveKey={LANGUAGES.english} onChange={(k) => console.log('changing tab: ' + k)}>
+                    <TabPane tab={I18N.get('0301')} key={LANGUAGES.english}>
+                        <FormItem style={{marginBottom:'12px'}} label={I18N.get('from.CVoteForm.label.publish')} {...formItemLayout}>
+                            {p.published}
+                        </FormItem>
+                        <FormItem label={I18N.get('from.CVoteForm.label.title')} {...formItemLayout} style={{marginTop: '24px'}}>{ p.title }</FormItem>
 
-                <FormItem label={I18N.get('from.CVoteForm.label.content')} {...formItemLayout}>{p.content}</FormItem>
-                <FormItem label={I18N.get('from.CVoteForm.label.proposedby')} {...formItemLayout}>{p.proposedBy}</FormItem>
+                        <FormItem label={I18N.get('from.CVoteForm.label.type')} {...formItemLayout}>{p.type}</FormItem>
 
-                <FormItem style={{'marginBottom':'30px'}} label={I18N.get('from.CVoteForm.label.motion')} help={I18N.get('from.CVoteForm.label.motion.help')} {...formItemLayout}>{p.motionId}</FormItem>
+                        <FormItem label={I18N.get('from.CVoteForm.label.content')} {...formItemLayout}>{p.content}</FormItem>
+                        <FormItem label={I18N.get('from.CVoteForm.label.proposedby')} {...formItemLayout}>{p.proposedBy}</FormItem>
 
-                {
-                    _.map(s.voter, (item, i)=>{
-                        const name = item.value
-                        return (
-                            <FormItem key={i} label={`Online Voting by ${name}`} {...formItemLayout}>{p['vote_'+name]}</FormItem>
-                        )
-                    })
-                }
+                        <FormItem style={{'marginBottom':'30px'}} label={I18N.get('from.CVoteForm.label.motion')} help={I18N.get('from.CVoteForm.label.motion.help')} {...formItemLayout}>{p.motionId}</FormItem>
 
-                {
-                    _.map(s.voter, (item, i)=>{
-                        const name = item.value
-                        return (
-                            <FormItem key={i} label={`Reasons from ${name} if against`} {...formItemLayout}>{p['reason_'+name]}</FormItem>
-                        )
-                    })
-                }
+                        {_.map(s.voter, (item, i)=>{
+                                const name = item.value
+                                return (
+                                    <FormItem key={i} label={`Online Voting by ${name}`} {...formItemLayout}>{p['vote_'+name]}</FormItem>
+                                )
+                        })}
 
-                <FormItem style={{'marginBottom':'12px'}} label={I18N.get('from.CVoteForm.label.conflict')} help={I18N.get('from.CVoteForm.label.conflict.help')} {...formItemLayout}>{p.isConflict}</FormItem>
-                <FormItem label={I18N.get('from.CVoteForm.label.note')} {...formItemLayout}>{p.notes}</FormItem>
+                        {_.map(s.voter, (item, i)=>{
+                                const name = item.value
+                                return (
+                                    <FormItem key={i} label={`Reasons from ${name} if against`} {...formItemLayout}>{p['reason_' + name]}</FormItem>
+                                )
+                        })}
 
-                <Row>
-                    <Col offset={6} span={12}>
-                        {this.props.isCouncil && this.renderSubmitButton()}
-                        {this.props.isCouncil && this.renderFinishButton()}
-                        {this.props.isCouncil && this.renderUpdateNoteButton()}
-                    </Col>
-                </Row>
-
-
+                        <FormItem style={{'marginBottom':'12px'}} label={I18N.get('from.CVoteForm.label.conflict')} help={I18N.get('from.CVoteForm.label.conflict.help')} {...formItemLayout}>{p.isConflict}</FormItem>
+                        <FormItem label={I18N.get('from.CVoteForm.label.note')} {...formItemLayout}>{p.notes}</FormItem>
+                        <Row>
+                            <Col offset={6} span={12}>
+                                {this.props.isCouncil && this.renderSubmitButton()}
+                                {this.props.isCouncil && this.renderFinishButton()}
+                                {this.props.isCouncil && this.renderUpdateNoteButton()}
+                            </Col>
+                        </Row>
+                    </TabPane>
+                    <TabPane tab={I18N.get('0302')} key={LANGUAGES.chinese}>
+                        <FormItem label={I18N.get('from.CVoteForm.label.title')} {...formItemLayout}>{ p.title_zh }</FormItem>
+                        <FormItem label={I18N.get('from.CVoteForm.label.content')} {...formItemLayout}>{p.content_zh}</FormItem>
+                            { _.map(s.voter, (item, i) => {
+                                const name = item.value
+                                return (
+                                    <FormItem key={i} label={`Reasons from ${name} if against`} {...formItemLayout} >{p['reason_zh_' + name]}</FormItem>
+                                )
+                            })}
+                        <FormItem label={I18N.get('from.CVoteForm.label.note')} {...formItemLayout} >{p.notes_zh}</FormItem>
+                    </TabPane>
+                </Tabs>
             </Form>
         )
     }
@@ -474,13 +565,13 @@ class C extends BaseComponent {
         let ss = data.status || 'processing...'
         _.each(s.voter, (item)=>{
             const name = item.value
-            if(data.vote_map[name] === 'support'){
+            if (data.vote_map[name] === 'support'){
                 n++
             }
-            else if(data.vote_map[name] === 'reject'){
+            else if (data.vote_map[name] === 'reject'){
                 en++
             }
-            else{
+            else {
                 an++
             }
         })

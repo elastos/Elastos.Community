@@ -3,6 +3,7 @@ import BaseComponent from '@/model/BaseComponent'
 import { Table, Tooltip, Row, Col, Button} from 'antd'
 import I18N from '@/I18N'
 import config from '@/config'
+import { LANGUAGES } from '@/config/constant'
 
 import './style.scss'
 import moment from 'moment/moment'
@@ -17,6 +18,7 @@ export default class extends BaseComponent {
     }
 
     ord_render() {
+        const { language } = this.props
         const map = {
             '1' : I18N.get('council.voting.type.newMotion'),
             '2' : I18N.get('council.voting.type.motionAgainst'),
@@ -37,7 +39,7 @@ export default class extends BaseComponent {
                 width: '30%',
                 render: (title, item) => {
                     return (<a onClick={this.toDetail.bind(this, item._id)} className="tableLink">
-                        {title}</a>
+                        { language === LANGUAGES.chinese ? ( item.title_zh ? item.title_zh : title) : title }</a>
                     )
                 }
             },
@@ -148,6 +150,10 @@ export default class extends BaseComponent {
 
     voteDataByUser(u, data){
         const map = data.vote_map;
+        if (!data.vote_map) {
+            // fix error in finding index of undefined
+            return ''
+        }
         if(!map[u]){
             return '';
         }
@@ -157,3 +163,4 @@ export default class extends BaseComponent {
         return '';
     }
 }
+ 
