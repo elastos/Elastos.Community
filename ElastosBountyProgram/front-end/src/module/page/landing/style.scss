@@ -8868,3 +8868,35 @@
   }
 }
 
+
+.language-menu {
+  width: 140px;
+  max-height: 196px;
+  overflow: auto;
+
+  background: #FFFFFF;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+
+  .language-us {
+      width: 51px;
+      height: 17px;
+
+      padding-left: 5px;
+      color: #000000;
+      font-family: Synthese;
+      line-height: normal;
+      font-size: 14px;
+  }
+
+  .language-cn {
+      width: 49px;
+      height: 21px;
+
+      padding-left: 5px;
+      color: #000000;
+      font-family: Microsoft YaHei;
+      line-height: normal;
+      font-size: 11px;
+  }
+}

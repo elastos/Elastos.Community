@@ -8,6 +8,7 @@ import Flyout from './Flyout';
 import {MAX_WIDTH_MOBILE, MIN_WIDTH_PC} from '@/config/constant'
 import {USER_ROLE, USER_LANGUAGE} from '@/constant'
 import Flag from 'react-flags'
+import Data from '@/config/data'
 import UserEditForm from '@/module/form/UserEditForm/Container'
 
 const {Header} = Layout
@@ -85,19 +86,35 @@ export default class extends BaseComponent {
     }
 
     buildLanguageDropdown() {
+        const menu = (
+            <Menu onClick={this.clickItem.bind(this)} className="language-menu">
+                <Menu.Item key="en">
+                    <div>
+                        <Flag name="US" format="png"
+                            basePath="/assets/images/flags"
+                            pngSize={24} shiny={true} alt="English" />
+                        <span className="language-us">English</span>
+                    </div>
+                </Menu.Item>
+                <Menu.Item key="zh">
+                    <div>
+                        <Flag name="CN" format="png"
+                            basePath="/assets/images/flags"
+                            pngSize={24} shiny={true} alt="English" />
+                        <span className="language-cn">简体中文</span>
+                    </div>
+                </Menu.Item>
+            </Menu>
+        )
+
         return (
-            <Select defaultValue={I18N.getLang()} style={{ width: 24+11+11 }} onChange={this.props.changeLanguage}>
-                <Select.Option value="en">
-                    <Flag name="US" format="png"
+            <Dropdown overlay={menu} placement="bottomCenter">
+                <a className="ant-dropdown-link">
+                    <Flag name={Data.mappingLanguageKeyToName[this.props.lang]} format="png"
                         basePath="/assets/images/flags"
-                        pngSize={24} shiny={true} alt="English"/>
-                </Select.Option>
-                <Select.Option value="zh">
-                    <Flag name="CN" format="png"
-                        basePath="/assets/images/flags"
-                        pngSize={24} shiny={true} alt="Chinese"/>
-                </Select.Option>
-            </Select>
+                        pngSize={24} shiny={true} alt="English" />
+                </a>
+            </Dropdown>
         )
     }
 

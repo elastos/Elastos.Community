@@ -5,11 +5,12 @@ import I18N from '@/I18N'
 import './style.scss'
 import { MAX_WIDTH_MOBILE, MIN_WIDTH_PC } from '@/config/constant'
 import Video from '@/module/shared/video/Container'
-import { Col, Row, List, Button, Select, Icon, Modal } from 'antd'
+import { Menu, Dropdown, Col, Row, List, Button, Select } from 'antd'
 import Footer from '@/module/layout/Footer/Container'
 import moment from 'moment/moment'
 import MediaQuery from 'react-responsive'
 import Flag from 'react-flags'
+import Data from '@/config/data'
 import {USER_LANGUAGE} from '@/constant'
 
 export default class extends StandardPage {
@@ -21,22 +22,46 @@ export default class extends StandardPage {
         }
     }
 
+    changeLanguage(e) {
+        const key = e.key
+        if (_.includes([
+            'en',
+            'zh'
+        ], key)) {
+            this.props.changeLanguage(e.key);
+        }
+    }
+
     buildLanguageDropdown() {
-        return (
-            <div className="language-dropdown">
-                <Select defaultValue={I18N.getLang()} style={{ width: 24+11+11 }} onChange={this.props.changeLanguage}>
-                    <Select.Option value="en">
+        const menu = (
+            <Menu onClick={this.changeLanguage.bind(this)} className="language-menu">
+                <Menu.Item key="en">
+                    <div>
                         <Flag name="US" format="png"
                             basePath="/assets/images/flags"
-                            pngSize={24} shiny={true} alt="English"/>
-                    </Select.Option>
-                    <Select.Option value="zh">
+                            pngSize={24} shiny={true} alt="English" />
+                        <span className="language-us">English</span>
+                    </div>
+                </Menu.Item>
+                <Menu.Item key="zh">
+                    <div>
                         <Flag name="CN" format="png"
                             basePath="/assets/images/flags"
-                            pngSize={24} shiny={true} alt="Chinese"/>
-                    </Select.Option>
-                </Select>
-            </div>
+                            pngSize={24} shiny={true} alt="English" />
+                        <span className="language-cn">简体中文</span>
+                    </div>
+                </Menu.Item>
+            </Menu>
+        )
+
+        return (
+            <Dropdown overlay={menu} >
+                <a className="ant-dropdown-link">
+                    <Flag name={Data.mappingLanguageKeyToName[this.props.lang]} format="png"
+                        basePath="/assets/images/flags"
+                        pngSize={24} shiny={true} alt="English" />
+                </a>
+            </Dropdown>
         )
     }
 

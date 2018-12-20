@@ -379,5 +379,9 @@ export default {
         MEMBER: 'role.member',
         LEADER: 'role.organizer',
         ADMIN: 'role.admin'
+    },
+    mappingLanguageKeyToName: {
+        en: 'US',
+        zh: 'CN'
     }
 }
