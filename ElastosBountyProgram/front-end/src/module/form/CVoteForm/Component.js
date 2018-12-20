@@ -3,7 +3,6 @@ import BaseComponent from '@/model/BaseComponent'
 import {Form, Icon, Input, Button, Checkbox, Select, Row, Col, message, Steps, Modal, Switch, Tabs } from 'antd'
 import I18N from '@/I18N'
 import _ from 'lodash'
-import { getIndex } from '@/util'
 import { LANGUAGES } from '@/config/constant'
 
 import './style.scss'
@@ -221,6 +220,7 @@ class C extends BaseComponent {
         )
 
         const vtt = {}
+        debugger
         _.each(s.voter, (item)=>{
             const name = item.value
 
@@ -231,7 +231,7 @@ class C extends BaseComponent {
             }
 
             const fn = getFieldDecorator('vote_'+name, {
-                initialValue : edit ? getIndex(data, 'vote_map/'+name) : (fullName !== name ? '-1' : 'support')
+                initialValue : edit ? data.vote_map[name] : (fullName !== name ? '-1' : 'support')
             })
             const el = (
                 <Select {...publicDisabled} {...tmp} size="large">
@@ -259,7 +259,7 @@ class C extends BaseComponent {
             }
 
             const fn = getFieldDecorator('reason_'+name, {
-                initialValue : edit ? getIndex(data, 'reason_map/'+name) : '',
+                initialValue : edit ? data.reason_map[name] : '',
                 rules : [
                     {},
                     {
@@ -565,13 +565,13 @@ class C extends BaseComponent {
         let ss = data.status || 'processing...'
         _.each(s.voter, (item)=>{
             const name = item.value
-            if(getIndex(data, 'vote_map/'+name) === 'support'){
+            if (data.vote_map[name] === 'support'){
                 n++
             }
-            else if(getIndex(data, 'vote_map/'+name) === 'reject'){
+            else if (data.vote_map[name] === 'reject'){
                 en++
             }
-            else{
+            else {
                 an++
             }
         })
