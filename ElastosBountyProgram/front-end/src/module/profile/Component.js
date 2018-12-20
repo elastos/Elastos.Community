@@ -325,10 +325,9 @@ export default class extends BaseComponent {
                 }
                 {!_.isEmpty(this.props.user.profile.portfolio) &&
                     <div className="portfolio-container">
-                        <a href={this.props.user.profile.portfolio} target="_blank" className="link-container">
-                            <Icon type="link"/>
+                        <a href={this.getFullUrl(this.props.user.profile.portfolio)} target="_blank" className="link-container">
+                            <Icon type="link"/> <span> {I18N.get('profile.portfolio')} </span>
                         </a>
-                        {I18N.get('profile.portfolio')}
                     </div>
                 }
             </div>
