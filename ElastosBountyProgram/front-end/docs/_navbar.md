@@ -1,3 +1,0 @@
-- Languages
-  - [:us: English](/)
-  - [:cn: 中文](/zh/)
