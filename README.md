@@ -2,10 +2,9 @@
 
 # Welcome to the Elastos Community!
 
-![elastos-logo](https://raw.githubusercontent.com/elastos/Elastos.Community/master/docs/imgs/Elastos_Logo_Stacked_RGB)
+![elastos-logo](https://raw.githubusercontent.com/elastos/Elastos.Community/master/docs/imgs/Elastos_Logo_Stacked_RGB.png)
 
-### You're probably here because you heard about Elastos the **blockchain**, well you're in the right place! But Elastos
-is much more than just a blockchain, here's a high-level overview first.   
+### You're probably here because you heard about Elastos the **blockchain**, well you're in the right place! But Elastos is much more than just a blockchain, here's a high-level overview first.   
 
 ![elastos-ecosystem](https://raw.githubusercontent.com/elastos/Elastos.Community/master/docs/imgs/elastos-ecosystem.png)
 
