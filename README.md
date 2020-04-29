@@ -58,6 +58,9 @@ Read about each component here: [ABOUT ELASTOS](ABOUT_ELASTOS.md)
 * GitHub: https://github.com/elastos
 * Gitlab: https://gitlab.com/users/elastos/projects
 
+<br/>
+<br/>
+
 ## Social Media
 * Twitter: https://twitter.com/ElastosInfo
 * Reddit: https://www.reddit.com/r/Elastos
@@ -76,7 +79,7 @@ Read about each component here: [ABOUT ELASTOS](ABOUT_ELASTOS.md)
 * Indian: https://t.me/ElastosIndia
 * Russian: https://t.me/Elastos_RUS
 * U.K.: https://t.me/ElastosUK 
-* Czech: ttps://t.me/elastoscz 
+* Czech: https://t.me/elastoscz 
 * Spanish:https://t.me/ElastosSpain
 * Australian: https://t.me/ElastosAustralia
 * Thai: https://t.me/ElastosThailand
