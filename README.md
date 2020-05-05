@@ -31,7 +31,11 @@ Read about each component here: [ABOUT ELASTOS](ABOUT_ELASTOS.md)
 <br/>
 
 ## Guides & Tutorials
+
+* Developer Website: https://developer.elastos.org
+
 * Beginner's Guide: https://www.reddit.com/r/Elastos/comments/7xihw9/elastos_a_beginners_guide
+
 * Build on our [elastOS](https://elastos.academy/elastosbrowser) app: https://try.elastos.org/ionic-framework/
 
 <br/>
