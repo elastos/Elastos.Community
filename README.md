@@ -55,6 +55,7 @@ Read about each component here: [ABOUT ELASTOS](ABOUT_ELASTOS.md)
 ## Developer Resources
 * Developer Docs: https://developer.elastos.org
 * Blockchain Explorer: https://blockchain.elastos.org
+* DID Chain Explorer: https://idchain.elastos.org
 * Ethereum (ETH) Sidechain (Testnet & Mainnet) Explorer: https://explorer.elaeth.io
 * ETH Sidechain Testnet RPC Port: https://rpc.elaeth.io
 * ETH Sidechain Mainnet RPC Port: https://mainrpc.elaeth.io
