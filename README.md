@@ -34,6 +34,8 @@ Read about each component here: [ABOUT ELASTOS](ABOUT_ELASTOS.md)
 
 * Developer Website: https://developer.elastos.org
 
+* Elastos Academy: https://elastos.academy
+
 * Beginner's Guide: https://www.reddit.com/r/Elastos/comments/7xihw9/elastos_a_beginners_guide
 
 * Build on our [elastOS](https://elastos.academy/elastosbrowser) app: https://try.elastos.org/ionic-framework/
@@ -56,6 +58,7 @@ Read about each component here: [ABOUT ELASTOS](ABOUT_ELASTOS.md)
 * Developer Docs: https://developer.elastos.org
 * Blockchain Explorer: https://blockchain.elastos.org
 * DID Chain Explorer: https://idchain.elastos.org
+* DID App ID Registration: https://elastos.academy/did-wizard
 * Ethereum (ETH) Sidechain (Testnet & Mainnet) Explorer: https://explorer.elaeth.io
 * ETH Sidechain Testnet RPC Port: https://rpc.elaeth.io
 * ETH Sidechain Mainnet RPC Port: https://mainrpc.elaeth.io
