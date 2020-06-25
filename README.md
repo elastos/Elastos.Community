@@ -106,3 +106,4 @@ Read about each component here: [ABOUT ELASTOS](ABOUT_ELASTOS.md)
 ## Learning Videos
 - [What is Elastos?](https://www.youtube.com/watch?v=sIO5j1Lx-Os&feature=youtu.be)
 - [Elastos Video Series by KP Woods](https://www.youtube.com/channel/UCu1XxDJE84ZvgLJ-EssbveA)
+- [Merged-Mining - How It Works](https://www.youtube.com/watch?v=rBhk93MSOV4)
