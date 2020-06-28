@@ -1,6 +1,7 @@
 
 
 # Welcome to the Elastos Community!
+
 <div align="center">
 <img src="https://raw.githubusercontent.com/elastos/Elastos.Community/master/docs/imgs/Elastos_Logo_Stacked_RGB.png" width="400" title="Elastos logo"/>
 </div>
